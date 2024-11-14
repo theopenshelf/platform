@@ -1,0 +1,19 @@
+version: '3'
+services:
+  local_db:
+    container_name: platform_local_db
+    image: postgres:alpine3.19
+    ports:
+      - "8433:5432"
+    hostname: local_db
+    environment:
+      - POSTGRES_PASSWORD=local
+      - POSTGRES_USER=local
+      - POSTGRES_DB=theopenshelf
+    volumes:
+      - ./db/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+
+volumes:
+  postgres_data:
+    driver: local

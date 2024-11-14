@@ -1,15 +1,15 @@
 openapi: 3.0.1
 info:
-  title: API bibliobjects API
+  title: The OpenShelf API
   version: "2.0"
   description: |
     # Summary
-    API bibliobjects API
+    The OpenShelf  API
 
 
 servers:
-  - url: https://bibliobjects.org
-    description: bibliobjects API
+  - url: https://TheOpenShelf.dev
+    description: The OpenShelf API
 
 paths:
 

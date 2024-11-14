@@ -1,0 +1,15 @@
+server:
+  port: 8486
+  ssl:
+    enabled: false
+
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:8433/theopenshelf
+    username: local
+    password: local
+    initialization-mode: always
+
+logging:
+  level:
+    org.springframework.web: DEBUG

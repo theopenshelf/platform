@@ -1,0 +1,9 @@
+spring:
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost/theopenshelf
+    host: localhost
+    port: 8433
+    database: theopenshelf
+    username: local
+    password: local

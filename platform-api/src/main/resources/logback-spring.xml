@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="com/google/cloud/spring/logging/logback-json-appender.xml"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <springProfile name="!json-logging">
+        <logger additivity="false" level="DEBUG" name="reactor.netty.http.client.HttpClient">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="dev.theopenshelf">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.cloud.gateway">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.web.server">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.web.reactive">
+            <appender-ref ref="CONSOLE"/>
+        </logger>
+        <root level="WARN">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+    <springProfile name="json-logging">
+        <logger additivity="false" level="DEBUG" name="reactor.netty.http.client.HttpClient">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="dev.theopenshelf">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.cloud.gateway">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.web.server">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </logger>
+        <logger additivity="false" level="DEBUG" name="org.springframework.web.reactive">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </logger>
+        <root level="WARN">
+            <appender-ref ref="CONSOLE_JSON"/>
+        </root>
+    </springProfile>
+</configuration>

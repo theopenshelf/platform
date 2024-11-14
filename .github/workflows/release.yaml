@@ -1,0 +1,102 @@
+name: release version
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Prepare release
+        id: vars
+        run: |
+          sudo apt-get install libxml2-utils
+          cd platform-api
+          export VERSION=`xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml | sed -e  "s/-SNAPSHOT$//"`
+          echo "app-version=$VERSION"
+          echo "app-version=$VERSION" >> $GITHUB_ENV
+
+      - name: Cache Maven packages
+        uses: actions/cache@v4
+        with:
+          path: /root/.m2
+          key: ${{ runner.os }}-m2-${{ env.app-version }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Build and Test
+        uses: qcastel/github-actions-maven-cmd@master
+        with:
+          maven-args: "clean verify -Ddockerfile.skip -DdockerCompose.skip -Djib.skip"
+
+      - name: Release
+        uses: qcastel/github-actions-maven-release@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
+        with:
+          release-branch-name: "main"
+          maven-project-folder: "platform-api/"
+
+          git-release-bot-name: "bot-theopenshelf"
+          git-release-bot-email: "bot@theopenshelf.dev"
+
+          docker-registry-id: ghcr.io/theopenshelf-dev
+          docker-registry-username: ${{ secrets.DOCKER_REGISTRY_USERNAME }} 
+          docker-registry-password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+
+          maven-args: "-Dmaven.javadoc.skip=true -DskipTests -DskipITs -Dmaven.deploy.skip=true"
+
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          gpg-enabled: true
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+          gpg-key: ${{ secrets.GPG_KEY }}
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io/theopenshelf
+          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+        
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: ./platform-ui
+          push: true
+          tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
+
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
+
+      - name: Deploy
+        uses: qcastel/github-actions-trigger-deploy@master
+        with:
+          branch-name: main
+          
+          git-release-bot-name: "bot-theopenshelf"
+          git-release-bot-email: "bot@theopenshelf.dev"
+
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          repository: git@github.com:theopenshelf/platform.git
+
+          images-names: "platform-api;platform-ui"
+
+          version: ${{ env.app-version }}
+
+          gpg-enabled: true
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+          gpg-key: ${{ secrets.GPG_KEY }}
