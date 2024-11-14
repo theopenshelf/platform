@@ -13,6 +13,20 @@ servers:
 
 paths:
 
+  /hello-world:
+    get:
+      operationId: getHelloWorld
+      summary: hello world
+      tags:
+        - hello-world
+
+      security:
+        - BearerAuthOAuth: []
+
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
+
   /items/:
 
     get:
@@ -251,7 +265,23 @@ components:
             $ref: "#/components/schemas/Item"
 
   responses:
-
+    OK_200_GET_HELLO_WORLD:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: responseHelloWorld
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Hello world!
+              items:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
     OK_200_GET_ITEMS:
       description: GetItems
       content:
