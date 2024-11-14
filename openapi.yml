@@ -1,0 +1,306 @@
+openapi: 3.0.1
+info:
+  title: API bibliobjects API
+  version: "2.0"
+  description: |
+    # Summary
+    API bibliobjects API
+
+
+servers:
+  - url: https://bibliobjects.org
+    description: bibliobjects API
+
+paths:
+
+  /items/:
+
+    get:
+      operationId: getItems
+      summary: Get items
+      tags:
+        - item
+      
+      security:
+        - BearerAuthOAuth: []
+      
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_ITEMS"
+  
+  /items/{item-id}:
+    parameters:
+      - $ref: "#/components/parameters/itemId" 
+      
+    get:
+      summary: Get item
+      operationId: getItem
+      tags:
+        - items
+      
+      security:
+        - BearerAuthOAuth: []
+      
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_ITEM"
+
+  /items/{item-id}/action/borrow:
+    parameters:
+      - $ref: "#/components/parameters/itemId" 
+      
+    post:
+      summary: Borrow an item
+      operationId: borrowItem
+      tags:
+        - items
+      
+      security:
+        - BearerAuthOAuth: []
+      
+      requestBody:
+        description: borrow item
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestBorrowItem"
+
+      responses:
+        '201':
+          $ref: "#/components/responses/OK_201_POST_BORROW_ITEM"
+
+  /items/{item-id}/action/return:
+    parameters:
+      - $ref: "#/components/parameters/itemId" 
+      
+    post:
+      summary: Return an item
+      operationId: returnItem
+      tags:
+        - items
+      
+      security:
+        - BearerAuthOAuth: []
+      
+      requestBody:
+        description: return item
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestReturnItem"
+
+      responses:
+        '201':
+          $ref: "#/components/responses/OK_201_POST_RETURN_ITEM"
+
+  /items/{item-id}/borrow-records:
+    parameters:
+      - $ref: "#/components/parameters/itemId" 
+    get:
+      summary: Get borrow records for a give item
+      operationId: getItemBorrowRecords
+      
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_ITEM_BORROW_RECORDS"
+
+  /users/{user-id}/borrow-records:
+    parameters:
+      - $ref: "#/components/parameters/userId" 
+    get:
+      summary: Get user borrow records
+      operationId: getUserBorrowRecords
+      
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_USER_BORROW_RECORDS"
+
+components:
+#####################################################
+# Predefined Components
+#####################################################
+
+  securitySchemes:
+
+    BearerAuthOAuth:
+      description: Bearer Token. 
+      type: http
+      scheme: bearer
+
+  parameters:
+    itemId:
+      name: item-id
+      in: path
+      description: Item ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    userId:
+      name: user-id
+      in: path
+      description: User ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    user:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        flat:
+          type: string  
+          example: A701
+
+    item:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        location:
+          type: string
+        picture:
+          type: string
+          example: data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEASABIAAD/4RITR
+        status:
+          type: string  
+          enum: [AVAILABLE, BORROWED, ARCHIVED] 
+
+    BorrowRecord:
+      type: object
+      required:
+        - id
+        - itemId
+        - borrowDate
+        - returnDate
+        - borrower
+      properties:
+        id:
+          type: string
+          format: uuid
+        itemId:
+          type: string
+          format: uuid
+        borrowDate:
+          type: string
+          format: date-time
+        returnDate:
+          type: string
+          format: date-time
+        borrower:
+          type: string
+          format: uuid
+
+    RequestBorrowItem:
+      type: object
+      required:
+        - name
+      properties:
+        borrowDate:
+          type: string
+          format: date-time
+        returnDate:
+          type: string
+          format: date-time
+        borrower:
+          type: string
+          format: uuid
+
+    RequestReturnItem:
+      type: object
+      required:
+        - name
+      properties:
+        date:
+          type: string
+          format: date-time
+        borrower:
+          type: string
+          format: uuid
+
+    ResponseGetItems:
+      type: object
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+
+  responses:
+
+    OK_200_GET_ITEMS:
+      description: GetItems
+      content:
+        application/json:
+           schema:
+            $ref: "#/components/schemas/ResponseGetItems"
+
+    OK_200_GET_ITEM:
+      description: OK
+      content:
+        application/json:
+           schema:
+              $ref: "#/components/schemas/Item"     
+
+    OK_201_POST_BORROW_ITEM:
+      description: OK
+      content:
+        application/json:
+           schema:
+              $ref: "#/components/schemas/BorrowRecord" 
+
+    OK_201_POST_RETURN_ITEM:
+      description: OK
+      content:
+        application/json:
+           schema:
+            title: responseReturnItem
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
+                example: Item return with success
+
+    OK_200_GET_ITEM_BORROW_RECORDS:
+      description: OK
+      content:
+        application/json:
+           schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BorrowRecord"
+
+    OK_200_GET_USER_BORROW_RECORDS:
+      description: OK
+      content:
+        application/json:
+           schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/BorrowRecord"
