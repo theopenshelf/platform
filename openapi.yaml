@@ -147,7 +147,7 @@ components:
         type: string
         format: uuid
   schemas:
-    user:
+    User:
       type: object
       required:
         - id
@@ -166,7 +166,7 @@ components:
           type: string  
           example: A701
 
-    item:
+    Item:
       type: object
       required:
         - id
