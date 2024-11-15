@@ -1,0 +1,42 @@
+/* Parent container for layout */
+.layout-container {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    gap: 1rem;
+}
+
+/* Sidebar styling */
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Filter group styling */
+.filter-group {
+    margin-bottom: 1rem;
+}
+
+.filter-group span {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Grid container styling */
+.grid-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+}

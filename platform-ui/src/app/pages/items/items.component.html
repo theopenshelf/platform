@@ -1,0 +1,39 @@
+<div class="layout-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar">
+        <h3 i18n="@@filterTitle">Filters</h3>
+        <div class="filter-group">
+            <span i18n="@@categoryFilter">Category</span>
+            <label *ngFor="let category of categories">
+                <input 
+                    type="checkbox" 
+                    [value]="category.value" 
+                    (change)="onCategoryChange($event)"
+                >
+                {{ category.label }}
+            </label>
+        </div>
+    </aside>
+
+    <main class="grid-container">
+        <div 
+            *ngFor="let item of filteredItems" 
+            tuiAppearance="floating" 
+            tuiCardLarge
+        >
+            <div tuiHeader>
+                <h2 tuiTitle>
+                    {{ item.name }}
+                    <span tuiSubtitle>{{ item.description }}</span>
+                </h2>
+                <aside tuiAccessories>
+                    <tui-avatar appearance="primary" src="@tui.star"></tui-avatar>
+                </aside>
+            </div>
+
+            <button i18n="@@borrowButton" appearance="secondary" size="m" tuiButton type="button">
+                Borrow
+            </button>
+        </div>
+    </main>
+</div>

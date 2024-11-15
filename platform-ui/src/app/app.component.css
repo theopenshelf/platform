@@ -1,0 +1,8 @@
+aside[tuiNavigationAside]:after {
+    inline-size: 14rem;
+}
+
+header[tuiNavigationHeader][tuiNavigationHeader] [tuiButton] {
+    
+    max-inline-size: 12rem;
+}

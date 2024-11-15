@@ -1,0 +1,113 @@
+<tui-root>
+
+
+    <!-- Ignore this part, it is only here to position drawer inside the example block -->
+    <div class="custom-portal"><ng-container #viewContainer /></div>
+    <header tuiNavigationHeader>
+        <span tuiNavigationLogo>
+            <tui-icon icon="@tui.home" />
+            <span tuiFade>The Open Shelf</span>
+        </span>
+        <hr />
+        
+
+        <button
+            appearance="secondary-grayscale"
+            iconStart="@tui.package"
+            tuiButton
+            type="button"
+            i18n="@@borrowItemButton"
+        >
+            Items
+        </button>
+
+	    <button
+            iconStart="@tui.shopping-basket"
+
+            appearance="secondary-grayscale"
+            tuiButton
+            tuiChevron
+            tuiDropdownOpen
+            type="button"
+            [tuiDropdown]="myitems"
+        >
+        <span >My borrowed items</span>
+        <ng-template #myitems>
+            <tui-data-list size="s">
+                <button
+                    tuiOption
+                    type="button"
+                    iconStart="@tui.house"
+                >
+                    currently borrowed
+                </button>
+                <button
+                iconStart="@tui.calendar-days"
+                    tuiOption
+                    type="button"
+                >
+                    Reserved
+                </button>
+            </tui-data-list>
+        </ng-template>
+    </button>
+
+    
+        <button
+            iconStart="@tui.bell"
+            tuiIconButton
+            type="button"
+            i18n="@@notificationsButton"
+        >
+            Notifications
+            <tui-badge-notification />
+        </button>
+
+        <button
+            iconStart="@tui.settings"
+            tuiIconButton
+            type="button"
+            tuiChevron
+            tuiDropdownOpen
+            [tuiDropdown]="settings"
+        >
+            <ng-template #settings>
+                <tui-data-list size="s">
+                    <button
+                        tuiOption
+                        type="button"
+                        i18n="@@yourAccountMenu"
+                    >
+                        Your account
+                        
+                    </button>
+                    <button
+                        tuiOption
+                        type="button"
+                        i18n="@@myHistoryMenu"
+                    >
+                        My history
+                        
+                    </button>
+                    <button
+                        tuiOption
+                        type="button"
+                        i18n="@@logoutMenu"
+                    >
+                        Log out
+                    </button>
+                </tui-data-list>
+            </ng-template>
+        </button>
+    </header>
+    <div [style.display]="'flex'">
+
+        <main tuiNavigationMain>
+
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+
+  
+
+</tui-root>
