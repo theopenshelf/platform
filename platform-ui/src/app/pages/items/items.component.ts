@@ -4,7 +4,7 @@ import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout/components/card';
 import { TuiHeader } from '@taiga-ui/layout/components/header';
-import { TuiRoot } from "@taiga-ui/core";
+import { TuiRoot, TuiTextfield } from "@taiga-ui/core";
 import { RouterOutlet } from '@angular/router';
 import {CommonModule, KeyValuePipe, NgForOf} from '@angular/common';
 import {ChangeDetectionStrategy} from '@angular/core';
@@ -39,61 +39,71 @@ import { TuiNavigation} from '@taiga-ui/layout';
     TuiAppearance,
     TuiCardLarge,
     TuiAvatar,
-
     TuiButton,
     TuiCardLarge,
     TuiHeader,
     TuiTitle,
-    TuiPlatform
+    TuiPlatform,
+    FormsModule,
+    TuiTextfield
   ],
   templateUrl: './items.component.html',
-  styleUrl: './items.component.css'
+  styleUrls: ['./items.component.css']
 })
 export class ItemsComponent {
 
-    // Categories for the filter
-    categories = [
-      { value: 'books', label: 'Books' },
-      { value: 'electronics', label: 'Electronics' },
-      { value: 'clothing', label: 'Clothing' },
-    ];
+  // Categories for the filter
+  categories = [
+    { value: 'books', label: 'Books' },
+    { value: 'electronics', label: 'Electronics' },
+    { value: 'clothing', label: 'Clothing' },
+  ];
+
+  // Items in the grid
+  items = [
+    { name: 'Harry Potter Book', description: 'A magical adventure story', category: 'books' },
+    { name: 'Laptop XYZ', description: 'High-performance laptop for work and play', category: 'electronics' },
+    { name: 'Cotton T-Shirt', description: 'Comfortable cotton T-shirt', category: 'clothing' },
+    { name: 'Wireless Mouse', description: 'Ergonomic wireless mouse for productivity', category: 'electronics' },
+    { name: 'Blue Jeans', description: 'Stylish denim jeans', category: 'clothing' },
+    { name: 'Smartphone Pro', description: 'Latest model with amazing features', category: 'electronics' },
+    { name: 'The Great Gatsby', description: 'A novel set in the Jazz Age', category: 'books' },
+    { name: 'Gaming Chair', description: 'Comfortable chair for long gaming sessions', category: 'electronics' },
+    { name: 'Leather Wallet', description: 'A sleek leather wallet', category: 'clothing' },
+    { name: 'LED Desk Lamp', description: 'Adjustable LED desk lamp', category: 'electronics' },
+    { name: 'Winter Jacket', description: 'Warm jacket for cold weather', category: 'clothing' },
+    { name: 'Cookbook Essentials', description: 'Recipes for home chefs', category: 'books' }
+  ];
+
+  // Selected categories
+  selectedCategories: Set<string> = new Set();
   
-    // Items in the grid
-    items = [
-        { name: 'Harry Potter Book', description: 'A magical adventure story', category: 'books' },
-        { name: 'Laptop XYZ', description: 'High-performance laptop for work and play', category: 'electronics' },
-        { name: 'Cotton T-Shirt', description: 'Comfortable cotton T-shirt', category: 'clothing' },
-        { name: 'Wireless Mouse', description: 'Ergonomic wireless mouse for productivity', category: 'electronics' },
-        { name: 'Blue Jeans', description: 'Stylish denim jeans', category: 'clothing' },
-        { name: 'Smartphone Pro', description: 'Latest model with amazing features', category: 'electronics' },
-        { name: 'The Great Gatsby', description: 'A novel set in the Jazz Age', category: 'books' },
-        { name: 'Gaming Chair', description: 'Comfortable chair for long gaming sessions', category: 'electronics' },
-        { name: 'Leather Wallet', description: 'A sleek leather wallet', category: 'clothing' },
-        { name: 'LED Desk Lamp', description: 'Adjustable LED desk lamp', category: 'electronics' },
-        { name: 'Winter Jacket', description: 'Warm jacket for cold weather', category: 'clothing' },
-        { name: 'Cookbook Essentials', description: 'Recipes for home chefs', category: 'books' }
-      ];
-    // Selected categories
-    selectedCategories: Set<string> = new Set();
-  
-    // Filtered items for the grid
-    get filteredItems() {
-      if (this.selectedCategories.size === 0) {
-        return this.items; // Show all items if no category is selected
-      }
-      return this.items.filter(item =>
-        this.selectedCategories.has(item.category)
-      );
+  // Text input for search filtering
+  searchText = '';
+
+  // Filtered items for the grid
+  get filteredItems() {
+    return this.items.filter(item => {
+      const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category);
+      const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) || 
+                        item.description.toLowerCase().includes(this.searchText.toLowerCase());
+      return categoryMatch && textMatch;
+    });
+  }
+
+  // Handle category checkbox changes
+  onCategoryChange(event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    if (checkbox.checked) {
+      this.selectedCategories.add(checkbox.value);
+    } else {
+      this.selectedCategories.delete(checkbox.value);
     }
-  
-    // Handle category checkbox changes
-    onCategoryChange(event: Event) {
-      const checkbox = event.target as HTMLInputElement;
-      if (checkbox.checked) {
-        this.selectedCategories.add(checkbox.value);
-      } else {
-        this.selectedCategories.delete(checkbox.value);
-      }
-    }
+  }
+
+  // Handle text filter change
+  onTextFilterChange() {
+    // The filtering is handled in the getter `filteredItems`
+  }
 
 }

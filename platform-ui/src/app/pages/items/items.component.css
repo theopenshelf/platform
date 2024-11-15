@@ -40,3 +40,9 @@
     padding: 1rem;
     box-sizing: border-box;
 }
+
+fieldset {
+    border: none;
+    margin: 0;
+    padding-left: 0;
+}
