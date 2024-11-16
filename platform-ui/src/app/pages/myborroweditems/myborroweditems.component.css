@@ -1,0 +1,86 @@
+table {
+  width: 100%;  
+  border-spacing: 0;
+
+}
+
+table td, table th {
+    border-right: none;
+    border-left: none;
+}
+
+table th {
+    background-color: #f8fafc;
+}
+
+h1 {
+    margin: 30px 0;
+}
+
+th {
+    cursor: pointer;
+    user-select: none;
+}
+
+th span {
+    margin-left: 4px;
+}
+
+/* Filtering section styles */
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filters label {
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.filters select {
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid #d1d5db;
+    background-color: #f9fafb;
+    cursor: pointer;
+}
+
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    min-width: 120px; /* Ensure consistent width */
+}
+
+/* Status badges */
+.badge-reserved {
+    background-color: #3498db; /* Light Blue */
+}
+
+.badge-borrowed {
+    background-color: #2ecc71; /* Green */
+}
+
+.badge-returned {
+    background-color: #95a5a6; /* Gray */
+}
+
+/* Category badges */
+.badge-books {
+    background-color: #9b59b6; /* Purple */
+}
+
+.badge-electronics {
+    background-color: #e67e22; /* Orange */
+}
+
+.badge-clothing {
+    background-color: #1abc9c; /* Teal */
+}

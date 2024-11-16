@@ -6,3 +6,39 @@ header[tuiNavigationHeader][tuiNavigationHeader] [tuiButton] {
     
     max-inline-size: 12rem;
 }
+
+header[tuiNavigationHeader][tuiNavigationHeader] {
+    background-color: #1e293b;
+}
+header[tuiNavigationHeader][tuiNavigationHeader]:before {
+    border-radius: 0;
+}
+
+.horizontal-menu {
+    display: flex;
+
+    background-color: #f5f5f5; /* Light background for the menu */
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #ddd; /* Optional separator */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    margin-bottom: 10px;
+}
+
+.horizontal-menu a {
+    text-decoration: none;
+    color: #333; /* Dark text */
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.horizontal-menu a tui-icon {
+    margin: 5px;
+}
+
+.horizontal-menu a:hover,
+.horizontal-menu a.active {
+    background-color: #ccc; /* Highlight color */
+    color: white;
+}

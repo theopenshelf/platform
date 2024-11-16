@@ -34,6 +34,7 @@ import { TuiNavigation} from '@taiga-ui/layout';
   selector: 'app-items',
   standalone: true,
   imports: [
+    RouterLink,
     CommonModule,
     TuiRepeatTimes,
     TuiAppearance,
