@@ -1,0 +1,27 @@
+.star-rating {
+  display: flex;
+  gap: 4px;
+  display: inline-block;
+}
+
+.star {
+  font-size: 24px;
+  color: #e0e0e0; /* Default star color (gray) */
+}
+
+.star.filled {
+  color: #f5a623; /* Filled star color (orange) */
+}
+
+.star.half {
+  color: #ccc;
+  position: relative;
+}
+
+.star.half::before {
+  content: '★';
+  position: absolute;
+  left: 0;
+  width: 50%;
+  overflow: hidden;
+}

@@ -1,0 +1,28 @@
+<tui-root>
+    <!-- Position drawer inside the example block -->
+    <div class="custom-portal"><ng-container #viewContainer /></div>
+
+    <!-- Header -->
+    <header tuiNavigationHeader>
+        <span tuiNavigationLogo>
+            <tui-icon icon="@tui.home"></tui-icon>
+            <span tuiFade>The Open Shelf</span>
+        </span>
+        <hr />
+
+    </header>
+
+    <!-- Main Content -->
+    <div [style.display]="'flex'">
+        <div id="main">
+            <button id="community-button" routerLink="/community"
+            i18n="@@borrowButton" appearance="primary" size="m" tuiButton type="button">
+                Community
+            </button>
+            <button id="admin-button" routerLink="/admin"
+            i18n="@@borrowButton" appearance="accent" size="m" tuiButton type="button">
+                Admin
+            </button>
+        </div>
+    </div>
+</tui-root>
