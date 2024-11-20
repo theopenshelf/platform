@@ -21,6 +21,7 @@ export class SignInComponent {
   }
 
   onSubmit() {
+    debugger;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
       if (this.authService.signIn(email, password)) {

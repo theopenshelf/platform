@@ -1,1 +1,43 @@
-<p>admin-landing-page works!</p>
+<!-- Ignore this part, it is only here to position drawer inside the example block -->
+<div class="custom-portal"><ng-container #viewContainer /></div>
+<header tuiNavigationHeader>
+    <span tuiNavigationLogo>
+        <tui-icon icon="@tui.home"></tui-icon>
+        <span tuiFade>The Open Shelf</span>
+    </span>
+    <hr />
+    <button appearance="secondary-grayscale" tuiButton type="button" routerLink="/community/">
+        Community portal
+    </button>
+    <button iconStart="@tui.bell" tuiIconButton type="button">
+        Notifications
+        <tui-badge-notification />
+    </button>
+
+</header>
+<div [style.display]="'flex'">
+    <aside [style.height.rem]="27" [tuiNavigationAside]="expanded">
+        <a iconStart="@tui.users" tuiAsideItem routerLink="/admin/users/">
+            Users
+        </a>
+        <a iconStart="@tui.package" tuiAsideItem routerLink="/admin/items/">
+            Items
+        </a>
+        <a iconStart="@tui.mail" tuiAsideItem routerLink="/admin/messages/">
+            Messages
+        </a>
+        <a iconStart="@tui.shield" tuiAsideItem routerLink="/admin/security/">
+            Security
+        </a>
+        <footer>
+            <button tuiAsideItem type="button" [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
+                (click)="expanded = !expanded">
+                {{ expanded ? 'Collapse' : 'Expand' }}
+            </button>
+        </footer>
+    </aside>
+    <div id="main-admin" [style.display]="'flex'">
+        <router-outlet></router-outlet>
+
+    </div>
+</div>

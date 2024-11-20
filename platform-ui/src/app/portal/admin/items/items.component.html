@@ -1,0 +1,55 @@
+<table
+    tuiTable
+    [size]="size"
+    [style.width.rem]="58"
+>
+    <thead>
+        <tr>
+            <th tuiTh>Item Name</th>
+            <th tuiTh>Picture</th>
+            <th tuiTh>Categories</th>
+            <th tuiTh>Borrows</th>
+            <th tuiTh>Late Return %</th>
+            <th tuiTh>Average Duration (days)</th>
+            <th tuiTh>State</th>
+            <th tuiTh>Actions</th>
+        </tr>
+    </thead>
+    <tbody tuiTbody>
+        <tr *ngFor="let item of items">
+            <td tuiTd>
+                <span tuiTitle>{{ item.name }}</span>
+            </td>
+            <td tuiTd>
+                <tui-avatar [src]="item.picture"  size="m"></tui-avatar>
+            </td>
+            <td tuiTd>
+                <tui-badge *ngFor="let category of item.categories">{{ category }}</tui-badge>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ item.borrows }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ item.averageDuration }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
+            </td>
+            <td tuiTd>
+                <div [tuiCell]="size">
+                    <button
+                        appearance="action"
+                        tuiLink
+                        type="button"
+                        [routerLink]="['/admin/item', item.id, 'edit']"
+                    >
+                        Edit
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

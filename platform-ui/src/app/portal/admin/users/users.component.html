@@ -1,0 +1,76 @@
+<table
+    tuiTable
+    [size]="size"
+    [style.width.rem]="58"
+>
+    <thead>
+        <tr>
+            <th tuiTh>Username</th>
+            <th tuiTh>Email</th>
+            <th tuiTh>Flat Number</th>
+            <th tuiTh>Address</th>
+            <th tuiTh>Borrowed Items</th>
+            <th tuiTh>Returned Late</th>
+            <th tuiTh>% of late</th>
+            <th tuiTh>Satisfaction %</th>
+            <th tuiTh>Actions</th>
+        </tr>
+    </thead>
+    <tbody tuiTbody>
+        <tr *ngFor="let user of users">
+            <td tuiTd>
+                <span tuiTitle>{{ user.username }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.email }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.flatNumber }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.address }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.borrowedItems }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.returnedLate }}</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.successRate }}%</span>
+            </td>
+            <td tuiTd>
+                <span tuiTitle>{{ user.satisfactionRate }}%</span>
+            </td>
+            <td tuiTd>
+                <div [tuiCell]="size">
+                    <button
+                        appearance="action"
+                        tuiLink
+                        type="button"
+                        [routerLink]="['/admin/messages']"
+                        [queryParams]="{ user: user.username }"
+                    >
+                        Messages
+                    </button>
+                    <button
+                        appearance="action"
+                        tuiLink
+                        type="button"
+                        [routerLink]="['/admin/user', user.username, 'password']"
+                    >
+                        Change Password
+                    </button>
+                    <button
+                        appearance="action"
+                        tuiLink
+                        type="button"
+                        [routerLink]="['/admin/user', user.username, 'edit']"
+                    >
+                        Edit
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

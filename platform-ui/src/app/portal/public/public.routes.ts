@@ -5,13 +5,20 @@ import { PublicLandingPageComponent } from './public-landing-page/public-landing
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { EmailConfirmationComponent } from './auth/email-confirmation/email-confirmation.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 export const PUBLIC_ROUTES: Routes = [
-    { path: '', component: PublicLandingPageComponent },
-    { path: 'sign-in', component: SignInComponent },
-    { path: 'sign-out', component: SignOutComponent },
-    { path: 'sign-in', component: SignInComponent },
-    { path: 'forgot-password', component: ForgotPasswordComponent },
-    { path: 'reset-password', component: ResetPasswordComponent },
-    { path: 'email-confirmation', component: EmailConfirmationComponent },
-  ];
+  {
+    path: '',
+    component: PublicLandingPageComponent,
+    children: [
+      { path: '', component: SignInComponent },
+      { path: 'login', component: SignInComponent },
+        { path: 'sign-out', component: SignOutComponent },
+        { path: 'sign-up', component: SignUpComponent },
+        { path: 'forgot-password', component: ForgotPasswordComponent },
+        { path: 'reset-password', component: ResetPasswordComponent },
+        { path: 'email-confirmation', component: EmailConfirmationComponent },
+      ],
+  },
+];
