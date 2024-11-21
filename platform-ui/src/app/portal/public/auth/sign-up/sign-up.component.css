@@ -1,0 +1,176 @@
+#login-container {
+    display: flex;
+    justify-content: space-between;
+    /* Space out the items evenly */
+    align-items: center;
+    /* Vertically align items in the center */
+    height: 100vh; /* Full viewport height */
+
+}
+.address-section {
+    margin-top: 20px;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+  .address-section legend {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .column {
+    flex: 1;
+  }
+
+#signup-form-section {
+    display: flex; /* Enable Flexbox */
+    flex-direction: column; /* Stack content vertically */
+    justify-content: center; /* Vertically center content */
+    align-items: center; /* Horizontally center content */
+    flex: 1;
+    background-color: #ffffff; /* Clean white background */
+    font-family: Arial, sans-serif; /* Optional: consistent typography */
+    height: 100vh; /* Full viewport height */
+    padding: 20px;
+  }
+  
+  #signup-form-section h2 {
+    width: 100%; /* Make the form take up the full width of the container */
+    font-size: 1.8rem;
+    color: #333; /* Darker text for readability */
+    margin-bottom: 10px;
+  }
+  
+  #signup-form-section p {
+    width: 100%; /* Make the form take up the full width of the container */
+    font-size: 0.9rem;
+    color: #555; /* Neutral text color */
+    margin-bottom: 15px;
+  }
+  
+  #signup-form-section form {
+    width: 100%; /* Make the form take up the full width of the container */
+    display: flex;
+    flex-direction: column; /* Ensure elements stack vertically */
+    gap: 15px; /* Add spacing between form fields */
+  }
+  
+  #signup-form-section label {
+    font-size: 0.85rem;
+    color: #444; /* Subtle color for labels */
+    margin-bottom: 5px;
+  }
+  
+  #signup-form-section input {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 5px; /* Rounded corners */
+    transition: border-color 0.3s; /* Smooth hover effect */
+  }
+  
+  #signup-form-section input:focus {
+    border-color: #007bff; /* Highlight border on focus */
+    outline: none; /* Remove default focus outline */
+  }
+  #signup-form-section input, 
+#signup-form-section button {
+  width: 100%; /* Ensure input fields and buttons span the full width */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+  
+  #signup-form-section button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #007bff; /* Primary button color */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* Smooth hover effect */
+  }
+  
+  #signup-form-section button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+  }
+  
+  #signup-form-section a {
+    color: #007bff; /* Link color matching the theme */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s; /* Smooth hover effect */
+  }
+  
+  #signup-form-section a:hover {
+    color: #0056b3; /* Darker shade on hover */
+  }
+
+#signup-welcome-section {
+    height: 100vh; /* Full viewport height */
+    flex: 1.5;
+    /* Make this section larger */
+    display: flex;
+    /* Enable Flexbox on this container */
+    justify-content: center;
+    /* Horizontally center content */
+    align-items: center;
+    /* Vertically center content */
+    padding: 20px;
+    background-color: rgb(30 41 59);
+    color: rgb(241, 245, 249);
+    width: 100%;
+    min-height: 400px;
+    position: relative; /* Enables absolute positioning for child elements */
+    overflow: hidden; /* Ensures the SVG doesn't overflow the section */
+
+}
+
+@media (max-width: 768px) {
+    #signup-welcome-section {
+      display: none; /* Hide the welcome section for small screens */
+    }
+  }
+
+#signup-welcome-content {
+    position: relative; /* Ensures content appears above the SVG */
+    padding: 0 10%;
+    vertical-align: middle;
+    z-index: 1; /* Places content above the SVG */
+}
+
+.background-motif {
+    opacity: 5%;
+    position: absolute;
+    top: -25%;
+    left: -25%;
+    width: 160%;
+    height: 160%;
+    z-index: 0;
+    /* Places the SVG behind the content */
+    pointer-events: none;
+    /* Ensures the SVG doesn't interfere with clicks */
+    color: #d1d5db;
+    /* A soft gray color, adjust as needed */
+}
+
+#signup-welcome-content h2 {
+    font-size: 4em;
+    line-height: 3rem !important;
+
+}
+
+#signup-welcome-content p {
+    color: #ececec;
+    font-size: 1rem !important;
+    line-height: 1.5rem !important;
+    --tw-text-opacity: 1 !important;
+    color: rgb(148 163 184 / 1);
+}

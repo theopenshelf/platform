@@ -1,9 +1,49 @@
-<h2>Sign Up</h2>
-<form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
-  <label>Email</label>
-  <input formControlName="email" type="email" />
-  <label>Password</label>
-  <input formControlName="password" type="password" />
-  <button type="submit">Sign Up</button>
-</form>
-<p>Already have an account? <a routerLink="/sign-in">Sign In</a></p>
+<div id="login-container">
+  <div id="signup-form-section">
+    <h2>Sign up</h2>
+    <p>Already registered? <a routerLink="/login">Sign in</a></p>
+
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <label>Username</label>
+      <input formControlName="username" type="username" />
+      <label>Email</label>
+      <input formControlName="email" type="email" />
+      <label>Password</label>
+      <input formControlName="password" type="password" />
+
+       <!-- Address Fields -->
+  <label>Street Address</label>
+  <input formControlName="streetAddress" type="text" placeholder="Enter your street address" />
+
+  <div class="row">
+    <div class="column">
+      <label>City</label>
+      <input formControlName="city" type="text" placeholder="Enter your city" />
+    </div>
+    <div class="column">
+      <label>Postal Code</label>
+      <input formControlName="postalCode" type="text" placeholder="Enter your postal code" />
+    </div>
+  </div>
+
+  <label>Country</label>
+  <input formControlName="country" type="text" placeholder="Enter your country" />
+
+      <button type="submit">Sign up</button>
+    </form>
+  </div>
+  <div id="signup-welcome-section">
+    <svg viewBox="0 0 960 540" width="100%" height="100%" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" class="background-motif">
+      <g fill="none" stroke="currentColor" stroke-width="100" class="text-gray-700 opacity-25">
+        <circle r="234" cx="196" cy="23"></circle>
+        <circle r="234" cx="790" cy="491"></circle>
+      </g>
+    </svg>
+    <div id="signup-welcome-content">
+      <h2>Welcome to Open Shelf</h2>
+      <p>A place where you can borrow anything you need</p>
+      <p>The Library of Things tries to avoid the unnecessary production and purchase of objects of little use which
+        later end up just stored away in a drawer</p>
+    </div>
+  </div>
+</div>
