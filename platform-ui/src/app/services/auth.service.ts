@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private userRole: 'admin' | 'community' | null = null;
+  private userRoles: string[] = ['admin', 'community']; // Store multiple roles
 
   constructor(private router: Router) {}
 
@@ -15,20 +15,22 @@ export class AuthService {
     // Mock login (Replace with actual backend logic)
     if (username === 'admin' && password === 'password') {
       this.isAuthenticated$.next(true);
-      this.userRole = 'admin';
+      this.userRoles = ['admin', 'community'];
       return true;
     }
     if (username === 'alice' && password === 'password') {
       this.isAuthenticated$.next(true);
-      this.userRole = 'community';
+      this.userRoles = ['community'];
       return true;
     }
     return false;
   }
 
-  getRole(): 'admin' | 'community' | null {
-    return this.userRole;
+  // Check if the user has a specific role
+  hasRole(role: string): boolean {
+    return this.userRoles.includes(role);
   }
+
 
   signUp(email: string, password: string): void {
     // Mock sign up logic (replace with backend API call)
@@ -37,7 +39,7 @@ export class AuthService {
 
   signOut(): void {
     this.isAuthenticated$.next(false);
-    this.userRole = null;
+    this.userRoles = [];
     this.router.navigate(['/']);
   }
 

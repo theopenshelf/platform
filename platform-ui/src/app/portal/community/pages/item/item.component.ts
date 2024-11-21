@@ -1,10 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TuiDialogService } from '@taiga-ui/core';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TuiButton, TuiDialogService, TuiMarkerHandler } from '@taiga-ui/core';
+import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { StarRatingComponent } from '../../../../components/star-rating/star-rating.component';
 import { CalendarModule, DateAdapter, CalendarEvent, CalendarUtils, CalendarA11y, CalendarDateFormatter, CalendarEventTitleFormatter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import {TuiInputDateRangeModule, TuiUnfinishedValidator} from '@taiga-ui/legacy';
+import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
+import { of } from 'rxjs';
+import { TUI_CALENDAR_DATE_STREAM } from '@taiga-ui/kit';
 
 type ItemStatus = 'available' | 'reserved' | 'borrowed' | 'borrowed-by-me';
 
@@ -14,27 +19,59 @@ interface BorrowRecord {
   endDate: string;
   status: 'borrowed' | 'reserved';
 }
+export const calendarStream$ = of(
+  new TuiDayRange(new TuiDay(2019, 2, 11), new TuiDay(2019, 2, 14)),
+);
+
+const TWO_DOTS: [string, string] = [
+  'var(--tui-background-accent-1)',
+  'var(--tui-status-info)',
+];
+const ONE_DOT: [string] = ['var(--tui-background-accent-1)'];
+const NO_DOT: [string] = [''];
+const today = TuiDay.currentLocal();
+const plusFive = today.append({ day: 5 });
+const plusTen = today.append({ day: 10 });
 
 @Component({
   standalone: true,
-  imports: [CommonModule, StarRatingComponent, CalendarModule],
+  imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule, TuiUnfinishedValidator],
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.css'],
   providers: [DatePipe, {
     provide: DateAdapter,
     useFactory: adapterFactory,
-  },
-  CalendarUtils, CalendarA11y, CalendarDateFormatter, CalendarEventTitleFormatter]
+  }]
 })
 export class ItemComponent {
-  item = {
+  protected readonly markerHandler: TuiMarkerHandler = (day: TuiDay) =>
+    day.dayAfter(plusFive) && day.dayBefore(plusTen) ? ONE_DOT : NO_DOT;
+    
+    item = {
     name: 'Wireless Mouse',
     description: 'Ergonomic mouse designed for comfort.',
     category: 'electronics',
     imageUrl: '/sterilisateur.png'
   };
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      const cells = document.querySelectorAll('.t-cell');
+    cells.forEach(cell => {
+      const dot = cell.querySelector('.t-dot');
+      if (dot) {
+        const dotColor = window.getComputedStyle(dot).backgroundColor;
+        if (dotColor !== "rgba(0, 0, 0, 0)") {
+          
+          cell.classList.add('not-available');
+          cell.classList.add('t-cell_disabled');
+          
+        }
+      }
+    });
+    });
+  }
   borrowRecords: BorrowRecord[] = [
     {
       borrowedBy: 'me@example.com',
@@ -49,6 +86,15 @@ export class ItemComponent {
       status: 'reserved',
     },
   ];
+
+  protected readonly bookForm = new FormGroup({
+      testValue: new FormControl(
+          new TuiDayRange(new TuiDay(2024, 11, 21), new TuiDay(2024, 11, 28)),
+      ),
+  });
+  protected readonly defaultViewedMonth = new TuiMonth(2024, 10) 
+  protected readonly min = new TuiDay(2024, 10, 21);
+  protected readonly max = new TuiDay(2025, 10, 21);
 
   itemStatus: ItemStatus = 'available';
   currentUser = 'me@example.com';
@@ -101,39 +147,7 @@ export class ItemComponent {
     });
   }
 
-  borrowNow() {
-    alert('Item borrowed successfully!');
-  }
 
 
-  openReservationDialog() {
-    this.dialogService
-      .open<{ start: TuiDay; end: TuiDay }>('Reserve this item', { label: 'Select dates' })
-      .subscribe((result) => {
-        if (result) {
-          console.log(`Reserved from ${result.start} to ${result.end}`);
-        }
-      });
-  }
 
-  formatDate(date: string): string {
-    // Use DatePipe to format the date
-    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
-  }
-
-   // Navigate to the previous month
-   goToPreviousMonth(): void {
-    const currentMonth = this.viewDate.getMonth();
-    const previousMonth = new Date(this.viewDate);
-    previousMonth.setMonth(currentMonth - 1);
-    this.viewDate = previousMonth;
-  }
-
-  // Navigate to the next month
-  goToNextMonth(): void {
-    const currentMonth = this.viewDate.getMonth();
-    const nextMonth = new Date(this.viewDate);
-    nextMonth.setMonth(currentMonth + 1);
-    this.viewDate = nextMonth;
-  }
 }

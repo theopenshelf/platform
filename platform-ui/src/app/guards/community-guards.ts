@@ -9,8 +9,8 @@ export class CommunityGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(): boolean {
-    if (this.authService.isAuthenticated() && this.authService.getRole() === 'community') {
-      return true;
+    if (this.authService.isAuthenticated() && this.authService.hasRole('community')) {
+        return true;
     }
     this.router.navigate(['/']); // Redirect to the home page if unauthorized
     return false;

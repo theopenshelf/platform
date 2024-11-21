@@ -26,9 +26,9 @@ export class SignInComponent {
     if (this.signInForm.valid) {
       const { username, password } = this.signInForm.value;
       if (this.authService.signIn(username, password)) {
-        if (this.authService.getRole() === 'admin') {
+        if (this.authService.hasRole('admin')) {
           this.router.navigate(['/admin']);
-        } else if (this.authService.getRole() === 'community') {
+        } else if (this.authService.hasRole('community')) {
           this.router.navigate(['/community']);
         } else {
           this.router.navigate(['/']);

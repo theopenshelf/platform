@@ -2,28 +2,30 @@
     <!-- Sidebar Section -->
     <div class="sidebar">
       <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
+
+
+      <form [formGroup]="bookForm">
+        <tui-calendar-range 
+         [defaultViewedMonth]= "defaultViewedMonth"
+         [min]="min" 
+         [max]="max" 
+         [markerHandler]="markerHandler" 
+         />
+
+        <button  id="borrow"
+        i18n="@@borrowButton" appearance="primary" size="m" tuiButton type="button">
+          Borrow
+        </button>
+    </form>
     </div>
   
     <!-- Details Section -->
     <div class="details">
       <h1>{{ item.name }}</h1>
-      <p>{{ item.description }}</p>
       <div>
         Rating: <app-star-rating [rating]="3.5"></app-star-rating>
       </div>
-  
-      <h3>Borrow/Reservation Calendar</h3>
-      
-      <!-- Navigation Arrows -->
-      <div class="calendar-navigation">
-        <button (click)="goToPreviousMonth()">&#8592;</button>
-        <span>{{ viewDate | date: 'MMMM yyyy' }}</span> <!-- Display current month -->
-        <button (click)="goToNextMonth()">&#8594;</button>
-      </div>
-      
-      <mwl-calendar-month-view
-        [viewDate]="viewDate"
-        [events]="events">
-      </mwl-calendar-month-view>
+      <p>{{ item.description }}</p>
+
     </div>
   </div>
