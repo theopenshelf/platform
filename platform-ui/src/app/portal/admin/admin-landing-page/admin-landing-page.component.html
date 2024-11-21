@@ -14,6 +14,17 @@
         <tui-badge-notification />
     </button>
 
+    <button iconStart="@tui.settings" tuiIconButton type="button" tuiChevron tuiDropdownOpen
+    [tuiDropdown]="settings">
+    <ng-template #settings>
+        <tui-data-list size="s">
+            <a routerLink="auth/sign-out" tuiOption type="button" i18n="@@logoutMenu">
+                Log out
+            </a>
+        </tui-data-list>
+    </ng-template>
+</button>
+
 </header>
 <div [style.display]="'flex'">
     <aside [style.height.rem]="27" [tuiNavigationAside]="expanded">

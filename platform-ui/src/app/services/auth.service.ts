@@ -1,19 +1,33 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  private userRole: 'admin' | 'community' | null = null;
 
-  signIn(email: string, password: string): boolean {
+  constructor(private router: Router) {}
+
+  signIn(username: string, password: string): boolean {
     // Mock login (Replace with actual backend logic)
-    if (email === 'test@example.com' && password === 'password123') {
+    if (username === 'admin' && password === 'password') {
       this.isAuthenticated$.next(true);
+      this.userRole = 'admin';
+      return true;
+    }
+    if (username === 'alice' && password === 'password') {
+      this.isAuthenticated$.next(true);
+      this.userRole = 'community';
       return true;
     }
     return false;
+  }
+
+  getRole(): 'admin' | 'community' | null {
+    return this.userRole;
   }
 
   signUp(email: string, password: string): void {
@@ -23,6 +37,8 @@ export class AuthService {
 
   signOut(): void {
     this.isAuthenticated$.next(false);
+    this.userRole = null;
+    this.router.navigate(['/']);
   }
 
   isAuthenticated() {

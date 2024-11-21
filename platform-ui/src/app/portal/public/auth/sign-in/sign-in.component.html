@@ -4,8 +4,8 @@
     <p>Don't have an account? <a routerLink="/sign-up">Sign Up</a></p>
 
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
-      <label>Email</label>
-      <input formControlName="email" type="email" />
+      <label>Username</label>
+      <input formControlName="username" type="text" />
       <label>Password</label>
       <input formControlName="password" type="password" />
       <button type="submit">Sign In</button>
