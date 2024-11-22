@@ -1,0 +1,20 @@
+<h2>Add a New Item</h2>
+<form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
+  <label for="name">Item Name</label>
+  <input id="name" formControlName="name" type="text" placeholder="Enter item name" />
+
+  <label for="category">Category</label>
+  <select id="category" formControlName="category">
+    <option value="">-- Select Category --</option>
+    <option value="books">Books</option>
+    <option value="electronics">Electronics</option>
+    <option value="clothing">Clothing</option>
+  </select>
+  
+  <label for="description">Description</label>
+  <textarea id="description" formControlName="description" placeholder="Enter item description"></textarea>
+
+
+
+  <button type="submit" [disabled]="addItemForm.invalid">Add Item</button>
+</form>
