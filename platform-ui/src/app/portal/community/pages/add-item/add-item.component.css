@@ -46,3 +46,8 @@
     background-color: #aaa;
     cursor: not-allowed;
   }
+
+  quill-editor {
+    background-color: #fff;
+    margin-bottom: 100px;
+  }
