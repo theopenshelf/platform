@@ -10,9 +10,13 @@
     <option value="electronics">Electronics</option>
     <option value="clothing">Clothing</option>
   </select>
-  
-  <label for="description">Description</label>
-  <textarea id="description" formControlName="description" placeholder="Enter item description"></textarea>
+
+    <label for="description">Description</label>
+    <quill-editor 
+      formControlName="description" 
+      [modules]="editorConfig" 
+      style="height: 200px;">
+    </quill-editor>
 
 
 

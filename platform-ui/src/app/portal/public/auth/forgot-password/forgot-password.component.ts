@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
+  standalone: true, 
     selector: 'app-forgot-password',
     imports: [RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './forgot-password.component.html',

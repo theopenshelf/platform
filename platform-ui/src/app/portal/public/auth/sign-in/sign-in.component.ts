@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
+  standalone: true, 
     selector: 'app-sign-in',
     imports: [RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './sign-in.component.html',

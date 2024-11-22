@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 
 @Component({
+  standalone: true, 
+
     selector: 'app-sign-out',
     imports: [ReactiveFormsModule, FormsModule],
     templateUrl: './sign-out.component.html',

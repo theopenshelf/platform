@@ -27,33 +27,25 @@ import { RouterModule } from '@angular/router';
 import {TuiCell} from '@taiga-ui/layout';
 
 @Component({
+    standalone: true, 
     imports: [
         RouterModule,
         CommonModule,
         FormsModule,
         NgForOf,
-        NgIf,
-        TuiAutoColorPipe,
         TuiAvatar,
         TuiBadge,
-        TuiButton,
         TuiCell,
-        TuiCheckbox,
-        TuiChip,
         TuiDropdown,
-        TuiIcon,
-        TuiInitialsPipe,
         TuiItemsWithMore,
         TuiLink,
-        TuiProgressBar,
-        TuiRadioList,
         TuiStatus,
         TuiTable,
         TuiTitle,
     ],
     selector: 'app-items',
     templateUrl: './items.component.html',
-    styleUrls: ['./items.component.less'],
+    styleUrls: ['./items.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsComponent {

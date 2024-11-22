@@ -34,7 +34,8 @@ const plusFive = today.append({ day: 5 });
 const plusTen = today.append({ day: 10 });
 
 @Component({
-    imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule, TuiUnfinishedValidator],
+  standalone: true, 
+    imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule],
     selector: 'app-item',
     templateUrl: './item.component.html',
     styleUrls: ['./item.component.css'],

@@ -31,11 +31,11 @@ import {
 import { TuiNavigation} from '@taiga-ui/layout';
 
 @Component({
+  standalone: true, 
     selector: 'app-items',
     imports: [
         RouterLink,
         CommonModule,
-        TuiRepeatTimes,
         TuiAppearance,
         TuiCardLarge,
         TuiAvatar,
@@ -43,7 +43,6 @@ import { TuiNavigation} from '@taiga-ui/layout';
         TuiCardLarge,
         TuiHeader,
         TuiTitle,
-        TuiPlatform,
         FormsModule,
         TuiTextfield
     ],

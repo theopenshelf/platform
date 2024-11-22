@@ -26,33 +26,22 @@ import { RouterModule } from '@angular/router';
 
 import {TuiCell} from '@taiga-ui/layout';
 @Component({
+    standalone: true, 
     imports: [
         RouterModule,
         CommonModule,
         FormsModule,
         NgForOf,
-        NgIf,
-        TuiAutoColorPipe,
-        TuiAvatar,
-        TuiBadge,
-        TuiButton,
         TuiCell,
-        TuiCheckbox,
-        TuiChip,
         TuiDropdown,
-        TuiIcon,
-        TuiInitialsPipe,
         TuiItemsWithMore,
         TuiLink,
-        TuiProgressBar,
-        TuiRadioList,
-        TuiStatus,
         TuiTable,
         TuiTitle,
     ],
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.less'],
+    styleUrls: ['./users.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent {
