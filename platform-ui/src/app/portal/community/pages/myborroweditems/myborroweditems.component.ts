@@ -5,11 +5,10 @@ import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
 
 @Component({
-    standalone: true,
     selector: 'app-myborroweditems',
     imports: [FormsModule, NgForOf, NgIf, NgClass, TuiButton, TuiTable, TuiTitle],
     templateUrl: './myborroweditems.component.html',
-    styleUrls: ['./myborroweditems.component.css'],
+    styleUrls: ['./myborroweditems.component.css']
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;

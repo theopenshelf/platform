@@ -31,25 +31,24 @@ import {
 import { TuiNavigation} from '@taiga-ui/layout';
 
 @Component({
-  selector: 'app-items',
-  standalone: true,
-  imports: [
-    RouterLink,
-    CommonModule,
-    TuiRepeatTimes,
-    TuiAppearance,
-    TuiCardLarge,
-    TuiAvatar,
-    TuiButton,
-    TuiCardLarge,
-    TuiHeader,
-    TuiTitle,
-    TuiPlatform,
-    FormsModule,
-    TuiTextfield
-  ],
-  templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+    selector: 'app-items',
+    imports: [
+        RouterLink,
+        CommonModule,
+        TuiRepeatTimes,
+        TuiAppearance,
+        TuiCardLarge,
+        TuiAvatar,
+        TuiButton,
+        TuiCardLarge,
+        TuiHeader,
+        TuiTitle,
+        TuiPlatform,
+        FormsModule,
+        TuiTextfield
+    ],
+    templateUrl: './items.component.html',
+    styleUrls: ['./items.component.css']
 })
 export class ItemsComponent {
 

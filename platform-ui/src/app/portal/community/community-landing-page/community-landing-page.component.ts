@@ -32,9 +32,8 @@ const ICON =
  
 
     @Component({
-      selector: 'app-community-landing-page',
-      standalone: true,
-      imports: [
+    selector: 'app-community-landing-page',
+    imports: [
         RouterOutlet,
         TuiRoot,
         FormsModule,
@@ -64,9 +63,9 @@ const ICON =
         TuiTabs,
         TuiTitle,
     ],
-  templateUrl: './community-landing-page.component.html',
-  styleUrl: './community-landing-page.component.css',
-  providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)],
+    templateUrl: './community-landing-page.component.html',
+    styleUrl: './community-landing-page.component.css',
+    providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
 })
 export class CommunityLandingPageComponent  extends TuiPortals {
   protected expanded = false;

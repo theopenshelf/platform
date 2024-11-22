@@ -3,11 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import this
 
 @Component({
-  selector: 'app-add-item',
-  standalone: true,
-  imports: [ReactiveFormsModule],
-  templateUrl: './add-item.component.html',
-  styleUrl: './add-item.component.css'
+    selector: 'app-add-item',
+    imports: [ReactiveFormsModule],
+    templateUrl: './add-item.component.html',
+    styleUrl: './add-item.component.css'
 })
 export class AddItemComponent {
   addItemForm: FormGroup;

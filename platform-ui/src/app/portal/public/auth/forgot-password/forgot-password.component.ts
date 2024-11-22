@@ -5,11 +5,10 @@ import { AuthService } from '../../../../services/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
-  selector: 'app-forgot-password',
-  standalone: true,
-  imports: [RouterLink, ReactiveFormsModule, FormsModule],
-  templateUrl: './forgot-password.component.html',
-  styleUrl: './forgot-password.component.css'
+    selector: 'app-forgot-password',
+    imports: [RouterLink, ReactiveFormsModule, FormsModule],
+    templateUrl: './forgot-password.component.html',
+    styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
   signInForm: FormGroup;

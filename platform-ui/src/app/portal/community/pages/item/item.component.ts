@@ -34,15 +34,14 @@ const plusFive = today.append({ day: 5 });
 const plusTen = today.append({ day: 10 });
 
 @Component({
-  standalone: true,
-  imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule, TuiUnfinishedValidator],
-  selector: 'app-item',
-  templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css'],
-  providers: [DatePipe, {
-    provide: DateAdapter,
-    useFactory: adapterFactory,
-  }]
+    imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule, TuiUnfinishedValidator],
+    selector: 'app-item',
+    templateUrl: './item.component.html',
+    styleUrls: ['./item.component.css'],
+    providers: [DatePipe, {
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+        }]
 })
 export class ItemComponent {
   protected readonly markerHandler: TuiMarkerHandler = (day: TuiDay) =>
