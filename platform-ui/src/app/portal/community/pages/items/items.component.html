@@ -1,12 +1,12 @@
 <div class="layout-container">
   <!-- Left Sidebar -->
   <aside class="sidebar">
-    <button routerLink="/community/item/add"
-        i18n="@@borrowButton" appearance="secondary" size="m" tuiButton type="button">
+    <button class="add-item" routerLink="/community/item/add"
+        i18n="@@borrowButton" appearance="primary" size="m" tuiButton type="button">
       Add item
     </button>
     <!-- Text Filter Input -->
-    <fieldset tuiTextfieldSize="s">
+    <fieldset tuiTextfieldSize="s" class="search">
       <tui-textfield iconStart="@tui.search">
         <input
         [(ngModel)]="searchText"
@@ -37,21 +37,28 @@
       *ngFor="let item of filteredItems" 
       tuiAppearance="floating" 
       tuiCardLarge
+      class="item-card"
     >
-      <div tuiHeader>
-        <h2 tuiTitle>
-          {{ item.name }}
-          <span tuiSubtitle>{{ item.description }}</span>
-        </h2>
-        <aside tuiAccessories>
-          <tui-avatar appearance="primary" src="@tui.star"></tui-avatar>
-        </aside>
+      <!-- Image Section -->
+      <div class="image-container">
+        <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
       </div>
 
-      <button routerLink="/community/item"
-      i18n="@@borrowButton" appearance="secondary" size="m" tuiButton type="button">
-        Borrow
-      </button>
+      <!-- Item Details -->
+      <div class="item-details">
+        <h2 tuiTitle>
+          {{ item.name }}
+          <span tuiSubtitle>{{ item.shortDescription }}</span>
+        </h2>
+      </div>
+
+      <!-- Borrow Button -->
+      <div class="item-actions">
+        <button routerLink="/community/items/{{item.id}}"
+        i18n="@@borrowButton" appearance="secondary" size="m" tuiButton type="button">
+          Borrow
+        </button>
+      </div>
     </div>
   </main>
 </div>

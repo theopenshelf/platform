@@ -3,6 +3,7 @@
   <label for="name">Item Name</label>
   <input id="name" formControlName="name" type="text" placeholder="Enter item name" />
 
+
   <label for="category">Category</label>
   <select id="category" formControlName="category">
     <option value="">-- Select Category --</option>
@@ -11,13 +12,30 @@
     <option value="clothing">Clothing</option>
   </select>
 
-    <label for="description">Description</label>
-    <quill-editor 
-      formControlName="description" 
-      [modules]="editorConfig" 
-      style="height: 200px;">
-    </quill-editor>
+  <label for="image">Upload Image</label>
+  <div
+    class="drag-drop-zone"
+    (dragover)="allowDrag($event)"
+    (drop)="onImageDrop($event)"
+  >
+    <p *ngIf="!imageFile">Drag and drop an image here, or click to select</p>
+    <p *ngIf="imageFile">File selected: {{ imageFile?.name }}</p>
+  </div>
+  
+  <label for="shortDescription">Short Description</label>
+  <textarea
+    id="shortDescription"
+    formControlName="shortDescription"
+    placeholder="Enter a short description (max 150 characters)"
+    maxlength="150"
+  ></textarea>
 
+  <label for="description">Description</label>
+  <quill-editor
+    formControlName="description"
+    [modules]="editorConfig"
+    style="height: 200px;"
+  ></quill-editor>
 
 
   <button type="submit" [disabled]="addItemForm.invalid">Add Item</button>

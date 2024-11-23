@@ -15,7 +15,7 @@ export const COMMUNITY_ROUTES: Routes = [
         { path: '', component: ItemsComponent },
         { path: 'items', component: ItemsComponent },
         { path: 'item/add', component: AddItemComponent },
-        { path: 'item', component: ItemComponent },
+        { path: 'items/:id', component: ItemComponent },
         { path: 'my-borrowed-items', component: MyborroweditemsComponent },
       ],
     },

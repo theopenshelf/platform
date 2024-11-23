@@ -1,91 +1,61 @@
 import { Component } from '@angular/core';
-import { TuiRepeatTimes } from '@taiga-ui/cdk/directives/repeat-times';
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout/components/card';
 import { TuiHeader } from '@taiga-ui/layout/components/header';
-import { TuiRoot, TuiTextfield } from "@taiga-ui/core";
-import { RouterOutlet } from '@angular/router';
-import {CommonModule, KeyValuePipe, NgForOf} from '@angular/common';
-import {ChangeDetectionStrategy} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {tuiAsPortal, TuiPlatform, TuiPortals} from '@taiga-ui/cdk';
+import { TuiTextfield } from "@taiga-ui/core";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
-    TuiButton,
-    TuiDataList,
-    TuiDropdown,
-    TuiDropdownService,
-    TuiIcon,
-    TuiTitle,
+  TuiButton,
+  TuiTitle,
 } from '@taiga-ui/core';
-import {
-    TuiBadge,
-    TuiBadgeNotification,
-    TuiChevron,
-    TuiDataListDropdownManager,
-    TuiFade,
-    TuiSwitch,
-    TuiTabs,
-} from '@taiga-ui/kit';
-import { TuiNavigation} from '@taiga-ui/layout';
+import { Category, Item, ItemsService } from '../../services/items.service';
 
 @Component({
-  standalone: true, 
-    selector: 'app-items',
-    imports: [
-        RouterLink,
-        CommonModule,
-        TuiAppearance,
-        TuiCardLarge,
-        TuiAvatar,
-        TuiButton,
-        TuiCardLarge,
-        TuiHeader,
-        TuiTitle,
-        FormsModule,
-        TuiTextfield
-    ],
-    templateUrl: './items.component.html',
-    styleUrls: ['./items.component.css']
+  standalone: true,
+  selector: 'app-items',
+  imports: [
+    RouterLink,
+    CommonModule,
+    TuiAppearance,
+    TuiCardLarge,
+    TuiAvatar,
+    TuiButton,
+    TuiCardLarge,
+    TuiHeader,
+    TuiTitle,
+    FormsModule,
+    TuiTextfield
+  ],
+  templateUrl: './items.component.html',
+  styleUrls: ['./items.component.css']
 })
 export class ItemsComponent {
 
   // Categories for the filter
-  categories = [
-    { value: 'books', label: 'Books' },
-    { value: 'electronics', label: 'Electronics' },
-    { value: 'clothing', label: 'Clothing' },
-  ];
-
-  // Items in the grid
-  items = [
-    { name: 'Harry Potter Book', description: 'A magical adventure story', category: 'books' },
-    { name: 'Laptop XYZ', description: 'High-performance laptop for work and play', category: 'electronics' },
-    { name: 'Cotton T-Shirt', description: 'Comfortable cotton T-shirt', category: 'clothing' },
-    { name: 'Wireless Mouse', description: 'Ergonomic wireless mouse for productivity', category: 'electronics' },
-    { name: 'Blue Jeans', description: 'Stylish denim jeans', category: 'clothing' },
-    { name: 'Smartphone Pro', description: 'Latest model with amazing features', category: 'electronics' },
-    { name: 'The Great Gatsby', description: 'A novel set in the Jazz Age', category: 'books' },
-    { name: 'Gaming Chair', description: 'Comfortable chair for long gaming sessions', category: 'electronics' },
-    { name: 'Leather Wallet', description: 'A sleek leather wallet', category: 'clothing' },
-    { name: 'LED Desk Lamp', description: 'Adjustable LED desk lamp', category: 'electronics' },
-    { name: 'Winter Jacket', description: 'Warm jacket for cold weather', category: 'clothing' },
-    { name: 'Cookbook Essentials', description: 'Recipes for home chefs', category: 'books' }
-  ];
-
+  categories: Category[] = [];
   // Selected categories
   selectedCategories: Set<string> = new Set();
-  
   // Text input for search filtering
   searchText = '';
+  items: Item[] = [];
+
+  constructor(private itemsService: ItemsService) { }
+
+  ngOnInit() {
+    // Fetch the items from the service
+    this.items = this.itemsService.getItems();
+    this.categories = this.itemsService.getCaterogies();
+  }
 
   // Filtered items for the grid
   get filteredItems() {
     return this.items.filter(item => {
       const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category);
-      const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) || 
-                        item.description.toLowerCase().includes(this.searchText.toLowerCase());
+      const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        item.description.toLowerCase().includes(this.searchText.toLowerCase());
       return categoryMatch && textMatch;
     });
   }
@@ -104,5 +74,4 @@ export class ItemsComponent {
   onTextFilterChange() {
     // The filtering is handled in the getter `filteredItems`
   }
-
 }

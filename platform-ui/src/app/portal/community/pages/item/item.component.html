@@ -1,4 +1,7 @@
-<div class="item-container">
+<div *ngIf="!item" class="item-container">
+  Not found
+</div>
+<div *ngIf="item" class="item-container">
     <!-- Sidebar Section -->
     <div class="sidebar">
       <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
@@ -25,7 +28,7 @@
       <div>
         Rating: <app-star-rating [rating]="3.5"></app-star-rating>
       </div>
-      <p>{{ item.description }}</p>
+      <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
 
     </div>
   </div>

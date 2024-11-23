@@ -1,5 +1,7 @@
 main[tuiNavigationMain] {
     border: none;
+    padding: 0 30px;
+
 }
 
 aside[tuiNavigationAside]:after {
