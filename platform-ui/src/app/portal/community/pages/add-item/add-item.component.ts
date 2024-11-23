@@ -28,7 +28,7 @@ export class AddItemComponent {
     ]
   };
 
-  imageFile: File | null = null;
+  imageFile?: File;
 
   constructor(
     private fb: FormBuilder,

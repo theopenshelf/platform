@@ -21,10 +21,8 @@ import { Category, Item, ItemsService } from '../../services/items.service';
     CommonModule,
     TuiAppearance,
     TuiCardLarge,
-    TuiAvatar,
     TuiButton,
     TuiCardLarge,
-    TuiHeader,
     TuiTitle,
     FormsModule,
     TuiTextfield

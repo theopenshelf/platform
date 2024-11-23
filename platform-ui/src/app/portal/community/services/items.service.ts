@@ -20,6 +20,10 @@ export interface BorrowRecord {
     endDate: string;
 }
 
+export interface BorrowItem extends Item {
+    record: BorrowRecord;
+}
+
 @Injectable({
     providedIn: 'root',
 })
@@ -172,4 +176,42 @@ export class ItemsService {
         this.items.push(item);
         return item;
     }
+
+    getMyBorrowItems(): BorrowItem[] {
+        const today = new Date();
+    
+        // Helper to add days to a date
+        const addDays = (date: Date, days: number): Date => {
+            const newDate = new Date(date);
+            newDate.setDate(newDate.getDate() + days);
+            return newDate;
+        };
+    
+        // Helper to format date as YYYY-MM-DD
+        const formatDate = (date: Date): string =>
+            date.toISOString().split('T')[0];
+    
+        return this.items
+            .filter(i => parseInt(i.id, 10) % 3 === 0 || parseInt(i.id, 10) % 4 === 0) // Filter items based on id
+            .map(i => {
+                const id = parseInt(i.id, 10);
+    
+                // Randomize dates based on the item id
+                const startOffset = id % 5 - 2; // Range: -2 to +2
+                const endOffset = startOffset + Math.abs(id % 7) + 1; // Always after start date
+    
+                const startDate = addDays(today, startOffset);
+                const endDate = addDays(startDate, endOffset);
+    
+                return {
+                    ...i, // Spread existing item properties
+                    record: {
+                        borrowedBy: 'me@example.com',
+                        startDate: formatDate(startDate),
+                        endDate: formatDate(endDate),
+                    },
+                } as BorrowItem;
+            });
+    }
+
 }

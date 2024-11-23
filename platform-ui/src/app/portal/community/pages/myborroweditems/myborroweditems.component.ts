@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
+import { Category, ItemsService } from '../../services/items.service';
 
 @Component({
   standalone: true, 
@@ -15,18 +16,6 @@ export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;
   protected size = this.sizes[0];
 
-  // Items in the grid
-  protected data = [
-    { name: 'Harry Potter Book', description: 'A magical adventure story', category: 'books', borrowedOn: '2024-11-01', dueDate: '2024-11-10' },
-    { name: 'Laptop XYZ', description: 'High-performance laptop for work and play', category: 'electronics', borrowedOn: '2024-11-15', dueDate: '2024-11-25' },
-    { name: 'Cotton T-Shirt', description: 'Comfortable cotton T-shirt', category: 'clothing', borrowedOn: '2024-11-20', dueDate: '2024-11-30' },
-    { name: 'Wireless Mouse', description: 'Ergonomic wireless mouse for productivity', category: 'electronics', borrowedOn: '2024-10-28', dueDate: '2024-11-18' },
-    { name: 'Blue Jeans', description: 'Stylish denim jeans', category: 'clothing', borrowedOn: '2024-11-25', dueDate: '2024-12-05' },
-    { name: 'Smartphone Pro', description: 'Latest model with amazing features', category: 'electronics', borrowedOn: '2024-10-20', dueDate: '2024-10-30' },
-    { name: 'The Great Gatsby', description: 'A novel set in the Jazz Age', category: 'books', borrowedOn: '2024-11-28', dueDate: '2024-12-15' },
-    { name: 'Gaming Chair', description: 'Comfortable chair for long gaming sessions', category: 'electronics', borrowedOn: '2024-10-22', dueDate: '2024-11-22' },
-  ];
-
   // Sorting State
   protected sortColumn: string = 'status';
   protected sortDirection: 'asc' | 'desc' = 'asc';
@@ -34,6 +23,8 @@ export class MyborroweditemsComponent {
   // Filters
   protected categoryFilter = '';
   protected statusFilter = '';
+  
+  categories: Category[] = [];
 
   // Status mapping for sorting
   private statusPriority = {
@@ -42,6 +33,12 @@ export class MyborroweditemsComponent {
     'Returned': 3,
   };
 
+  constructor(private itemsService: ItemsService) { }
+
+  ngOnInit() {
+    // Fetch the items from the service
+    this.categories = this.itemsService.getCaterogies();
+  }
   // Helper function to calculate item status
   protected computeStatus(borrowedOn: string, dueDate: string): 'Reserved' | 'Currently Borrowed' | 'Returned' {
     const now = new Date();
@@ -58,27 +55,65 @@ export class MyborroweditemsComponent {
   }
 
   // Format Borrowed On and Due Date dynamically
-  protected formatDate(date: string, status: string): string {
+  protected formatDate(date: string, column: 'startDate' | 'endDate', status: string): string {
     const now = new Date();
     const targetDate = new Date(date);
-    const diffInDays = Math.ceil((targetDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
-    if (status === 'Reserved') {
-      return `in ${diffInDays} days`;
-    } else if (status === 'Currently Borrowed') {
-      return `due in ${diffInDays} days`;
+    // Normalize dates to midnight for consistent day difference calculation
+    const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const targetMidnight = new Date(targetDate.getFullYear(), targetDate.getMonth(), targetDate.getDate());
+
+    const diffInDays = Math.round((targetMidnight.getTime() - nowMidnight.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (column === 'startDate') {
+        // Handle messages for the start date
+        if (status === 'Reserved') {
+            return diffInDays === 0 ? `Reserved today` : `Reserved in ${Math.abs(diffInDays)} day(s)`;
+        } else if (status === 'Currently Borrowed') {
+            if (diffInDays === 0) {
+                return `Borrowed today`;
+            } else if (diffInDays > 0) {
+                return `Will be borrowed in ${diffInDays} day(s)`; // Future borrow start
+            } else {
+                return `Borrowed ${Math.abs(diffInDays)} day(s) ago`; // Past borrow start
+            }
+        } else {
+            return `Returned on ${targetDate.toLocaleDateString()}`;
+        }
+    } else if (column === 'endDate') {
+        // Handle messages for the end date
+        if (status === 'Reserved') {
+            if (diffInDays === 0) {
+                return `Ends today`;
+            } else if (diffInDays > 0) {
+                return `Ends in ${diffInDays} day(s)`; // Future reservation end
+            } else {
+                return `Ended ${Math.abs(diffInDays)} day(s) ago`; // Past reservation end
+            }
+        } else if (status === 'Currently Borrowed') {
+            if (diffInDays === 0) {
+                return `Due today`;
+            } else if (diffInDays > 0) {
+                return `Due in ${diffInDays} day(s)`; // Future due date
+            } else {
+                return `Overdue by ${Math.abs(diffInDays)} day(s)`; // Past due date
+            }
+        } else {
+            return `Ended on ${targetDate.toLocaleDateString()}`;
+        }
     } else {
-      return targetDate.toLocaleDateString(); // Default exact date for Returned
+        // Default case: just return the date
+        return targetDate.toLocaleDateString();
     }
-  }
+}
 
   // Get filtered and sorted data
   protected get filteredAndSortedData() {
-    let result = this.data;
+    let result = this.itemsService.getMyBorrowItems();
 
     // Filter by category and status
     result = result.filter((item) => {
-      const status = this.computeStatus(item.borrowedOn, item.dueDate);
+      const status = this.computeStatus(item.record.startDate, item.record.endDate);
       return (
         (!this.categoryFilter || item.category === this.categoryFilter) &&
         (!this.statusFilter || status === this.statusFilter)
@@ -105,11 +140,11 @@ export class MyborroweditemsComponent {
   // Get sortable value for a column
   private getSortableValue(item: any, column: string): any {
     switch (column) {
-      case 'borrowedOn':
-      case 'dueDate':
-        return new Date(item[column]); // Sort by actual date
+      case 'startDate':
+      case 'endDate':
+        return new Date(item["record"][column]); // Sort by actual date
       case 'status':
-        const status = this.computeStatus(item.borrowedOn, item.dueDate);
+        const status = this.computeStatus(item.record.startDate, item.record.endDate);
         return this.statusPriority[status]; // Sort by status priority
       default:
         return item[column]; // Default sorting
@@ -162,6 +197,5 @@ protected getCategoryBadgeClass(category: string): string {
 }
 
   // Dynamic options for filters
-  protected readonly categories = ['books', 'electronics', 'clothing'];
   protected readonly statuses = ['Currently Borrowed', 'Reserved', 'Returned'];
 }

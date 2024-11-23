@@ -19,8 +19,8 @@
     (drop)="onImageDrop($event)"
   >
     <p *ngIf="!imageFile">Drag and drop an image here, or click to select</p>
-    <p *ngIf="imageFile">File selected: {{ imageFile?.name }}</p>
-  </div>
+    <p *ngIf="imageFile">File selected: {{ imageFile.name }}</p>
+    </div>
   
   <label for="shortDescription">Short Description</label>
   <textarea

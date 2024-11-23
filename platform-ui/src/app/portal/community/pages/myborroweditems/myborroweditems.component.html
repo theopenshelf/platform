@@ -26,8 +26,8 @@
                 <th tuiTh (click)="sort('name')">Item Name {{ getSortIndicator('name') }}</th>
                 <th tuiTh (click)="sort('description')">Description {{ getSortIndicator('description') }}</th>
                 <th tuiTh (click)="sort('category')">Category {{ getSortIndicator('category') }}</th>
-                <th tuiTh (click)="sort('borrowedOn')">Borrowed On {{ getSortIndicator('borrowedOn') }}</th>
-                <th tuiTh (click)="sort('dueDate')">Due Date {{ getSortIndicator('dueDate') }}</th>
+                <th tuiTh (click)="sort('startDate')">Borrowed On {{ getSortIndicator('borrowedOn') }}</th>
+                <th tuiTh (click)="sort('endDate')">Due Date {{ getSortIndicator('dueDate') }}</th>
                 <th tuiTh (click)="sort('status')">Status {{ getSortIndicator('status') }}</th>
             </tr>
         </thead>
@@ -40,11 +40,11 @@
                         {{ item.category }}
                     </span>
                 </td>
-                <td tuiTd>{{ formatDate(item.borrowedOn, computeStatus(item.borrowedOn, item.dueDate)) }}</td>
-                <td tuiTd>{{ formatDate(item.dueDate, computeStatus(item.borrowedOn, item.dueDate)) }}</td>
+                <td tuiTd>{{ formatDate(item.record.startDate, "startDate", computeStatus(item.record.startDate, item.record.endDate)) }}</td>
+                <td tuiTd>{{ formatDate(item.record.endDate, "endDate", computeStatus(item.record.startDate, item.record.endDate)) }}</td>
                 <td tuiTd>
-                    <span [ngClass]="getBadgeClass(computeStatus(item.borrowedOn, item.dueDate))">
-                        {{ computeStatus(item.borrowedOn, item.dueDate) }}
+                    <span [ngClass]="getBadgeClass(computeStatus(item.record.startDate, item.record.endDate))">
+                        {{ computeStatus(item.record.startDate, item.record.endDate) }}
                     </span>
                 </td>
             </tr>
