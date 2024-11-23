@@ -35,7 +35,7 @@
         <org.bouncycastle.version>1.70</org.bouncycastle.version>
         <r2dbc.postgresql.version>0.8.4.RELEASE</r2dbc.postgresql.version>
         <postgresql.version>42.2.16</postgresql.version>
-        <io.specto.hoverfly-java.version>0.16.2</io.specto.hoverfly-java.version>
+        <io.specto.hoverfly-java.version>0.19.1</io.specto.hoverfly-java.version>
         <io.specto.hoverfly-java-junit5.version>0.16.2</io.specto.hoverfly-java-junit5.version>
         <org.openapitools.version>7.9.0</org.openapitools.version>
     </properties>
