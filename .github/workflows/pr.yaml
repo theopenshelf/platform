@@ -1,4 +1,4 @@
-name: release version
+name: build and test
 
 on:
   pull_request:
