@@ -9,3 +9,8 @@ updates:
     directory: "platform-api"
     schedule:
       interval: "daily"
+  # NPM updates for platform-ui (Angular project)
+  - package-ecosystem: "npm"
+    directory: "platform-ui"
+    schedule:
+      interval: "daily"
