@@ -44,9 +44,6 @@
   }
   
 
-  
-
-
   /* Column Selector */
   .column-selector {
     margin-bottom: 1rem;
@@ -87,3 +84,16 @@ tbody tr + tr {
 tbody tr:hover {
     background-color: #f9f9f9; /* Subtle hover effect */
 }
+
+tui-dialog-backdrop {
+    background-color: rgba(0, 0, 0, 0.6) !important;  
+    z-index: 9999;
+  }
+
+  tui-dialog {
+    z-index: 9999 !important;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

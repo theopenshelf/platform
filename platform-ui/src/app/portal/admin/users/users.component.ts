@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import {
     TuiAutoColorPipe,
     TuiButton,
+    TuiDialog,
     TuiDropdown,
     TuiIcon,
     TuiInitialsPipe,
@@ -12,7 +13,11 @@ import {
 } from '@taiga-ui/core';
 import { NgForOf } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TuiAvatar } from '@taiga-ui/kit';
+import { TuiAvatar, TuiConfirmData } from '@taiga-ui/kit';
+import {TuiResponsiveDialogService} from '@taiga-ui/addon-mobile';
+import {TuiAlertService} from '@taiga-ui/core';
+import {TUI_CONFIRM} from '@taiga-ui/kit';
+import {switchMap} from 'rxjs';
 
 export type User = {
     username: string;
@@ -27,6 +32,7 @@ export type User = {
 @Component({
     standalone: true,
     imports: [
+        TuiDialog,
         TuiButton,
         TuiAutoColorPipe,
         TuiInitialsPipe,
@@ -47,6 +53,10 @@ export class UsersComponent {
     // Default Table Size
     protected readonly size = 'm';
 
+    constructor(
+        private dialogs: TuiResponsiveDialogService,
+        private alerts: TuiAlertService
+    ) {}
     // Mock Users Data
     protected readonly users: User[] = [
         {
@@ -120,5 +130,22 @@ export class UsersComponent {
     // Get the sorting icon (up or down)
     getSortIcon(column: string): string {
         return this.sortOrder[column] ? '↑' : '↓';
+    }
+
+    deleteUser(username: String): void {
+        const data: TuiConfirmData = {
+            content: 'Are you sure you want to delete this user?',  // Simple content
+            yes: 'Yes, Delete',
+            no: 'Cancel',
+        };
+ 
+        this.dialogs
+            .open<boolean>(TUI_CONFIRM, {
+                label: "Delete user '" +username + "'",
+                size: 'm',
+                data,
+            })
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + username + '</strong> deleted successfully', {appearance: 'positive'})))
+            .subscribe();
     }
 }

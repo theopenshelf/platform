@@ -12,6 +12,7 @@ import {
     TuiDropdown,
     TuiDropdownService,
     TuiIcon,
+    TuiRoot,
     TuiTitle,
 } from '@taiga-ui/core';
 import {
@@ -33,6 +34,7 @@ const ICON =
     standalone: true, 
     selector: 'app-admin-landing-page',
     imports: [
+        TuiRoot,
         RouterOutlet,
         FormsModule,
         RouterLink,

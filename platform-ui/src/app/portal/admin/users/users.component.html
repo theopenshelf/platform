@@ -84,6 +84,19 @@
                 >
                     Edit
                 </button>
+                <button
+                    (click)="deleteUser(user.username)"
+                    appearance="outline"
+                    iconStart="@tui.trash-2"
+                    size="s"
+                    tuiIconButton
+                    type="button"
+                    [style.border-radius.%]="100"
+                >
+                    Delete
+                </button>
+
+  
                 </td>
             </tr>
         </tbody>
