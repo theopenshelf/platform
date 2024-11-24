@@ -1,76 +1,91 @@
-<table
-    tuiTable
-    [size]="size"
-    [style.width.rem]="58"
->
-    <thead>
-        <tr>
-            <th tuiTh>Username</th>
-            <th tuiTh>Email</th>
-            <th tuiTh>Flat Number</th>
-            <th tuiTh>Address</th>
-            <th tuiTh>Borrowed Items</th>
-            <th tuiTh>Returned Late</th>
-            <th tuiTh>% of late</th>
-            <th tuiTh>Satisfaction %</th>
-            <th tuiTh>Actions</th>
-        </tr>
-    </thead>
-    <tbody tuiTbody>
-        <tr *ngFor="let user of users">
-            <td tuiTd>
-                <span tuiTitle>{{ user.username }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.email }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.flatNumber }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.address }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.borrowedItems }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.returnedLate }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.successRate }}%</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ user.satisfactionRate }}%</span>
-            </td>
-            <td tuiTd>
-                <div [tuiCell]="size">
+<div class="table-container">
+    <!-- Column Selector Dropdown -->
+    <div class="column-selector">
+        <label>Select Columns:</label>
+        <div *ngFor="let column of availableColumns">
+            <input
+                type="checkbox"
+                [(ngModel)]="column.visible"
+                (change)="updateVisibleColumns()"
+            />
+            {{ column.label }}
+        </div>
+    </div>
+
+    <!-- Table -->
+    <table tuiTable [size]="size" class="compact-table">
+        <thead>
+            <tr>
+                <th tuiTh (click)="sort('username')">
+                    Username
+                    <span [class.sorted]="currentSort === 'username'">
+                        {{ getSortIcon('username') }} <!-- Add sort indicator -->
+                    </span>
+
+                </th>
+                <th *ngFor="let column of visibleColumns" tuiTh (click)="sort(column.key)">
+                    {{ column.label }}
+                    <span [class.sorted]="currentSort === column.key">
+                        {{ getSortIcon(column.key) }} <!-- Add sort indicator -->
+                    </span>
+                </th>
+                <th tuiTh>Actions</th>
+            </tr>
+        </thead>
+        <tbody tuiTbody>
+            <tr *ngFor="let user of sortedUsers">
+                <td tuiTd>
+                    <div class="user-info">
+                        <tui-avatar
+                        [src]="user.username | tuiInitials"
+                        [style.background]="user.username | tuiAutoColor"
+                        size="s"
+                      ></tui-avatar>
+                      <span class="username ellipsis">{{ user.username }}</span>
+                    </div>
+                </td>
+                <td *ngFor="let column of visibleColumns" tuiTd>
+                    <span tuiTitle>{{ user[column.key] }}</span>
+                </td>
+                <td tuiTd class="action-icons">
+
                     <button
-                        appearance="action"
-                        tuiLink
-                        type="button"
-                        [routerLink]="['/admin/messages']"
-                        [queryParams]="{ user: user.username }"
-                    >
-                        Messages
-                    </button>
-                    <button
-                        appearance="action"
-                        tuiLink
-                        type="button"
-                        [routerLink]="['/admin/user', user.username, 'password']"
-                    >
-                        Change Password
-                    </button>
-                    <button
-                        appearance="action"
-                        tuiLink
-                        type="button"
-                        [routerLink]="['/admin/user', user.username, 'edit']"
-                    >
-                        Edit
-                    </button>
-                </div>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                    [routerLink]="['/admin/messages']"
+                    appearance="outline"
+                    iconStart="@tui.mail"
+                    size="s"
+                    tuiIconButton
+                    type="button"
+                    [style.border-radius.%]="100"
+                >
+                    messages
+                </button>
+
+                <button
+                     [routerLink]="['/admin/user', user.username, 'password']"
+                    appearance="outline"
+                    iconStart="@tui.key"
+                    size="s"
+                    tuiIconButton
+                    type="button"
+                    [style.border-radius.%]="100"
+                >
+                    password
+                </button>
+
+                <button
+                     [routerLink]="['/admin/user', user.username, 'edit']"
+                    appearance="outline"
+                    iconStart="@tui.pen"
+                    size="s"
+                    tuiIconButton
+                    type="button"
+                    [style.border-radius.%]="100"
+                >
+                    Edit
+                </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

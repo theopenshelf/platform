@@ -1,7 +1,6 @@
-import {NgForOf, NgIf} from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {TuiTable} from '@taiga-ui/addon-table';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TuiTable } from '@taiga-ui/addon-table';
 import {
     TuiAutoColorPipe,
     TuiButton,
@@ -11,43 +10,45 @@ import {
     TuiLink,
     TuiTitle,
 } from '@taiga-ui/core';
-import {
-    TuiAvatar,
-    TuiBadge,
-    TuiCheckbox,
-    TuiChip,
-    TuiItemsWithMore,
-    TuiProgressBar,
-    TuiRadioList,
-    TuiStatus,
-} from '@taiga-ui/kit';
-import { CommonModule } from '@angular/common';
+import { NgForOf } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TuiAvatar } from '@taiga-ui/kit';
 
-import {TuiCell} from '@taiga-ui/layout';
+export type User = {
+    username: string;
+    email: string;
+    flatNumber: string;
+    address: string;
+    borrowedItems: number;
+    returnedLate: number;
+    successRate: number;
+} & Record<string, any>;
+
 @Component({
-    standalone: true, 
+    standalone: true,
     imports: [
+        TuiButton,
+        TuiAutoColorPipe,
+        TuiInitialsPipe,
+        TuiAvatar,
         RouterModule,
-        CommonModule,
         FormsModule,
         NgForOf,
-        TuiCell,
         TuiDropdown,
-        TuiItemsWithMore,
-        TuiLink,
         TuiTable,
         TuiTitle,
     ],
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent {
-    protected readonly size = 'm'; // Default table size
+    // Default Table Size
+    protected readonly size = 'm';
 
-    protected readonly users = [
+    // Mock Users Data
+    protected readonly users: User[] = [
         {
             username: 'johndoe',
             email: 'johndoe@example.com',
@@ -56,7 +57,6 @@ export class UsersComponent {
             borrowedItems: 5,
             returnedLate: 1,
             successRate: 80,
-            satisfactionRate: 95,
         },
         {
             username: 'janedoe',
@@ -66,7 +66,59 @@ export class UsersComponent {
             borrowedItems: 10,
             returnedLate: 0,
             successRate: 100,
-            satisfactionRate: 98,
         },
     ];
+
+    // Available Columns for Display
+    availableColumns = [
+        { key: 'email', label: 'Email', visible: true },
+        { key: 'flatNumber', label: 'Flat Number', visible: true },
+        { key: 'address', label: 'Address', visible: false },
+        { key: 'borrowedItems', label: 'Borrowed Items', visible: true },
+        { key: 'returnedLate', label: 'Returned Late', visible: true },
+        { key: 'successRate', label: '% of Late', visible: true },
+    ];
+
+    updateVisibleColumns(): void {
+        this.visibleColumns = this.availableColumns.filter((column) => column.visible);
+    }
+    ngOnInit(): void {
+        this.updateVisibleColumns();
+    }
+
+    // Default Visible Columns
+    visibleColumns = [...this.availableColumns];
+
+    // Current Sorting Column
+    currentSort: string = '';
+    sortOrder: { [key: string]: boolean } = {};  // True for ascending, false for descending
+    sortedUsers = [...this.users];
+
+    // Sort function with toggle for ascending/descending
+    sort(column: string): void {
+        // Toggle sort order
+        if (this.currentSort === column) {
+            this.sortOrder[column] = !this.sortOrder[column];
+        } else {
+            this.currentSort = column;
+            this.sortOrder[column] = true; // Default to ascending for new column
+        }
+
+        // Sort users based on the current column and order
+        this.sortedUsers = [...this.users].sort((a, b) => {
+            const aValue = a[column];
+            const bValue = b[column];
+
+            if (this.sortOrder[column]) {
+                return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+            } else {
+                return aValue < bValue ? 1 : (aValue > bValue ? -1 : 0);
+            }
+        });
+    }
+
+    // Get the sorting icon (up or down)
+    getSortIcon(column: string): string {
+        return this.sortOrder[column] ? '↑' : '↓';
+    }
 }
