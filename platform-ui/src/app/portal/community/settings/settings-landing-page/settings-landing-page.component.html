@@ -1,0 +1,46 @@
+<div class="settings-container">
+    <div class="settings-header">
+        <tui-avatar
+          [src]="'Quentin Castel' | tuiInitials"
+          [style.background]="'Quentin Castel' | tuiAutoColor"
+          size="l"
+        ></tui-avatar>
+      
+        <div class="user-info">
+          <span class="name">Quentin Castel</span>
+          <span class="username">&#64;qcastel</span>
+        </div>
+    </div>
+  
+    <div class="settings-body">
+        <nav class="settings-menu">
+            <ul>
+                <li>
+                    <a routerLink="/community/settings/profile" routerLinkActive="active">
+                        <tui-icon icon="@tui.user" [style.width.px]="16" [style.color]="'var(--tui-background-accent-1)'" />
+                        Profile
+                    </a>
+                </li>
+
+                <li>
+                    <a routerLink="/community/settings/my-items" routerLinkActive="active">
+                        <tui-icon icon="@tui.shopping-basket" [style.width.px]="16" [style.color]="'var(--tui-background-accent-1)'" />
+                        My Items
+                    </a>
+                </li>
+
+                <li>
+                    <a routerLink="/community/settings/locations" routerLinkActive="active">
+                        <tui-icon icon="@tui.map-pin" [style.width.px]="16" [style.color]="'var(--tui-background-accent-1)'" />
+                        Locations
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main content area -->
+        <div class="settings-content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

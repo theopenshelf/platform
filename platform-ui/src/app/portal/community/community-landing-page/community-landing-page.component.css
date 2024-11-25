@@ -20,6 +20,9 @@ header[tuiNavigationHeader][tuiNavigationHeader]:before {
     border-radius: 0;
 }
 
+a.dropdown {
+    min-width: 200px;
+}
 
 .horizontal-menu {
     display: flex;

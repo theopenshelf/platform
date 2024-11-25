@@ -12,11 +12,15 @@ export const COMMUNITY_ROUTES: Routes = [
       path: '',
       component: CommunityLandingPageComponent,
       children: [
-        { path: '', component: ItemsComponent },
+        { path: '', redirectTo: 'items', pathMatch: 'full' }, // Redirect to 'profile'
         { path: 'items', component: ItemsComponent },
         { path: 'item/add', component: AddItemComponent },
         { path: 'items/:id', component: ItemComponent },
         { path: 'my-borrowed-items', component: MyborroweditemsComponent },
+        {
+          path: 'settings',
+          loadChildren: () => import('./settings/settings.routes').then(m => m.SETTINGS_ROUTES),
+        },
       ],
     },
   ];

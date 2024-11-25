@@ -12,7 +12,7 @@ export const PUBLIC_ROUTES: Routes = [
     path: '',
     component: PublicLandingPageComponent,
     children: [
-      { path: '', component: SignInComponent },
+      { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'login', component: SignInComponent },
         { path: 'sign-out', component: SignOutComponent },
         { path: 'sign-up', component: SignUpComponent },

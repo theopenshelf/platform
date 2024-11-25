@@ -12,16 +12,22 @@
 
         <app-notifications-popup></app-notifications-popup>
 
-        <button iconStart="@tui.settings" tuiIconButton type="button" tuiChevron tuiDropdownOpen
-            [tuiDropdown]="settings">
+        <button 
+
+        iconStart="@tui.settings" 
+        tuiIconButton 
+        type="button" 
+        tuiChevron 
+        tuiDropdownOpen
+        [tuiDropdown]="settings">
             <ng-template #settings>
                 <tui-data-list size="s">
-                    <a routerLink="user/profile" tuiOption type="button" i18n="@@yourAccountMenu">
-                        Your profile
+                    <a routerLink="/community/settings" tuiOption class="dropdown" type="button">
+                        Settings
                         </a>
                 </tui-data-list>
                 <tui-data-list size="s">
-                    <a routerLink="auth/sign-out" tuiOption type="button" i18n="@@logoutMenu">
+                    <a routerLink="auth/sign-out" tuiOption class="dropdown" type="button" i18n="@@logoutMenu">
                         Log out
                     </a>
                 </tui-data-list>

@@ -10,7 +10,7 @@ export const ADMIN_ROUTES: Routes = [
     path: '',
     component: AdminLandingPageComponent,
     children: [
-      { path: '', component: UsersComponent },
+      { path: '', redirectTo: 'users', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'users', component: UsersComponent },
       { path: 'items', component: ItemsComponent },
       { path: 'security', component: SecurityComponent },
