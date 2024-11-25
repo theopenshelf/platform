@@ -30,7 +30,7 @@
     "@taiga-ui/event-plugins": "^4.0.2",
     "@taiga-ui/icons": "^4.15.0",
     "@taiga-ui/kit": "^4.15.0",
-    "@taiga-ui/layout": "^4.15.0",
+    "@taiga-ui/layout": "^4.16.0",
     "angular-calendar": "^0.31.1",
     "date-fns": "^4.1.0",
     "ngx-quill": "^27.0.0",
