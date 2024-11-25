@@ -20,6 +20,7 @@ header[tuiNavigationHeader][tuiNavigationHeader]:before {
     border-radius: 0;
 }
 
+
 .horizontal-menu {
     display: flex;
 
@@ -47,4 +48,10 @@ header[tuiNavigationHeader][tuiNavigationHeader]:before {
 .horizontal-menu a.active {
     background-color: #ccc; /* Highlight color */
     color: white;
+}
+
+.unreadNotificationsCount {
+    position: relative !important;
+    top: -8px!important;
+    left: -4px!important;
 }

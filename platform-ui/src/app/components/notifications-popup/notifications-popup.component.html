@@ -1,0 +1,30 @@
+<button iconStart="@tui.bell" (click)="toggleNotificationsPopup()" tuiIconButton type="button" i18n="@@notificationsButton">
+    Notifications
+    <tui-badge-notification *ngIf="unreadNotificationsCount > 0" class="unreadNotificationsCount" size="s">{{ unreadNotificationsCount }}
+    </tui-badge-notification>
+</button>
+
+<div *ngIf="isPopupVisible" class="notifications-popup">
+    <div class="header">
+      <h3>Notifications</h3>
+    </div>
+    <div class="notifications-list">
+      <div
+        class="notification-item"
+        *ngFor="let notification of notifications"
+        [class.unread]="!notification.alreadyRead"
+        (click)="onNotificationClick(notification)"
+      >
+      <img
+        [src]="getNotificationImage(notification)"
+        alt="{{ notification.payload?.item?.name || 'Notification' }}"
+      />
+        <div class="notification-content">
+          <p class="notification-text">
+            {{ getNotificationText(notification.type) }}
+          </p>
+          <small class="notification-date">{{ notification.date }}</small>
+        </div>
+      </div>
+    </div>
+  </div>

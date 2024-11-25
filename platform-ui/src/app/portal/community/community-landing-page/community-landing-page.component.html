@@ -10,10 +10,7 @@
         </span>
         <hr />
 
-        <button iconStart="@tui.bell" tuiIconButton type="button" i18n="@@notificationsButton">
-            Notifications
-            <tui-badge-notification></tui-badge-notification>
-        </button>
+        <app-notifications-popup></app-notifications-popup>
 
         <button iconStart="@tui.settings" tuiIconButton type="button" tuiChevron tuiDropdownOpen
             [tuiDropdown]="settings">

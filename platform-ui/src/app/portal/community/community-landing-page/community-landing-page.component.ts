@@ -25,6 +25,10 @@ import {
     TuiTabs,
 } from '@taiga-ui/kit';
 import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';
+import { NotificationsPopupComponent } from "../../../components/notifications-popup/notifications-popup.component";
+import { CommonModule } from '@angular/common'; // Import CommonModule
+import { NotificationsService } from "../../../services/notifications.service";
+import { HostListener, ElementRef, OnInit } from '@angular/core';
 
 
 const ICON =
@@ -35,12 +39,13 @@ const ICON =
         standalone: true, 
     selector: 'app-community-landing-page',
     imports: [
+        CommonModule,
+        NotificationsPopupComponent,
         RouterOutlet,
         TuiRoot,
         FormsModule,
         RouterLink,
         TuiAppearance,
-        TuiBadgeNotification,
         TuiButton,
         TuiChevron,
         TuiAppearance,
@@ -60,4 +65,9 @@ export class CommunityLandingPageComponent  extends TuiPortals {
   protected open = false;
   protected switch = false;
   protected readonly routes: any = {};
+
+  constructor() {
+      super();
+  }
+
 }
