@@ -13,7 +13,7 @@ servers:
 
 paths:
 
-  /hello-world:
+  /community/hello-world:
     get:
       operationId: getHelloWorld
       summary: hello world
@@ -26,6 +26,37 @@ paths:
       responses:
         '200':
           $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
+
+  /public/auth/login:
+    post:
+      operationId: login
+      summary: Log user with username / password
+      tags:
+        - auth
+
+      security:
+        - BearerAuthOAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "my-login"
+                password:
+                  type: string
+                  example: "my-password"
+              required:
+                - username
+                - password
+
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_LOGIN"
 
   /items/:
 
@@ -165,11 +196,14 @@ components:
       type: object
       required:
         - id
-        - name
+        - login
+        - username
       properties:
         id:
           type: string
           format: uuid
+        username:
+          type: string
         firstName:
           type: string
         lastName:
@@ -282,6 +316,12 @@ components:
                 type: array
                 items:
                   $ref: "#/components/schemas/Item"
+    OK_200_LOGIN:
+      description: Logged in user details
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/User"
     OK_200_GET_ITEMS:
       description: GetItems
       content:
