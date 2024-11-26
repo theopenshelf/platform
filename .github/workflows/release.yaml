@@ -22,6 +22,7 @@ jobs:
           echo "app-version=$VERSION"
           echo "app-version=$VERSION" >> $GITHUB_ENV
 
+      # Java
       - name: Cache Maven packages
         uses: actions/cache@v4
         with:
@@ -33,7 +34,10 @@ jobs:
         uses: qcastel/github-actions-maven-cmd@master
         with:
           maven-args: "clean verify -Ddockerfile.skip -DdockerCompose.skip -Djib.skip"
-      # Step: Verify Angular project compiles
+      
+      # Angular
+      - name: Clear npm cache
+        run: npm cache clean --force
       - name: Verify Angular project compiles
         run: |
           cd platform-ui
