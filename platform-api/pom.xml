@@ -21,7 +21,7 @@
         <jwt.nimbus.version>9.47</jwt.nimbus.version>
         <bouncycastle.version>1.70</bouncycastle.version>
         <hoverfly.version>0.14.0</hoverfly.version>
-        <google.jib.version>3.4.1</google.jib.version>
+        <google.jib.version>3.4.4</google.jib.version>
         <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
         <openapi.tool.version>0.2.6</openapi.tool.version>
         <nimbus.oauth2.version>11.10.1</nimbus.oauth2.version>
