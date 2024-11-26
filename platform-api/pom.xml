@@ -25,7 +25,7 @@
         <maven.release.plugin.version>3.1.1</maven.release.plugin.version>
         <openapi.tool.version>0.2.6</openapi.tool.version>
         <nimbus.oauth2.version>11.20.1</nimbus.oauth2.version>
-        <swagger.core.v3.version>2.2.20</swagger.core.v3.version>
+        <swagger.core.v3.version>2.2.26</swagger.core.v3.version>
         <swagger.version>1.6.14</swagger.version>
         <io.springfox.swagger2.version>3.0.0</io.springfox.swagger2.version>
         <io.springfox.swagger-ui.version>3.0.0</io.springfox.swagger-ui.version>
