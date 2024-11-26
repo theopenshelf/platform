@@ -28,6 +28,9 @@ export interface BorrowItem extends Item {
     providedIn: 'root',
 })
 export class ItemsService {
+    getMyOwnedItems(): Item[] {
+        return this.items;
+    }
     private index = 1;
 
     private items: Item[] = [

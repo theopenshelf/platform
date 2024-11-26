@@ -8,6 +8,29 @@
 
 }
 
+#logo {
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin: 0 20px;
+}
+
+#login-welcome-content {
+  display: flex;
+  align-items: center;  /* Vertically center the items */
+  justify-content: space-between; /* Space out the logo and presentation */
+}
+
+#logo {
+  height: 300px;  /* Set the logo height to 300px */
+}
+
+#presentation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  /* Vertically center the text */
+}
+
 #login-form-section {
     display: flex; /* Enable Flexbox */
     flex-direction: column; /* Stack content vertically */

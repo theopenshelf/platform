@@ -13,6 +13,8 @@
     gap: 12px; /* Space between avatar and text */
     padding: 16px;
     width: 100%;
+    border-bottom: solid #e6e6e6 1px;
+    margin-bottom: 10px;
 }
 
 /* User info inside the header */

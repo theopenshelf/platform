@@ -5,6 +5,7 @@ import { TuiAppearance, TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taig
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { TuiPortals } from '@taiga-ui/cdk';
 import { TuiAvatar } from '@taiga-ui/kit';
+import { AuthService, UserInfo } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-settings-landing-page',
@@ -24,5 +25,11 @@ import { TuiAvatar } from '@taiga-ui/kit';
   styleUrl: './settings-landing-page.component.css'
 })
 export class SettingsLandingPageComponent extends TuiPortals {
+  protected userInfo: UserInfo;
+
+  constructor(private authService: AuthService) {
+    super();
+    this.userInfo = this.authService.getCurrentUserInfo()
+  }
 
 }

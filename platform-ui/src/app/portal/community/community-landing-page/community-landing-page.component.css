@@ -4,6 +4,9 @@ main[tuiNavigationMain] {
 
 }
 
+#logo {
+    width: 40px;
+}
 aside[tuiNavigationAside]:after {
     inline-size: 14rem;
 }

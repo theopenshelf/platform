@@ -1,14 +1,14 @@
 <div class="settings-container">
     <div class="settings-header">
         <tui-avatar
-          [src]="'Quentin Castel' | tuiInitials"
-          [style.background]="'Quentin Castel' | tuiAutoColor"
+          [src]="userInfo.firstName + ' ' + userInfo.lastName | tuiInitials"
+          [style.background]="userInfo.firstName + ' ' + userInfo.lastName | tuiAutoColor"
           size="l"
         ></tui-avatar>
       
         <div class="user-info">
-          <span class="name">Quentin Castel</span>
-          <span class="username">&#64;qcastel</span>
+          <span class="name">{{userInfo.firstName}} {{userInfo.lastName}}</span>
+          <span class="username">&#64;{{userInfo.username}}</span>
         </div>
     </div>
   

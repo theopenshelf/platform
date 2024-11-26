@@ -2,6 +2,12 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
+export interface UserInfo {
+  firstName: string;
+  lastName: string;
+  username: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,6 +16,15 @@ export class AuthService {
   private userRoles: string[] = ['admin', 'community']; // Store multiple roles
 
   constructor(private router: Router) {}
+
+
+  getCurrentUserInfo(): UserInfo {
+    return {
+      "firstName": "Quentin",
+      "lastName": "Castel",
+      "username": "qcastel",
+    }
+  }
 
   signIn(username: string, password: string): boolean {
     // Mock login (Replace with actual backend logic)
