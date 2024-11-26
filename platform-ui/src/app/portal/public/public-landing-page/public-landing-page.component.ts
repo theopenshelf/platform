@@ -39,7 +39,7 @@ import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';
         TuiTabs,
     ],
     templateUrl: './public-landing-page.component.html',
-    styleUrl: './public-landing-page.component.css',
+    styleUrl: './public-landing-page.component.scss',
     providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
 })
 export class PublicLandingPageComponent  extends TuiPortals {

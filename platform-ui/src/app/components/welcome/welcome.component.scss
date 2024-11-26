@@ -1,0 +1,54 @@
+@use 'theme' as *;
+
+#logo {
+  width: 300px;
+  height: 300px;
+  float: left;
+  margin: 0 20px;
+}
+
+#login-welcome-content {
+  display: flex;
+  align-items: center; /* Vertically center the items */
+  justify-content: space-between; /* Space out the logo and presentation */
+  position: relative; /* Ensures content appears above the SVG */
+  padding: 0 10%;
+  vertical-align: middle;
+  z-index: 1; /* Places content above the SVG */
+}
+
+#presentation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center the text */
+}
+
+#login-welcome-content h2 {
+  font-size: 4em;
+  line-height: 3rem !important;
+}
+
+#login-welcome-content p {
+  color: $light-color;
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  --tw-text-opacity: 1 !important;
+}
+
+.background-motif {
+  opacity: 0.05; /* Adjusted for consistency */
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 160%;
+  height: 160%;
+  z-index: 0; /* Places the SVG behind the content */
+  pointer-events: none; /* Ensures the SVG doesn't interfere with clicks */
+  color: $black; /* A soft gray color, adjust as needed */
+}
+
+@media (max-width: 768px) {
+  #login-welcome-section {
+    display: none; /* Hide the welcome section for small screens */
+  }
+}

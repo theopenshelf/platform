@@ -13,7 +13,7 @@ import { TuiButton } from '@taiga-ui/core';
     CommonModule
   ],
   templateUrl: './notifications-popup.component.html',
-  styleUrls: ['./notifications-popup.component.css']
+  styleUrls: ['./notifications-popup.component.scss']
 })
 export class NotificationsPopupComponent implements OnInit {
   notifications: Notification[] = [];

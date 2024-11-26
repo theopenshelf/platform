@@ -1,3 +1,5 @@
+@use 'theme' as *;
+
 /* Table styles */
 table {
     width: 100%;  
@@ -10,11 +12,12 @@ table td, table th {
 }
 
 table th {
-    background-color: #f8fafc;
+    background-color: $light-color; /* Light background from theme */
 }
 
 h1 {
     margin: 30px 0;
+    color: $dark-color; /* Dark text from theme */
 }
 
 th {
@@ -37,13 +40,14 @@ th span {
 .filters label {
     font-weight: bold;
     margin-right: 8px;
+    color: $dark-color; /* Dark text from theme */
 }
 
 .filters select {
     padding: 6px 12px;
     border-radius: 4px;
-    border: 1px solid #d1d5db;
-    background-color: #f9fafb;
+    border: 1px solid $border-color; /* Border color from theme */
+    background-color: $white; /* Light background from theme */
     cursor: pointer;
 }
 
@@ -54,8 +58,9 @@ th span {
     border-radius: 12px;
     font-size: 0.9em;
     font-weight: bold;
-    color: white;
+    color: $white; /* White text for contrast */
     text-align: center;
+    min-width: 120px; /* Ensure consistent width */
 }
 
 .badge-books {
@@ -70,10 +75,10 @@ th span {
     background-color: #1abc9c;
 }
 
-
+/* Description styling */
 .description {
     margin-bottom: 2rem;
     font-size: 1rem;
-    color: #555;
+    color: $dark-color; /* Lighter text color from theme */
     line-height: 1.5;
 }

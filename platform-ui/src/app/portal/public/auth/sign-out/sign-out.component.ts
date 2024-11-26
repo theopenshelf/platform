@@ -9,7 +9,7 @@ import { AuthService } from '../../../../services/auth.service';
     selector: 'app-sign-out',
     imports: [ReactiveFormsModule, FormsModule],
     templateUrl: './sign-out.component.html',
-    styleUrl: './sign-out.component.css'
+    styleUrl: './sign-out.component.scss'
 })
 export class SignOutComponent {
   signInForm: FormGroup;
@@ -22,7 +22,6 @@ export class SignOutComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
       if (this.authService.signIn(email, password)) {

@@ -1,0 +1,61 @@
+// Define your color palette
+$primary-color: #293446;
+$accent-color: #FB8C02;
+$secondary-color: #A0641A;
+$dark-color: #283242;
+$light-color: #dde6ee;
+$link-color: $accent-color;
+$link-color-hover: #A0641A;
+
+$neutral-color: #ccc;
+$border-color: #959595;
+$danger-color: #580505;
+$warning-color: #a85700;
+
+// Optionally, define neutral colors and any other common colors
+$white: #ffffff;
+$black: #000000;
+
+$font-family: 'Arial', sans-serif;
+
+
+// Create a custom theme for buttons
+@mixin button-styles($bg-color, $text-color: $white) {
+    background-color: $bg-color;
+    color: $text-color;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  
+    &:hover {
+      background-color: darken($bg-color, 10%);
+    }
+  }
+  
+  // Apply styles globally
+  body {
+    font-family: $font-family;
+    background-color: $light-color;
+    color: $dark-color;
+  }
+  
+  .primary-button {
+    @include button-styles($primary-color);
+  }
+  
+  .accent-button {
+    @include button-styles($accent-color);
+  }
+  
+  .card {
+    background-color: $white;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  header {
+    background-color: $primary-color;
+    color: $white;
+    padding: 20px;
+  }

@@ -1,3 +1,5 @@
+@use 'theme' as *;
+
 /* General Table Styling */
 .table-container {
   overflow-x: auto;
@@ -8,7 +10,6 @@ table {
   /* Ensures no gaps between cells */
   width: 100%;
   border-spacing: 0;
-
 }
 
 th,
@@ -20,7 +21,7 @@ td {
 }
 
 thead th {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $border-color; /* Use theme border color */
   /* Subtle Divider for Header */
   text-transform: uppercase;
   font-weight: bold;
@@ -28,10 +29,9 @@ thead th {
 }
 
 tbody td {
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid $border-color; /* Use theme border color */
   /* Row Divider */
   vertical-align: middle;
-
 }
 
 /* Avatar and Username Styling */
@@ -48,15 +48,9 @@ tbody td {
   white-space: nowrap;
 }
 
-
 /* Column Selector */
 .column-selector {
   margin-bottom: 1rem;
-}
-
-/* Compact Table Size */
-.compact-table {
-  font-size: 0.9rem;
 }
 
 .column-selector {
@@ -75,20 +69,16 @@ tbody td {
   margin-right: 0.25rem;
 }
 
-/* Remove all borders (vertical and horizontal) */
-thead th,
-tbody td {}
-
 /* Optional: Subtle horizontal divider for rows */
 tbody tr+tr {
-  border-top: 1px solid #f0f0f0;
+  border-top: 1px solid $dark-color; /* Lighter divider using theme color */
   /* Add a light divider between rows */
 }
 
 /* Hover effect for table rows (optional) */
 tbody tr:hover {
-  background-color: #f9f9f9;
-  /* Subtle hover effect */
+  background-color: $dark-color; /* Subtle hover effect using theme */
+  /* Lighter background on hover */
 }
 
 tui-dialog-backdrop {

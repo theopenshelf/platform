@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
     selector: 'app-email-confirmation',
     imports: [],
     templateUrl: './email-confirmation.component.html',
-    styleUrl: './email-confirmation.component.css'
+    styleUrl: './email-confirmation.component.scss'
 })
 export class EmailConfirmationComponent {
 

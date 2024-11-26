@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
     standalone: true, 
     imports: [CommonModule, ReactiveFormsModule, QuillModule], // Import required modules
     templateUrl: './add-item.component.html',
-    styleUrl: './add-item.component.css'
+    styleUrl: './add-item.component.scss'
 })
 export class AddItemComponent {
   addItemForm: FormGroup;

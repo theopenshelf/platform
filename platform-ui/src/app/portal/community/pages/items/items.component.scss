@@ -1,3 +1,5 @@
+@use 'theme' as *;
+
 /* Parent container for layout */
 .layout-container {
     display: flex;
@@ -6,18 +8,27 @@
     gap: 1rem;
 }
 
+/* Add item container */
 .add-item {
     width: 100%;
+    background-color: $accent-color;
 }
 
+.add-item:hover {
+    background-color: $secondary-color;
+}
+
+/* Search container */
 .search {
     padding-right: 0;
+    padding-left: 0;
+    border: 0;
 }
 
 /* Sidebar styling */
 .sidebar {
     width: 250px;
-    background-color: #f8f9fa;
+    background-color: $light-color; /* Light gray background from theme */
     padding: 1rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -32,6 +43,7 @@
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
+    color: $dark-color; /* Dark text color */
 }
 
 .filter-group label {
@@ -49,19 +61,13 @@
     box-sizing: border-box;
 }
 
-fieldset {
-    border: none;
-    margin: 0;
-    padding-left: 0;
-}
-
 /* Card styling */
 .item-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
+    background-color: $white; /* White background from theme */
+    border: 1px solid $neutral-color; /* Use theme border color */
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -74,12 +80,12 @@ fieldset {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Image styling */
+/* Image container styling */
 .image-container {
     width: 100%;
-    aspect-ratio: 1 / 1; /* Makes the image container square */
+    aspect-ratio: 1 / 1; /* Keeps the image container square */
     overflow: hidden;
-    background-color: #f9f9f9;
+    background-color: $dark-color; /* Light gray background for images */
 }
 
 .item-image {
@@ -88,7 +94,7 @@ fieldset {
     object-fit: cover;
 }
 
-/* Details styling */
+/* Item details styling */
 .item-details {
     padding: 1rem;
 }
@@ -97,16 +103,40 @@ fieldset {
     margin: 0;
     font-size: 1.2rem;
     font-weight: bold;
+    color: $dark-color; /* Dark text for item title */
 }
 
 .item-details span {
     display: block;
     margin-top: 0.5rem;
-    color: #757575;
+    color: $dark-color; /* Muted text for additional details */
     font-size: 0.9rem;
 }
 
-/* Actions styling */
+/* Item actions styling */
 .item-actions {
     padding: 1rem;
+    background-color: $white; /* Light background for actions */
+    border-top: 1px solid $neutral-color; /* Border to separate actions */
+}
+
+/* Button or action links styling */
+.item-actions button {
+    background-color: $accent-color; /* Primary color for actions */
+    color: $white; /* White text */
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.item-actions button:hover {
+    background-color: darken($secondary-color, 10%); /* Darken primary color on hover */
+}
+
+.item-actions button:disabled {
+    background-color: $secondary-color; /* Disabled button color */
+    cursor: not-allowed;
 }

@@ -47,7 +47,7 @@ const ICON =
     ],
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './app.component.html',
-    styleUrl: './app.component.css',
+    styleUrl: './app.component.scss',
     providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
 })
 export class AppComponent  extends TuiPortals {

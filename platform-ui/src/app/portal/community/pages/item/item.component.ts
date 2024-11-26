@@ -29,7 +29,7 @@ const plusTen = today.append({ day: 10 });
   imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule],
   selector: 'app-item',
   templateUrl: './item.component.html',
-  styleUrls: ['./item.component.css'],
+  styleUrls: ['./item.component.scss'],
   providers: [DatePipe, {
     provide: DateAdapter,
     useFactory: adapterFactory,

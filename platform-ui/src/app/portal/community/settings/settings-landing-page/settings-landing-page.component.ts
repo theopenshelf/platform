@@ -22,7 +22,7 @@ import { AuthService, UserInfo } from '../../../../services/auth.service';
 
   ],
   templateUrl: './settings-landing-page.component.html',
-  styleUrl: './settings-landing-page.component.css'
+  styleUrl: './settings-landing-page.component.scss'
 })
 export class SettingsLandingPageComponent extends TuiPortals {
   protected userInfo: UserInfo;

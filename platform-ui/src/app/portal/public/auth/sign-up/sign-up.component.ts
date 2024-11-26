@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
+import { WelcomeComponent } from '../../../../components/welcome/welcome.component';
 
 @Component({
   standalone: true, 
     selector: 'app-sign-up',
-    imports: [RouterLink, ReactiveFormsModule, FormsModule],
+    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './sign-up.component.html',
-    styleUrl: './sign-up.component.css'
+    styleUrl: './sign-up.component.scss'
 })
 export class SignUpComponent {
   signUpForm: FormGroup;

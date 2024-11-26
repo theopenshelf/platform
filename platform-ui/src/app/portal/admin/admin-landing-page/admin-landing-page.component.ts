@@ -51,7 +51,7 @@ const ICON =
         TuiTabs,
     ],
     templateUrl: './admin-landing-page.component.html',
-    styleUrl: './admin-landing-page.component.css',
+    styleUrl: './admin-landing-page.component.scss',
     providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
 })
 export class AdminLandingPageComponent extends TuiPortals {

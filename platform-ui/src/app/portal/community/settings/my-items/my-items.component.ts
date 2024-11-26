@@ -10,7 +10,7 @@ import { Category, ItemsService } from '../../services/items.service';
     selector: 'app-my-items',
     imports: [FormsModule, NgForOf, NgClass, TuiTable],
     templateUrl: './my-items.component.html',
-    styleUrls: ['./my-items.component.css']
+    styleUrls: ['./my-items.component.scss']
 })
 export class MyItemsComponent {
     protected readonly sizes = ['l', 'm', 's'] as const;

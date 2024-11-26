@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-star-rating',
     imports: [CommonModule], // Import CommonModule here for *ngFor
     templateUrl: './star-rating.component.html',
-    styleUrls: ['./star-rating.component.css']
+    styleUrls: ['./star-rating.component.scss']
 })
 export class StarRatingComponent {
   @Input() rating: number = 0;

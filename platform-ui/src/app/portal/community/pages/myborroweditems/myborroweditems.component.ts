@@ -10,7 +10,7 @@ import { Category, ItemsService } from '../../services/items.service';
     selector: 'app-myborroweditems',
     imports: [FormsModule, NgForOf, NgClass, TuiTable],
     templateUrl: './myborroweditems.component.html',
-    styleUrls: ['./myborroweditems.component.css']
+    styleUrls: ['./myborroweditems.component.scss']
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;

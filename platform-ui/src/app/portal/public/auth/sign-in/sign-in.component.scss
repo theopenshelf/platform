@@ -1,0 +1,106 @@
+@use 'theme' as *;
+
+#login-container {
+  display: flex;
+  justify-content: space-between; /* Space out the items evenly */
+  align-items: center; /* Vertically align items in the center */
+  height: 100vh; /* Full viewport height */
+}
+
+#login-form-section {
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  flex: 1;
+  background-color: $white; /* Theme-based clean white background */
+  font-family: Arial, sans-serif; /* Optional: consistent typography */
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+}
+
+#login-form-section h2 {
+  width: 100%; /* Make the form take up the full width of the container */
+  font-size: 1.8rem;
+  color: $dark-color; /* Darker text for readability */
+  margin-bottom: 10px;
+}
+
+#login-form-section p {
+  width: 100%; /* Make the form take up the full width of the container */
+  font-size: 0.9rem;
+  color: $dark-color; /* Neutral text color */
+  margin-bottom: 15px;
+}
+
+#login-form-section form {
+  width: 100%; /* Make the form take up the full width of the container */
+  display: flex;
+  flex-direction: column; /* Ensure elements stack vertically */
+  gap: 15px; /* Add spacing between form fields */
+}
+
+#login-form-section label {
+  font-size: 0.85rem;
+  color: $dark-color; /* Subtle color for labels */
+  margin-bottom: 5px;
+}
+
+#login-form-section input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid $border-color; /* Subtle border */
+  border-radius: 5px; /* Rounded corners */
+  transition: border-color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section input:focus {
+  border-color: $primary-color; /* Highlight border on focus */
+  outline: none; /* Remove default focus outline */
+}
+
+#login-form-section input,
+#login-form-section button {
+  width: 100%; /* Ensure input fields and buttons span the full width */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+#login-form-section button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: $link-color; /* Primary button color */
+  color: $white; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section button:hover {
+  background-color: $link-color-hover; /* Darker shade on hover */
+}
+
+#login-form-section a {
+  color: $link-color; /* Link color matching the theme */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section a:hover {
+  color: $link-color-hover; /* Darker shade on hover */
+}
+
+#login-welcome-section {
+  height: 100vh; /* Full viewport height */
+  flex: 1.5; /* Make this section larger */
+  display: flex; /* Enable Flexbox on this container */
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+  padding: 20px;
+  background-color: $primary-color; /* Theme-based dark background */
+  color: $light-color; /* Theme-based light text */
+  width: 100%;
+  min-height: 400px;
+  position: relative; /* Enables absolute positioning for child elements */
+  overflow: hidden; /* Ensures the SVG doesn't overflow the section */
+}

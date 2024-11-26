@@ -5,31 +5,28 @@
     <!-- Header -->
     <header tuiNavigationHeader>
         <span tuiNavigationLogo>
-            <img id="logo" src="/logo-simple.png"/>
+            <img id="logo" src="/logo-simple.png" />
             <span tuiFade>The Open Shelf</span>
         </span>
         <hr />
 
         <app-notifications-popup></app-notifications-popup>
 
-        <button 
-
-        iconStart="@tui.settings" 
-        tuiIconButton 
-        type="button" 
-        tuiChevron 
-        tuiDropdownOpen
-        [tuiDropdown]="settings">
+        <button iconStart="@tui.ellipsis" tuiIconButton type="button" tuiChevron tuiDropdownOpen
+            [tuiDropdown]="settings">
             <ng-template #settings>
                 <tui-data-list size="s">
-                    <a routerLink="/community/settings" tuiOption class="dropdown" type="button">
+                    <button routerLink="/community/settings" class="dropdown" iconStart="@tui.settings"
+                        tuiButton type="button">
                         Settings
-                        </a>
+                    </button>
                 </tui-data-list>
                 <tui-data-list size="s">
-                    <a routerLink="auth/sign-out" tuiOption class="dropdown" type="button" i18n="@@logoutMenu">
-                        Log out
-                    </a>
+                    <button routerLink="/auth/sign-out"  class="dropdown" iconStart="@tui.log-out"
+                    tuiButton type="button">
+                    Log out
+                </button>
+
                 </tui-data-list>
             </ng-template>
         </button>
@@ -44,12 +41,12 @@
             Items
         </a>
 
-        <a routerLink="/community/my-borrowed-items" iconStart="@tui.shopping-basket" appearance="secondary-grayscale" tuiChevron
-             type="button">
+        <a routerLink="/community/my-borrowed-items" iconStart="@tui.shopping-basket" appearance="secondary-grayscale"
+            tuiChevron type="button">
             <tui-icon icon="@tui.shopping-basket" />
 
             <span>My borrowed items</span>
-           
+
         </a>
 
     </nav>

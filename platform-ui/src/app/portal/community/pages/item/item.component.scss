@@ -1,0 +1,126 @@
+@use 'theme' as *;
+
+/* Availability Styling */
+::ng-deep .not-available {
+  background-color: rgba($danger-color, 0.476) !important; /* Use theme's danger color */
+}
+
+/* Title Section */
+.title {
+  height: 60px;
+  background-color: $danger-color; /* Light gray background from theme */
+  text-align: center;
+  padding: 30px;
+  margin-bottom: 30px;
+  color: $dark-color; /* Dark text for readability */
+}
+
+/* Flexbox Container for Item */
+.item-container {
+  display: flex;
+  gap: 2rem; /* Space between sidebar and details */
+  align-items: flex-start;
+  padding: 20px;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  flex: 1; /* Sidebar takes 1/3 of the space */
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 100px;
+}
+
+/* Item Image Styling */
+.item-image {
+  border: 1px solid $border-color; /* Use theme border color */
+  width: 80%;
+  border-radius: 8px;
+  margin: 10%;
+  margin-bottom: 20px;
+  margin-top: 0;
+}
+
+/* Book and Reserve Buttons */
+.book-button,
+.reserve-button {
+  margin-top: 15px;
+  padding: 10px;
+  width: 100%;
+  background-color: $accent-color; /* Primary color for buttons */
+  color: $white; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.book-button[disabled] {
+  background-color: $secondary-color; /* Disabled button color */
+  cursor: not-allowed;
+}
+
+.reserve-button {
+  background-color: $warning-color; /* Reserve button using warning color */
+}
+
+.reserve-button:hover,
+.book-button:hover {
+  background-color: darken($primary-color, 10%); /* Darken on hover */
+}
+
+/* Unavailable Status */
+.unavailable {
+  margin-top: 10px;
+  color: $danger-color; /* Red color for unavailable status */
+}
+
+/* Details Section */
+.details {
+  flex: 2; /* Details section takes 2/3 of the space */
+}
+
+.details h2 {
+  margin-top: 0;
+  color: $dark-color; /* Dark color for heading */
+}
+
+/* Review Section */
+.review {
+  border-top: 1px solid $border-color; /* Use theme border color */
+  padding-top: 10px;
+  margin-top: 10px;
+}
+
+.review strong {
+  display: block;
+  color: $dark-color; /* Ensure the strong text is dark */
+}
+
+.review span {
+  font-size: 0.9em;
+  color: $dark-color; /* Muted text for review details */
+}
+
+/* Form Styling */
+form {
+  width: 100%;
+}
+
+/* Borrow Button */
+button#borrow {
+  width: 100%;
+  margin-top: 10px;
+  background-color: $accent-color; /* Primary button color */
+  color: $white; /* White text */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button#borrow:hover {
+  background-color: darken($secondary-color, 10%); /* Darken on hover */
+}

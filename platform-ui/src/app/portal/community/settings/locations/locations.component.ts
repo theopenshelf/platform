@@ -20,7 +20,7 @@ interface Location {
 
     ],
     templateUrl: './locations.component.html',
-    styleUrls: ['./locations.component.css']
+    styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
     locationForm!: FormGroup;

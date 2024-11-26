@@ -24,7 +24,7 @@ import {
     TuiSwitch,
     TuiTabs,
 } from '@taiga-ui/kit';
-import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';
+import {TuiCardLarge, TuiHeader, tuiLayoutIconsProvider, TuiNavigation} from '@taiga-ui/layout';
 import { NotificationsPopupComponent } from "../../../components/notifications-popup/notifications-popup.component";
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { NotificationsService } from "../../../services/notifications.service";
@@ -57,8 +57,11 @@ const ICON =
         TuiTabs,
     ],
     templateUrl: './community-landing-page.component.html',
-    styleUrl: './community-landing-page.component.css',
-    providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
+    styleUrl: './community-landing-page.component.scss',
+    providers: [
+        tuiLayoutIconsProvider({grid: '@tui.align-justify'}), 
+        TuiDropdownService, 
+        tuiAsPortal(TuiDropdownService)]
 })
 export class CommunityLandingPageComponent  extends TuiPortals {
   protected expanded = false;

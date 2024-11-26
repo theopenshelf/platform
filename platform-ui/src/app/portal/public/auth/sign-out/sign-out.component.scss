@@ -1,0 +1,145 @@
+@use 'theme' as *;
+
+#login-container {
+  display: flex;
+  justify-content: space-between; /* Space out the items evenly */
+  align-items: center; /* Vertically align items in the center */
+  height: 100vh; /* Full viewport height */
+}
+
+#login-form-section {
+  display: flex; /* Enable Flexbox */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: center; /* Vertically center content */
+  align-items: center; /* Horizontally center content */
+  flex: 1;
+  background-color: $white; /* Clean white background from theme */
+  font-family: Arial, sans-serif; /* Optional: consistent typography */
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+}
+
+#login-form-section h2 {
+  width: 100%; /* Make the form take up the full width of the container */
+  font-size: 1.8rem;
+  color: $dark-color; /* Darker text from theme */
+  margin-bottom: 10px;
+}
+
+#login-form-section p {
+  width: 100%; /* Make the form take up the full width of the container */
+  font-size: 0.9rem;
+  color: $dark-color; /* Neutral text color from theme */
+  margin-bottom: 15px;
+}
+
+#login-form-section form {
+  width: 100%; /* Make the form take up the full width of the container */
+  display: flex;
+  flex-direction: column; /* Ensure elements stack vertically */
+  gap: 15px; /* Add spacing between form fields */
+}
+
+#login-form-section label {
+  font-size: 0.85rem;
+  color: $dark-color; /* Subtle color for labels from theme */
+  margin-bottom: 5px;
+}
+
+#login-form-section input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid $border-color; /* Subtle border from theme */
+  border-radius: 5px; /* Rounded corners */
+  transition: border-color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section input:focus {
+  border-color: $primary-color; /* Highlight border on focus with theme primary color */
+  outline: none; /* Remove default focus outline */
+}
+
+#login-form-section input,
+#login-form-section button {
+  width: 100%; /* Ensure input fields and buttons span the full width */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+#login-form-section button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: $link-color; /* Primary button color from theme */
+  color: $white; /* White text from theme */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section button:hover {
+  background-color: $link-color-hover; /* Darker shade on hover from theme */
+}
+
+#login-form-section a {
+  color: $link-color; /* Link color matching the theme */
+  text-decoration: none; /* Remove underline */
+  transition: color 0.3s; /* Smooth hover effect */
+}
+
+#login-form-section a:hover {
+  color: $link-color-hover; /* Darker shade on hover from theme */
+}
+
+#login-welcome-section {
+  height: 100vh; /* Full viewport height */
+  flex: 1.5; /* Make this section larger */
+  display: flex; /* Enable Flexbox on this container */
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+  padding: 20px;
+  background-color: $primary-color; /* Background color from theme */
+  color: $light-color; /* Light text color from theme */
+  width: 100%;
+  min-height: 400px;
+  position: relative; /* Enables absolute positioning for child elements */
+  overflow: hidden; /* Ensures the SVG doesn't overflow the section */
+}
+
+@media (max-width: 768px) {
+  #login-welcome-section {
+    display: none; /* Hide the welcome section for small screens */
+  }
+}
+
+#login-welcome-content {
+  position: relative; /* Ensures content appears above the SVG */
+  padding: 0 10%;
+  vertical-align: middle;
+  z-index: 1; /* Places content above the SVG */
+}
+
+.background-motif {
+  opacity: 5%;
+  position: absolute;
+  top: -25%;
+  left: -25%;
+  width: 160%;
+  height: 160%;
+  z-index: 0;
+  /* Places the SVG behind the content */
+  pointer-events: none;
+  /* Ensures the SVG doesn't interfere with clicks */
+  color: $dark-color; /* A soft gray color from theme */
+}
+
+#login-welcome-content h2 {
+  font-size: 4em;
+  line-height: 3rem !important;
+}
+
+#login-welcome-content p {
+  color: $dark-color; /* Soft gray text from theme */
+  font-size: 1rem !important;
+  line-height: 1.5rem !important;
+  --tw-text-opacity: 1 !important;
+}

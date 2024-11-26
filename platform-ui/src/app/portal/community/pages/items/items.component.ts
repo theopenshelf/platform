@@ -28,7 +28,7 @@ import { Category, Item, ItemsService } from '../../services/items.service';
     TuiTextfield
   ],
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.css']
+  styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent {
 

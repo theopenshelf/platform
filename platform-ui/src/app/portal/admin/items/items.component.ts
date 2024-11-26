@@ -45,7 +45,7 @@ import {TuiCell} from '@taiga-ui/layout';
     ],
     selector: 'app-items',
     templateUrl: './items.component.html',
-    styleUrls: ['./items.component.css'],
+    styleUrls: ['./items.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsComponent {

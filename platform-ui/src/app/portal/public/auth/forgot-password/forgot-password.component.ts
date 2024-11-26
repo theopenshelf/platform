@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import { WelcomeComponent } from '../../../../components/welcome/welcome.component';
 
 @Component({
   standalone: true, 
     selector: 'app-forgot-password',
-    imports: [RouterLink, ReactiveFormsModule, FormsModule],
+    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './forgot-password.component.html',
-    styleUrl: './forgot-password.component.css'
+    styleUrl: './forgot-password.component.scss'
 })
 export class ForgotPasswordComponent {
   signInForm: FormGroup;
@@ -22,7 +23,6 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.signInForm.valid) {
       const { email, password } = this.signInForm.value;
       if (this.authService.signIn(email, password)) {

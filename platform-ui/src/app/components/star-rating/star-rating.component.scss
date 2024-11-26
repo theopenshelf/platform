@@ -1,3 +1,5 @@
+@use 'theme' as *;
+
 .star-rating {
   display: flex;
   gap: 4px;
@@ -6,15 +8,15 @@
 
 .star {
   font-size: 24px;
-  color: #e0e0e0; /* Default star color (gray) */
+  color: $light-color; /* Default star color (gray) */
 }
 
 .star.filled {
-  color: #f5a623; /* Filled star color (orange) */
+  color: $accent-color; /* Filled star color (orange) */
 }
 
 .star.half {
-  color: #ccc;
+  color: $light-color; /* Half-filled star fallback color */
   position: relative;
 }
 
@@ -24,4 +26,5 @@
   left: 0;
   width: 50%;
   overflow: hidden;
+  color: $accent-color; /* Match filled star color */
 }

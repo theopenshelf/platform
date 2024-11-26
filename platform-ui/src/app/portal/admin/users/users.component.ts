@@ -46,7 +46,7 @@ export type User = {
     ],
     selector: 'app-users',
     templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css'],
+    styleUrls: ['./users.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UsersComponent {

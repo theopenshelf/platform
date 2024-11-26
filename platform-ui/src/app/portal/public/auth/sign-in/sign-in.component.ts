@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
+import { WelcomeComponent } from '../../../../components/welcome/welcome.component';
 
 @Component({
   standalone: true, 
     selector: 'app-sign-in',
-    imports: [RouterLink, ReactiveFormsModule, FormsModule],
+    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './sign-in.component.html',
-    styleUrl: './sign-in.component.css'
+    styleUrl: './sign-in.component.scss'
 })
 export class SignInComponent {
   signInForm: FormGroup;
@@ -22,7 +23,6 @@ export class SignInComponent {
   }
 
   onSubmit() {
-    debugger;
     if (this.signInForm.valid) {
       const { username, password } = this.signInForm.value;
       if (this.authService.signIn(username, password)) {
