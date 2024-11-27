@@ -48,3 +48,4 @@ Thumbs.db
 platform-api/target/*
 platform-ui/.angular
 platform-ui/node_modules
+platform-ui/src/app/api-client/

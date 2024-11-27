@@ -26,9 +26,9 @@
   <main class="grid-container">
     <div *ngFor="let item of filteredItems" tuiAppearance="floating" class="item-card">
       <!-- Flexbox container for the image and details -->
-      <div class="card-content" routerLink="/community/items/{{item.id}}">
+      <div class="card-content" >
         <!-- Image Section -->
-        <div class="image-container">
+        <div class="image-container" routerLink="/community/items/{{item.id}}">
           <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
         </div>
 
@@ -37,7 +37,7 @@
         <div class="item-content">
           <div class="item-details">
             <button class="favorite"  [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton appearance="outline" size="s" type="button"></button>
-            <h2 tuiTitle>
+            <h2 routerLink="/community/items/{{item.id}}" tuiTitle>
               {{ item.name }}
             </h2>
             <span class="location">
@@ -48,13 +48,13 @@
               <span class="owner-value">{{ item.owner }}</span>
               <tui-icon icon="@tui.user-round" />
             </span>
-            <span class="shortDescription">{{ item.shortDescription }}</span>
+            <span routerLink="/community/items/{{item.id}}" class="shortDescription">{{ item.shortDescription }}</span>
 
           </div>
 
           <!-- Borrow Button -->
           <div class="item-actions">
-            <button appearance="flat" size="m"
+            <button appearance="flat" size="m" routerLink="/community/items/{{item.id}}"
               tuiButton type="button">
               Available
             </button>

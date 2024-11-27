@@ -18,7 +18,7 @@ paths:
       operationId: getHelloWorld
       summary: hello world
       tags:
-        - hello-world
+        - hello-world-api
 
       security:
         - BearerAuthOAuth: []
@@ -32,7 +32,7 @@ paths:
       operationId: login
       summary: Log user with username / password
       tags:
-        - auth
+        - auth-api
 
       security:
         - BearerAuthOAuth: []
@@ -64,7 +64,7 @@ paths:
       operationId: getItems
       summary: Get items
       tags:
-        - item
+        - item-api
       
       security:
         - BearerAuthOAuth: []
@@ -81,7 +81,7 @@ paths:
       summary: Get item
       operationId: getItem
       tags:
-        - items
+        - items-api
       
       security:
         - BearerAuthOAuth: []
@@ -98,7 +98,7 @@ paths:
       summary: Borrow an item
       operationId: borrowItem
       tags:
-        - items
+        - items-api
       
       security:
         - BearerAuthOAuth: []
@@ -123,7 +123,7 @@ paths:
       summary: Return an item
       operationId: returnItem
       tags:
-        - items
+        - items-api
       
       security:
         - BearerAuthOAuth: []
@@ -146,7 +146,8 @@ paths:
     get:
       summary: Get borrow records for a give item
       operationId: getItemBorrowRecords
-      
+      tags:
+        - items-api
       responses:
         '200':
           $ref: "#/components/responses/OK_200_GET_ITEM_BORROW_RECORDS"
@@ -157,7 +158,8 @@ paths:
     get:
       summary: Get user borrow records
       operationId: getUserBorrowRecords
-      
+      tags:
+        - users-api
       responses:
         '200':
           $ref: "#/components/responses/OK_200_GET_USER_BORROW_RECORDS"

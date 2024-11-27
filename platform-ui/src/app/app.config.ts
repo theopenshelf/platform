@@ -5,10 +5,15 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { BASE_PATH } from "./api-client";
+import { environment } from "../environments/environment";
+import { provideHttpClient } from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    { provide: BASE_PATH, useValue: environment.API_BASE_PATH },
     provideAnimations(), 
+    provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes), 
     NG_EVENT_PLUGINS, 

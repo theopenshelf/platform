@@ -11,3 +11,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 tui-root {
     --tui-background-base: $background-color;
 }
+
+select {
+    padding: 20px;
+    border-radius: 6px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(203 213 225 / 1 ) !important;
+    background-color: rgb(255 255 255 / 1) !important;
+    height: 40px;
+}

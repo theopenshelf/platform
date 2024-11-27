@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthApiService, ResponseHelloWorld, User } from '../api-client';
 
 export interface UserInfo {
   firstName: string;
@@ -14,8 +15,9 @@ export interface UserInfo {
 export class AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private userRoles: string[] = ['admin', 'community']; // Store multiple roles
+  message: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authApiService: AuthApiService) {}
 
 
   getCurrentUserInfo(): UserInfo {
@@ -27,6 +29,24 @@ export class AuthService {
   }
 
   signIn(username: string, password: string): boolean {
+
+    this.authApiService.login({
+      username: username,
+      password: password
+    }).subscribe({
+      next: (user: User) => {
+        console.log('Login successful', user);
+        // Do something with the user
+      },
+      error: (error) => {
+        console.error('Login failed', error);
+        // Handle the error
+      },
+      complete: () => {
+        console.log('Login request complete');
+      }
+    });
+  
     // Mock login (Replace with actual backend logic)
     if (username === 'admin' && password === 'password') {
       this.isAuthenticated$.next(true);
