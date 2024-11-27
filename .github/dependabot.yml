@@ -13,5 +13,6 @@ updates:
       angular-packages:
         patterns:
           - "@angular/*"
+          - "@taiga-ui/*"
           - "zone.js"
           - "rxjs"
