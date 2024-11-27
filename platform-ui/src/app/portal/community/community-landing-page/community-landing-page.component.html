@@ -16,16 +16,23 @@
             [tuiDropdown]="settings">
             <ng-template #settings>
                 <tui-data-list size="s">
-                    <button routerLink="/community/settings" class="dropdown" iconStart="@tui.settings"
-                        tuiButton type="button">
+                    <button routerLink="/community/settings" class="dropdown" iconStart="@tui.settings" tuiButton
+                        type="button">
                         Settings
                     </button>
                 </tui-data-list>
                 <tui-data-list size="s">
-                    <button routerLink="/auth/sign-out"  class="dropdown" iconStart="@tui.log-out"
-                    tuiButton type="button">
-                    Log out
-                </button>
+                    <button routerLink="/admin" class="dropdown" iconStart="@tui.lock" tuiButton
+                        type="button">
+                        Admin panel
+                    </button>
+
+                </tui-data-list>
+                <tui-data-list size="s">
+                    <button routerLink="/auth/sign-out" class="dropdown" iconStart="@tui.log-out" tuiButton
+                        type="button">
+                        Log out
+                    </button>
 
                 </tui-data-list>
             </ng-template>
@@ -35,14 +42,14 @@
     <!-- Horizontal Menu -->
     <nav id="menu" class="horizontal-menu">
         <!-- Buttons -->
-        <a routerLink="/community/items" appearance="secondary-grayscale" iconStart="@tui.package" type="button"
-            i18n="@@borrowItemButton">
+        <a routerLink="/community/items" routerLinkActive="active" appearance="secondary-grayscale"
+            iconStart="@tui.package" type="button" i18n="@@borrowItemButton">
             <tui-icon icon="@tui.package" />
             Items
         </a>
 
-        <a routerLink="/community/my-borrowed-items" iconStart="@tui.shopping-basket" appearance="secondary-grayscale"
-            tuiChevron type="button">
+        <a routerLink="/community/my-borrowed-items" routerLinkActive="active" iconStart="@tui.shopping-basket"
+            appearance="secondary-grayscale" tuiChevron type="button">
             <tui-icon icon="@tui.shopping-basket" />
 
             <span>My borrowed items</span>

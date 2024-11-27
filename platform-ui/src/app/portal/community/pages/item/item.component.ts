@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TuiButton, TuiDialogService, TuiMarkerHandler } from '@taiga-ui/core';
+import { TuiButton, TuiDialogService, TuiIcon, TuiMarkerHandler } from '@taiga-ui/core';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { StarRatingComponent } from '../../../../components/star-rating/star-rating.component';
 import { CalendarModule, DateAdapter, CalendarEvent, CalendarUtils, CalendarA11y, CalendarDateFormatter, CalendarEventTitleFormatter } from 'angular-calendar';
@@ -26,7 +26,13 @@ const plusTen = today.append({ day: 10 });
 
 @Component({
   standalone: true,
-  imports: [TuiCalendarRange, CommonModule, TuiButton, StarRatingComponent, CalendarModule, ReactiveFormsModule, TuiInputDateRangeModule],
+  imports: [
+    TuiCalendarRange, 
+    CommonModule, 
+    TuiButton, 
+    TuiIcon, 
+    ReactiveFormsModule, 
+    TuiInputDateRangeModule],
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
@@ -97,5 +103,18 @@ export class ItemComponent {
         }
       });
     });
+  }
+
+  protected getCategoryBadgeClass(category: string): string {
+    switch (category) {
+        case 'books':
+            return 'badge badge-books';
+        case 'electronics':
+            return 'badge badge-electronics';
+        case 'clothing':
+            return 'badge badge-clothing';
+        default:
+            return '';
+    }
   }
 }

@@ -3,7 +3,7 @@ import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout/components/card';
 import { TuiHeader } from '@taiga-ui/layout/components/header';
-import { TuiTextfield } from "@taiga-ui/core";
+import { TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -18,6 +18,7 @@ import { Category, Item, ItemsService } from '../../services/items.service';
   selector: 'app-items',
   imports: [
     RouterLink,
+    TuiIcon,
     CommonModule,
     TuiAppearance,
     TuiCardLarge,

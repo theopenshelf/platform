@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
 import { Category, ItemsService } from '../../services/items.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true, 
     selector: 'app-myborroweditems',
-    imports: [FormsModule, NgForOf, NgClass, TuiTable],
+    imports: [RouterLink, FormsModule, NgForOf, NgClass, TuiTable],
     templateUrl: './myborroweditems.component.html',
     styleUrls: ['./myborroweditems.component.scss']
 })

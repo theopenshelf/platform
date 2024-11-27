@@ -34,7 +34,7 @@ export class NotificationsService {
                 "item": {
                     id: "2",
                     name: 'Harry Potter Book',
-                    imageUrl: '/terraforming-mars.png',
+                    imageUrl: '/items/terraforming-mars.png',
                     category: 'books',
                 }
             }
@@ -49,7 +49,7 @@ export class NotificationsService {
                 "item": {
                     id: "4",
                     name: 'Smartphone Pro',
-                    imageUrl: '/terraforming-mars.png',
+                    imageUrl: '/items/terraforming-mars.png',
                     category: 'electronics',
                 }
             }
@@ -64,7 +64,7 @@ export class NotificationsService {
                 "item": {
                     id: "4",
                     name: 'Smartphone Pro',
-                    imageUrl: '/terraforming-mars.png',
+                    imageUrl: '/items/terraforming-mars.png',
                     category: 'electronics',
                 }
             }
@@ -79,7 +79,7 @@ export class NotificationsService {
                 "item": {
                     id: "6",
                     name: 'The Great Gatsby',
-                    imageUrl: '/terraforming-mars.png',
+                    imageUrl: '/items/terraforming-mars.png',
                     category: 'books',
                 }
             }

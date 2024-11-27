@@ -39,6 +39,7 @@ const ICON =
         standalone: true, 
     selector: 'app-community-landing-page',
     imports: [
+        RouterLinkActive,
         CommonModule,
         NotificationsPopupComponent,
         RouterOutlet,

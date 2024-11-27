@@ -1,63 +1,69 @@
 <div class="layout-container">
   <!-- Left Sidebar -->
   <aside class="sidebar">
-    <button class="add-item" routerLink="/community/item/add"
-        i18n="@@borrowButton" appearance="primary" size="m" tuiButton type="button">
+    <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
+      tuiButton type="button">
       Add item
     </button>
     <!-- Text Filter Input -->
     <fieldset tuiTextfieldSize="s" class="search">
       <tui-textfield iconStart="@tui.search">
-        <input
-        [(ngModel)]="searchText"
-            placeholder="Search"
-            tuiTextfield
-            (input)="onTextFilterChange()"
-        />
-        </tui-textfield>
+        <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
+      </tui-textfield>
     </fieldset>
 
     <!-- Category Filter -->
     <div class="filter-group">
       <span i18n="@@categoryFilter">Category</span>
       <label *ngFor="let category of categories">
-        <input 
-          type="checkbox" 
-          [value]="category.value" 
-          (change)="onCategoryChange($event)"
-        >
+        <input type="checkbox" [value]="category.value" (change)="onCategoryChange($event)">
         {{ category.label }}
       </label>
     </div>
   </aside>
 
-  <!-- Main Content Area (Grid of Items) -->
+
   <main class="grid-container">
-    <div 
-      *ngFor="let item of filteredItems" 
-      tuiAppearance="floating" 
-      tuiCardLarge
-      class="item-card"
-    >
-      <!-- Image Section -->
-      <div class="image-container">
-        <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
-      </div>
+    <div *ngFor="let item of filteredItems" tuiAppearance="floating" class="item-card">
+      <!-- Flexbox container for the image and details -->
+      <div class="card-content" routerLink="/community/items/{{item.id}}">
+        <!-- Image Section -->
+        <div class="image-container">
+          <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+        </div>
 
-      <!-- Item Details -->
-      <div class="item-details">
-        <h2 tuiTitle>
-          {{ item.name }}
-          <span tuiSubtitle>{{ item.shortDescription }}</span>
-        </h2>
-      </div>
+        <!-- Item Details -->
 
-      <!-- Borrow Button -->
-      <div class="item-actions">
-        <button routerLink="/community/items/{{item.id}}"
-        i18n="@@borrowButton" appearance="secondary" size="m" tuiButton type="button">
-          Borrow
-        </button>
+        <div class="item-content">
+          <div class="item-details">
+            <button class="favorite"  [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton appearance="outline" size="s" type="button"></button>
+            <h2 tuiTitle>
+              {{ item.name }}
+            </h2>
+            <span class="location">
+              <span class="location-value">{{ item.located }}</span>
+              <tui-icon icon="@tui.map-pin" />
+            </span>
+            <span class="owner">
+              <span class="owner-value">{{ item.owner }}</span>
+              <tui-icon icon="@tui.user-round" />
+            </span>
+            <span class="shortDescription">{{ item.shortDescription }}</span>
+
+          </div>
+
+          <!-- Borrow Button -->
+          <div class="item-actions">
+            <button appearance="flat" size="m"
+              tuiButton type="button">
+              Available
+            </button>
+            <button  class="borrow-counts" appearance="flat" size="m"tuiButton type="button">
+              {{ item.borrowCount }} borrow(s)
+          </button>
+
+          </div>
+        </div>
       </div>
     </div>
   </main>

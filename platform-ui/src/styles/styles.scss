@@ -1,9 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
 @use 'theme' as *;
 
-body {
-    background-color: #efefef;
+body tui-root {
+    background-color: $background-color;
     font-family: "Inter var", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+tui-root {
+    --tui-background-base: $background-color;
+}

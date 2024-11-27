@@ -11,7 +11,6 @@
 /* Add item container */
 .add-item {
     width: 100%;
-    background-color: $accent-color;
 }
 
 .add-item:hover {
@@ -28,10 +27,12 @@
 /* Sidebar styling */
 .sidebar {
     width: 250px;
-    background-color: $light-color; /* Light gray background from theme */
+    background-color: $white; /* Light gray background from theme */
     padding: 1rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
+    border: 1px solid rgb(226, 232, 240);
+    border-radius: 16px;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, ;
+    margin-top: 17px;
 }
 
 /* Filter group styling */
@@ -51,11 +52,12 @@
     margin-bottom: 0.5rem;
 }
 
+
 /* Grid container styling */
 .grid-container {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
     gap: 1rem;
     padding: 1rem;
     box-sizing: border-box;
@@ -64,14 +66,14 @@
 /* Card styling */
 .item-card {
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Align children (image + content) horizontally */
     justify-content: space-between;
-    background-color: $white; /* White background from theme */
-    border: 1px solid $neutral-color; /* Use theme border color */
-    border-radius: 8px;
+    background-color: #fff;
+    border: 1px solid rgb(226, 232, 240);
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+    text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -80,12 +82,17 @@
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Image container styling */
-.image-container {
+/* Card container for image + content */
+.card-content {
+    display: flex;
     width: 100%;
-    aspect-ratio: 1 / 1; /* Keeps the image container square */
-    overflow: hidden;
-    background-color: $dark-color; /* Light gray background for images */
+}
+
+/* Image Section */
+.image-container {
+    width: 40%; /* Image takes 1/3 of the card's width */
+    height: 200px;
+    border-right: 1px solid #ccc;
 }
 
 .item-image {
@@ -94,49 +101,63 @@
     object-fit: cover;
 }
 
-/* Item details styling */
+.item-content {
+    padding: 5%;
+    width: 50%; /* The content section takes the remaining 2/3 of the width */
+  
+}
+/* Item Details Section (2/3 of the card's width) */
 .item-details {
-    padding: 1rem;
+    height: 80%; /* The content section takes the remaining 2/3 of the width */
 }
 
-.item-details h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: $dark-color; /* Dark text for item title */
-}
-
-.item-details span {
-    display: block;
-    margin-top: 0.5rem;
-    color: $dark-color; /* Muted text for additional details */
-    font-size: 0.9rem;
-}
-
-/* Item actions styling */
+/* Item Actions Section */
 .item-actions {
-    padding: 1rem;
-    background-color: $white; /* Light background for actions */
-    border-top: 1px solid $neutral-color; /* Border to separate actions */
-}
+    padding: 2% 0;
+    height: 14%; /* The content section takes the remaining 2/3 of the width */
+    border-top: 1px solid rgb(226, 232, 240);
+    display: flex;
 
-/* Button or action links styling */
+}
 .item-actions button {
-    background-color: $accent-color; /* Primary color for actions */
-    color: $white; /* White text */
-    border: none;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    border-radius: 30px;
+    font-size: small;
+    font-weight: 600;
 }
 
-.item-actions button:hover {
-    background-color: darken($secondary-color, 10%); /* Darken primary color on hover */
+.borrow-counts {
+    color: $dark-color;
+    margin-left: auto; /* Push this button to the right */
 }
 
-.item-actions button:disabled {
-    background-color: $secondary-color; /* Disabled button color */
-    cursor: not-allowed;
+.favorite {
+    float: right;
+    border-radius: 30px;
+    padding: 10px;
+    width: 30px;
+    height: 30px;
+    color: #ccc;
+}
+
+.favorite.selected {
+    color: $accent-color;
+}
+
+.location tui-icon, .owner tui-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: -3px;
+}
+
+.location, .owner {
+    color: rgb(100, 116, 139);
+    padding-right: 5px;
+    line-height: 16px;
+    vertical-align: middle; /* Adjust alignment within the line */
+}
+
+.shortDescription {
+    display: block;
+    padding-top: 5px;
 }

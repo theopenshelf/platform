@@ -4,6 +4,7 @@
 table {
     width: 100%;
     border-spacing: 0;
+    background-color: $white;
 }
 
 table td, table th {
@@ -30,6 +31,10 @@ th span {
     margin-left: 4px;
 }
 
+tr:hover {
+    background-color: $light-color;
+}
+
 /* Filtering section styles */
 .filters {
     display: flex;
@@ -51,7 +56,10 @@ th span {
     background-color: $white; /* Light background from theme */
     cursor: pointer;
 }
-
+.item-image {
+    max-width: 50px;
+    max-height: 50px;
+}
 /* Badge styles */
 .badge {
     display: inline-block;

@@ -23,8 +23,9 @@
     <table tuiTable [size]="size">
         <thead>
             <tr>
+                <th tuiTh></th>
                 <th tuiTh (click)="sort('name')">Item Name {{ getSortIndicator('name') }}</th>
-                <th tuiTh (click)="sort('description')">Description {{ getSortIndicator('description') }}</th>
+                <th tuiTh (click)="sort('location')">Location {{ getSortIndicator('location') }}</th>
                 <th tuiTh (click)="sort('category')">Category {{ getSortIndicator('category') }}</th>
                 <th tuiTh (click)="sort('startDate')">Borrowed On {{ getSortIndicator('borrowedOn') }}</th>
                 <th tuiTh (click)="sort('endDate')">Due Date {{ getSortIndicator('dueDate') }}</th>
@@ -32,9 +33,10 @@
             </tr>
         </thead>
         <tbody tuiTbody>
-            <tr *ngFor="let item of filteredAndSortedData">
+            <tr routerLink="/community/items/{{item.id}}" *ngFor="let item of filteredAndSortedData">
+                <td tuiTd><img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" /></td>
                 <td tuiTd>{{ item.name }}</td>
-                <td tuiTd>{{ item.description }}</td>
+                <td tuiTd>{{ item.located }}</td>
                 <td tuiTd>
                     <span [ngClass]="getCategoryBadgeClass(item.category)">
                         {{ item.category }}

@@ -24,9 +24,29 @@
   
     <!-- Details Section -->
     <div class="details">
+      <div class="top-right-details">
+        <button  class="borrow-counts" appearance="flat" size="m"tuiButton type="button">
+          {{ item.borrowCount }} borrow(s)
+      </button>
+      <button class="favorite"  [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton appearance="outline" size="s" type="button"></button>
+      <button class="edit"  iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
+    </div>
       <h1>{{ item.name }}</h1>
-      <div>
-        Rating: <app-star-rating [rating]="3.5"></app-star-rating>
+      <div class="categories">
+        <button tuiButton   appearance="primary" type="button" size="s" [ngClass]="getCategoryBadgeClass(item.category)">
+          {{ item.category }}
+        </button>
+      </div>
+      <div class="attributes">
+        <span class="location">
+          <tui-icon icon="@tui.map-pin" />
+          <span class="location-value">{{ item.located }}</span>
+        </span>
+        <span class="owner">
+          <tui-icon icon="@tui.user-round" />
+          <span class="owner-value">{{ item.owner }}</span>
+        </span>
+
       </div>
       <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
 
