@@ -28,7 +28,7 @@
     "@taiga-ui/cdk": "^4.15.0",
     "@taiga-ui/core": "^4.16.0",
     "@taiga-ui/event-plugins": "^4.0.2",
-    "@taiga-ui/icons": "^4.15.0",
+    "@taiga-ui/icons": "^4.17.0",
     "@taiga-ui/kit": "^4.15.0",
     "@taiga-ui/layout": "^4.15.0",
     "angular-calendar": "^0.31.1",
