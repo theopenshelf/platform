@@ -11,7 +11,7 @@ import org.springframework.security.web.server.context.ServerSecurityContextRepo
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerWebExchange;
 
-import dev.theopenshelf.platform.api.AuthApiDelegate;
+import dev.theopenshelf.platform.api.AuthApiApiDelegate;
 import dev.theopenshelf.platform.model.LoginRequest;
 import dev.theopenshelf.platform.model.User;
 import dev.theopenshelf.platform.respositories.UsersRepository;
@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AuthApi implements AuthApiDelegate {
+public class AuthApi implements AuthApiApiDelegate {
     private final ReactiveAuthenticationManager authenticationManager;
     private final UsersRepository usersRepository;
     private final ServerSecurityContextRepository serverSecurityContextRepository;

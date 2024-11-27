@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ServerWebExchange;
 
-import dev.theopenshelf.platform.api.HelloWorldApiDelegate;
+import dev.theopenshelf.platform.api.HelloWorldApiApiDelegate;
 import dev.theopenshelf.platform.model.ResponseHelloWorld;
 import dev.theopenshelf.platform.services.ItemsService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class HelloWorldApi implements HelloWorldApiDelegate {
+public class HelloWorldApi implements HelloWorldApiApiDelegate {
 
     @Autowired
     private ItemsService itemsService;
