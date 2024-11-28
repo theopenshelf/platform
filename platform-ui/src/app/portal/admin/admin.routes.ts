@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
 import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
-import { UsersComponent } from './users/users.component';
-import { ItemsComponent } from './items/items.component';
-import { SecurityComponent } from './security/security.component';
+import { UsersComponent } from './pages/users/users.component';
+import { ItemsComponent } from './pages/items/items.component';
+import { SecurityComponent } from './pages/security/security.component';
 
 
 export const ADMIN_ROUTES: Routes = [

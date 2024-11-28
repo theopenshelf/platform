@@ -13,11 +13,12 @@ import {
 } from '@taiga-ui/core';
 import { NgForOf } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { TuiAvatar, TuiConfirmData } from '@taiga-ui/kit';
+import { TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/kit';
 import {TuiResponsiveDialogService} from '@taiga-ui/addon-mobile';
 import {TuiAlertService} from '@taiga-ui/core';
 import {TUI_CONFIRM} from '@taiga-ui/kit';
 import {switchMap} from 'rxjs';
+import { UsersService } from '../../services/users.service';
 
 export type User = {
     username: string;
@@ -32,6 +33,7 @@ export type User = {
 @Component({
     standalone: true,
     imports: [
+        TuiCheckbox,
         TuiDialog,
         TuiButton,
         TuiAutoColorPipe,
@@ -43,41 +45,29 @@ export type User = {
         TuiDropdown,
         TuiTable,
         TuiTitle,
+        TuiIcon,
+        TuiLink
     ],
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent {
     // Default Table Size
     protected readonly size = 'm';
+    protected users: User[] = [];
+    protected sortedUsers: User[] = [];
 
     constructor(
         private dialogs: TuiResponsiveDialogService,
-        private alerts: TuiAlertService
-    ) {}
+        private alerts: TuiAlertService,
+        private usersService: UsersService
+    ) {
+        this.users = usersService.getUsers();
+    }
     // Mock Users Data
-    protected readonly users: User[] = [
-        {
-            username: 'johndoe',
-            email: 'johndoe@example.com',
-            flatNumber: '12A',
-            address: '123 Main St, Cityville',
-            borrowedItems: 5,
-            returnedLate: 1,
-            successRate: 80,
-        },
-        {
-            username: 'janedoe',
-            email: 'janedoe@example.com',
-            flatNumber: '3B',
-            address: '456 Elm St, Townsville',
-            borrowedItems: 10,
-            returnedLate: 0,
-            successRate: 100,
-        },
-    ];
+   
 
     // Available Columns for Display
     availableColumns = [
@@ -89,20 +79,22 @@ export class UsersComponent {
         { key: 'successRate', label: '% of Late', visible: true },
     ];
 
-    updateVisibleColumns(): void {
-        this.visibleColumns = this.availableColumns.filter((column) => column.visible);
-    }
-    ngOnInit(): void {
-        this.updateVisibleColumns();
-    }
-
-    // Default Visible Columns
+        // Default Visible Columns
     visibleColumns = [...this.availableColumns];
 
     // Current Sorting Column
     currentSort: string = '';
     sortOrder: { [key: string]: boolean } = {};  // True for ascending, false for descending
-    sortedUsers = [...this.users];
+
+    updateVisibleColumns(): void {
+        this.visibleColumns = this.availableColumns.filter((column) => column.visible);
+    }
+    ngOnInit(): void {
+        this.updateVisibleColumns();
+        this.users = this.usersService.getUsers();
+            // Current Sorting Column
+        this.sortedUsers = [...this.users];
+    }
 
     // Sort function with toggle for ascending/descending
     sort(column: string): void {
@@ -148,4 +140,22 @@ export class UsersComponent {
             .pipe(switchMap((response) => this.alerts.open('User <strong>' + username + '</strong> deleted successfully', {appearance: 'positive'})))
             .subscribe();
     }
+
+    disableUser(username: String): void {
+        const data: TuiConfirmData = {
+            content: 'Are you sure you want to disable this user?',  // Simple content
+            yes: 'Yes, Disable',
+            no: 'Cancel',
+        };
+ 
+        this.dialogs
+            .open<boolean>(TUI_CONFIRM, {
+                label: "Disable user '" +username + "'",
+                size: 'm',
+                data,
+            })
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + username + '</strong> Disable successfully', {appearance: 'positive'})))
+            .subscribe();
+    }
+
 }

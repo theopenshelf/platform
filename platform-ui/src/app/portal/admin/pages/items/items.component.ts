@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import {TuiCell} from '@taiga-ui/layout';
+import { Item, ItemsService } from '../../services/items.service';
 
 @Component({
     standalone: true, 
@@ -42,6 +43,8 @@ import {TuiCell} from '@taiga-ui/layout';
         TuiStatus,
         TuiTable,
         TuiTitle,
+        TuiButton,
+        TuiIcon,
     ],
     selector: 'app-items',
     templateUrl: './items.component.html',
@@ -51,36 +54,13 @@ import {TuiCell} from '@taiga-ui/layout';
 export class ItemsComponent {
     protected readonly size = 'm'; // Default table size
 
-    protected readonly items = [
-        {
-            id: 1,
-            name: 'Harry Potter and the Philosopher\'s Stone',
-            picture: 'assets/images/harry-potter.jpg',
-            categories: ['Books', 'Fantasy'],
-            borrows: 120,
-            lateReturnPercentage: 5,
-            averageDuration: 14,
-            state: { label: 'Available', statusColor: 'positive' },
-        },
-        {
-            id: 2,
-            name: 'The Great Gatsby',
-            picture: 'assets/images/great-gatsby.jpg',
-            categories: ['Books', 'Classics'],
-            borrows: 85,
-            lateReturnPercentage: 10,
-            averageDuration: 12,
-            state: { label: 'Checked Out', statusColor: 'warning' },
-        },
-        {
-            id: 3,
-            name: 'MacBook Pro 16"',
-            picture: 'assets/images/macbook-pro.jpg',
-            categories: ['Electronics'],
-            borrows: 15,
-            lateReturnPercentage: 0,
-            averageDuration: 30,
-            state: { label: 'Under Maintenance', statusColor: 'negative' },
-        },
-    ];
+    items: Item[] = [];
+
+    public constructor(private itemsService: ItemsService) {
+    }
+
+    ngOnInit() {
+        // Fetch the items from the service
+        this.items = this.itemsService.getItems();
+    }
 }

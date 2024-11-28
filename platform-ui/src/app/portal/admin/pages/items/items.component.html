@@ -1,8 +1,13 @@
-<table
-    tuiTable
-    [size]="size"
-    [style.width.rem]="58"
->
+<div class="top-actions">
+    <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="m"
+    tuiButton type="button">
+    <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
+
+    Add item
+</button>
+</div>
+
+<table tuiTable>
     <thead>
         <tr>
             <th tuiTh>Item Name</th>
@@ -21,13 +26,13 @@
                 <span tuiTitle>{{ item.name }}</span>
             </td>
             <td tuiTd>
-                <tui-avatar [src]="item.picture"  size="m"></tui-avatar>
+                <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
             </td>
             <td tuiTd>
-                <tui-badge *ngFor="let category of item.categories">{{ category }}</tui-badge>
+                <tui-badge>{{ item.category }}</tui-badge>
             </td>
             <td tuiTd>
-                <span tuiTitle>{{ item.borrows }}</span>
+                <span tuiTitle>{{ item.borrowCount }}</span>
             </td>
             <td tuiTd>
                 <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
@@ -39,16 +44,14 @@
                 <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
             </td>
             <td tuiTd>
-                <div [tuiCell]="size">
-                    <button
-                        appearance="action"
-                        tuiLink
-                        type="button"
-                        [routerLink]="['/admin/item', item.id, 'edit']"
-                    >
-                        Edit
-                    </button>
-                </div>
+                <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+                    size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+                    Edit
+                </button>
+                <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
+                    [style.border-radius.%]="100">
+                    Archive
+                </button>
             </td>
         </tr>
     </tbody>

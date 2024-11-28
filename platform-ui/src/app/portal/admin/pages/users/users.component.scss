@@ -26,6 +26,7 @@ thead th {
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
+  background-color: $light-color;
 }
 
 tbody td {
@@ -77,7 +78,7 @@ tbody tr+tr {
 
 /* Hover effect for table rows (optional) */
 tbody tr:hover {
-  background-color: $dark-color; /* Subtle hover effect using theme */
+  background-color: $light-color; /* Subtle hover effect using theme */
   /* Lighter background on hover */
 }
 
@@ -92,4 +93,17 @@ tui-dialog {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.top-actions {
+  padding: 5px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }

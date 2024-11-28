@@ -1,9 +1,19 @@
 @use 'theme' as *;
 
-#main-admin {
-    padding: 20px;
+/* General styling for main navigation */
+main {
+    border: none;
+    padding: 0 10px;
+    padding-top: 20px;
+    width: 100%;
 }
 
 #logo {
     width: 40px;
+}
+
+/* Dropdown button */
+button.dropdown {
+    min-width: 200px;
+    justify-content: flex-start;
 }
