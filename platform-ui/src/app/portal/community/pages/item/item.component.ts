@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TuiButton, TuiDialogService, TuiIcon, TuiMarkerHandler } from '@taiga-ui/core';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
@@ -66,7 +66,8 @@ export class ItemComponent {
     return this.item ? this.sanitizer.bypassSecurityTrustHtml(this.item.description) : '';
   }
   // Marker handler based on borrow records
-  protected readonly markerHandler: TuiMarkerHandler = (day: TuiDay) => {
+  protected markerHandler = (day: TuiDay): [string] => {
+    this.updateCellAvailability();
     for (const record of this.records) {
       const startDate = TuiDay.fromLocalNativeDate(new Date(record.startDate));
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
@@ -87,18 +88,18 @@ export class ItemComponent {
     }
   }
 
-  ngAfterViewInit() {
+  updateCellAvailability() {
     setTimeout(() => {
       const cells = document.querySelectorAll('.t-cell');
       cells.forEach(cell => {
         const dot = cell.querySelector('.t-dot');
+        cell.classList.remove('not-available');
+        cell.classList.remove('t-cell_disabled');
         if (dot) {
           const dotColor = window.getComputedStyle(dot).backgroundColor;
           if (dotColor !== "rgba(0, 0, 0, 0)") {
-
             cell.classList.add('not-available');
             cell.classList.add('t-cell_disabled');
-
           }
         }
       });
