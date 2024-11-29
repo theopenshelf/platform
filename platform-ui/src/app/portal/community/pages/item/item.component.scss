@@ -114,15 +114,18 @@ form {
 }
 
 /* Borrow Button */
-button#borrow {
+button#borrow, button#cancel {
   width: 100%;
   margin-top: 10px;
-  background-color: $accent-color; /* Primary button color */
-  color: $white; /* White text */
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+}
+
+button#borrow {
+  background-color: $accent-color; /* Primary button color */
+  color: $white; /* White text */
 }
 
 button#borrow:hover {
@@ -178,9 +181,20 @@ button#borrow:hover {
   border-radius: 30px;
 }
 
-.favorite {
+.sidebar .details {
+  width: 100%;
+  padding-right: 10px;
+}
+
+.top-left-details {
+  float: right;
+  margin-bottom: 10px;
+}
+
+.favorite, .reservation-state {
   border-radius: 30px;
-  padding: 10px;
+  padding: 20px;
+  margin: 5px;
   width: 30px;
   height: 30px;
   color: #ccc;

@@ -32,6 +32,7 @@ export interface BorrowItem extends Item {
     providedIn: 'root',
 })
 export class ItemsService {
+
     getMyOwnedItems(): Item[] {
         return this.items;
     }
@@ -232,41 +233,35 @@ export class ItemsService {
         return item;
     }
 
+    private borrowedItems: BorrowItem[] = [];
+
+    borrowItem(item: Item, startDate: string, endDate: string): BorrowItem {
+        const borrowedItem = {
+            ...item,
+            record: { borrowedBy: 'me@example.com', startDate, endDate }
+        } as BorrowItem;
+        
+        this.borrowedItems.push(borrowedItem);
+        return borrowedItem;
+    }
+
     getMyBorrowItems(): BorrowItem[] {
-        const today = new Date();
+        return this.borrowedItems;
+    }
+
+    cancelReservation(borrowRecord: BorrowItem) {
+        const index = this.borrowedItems.findIndex(item => item.id === borrowRecord.id);
+        if (index !== -1) {
+            this.borrowedItems.splice(index, 1);
+        }
+    }
     
-        // Helper to add days to a date
-        const addDays = (date: Date, days: number): Date => {
-            const newDate = new Date(date);
-            newDate.setDate(newDate.getDate() + days);
-            return newDate;
-        };
-    
-        // Helper to format date as YYYY-MM-DD
-        const formatDate = (date: Date): string =>
-            date.toISOString().split('T')[0];
-    
-        return this.items
-            .filter(i => parseInt(i.id, 10) % 3 === 0 || parseInt(i.id, 10) % 4 === 0) // Filter items based on id
-            .map(i => {
-                const id = parseInt(i.id, 10);
-    
-                // Randomize dates based on the item id
-                const startOffset = id % 5 - 2; // Range: -2 to +2
-                const endOffset = startOffset + Math.abs(id % 7) + 1; // Always after start date
-    
-                const startDate = addDays(today, startOffset);
-                const endDate = addDays(startDate, endOffset);
-    
-                return {
-                    ...i, // Spread existing item properties
-                    record: {
-                        borrowedBy: 'me@example.com',
-                        startDate: formatDate(startDate),
-                        endDate: formatDate(endDate),
-                    },
-                } as BorrowItem;
-            });
+    getMyBorrowItem(id: string): BorrowItem {
+        const item = this.borrowedItems.find(item => item.id === id);
+        if (!item) {
+            throw new Error(`Borrowed item with id ${id} not found`);
+        }
+        return item;
     }
 
 }

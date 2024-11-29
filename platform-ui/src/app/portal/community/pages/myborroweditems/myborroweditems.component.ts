@@ -43,7 +43,9 @@ export class MyborroweditemsComponent {
   // Helper function to calculate item status
   protected computeStatus(borrowedOn: string, dueDate: string): 'Reserved' | 'Currently Borrowed' | 'Returned' {
     const now = new Date();
-    const borrowed = new Date(borrowedOn);
+    let [day, month, year] = borrowedOn.split('/'); // Split into parts
+    const borrowed = new Date(`${year}-${month}-${day}`);
+    [day, month, year] = dueDate.split('/'); // Split into parts
     const due = new Date(dueDate);
 
     if (now < borrowed) {
@@ -58,7 +60,8 @@ export class MyborroweditemsComponent {
   // Format Borrowed On and Due Date dynamically
   protected formatDate(date: string, column: 'startDate' | 'endDate', status: string): string {
     const now = new Date();
-    const targetDate = new Date(date);
+    const [day, month, year] = date.split('/'); // Split into parts
+    const targetDate = new Date(`${year}-${month}-${day}`); 
 
     // Normalize dates to midnight for consistent day difference calculation
     const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -143,7 +146,8 @@ export class MyborroweditemsComponent {
     switch (column) {
       case 'startDate':
       case 'endDate':
-        return new Date(item["record"][column]); // Sort by actual date
+        let [day, month, year] = item["record"][column].split('/'); // Split into parts
+        return new Date(`${year}-${month}-${day}`); // Sort by actual date
       case 'status':
         const status = this.computeStatus(item.record.startDate, item.record.endDate);
         return this.statusPriority[status]; // Sort by status priority
