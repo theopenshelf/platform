@@ -102,8 +102,11 @@
 }
 
 .item-content {
-    padding: 5%;
-    width: 50%; /* The content section takes the remaining 2/3 of the width */
+    padding-top: 10px;
+    padding-bottom: 5%;
+    padding-left:  3%;
+    padding-right: 2%;
+    width: 55%; /* The content section takes the remaining 2/3 of the width */
   
 }
 /* Item Details Section (2/3 of the card's width) */
@@ -130,10 +133,17 @@
     margin-left: auto; /* Push this button to the right */
 }
 
-.favorite {
+
+.item-details-top-right {
     float: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.favorite, .reservation-state {
     border-radius: 30px;
-    padding: 10px;
+    padding: 20px;
+    margin: 2px;
     width: 30px;
     height: 30px;
 }

@@ -10,7 +10,7 @@
           [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button" (click)="markAsFavorite()"></button>
         <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
           [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
-          [tuiHint]="borrowItemRecord ? 'Reserved from ' + borrowItemRecord.record.startDate + ' to ' + borrowItemRecord.record.endDate : ''"></button>
+          [tuiHint]="borrowItemRecord ? 'Reserved from ' + borrowItemRecord.record.startDate + ' to ' + borrowItemRecord.record.endDate : 'No reservation yet'"></button>
       </div>
     </div>
     <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />

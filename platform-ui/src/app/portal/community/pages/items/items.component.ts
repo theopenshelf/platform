@@ -3,7 +3,7 @@ import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout/components/card';
 import { TuiHeader } from '@taiga-ui/layout/components/header';
-import { TuiIcon, TuiTextfield } from "@taiga-ui/core";
+import { TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -11,12 +11,13 @@ import {
   TuiButton,
   TuiTitle,
 } from '@taiga-ui/core';
-import { Category, Item, ItemsService } from '../../services/items.service';
+import { Category, Item, ItemsService, ItemWithRecords } from '../../services/items.service';
 
 @Component({
   standalone: true,
   selector: 'app-items',
   imports: [
+    TuiHint,
     RouterLink,
     TuiIcon,
     CommonModule,
@@ -39,13 +40,13 @@ export class ItemsComponent {
   selectedCategories: Set<string> = new Set();
   // Text input for search filtering
   searchText = '';
-  items: Item[] = [];
+  items: ItemWithRecords[] = [];
 
   constructor(private itemsService: ItemsService) { }
 
   ngOnInit() {
     // Fetch the items from the service
-    this.items = this.itemsService.getItems();
+    this.items = this.itemsService.getItemsWithRecords();
     this.categories = this.itemsService.getCaterogies();
   }
 

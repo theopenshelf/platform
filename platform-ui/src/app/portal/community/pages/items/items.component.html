@@ -26,7 +26,7 @@
   <main class="grid-container">
     <div *ngFor="let item of filteredItems" tuiAppearance="floating" class="item-card">
       <!-- Flexbox container for the image and details -->
-      <div class="card-content" >
+      <div class="card-content">
         <!-- Image Section -->
         <div class="image-container" routerLink="/community/items/{{item.id}}">
           <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
@@ -37,7 +37,16 @@
 
         <div class="item-content">
           <div class="item-details">
-            <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button" (click)="markAsFavorite(item)"></button>
+            <div class="item-details-top-right">
+              <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
+                [appearance]="item.myBooking ? 'primary' : 'outline'" size="m" type="button"
+                [tuiHint]="item.myBooking ? 'Reserved from ' + item.myBooking.startDate + ' to ' + item.myBooking.endDate : 'No reservation yet'">
+              </button>
+
+              <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
+                [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
+                (click)="markAsFavorite(item)"></button>
+            </div>
             <h2 routerLink="/community/items/{{item.id}}" tuiTitle>
               {{ item.name }}
             </h2>
@@ -50,18 +59,22 @@
               <tui-icon icon="@tui.user-round" />
             </span>
             <span routerLink="/community/items/{{item.id}}" class="shortDescription">{{ item.shortDescription }}</span>
-            
+
           </div>
 
           <!-- Borrow Button -->
           <div class="item-actions">
-            <button appearance="flat" size="m" routerLink="/community/items/{{item.id}}"
+            <button *ngIf="!item.isBookedToday" appearance="outline" size="m" routerLink="/community/items/{{item.id}}"
               tuiButton type="button">
-              Available
+              Available now
             </button>
-            <button  class="borrow-counts" appearance="flat" size="m"tuiButton type="button">
+            <button *ngIf="item.isBookedToday" appearance="secondary" size="m" routerLink="/community/items/{{item.id}}"
+              tuiButton type="button">
+              Currently borrowed
+            </button>
+            <button class="borrow-counts" appearance="flat" size="m" tuiButton type="button">
               {{ item.borrowCount }} borrow(s)
-          </button>
+            </button>
 
           </div>
         </div>

@@ -28,6 +28,12 @@ export interface BorrowItem extends Item {
     record: BorrowRecord;
 }
 
+export type ItemWithRecords = Item & {
+    borrowRecords: BorrowRecord[];
+    isBookedToday: boolean;
+    myBooking: BorrowRecord | undefined;
+};
+
 @Injectable({
     providedIn: 'root',
 })
@@ -189,6 +195,27 @@ export class ItemsService {
         return this.items;
     }
 
+    getItemsWithRecords(): ItemWithRecords[] {
+
+        return this.items.map(item => {
+            const borrowRecords = this.getItemBorrowRecords(item.id);
+            const today = new Date().toISOString().split('T')[0];
+
+            const itemWithRecords: ItemWithRecords = {
+                ...item,
+                borrowRecords,
+                isBookedToday: borrowRecords.some(record => 
+                    record.startDate <= today && today <= record.endDate
+                ),
+                myBooking: borrowRecords.find(record =>
+                    record.borrowedBy === 'me@example.com' && record.startDate > today
+                )
+            };
+
+            return itemWithRecords;
+        });
+    }
+
     getItem(id: string): Item {
         return this.items.find((i) => i.id === id) as Item;
     }
@@ -206,11 +233,6 @@ export class ItemsService {
             date.toISOString().split('T')[0]; // YYYY-MM-DD format
         const myBorrowItem = this.getMyBorrowItem(id);
         const records = [
-            {
-                borrowedBy: 'me@example.com', 
-                startDate: formatDate(addDays(today, 3)),
-                endDate: formatDate(addDays(today, 6)),
-            },
             {
                 borrowedBy: 'someone_else@example.com',
                 startDate: formatDate(addDays(today, 15)), 
