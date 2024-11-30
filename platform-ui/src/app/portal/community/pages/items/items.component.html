@@ -37,7 +37,7 @@
 
         <div class="item-content">
           <div class="item-details">
-            <button class="favorite"  [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton appearance="outline" size="s" type="button"></button>
+            <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button" (click)="markAsFavorite(item)"></button>
             <h2 routerLink="/community/items/{{item.id}}" tuiTitle>
               {{ item.name }}
             </h2>

@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiMarkerHandler } from '@taiga-ui/core';
-import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
+import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { StarRatingComponent } from '../../../../components/star-rating/star-rating.component';
 import { CalendarModule, DateAdapter, CalendarEvent, CalendarUtils, CalendarA11y, CalendarDateFormatter, CalendarEventTitleFormatter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -15,12 +15,10 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 
-const TWO_DOTS: [string, string] = [
-  'var(--tui-background-accent-1)',
-  'var(--tui-status-info)',
-];
-const ONE_DOT: [string] = ['var(--tui-background-accent-1)'];
-const NO_DOT: [string] = [''];
+const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
+const BOOKED: string = 'rgba(0, 0, 2, 0)';
+const BOOKED_BY_ME: string = 'rgba(0, 0, 3, 0)';
+const AVAILABLE: string = '';
 const today = TuiDay.currentLocal();
 const plusFive = today.append({ day: 5 });
 const plusTen = today.append({ day: 10 });
@@ -52,11 +50,14 @@ export class ItemComponent {
   });
   private readonly today = new Date();
   protected readonly defaultViewedMonth = new TuiMonth(this.today.getFullYear(), this.today.getMonth());
-  protected readonly min = new TuiDay(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
-  protected readonly max = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
+  protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
+  protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
   records: BorrowRecord[] = [];
   selectedDate: TuiDayRange | undefined;
   borrowItemRecord: BorrowItem | undefined;
+  disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
+    return day.dayBefore(this.min);
+  };
 
   constructor(private itemsService: ItemsService,
     private route: ActivatedRoute,
@@ -75,15 +76,21 @@ export class ItemComponent {
   // Marker handler based on borrow records
   protected markerHandler = (day: TuiDay): [string] => {
     this.updateCellAvailability();
+    if (day.dayBefore(this.min)) {
+      return [BEFORE_TODAY];
+    }
     for (const record of this.records) {
       const startDate = TuiDay.fromLocalNativeDate(new Date(record.startDate));
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
 
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
-        return ONE_DOT; // Marked day
+        if (record == this.borrowItemRecord?.record) {
+          return [BOOKED_BY_ME]; // Marked day
+        }
+        return [BOOKED]; // Marked day
       }
     }
-    return NO_DOT; // Not marked
+    return [AVAILABLE]; // Not marked
   };
 
   ngOnInit() {
@@ -91,14 +98,7 @@ export class ItemComponent {
     if (itemId) {
       this.item = this.itemsService.getItem(itemId);
       this.records = this.itemsService.getItemBorrowRecords(itemId);
-      this.borrowItemRecord = this.itemsService.getMyBorrowItem(itemId);
-      if (this.borrowItemRecord) {
-        let [day, month, year] = this.borrowItemRecord.record.startDate.split('/'); // Split into parts
-        const startDate = TuiDay.fromLocalNativeDate(new Date(`${year}-${month}-${day}`));
-        [day, month, year] = this.borrowItemRecord.record.endDate.split('/'); // Split into parts
-        const endDate = TuiDay.fromLocalNativeDate(new Date(`${year}-${month}-${day}`));
-        this.selectedDate = new TuiDayRange(startDate, endDate);
-      }
+      this.borrowItemRecord = this.itemsService.getMyBorrowItem(itemId) || undefined;
     }
   }
 
@@ -107,11 +107,16 @@ export class ItemComponent {
       const cells = document.querySelectorAll('.t-cell');
       cells.forEach(cell => {
         const dot = cell.querySelector('.t-dot');
-        cell.classList.remove('not-available');
-        cell.classList.remove('t-cell_disabled');
         if (dot) {
+          cell.classList.remove('not-available');
+          cell.classList.remove('t-cell_disabled');
+          cell.classList.remove('my-booking');
           const dotColor = window.getComputedStyle(dot).backgroundColor;
-          if (dotColor !== "rgba(0, 0, 0, 0)") {
+          if (dotColor == BEFORE_TODAY) {
+            cell.classList.add('t-cell_disabled');
+          } else if (dotColor == BOOKED_BY_ME && this.borrowItemRecord) {
+            cell.classList.add('my-booking');
+          } else if (dotColor == BOOKED) {
             cell.classList.add('not-available');
             cell.classList.add('t-cell_disabled');
           }
@@ -121,7 +126,7 @@ export class ItemComponent {
   }
   public onRangeChange(range: TuiDayRange | null): void {
     if (range) {
-    this.selectedDate = range;
+     this.selectedDate = range;
     }
   }
 
@@ -146,8 +151,8 @@ export class ItemComponent {
         if (response) {
           this.borrowItemRecord = this.itemsService.borrowItem(
             this.item!,
-            this.selectedDate?.from.toLocalNativeDate().toLocaleDateString() ?? '',
-            this.selectedDate?.to.toLocalNativeDate().toLocaleDateString() ?? ''
+            this.selectedDate?.from.toLocalNativeDate().toISOString().split('T')[0] ?? '',
+            this.selectedDate?.to.toLocalNativeDate().toISOString().split('T')[0] ?? ''
           );
           return this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' });
         }
@@ -172,6 +177,7 @@ export class ItemComponent {
           if (response) {
             this.itemsService.cancelReservation(this.borrowItemRecord!);
             this.borrowItemRecord = undefined;
+            this.updateCellAvailability();
             return this.alerts.open('Reservation cancelled successfully', { appearance: 'success' });
           }
           return EMPTY;
@@ -180,6 +186,9 @@ export class ItemComponent {
     }
   }
 
+  markAsFavorite() {
+    this.itemsService.markAsFavorite(this.item!);
+  }
   protected getCategoryBadgeClass(category: string): string {
     switch (category) {
       case 'books':

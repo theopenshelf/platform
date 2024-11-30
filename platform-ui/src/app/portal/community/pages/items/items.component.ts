@@ -73,4 +73,8 @@ export class ItemsComponent {
   onTextFilterChange() {
     // The filtering is handled in the getter `filteredItems`
   }
+
+  markAsFavorite(item: Item) {
+    this.itemsService.markAsFavorite(item);
+  }
 }

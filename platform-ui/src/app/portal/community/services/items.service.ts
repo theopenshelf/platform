@@ -204,19 +204,26 @@ export class ItemsService {
 
         const formatDate = (date: Date): string =>
             date.toISOString().split('T')[0]; // YYYY-MM-DD format
-
-        return [
+        const myBorrowItem = this.getMyBorrowItem(id);
+        const records = [
             {
-                borrowedBy: 'me@example.com',
+                borrowedBy: 'me@example.com', 
                 startDate: formatDate(addDays(today, 3)),
                 endDate: formatDate(addDays(today, 6)),
             },
             {
                 borrowedBy: 'someone_else@example.com',
-                startDate: formatDate(addDays(today, 15)),
+                startDate: formatDate(addDays(today, 15)), 
                 endDate: formatDate(addDays(today, 22)),
             },
         ];
+
+        if (myBorrowItem) {
+            records.push(myBorrowItem.record);
+        }
+
+        debugger
+        return records;
     }
 
     getCaterogies() {
@@ -256,12 +263,16 @@ export class ItemsService {
         }
     }
     
-    getMyBorrowItem(id: string): BorrowItem {
+    getMyBorrowItem(id: string): BorrowItem | null {
         const item = this.borrowedItems.find(item => item.id === id);
         if (!item) {
-            throw new Error(`Borrowed item with id ${id} not found`);
+           return null;
         }
         return item;
+    }
+
+    markAsFavorite(item: Item) {
+        item.favorite = !item.favorite;
     }
 
 }

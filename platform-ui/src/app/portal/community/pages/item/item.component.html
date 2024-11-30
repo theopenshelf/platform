@@ -7,7 +7,7 @@
     <div class="details">
       <div class="top-left-details">
         <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
-          appearance="outline" size="m" type="button"></button>
+          [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button" (click)="markAsFavorite()"></button>
         <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
           [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
           [tuiHint]="borrowItemRecord ? 'Reserved from ' + borrowItemRecord.record.startDate + ' to ' + borrowItemRecord.record.endDate : ''"></button>
@@ -17,9 +17,15 @@
 
 
     <form [formGroup]="bookForm">
-      <tui-calendar-range [defaultViewedMonth]="defaultViewedMonth" [min]="min" [max]="max" [value]="selectedDate || null"
-
-        [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)" />
+      <tui-calendar-range  
+      [defaultViewedMonth]="defaultViewedMonth" 
+      [min]="min" 
+      [max]="max" 
+      [value]="selectedDate || null"
+      [markerHandler]="markerHandler" 
+      (valueChange)="onRangeChange($event)"
+      [disabledItemHandler]="disabledItemHandler"  
+    />
 
       <button *ngIf="!borrowItemRecord" id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary"
         size="m" tuiButton type="button">

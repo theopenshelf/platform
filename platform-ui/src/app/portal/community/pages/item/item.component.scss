@@ -5,6 +5,11 @@
   background-color: rgba($danger-color, 0.476) !important; /* Use theme's danger color */
 }
 
+::ng-deep .my-booking {
+  background-color: rgba(144, 238, 144, 0.476) !important; /* Light green background */
+}
+
+
 /* Title Section */
 .title {
   height: 60px;
@@ -197,9 +202,4 @@ button#borrow:hover {
   margin: 5px;
   width: 30px;
   height: 30px;
-  color: #ccc;
-}
-
-.favorite.selected {
-  color: $accent-color;
 }
