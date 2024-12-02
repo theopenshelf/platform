@@ -1,0 +1,10 @@
+<h2>Add/Edit Category</h2>
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <label for="name">Category Name</label>
+    <input id="name" formControlName="name" type="text" placeholder="Enter category name" />
+
+    <label for="template">Template</label>
+    <textarea id="template" formControlName="template" placeholder="Enter template"></textarea>
+
+    <button type="submit" [disabled]="categoryForm.invalid">Save Category</button>
+</form>

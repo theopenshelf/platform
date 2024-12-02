@@ -1,0 +1,18 @@
+<h2>Categories</h2>
+<div class="top-actions">
+    <button routerLink="/admin/categories/edit">Add Category</button>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Template</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let category of categories">
+            <td>{{ category.name }}</td>
+            <td>{{ category.template }}</td>
+        </tr>
+    </tbody>
+</table>
