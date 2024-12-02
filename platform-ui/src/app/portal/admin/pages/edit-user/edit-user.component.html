@@ -1,0 +1,29 @@
+<div id="edit-user-container">
+  <h2>Edit User</h2>
+
+  <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
+    <label>Username</label>
+    <input formControlName="username" type="text" />
+
+    <label>Email</label>
+    <input formControlName="email" type="email" />
+
+    <ng-container *ngIf="!userId">
+        <label>Password</label>
+        <input formControlName="password" type="password" />
+    </ng-container>
+    <!-- Address Fields -->
+    <label>Flat number</label>
+    <input formControlName="flatNumber" type="text" />
+
+    <label>Street Address</label>
+    <input formControlName="address" type="text" />
+
+    <button type="submit" class="add-user" appearance="primary" size="m" tuiButton>
+            Save Changes
+    </button>
+    <button class="add-user" routerLink="/admin/users" appearance="secondary" size="m" tuiButton>
+        Cancel
+    </button>
+  </form>
+</div>

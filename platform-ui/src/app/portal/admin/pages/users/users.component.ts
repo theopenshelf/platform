@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import {
     TuiAutoColorPipe,
@@ -18,9 +18,14 @@ import {TuiResponsiveDialogService} from '@taiga-ui/addon-mobile';
 import {TuiAlertService} from '@taiga-ui/core';
 import {TUI_CONFIRM} from '@taiga-ui/kit';
 import {switchMap} from 'rxjs';
-import { UsersService } from '../../services/users.service';
+import { User, UsersService } from '../../services/users.service';
+import {TuiAutoFocus} from '@taiga-ui/cdk';
+import { TuiHint} from '@taiga-ui/core';
+import {TuiInputModule} from '@taiga-ui/legacy';
+ 
 
-export type User = {
+export type User1 = {
+    id: string;
     username: string;
     email: string;
     flatNumber: string;
@@ -33,6 +38,13 @@ export type User = {
 @Component({
     standalone: true,
     imports: [
+        TuiAutoFocus,
+        TuiButton,
+        TuiDialog,
+        TuiHint,
+        TuiInputModule,
+        ReactiveFormsModule,
+
         TuiCheckbox,
         TuiDialog,
         TuiButton,
@@ -58,6 +70,7 @@ export class UsersComponent {
     protected readonly size = 'm';
     protected users: User[] = [];
     protected sortedUsers: User[] = [];
+    currentUser: User | undefined;
 
     constructor(
         private dialogs: TuiResponsiveDialogService,
@@ -86,6 +99,12 @@ export class UsersComponent {
     currentSort: string = '';
     sortOrder: { [key: string]: boolean } = {};  // True for ascending, false for descending
 
+     passwordForm = new FormGroup({
+        userPasswordControl: new FormControl(''),
+    });
+ 
+    protected openPasswordDialog = false;
+    
     updateVisibleColumns(): void {
         this.visibleColumns = this.availableColumns.filter((column) => column.visible);
     }
@@ -108,8 +127,8 @@ export class UsersComponent {
 
         // Sort users based on the current column and order
         this.sortedUsers = [...this.users].sort((a, b) => {
-            const aValue = a[column];
-            const bValue = b[column];
+            const aValue = a[column as keyof User];
+            const bValue = b[column as keyof User];
 
             if (this.sortOrder[column]) {
                 return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
@@ -124,7 +143,7 @@ export class UsersComponent {
         return this.sortOrder[column] ? '↑' : '↓';
     }
 
-    deleteUser(username: String): void {
+    deleteUser(user: User): void {
         const data: TuiConfirmData = {
             content: 'Are you sure you want to delete this user?',  // Simple content
             yes: 'Yes, Delete',
@@ -133,15 +152,15 @@ export class UsersComponent {
  
         this.dialogs
             .open<boolean>(TUI_CONFIRM, {
-                label: "Delete user '" +username + "'",
+                label: "Delete user '" +user.username + "'",
                 size: 'm',
                 data,
             })
-            .pipe(switchMap((response) => this.alerts.open('User <strong>' + username + '</strong> deleted successfully', {appearance: 'positive'})))
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> deleted successfully', {appearance: 'positive'})))
             .subscribe();
     }
 
-    disableUser(username: String): void {
+    disableUser(user: User): void {
         const data: TuiConfirmData = {
             content: 'Are you sure you want to disable this user?',  // Simple content
             yes: 'Yes, Disable',
@@ -150,12 +169,32 @@ export class UsersComponent {
  
         this.dialogs
             .open<boolean>(TUI_CONFIRM, {
-                label: "Disable user '" +username + "'",
+                label: "Disable user '" + user.username + "'",
                 size: 'm',
                 data,
             })
-            .pipe(switchMap((response) => this.alerts.open('User <strong>' + username + '</strong> Disable successfully', {appearance: 'positive'})))
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> Disable successfully', {appearance: 'positive'})))
             .subscribe();
+    }
+
+    getUserProperty(user: any, key: string): any {
+        return user[key];
+    }
+ 
+    protected setPassword(user: User): void {
+        this.openPasswordDialog = true;
+        this.currentUser = user;
+    }
+
+    setUserPassword() {
+        if (this.passwordForm.valid) {
+            const newPassword = this.passwordForm.get('userPasswordControl')?.value;
+            if (typeof newPassword === 'string') {
+                this.usersService.setUserPassword(this.currentUser?.id, newPassword);
+                this.openPasswordDialog = false;
+                this.alerts.open('User <strong>' + this.currentUser?.username + '</strong> password set successfully', {appearance: 'positive'}).subscribe();
+            }
+        }
     }
 
 }

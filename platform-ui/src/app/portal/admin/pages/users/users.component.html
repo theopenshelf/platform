@@ -3,11 +3,11 @@
 
     <div class="top-actions">
         <button class="add-user" routerLink="/admin/users/add" i18n="@@borrowButton" appearance="primary" size="m"
-        tuiButton type="button">
-        <tui-icon icon="@tui.user" [style.height.rem]="1" />
+            tuiButton type="button">
+            <tui-icon icon="@tui.user" [style.height.rem]="1" />
 
-        Add user
-    </button>
+            Add user
+        </button>
     </div>
 
     <div class="column-selector">
@@ -48,29 +48,29 @@
                     </div>
                 </td>
                 <td *ngFor="let column of visibleColumns" tuiTd>
-                    <span tuiTitle>{{ user[column.key] }}</span>
+                    <span tuiTitle>{{ getUserProperty(user, column.key) }}</span>
                 </td>
                 <td tuiTd class="action-icons">
 
-                    <button [routerLink]="['/admin/messages']" appearance="outline" iconStart="@tui.mail" size="s"
-                        tuiIconButton type="button" [style.border-radius.%]="100">
+                    <button [routerLink]="['/admin/users', user.id, 'messages']" appearance="outline"
+                        iconStart="@tui.mail" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
                         messages
                     </button>
 
-                    <button [routerLink]="['/admin/user', user.username, 'password']" appearance="outline"
+                    <button (click)="setPassword(user)" appearance="outline"
                         iconStart="@tui.key" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
                         password
                     </button>
 
-                    <button [routerLink]="['/admin/user', user.username, 'edit']" appearance="outline"
-                        iconStart="@tui.pen" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+                    <button [routerLink]="['/admin/users', user.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+                        size="s" tuiIconButton type="button" [style.border-radius.%]="100">
                         Edit
                     </button>
-                    <button (click)="deleteUser(user.username)" appearance="outline" iconStart="@tui.trash-2" size="s"
+                    <button (click)="deleteUser(user)" appearance="outline" iconStart="@tui.trash-2" size="s"
                         tuiIconButton type="button" [style.border-radius.%]="100">
                         Delete
                     </button>
-                    <button (click)="disableUser(user.username)" appearance="outline" iconStart="@tui.shield-ban" size="s"
+                    <button (click)="disableUser(user)" appearance="outline" iconStart="@tui.shield-ban" size="s"
                         tuiIconButton type="button" [style.border-radius.%]="100">
                         Disable
                     </button>
@@ -83,3 +83,28 @@
 
     </div>
 </div>
+
+<ng-template
+    let-observer
+    [tuiDialogOptions]="{label: 'Set user ' + currentUser?.username + ' password', size: 's'}"
+    [(tuiDialog)]="openPasswordDialog"
+>
+    <form
+        [formGroup]="passwordForm"
+        (ngSubmit)="setUserPassword()"
+    >
+        <tui-input
+            formControlName="userPasswordControl"
+            tuiAutoFocus
+        >
+        </tui-input>
+        <p>
+            <button
+                tuiButton
+                type="submit"
+            >
+                Ok
+            </button>
+        </p>
+    </form>
+</ng-template>

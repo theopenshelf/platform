@@ -10,7 +10,7 @@ export interface User {
     returnedLate: number;
     successRate: number;
     disabled: boolean;
-}
+} ;
 
 @Injectable({
     providedIn: 'root',
@@ -48,5 +48,29 @@ export class UsersService {
         return this.users;
     }
 
+    getUser(id: string): User {
+        return this.users.find(user => user.id === id) || {} as User;
+    }
+    
+    saveUser(user: User): void {
+        debugger;
+        const existingUserIndex = this.users.findIndex(u => u.id === user.id);
+        if (existingUserIndex >= 0) {
+            // Update existing user
+            this.users[existingUserIndex] = user;
+        } else {
+            // Add new user with incremented ID
+            user.id = this.index++ + "";
+            this.users.push(user);
+        }
+    }
+
+    setUserPassword(userId: string | undefined, newPassword: string | undefined): void {
+        if (userId && newPassword) {
+            console.log(`Password updated for user ${userId}`);
+        } else {
+            console.error('Invalid user ID or password');
+        }
+    }
 
 }
