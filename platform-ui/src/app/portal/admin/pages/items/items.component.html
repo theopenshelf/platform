@@ -29,7 +29,7 @@
                 <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
             </td>
             <td tuiTd>
-                <tui-badge>{{ item.category }}</tui-badge>
+                <category-badge [category]="item.category"></category-badge>
             </td>
             <td tuiTd>
                 <span tuiTitle>{{ item.borrowCount }}</span>

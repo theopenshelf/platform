@@ -53,7 +53,6 @@ export class UsersService {
     }
     
     saveUser(user: User): void {
-        debugger;
         const existingUserIndex = this.users.findIndex(u => u.id === user.id);
         if (existingUserIndex >= 0) {
             // Update existing user

@@ -25,3 +25,10 @@ tbody td {
     border-bottom: 1px solid $border-color;
     vertical-align: middle;
 }
+
+.top-actions {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }

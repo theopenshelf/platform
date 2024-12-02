@@ -5,11 +5,9 @@
 
 
   <label for="category">Category</label>
-  <select id="category" formControlName="category">
+  <select id="category" formControlName="category" [ngModel]="addItemForm.get('category')?.value">
     <option value="">-- Select Category --</option>
-    <option value="books">Books</option>
-    <option value="electronics">Electronics</option>
-    <option value="clothing">Clothing</option>
+    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
   </select>
 
   <label for="image">Upload Image</label>

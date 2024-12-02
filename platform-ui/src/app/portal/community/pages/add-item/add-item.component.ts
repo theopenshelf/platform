@@ -5,6 +5,7 @@ import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
 import { Item, ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { CategoriesService, Category } from '../../../admin/services/categories.service';
 
 @Component({
     selector: 'app-add-item',
@@ -29,17 +30,37 @@ export class AddItemComponent {
   };
 
   imageFile?: File;
+  categories: Category[];
 
   constructor(
     private fb: FormBuilder,
     private itemsService: ItemsService,
+    private categoriesService: CategoriesService,
     private router: Router
   ) {
+    this.categories = this.categoriesService.getCategories();
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
       shortDescription: ['', [Validators.required, Validators.maxLength(150)]],
       description: ['', Validators.required],
-      category: ['', Validators.required],
+      category: ['', [Validators.required], [
+        (control) => {
+          const categoryValue = control.value;
+          const descriptionControl = this.addItemForm?.get('description');
+          
+          if (categoryValue && descriptionControl && !descriptionControl.value) {
+            // Get selected category
+            const category = this.categories?.find(c => c.name === categoryValue);
+            if (category?.template) {
+              return Promise.resolve().then(() => {
+                descriptionControl.setValue(category.template);
+                return null;
+              });
+            }
+          }
+          return Promise.resolve(null);
+        }
+      ]],
       image: [null, Validators.required],
     });
   }
@@ -65,7 +86,9 @@ export class AddItemComponent {
   onSubmit() {
     if (this.addItemForm.valid) {
       const newItem = this.addItemForm.value;
+      newItem.category = this.categories.find(c => c.name === newItem.category);
       const createdItem = this.itemsService.addItem(newItem)
+      debugger;
       this.addItemForm.reset();
       this.router.navigate(['/community/items', createdItem.id]);
     }

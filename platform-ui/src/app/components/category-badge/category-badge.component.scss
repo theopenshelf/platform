@@ -1,0 +1,15 @@
+@use 'theme' as *;
+
+
+.category-badge {
+    height: 30px;
+    display: inline-block;
+    padding: 3px 12px;
+    border-radius: 30px;
+    border: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: $white; /* White text for badges */
+    text-align: center;
+    min-width: 120px; /* Ensure consistent width */
+}

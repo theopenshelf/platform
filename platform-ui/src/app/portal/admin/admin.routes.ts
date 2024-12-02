@@ -20,7 +20,8 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'items', component: ItemsComponent },
       { path: 'security', component: SecurityComponent },
       { path: 'categories', component: CategoriesComponent },
-      { path: 'categories/edit', component: EditCategoryComponent },
+      { path: 'categories/add', component: EditCategoryComponent },
+      { path: 'categories/:id/edit', component: EditCategoryComponent },
     ],
   },
 ];

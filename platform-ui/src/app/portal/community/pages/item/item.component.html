@@ -48,9 +48,7 @@
     </div>
     <h1>{{ item.name }}</h1>
     <div class="categories">
-      <button tuiButton appearance="primary" type="button" size="s" [ngClass]="getCategoryBadgeClass(item.category)">
-        {{ item.category }}
-      </button>
+      <category-badge [category]="item.category"></category-badge>
     </div>
     <div class="attributes">
       <span class="location">

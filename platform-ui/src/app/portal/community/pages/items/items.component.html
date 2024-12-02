@@ -16,8 +16,8 @@
     <div class="filter-group">
       <span i18n="@@categoryFilter">Category</span>
       <label *ngFor="let category of categories">
-        <input type="checkbox" [value]="category.value" (change)="onCategoryChange($event)">
-        {{ category.label }}
+        <input type="checkbox" [value]="category.name" (change)="onCategoryChange($event)">
+        {{ category.name }}
       </label>
     </div>
   </aside>

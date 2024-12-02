@@ -3,13 +3,15 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
-import { Category, ItemsService } from '../../services/items.service';
+import { ItemsService } from '../../services/items.service';
 import { RouterLink } from '@angular/router';
+import { CategoriesService, Category } from '../../../admin/services/categories.service';
+import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 
 @Component({
   standalone: true, 
     selector: 'app-myborroweditems',
-    imports: [RouterLink, FormsModule, NgForOf, NgClass, TuiTable],
+    imports: [RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
     templateUrl: './myborroweditems.component.html',
     styleUrls: ['./myborroweditems.component.scss']
 })
@@ -34,11 +36,11 @@ export class MyborroweditemsComponent {
     'Returned': 3,
   };
 
-  constructor(private itemsService: ItemsService) { }
+  constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
 
   ngOnInit() {
     // Fetch the items from the service
-    this.categories = this.itemsService.getCaterogies();
+    this.categories = this.categoriesService.getCategories();
   }
   // Helper function to calculate item status
   protected computeStatus(borrowedOn: string, dueDate: string): 'Reserved' | 'Currently Borrowed' | 'Returned' {
@@ -117,7 +119,7 @@ export class MyborroweditemsComponent {
     result = result.filter((item) => {
       const status = this.computeStatus(item.record.startDate, item.record.endDate);
       return (
-        (!this.categoryFilter || item.category === this.categoryFilter) &&
+        (!this.categoryFilter || item.category.name === this.categoryFilter) &&
         (!this.statusFilter || status === this.statusFilter)
       );
     });

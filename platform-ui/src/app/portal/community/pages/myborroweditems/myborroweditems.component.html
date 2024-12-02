@@ -38,9 +38,7 @@
                 <td tuiTd>{{ item.name }}</td>
                 <td tuiTd>{{ item.located }}</td>
                 <td tuiTd>
-                    <span [ngClass]="getCategoryBadgeClass(item.category)">
-                        {{ item.category }}
-                    </span>
+                    <category-badge [category]="item.category"></category-badge>
                 </td>
                 <td tuiTd>{{ formatDate(item.record.startDate, "startDate", computeStatus(item.record.startDate, item.record.endDate)) }}</td>
                 <td tuiTd>{{ formatDate(item.record.endDate, "endDate", computeStatus(item.record.startDate, item.record.endDate)) }}</td>

@@ -3,12 +3,20 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiTitle } from '@taiga-ui/core';
-import { Category, ItemsService } from '../../services/items.service';
+import { ItemsService } from '../../services/items.service';
+import { CategoriesService, Category } from '../../../admin/services/categories.service';
+import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 
 @Component({
     standalone: true,
     selector: 'app-my-items',
-    imports: [FormsModule, NgForOf, NgClass, TuiTable],
+    imports: [
+        FormsModule,
+        NgForOf,
+        NgClass,
+        TuiTable,
+        CategoryBadgeComponent
+    ],
     templateUrl: './my-items.component.html',
     styleUrls: ['./my-items.component.scss']
 })
@@ -25,11 +33,11 @@ export class MyItemsComponent {
 
     categories: Category[] = [];
 
-    constructor(private itemsService: ItemsService) { }
+    constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
 
     ngOnInit() {
         // Fetch categories from the service
-        this.categories = this.itemsService.getCaterogies();
+        this.categories = this.categoriesService.getCategories();
     }
 
     // Get filtered and sorted data
@@ -38,7 +46,7 @@ export class MyItemsComponent {
 
         // Filter by category
         result = result.filter((item) => {
-            return !this.categoryFilter || item.category === this.categoryFilter;
+            return !this.categoryFilter || item.category.name === this.categoryFilter;
         });
 
         // Sort by the selected column

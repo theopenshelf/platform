@@ -14,6 +14,7 @@ import { Item, BorrowRecord, ItemsService, BorrowItem } from '../../services/ite
 import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
+import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 
 const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
@@ -26,6 +27,7 @@ const plusTen = today.append({ day: 10 });
 @Component({
   standalone: true,
   imports: [
+    CategoryBadgeComponent,
     TuiHint,
     TuiCalendarRange,
     CommonModule,

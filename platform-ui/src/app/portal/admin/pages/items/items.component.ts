@@ -26,10 +26,12 @@ import { RouterModule } from '@angular/router';
 
 import {TuiCell} from '@taiga-ui/layout';
 import { Item, ItemsService } from '../../services/items.service';
+import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 
 @Component({
     standalone: true, 
     imports: [
+        CategoryBadgeComponent,
         RouterModule,
         CommonModule,
         FormsModule,

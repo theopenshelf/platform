@@ -11,7 +11,7 @@
             Category:
             <select [(ngModel)]="categoryFilter">
                 <option value="">All</option>
-                <option *ngFor="let category of categories" [value]="category.value">{{ category.label }}</option>
+                <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
             </select>
         </label>
     </div>
@@ -30,9 +30,7 @@
                 <td tuiTd>{{ item.name }}</td>
                 <td tuiTd>{{ item.description }}</td>
                 <td tuiTd>
-                    <span [ngClass]="getCategoryBadgeClass(item.category)">
-                        {{ item.category }}
-                    </span>
+                    <category-badge [category]="item.category"></category-badge>
                 </td>
             </tr>
         </tbody>

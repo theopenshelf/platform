@@ -2,15 +2,20 @@ import { NgForOf } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiButton, TuiTitle } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiTitle } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoriesService, Category } from '../../services/categories.service';
+import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
+import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
+import { switchMap } from 'rxjs';
+import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 
 
 @Component({
     standalone: true,
     imports: [
+        CategoryBadgeComponent,
         RouterModule,
         CommonModule,
         FormsModule,
@@ -25,13 +30,33 @@ import { CategoriesService, Category } from '../../services/categories.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent {
+
     categories: Category[] = [];
 
-    public constructor(private categoriesService: CategoriesService) {
+    public constructor(private dialogs: TuiResponsiveDialogService,
+    private alerts: TuiAlertService,
+    private categoriesService: CategoriesService) {
     }
 
     ngOnInit() {
         // Fetch the categories from the service
         this.categories = this.categoriesService.getCategories();
+    }
+
+    deleteCategory(category: Category) {
+        const data: TuiConfirmData = {
+            content: 'Are you sure you want to delete this user?',  // Simple content
+            yes: 'Yes, Delete',
+            no: 'Cancel',
+        };
+ 
+        this.dialogs
+            .open<boolean>(TUI_CONFIRM, {
+                label: "Delete category '" + category.name + "'",
+                size: 'm',
+                data,
+            })
+            .pipe(switchMap((response) => this.alerts.open('Category <strong>' + category.name + '</strong> deleted successfully', {appearance: 'positive'})))
+            .subscribe();
     }
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CategoriesService, Category } from '../../admin/services/categories.service';
 
 export interface Item {
     id: string;
@@ -8,14 +9,9 @@ export interface Item {
     imageUrl: string;
     description: string;
     shortDescription: string;
-    category: string;
+    category: Category;
     favorite: boolean;
     borrowCount: number
-}
-
-export interface Category {
-    value: string;
-    label: string;
 }
 
 export interface BorrowRecord {
@@ -53,7 +49,7 @@ export class ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'A magical adventure story that follows the journey of a young wizard and his friends.',
             shortDescription: 'A magical adventure story.',
-            category: 'books',
+            category: CategoriesService.BOOKS,
             favorite: true,
             borrowCount: 8
         },
@@ -65,7 +61,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'High-performance laptop for work and play, featuring a sleek design and powerful specs.',
             shortDescription: 'High-performance laptop.',
-            category: 'electronics',
+            category: CategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 2
         },
@@ -77,7 +73,7 @@ export class ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'Comfortable cotton T-shirt, perfect for casual outings or lounging at home.',
             shortDescription: 'Comfortable cotton T-shirt.',
-            category: 'clothing',
+            category: CategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 0
         },
@@ -89,7 +85,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Ergonomic wireless mouse designed for productivity and comfort during extended use.',
             shortDescription: 'Ergonomic wireless mouse.',
-            category: 'electronics',
+            category: CategoriesService.ELECTRONICS,
             favorite: true,
             borrowCount: 9
         },
@@ -101,7 +97,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Stylish denim jeans that provide comfort and versatility for any occasion.',
             shortDescription: 'Stylish denim jeans.',
-            category: 'clothing',
+            category: CategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 4
         },
@@ -113,7 +109,7 @@ export class ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'Latest smartphone model with cutting-edge features and a sleek design.',
             shortDescription: 'Latest smartphone model.',
-            category: 'electronics',
+            category: CategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 1
         },
@@ -125,7 +121,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'A classic novel set in the Jazz Age, exploring themes of love, wealth, and the American dream.',
             shortDescription: 'Classic Jazz Age novel.',
-            category: 'books',
+            category: CategoriesService.BOOKS,
             favorite: false,
             borrowCount: 1
         },
@@ -137,7 +133,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Comfortable chair designed for long gaming sessions with ergonomic support.',
             shortDescription: 'Ergonomic gaming chair.',
-            category: 'electronics',
+            category: CategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 2
         },
@@ -149,7 +145,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Sleek leather wallet with compartments for cards, cash, and coins.',
             shortDescription: 'Sleek leather wallet.',
-            category: 'clothing',
+            category: CategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 3
         },
@@ -161,7 +157,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Adjustable LED desk lamp with multiple brightness settings.',
             shortDescription: 'Adjustable LED lamp.',
-            category: 'electronics',
+            category: CategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 18
         },
@@ -173,7 +169,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Warm and durable jacket for cold weather, designed for style and comfort.',
             shortDescription: 'Warm winter jacket.',
-            category: 'clothing',
+            category: CategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 0
         },
@@ -185,7 +181,7 @@ export class ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'A comprehensive cookbook filled with recipes for home chefs of all levels.',
             shortDescription: 'Comprehensive cookbook.',
-            category: 'books',
+            category: CategoriesService.BOOKS,
             favorite: false,
             borrowCount: 1
         },
@@ -244,17 +240,9 @@ export class ItemsService {
             records.push(myBorrowItem.record);
         }
 
-        debugger
         return records;
     }
 
-    getCaterogies() {
-        return [
-            { value: 'books', label: 'Books' },
-            { value: 'electronics', label: 'Electronics' },
-            { value: 'clothing', label: 'Clothing' },
-        ];
-    }
 
     addItem(item: Item): Item {
         item.id = this.index++ + "";

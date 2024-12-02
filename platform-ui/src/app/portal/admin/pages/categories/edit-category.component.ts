@@ -6,13 +6,18 @@ import { OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule, } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User, UsersService } from '../../services/users.service';
-import { TuiAlertService, TuiButton } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import {TUI_DEFAULT_INPUT_COLORS, TuiInputColorModule} from '@taiga-ui/legacy';
+import { QuillModule } from 'ngx-quill';
 
 @Component({
     standalone: true,
     selector: 'app-edit-category',
     imports: [
+        QuillModule,
+        TuiInputColorModule, 
+        TuiTextfield,
         CommonModule,
         RouterLink,
         TuiButton,
@@ -23,23 +28,52 @@ import { CommonModule } from '@angular/common'; // Import CommonModule
 })
 export class EditCategoryComponent {
     categoryForm: FormGroup;
+    categoryId: string | null = null;
+    category: Category = { color: '#75358a' } as Category;
+    protected readonly palette = TUI_DEFAULT_INPUT_COLORS;
+    color: string = '';
 
+    editorConfig = {
+        toolbar: [
+          ['bold', 'italic', 'underline', 'strike'],        // Text formatting
+          [{ 'header': 1 }, { 'header': 2 }],              // Headers
+          [{ 'list': 'ordered' }, { 'list': 'bullet' }],   // Lists
+          [{ 'indent': '-1' }, { 'indent': '+1' }],        // Indentation
+          [{ 'align': [] }],                               // Text alignment
+          ['link', 'image'],                               // Links and images
+          ['clean']                                        // Remove formatting
+        ]
+      };
+
+    
     constructor(
+        private route: ActivatedRoute,
         private fb: FormBuilder,
         private categoriesService: CategoriesService,
         private router: Router
     ) {
         this.categoryForm = this.fb.group({
             name: ['', Validators.required],
+            color: ['', Validators.required],
             template: ['', Validators.required]
         });
     }
+
+    ngOnInit() {
+        this.categoryId = this.route.snapshot.paramMap.get('id');
+        if (this.categoryId) {
+          this.category = this.categoriesService.getCategory(this.categoryId);
+          this.categoryForm.patchValue(this.category);
+        } else {
+            this.categoryForm.patchValue(this.category);
+        }
+      }
 
     onSubmit() {
         if (this.categoryForm.valid) {
             const newCategory: Category = this.categoryForm.value;
             this.categoriesService.addCategory(newCategory);
-            this.router.navigate(['/categories']);
+            this.router.navigate(['/admin/categories']);
         }
     }
 } 

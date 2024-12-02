@@ -11,7 +11,8 @@ import {
   TuiButton,
   TuiTitle,
 } from '@taiga-ui/core';
-import { Category, Item, ItemsService, ItemWithRecords } from '../../services/items.service';
+import { Item, ItemsService, ItemWithRecords } from '../../services/items.service';
+import { CategoriesService, Category } from '../../../admin/services/categories.service';
 
 @Component({
   standalone: true,
@@ -42,18 +43,18 @@ export class ItemsComponent {
   searchText = '';
   items: ItemWithRecords[] = [];
 
-  constructor(private itemsService: ItemsService) { }
+  constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
 
   ngOnInit() {
     // Fetch the items from the service
     this.items = this.itemsService.getItemsWithRecords();
-    this.categories = this.itemsService.getCaterogies();
+    this.categories = this.categoriesService.getCategories();
   }
 
   // Filtered items for the grid
   get filteredItems() {
     return this.items.filter(item => {
-      const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category);
+      const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category.name);
       const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.description.toLowerCase().includes(this.searchText.toLowerCase());
       return categoryMatch && textMatch;
