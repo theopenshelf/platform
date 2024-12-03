@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardLarge } from '@taiga-ui/layout/components/card';
@@ -13,6 +13,7 @@ import {
 } from '@taiga-ui/core';
 import { Item, ItemsService, ItemWithRecords } from '../../services/items.service';
 import { CategoriesService, Category } from '../../../admin/services/categories.service';
+import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
   standalone: true,
@@ -31,7 +32,10 @@ import { CategoriesService, Category } from '../../../admin/services/categories.
     TuiTextfield
   ],
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss']
+  styleUrls: ['./items.component.scss'],
+  providers: [
+    ...communityProviders
+  ]
 })
 export class ItemsComponent {
 
@@ -43,7 +47,10 @@ export class ItemsComponent {
   searchText = '';
   items: ItemWithRecords[] = [];
 
-  constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
+  constructor(
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+    private categoriesService: CategoriesService
+  ) { }
 
   ngOnInit() {
     // Fetch the items from the service

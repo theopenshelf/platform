@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import this
 import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
@@ -6,13 +6,17 @@ import { Item, ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { CategoriesService, Category } from '../../../admin/services/categories.service';
+import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
     selector: 'app-add-item',
     standalone: true, 
     imports: [CommonModule, ReactiveFormsModule, QuillModule], // Import required modules
     templateUrl: './add-item.component.html',
-    styleUrl: './add-item.component.scss'
+    styleUrl: './add-item.component.scss',
+    providers: [
+        ...communityProviders
+    ]
 })
 export class AddItemComponent {
   addItemForm: FormGroup;
@@ -34,7 +38,7 @@ export class AddItemComponent {
 
   constructor(
     private fb: FormBuilder,
-    private itemsService: ItemsService,
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private categoriesService: CategoriesService,
     private router: Router
   ) {

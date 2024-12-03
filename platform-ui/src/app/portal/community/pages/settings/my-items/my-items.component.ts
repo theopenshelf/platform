@@ -1,11 +1,12 @@
 import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiTitle } from '@taiga-ui/core';
-import { ItemsService } from '../../services/items.service';
-import { CategoriesService, Category } from '../../../admin/services/categories.service';
-import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { ItemsService } from '../../../services/items.service';
+import { CategoriesService, Category } from '../../../../admin/services/categories.service';
+import { CategoryBadgeComponent } from '../../../../../components/category-badge/category-badge.component';
+import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../../community.provider';
 
 @Component({
     standalone: true,
@@ -18,7 +19,10 @@ import { CategoryBadgeComponent } from '../../../../components/category-badge/ca
         CategoryBadgeComponent
     ],
     templateUrl: './my-items.component.html',
-    styleUrls: ['./my-items.component.scss']
+    styleUrls: ['./my-items.component.scss'],
+    providers: [
+        ...communityProviders
+    ]
 })
 export class MyItemsComponent {
     protected readonly sizes = ['l', 'm', 's'] as const;
@@ -33,7 +37,7 @@ export class MyItemsComponent {
 
     categories: Category[] = [];
 
-    constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
+    constructor(@Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, private categoriesService: CategoriesService) { }
 
     ngOnInit() {
         // Fetch categories from the service

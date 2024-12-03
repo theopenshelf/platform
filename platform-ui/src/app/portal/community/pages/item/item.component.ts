@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, Inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiMarkerHandler } from '@taiga-ui/core';
 import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 
 const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
@@ -38,7 +39,10 @@ const plusTen = today.append({ day: 10 });
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
-  providers: [DatePipe, {
+  providers: [
+    ...communityProviders,
+    DatePipe, 
+    {
     provide: DateAdapter,
     useFactory: adapterFactory,
   }]
@@ -61,14 +65,14 @@ export class ItemComponent {
     return day.dayBefore(this.min);
   };
 
-  constructor(private itemsService: ItemsService,
+  constructor(
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private dialogService: TuiDialogService,
     private datePipe: DatePipe,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
-
   ) {
   }
 

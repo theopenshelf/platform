@@ -28,6 +28,10 @@ import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import MockAuthService from "./services/mock/auth.service";
+import {AuthService} from "./services/auth.service";
+import { MockNotificationsService } from "./services/mock/notifications.service";
+import { globalProviders } from "./global.provider";
 
 
 const ICON =
@@ -48,7 +52,11 @@ const ICON =
     changeDetection: ChangeDetectionStrategy.OnPush,
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
-    providers: [TuiDropdownService, tuiAsPortal(TuiDropdownService)]
+    providers: [
+        ...globalProviders,
+        TuiDropdownService, 
+        tuiAsPortal(TuiDropdownService),
+    ]
 })
 export class AppComponent  extends TuiPortals {
 }

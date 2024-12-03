@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { provideRouter, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
 import { SETTINGS_ROUTES } from '../settings.routes';
 import { TuiAppearance, TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { TuiPortals } from '@taiga-ui/cdk';
 import { TuiAvatar } from '@taiga-ui/kit';
-import { AuthService, UserInfo } from '../../../../services/auth.service';
+import AuthService from '../../../../../services/mock/auth.service';
+import { UserInfo } from '../../../../../services/auth.service';
+import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
 
 @Component({
   selector: 'app-settings-landing-page',
@@ -18,6 +20,7 @@ import { AuthService, UserInfo } from '../../../../services/auth.service';
     RouterOutlet,
     RouterLink],
   providers: [
+    ...globalProviders,
     tuiLayoutIconsProvider({ grid: '@tui.align-justify' }),
 
   ],
@@ -27,7 +30,7 @@ import { AuthService, UserInfo } from '../../../../services/auth.service';
 export class SettingsLandingPageComponent extends TuiPortals {
   protected userInfo: UserInfo;
 
-  constructor(private authService: AuthService) {
+  constructor(@Inject(AUTH_SERVICE_TOKEN) private authService: AuthService) {
     super();
     this.userInfo = this.authService.getCurrentUserInfo()
   }

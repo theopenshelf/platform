@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../services/auth.service';
+import AuthService from '../../../../../services/mock/auth.service';
 import {RouterLink, RouterLinkActive} from '@angular/router';
-import { WelcomeComponent } from '../../../../components/welcome/welcome.component';
+import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 
 @Component({
   standalone: true, 

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CommunityLandingPageComponent } from './community-landing-page.component';
+import CommunityLayoutComponent from './community-layout.component';
 
 describe('CommunityLandingPageComponent', () => {
-  let component: CommunityLandingPageComponent;
-  let fixture: ComponentFixture<CommunityLandingPageComponent>;
+  let component: CommunityLayoutComponent;
+  let fixture: ComponentFixture<CommunityLayoutComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommunityLandingPageComponent]
+      imports: [CommunityLayoutComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CommunityLandingPageComponent);
+    fixture = TestBed.createComponent(CommunityLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

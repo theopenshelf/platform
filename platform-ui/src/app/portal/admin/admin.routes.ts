@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { AdminLandingPageComponent } from './admin-landing-page/admin-landing-page.component';
+import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { UsersComponent } from './pages/users/users.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { SecurityComponent } from './pages/security/security.component';
@@ -11,7 +11,7 @@ import { EditCategoryComponent } from './pages/categories/edit-category.componen
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
-    component: AdminLandingPageComponent,
+    component: AdminLayoutComponent,
     children: [
       { path: '', redirectTo: 'users', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'users', component: UsersComponent },

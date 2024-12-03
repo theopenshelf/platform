@@ -1,5 +1,5 @@
 import { NgForOf, NgIf, NgClass } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
@@ -7,13 +7,17 @@ import { ItemsService } from '../../services/items.service';
 import { RouterLink } from '@angular/router';
 import { CategoriesService, Category } from '../../../admin/services/categories.service';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
   standalone: true, 
     selector: 'app-myborroweditems',
     imports: [RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
     templateUrl: './myborroweditems.component.html',
-    styleUrls: ['./myborroweditems.component.scss']
+    styleUrls: ['./myborroweditems.component.scss'],
+    providers: [
+        ...communityProviders
+    ]
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;
@@ -36,7 +40,10 @@ export class MyborroweditemsComponent {
     'Returned': 3,
   };
 
-  constructor(private itemsService: ItemsService, private categoriesService: CategoriesService) { }
+  constructor(
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+    private categoriesService: CategoriesService
+  ) { }
 
   ngOnInit() {
     // Fetch the items from the service
