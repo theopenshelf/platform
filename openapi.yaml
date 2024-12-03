@@ -58,111 +58,121 @@ paths:
         '200':
           $ref: "#/components/responses/OK_200_LOGIN"
 
-  /items/:
-
+  /community/items:
     get:
       operationId: getItems
-      summary: Get items
+      summary: Retrieve all items
       tags:
-        - item-api
-      
-      security:
-        - BearerAuthOAuth: []
-      
+        - items-api
       responses:
         '200':
-          $ref: "#/components/responses/OK_200_GET_ITEMS"
-  
-  /items/{item-id}:
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}:
     parameters:
-      - $ref: "#/components/parameters/itemId" 
-      
+      - $ref: "#/components/parameters/itemId"
     get:
-      summary: Get item
       operationId: getItem
+      summary: Retrieve a specific item by ID
       tags:
         - items-api
-      
-      security:
-        - BearerAuthOAuth: []
-      
       responses:
         '200':
-          $ref: "#/components/responses/OK_200_GET_ITEM"
+          description: A single item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
 
-  /items/{item-id}/action/borrow:
+  /community/items/{item-id}/borrow-records:
     parameters:
-      - $ref: "#/components/parameters/itemId" 
-      
-    post:
-      summary: Borrow an item
-      operationId: borrowItem
-      tags:
-        - items-api
-      
-      security:
-        - BearerAuthOAuth: []
-      
-      requestBody:
-        description: borrow item
-        required: true
-        content: 
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RequestBorrowItem"
-
-      responses:
-        '201':
-          $ref: "#/components/responses/OK_201_POST_BORROW_ITEM"
-
-  /items/{item-id}/action/return:
-    parameters:
-      - $ref: "#/components/parameters/itemId" 
-      
-    post:
-      summary: Return an item
-      operationId: returnItem
-      tags:
-        - items-api
-      
-      security:
-        - BearerAuthOAuth: []
-      
-      requestBody:
-        description: return item
-        required: true
-        content: 
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RequestReturnItem"
-
-      responses:
-        '201':
-          $ref: "#/components/responses/OK_201_POST_RETURN_ITEM"
-
-  /items/{item-id}/borrow-records:
-    parameters:
-      - $ref: "#/components/parameters/itemId" 
+      - $ref: "#/components/parameters/itemId"
     get:
-      summary: Get borrow records for a give item
       operationId: getItemBorrowRecords
+      summary: Retrieve borrow records for a specific item
       tags:
         - items-api
       responses:
         '200':
-          $ref: "#/components/responses/OK_200_GET_ITEM_BORROW_RECORDS"
+          description: Borrow records for the item
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BorrowRecord"
 
-  /users/{user-id}/borrow-records:
+  /community/items/{item-id}/borrow:
     parameters:
-      - $ref: "#/components/parameters/userId" 
-    get:
-      summary: Get user borrow records
-      operationId: getUserBorrowRecords
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: borrowItem
+      summary: Borrow an item
       tags:
-        - users-api
+        - items-api
+      requestBody:
+        description: Borrow item details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
+      responses:
+        '201':
+          description: Item borrowed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BorrowItem"
+
+  /community/items/{item-id}/favorite:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: markAsFavorite
+      summary: Toggle favorite status of an item
+      tags:
+        - items-api
       responses:
         '200':
-          $ref: "#/components/responses/OK_200_GET_USER_BORROW_RECORDS"
+          description: Item favorite status toggled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}/my-borrow:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    get:
+      operationId: getMyBorrowItem
+      summary: Retrieve a specific borrowed item for the current user
+      tags:
+        - items-api
+      responses:
+        '200':
+          description: A specific borrowed item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BorrowItem"
+        '404':
+          description: Item not found or not borrowed by the user
+
+
 
 components:
 #####################################################
@@ -221,47 +231,106 @@ components:
       required:
         - id
         - name
+        - located
+        - owner
+        - imageUrl
+        - description
+        - shortDescription
+        - category
+        - favorite
+        - borrowCount
       properties:
         id:
           type: string
-          format: uuid
+          example: "1"
         name:
           type: string
+          example: "Harry Potter Book"
+        located:
+          type: string
+          example: "ShareSpace"
+        owner:
+          type: string
+          example: "TheOpenShelf"
+        imageUrl:
+          type: string
+          example: "/items/harry-potter.png"
         description:
           type: string
-        location:
+          example: "A magical adventure story that follows the journey of a young wizard and his friends."
+        shortDescription:
           type: string
-        picture:
-          type: string
-          example: data:image/jpeg;base64,/9j/4AAQSkZJRgABAgEASABIAAD/4RITR
-        status:
-          type: string  
-          enum: [AVAILABLE, BORROWED, ARCHIVED] 
+          example: "A magical adventure story."
+        category:
+          $ref: "#/components/schemas/Category"
+        favorite:
+          type: boolean
+          example: true
+        borrowCount:
+          type: integer
+          example: 8
 
     BorrowRecord:
       type: object
       required:
+        - borrowedBy
+        - startDate
+        - endDate
+      properties:
+        borrowedBy:
+          type: string
+          example: "someone_else@example.com"
+        startDate:
+          type: string
+          format: date
+          example: "2023-11-15"
+        endDate:
+          type: string
+          format: date
+          example: "2023-11-22"
+    Category:
+      type: object
+      required:
         - id
-        - itemId
-        - borrowDate
-        - returnDate
-        - borrower
+        - name
+        - color
+        - template
       properties:
         id:
           type: string
-          format: uuid
-        itemId:
+        name:
           type: string
-          format: uuid
-        borrowDate:
+        color:
           type: string
-          format: date-time
-        returnDate:
+        template:
           type: string
-          format: date-time
-        borrower:
-          type: string
-          format: uuid
+    BorrowItem:
+      allOf:
+        - $ref: "#/components/schemas/Item"
+        - type: object
+          required:
+            - record
+          properties:
+            record:
+              $ref: "#/components/schemas/BorrowRecord"
+              example:
+                borrowedBy: "me@example.com"
+                startDate: "2023-11-01"
+                endDate: "2023-11-10"
+
+    ItemWithRecords:
+      allOf:
+        - $ref: "#/components/schemas/Item"
+        - type: object
+          properties:
+            borrowRecords:
+              type: array
+              items:
+                $ref: "#/components/schemas/BorrowRecord"
+            isBookedToday:
+              type: boolean
+            myBooking:
+              $ref: "#/components/schemas/BorrowRecord"
 
     RequestBorrowItem:
       type: object
@@ -313,66 +382,36 @@ components:
             properties:
               message:
                 type: string
-                example: Hello world!
+                example: "Hello world!"
               items:
                 type: array
                 items:
                   $ref: "#/components/schemas/Item"
+                example:
+                  - id: "1"
+                    name: "Harry Potter Book"
+                    located: "ShareSpace"
+                    owner: "TheOpenShelf"
+                    imageUrl: "/items/harry-potter.png"
+                    description: "A magical adventure story that follows the journey of a young wizard and his friends."
+                    shortDescription: "A magical adventure story."
+                    category:
+                      id: "books"
+                      name: "Books"
+                      color: "blue"
+                      template: "book-template"
+                    favorite: true
+                    borrowCount: 8
     OK_200_LOGIN:
       description: Logged in user details
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/User"
-    OK_200_GET_ITEMS:
-      description: GetItems
-      content:
-        application/json:
-           schema:
-            $ref: "#/components/schemas/ResponseGetItems"
-
-    OK_200_GET_ITEM:
-      description: OK
-      content:
-        application/json:
-           schema:
-              $ref: "#/components/schemas/Item"     
-
-    OK_201_POST_BORROW_ITEM:
-      description: OK
-      content:
-        application/json:
-           schema:
-              $ref: "#/components/schemas/BorrowRecord" 
-
-    OK_201_POST_RETURN_ITEM:
-      description: OK
-      content:
-        application/json:
-           schema:
-            title: responseReturnItem
-            type: object
-            required:
-              - message
-            properties:
-              message:
-                type: string
-                example: Item return with success
-
-    OK_200_GET_ITEM_BORROW_RECORDS:
-      description: OK
-      content:
-        application/json:
-           schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/BorrowRecord"
-
-    OK_200_GET_USER_BORROW_RECORDS:
-      description: OK
-      content:
-        application/json:
-           schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/BorrowRecord"
+            example:
+              id: "123e4567-e89b-12d3-a456-426614174000"
+              username: "my-login"
+              firstName: "John"
+              lastName: "Doe"
+              email: "john.doe@example.com"
+              flat: "A701" 
