@@ -1,5 +1,5 @@
 import { NgForOf } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAlertService, TuiButton, TuiTitle } from '@taiga-ui/core';
@@ -10,6 +10,7 @@ import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { switchMap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
 
 
 @Component({
@@ -27,15 +28,20 @@ import { CategoryBadgeComponent } from '../../../../components/category-badge/ca
     selector: 'app-categories',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
+    providers: [
+        ...adminProviders
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent {
 
     categories: Category[] = [];
 
-    public constructor(private dialogs: TuiResponsiveDialogService,
-    private alerts: TuiAlertService,
-    private categoriesService: CategoriesService) {
+    public constructor(
+        private dialogs: TuiResponsiveDialogService,
+        private alerts: TuiAlertService,
+        @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
+    ) {
     }
 
     ngOnInit() {

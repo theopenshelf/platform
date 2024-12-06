@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiTitle } from '@taiga-ui/core';
 import { ItemsService } from '../../../services/items.service';
-import { CategoriesService, Category } from '../../../../admin/services/categories.service';
+import { CategoriesService, Category } from '../../../services/categories.service';
 import { CategoryBadgeComponent } from '../../../../../components/category-badge/category-badge.component';
-import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../../community.provider';
+import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../../community.provider';
 
 @Component({
     standalone: true,
@@ -21,7 +21,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../../community.prov
     templateUrl: './my-items.component.html',
     styleUrls: ['./my-items.component.scss'],
     providers: [
-        ...communityProviders
+        ...communityProviders,
     ]
 })
 export class MyItemsComponent {
@@ -37,7 +37,10 @@ export class MyItemsComponent {
 
     categories: Category[] = [];
 
-    constructor(@Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, private categoriesService: CategoriesService) { }
+    constructor(
+        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+        @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
+    ) { }
 
     ngOnInit() {
         // Fetch categories from the service

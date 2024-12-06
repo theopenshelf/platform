@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService, Category } from '../../services/categories.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { TuiAlertService, TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import {TUI_DEFAULT_INPUT_COLORS, TuiInputColorModule} from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
+import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
 
 @Component({
     standalone: true,
@@ -24,7 +25,10 @@ import { QuillModule } from 'ngx-quill';
         FormsModule,
         ReactiveFormsModule],
     templateUrl: './edit-category.component.html',
-    styleUrls: ['./edit-category.component.scss']
+    styleUrls: ['./edit-category.component.scss'],
+    providers: [
+        ...adminProviders
+    ],
 })
 export class EditCategoryComponent {
     categoryForm: FormGroup;
@@ -49,7 +53,7 @@ export class EditCategoryComponent {
     constructor(
         private route: ActivatedRoute,
         private fb: FormBuilder,
-        private categoriesService: CategoriesService,
+        @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
         private router: Router
     ) {
         this.categoryForm = this.fb.group({

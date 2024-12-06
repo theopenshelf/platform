@@ -12,8 +12,8 @@ import {
   TuiTitle,
 } from '@taiga-ui/core';
 import { Item, ItemsService, ItemWithRecords } from '../../services/items.service';
-import { CategoriesService, Category } from '../../../admin/services/categories.service';
-import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CategoriesService, Category } from '../../services/categories.service';
+import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
   standalone: true,
@@ -34,7 +34,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provide
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss'],
   providers: [
-    ...communityProviders
+    ...communityProviders,
   ]
 })
 export class ItemsComponent {
@@ -49,7 +49,7 @@ export class ItemsComponent {
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
-    private categoriesService: CategoriesService
+    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
   ) { }
 
   ngOnInit() {

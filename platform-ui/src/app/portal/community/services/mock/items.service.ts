@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CategoriesService, Category } from '../../../admin/services/categories.service';
 import { BorrowItem, BorrowRecord, Item, ItemsService, ItemWithRecords } from '../items.service';
+import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
 
 
 @Injectable({
@@ -22,7 +22,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'A magical adventure story that follows the journey of a young wizard and his friends.',
             shortDescription: 'A magical adventure story.',
-            category: CategoriesService.BOOKS,
+            category: MockCategoriesService.BOOKS,
             favorite: true,
             borrowCount: 8
         },
@@ -34,7 +34,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'High-performance laptop for work and play, featuring a sleek design and powerful specs.',
             shortDescription: 'High-performance laptop.',
-            category: CategoriesService.ELECTRONICS,
+            category: MockCategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 2
         },
@@ -46,7 +46,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'Comfortable cotton T-shirt, perfect for casual outings or lounging at home.',
             shortDescription: 'Comfortable cotton T-shirt.',
-            category: CategoriesService.CLOTHING,
+            category: MockCategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 0
         },
@@ -58,7 +58,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Ergonomic wireless mouse designed for productivity and comfort during extended use.',
             shortDescription: 'Ergonomic wireless mouse.',
-            category: CategoriesService.ELECTRONICS,
+            category: MockCategoriesService.ELECTRONICS,
             favorite: true,
             borrowCount: 9
         },
@@ -70,7 +70,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Stylish denim jeans that provide comfort and versatility for any occasion.',
             shortDescription: 'Stylish denim jeans.',
-            category: CategoriesService.CLOTHING,
+            category: MockCategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 4
         },
@@ -82,7 +82,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/harry-potter.png',
             description: 'Latest smartphone model with cutting-edge features and a sleek design.',
             shortDescription: 'Latest smartphone model.',
-            category: CategoriesService.ELECTRONICS,
+            category: MockCategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 1
         },
@@ -94,7 +94,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'A classic novel set in the Jazz Age, exploring themes of love, wealth, and the American dream.',
             shortDescription: 'Classic Jazz Age novel.',
-            category: CategoriesService.BOOKS,
+            category: MockCategoriesService.BOOKS,
             favorite: false,
             borrowCount: 1
         },
@@ -106,7 +106,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Comfortable chair designed for long gaming sessions with ergonomic support.',
             shortDescription: 'Ergonomic gaming chair.',
-            category: CategoriesService.ELECTRONICS,
+            category: MockCategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 2
         },
@@ -118,7 +118,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Sleek leather wallet with compartments for cards, cash, and coins.',
             shortDescription: 'Sleek leather wallet.',
-            category: CategoriesService.CLOTHING,
+            category: MockCategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 3
         },
@@ -130,7 +130,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Adjustable LED desk lamp with multiple brightness settings.',
             shortDescription: 'Adjustable LED lamp.',
-            category: CategoriesService.ELECTRONICS,
+            category: MockCategoriesService.ELECTRONICS,
             favorite: false,
             borrowCount: 18
         },
@@ -142,7 +142,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'Warm and durable jacket for cold weather, designed for style and comfort.',
             shortDescription: 'Warm winter jacket.',
-            category: CategoriesService.CLOTHING,
+            category: MockCategoriesService.CLOTHING,
             favorite: false,
             borrowCount: 0
         },
@@ -154,7 +154,7 @@ export class MockItemsService implements ItemsService {
             imageUrl: '/items/terraforming-mars.png',
             description: 'A comprehensive cookbook filled with recipes for home chefs of all levels.',
             shortDescription: 'Comprehensive cookbook.',
-            category: CategoriesService.BOOKS,
+            category: MockCategoriesService.BOOKS,
             favorite: false,
             borrowCount: 1
         },

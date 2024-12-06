@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import {
@@ -22,6 +22,7 @@ import { User, UsersService } from '../../services/users.service';
 import {TuiAutoFocus} from '@taiga-ui/cdk';
 import { TuiHint} from '@taiga-ui/core';
 import {TuiInputModule} from '@taiga-ui/legacy';
+import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
  
 
 export type User1 = {
@@ -63,7 +64,10 @@ export type User1 = {
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        ...adminProviders
+    ]
 })
 export class UsersComponent {
     // Default Table Size
@@ -75,7 +79,7 @@ export class UsersComponent {
     constructor(
         private dialogs: TuiResponsiveDialogService,
         private alerts: TuiAlertService,
-        private usersService: UsersService
+        @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService
     ) {
         this.users = usersService.getUsers();
     }

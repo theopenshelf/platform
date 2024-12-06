@@ -1,5 +1,5 @@
 import {NgForOf, NgIf} from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Inject} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {TuiTable} from '@taiga-ui/addon-table';
 import {
@@ -27,6 +27,7 @@ import { RouterModule } from '@angular/router';
 import {TuiCell} from '@taiga-ui/layout';
 import { Item, ItemsService } from '../../services/items.service';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { adminProviders, ITEMS_SERVICE_TOKEN } from '../../admin.providers';
 
 @Component({
     standalone: true, 
@@ -51,6 +52,9 @@ import { CategoryBadgeComponent } from '../../../../components/category-badge/ca
     selector: 'app-items',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.scss'],
+    providers: [
+        ...adminProviders
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsComponent {
@@ -58,7 +62,9 @@ export class ItemsComponent {
 
     items: Item[] = [];
 
-    public constructor(private itemsService: ItemsService) {
+    public constructor(
+        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
+    ) {
     }
 
     ngOnInit() {

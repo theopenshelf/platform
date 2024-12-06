@@ -5,8 +5,8 @@ import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
 import { Item, ItemsService } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { CategoriesService, Category } from '../../../admin/services/categories.service';
-import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CategoriesService, Category } from '../../services/categories.service';
+import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
     selector: 'app-add-item',
@@ -15,7 +15,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provide
     templateUrl: './add-item.component.html',
     styleUrl: './add-item.component.scss',
     providers: [
-        ...communityProviders
+        ...communityProviders,
     ]
 })
 export class AddItemComponent {
@@ -39,7 +39,7 @@ export class AddItemComponent {
   constructor(
     private fb: FormBuilder,
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    private categoriesService: CategoriesService,
+    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
     private router: Router
   ) {
     this.categories = this.categoriesService.getCategories();
@@ -92,7 +92,6 @@ export class AddItemComponent {
       const newItem = this.addItemForm.value;
       newItem.category = this.categories.find(c => c.name === newItem.category);
       const createdItem = this.itemsService.addItem(newItem)
-      debugger;
       this.addItemForm.reset();
       this.router.navigate(['/community/items', createdItem.id]);
     }

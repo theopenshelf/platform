@@ -5,9 +5,9 @@ import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
 import { ItemsService } from '../../services/items.service';
 import { RouterLink } from '@angular/router';
-import { CategoriesService, Category } from '../../../admin/services/categories.service';
+import { CategoriesService, Category } from '../../services/categories.service';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
   standalone: true, 
@@ -16,7 +16,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provide
     templateUrl: './myborroweditems.component.html',
     styleUrls: ['./myborroweditems.component.scss'],
     providers: [
-        ...communityProviders
+        ...communityProviders,
     ]
 })
 export class MyborroweditemsComponent {
@@ -42,7 +42,7 @@ export class MyborroweditemsComponent {
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
-    private categoriesService: CategoriesService
+    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
   ) { }
 
   ngOnInit() {
@@ -121,7 +121,6 @@ export class MyborroweditemsComponent {
   // Get filtered and sorted data
   protected get filteredAndSortedData() {
     let result = this.itemsService.getMyBorrowItems();
-
     // Filter by category and status
     result = result.filter((item) => {
       const status = this.computeStatus(item.record.startDate, item.record.endDate);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CategoriesService, Category } from '../../admin/services/categories.service';
+import { Category } from './categories.service';
 
 export interface Item {
     id: string;
