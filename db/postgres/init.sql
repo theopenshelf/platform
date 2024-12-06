@@ -11,7 +11,7 @@ CREATE TABLE "items" (
 INSERT INTO "items" (
     "name",
     "description",
-    "location",
+    "located",
     "created_at"
 ) VALUES (
     'Sample Item',

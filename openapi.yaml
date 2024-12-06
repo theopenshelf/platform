@@ -242,7 +242,8 @@ components:
       properties:
         id:
           type: string
-          example: "1"
+          format: uuid
+          example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
         name:
           type: string
           example: "Harry Potter Book"
@@ -298,6 +299,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
         color:
@@ -388,7 +390,7 @@ components:
                 items:
                   $ref: "#/components/schemas/Item"
                 example:
-                  - id: "1"
+                  - id: "123e4567-e89b-12d3-a456-426614174000"
                     name: "Harry Potter Book"
                     located: "ShareSpace"
                     owner: "TheOpenShelf"

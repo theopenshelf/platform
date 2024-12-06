@@ -18,7 +18,7 @@ public class ItemEntity {
     private UUID id;
     private String name;
     private String description;
-    private String location;
+    private String located;
 
     private Instant createdAt;
 
@@ -27,7 +27,7 @@ public class ItemEntity {
                 .id(id)
                 .name(name)
                 .description(description)
-                .location(location)
+                .located(located)
                 ;
     }
 }
