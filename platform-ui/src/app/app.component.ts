@@ -1,36 +1,16 @@
-import { TuiRoot } from "@taiga-ui/core";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
-import {KeyValuePipe, NgForOf} from '@angular/common';
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {RouterLink, RouterLinkActive} from '@angular/router';
-import {tuiAsPortal, TuiPortals, TuiRepeatTimes} from '@taiga-ui/cdk';
+import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
 import {
-    TuiAppearance,
-    TuiButton,
     TuiDataList,
     TuiDropdown,
-    TuiDropdownService,
-    TuiIcon,
-    TuiTitle,
+    TuiDropdownService
 } from '@taiga-ui/core';
 import {
-    TuiAvatar,
-    TuiBadge,
-    TuiBadgeNotification,
-    TuiChevron,
-    TuiDataListDropdownManager,
-    TuiFade,
-    TuiSwitch,
-    TuiTabs,
+    TuiTabs
 } from '@taiga-ui/kit';
-import {TuiCardLarge, TuiHeader, TuiNavigation} from '@taiga-ui/layout';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CalendarModule, DateAdapter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import MockAuthService from "./services/mock/auth.service";
-import {AuthService} from "./services/auth.service";
-import { MockNotificationsService } from "./services/mock/notifications.service";
+import { TuiNavigation } from '@taiga-ui/layout';
 import { globalProviders } from "./global.provider";
 
 

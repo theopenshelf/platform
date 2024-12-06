@@ -5,8 +5,7 @@ import { TuiAppearance, TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taig
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { TuiPortals } from '@taiga-ui/cdk';
 import { TuiAvatar } from '@taiga-ui/kit';
-import AuthService from '../../../../../services/mock/auth.service';
-import { UserInfo } from '../../../../../services/auth.service';
+import { AuthService, UserInfo } from '../../../../../services/auth.service';
 import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
 
 @Component({
@@ -30,7 +29,9 @@ import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provi
 export class SettingsLandingPageComponent extends TuiPortals {
   protected userInfo: UserInfo;
 
-  constructor(@Inject(AUTH_SERVICE_TOKEN) private authService: AuthService) {
+  constructor(
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService
+  ) {
     super();
     this.userInfo = this.authService.getCurrentUserInfo()
   }

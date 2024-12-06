@@ -8,7 +8,7 @@ import { AuthService, UserInfo } from '../auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export default class MockAuthService implements AuthService {
+export class MockAuthService implements AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private userRoles: string[] = ['admin', 'community']; // Store multiple roles
   message: string = '';
