@@ -48,7 +48,7 @@
     "@angular/compiler-cli": "^19.0.3",
     "@angular/localize": "^19.0.3",
     "@openapitools/openapi-generator-cli": "^2.15.3",
-    "@types/jasmine": "~5.1.0",
+    "@types/jasmine": "~5.1.5",
     "jasmine-core": "~5.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
