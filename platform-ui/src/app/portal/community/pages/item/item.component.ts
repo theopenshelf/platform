@@ -11,7 +11,7 @@ import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { EMPTY, of, switchMap } from 'rxjs';
 import { TUI_CALENDAR_DATE_STREAM, TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { Item, BorrowRecord, ItemsService, BorrowItem } from '../../services/items.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
@@ -73,6 +73,7 @@ export class ItemComponent {
     private datePipe: DatePipe,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
+    private router: Router
   ) {
   }
 
@@ -160,7 +161,9 @@ export class ItemComponent {
             this.selectedDate?.from.toLocalNativeDate().toISOString().split('T')[0] ?? '',
             this.selectedDate?.to.toLocalNativeDate().toISOString().split('T')[0] ?? ''
           );
-          return this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' });
+          this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' }).subscribe();
+          this.router.navigate(['/community/my-borrowed-items']);
+          return EMPTY;
         }
         return EMPTY;
       }))
