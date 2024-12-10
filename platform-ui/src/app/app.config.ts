@@ -8,9 +8,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { BASE_PATH } from "./api-client";
 import { environment } from "../environments/environment";
 import { provideHttpClient } from "@angular/common/http";
+import { globalProviders } from "./global.provider";
 
 export const appConfig: ApplicationConfig = {
   providers: [
+      ...globalProviders,
     { provide: BASE_PATH, useValue: environment.API_BASE_PATH },
     provideAnimations(), 
     provideHttpClient(),

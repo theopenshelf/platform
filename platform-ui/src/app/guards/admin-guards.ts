@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { AUTH_SERVICE_TOKEN } from '../global.provider';
 import { AuthService } from '../services/auth.service';
-import { MockAuthService } from '../services/mock/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminGuard implements CanActivate {
   constructor(
-    @Inject(MockAuthService) private authService: AuthService, 
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService, 
     private router: Router
   ) {}
 
