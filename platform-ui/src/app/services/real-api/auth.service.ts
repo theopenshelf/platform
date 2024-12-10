@@ -8,38 +8,43 @@ import { AuthService, UserInfo } from '../auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class MockAuthService implements AuthService {
+export class APIAuthService implements AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private userRoles: string[] = ['admin', 'community']; // Store multiple roles
   message: string = '';
+  userInfo: UserInfo = {
+    "firstName": "unknown",
+    "lastName": "unknown",
+    "username": "unknown",
+  };
 
   constructor(private router: Router, private authApiService: AuthApiService) {}
 
 
   getCurrentUserInfo(): UserInfo {
-    return {
-      "firstName": "Quentin",
-      "lastName": "Castel",
-      "username": "qcastel",
-    }
+    return this.userInfo;
   }
 
   signIn(username: string, password: string): Observable<boolean> {
     return new Observable<boolean>((observer) => {
-      if (username === 'admin' && password === 'password') {
-        this.isAuthenticated$.next(true);
-        this.userRoles = ['admin', 'community'];
-        observer.next(true);
-        observer.complete();
-      } else if (username === 'alice' && password === 'password') {
-        this.isAuthenticated$.next(true);
-        this.userRoles = ['community'];
-        observer.next(true);
-        observer.complete();
-      } else {
-        observer.next(false);
-        observer.complete();
-      }
+      this.authApiService.login({
+        username: username,
+        password: password
+      }).subscribe({
+        next: (user: User) => {
+          this.isAuthenticated$.next(true);
+          this.userRoles = user.roles; // Assuming the user object has a roles property
+          this.userInfo.firstName = user.firstName;
+          this.userInfo.lastName = user.lastName;
+          this.userInfo.username = user.username;
+          observer.next(true);
+          observer.complete();
+        },
+        error: (error) => {
+          observer.next(false);
+          observer.complete();
+        }
+      });
     });
   }
 

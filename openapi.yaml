@@ -184,6 +184,107 @@ paths:
         '404':
           description: Item not found or not borrowed by the user
 
+  /community/notifications:
+    get:
+      operationId: getNotifications
+      summary: Retrieve all notifications
+      tags:
+        - notifications-api
+      responses:
+        '200':
+          description: A list of notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /community/notifications/unread-count:
+    get:
+      operationId: getUnreadNotificationsCount
+      summary: Retrieve the count of unread notifications
+      tags:
+        - notifications-api
+      responses:
+        '200':
+          description: Count of unread notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 5
+
+  /community/notifications/acknowledge:
+    post:
+      operationId: acknowledgeNotifications
+      summary: Acknowledge notifications as read
+      tags:
+        - notifications-api
+      requestBody:
+        description: List of notifications to acknowledge
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Notification"
+      responses:
+        '204':
+          description: Notifications acknowledged successfully
+
+  /categories:
+    get:
+      operationId: getCategories
+      summary: Retrieve all categories
+      tags:
+        - categories-api
+      responses:
+        '200':
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /admin/items:
+    get:
+      operationId: getItemStats
+      summary: Retrieve all item statistics
+      tags:
+        - admin-items-api
+      responses:
+        '200':
+          description: A list of item statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ItemStat"
+
+  /admin/users:
+    get:
+      operationId: getUsers
+      summary: Retrieve all users
+      tags:
+        - admin-users-api
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserWithStats"
+
 
 
 components:
@@ -222,6 +323,9 @@ components:
         - id
         - login
         - username
+        - firstName
+        - lastName
+        - roles
       properties:
         id:
           type: string
@@ -237,6 +341,11 @@ components:
         flat:
           type: string  
           example: A701
+        roles:
+          type: array
+          items:
+            type: string
+            example: "admin"
 
     Item:
       type: object
@@ -382,6 +491,120 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Item"
+
+    Notification:
+      type: object
+      required:
+        - id
+        - author
+        - date
+        - type
+        - alreadyRead
+      properties:
+        id:
+          type: integer
+          example: 1
+        author:
+          type: string
+          example: "system"
+        date:
+          type: string
+          format: date-time
+          example: "2023-11-15T13:45:30"
+        type:
+          type: string
+          enum:
+            - ITEM_AVAILABLE
+            - ITEM_DUE
+            - ITEM_BORROW_RESERVATION_DATE_START
+            - ITEM_RESERVED_NO_LONGER_AVAILABLE
+        alreadyRead:
+          type: boolean
+          example: false
+        payload:
+          type: object
+          additionalProperties: true
+
+    ItemStat:
+      type: object
+      required:
+        - id
+        - name
+        - located
+        - owner
+        - imageUrl
+        - description
+        - shortDescription
+        - category
+        - favorite
+        - borrowCount
+        - lateReturnPercentage
+        - averageDuration
+        - state
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        located:
+          type: string
+        owner:
+          type: string
+        imageUrl:
+          type: string
+        description:
+          type: string
+        shortDescription:
+          type: string
+        category:
+          $ref: "#/components/schemas/Category"
+        favorite:
+          type: boolean
+        borrowCount:
+          type: integer
+        lateReturnPercentage:
+          type: number
+        averageDuration:
+          type: number
+        state:
+          type: object
+          properties:
+            label:
+              type: string
+            statusColor:
+              type: string
+
+    UserWithStats:
+      type: object
+      required:
+        - id
+        - username
+        - email
+        - flatNumber
+        - address
+        - borrowedItems
+        - returnedLate
+        - successRate
+        - disabled
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        email:
+          type: string
+        flatNumber:
+          type: string
+        address:
+          type: string
+        borrowedItems:
+          type: integer
+        returnedLate:
+          type: integer
+        successRate:
+          type: number
+        disabled:
+          type: boolean
 
   responses:
     OK_200_GET_HELLO_WORLD:

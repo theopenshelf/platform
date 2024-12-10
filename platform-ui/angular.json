@@ -72,6 +72,17 @@
                       "with": "src/environments/environment.dev.ts"
                   }
               ]
+            },
+            "mock-test": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                  {
+                      "replace": "src/environments/environment.ts",
+                      "with": "src/environments/environment.mock-test.ts"
+                  }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -84,6 +95,9 @@
             },
             "development": {
               "buildTarget": "platform-ui:build:development"
+            },
+            "mock-test": {
+              "buildTarget": "platform-ui:build:mock-test"
             }
           },
           "defaultConfiguration": "development"

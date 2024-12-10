@@ -10,7 +10,7 @@ export interface UserInfo {
 export interface AuthService {
   message: string;
   getCurrentUserInfo(): UserInfo;
-  signIn(username: string, password: string): boolean;
+  signIn(username: string, password: string): Observable<boolean>;
   hasRole(role: string): boolean;
   signUp(email: string, password: string): void;
   signOut(): void;
