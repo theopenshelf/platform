@@ -13,20 +13,6 @@ servers:
 
 paths:
 
-  /community/hello-world:
-    get:
-      operationId: getHelloWorld
-      summary: hello world
-      tags:
-        - hello-world-api
-
-      security:
-        - BearerAuthOAuth: []
-
-      responses:
-        '200':
-          $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
-
   /public/auth/login:
     post:
       operationId: login
@@ -57,6 +43,20 @@ paths:
       responses:
         '200':
           $ref: "#/components/responses/OK_200_LOGIN"
+
+  /community/hello-world:
+    get:
+      operationId: getHelloWorld
+      summary: hello world
+      tags:
+        - hello-world-api
+
+      security:
+        - BearerAuthOAuth: []
+
+      responses:
+        '200':
+          $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
 
   /community/items:
     get:
@@ -93,6 +93,18 @@ paths:
   /community/items/{item-id}/borrow-records:
     parameters:
       - $ref: "#/components/parameters/itemId"
+      - name: owner
+        in: query
+        description: Filter by owner
+        required: false
+        schema:
+          type: string
+      - name: borrower
+        in: query
+        description: Filter by borrower
+        required: false
+        schema:
+          type: string
     get:
       operationId: getItemBorrowRecords
       summary: Retrieve borrow records for a specific item
@@ -108,7 +120,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/BorrowRecord"
 
-  /community/items/{item-id}/borrow:
+  /community/items/{item-id}/actions/borrow:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
@@ -138,7 +150,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/BorrowItem"
 
-  /community/items/{item-id}/favorite:
+  /community/items/{item-id}/actions/favorite:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
