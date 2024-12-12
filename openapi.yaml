@@ -421,6 +421,88 @@ paths:
         '404':
           description: User not found
 
+  /community/locations:
+    get:
+      operationId: getLocations
+      summary: Retrieve all locations
+      tags:
+        - locations-api
+      responses:
+        '200':
+          description: A list of locations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Location"
+    post:
+      operationId: addLocation
+      summary: Add a new location
+      tags:
+        - locations-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+      responses:
+        '201':
+          description: Location created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+
+  /community/locations/{location-id}:
+    parameters:
+      - name: location-id
+        in: path
+        description: Location ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getLocation
+      summary: Retrieve a specific location
+      tags:
+        - locations-api
+      responses:
+        '200':
+          description: A single location
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+    put:
+      operationId: updateLocation
+      summary: Update a location
+      tags:
+        - locations-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Location"
+      responses:
+        '200':
+          description: Location updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Location"
+    delete:
+      operationId: deleteLocation
+      summary: Delete a location
+      tags:
+        - locations-api
+      responses:
+        '204':
+          description: Location deleted successfully
+
 
 
 components:
@@ -741,6 +823,27 @@ components:
           type: number
         disabled:
           type: boolean
+
+    Location:
+      type: object
+      required:
+        - id
+        - name
+        - address
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        name:
+          type: string
+          example: "Main Library"
+        instructions:
+          type: string
+          example: "Use side entrance, code is 1234"
+        address:
+          type: string
+          example: "123 Main Street, City, Country"
 
   responses:
     OK_200_GET_HELLO_WORLD:

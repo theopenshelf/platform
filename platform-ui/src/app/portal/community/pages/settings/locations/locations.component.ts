@@ -1,13 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { TuiButton } from '@taiga-ui/core';
-
-interface Location {
-    name: string;
-    instructions: string;
-    address: string;
-}
+import { LocationsService, UILocation } from '../../../services/locations.service';
+import { communityProviders, LOCATIONS_SERVICE_TOKEN } from '../../../community.provider';
 
 @Component({
     standalone: true,
@@ -19,16 +15,19 @@ interface Location {
       TuiButton,
 
     ],
+    providers: [
+        ...communityProviders,
+    ],
     templateUrl: './locations.component.html',
     styleUrls: ['./locations.component.scss']
 })
 export class LocationsComponent implements OnInit {
     locationForm!: FormGroup;
-    locations: Location[] = [];
+    locations: UILocation[] = [];
     editMode: boolean = false;
     editIndex: number | null = null;
 
-    constructor(private fb: FormBuilder) {}
+    constructor(private fb: FormBuilder, @Inject(LOCATIONS_SERVICE_TOKEN) private locationsService: LocationsService) {}
 
     ngOnInit(): void {
         this.locationForm = this.fb.group({
@@ -36,17 +35,28 @@ export class LocationsComponent implements OnInit {
             instructions: [''],
             address: ['', Validators.required],
         });
+
+        this.loadLocations();
+    }
+
+    loadLocations(): void {
+        this.locationsService.getLocations().subscribe(locations => {
+            this.locations = locations;
+        });
     }
 
     onSubmit(): void {
         if (this.editMode && this.editIndex !== null) {
-            // Update existing location
-            this.locations[this.editIndex] = this.locationForm.value;
-            this.editMode = false;
-            this.editIndex = null;
+            const locationId = this.locations[this.editIndex].id; // Assuming each location has an 'id' field
+            this.locationsService.updateLocation(locationId, this.locationForm.value).subscribe(() => {
+                this.loadLocations();
+                this.editMode = false;
+                this.editIndex = null;
+            });
         } else {
-            // Add new location
-            this.locations.push(this.locationForm.value);
+            this.locationsService.addLocation(this.locationForm.value).subscribe(() => {
+                this.loadLocations();
+            });
         }
         this.locationForm.reset();
     }
@@ -64,6 +74,9 @@ export class LocationsComponent implements OnInit {
     }
 
     deleteLocation(index: number): void {
-        this.locations.splice(index, 1);
+        const locationId = this.locations[index].id; // Assuming each location has an 'id' field
+        this.locationsService.deleteLocation(locationId).subscribe(() => {
+            this.loadLocations();
+        });
     }
 }
