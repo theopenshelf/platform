@@ -61,9 +61,22 @@ paths:
   /community/items:
     get:
       operationId: getItems
-      summary: Retrieve all items
+      summary: Retrieve all items (filter by current user items)
       tags:
         - items-api
+      parameters:
+        - name: currentUser
+          in: query
+          description: Filter items by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedByCurrentUser
+          in: query
+          description: Filter items borrowed by current user
+          required: false
+          schema:
+            type: boolean
       responses:
         '200':
           description: A list of items
@@ -73,6 +86,24 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Item"
+    post:
+      operationId: addItem
+      summary: Add a new item
+      tags:
+        - items-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        '201':
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
 
   /community/items/{item-id}:
     parameters:
@@ -119,6 +150,21 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/BorrowRecord"
+    delete:
+      operationId: deleteBorrowRecord
+      summary: Delete a borrow record for a specific item
+      tags:
+        - items-api
+      parameters:
+        - name: recordId
+          in: query
+          description: ID of the borrow record to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Borrow record deleted successfully
 
   /community/items/{item-id}/actions/borrow:
     parameters:
@@ -165,24 +211,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Item"
-
-  /community/items/{item-id}/my-borrow:
-    parameters:
-      - $ref: "#/components/parameters/itemId"
-    get:
-      operationId: getMyBorrowItem
-      summary: Retrieve a specific borrowed item for the current user
-      tags:
-        - items-api
-      responses:
-        '200':
-          description: A specific borrowed item
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BorrowItem"
-        '404':
-          description: Item not found or not borrowed by the user
 
   /community/notifications:
     get:
@@ -284,6 +312,114 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/UserWithStats"
+
+  /public/auth/signup:
+    post:
+      operationId: signUp
+      summary: Register a new user
+      tags:
+        - auth-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "newuser@example.com"
+                username:
+                  type: string
+                  example: "newuser"
+                password:
+                  type: string
+                  example: "securepassword"
+                streetAddress:
+                  type: string
+                  example: "123 Main St"
+                city:
+                  type: string
+                  example: "Anytown"
+                postalCode:
+                  type: string
+                  example: "12345"
+                country:
+                  type: string
+                  example: "Countryland"
+              required:
+                - email
+                - username
+                - password
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: Invalid input
+
+  /public/auth/signout:
+    post:
+      operationId: signOut
+      summary: Sign out the current user
+      tags:
+        - auth-api
+      responses:
+        '204':
+          description: User signed out successfully
+
+  /public/auth/reset-password:
+    post:
+      operationId: resetPassword
+      summary: Reset password for a user
+      tags:
+        - auth-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "user@example.com"
+              required:
+                - email
+      responses:
+        '200':
+          description: Password reset email sent
+        '404':
+          description: User not found
+
+  /public/auth/reset-password/confirm:
+    post:
+      operationId: confirmResetPassword
+      summary: Confirm password reset with token
+      tags:
+        - auth-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+                  example: "reset-token-123"
+                newPassword:
+                  type: string
+                  example: "newSecurePassword"
+              required:
+                - token
+                - newPassword
+      responses:
+        '200':
+          description: Password reset successfully
+        '400':
+          description: Invalid token or password
+        '404':
+          description: User not found
 
 
 

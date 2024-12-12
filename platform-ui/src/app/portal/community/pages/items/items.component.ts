@@ -11,8 +11,8 @@ import {
   TuiButton,
   TuiTitle,
 } from '@taiga-ui/core';
-import { Item, ItemsService, ItemWithRecords } from '../../services/items.service';
-import { CategoriesService, Category } from '../../services/categories.service';
+import { UIItem, ItemsService, ItemWithRecords } from '../../services/items.service';
+import { CategoriesService, UICategory } from '../../services/categories.service';
 import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
 
 @Component({
@@ -40,7 +40,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } fro
 export class ItemsComponent {
 
   // Categories for the filter
-  categories: Category[] = [];
+  categories: UICategory[] = [];
   // Selected categories
   selectedCategories: Set<string> = new Set();
   // Text input for search filtering
@@ -54,8 +54,12 @@ export class ItemsComponent {
 
   ngOnInit() {
     // Fetch the items from the service
-    this.items = this.itemsService.getItemsWithRecords();
-    this.categories = this.categoriesService.getCategories();
+    this.itemsService.getItemsWithRecords().subscribe(items => {
+      this.items = items;
+    });
+    this.categoriesService.getCategories().subscribe(categories => {
+      this.categories = categories;
+    });
   }
 
   // Filtered items for the grid
@@ -83,7 +87,7 @@ export class ItemsComponent {
     // The filtering is handled in the getter `filteredItems`
   }
 
-  markAsFavorite(item: Item) {
+  markAsFavorite(item: UIItem) {
     this.itemsService.markAsFavorite(item);
   }
 }

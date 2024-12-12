@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthApiService, ResponseHelloWorld, User } from '../../api-client';
+import { AuthApiService, NotificationsApiService, ResponseHelloWorld, User } from '../../api-client';
 import { AuthService, UserInfo } from '../auth.service';
+import { TuiAlertService } from '@taiga-ui/core';
 
 
 @Injectable({
@@ -18,7 +19,11 @@ export class APIAuthService implements AuthService {
     "username": "unknown",
   };
 
-  constructor(private router: Router, private authApiService: AuthApiService) {}
+  constructor(
+    private router: Router, 
+    private authApiService: AuthApiService,
+    private alerts: TuiAlertService
+    ) {}
 
 
   getCurrentUserInfo(): UserInfo {
@@ -54,15 +59,34 @@ export class APIAuthService implements AuthService {
   }
 
 
-  signUp(email: string, password: string): void {
+  signUp(email: string, username: string, password: string, streetAddress: string, city: string, postalCode: string, country: string): void {
     // Mock sign up logic (replace with backend API call)
-    console.log('User registered:', { email, password });
+    this.authApiService.signUp({
+      email: email,
+      username: username,
+      password: password,
+      streetAddress: streetAddress,
+      city: city,
+      postalCode: postalCode,
+      country: country
+    }).subscribe({
+      next: (response) => {
+        this.router.navigate(['/']);
+        this.alerts.open(`Successfully signed up`, { appearance: 'positive' }).subscribe();
+      }
+    });
   }
 
   signOut(): void {
-    this.isAuthenticated$.next(false);
-    this.userRoles = [];
-    this.router.navigate(['/']);
+    this.authApiService.signOut().subscribe({
+      next: (response) => {
+        this.isAuthenticated$.next(false);
+        this.userRoles = [];
+        this.router.navigate(['/']);
+        this.alerts.open(`Successfully logged out`, { appearance: 'positive' }).subscribe();
+      }
+    });
+
   }
 
   isAuthenticated() {
@@ -70,6 +94,12 @@ export class APIAuthService implements AuthService {
   }
 
   resetPassword(email: string): void {
-    console.log(`Password reset email sent to: ${email}`);
+    this.authApiService.resetPassword({
+      email: email
+    }).subscribe({
+      next: (response) => {
+        console.log('Password reset email sent:', response);
+      }
+    });
   }
 }

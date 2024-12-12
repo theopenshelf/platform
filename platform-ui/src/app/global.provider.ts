@@ -6,6 +6,7 @@ import { MockNotificationsService } from './services/mock/notifications.service'
 import { AuthService } from './services/auth.service';
 import { MockAuthService } from './services/mock/auth.service';
 import { APIAuthService } from './services/real-api/auth.service';
+import { APINotificationsService } from './services/real-api/notifications.service';
 
 
 export const NOTIFICATIONS_SERVICE_TOKEN = new InjectionToken<NotificationsService>('NotificationsService');
@@ -18,6 +19,6 @@ export const globalProviders: Provider[] = [
     },
     {
         provide: NOTIFICATIONS_SERVICE_TOKEN,
-        useExisting: MockNotificationsService,
+        useExisting: environment.useMockApi ? MockNotificationsService : APINotificationsService,
     }
 ];

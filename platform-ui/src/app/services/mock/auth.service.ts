@@ -49,7 +49,7 @@ export class MockAuthService implements AuthService {
   }
 
 
-  signUp(email: string, password: string): void {
+  signUp(email: string, username: string, password: string, streetAddress: string, city: string, postalCode: string, country: string): void {
     // Mock sign up logic (replace with backend API call)
     console.log('User registered:', { email, password });
   }

@@ -8,9 +8,9 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiInputDateRangeModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
-import { EMPTY, of, switchMap } from 'rxjs';
+import { EMPTY, of, switchMap, tap } from 'rxjs';
 import { TUI_CALENDAR_DATE_STREAM, TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
-import { Item, BorrowRecord, ItemsService, BorrowItem } from '../../services/items.service';
+import { UIItem, UIBorrowRecord, ItemsService, UIBorrowItem } from '../../services/items.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
@@ -49,7 +49,7 @@ const plusTen = today.append({ day: 10 });
 })
 export class ItemComponent {
 
-  item: Item | undefined;
+  item: UIItem | undefined;
 
   protected readonly bookForm = new FormGroup({
     testValue: new FormControl(),
@@ -58,9 +58,9 @@ export class ItemComponent {
   protected readonly defaultViewedMonth = new TuiMonth(this.today.getFullYear(), this.today.getMonth());
   protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
   protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
-  records: BorrowRecord[] = [];
+  records: UIBorrowRecord[] = [];
   selectedDate: TuiDayRange | undefined;
-  borrowItemRecord: BorrowItem | undefined;
+  borrowItemRecord: UIBorrowItem | undefined;
   disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
     return day.dayBefore(this.min);
   };
@@ -103,9 +103,9 @@ export class ItemComponent {
   ngOnInit() {
     const itemId = this.route.snapshot.paramMap.get('id');
     if (itemId) {
-      this.item = this.itemsService.getItem(itemId);
-      this.records = this.itemsService.getItemBorrowRecords(itemId);
-      this.borrowItemRecord = this.itemsService.getMyBorrowItem(itemId) || undefined;
+      this.itemsService.getItem(itemId).subscribe(item => this.item = item);
+      this.itemsService.getItemBorrowRecords(itemId).subscribe(records => this.records = records);
+      this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => this.borrowItemRecord = borrowItemRecord || undefined);
     }
   }
 
@@ -156,13 +156,22 @@ export class ItemComponent {
       })
       .pipe(switchMap((response) => {
         if (response) {
-          this.borrowItemRecord = this.itemsService.borrowItem(
+          return this.itemsService.borrowItem(
             this.item!,
             this.selectedDate?.from.toLocalNativeDate().toISOString().split('T')[0] ?? '',
             this.selectedDate?.to.toLocalNativeDate().toISOString().split('T')[0] ?? ''
+          ).pipe(
+            tap(borrowItemRecord => {
+              this.borrowItemRecord = borrowItemRecord;
+            })
+          ).pipe(
+            tap(() => {
+              if (this.borrowItemRecord) {
+                this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' }).subscribe();
+                this.router.navigate(['/community/my-borrowed-items']);
+              }
+            })
           );
-          this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' }).subscribe();
-          this.router.navigate(['/community/my-borrowed-items']);
           return EMPTY;
         }
         return EMPTY;

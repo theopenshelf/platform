@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BorrowItem, BorrowRecord, Item, ItemsService, ItemWithRecords } from '../items.service';
+import { UIBorrowItem, UIBorrowRecord, UIItem, ItemsService, ItemWithRecords } from '../items.service';
 import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
+import { BorrowItem } from '../../../admin/services/items.service';
+import { forkJoin, map, Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -8,12 +10,12 @@ import { MockCategoriesService } from '../../../admin/services/mock/categories.s
 })
 export class MockItemsService implements ItemsService {
 
-    getMyOwnedItems(): Item[] {
-        return this.items;
+    getMyOwnedItems(): Observable<UIItem[]> {
+        return of(this.items);
     }
     private index = 1;
 
-    private items: Item[] = [
+    private items: UIItem[] = [
         {
             id: this.index++ + "",
             name: 'Harry Potter Book',
@@ -160,36 +162,42 @@ export class MockItemsService implements ItemsService {
         },
     ];
 
-    getItems(): Item[] {
-        return this.items;
+    getItems():  Observable<    UIItem[]> {
+        return of(this.items);
     }
 
-    getItemsWithRecords(): ItemWithRecords[] {
+    getItemsWithRecords(): Observable<ItemWithRecords[]> {
 
-        return this.items.map(item => {
-            const borrowRecords = this.getItemBorrowRecords(item.id);
-            const today = new Date().toISOString().split('T')[0];
+        const test = this.items.map(item => {
+            let borrowRecords: UIBorrowRecord[] = [];
+            return this.getItemBorrowRecords(item.id).pipe(
+                map(records => {
+                    borrowRecords = records
+                    const today = new Date().toISOString().split('T')[0];
 
-            const itemWithRecords: ItemWithRecords = {
-                ...item,
-                borrowRecords,
-                isBookedToday: borrowRecords.some(record => 
-                    record.startDate <= today && today <= record.endDate
-                ),
-                myBooking: borrowRecords.find(record =>
-                    record.borrowedBy === 'me@example.com' && record.startDate > today
-                )
-            };
-
-            return itemWithRecords;
+                    const itemWithRecords: ItemWithRecords = {
+                        ...item,
+                        borrowRecords,
+                        isBookedToday: borrowRecords.some(record => 
+                            record.startDate <= today && today <= record.endDate
+                        ),
+                        myBooking: borrowRecords.find(record =>
+                            record.borrowedBy === 'me@example.com' && record.startDate > today
+                        )
+                    };
+        
+                    return itemWithRecords;
+                })
+            );
         });
+        return forkJoin(test);
     }
 
-    getItem(id: string): Item {
-        return this.items.find((i) => i.id === id) as Item;
+    getItem(id: string): Observable<UIItem> {
+        return of(this.items.find((i) => i.id === id) as UIItem);
     }
 
-    getItemBorrowRecords(id: string): BorrowRecord[] {
+    getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]> {
         const today = new Date();
 
         const addDays = (date: Date, days: number): Date => {
@@ -200,62 +208,67 @@ export class MockItemsService implements ItemsService {
 
         const formatDate = (date: Date): string =>
             date.toISOString().split('T')[0]; // YYYY-MM-DD format
-        const myBorrowItem = this.getMyBorrowItem(id);
         const records = [
             {
+                id: '1',
                 borrowedBy: 'someone_else@example.com',
                 startDate: formatDate(addDays(today, 15)), 
                 endDate: formatDate(addDays(today, 22)),
             },
         ];
 
-        if (myBorrowItem) {
-            records.push(myBorrowItem.record);
-        }
-
-        return records;
+        return this.getMyBorrowItem(id).pipe(
+            map(myBorrowItem => {
+                if (myBorrowItem) {
+                    records.push(myBorrowItem.record);
+                }
+                return records;
+            })
+        );
     }
 
 
-    addItem(item: Item): Item {
+    addItem(item: UIItem): Observable<UIItem> {
         item.id = this.index++ + "";
         this.items.push(item);
-        return item;
+        return of(item);
     }
 
-    private borrowedItems: BorrowItem[] = [];
+    private borrowedItems: UIBorrowItem[] = [];
 
-    borrowItem(item: Item, startDate: string, endDate: string): BorrowItem {
+    borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIBorrowItem> {
         const borrowedItem = {
             ...item,
             record: { borrowedBy: 'me@example.com', startDate, endDate }
-        } as BorrowItem;
+        } as UIBorrowItem;
         
         this.borrowedItems.push(borrowedItem);
-        return borrowedItem;
+        return of(borrowedItem);
     }
 
-    getMyBorrowItems(): BorrowItem[] {
-        return this.borrowedItems;
+    getMyBorrowItems(): Observable<UIBorrowItem[]> {
+        return of(this.borrowedItems);
     }
 
-    cancelReservation(borrowRecord: BorrowItem) {
+    cancelReservation(borrowRecord: UIBorrowItem): Observable<void> {
         const index = this.borrowedItems.findIndex(item => item.id === borrowRecord.id);
         if (index !== -1) {
             this.borrowedItems.splice(index, 1);
         }
+        return of(undefined);
     }
     
-    getMyBorrowItem(id: string): BorrowItem | null {
+    getMyBorrowItem(id: string): Observable<UIBorrowItem | null> {
         const item = this.borrowedItems.find(item => item.id === id);
         if (!item) {
-           return null;
+           return of(null);
         }
-        return item;
+        return of(item);
     }
 
-    markAsFavorite(item: Item) {
+    markAsFavorite(item: UIItem): Observable<void> {
         item.favorite = !item.favorite;
+        return of(undefined);
     }
 
 }

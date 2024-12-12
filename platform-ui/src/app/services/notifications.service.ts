@@ -1,3 +1,5 @@
+import { Observable } from "rxjs";
+
 export enum NotificationType {
     ITEM_AVAILABLE,
     ITEM_DUE,
@@ -5,7 +7,7 @@ export enum NotificationType {
     ITEM_RESERVED_NO_LONGER_AVAILABLE
 }
 
-export interface Notification {
+export interface UINotification {
     id: number;
     author: string;
     date: string;
@@ -15,7 +17,7 @@ export interface Notification {
 }
 
 export interface NotificationsService {
-    getNotifications(): Notification[];
+    getNotifications(): Observable<Array<UINotification>>;
     getUnreadNotificationsCount(): number;
-    acknowledgeNotifications(notifications: Notification[]): void;
+    acknowledgeNotifications(notifications: UINotification[]): void;
 }

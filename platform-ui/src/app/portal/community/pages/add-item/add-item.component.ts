@@ -1,12 +1,14 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import this
 import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
-import { Item, ItemsService } from '../../services/items.service';
+import { ItemsService, UIItem } from '../../services/items.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { CategoriesService, Category } from '../../services/categories.service';
+import { CategoriesService, UICategory } from '../../services/categories.service';
 import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     selector: 'app-add-item',
@@ -18,7 +20,9 @@ import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } fro
         ...communityProviders,
     ]
 })
-export class AddItemComponent {
+export class AddItemComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   addItemForm: FormGroup;
 
   editorConfig = {
@@ -34,7 +38,7 @@ export class AddItemComponent {
   };
 
   imageFile?: File;
-  categories: Category[];
+  categories: UICategory[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -42,7 +46,6 @@ export class AddItemComponent {
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
     private router: Router
   ) {
-    this.categories = this.categoriesService.getCategories();
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
       shortDescription: ['', [Validators.required, Validators.maxLength(150)]],
@@ -68,7 +71,25 @@ export class AddItemComponent {
       image: [null, Validators.required],
     });
   }
-  
+
+  ngOnInit() {
+    this.categoriesService.getCategories()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (categories) => {
+          this.categories = categories;
+        },
+        error: (error) => {
+          console.error('Failed to load categories:', error);
+          // Handle error (show user feedback, etc.)
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   onImageDrop(event: DragEvent) {
     event.preventDefault();
@@ -91,9 +112,16 @@ export class AddItemComponent {
     if (this.addItemForm.valid) {
       const newItem = this.addItemForm.value;
       newItem.category = this.categories.find(c => c.name === newItem.category);
-      const createdItem = this.itemsService.addItem(newItem)
-      this.addItemForm.reset();
-      this.router.navigate(['/community/items', createdItem.id]);
+      this.itemsService.addItem(newItem).subscribe({
+        next: (createdItem) => {
+          this.addItemForm.reset();
+          this.router.navigate(['/community/items', createdItem.id]);
+        },
+        error: (error) => {
+          console.error('Failed to create item:', error);
+          // Handle error (show user feedback, etc.)
+        }
+      });
     }
   }
 }

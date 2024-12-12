@@ -33,7 +33,7 @@
             </tr>
         </thead>
         <tbody tuiTbody>
-            <tr routerLink="/community/items/{{item.id}}" *ngFor="let item of filteredAndSortedData">
+            <tr routerLink="/community/items/{{item.id}}" *ngFor="let item of (items$ | async)">
                 <td tuiTd><img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" /></td>
                 <td tuiTd>{{ item.name }}</td>
                 <td tuiTd>{{ item.located }}</td>

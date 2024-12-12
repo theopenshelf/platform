@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { NotificationType, Notification, NotificationsService } from '../notifications.service';
+import { NotificationType, UINotification, NotificationsService } from '../notifications.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MockNotificationsService implements NotificationsService {
 
-    private notifications: Notification[] = [
+    private notifications: UINotification[] = [
         {
             "id": 4,
             "author": "Platform",
@@ -70,16 +70,15 @@ export class MockNotificationsService implements NotificationsService {
             }
         }
     ];
-
-    getNotifications(): Notification[] {
-        return this.notifications;
+    getNotifications(): Observable<Array<UINotification>> {
+        return of(this.notifications);
     }
 
     getUnreadNotificationsCount(): number {
         return this.notifications.filter(notification => !notification.alreadyRead).length;
     }
 
-    acknowledgeNotifications(notifications: Notification[]) {
+    acknowledgeNotifications(notifications: UINotification[]) {
         notifications.forEach(notification => {
             notification.alreadyRead = true;
         })

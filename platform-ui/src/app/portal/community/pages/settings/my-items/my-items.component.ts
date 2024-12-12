@@ -4,9 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiTitle } from '@taiga-ui/core';
 import { ItemsService } from '../../../services/items.service';
-import { CategoriesService, Category } from '../../../services/categories.service';
+import { CategoriesService, UICategory } from '../../../services/categories.service';
 import { CategoryBadgeComponent } from '../../../../../components/category-badge/category-badge.component';
 import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../../community.provider';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
     standalone: true,
@@ -35,7 +37,10 @@ export class MyItemsComponent {
     // Filters
     protected categoryFilter = '';
 
-    categories: Category[] = [];
+    categories: UICategory[] = [];
+    protected items: any[] = [];
+
+    private destroy$ = new Subject<void>();
 
     constructor(
         @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
@@ -44,12 +49,28 @@ export class MyItemsComponent {
 
     ngOnInit() {
         // Fetch categories from the service
-        this.categories = this.categoriesService.getCategories();
+        this.categoriesService.getCategories().pipe(
+            takeUntil(this.destroy$)
+        ).subscribe((categories) => {
+            this.categories = categories;
+        });
+
+        // Add subscription to items
+        this.itemsService.getMyOwnedItems().pipe(
+            takeUntil(this.destroy$)
+        ).subscribe(items => {
+            this.items = items;
+        });
+    }
+
+    ngOnDestroy() {
+        this.destroy$.next();
+        this.destroy$.complete();
     }
 
     // Get filtered and sorted data
     protected get filteredAndSortedData() {
-        let result = this.itemsService.getMyOwnedItems();
+        let result = [...this.items];
 
         // Filter by category
         result = result.filter((item) => {

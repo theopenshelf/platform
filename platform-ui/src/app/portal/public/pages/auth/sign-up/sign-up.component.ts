@@ -34,8 +34,8 @@ export class SignUpComponent {
 
   onSubmit() {
     if (this.signUpForm.valid) {
-      const { email, password } = this.signUpForm.value;
-      this.authService.signUp(email, password);
+      const { email, password, username, streetAddress, city, postalCode, country } = this.signUpForm.value;
+      this.authService.signUp(email, username, password, streetAddress, city, postalCode, country);
       alert('Registration successful! Please check your email for confirmation.');
     }
   }

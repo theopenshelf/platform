@@ -3,16 +3,18 @@ import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiButton, TuiTitle } from '@taiga-ui/core';
-import { ItemsService } from '../../services/items.service';
+import { ItemsService, UIBorrowItem } from '../../services/items.service';
 import { RouterLink } from '@angular/router';
-import { CategoriesService, Category } from '../../services/categories.service';
+import { CategoriesService, UICategory } from '../../services/categories.service';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
+import { Observable, combineLatest, map, BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true, 
     selector: 'app-myborroweditems',
-    imports: [RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
+    imports: [CommonModule, RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
     templateUrl: './myborroweditems.component.html',
     styleUrls: ['./myborroweditems.component.scss'],
     providers: [
@@ -28,10 +30,26 @@ export class MyborroweditemsComponent {
   protected sortDirection: 'asc' | 'desc' = 'asc';
 
   // Filters
-  protected categoryFilter = '';
-  protected statusFilter = '';
-  
-  categories: Category[] = [];
+  private categoryFilterSubject = new BehaviorSubject<string>('');
+  private statusFilterSubject = new BehaviorSubject<string>('');
+
+  // Create getters and setters for the filters
+  protected get categoryFilter(): string {
+    return this.categoryFilterSubject.value;
+  }
+  protected set categoryFilter(value: string) {
+    this.categoryFilterSubject.next(value);
+  }
+
+  protected get statusFilter(): string {
+    return this.statusFilterSubject.value;
+  }
+  protected set statusFilter(value: string) {
+    this.statusFilterSubject.next(value);
+  }
+
+  protected items$: Observable<UIBorrowItem[]>;
+  categories: UICategory[] = [];
 
   // Status mapping for sorting
   private statusPriority = {
@@ -43,12 +61,16 @@ export class MyborroweditemsComponent {
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
-  ) { }
+  ) {
+    this.items$ = this.getFilteredAndSortedData$();
+  }
 
   ngOnInit() {
-    // Fetch the items from the service
-    this.categories = this.categoriesService.getCategories();
+    this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
+      this.categories = categories;
+    });
   }
+
   // Helper function to calculate item status
   protected computeStatus(borrowedOn: string, dueDate: string): 'Reserved' | 'Currently Borrowed' | 'Returned' {
     const now = new Date();
@@ -118,33 +140,39 @@ export class MyborroweditemsComponent {
     }
 }
 
-  // Get filtered and sorted data
-  protected get filteredAndSortedData() {
-    let result = this.itemsService.getMyBorrowItems();
-    // Filter by category and status
-    result = result.filter((item) => {
-      const status = this.computeStatus(item.record.startDate, item.record.endDate);
-      return (
-        (!this.categoryFilter || item.category.name === this.categoryFilter) &&
-        (!this.statusFilter || status === this.statusFilter)
-      );
-    });
+  // Update getFilteredAndSortedData to use combineLatest
+  private getFilteredAndSortedData$(): Observable<UIBorrowItem[]> {
+    return combineLatest([
+      this.itemsService.getMyBorrowItems(),
+      this.categoryFilterSubject,
+      this.statusFilterSubject
+    ]).pipe(
+      map(([items, categoryFilter, statusFilter]) => {
+        let result = items.filter((item: UIBorrowItem) => {
+          const status = this.computeStatus(item.record.startDate, item.record.endDate);
+          return (
+            (!categoryFilter || item.category.name === categoryFilter) &&
+            (!statusFilter || status === statusFilter)
+          );
+        });
 
-    // Sort by the selected column
-    if (this.sortColumn) {
-      result = [...result].sort((a, b) => {
-        const aValue = this.getSortableValue(a, this.sortColumn!);
-        const bValue = this.getSortableValue(b, this.sortColumn!);
+        // Sort by the selected column
+        if (this.sortColumn) {
+          result = [...result].sort((a, b) => {
+            const aValue = this.getSortableValue(a, this.sortColumn!);
+            const bValue = this.getSortableValue(b, this.sortColumn!);
 
-        if (this.sortDirection === 'asc') {
-          return aValue > bValue ? 1 : -1;
-        } else {
-          return aValue < bValue ? 1 : -1;
+            if (this.sortDirection === 'asc') {
+              return aValue > bValue ? 1 : -1;
+            } else {
+              return aValue < bValue ? 1 : -1;
+            }
+          });
         }
-      });
-    }
 
-    return result;
+        return result;
+      })
+    );
   }
 
   // Get sortable value for a column
@@ -161,16 +189,15 @@ export class MyborroweditemsComponent {
     }
   }
 
-  // Handle column sorting
+  // Update sort method to refresh the Observable
   protected sort(column: string): void {
     if (this.sortColumn === column) {
-      // Toggle sort direction if the same column is clicked
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      // Set new column and reset to ascending order
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
+    this.items$ = this.getFilteredAndSortedData$();
   }
 
   protected getSortIndicator(column: string): string {

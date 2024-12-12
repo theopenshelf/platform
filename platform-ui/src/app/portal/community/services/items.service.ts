@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Category } from './categories.service';
+import { UICategory } from './categories.service';
+import { Observable } from 'rxjs';
 
-export interface Item {
+export interface UIItem {
     id: string;
     name: string;
     located: string;
@@ -9,37 +10,38 @@ export interface Item {
     imageUrl: string;
     description: string;
     shortDescription: string;
-    category: Category;
+    category: UICategory;
     favorite: boolean;
     borrowCount: number
 }
 
-export interface BorrowRecord {
+export interface UIBorrowRecord {
+    id: string;
     borrowedBy: string;
     startDate: string;
     endDate: string;
 }
 
-export interface BorrowItem extends Item {
-    record: BorrowRecord;
+export interface UIBorrowItem extends UIItem {
+    record: UIBorrowRecord;
 }
 
-export type ItemWithRecords = Item & {
-    borrowRecords: BorrowRecord[];
+export type ItemWithRecords = UIItem & {
+    borrowRecords: UIBorrowRecord[];
     isBookedToday: boolean;
-    myBooking: BorrowRecord | undefined;
+    myBooking: UIBorrowRecord | undefined;
 };
 
 export interface ItemsService {
-    getMyOwnedItems(): Item[];
-    getItems(): Item[];
-    getItemsWithRecords(): ItemWithRecords[];
-    getItem(id: string): Item;
-    getItemBorrowRecords(id: string): BorrowRecord[];
-    addItem(item: Item): Item;
-    borrowItem(item: Item, startDate: string, endDate: string): BorrowItem;
-    getMyBorrowItems(): BorrowItem[];
-    cancelReservation(borrowRecord: BorrowItem): void;
-    getMyBorrowItem(id: string): BorrowItem | null;
-    markAsFavorite(item: Item): void;
+    getMyOwnedItems():  Observable<UIItem[]>;
+    getItems(): Observable<UIItem[]>;
+    getItemsWithRecords(): Observable<ItemWithRecords[]>;
+    getItem(id: string): Observable<UIItem>;
+    getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]>;
+    addItem(item: UIItem): Observable<UIItem>;
+    borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIBorrowItem>;
+    getMyBorrowItems(): Observable<UIBorrowItem[]>;
+    cancelReservation(borrowRecord: UIBorrowItem): Observable<void>;
+    getMyBorrowItem(id: string): Observable<UIBorrowItem | null>;
+    markAsFavorite(item: UIItem): Observable<void>;
 }

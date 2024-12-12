@@ -1,5 +1,5 @@
 import { Component, HostListener, ElementRef, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { NotificationsService, Notification, NotificationType } from '../../services/notifications.service';
+import { NotificationsService, UINotification, NotificationType } from '../../services/notifications.service';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Router, RouterLink } from '@angular/router';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
@@ -21,7 +21,7 @@ import { globalProviders, NOTIFICATIONS_SERVICE_TOKEN } from '../../global.provi
   styleUrls: ['./notifications-popup.component.scss']
 })
 export class NotificationsPopupComponent implements OnInit {
-  notifications: Notification[] = [];
+  notifications: UINotification[] = [];
   protected unreadNotificationsCount: number = 0;
 
   @Input() isPopupVisible: boolean = false;  // Popup visibility controlled by the parent
@@ -31,11 +31,12 @@ export class NotificationsPopupComponent implements OnInit {
     private elRef: ElementRef,
     private router: Router, 
     @Inject(NOTIFICATIONS_SERVICE_TOKEN) private notificationsService: NotificationsService) {}
-
   ngOnInit() {
-    this.notifications = this.notificationsService.getNotifications();
-    this.notificationsService.acknowledgeNotifications(this.notifications);
-    this.unreadNotificationsCount = this.notificationsService.getUnreadNotificationsCount();
+    this.notificationsService.getNotifications().subscribe((notifications: UINotification[]) => {
+      this.notifications = notifications;
+      this.notificationsService.acknowledgeNotifications(this.notifications);
+      this.unreadNotificationsCount = this.notificationsService.getUnreadNotificationsCount();
+    });
   }
 
   toggleNotificationsPopup() {
@@ -43,7 +44,7 @@ export class NotificationsPopupComponent implements OnInit {
     this.unreadNotificationsCount = this.notificationsService.getUnreadNotificationsCount();
   }
 
-  markAsRead(notification: Notification): void {
+  markAsRead(notification: UINotification): void {
     notification.alreadyRead = true;
   }
 
@@ -66,7 +67,7 @@ export class NotificationsPopupComponent implements OnInit {
     }
   }
 
-  getNotificationLink(notification: Notification): string | null {
+  getNotificationLink(notification: UINotification): string | null {
     switch (notification.type) {
       case NotificationType.ITEM_AVAILABLE:
       case NotificationType.ITEM_DUE:
@@ -80,7 +81,7 @@ export class NotificationsPopupComponent implements OnInit {
     }
   }
 
-  getNotificationImage(notification: Notification): string {
+  getNotificationImage(notification: UINotification): string {
     // Check if the notification has an associated item with an image
     if (notification.payload?.item?.imageUrl) {
       return notification.payload.item.imageUrl;
@@ -89,7 +90,7 @@ export class NotificationsPopupComponent implements OnInit {
     return '/assets/default-notification.png';
   }
 
-  onNotificationClick(notification: Notification) {
+  onNotificationClick(notification: UINotification) {
     // Handle notification click depending on its type or other properties
     const link = this.getNotificationLink(notification);
     if (link) {

@@ -12,7 +12,7 @@ export interface AuthService {
   getCurrentUserInfo(): UserInfo;
   signIn(username: string, password: string): Observable<boolean>;
   hasRole(role: string): boolean;
-  signUp(email: string, password: string): void;
+  signUp(email: string, username: string, password: string, streetAddress: string, city: string, postalCode: string, country: string): void;
   signOut(): void;
   isAuthenticated(): Observable<boolean>;
   resetPassword(email: string): void;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface Category {
+export interface UICategory {
     id: string;
     name: string;
     color: string;
@@ -8,7 +9,5 @@ export interface Category {
 } ;
 
 export interface CategoriesService {
-    getCategories(): Category[];
-    getCategory(id: string): Category;
-    addCategory(category: Category): void;
+    getCategories(): Observable<UICategory[]>;
 }
