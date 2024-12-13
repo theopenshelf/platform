@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { CategoriesService, UICategory } from '../categories.service';
-import { CategoriesApiService, Category } from '../../../../api-client';
 import { map, Observable } from 'rxjs';
+import { CategoriesCommunityApiService, Category } from '../../../../api-client';
+import { CategoriesService, UICategory } from '../categories.service';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class APICategoriesService implements CategoriesService {
-    constructor(private categoriesApiService: CategoriesApiService) {}
+    constructor(private categoriesApiService: CategoriesCommunityApiService) { }
 
     getCategories(): Observable<UICategory[]> {
         return this.categoriesApiService.getCategories().pipe(

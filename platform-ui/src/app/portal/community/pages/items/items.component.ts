@@ -1,19 +1,12 @@
-import { Component, Inject } from '@angular/core';
-import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { TuiAvatar } from '@taiga-ui/kit';
-import { TuiCardLarge } from '@taiga-ui/layout/components/card';
-import { TuiHeader } from '@taiga-ui/layout/components/header';
-import { TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-  TuiButton,
-  TuiTitle,
-} from '@taiga-ui/core';
-import { UIItem, ItemsService, ItemWithRecords } from '../../services/items.service';
+import { TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
+import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
+import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { CategoriesService, UICategory } from '../../services/categories.service';
-import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
+import { ItemsService, ItemWithRecords, UIItem } from '../../services/items.service';
 
 @Component({
   standalone: true,
@@ -24,9 +17,7 @@ import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } fro
     TuiIcon,
     CommonModule,
     TuiAppearance,
-    TuiCardLarge,
     TuiButton,
-    TuiCardLarge,
     TuiTitle,
     FormsModule,
     TuiTextfield
@@ -48,7 +39,7 @@ export class ItemsComponent {
   items: ItemWithRecords[] = [];
 
   constructor(
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
   ) { }
 

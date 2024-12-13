@@ -1,10 +1,10 @@
+import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { User, UsersService } from '../../services/users.service';
 import { TuiAlertService, TuiButton } from '@taiga-ui/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
+import { UIUser, UsersService } from '../../services/users.service';
 
 @Component({
   standalone: true,
@@ -22,7 +22,7 @@ import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
   ]
 })
 export class EditUserComponent implements OnInit {
-  user: User = {} as User;
+  user: UIUser = {} as UIUser;
   editUserForm: FormGroup;
   userId: string | null = null;
 
@@ -44,8 +44,10 @@ export class EditUserComponent implements OnInit {
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
-      this.user = this.usersService.getUser(this.userId);
-      this.editUserForm.patchValue(this.user);
+      this.usersService.getUser(this.userId).subscribe(user => {
+        this.user = user;
+        this.editUserForm.patchValue(this.user);
+      });
     } else {
       this.editUserForm = this.fb.group({
         username: ['', Validators.required],
@@ -65,7 +67,7 @@ export class EditUserComponent implements OnInit {
       this.user.email = updatedUser.email;
       this.user.flatNumber = updatedUser.flatNumber;
       this.user.address = updatedUser.address;
-      this.usersService.saveUser( this.user);
+      this.usersService.saveUser(this.user);
       this.alerts.open(`Successfully saved ${this.user.username}`, { appearance: 'positive' }).subscribe();
       this.router.navigate(['/admin/users']);
     }

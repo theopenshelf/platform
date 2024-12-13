@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { LocationsCommunityApiService } from '../../../../api-client';
 import { LocationsService, UILocation } from '../locations.service';
-import { LocationsApiService } from '../../../../api-client';
 
 
 @Injectable({
@@ -10,7 +9,7 @@ import { LocationsApiService } from '../../../../api-client';
 })
 export class ApiLocationsService implements LocationsService {
 
-  constructor(private locationsApiService: LocationsApiService) {}
+  constructor(private locationsApiService: LocationsCommunityApiService) { }
 
   getLocations(): Observable<UILocation[]> {
     return this.locationsApiService.getLocations().pipe(

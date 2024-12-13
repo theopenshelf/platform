@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { UIBorrowItem, UIBorrowRecord, UIItem, ItemsService, ItemWithRecords } from '../items.service';
-import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
-import { BorrowItem } from '../../../admin/services/items.service';
 import { forkJoin, map, Observable, of } from 'rxjs';
+import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
+import { ItemsService, ItemWithRecords, UIBorrowItem, UIBorrowRecord, UIItem } from '../items.service';
 
 
 @Injectable({
@@ -162,7 +161,7 @@ export class MockItemsService implements ItemsService {
         },
     ];
 
-    getItems():  Observable<    UIItem[]> {
+    getItems(): Observable<UIItem[]> {
         return of(this.items);
     }
 
@@ -178,14 +177,14 @@ export class MockItemsService implements ItemsService {
                     const itemWithRecords: ItemWithRecords = {
                         ...item,
                         borrowRecords,
-                        isBookedToday: borrowRecords.some(record => 
+                        isBookedToday: borrowRecords.some(record =>
                             record.startDate <= today && today <= record.endDate
                         ),
                         myBooking: borrowRecords.find(record =>
                             record.borrowedBy === 'me@example.com' && record.startDate > today
                         )
                     };
-        
+
                     return itemWithRecords;
                 })
             );
@@ -212,7 +211,7 @@ export class MockItemsService implements ItemsService {
             {
                 id: '1',
                 borrowedBy: 'someone_else@example.com',
-                startDate: formatDate(addDays(today, 15)), 
+                startDate: formatDate(addDays(today, 15)),
                 endDate: formatDate(addDays(today, 22)),
             },
         ];
@@ -241,7 +240,7 @@ export class MockItemsService implements ItemsService {
             ...item,
             record: { borrowedBy: 'me@example.com', startDate, endDate }
         } as UIBorrowItem;
-        
+
         this.borrowedItems.push(borrowedItem);
         return of(borrowedItem);
     }
@@ -257,11 +256,11 @@ export class MockItemsService implements ItemsService {
         }
         return of(undefined);
     }
-    
+
     getMyBorrowItem(id: string): Observable<UIBorrowItem | null> {
         const item = this.borrowedItems.find(item => item.id === id);
         if (!item) {
-           return of(null);
+            return of(null);
         }
         return of(item);
     }

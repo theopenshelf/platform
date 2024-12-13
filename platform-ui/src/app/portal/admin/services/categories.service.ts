@@ -1,14 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface Category {
+export interface UICategory {
     id: string;
     name: string;
     color: string;
     template: string;
-} ;
+};
 
 export interface CategoriesService {
-    getCategories(): Category[];
-    getCategory(id: string): Category;
-    addCategory(category: Category): void;
+    getCategories(): Observable<UICategory[]>;
+    getCategory(id: string): Observable<UICategory>;
+    addCategory(category: UICategory): Observable<UICategory>;
 }

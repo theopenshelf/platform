@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-export interface User {
+export interface UIUser {
     id: string;
     username: string;
     email: string;
@@ -10,11 +10,11 @@ export interface User {
     returnedLate: number;
     successRate: number;
     disabled: boolean;
-} ;
+};
 
 export interface UsersService {
-    getUsers(): User[];
-    getUser(id: string): User;
-    saveUser(user: User): void;
-    setUserPassword(userId: string | undefined, newPassword: string | undefined): void;
+    getUsers(): Observable<UIUser[]>;
+    getUser(id: string): Observable<UIUser>;
+    saveUser(user: UIUser): Observable<UIUser>;
+    setUserPassword(userId: string, newPassword: string): Observable<void>;
 }

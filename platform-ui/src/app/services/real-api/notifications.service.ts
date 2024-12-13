@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { NotificationType, NotificationsService, UINotification } from '../notifications.service';
-import { NotificationsApiService, Notification } from '../../api-client';
+import { map, Observable } from 'rxjs';
+import { Notification, NotificationsCommunityApiService } from '../../api-client';
+import { NotificationsService, NotificationType, UINotification } from '../notifications.service';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class APINotificationsService implements NotificationsService {
     notifications: Array<UINotification> | undefined;
 
-    constructor(private notificationsService: NotificationsApiService) {}
-    
+    constructor(private notificationsService: NotificationsCommunityApiService) { }
+
     getNotifications(): Observable<Array<UINotification>> {
         return this.notificationsService.getNotifications().pipe(
             map((notifications: Notification[]) => {

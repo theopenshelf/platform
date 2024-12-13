@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthApiService, NotificationsApiService, ResponseHelloWorld, User } from '../../api-client';
-import { AuthService, UserInfo } from '../auth.service';
 import { TuiAlertService } from '@taiga-ui/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthApiService, User } from '../../api-client';
+import { AuthService, UserInfo } from '../auth.service';
 
 
 @Injectable({
@@ -20,10 +20,10 @@ export class APIAuthService implements AuthService {
   };
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private authApiService: AuthApiService,
     private alerts: TuiAlertService
-    ) {}
+  ) { }
 
 
   getCurrentUserInfo(): UserInfo {

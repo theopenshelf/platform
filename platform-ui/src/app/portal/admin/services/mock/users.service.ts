@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { User, UsersService } from '../users.service';
+import { Observable, of } from 'rxjs';
+import { UIUser, UsersService } from '../users.service';
 
 
 @Injectable({
@@ -9,7 +10,7 @@ export class MockUsersService implements UsersService {
 
     private index = 1;
 
-    protected readonly users: User[] = [
+    protected readonly users: UIUser[] = [
         {
             id: this.index++ + "",
             username: 'johndoe',
@@ -34,15 +35,15 @@ export class MockUsersService implements UsersService {
         },
     ];
 
-    getUsers(): User[] {
-        return this.users;
+    getUsers(): Observable<UIUser[]> {
+        return of(this.users);
     }
 
-    getUser(id: string): User {
-        return this.users.find(user => user.id === id) || {} as User;
+    getUser(id: string): Observable<UIUser> {
+        return of(this.users.find(user => user.id === id) || {} as UIUser);
     }
-    
-    saveUser(user: User): void {
+
+    saveUser(user: UIUser): Observable<UIUser> {
         const existingUserIndex = this.users.findIndex(u => u.id === user.id);
         if (existingUserIndex >= 0) {
             // Update existing user
@@ -52,14 +53,16 @@ export class MockUsersService implements UsersService {
             user.id = this.index++ + "";
             this.users.push(user);
         }
+        return of(user);
     }
 
-    setUserPassword(userId: string | undefined, newPassword: string | undefined): void {
+    setUserPassword(userId: string, newPassword: string): Observable<void> {
         if (userId && newPassword) {
             console.log(`Password updated for user ${userId}`);
         } else {
             console.error('Invalid user ID or password');
         }
+        return of(undefined);
     }
 
 }

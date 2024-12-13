@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-import { UIBorrowItem, UIBorrowRecord, UIItem, ItemsService, ItemWithRecords } from '../items.service';
-import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
-import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { BorrowItem, BorrowRecord, Item, ItemsApiService } from '../../../../api-client';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { BorrowItem, BorrowRecord, Item, ItemsCommunityApiService } from '../../../../api-client';
+import { ItemsService, ItemWithRecords, UIBorrowItem, UIBorrowRecord, UIItem } from '../items.service';
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class APIItemsService implements ItemsService {
-    constructor(private itemsApiService: ItemsApiService) {}
+    constructor(private itemsApiService: ItemsCommunityApiService) { }
 
-    getMyOwnedItems():  Observable<UIItem[]> {
+    getMyOwnedItems(): Observable<UIItem[]> {
         return this.itemsApiService.getItems(true).pipe(
             map((items: Item[]) => items.map((item: Item) => ({
                 id: item.id,
@@ -55,7 +54,7 @@ export class APIItemsService implements ItemsService {
                             const itemWithRecords: ItemWithRecords = {
                                 ...item,
                                 borrowRecords,
-                                isBookedToday: borrowRecords.some(record => 
+                                isBookedToday: borrowRecords.some(record =>
                                     record.startDate <= today && today <= record.endDate
                                 ),
                                 myBooking: borrowRecords.find(record =>
@@ -86,7 +85,7 @@ export class APIItemsService implements ItemsService {
             } as UIItem))
         );
     }
-    
+
     getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]> {
         return this.itemsApiService.getItemBorrowRecords(id).pipe(
             map((records: BorrowRecord[]) => records.map((record: BorrowRecord) => ({

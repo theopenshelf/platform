@@ -6,13 +6,11 @@ info:
     # Summary
     The OpenShelf  API
 
-
 servers:
   - url: https://TheOpenShelf.dev
     description: The OpenShelf API
 
 paths:
-
   /public/auth/login:
     post:
       operationId: login
@@ -41,277 +39,8 @@ paths:
                 - password
 
       responses:
-        '200':
+        "200":
           $ref: "#/components/responses/OK_200_LOGIN"
-
-  /community/hello-world:
-    get:
-      operationId: getHelloWorld
-      summary: hello world
-      tags:
-        - hello-world-api
-
-      security:
-        - BearerAuthOAuth: []
-
-      responses:
-        '200':
-          $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
-
-  /community/items:
-    get:
-      operationId: getItems
-      summary: Retrieve all items (filter by current user items)
-      tags:
-        - items-api
-      parameters:
-        - name: currentUser
-          in: query
-          description: Filter items by current user
-          required: false
-          schema:
-            type: boolean
-        - name: borrowedByCurrentUser
-          in: query
-          description: Filter items borrowed by current user
-          required: false
-          schema:
-            type: boolean
-      responses:
-        '200':
-          description: A list of items
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Item"
-    post:
-      operationId: addItem
-      summary: Add a new item
-      tags:
-        - items-api
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Item"
-      responses:
-        '201':
-          description: Item created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Item"
-
-  /community/items/{item-id}:
-    parameters:
-      - $ref: "#/components/parameters/itemId"
-    get:
-      operationId: getItem
-      summary: Retrieve a specific item by ID
-      tags:
-        - items-api
-      responses:
-        '200':
-          description: A single item
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Item"
-
-  /community/items/{item-id}/borrow-records:
-    parameters:
-      - $ref: "#/components/parameters/itemId"
-      - name: owner
-        in: query
-        description: Filter by owner
-        required: false
-        schema:
-          type: string
-      - name: borrower
-        in: query
-        description: Filter by borrower
-        required: false
-        schema:
-          type: string
-    get:
-      operationId: getItemBorrowRecords
-      summary: Retrieve borrow records for a specific item
-      tags:
-        - items-api
-      responses:
-        '200':
-          description: Borrow records for the item
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/BorrowRecord"
-    delete:
-      operationId: deleteBorrowRecord
-      summary: Delete a borrow record for a specific item
-      tags:
-        - items-api
-      parameters:
-        - name: recordId
-          in: query
-          description: ID of the borrow record to delete
-          required: true
-          schema:
-            type: string
-      responses:
-        '204':
-          description: Borrow record deleted successfully
-
-  /community/items/{item-id}/actions/borrow:
-    parameters:
-      - $ref: "#/components/parameters/itemId"
-    post:
-      operationId: borrowItem
-      summary: Borrow an item
-      tags:
-        - items-api
-      requestBody:
-        description: Borrow item details
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                startDate:
-                  type: string
-                  format: date
-                endDate:
-                  type: string
-                  format: date
-      responses:
-        '201':
-          description: Item borrowed successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/BorrowItem"
-
-  /community/items/{item-id}/actions/favorite:
-    parameters:
-      - $ref: "#/components/parameters/itemId"
-    post:
-      operationId: markAsFavorite
-      summary: Toggle favorite status of an item
-      tags:
-        - items-api
-      responses:
-        '200':
-          description: Item favorite status toggled
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Item"
-
-  /community/notifications:
-    get:
-      operationId: getNotifications
-      summary: Retrieve all notifications
-      tags:
-        - notifications-api
-      responses:
-        '200':
-          description: A list of notifications
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Notification"
-
-  /community/notifications/unread-count:
-    get:
-      operationId: getUnreadNotificationsCount
-      summary: Retrieve the count of unread notifications
-      tags:
-        - notifications-api
-      responses:
-        '200':
-          description: Count of unread notifications
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  count:
-                    type: integer
-                    example: 5
-
-  /community/notifications/acknowledge:
-    post:
-      operationId: acknowledgeNotifications
-      summary: Acknowledge notifications as read
-      tags:
-        - notifications-api
-      requestBody:
-        description: List of notifications to acknowledge
-        required: true
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                $ref: "#/components/schemas/Notification"
-      responses:
-        '204':
-          description: Notifications acknowledged successfully
-
-  /categories:
-    get:
-      operationId: getCategories
-      summary: Retrieve all categories
-      tags:
-        - categories-api
-      responses:
-        '200':
-          description: A list of categories
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Category"
-
-  /admin/items:
-    get:
-      operationId: getItemStats
-      summary: Retrieve all item statistics
-      tags:
-        - admin-items-api
-      responses:
-        '200':
-          description: A list of item statistics
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/ItemStat"
-
-  /admin/users:
-    get:
-      operationId: getUsers
-      summary: Retrieve all users
-      tags:
-        - admin-users-api
-      responses:
-        '200':
-          description: A list of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/UserWithStats"
 
   /public/auth/signup:
     post:
@@ -352,9 +81,9 @@ paths:
                 - username
                 - password
       responses:
-        '201':
+        "201":
           description: User registered successfully
-        '400':
+        "400":
           description: Invalid input
 
   /public/auth/signout:
@@ -364,7 +93,7 @@ paths:
       tags:
         - auth-api
       responses:
-        '204':
+        "204":
           description: User signed out successfully
 
   /public/auth/reset-password:
@@ -386,9 +115,9 @@ paths:
               required:
                 - email
       responses:
-        '200':
+        "200":
           description: Password reset email sent
-        '404':
+        "404":
           description: User not found
 
   /public/auth/reset-password/confirm:
@@ -414,21 +143,258 @@ paths:
                 - token
                 - newPassword
       responses:
-        '200':
+        "200":
           description: Password reset successfully
-        '400':
+        "400":
           description: Invalid token or password
-        '404':
+        "404":
           description: User not found
+
+  /community/hello-world:
+    get:
+      operationId: getHelloWorld
+      summary: hello world
+      tags:
+        - hello-world-api
+
+      security:
+        - BearerAuthOAuth: []
+
+      responses:
+        "200":
+          $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
+
+  /community/items:
+    get:
+      operationId: getItems
+      summary: Retrieve all items (filter by current user items)
+      tags:
+        - items-community-api
+      parameters:
+        - name: currentUser
+          in: query
+          description: Filter items by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedByCurrentUser
+          in: query
+          description: Filter items borrowed by current user
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+    post:
+      operationId: addItem
+      summary: Add a new item
+      tags:
+        - items-community-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        "201":
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    get:
+      operationId: getItem
+      summary: Retrieve a specific item by ID
+      tags:
+        - items-community-api
+      responses:
+        "200":
+          description: A single item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}/borrow-records:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+      - name: owner
+        in: query
+        description: Filter by owner
+        required: false
+        schema:
+          type: string
+      - name: borrower
+        in: query
+        description: Filter by borrower
+        required: false
+        schema:
+          type: string
+    get:
+      operationId: getItemBorrowRecords
+      summary: Retrieve borrow records for a specific item
+      tags:
+        - items-community-api
+      responses:
+        "200":
+          description: Borrow records for the item
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BorrowRecord"
+    delete:
+      operationId: deleteBorrowRecord
+      summary: Delete a borrow record for a specific item
+      tags:
+        - items-community-api
+      parameters:
+        - name: recordId
+          in: query
+          description: ID of the borrow record to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Borrow record deleted successfully
+
+  /community/items/{item-id}/actions/borrow:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: borrowItem
+      summary: Borrow an item
+      tags:
+        - items-community-api
+      requestBody:
+        description: Borrow item details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                startDate:
+                  type: string
+                  format: date
+                endDate:
+                  type: string
+                  format: date
+      responses:
+        "201":
+          description: Item borrowed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BorrowItem"
+
+  /community/items/{item-id}/actions/favorite:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: markAsFavorite
+      summary: Toggle favorite status of an item
+      tags:
+        - items-community-api
+      responses:
+        "200":
+          description: Item favorite status toggled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/notifications:
+    get:
+      operationId: getNotifications
+      summary: Retrieve all notifications
+      tags:
+        - notifications-community-api
+      responses:
+        "200":
+          description: A list of notifications
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Notification"
+
+  /community/notifications/unread-count:
+    get:
+      operationId: getUnreadNotificationsCount
+      summary: Retrieve the count of unread notifications
+      tags:
+        - notifications-community-api
+      responses:
+        "200":
+          description: Count of unread notifications
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    example: 5
+
+  /community/notifications/acknowledge:
+    post:
+      operationId: acknowledgeNotifications
+      summary: Acknowledge notifications as read
+      tags:
+        - notifications-community-api
+      requestBody:
+        description: List of notifications to acknowledge
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Notification"
+      responses:
+        "204":
+          description: Notifications acknowledged successfully
+
+  /community/categories:
+    get:
+      operationId: getCategories
+      summary: Retrieve all categories
+      tags:
+        - categories-community-api
+      responses:
+        "200":
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
 
   /community/locations:
     get:
       operationId: getLocations
       summary: Retrieve all locations
       tags:
-        - locations-api
+        - locations-community-api
       responses:
-        '200':
+        "200":
           description: A list of locations
           content:
             application/json:
@@ -440,7 +406,7 @@ paths:
       operationId: addLocation
       summary: Add a new location
       tags:
-        - locations-api
+        - locations-community-api
       requestBody:
         required: true
         content:
@@ -448,7 +414,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Location"
       responses:
-        '201':
+        "201":
           description: Location created successfully
           content:
             application/json:
@@ -468,9 +434,9 @@ paths:
       operationId: getLocation
       summary: Retrieve a specific location
       tags:
-        - locations-api
+        - locations-community-api
       responses:
-        '200':
+        "200":
           description: A single location
           content:
             application/json:
@@ -480,7 +446,7 @@ paths:
       operationId: updateLocation
       summary: Update a location
       tags:
-        - locations-api
+        - locations-community-api
       requestBody:
         required: true
         content:
@@ -488,7 +454,7 @@ paths:
             schema:
               $ref: "#/components/schemas/Location"
       responses:
-        '200':
+        "200":
           description: Location updated successfully
           content:
             application/json:
@@ -498,22 +464,273 @@ paths:
       operationId: deleteLocation
       summary: Delete a location
       tags:
-        - locations-api
+        - locations-community-api
       responses:
-        '204':
+        "204":
           description: Location deleted successfully
 
+  /community/profile:
+    put:
+      operationId: updateProfile
+      summary: Update the current user's profile
+      tags:
+        - profile-community-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "updateduser@example.com"
+                username:
+                  type: string
+                  example: "updateduser"
+                streetAddress:
+                  type: string
+                  example: "456 New St"
+                city:
+                  type: string
+                  example: "Newtown"
+                postalCode:
+                  type: string
+                  example: "67890"
+                country:
+                  type: string
+                  example: "Newland"
+              required:
+                - email
+                - username
+      responses:
+        "200":
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid input
+        "404":
+          description: User not found
 
+  /admin/items/{item-id}:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    get:
+      operationId: getItem
+      summary: Retrieve a specific item by ID
+      tags:
+        - items-admin-api
+      responses:
+        "200":
+          description: A single item
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /admin/items/categories:
+    get:
+      operationId: getCategories
+      summary: Retrieve all categories
+      tags:
+        - categories-admin-api
+      responses:
+        "200":
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+
+  /admin/items:
+    get:
+      operationId: getItems
+      summary: Retrieve all items
+      tags:
+        - items-admin-api
+      responses:
+        "200":
+          description: A list of items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Item"
+
+    post:
+      operationId: addItem
+      summary: Add a new item
+      tags:
+        - items-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        "201":
+          description: Item created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /admin/users:
+    get:
+      operationId: getUsers
+      summary: Retrieve all users
+      tags:
+        - users-admin-api
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UserWithStats"
+    post:
+      operationId: saveUser
+      summary: Save a user
+      tags:
+        - users-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserWithStats"
+      responses:
+        "201":
+          description: User saved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWithStats"
+  /admin/users/{user-id}:
+    parameters:
+      - name: user-id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getUser
+      summary: Retrieve a specific user by ID
+      tags:
+        - users-admin-api
+      responses:
+        "200":
+          description: A single user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserWithStats"
+
+  /admin/users/{user-id}/password:
+    parameters:
+      - name: user-id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    put:
+      operationId: setUserPassword
+      summary: Set a user's password
+      tags:
+        - users-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newPassword:
+                  type: string
+                  example: "newSecurePassword"
+              required:
+                - newPassword
+      responses:
+        "204":
+          description: Password updated successfully
+
+  /admin/categories:
+    get:
+      operationId: getAdminCategories
+      summary: Retrieve all categories for admin
+      tags:
+        - categories-admin-api
+      responses:
+        "200":
+          description: A list of categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Category"
+    post:
+      operationId: addAdminCategory
+      summary: Add a new category for admin
+      tags:
+        - categories-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Category"
+      responses:
+        "201":
+          description: Category created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
+
+  /admin/categories/{category-id}:
+    parameters:
+      - name: category-id
+        in: path
+        description: Category ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getAdminCategory
+      summary: Retrieve a specific category by ID for admin
+      tags:
+        - categories-admin-api
+      responses:
+        "200":
+          description: A single category
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Category"
 
 components:
-#####################################################
-# Predefined Components
-#####################################################
+  #####################################################
+  # Predefined Components
+  #####################################################
 
   securitySchemes:
-
     BearerAuthOAuth:
-      description: Bearer Token. 
+      description: Bearer Token.
       type: http
       scheme: bearer
 
@@ -557,7 +774,7 @@ components:
         email:
           type: string
         flat:
-          type: string  
+          type: string
           example: A701
         roles:
           type: array
@@ -890,4 +1107,4 @@ components:
               firstName: "John"
               lastName: "Doe"
               email: "john.doe@example.com"
-              flat: "A701" 
+              flat: "A701"

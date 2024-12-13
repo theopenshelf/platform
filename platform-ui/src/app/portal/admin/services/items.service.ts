@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { CategoriesService, Category } from './categories.service';
+import { Observable } from 'rxjs';
+import { UICategory } from './categories.service';
 
-export interface Item {
+export interface UIItem {
     id: string;
     name: string;
     located: string;
@@ -9,28 +9,26 @@ export interface Item {
     imageUrl: string;
     description: string;
     shortDescription: string;
-    category: Category;
+    category: UICategory;
     favorite: boolean;
     borrowCount: number;
     lateReturnPercentage: number;
     averageDuration: number;
-    state: { label: string, statusColor: string };  
+    state: { label: string, statusColor: string };
 }
 
-export interface BorrowRecord {
+export interface UIBorrowRecord {
     borrowedBy: string;
     startDate: string;
     endDate: string;
 }
 
-export interface BorrowItem extends Item {
-    record: BorrowRecord;
+export interface UIBorrowItem extends UIItem {
+    record: UIBorrowRecord;
 }
 
 export interface ItemsService {
-    getMyOwnedItems(): Item[];
-    getItems(): Item[];
-    getItem(id: string): Item;
-    getCaterogies(): { value: string, label: string }[];
-    addItem(item: Item): Item;
+    getItems(): Observable<UIItem[]>;
+    getItem(id: string): Observable<UIItem>;
+    addItem(item: UIItem): Observable<UIItem>;
 }

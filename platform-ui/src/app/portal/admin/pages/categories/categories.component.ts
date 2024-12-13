@@ -1,16 +1,15 @@
-import { NgForOf } from '@angular/common';
+import { CommonModule, NgForOf } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAlertService, TuiButton, TuiTitle } from '@taiga-ui/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { CategoriesService, Category } from '../../services/categories.service';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
-import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { switchMap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
+import { CategoriesService, UICategory } from '../../services/categories.service';
 
 
 @Component({
@@ -35,7 +34,7 @@ import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers'
 })
 export class CategoriesComponent {
 
-    categories: Category[] = [];
+    categories: UICategory[] = [];
 
     public constructor(
         private dialogs: TuiResponsiveDialogService,
@@ -46,23 +45,23 @@ export class CategoriesComponent {
 
     ngOnInit() {
         // Fetch the categories from the service
-        this.categories = this.categoriesService.getCategories();
+        this.categoriesService.getCategories().subscribe(categories => this.categories = categories);
     }
 
-    deleteCategory(category: Category) {
+    deleteCategory(category: UICategory) {
         const data: TuiConfirmData = {
             content: 'Are you sure you want to delete this user?',  // Simple content
             yes: 'Yes, Delete',
             no: 'Cancel',
         };
- 
+
         this.dialogs
             .open<boolean>(TUI_CONFIRM, {
                 label: "Delete category '" + category.name + "'",
                 size: 'm',
                 data,
             })
-            .pipe(switchMap((response) => this.alerts.open('Category <strong>' + category.name + '</strong> deleted successfully', {appearance: 'positive'})))
+            .pipe(switchMap((response) => this.alerts.open('Category <strong>' + category.name + '</strong> deleted successfully', { appearance: 'positive' })))
             .subscribe();
     }
 }

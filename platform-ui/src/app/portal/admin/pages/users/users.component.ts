@@ -1,29 +1,28 @@
-import { ChangeDetectionStrategy, Component, Inject, inject } from '@angular/core';
+import { NgForOf } from '@angular/common';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
+import { TuiAutoFocus } from '@taiga-ui/cdk';
 import {
+    TuiAlertService,
     TuiAutoColorPipe,
     TuiButton,
     TuiDialog,
     TuiDropdown,
+    TuiHint,
     TuiIcon,
     TuiInitialsPipe,
     TuiLink,
     TuiTitle,
 } from '@taiga-ui/core';
-import { NgForOf } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/kit';
-import {TuiResponsiveDialogService} from '@taiga-ui/addon-mobile';
-import {TuiAlertService} from '@taiga-ui/core';
-import {TUI_CONFIRM} from '@taiga-ui/kit';
-import {switchMap} from 'rxjs';
-import { User, UsersService } from '../../services/users.service';
-import {TuiAutoFocus} from '@taiga-ui/cdk';
-import { TuiHint} from '@taiga-ui/core';
-import {TuiInputModule} from '@taiga-ui/legacy';
+import { TUI_CONFIRM, TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/kit';
+import { TuiInputModule } from '@taiga-ui/legacy';
+import { switchMap } from 'rxjs';
 import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
- 
+import { UIUser, UsersService } from '../../services/users.service';
+
 
 export type User1 = {
     id: string;
@@ -72,19 +71,19 @@ export type User1 = {
 export class UsersComponent {
     // Default Table Size
     protected readonly size = 'm';
-    protected users: User[] = [];
-    protected sortedUsers: User[] = [];
-    currentUser: User | undefined;
+    protected users: UIUser[] = [];
+    protected sortedUsers: UIUser[] = [];
+    currentUser: UIUser | undefined;
 
     constructor(
         private dialogs: TuiResponsiveDialogService,
         private alerts: TuiAlertService,
         @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService
     ) {
-        this.users = usersService.getUsers();
+        this.usersService.getUsers().subscribe(users => this.users = users);
     }
     // Mock Users Data
-   
+
 
     // Available Columns for Display
     availableColumns = [
@@ -96,26 +95,26 @@ export class UsersComponent {
         { key: 'successRate', label: '% of Late', visible: true },
     ];
 
-        // Default Visible Columns
+    // Default Visible Columns
     visibleColumns = [...this.availableColumns];
 
     // Current Sorting Column
     currentSort: string = '';
     sortOrder: { [key: string]: boolean } = {};  // True for ascending, false for descending
 
-     passwordForm = new FormGroup({
+    passwordForm = new FormGroup({
         userPasswordControl: new FormControl(''),
     });
- 
+
     protected openPasswordDialog = false;
-    
+
     updateVisibleColumns(): void {
         this.visibleColumns = this.availableColumns.filter((column) => column.visible);
     }
     ngOnInit(): void {
         this.updateVisibleColumns();
-        this.users = this.usersService.getUsers();
-            // Current Sorting Column
+        this.usersService.getUsers().subscribe(users => this.users = users);
+        // Current Sorting Column
         this.sortedUsers = [...this.users];
     }
 
@@ -131,8 +130,8 @@ export class UsersComponent {
 
         // Sort users based on the current column and order
         this.sortedUsers = [...this.users].sort((a, b) => {
-            const aValue = a[column as keyof User];
-            const bValue = b[column as keyof User];
+            const aValue = a[column as keyof UIUser];
+            const bValue = b[column as keyof UIUser];
 
             if (this.sortOrder[column]) {
                 return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
@@ -147,45 +146,45 @@ export class UsersComponent {
         return this.sortOrder[column] ? '↑' : '↓';
     }
 
-    deleteUser(user: User): void {
+    deleteUser(user: UIUser): void {
         const data: TuiConfirmData = {
             content: 'Are you sure you want to delete this user?',  // Simple content
             yes: 'Yes, Delete',
             no: 'Cancel',
         };
- 
+
         this.dialogs
             .open<boolean>(TUI_CONFIRM, {
-                label: "Delete user '" +user.username + "'",
+                label: "Delete user '" + user.username + "'",
                 size: 'm',
                 data,
             })
-            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> deleted successfully', {appearance: 'positive'})))
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> deleted successfully', { appearance: 'positive' })))
             .subscribe();
     }
 
-    disableUser(user: User): void {
+    disableUser(user: UIUser): void {
         const data: TuiConfirmData = {
             content: 'Are you sure you want to disable this user?',  // Simple content
             yes: 'Yes, Disable',
             no: 'Cancel',
         };
- 
+
         this.dialogs
             .open<boolean>(TUI_CONFIRM, {
                 label: "Disable user '" + user.username + "'",
                 size: 'm',
                 data,
             })
-            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> Disable successfully', {appearance: 'positive'})))
+            .pipe(switchMap((response) => this.alerts.open('User <strong>' + user.username + '</strong> Disable successfully', { appearance: 'positive' })))
             .subscribe();
     }
 
     getUserProperty(user: any, key: string): any {
         return user[key];
     }
- 
-    protected setPassword(user: User): void {
+
+    protected setPassword(user: UIUser): void {
         this.openPasswordDialog = true;
         this.currentUser = user;
     }
@@ -193,10 +192,11 @@ export class UsersComponent {
     setUserPassword() {
         if (this.passwordForm.valid) {
             const newPassword = this.passwordForm.get('userPasswordControl')?.value;
-            if (typeof newPassword === 'string') {
-                this.usersService.setUserPassword(this.currentUser?.id, newPassword);
-                this.openPasswordDialog = false;
-                this.alerts.open('User <strong>' + this.currentUser?.username + '</strong> password set successfully', {appearance: 'positive'}).subscribe();
+            if (typeof newPassword === 'string' && this.currentUser?.id) {
+                this.usersService.setUserPassword(this.currentUser.id, newPassword).subscribe(() => {
+                    this.openPasswordDialog = false;
+                    this.alerts.open('User <strong>' + this.currentUser?.username + '</strong> password set successfully', { appearance: 'positive' }).subscribe();
+                });
             }
         }
     }

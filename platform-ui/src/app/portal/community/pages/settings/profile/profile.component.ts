@@ -1,16 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, InjectionToken, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { communityProviders } from '../../../community.provider';
+import { PROFILE_SERVICE_TOKEN } from '../../../community.provider';
+import { ProfileService } from '../../../services/profile.service';
+import { AuthService } from '../../../../../services/auth.service';
+import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
 
 @Component({
   selector: 'app-profile',
   imports: [ReactiveFormsModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss'
+  styleUrl: './profile.component.scss' ,
+    providers: [
+        ...globalProviders,
+        ...communityProviders,
+    ]
 })
 export class ProfileComponent {
   profileForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    @Inject(PROFILE_SERVICE_TOKEN) private profileService: ProfileService, 
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService
+
+  ) {
     this.profileForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -27,24 +41,17 @@ export class ProfileComponent {
 
   // Load initial profile data
   loadProfile(): void {
-    const mockProfileData = {
-      username: 'Quentin Castel',
-      email: 'quentin@example.com',
-      password: '', // Leave blank for security reasons
-      streetAddress: '123 Library St.',
-      city: 'Bookville',
-      postalCode: '12345',
-      country: 'France'
-    };
-    this.profileForm.patchValue(mockProfileData);
+    this.profileForm.patchValue(this.authService.getCurrentUserInfo());
   }
 
   onSave(): void {
     if (this.profileForm.valid) {
-      console.log('Profile data saved:', this.profileForm.value);
-      // Add your save logic here, e.g., API call
+      this.profileService.updateProfile(this.profileForm.value).subscribe(profile => {
+        console.log('Profile data saved:', profile);
+      });
     } else {
       console.error('Form is invalid');
     }
   }
 }
+

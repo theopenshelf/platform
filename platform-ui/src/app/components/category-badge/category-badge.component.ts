@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Category } from '../../portal/admin/services/categories.service';
+import { UICategory } from '../../portal/admin/services/categories.service';
 
 @Component({
   standalone: true,
@@ -9,5 +9,5 @@ import { Category } from '../../portal/admin/services/categories.service';
   styleUrl: './category-badge.component.scss'
 })
 export class CategoryBadgeComponent {
-  @Input() category!: Category;
+  @Input() category!: UICategory;
 }

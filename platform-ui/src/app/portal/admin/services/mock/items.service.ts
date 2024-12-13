@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Item, ItemsService } from '../items.service';
+import { Observable, of } from 'rxjs';
+import { ItemsService, UIItem } from '../items.service';
 import { MockCategoriesService } from './categories.service';
-
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class MockItemsService implements ItemsService {
-    getMyOwnedItems(): Item[] {
-        return this.items;
-    }
     private index = 1;
 
-    private items: Item[] = [
+    private items: UIItem[] = [
         {
             id: this.index++ + "",
             name: 'Harry Potter Book',
@@ -136,26 +133,18 @@ export class MockItemsService implements ItemsService {
         },
     ];
 
-    getItems(): Item[] {
-        return this.items;
+    getItems(): Observable<UIItem[]> {
+        return of(this.items);
     }
 
-    getItem(id: string): Item {
-        return this.items.find((i) => i.id === id) as Item;
+    getItem(id: string): Observable<UIItem> {
+        return of(this.items.find((i) => i.id === id) as UIItem);
     }
 
-    getCaterogies() {
-        return [
-            { value: 'books', label: 'Books' },
-            { value: 'electronics', label: 'Electronics' },
-            { value: 'clothing', label: 'Clothing' },
-        ];
-    }
-
-    addItem(item: Item): Item {
+    addItem(item: UIItem): Observable<UIItem> {
         item.id = this.index++ + "";
         this.items.push(item);
-        return item;
+        return of(item);
     }
 
 }
