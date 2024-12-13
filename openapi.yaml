@@ -519,7 +519,7 @@ paths:
     parameters:
       - $ref: "#/components/parameters/itemId"
     get:
-      operationId: getItem
+      operationId: getAdminItemById
       summary: Retrieve a specific item by ID
       tags:
         - items-admin-api
@@ -533,7 +533,7 @@ paths:
 
   /admin/items/categories:
     get:
-      operationId: getCategories
+      operationId: getAdminItemCategories
       summary: Retrieve all categories
       tags:
         - categories-admin-api
@@ -549,7 +549,7 @@ paths:
 
   /admin/items:
     get:
-      operationId: getItems
+      operationId: getAdminItems
       summary: Retrieve all items
       tags:
         - items-admin-api
@@ -564,7 +564,7 @@ paths:
                   $ref: "#/components/schemas/Item"
 
     post:
-      operationId: addItem
+      operationId: addAdminItem
       summary: Add a new item
       tags:
         - items-admin-api
@@ -615,6 +615,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/UserWithStats"
+
   /admin/users/{user-id}:
     parameters:
       - name: user-id

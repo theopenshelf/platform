@@ -13,7 +13,7 @@ export class ApiItemsService implements ItemsService {
     constructor(private itemsAdminApiService: ItemsAdminApiService) { }
 
     getItems(): Observable<UIItem[]> {
-        return this.itemsAdminApiService.getItems().pipe(
+        return this.itemsAdminApiService.getAdminItems().pipe(
             map((items: Item[]) => items.map((item: Item) => ({
                 id: item.id,
                 name: item.name,
@@ -32,7 +32,7 @@ export class ApiItemsService implements ItemsService {
     }
 
     getItem(id: string): Observable<UIItem> {
-        return this.itemsAdminApiService.getItem(id).pipe(
+        return this.itemsAdminApiService.getAdminItemById(id).pipe(
             map((item: Item) => ({
                 id: item.id,
                 name: item.name,
@@ -50,7 +50,7 @@ export class ApiItemsService implements ItemsService {
     }
 
     addItem(item: UIItem): Observable<UIItem> {
-        return this.itemsAdminApiService.addItem(item).pipe(
+        return this.itemsAdminApiService.addAdminItem(item).pipe(
             map((item: Item) => ({
                 id: item.id,
                 name: item.name,
