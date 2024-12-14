@@ -724,6 +724,69 @@ paths:
               schema:
                 $ref: "#/components/schemas/Category"
 
+  /admin/settings/security:
+    get:
+      operationId: getSecuritySettings
+      summary: Retrieve security settings
+      tags:
+        - settings-admin-api
+      responses:
+        "200":
+          description: Security settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRegistrationEnabled:
+                    type: boolean
+                    example: true
+
+    post:
+      operationId: saveSecuritySettings
+      summary: Save security settings
+      tags:
+        - settings-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isRegistrationEnabled:
+                  type: boolean
+                  example: false
+      responses:
+        "200":
+          description: Security settings saved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRegistrationEnabled:
+                    type: boolean
+                    example: false
+
+  /public/settings:
+    get:
+      operationId: getPublicSettings
+      summary: Retrieve public UI settings
+      tags:
+        - settings-public-api
+      responses:
+        "200":
+          description: Public UI settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isRegistrationEnabled:
+                    type: boolean
+                    example: true
+
 components:
   #####################################################
   # Predefined Components

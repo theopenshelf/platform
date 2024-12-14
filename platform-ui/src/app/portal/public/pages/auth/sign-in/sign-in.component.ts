@@ -1,15 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
-import { AuthService } from '../../../../../services/auth.service';
 import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
+import { AuthService } from '../../../../../services/auth.service';
+import { ConfigService, UISettings } from '../../../../../services/config.service';
 
 @Component({
   standalone: true,
   selector: 'app-sign-in',
-  imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   providers: [
@@ -18,16 +19,19 @@ import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provi
 })
 export class SignInComponent {
   signInForm: FormGroup;
+  config: UISettings;
 
   constructor(
     private fb: FormBuilder,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
+    private configService: ConfigService,
     private router: Router
   ) {
     this.signInForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', Validators.required],
     });
+    this.config = this.configService.getSettings();
   }
 
   onSubmit() {

@@ -1,1 +1,23 @@
-<p>security works!</p>
+<h2>Registration settings</h2>
+<form (ngSubmit)="onSubmit()">
+    <div class="section">
+        <input
+            tuiSwitch
+            type="checkbox"
+            [(ngModel)]="securitySettings.isRegistrationEnabled"
+            [showIcons]="true"
+            name="registrationToggle"
+        >
+        <label>Enable User Registration</label>
+
+    </div>
+    <div>
+        <button
+            tuiButton
+            size="m"
+            type="submit"
+        >
+            Save
+        </button>
+    </div>
+</form>

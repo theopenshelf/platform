@@ -1,12 +1,33 @@
-import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, Inject } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TuiPlatform } from '@taiga-ui/cdk';
+import { TuiButton } from '@taiga-ui/core';
+import { TuiSwitch } from '@taiga-ui/kit';
+import { adminProviders, SECURITY_SETTINGS_SERVICE_TOKEN } from '../../admin.providers';
+import { SecuritySettingsService, UISecuritySettings } from '../../services/security-settings.service';
 
 @Component({
-    standalone: true, 
+    standalone: true,
     selector: 'app-security',
-    imports: [],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiButton, TuiPlatform, TuiSwitch],
     templateUrl: './security.component.html',
-    styleUrl: './security.component.scss'
+    styleUrl: './security.component.scss',
+    providers: [
+        ...adminProviders
+    ]
 })
 export class SecurityComponent {
+    securitySettings: UISecuritySettings = { isRegistrationEnabled: false };
 
+    constructor(
+        @Inject(SECURITY_SETTINGS_SERVICE_TOKEN) private securitySettingsService: SecuritySettingsService
+    ) {
+        this.securitySettingsService.getSecuritySettings().subscribe(settings => this.securitySettings = settings);
+    }
+
+    onSubmit() {
+        this.securitySettingsService.saveSecuritySettings(this.securitySettings).subscribe();
+    }
 }
+
