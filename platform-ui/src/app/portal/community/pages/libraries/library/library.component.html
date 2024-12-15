@@ -17,6 +17,9 @@
         <div class="members">
             <tui-accordion class="container">
                 <tui-accordion-item *ngFor="let member of library.members">
+                    <tui-avatar [src]="member.username | tuiInitials"
+            [style.background]="member.username | tuiAutoColor" size="s">
+        </tui-avatar>
                     {{ member.username }}
                     <ng-template tuiAccordionItemContent>
                         <div class="toggle-container">

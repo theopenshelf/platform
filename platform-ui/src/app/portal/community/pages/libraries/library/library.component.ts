@@ -1,15 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiIcon, TuiIconPipe } from '@taiga-ui/core';
-import { TuiAccordion, TuiSwitch } from '@taiga-ui/kit';
+import { TuiAutoColorPipe, TuiIcon, TuiIconPipe, TuiInitialsPipe } from '@taiga-ui/core';
+import { TuiAccordion, TuiAvatar, TuiSwitch } from '@taiga-ui/kit';
 import { communityProviders, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
 import { UIItemWithRecords } from '../../../models/UIItemWithRecords';
 import { UILibrary } from '../../../models/UILibrary';
 import { ItemsService } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-library',
@@ -20,7 +20,10 @@ import { FormsModule } from '@angular/forms';
     TuiIcon,
     TuiIconPipe,
     TuiAccordion,
-    TuiSwitch
+    TuiSwitch,
+    TuiAvatar,
+    TuiInitialsPipe,
+    TuiAutoColorPipe
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
