@@ -1,14 +1,14 @@
-import { NgForOf, NgIf, NgClass } from '@angular/common';
+import { NgClass, NgForOf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiTitle } from '@taiga-ui/core';
-import { ItemsService } from '../../../services/items.service';
-import { CategoriesService, UICategory } from '../../../services/categories.service';
-import { CategoryBadgeComponent } from '../../../../../components/category-badge/category-badge.component';
-import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../../community.provider';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CategoryBadgeComponent } from '../../../../../components/category-badge/category-badge.component';
+import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../../community.provider';
+import { UICategory } from '../../../models/UICategory';
+import { CategoriesService } from '../../../services/categories.service';
+import { ItemsService } from '../../../services/items.service';
 
 @Component({
     standalone: true,
@@ -43,7 +43,7 @@ export class MyItemsComponent {
     private destroy$ = new Subject<void>();
 
     constructor(
-        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
         @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
     ) { }
 

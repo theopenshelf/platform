@@ -5,13 +5,18 @@ import { RouterLink } from '@angular/router';
 import { TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
-import { CategoriesService, UICategory } from '../../services/categories.service';
-import { ItemsService, ItemWithRecords, UIItem } from '../../services/items.service';
+import { ItemCardComponent } from '../../components/item-card/item-card.component';
+import { UICategory } from '../../models/UICategory';
+import { UIItem } from '../../models/UIItem';
+import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { CategoriesService } from '../../services/categories.service';
+import { ItemsService } from '../../services/items.service';
 
 @Component({
   standalone: true,
   selector: 'app-items',
   imports: [
+    ItemCardComponent,
     TuiHint,
     RouterLink,
     TuiIcon,
@@ -36,7 +41,7 @@ export class ItemsComponent {
   selectedCategories: Set<string> = new Set();
   // Text input for search filtering
   searchText = '';
-  items: ItemWithRecords[] = [];
+  items: UIItemWithRecords[] = [];
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,

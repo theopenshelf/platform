@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CategoriesService, UICategory } from '../categories.service';
 import { Observable, of } from 'rxjs';
+import { UICategory } from '../../models/UICategory';
+import { CategoriesService } from '../categories.service';
 
 
 @Injectable({

@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, switchMap } from 'rxjs';
 import { BorrowItem, BorrowRecord, Item, ItemsCommunityApiService } from '../../../../api-client';
-import { ItemsService, ItemWithRecords, UIBorrowItem, UIBorrowRecord, UIItem } from '../items.service';
+import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
+import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { ItemsService } from '../items.service';
 
 
 @Injectable({
@@ -40,7 +44,48 @@ export class APIItemsService implements ItemsService {
         );
     }
 
-    getItemsWithRecords(): Observable<ItemWithRecords[]> {
+    getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]> {
+        return this.itemsApiService.getItems(false, false, libraryId).pipe(
+            map((items: Item[]) => items.map((item: Item) => ({
+                id: item.id,
+                name: item.name,
+                located: item.located,
+                owner: item.owner,
+                imageUrl: item.imageUrl,
+                description: item.description,
+                shortDescription: item.shortDescription,
+                category: item.category
+            } as UIItem)))
+        ).pipe(
+            switchMap((items: UIItem[]) => {
+                const test = items.map(item => {
+                    let borrowRecords: UIBorrowRecord[] = [];
+                    return this.getItemBorrowRecords(item.id).pipe(
+                        map(records => {
+                            borrowRecords = records;
+                            const today = new Date().toISOString().split('T')[0];
+
+                            const itemWithRecords: UIItemWithRecords = {
+                                ...item,
+                                borrowRecords,
+                                isBookedToday: borrowRecords.some(record =>
+                                    record.startDate <= today && today <= record.endDate
+                                ),
+                                myBooking: borrowRecords.find(record =>
+                                    record.borrowedBy === 'me@example.com' && record.startDate > today
+                                )
+                            };
+
+                            return itemWithRecords;
+                        })
+                    );
+                });
+                return forkJoin(test);
+            })
+        );
+    }
+
+    getItemsWithRecords(): Observable<UIItemWithRecords[]> {
 
         return this.getItems().pipe(
             switchMap((items: UIItem[]) => {
@@ -51,7 +96,7 @@ export class APIItemsService implements ItemsService {
                             borrowRecords = records;
                             const today = new Date().toISOString().split('T')[0];
 
-                            const itemWithRecords: ItemWithRecords = {
+                            const itemWithRecords: UIItemWithRecords = {
                                 ...item,
                                 borrowRecords,
                                 isBookedToday: borrowRecords.some(record =>

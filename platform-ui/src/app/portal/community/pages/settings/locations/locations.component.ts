@@ -1,18 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { TuiButton } from '@taiga-ui/core';
-import { LocationsService, UILocation } from '../../../services/locations.service';
 import { communityProviders, LOCATIONS_SERVICE_TOKEN } from '../../../community.provider';
+import { UILocation } from '../../../models/UILocation';
+import { LocationsService } from '../../../services/locations.service';
 
 @Component({
     standalone: true,
     selector: 'app-locations',
     imports: [
-      CommonModule, 
-      FormsModule, 
-      ReactiveFormsModule,
-      TuiButton,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        TuiButton,
 
     ],
     providers: [
@@ -27,7 +28,7 @@ export class LocationsComponent implements OnInit {
     editMode: boolean = false;
     editIndex: number | null = null;
 
-    constructor(private fb: FormBuilder, @Inject(LOCATIONS_SERVICE_TOKEN) private locationsService: LocationsService) {}
+    constructor(private fb: FormBuilder, @Inject(LOCATIONS_SERVICE_TOKEN) private locationsService: LocationsService) { }
 
     ngOnInit(): void {
         this.locationForm = this.fb.group({

@@ -183,6 +183,12 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: libraryId
+          in: query
+          description: Filter items by library ID
+          required: false
+          schema:
+            type: string
       responses:
         "200":
           description: A list of items

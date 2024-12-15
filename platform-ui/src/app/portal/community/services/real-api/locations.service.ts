@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { LocationsCommunityApiService } from '../../../../api-client';
-import { LocationsService, UILocation } from '../locations.service';
+import { UILocation } from '../../models/UILocation';
+import { LocationsService } from '../locations.service';
 
 
 @Injectable({

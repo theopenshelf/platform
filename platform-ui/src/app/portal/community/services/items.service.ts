@@ -1,41 +1,14 @@
-import { Injectable } from '@angular/core';
-import { UICategory } from './categories.service';
 import { Observable } from 'rxjs';
-
-export interface UIItem {
-    id: string;
-    name: string;
-    located: string;
-    owner: string;
-    imageUrl: string;
-    description: string;
-    shortDescription: string;
-    category: UICategory;
-    favorite: boolean;
-    borrowCount: number
-}
-
-export interface UIBorrowRecord {
-    id: string;
-    borrowedBy: string;
-    startDate: string;
-    endDate: string;
-}
-
-export interface UIBorrowItem extends UIItem {
-    record: UIBorrowRecord;
-}
-
-export type ItemWithRecords = UIItem & {
-    borrowRecords: UIBorrowRecord[];
-    isBookedToday: boolean;
-    myBooking: UIBorrowRecord | undefined;
-};
+import { UIBorrowItem } from '../models/UIBorrowItem';
+import { UIBorrowRecord } from '../models/UIBorrowRecord';
+import { UIItem } from '../models/UIItem';
+import { UIItemWithRecords } from '../models/UIItemWithRecords';
 
 export interface ItemsService {
-    getMyOwnedItems():  Observable<UIItem[]>;
+    getMyOwnedItems(): Observable<UIItem[]>;
     getItems(): Observable<UIItem[]>;
-    getItemsWithRecords(): Observable<ItemWithRecords[]>;
+    getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]>;
+    getItemsWithRecords(): Observable<UIItemWithRecords[]>;
     getItem(id: string): Observable<UIItem>;
     getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]>;
     addItem(item: UIItem): Observable<UIItem>;

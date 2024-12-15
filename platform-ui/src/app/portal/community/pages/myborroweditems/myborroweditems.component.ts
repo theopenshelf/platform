@@ -1,25 +1,25 @@
-import { NgForOf, NgIf, NgClass } from '@angular/common';
+import { CommonModule, NgClass, NgForOf } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiButton, TuiTitle } from '@taiga-ui/core';
-import { ItemsService, UIBorrowItem } from '../../services/items.service';
 import { RouterLink } from '@angular/router';
-import { CategoriesService, UICategory } from '../../services/categories.service';
+import { TuiTable } from '@taiga-ui/addon-table';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
-import { Observable, combineLatest, map, BehaviorSubject } from 'rxjs';
-import { CommonModule } from '@angular/common';
+import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { UICategory } from '../../models/UICategory';
+import { CategoriesService } from '../../services/categories.service';
+import { ItemsService } from '../../services/items.service';
 
 @Component({
-  standalone: true, 
-    selector: 'app-myborroweditems',
-    imports: [CommonModule, RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
-    templateUrl: './myborroweditems.component.html',
-    styleUrls: ['./myborroweditems.component.scss'],
-    providers: [
-        ...communityProviders,
-    ]
+  standalone: true,
+  selector: 'app-myborroweditems',
+  imports: [CommonModule, RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
+  templateUrl: './myborroweditems.component.html',
+  styleUrls: ['./myborroweditems.component.scss'],
+  providers: [
+    ...communityProviders,
+  ]
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;
@@ -59,7 +59,7 @@ export class MyborroweditemsComponent {
   };
 
   constructor(
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService, 
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
   ) {
     this.items$ = this.getFilteredAndSortedData$();
@@ -90,7 +90,7 @@ export class MyborroweditemsComponent {
   protected formatDate(date: string, column: 'startDate' | 'endDate', status: string): string {
     const now = new Date();
     const [day, month, year] = date.split('/'); // Split into parts
-    const targetDate = new Date(`${year}-${month}-${day}`); 
+    const targetDate = new Date(`${year}-${month}-${day}`);
 
     // Normalize dates to midnight for consistent day difference calculation
     const nowMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -99,46 +99,46 @@ export class MyborroweditemsComponent {
     const diffInDays = Math.round((targetMidnight.getTime() - nowMidnight.getTime()) / (1000 * 60 * 60 * 24));
 
     if (column === 'startDate') {
-        // Handle messages for the start date
-        if (status === 'Reserved') {
-            return diffInDays === 0 ? `Reserved today` : `Reserved in ${Math.abs(diffInDays)} day(s)`;
-        } else if (status === 'Currently Borrowed') {
-            if (diffInDays === 0) {
-                return `Borrowed today`;
-            } else if (diffInDays > 0) {
-                return `Will be borrowed in ${diffInDays} day(s)`; // Future borrow start
-            } else {
-                return `Borrowed ${Math.abs(diffInDays)} day(s) ago`; // Past borrow start
-            }
+      // Handle messages for the start date
+      if (status === 'Reserved') {
+        return diffInDays === 0 ? `Reserved today` : `Reserved in ${Math.abs(diffInDays)} day(s)`;
+      } else if (status === 'Currently Borrowed') {
+        if (diffInDays === 0) {
+          return `Borrowed today`;
+        } else if (diffInDays > 0) {
+          return `Will be borrowed in ${diffInDays} day(s)`; // Future borrow start
         } else {
-            return `Returned on ${targetDate.toLocaleDateString()}`;
+          return `Borrowed ${Math.abs(diffInDays)} day(s) ago`; // Past borrow start
         }
+      } else {
+        return `Returned on ${targetDate.toLocaleDateString()}`;
+      }
     } else if (column === 'endDate') {
-        // Handle messages for the end date
-        if (status === 'Reserved') {
-            if (diffInDays === 0) {
-                return `Ends today`;
-            } else if (diffInDays > 0) {
-                return `Ends in ${diffInDays} day(s)`; // Future reservation end
-            } else {
-                return `Ended ${Math.abs(diffInDays)} day(s) ago`; // Past reservation end
-            }
-        } else if (status === 'Currently Borrowed') {
-            if (diffInDays === 0) {
-                return `Due today`;
-            } else if (diffInDays > 0) {
-                return `Due in ${diffInDays} day(s)`; // Future due date
-            } else {
-                return `Overdue by ${Math.abs(diffInDays)} day(s)`; // Past due date
-            }
+      // Handle messages for the end date
+      if (status === 'Reserved') {
+        if (diffInDays === 0) {
+          return `Ends today`;
+        } else if (diffInDays > 0) {
+          return `Ends in ${diffInDays} day(s)`; // Future reservation end
         } else {
-            return `Ended on ${targetDate.toLocaleDateString()}`;
+          return `Ended ${Math.abs(diffInDays)} day(s) ago`; // Past reservation end
         }
+      } else if (status === 'Currently Borrowed') {
+        if (diffInDays === 0) {
+          return `Due today`;
+        } else if (diffInDays > 0) {
+          return `Due in ${diffInDays} day(s)`; // Future due date
+        } else {
+          return `Overdue by ${Math.abs(diffInDays)} day(s)`; // Past due date
+        }
+      } else {
+        return `Ended on ${targetDate.toLocaleDateString()}`;
+      }
     } else {
-        // Default case: just return the date
-        return targetDate.toLocaleDateString();
+      // Default case: just return the date
+      return targetDate.toLocaleDateString();
     }
-}
+  }
 
   // Update getFilteredAndSortedData to use combineLatest
   private getFilteredAndSortedData$(): Observable<UIBorrowItem[]> {
@@ -209,29 +209,29 @@ export class MyborroweditemsComponent {
 
   protected getBadgeClass(status: 'Reserved' | 'Currently Borrowed' | 'Returned'): string {
     switch (status) {
-        case 'Reserved':
-            return 'badge badge-reserved';
-        case 'Currently Borrowed':
-            return 'badge badge-borrowed';
-        case 'Returned':
-            return 'badge badge-returned';
-        default:
-            return '';
-    }
-}
-
-protected getCategoryBadgeClass(category: string): string {
-  switch (category) {
-      case 'books':
-          return 'badge badge-books';
-      case 'electronics':
-          return 'badge badge-electronics';
-      case 'clothing':
-          return 'badge badge-clothing';
+      case 'Reserved':
+        return 'badge badge-reserved';
+      case 'Currently Borrowed':
+        return 'badge badge-borrowed';
+      case 'Returned':
+        return 'badge badge-returned';
       default:
-          return '';
+        return '';
+    }
   }
-}
+
+  protected getCategoryBadgeClass(category: string): string {
+    switch (category) {
+      case 'books':
+        return 'badge badge-books';
+      case 'electronics':
+        return 'badge badge-electronics';
+      case 'clothing':
+        return 'badge badge-clothing';
+      default:
+        return '';
+    }
+  }
 
   // Dynamic options for filters
   protected readonly statuses = ['Currently Borrowed', 'Reserved', 'Returned'];

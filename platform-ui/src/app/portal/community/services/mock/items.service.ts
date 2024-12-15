@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, of } from 'rxjs';
 import { MockCategoriesService } from '../../../admin/services/mock/categories.service';
-import { ItemsService, ItemWithRecords, UIBorrowItem, UIBorrowRecord, UIItem } from '../items.service';
+import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
+import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { ItemsService } from '../items.service';
 
 
 @Injectable({
@@ -165,7 +169,33 @@ export class MockItemsService implements ItemsService {
         return of(this.items);
     }
 
-    getItemsWithRecords(): Observable<ItemWithRecords[]> {
+    getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]> {
+        const test = this.items.map(item => {
+            let borrowRecords: UIBorrowRecord[] = [];
+            return this.getItemBorrowRecords(item.id).pipe(
+                map(records => {
+                    borrowRecords = records
+                    const today = new Date().toISOString().split('T')[0];
+
+                    const itemWithRecords: UIItemWithRecords = {
+                        ...item,
+                        borrowRecords,
+                        isBookedToday: borrowRecords.some(record =>
+                            record.startDate <= today && today <= record.endDate
+                        ),
+                        myBooking: borrowRecords.find(record =>
+                            record.borrowedBy === 'me@example.com' && record.startDate > today
+                        )
+                    };
+
+                    return itemWithRecords;
+                })
+            );
+        });
+        return forkJoin(test);
+    }
+
+    getItemsWithRecords(): Observable<UIItemWithRecords[]> {
 
         const test = this.items.map(item => {
             let borrowRecords: UIBorrowRecord[] = [];
@@ -174,7 +204,7 @@ export class MockItemsService implements ItemsService {
                     borrowRecords = records
                     const today = new Date().toISOString().split('T')[0];
 
-                    const itemWithRecords: ItemWithRecords = {
+                    const itemWithRecords: UIItemWithRecords = {
                         ...item,
                         borrowRecords,
                         isBookedToday: borrowRecords.some(record =>

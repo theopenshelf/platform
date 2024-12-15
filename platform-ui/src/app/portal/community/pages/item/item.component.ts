@@ -1,21 +1,23 @@
-import { Component, HostListener, Inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiMarkerHandler } from '@taiga-ui/core';
-import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { StarRatingComponent } from '../../../../components/star-rating/star-rating.component';
-import { CalendarModule, DateAdapter, CalendarEvent, CalendarUtils, CalendarA11y, CalendarDateFormatter, CalendarEventTitleFormatter } from 'angular-calendar';
-import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TuiInputDateRangeModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
-import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
-import { EMPTY, of, switchMap, tap } from 'rxjs';
-import { TUI_CALENDAR_DATE_STREAM, TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
-import { UIItem, UIBorrowRecord, ItemsService, UIBorrowItem } from '../../services/items.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
+import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
+import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon } from '@taiga-ui/core';
+import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
+import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
+import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
+import { DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { EMPTY, switchMap, tap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
+import { ItemsService } from '../../services/items.service';
 
 const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
@@ -41,11 +43,11 @@ const plusTen = today.append({ day: 10 });
   styleUrls: ['./item.component.scss'],
   providers: [
     ...communityProviders,
-    DatePipe, 
+    DatePipe,
     {
-    provide: DateAdapter,
-    useFactory: adapterFactory,
-  }]
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }]
 })
 export class ItemComponent {
 
@@ -133,7 +135,7 @@ export class ItemComponent {
   }
   public onRangeChange(range: TuiDayRange | null): void {
     if (range) {
-     this.selectedDate = range;
+      this.selectedDate = range;
     }
   }
 

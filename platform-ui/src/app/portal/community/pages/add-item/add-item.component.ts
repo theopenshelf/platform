@@ -1,24 +1,24 @@
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReactiveFormsModule } from '@angular/forms'; // Import this
-import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
-import { ItemsService, UIItem } from '../../services/items.service';
-import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Import CommonModule
-import { CategoriesService, UICategory } from '../../services/categories.service';
-import { communityProviders, ITEMS_SERVICE_TOKEN, CATEGORIES_SERVICE_TOKEN } from '../../community.provider';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { UICategory } from '../../models/UICategory';
+import { CategoriesService } from '../../services/categories.service';
+import { ItemsService } from '../../services/items.service';
 
 @Component({
-    selector: 'app-add-item',
-    standalone: true, 
-    imports: [CommonModule, ReactiveFormsModule, QuillModule], // Import required modules
-    templateUrl: './add-item.component.html',
-    styleUrl: './add-item.component.scss',
-    providers: [
-        ...communityProviders,
-    ]
+  selector: 'app-add-item',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, QuillModule], // Import required modules
+  templateUrl: './add-item.component.html',
+  styleUrl: './add-item.component.scss',
+  providers: [
+    ...communityProviders,
+  ]
 })
 export class AddItemComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -54,7 +54,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
         (control) => {
           const categoryValue = control.value;
           const descriptionControl = this.addItemForm?.get('description');
-          
+
           if (categoryValue && descriptionControl && !descriptionControl.value) {
             // Get selected category
             const category = this.categories?.find(c => c.name === categoryValue);

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { CategoriesCommunityApiService, Category } from '../../../../api-client';
-import { CategoriesService, UICategory } from '../categories.service';
+import { UICategory } from '../../models/UICategory';
+import { CategoriesService } from '../categories.service';
 
 
 @Injectable({
