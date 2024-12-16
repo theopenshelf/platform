@@ -1,4 +1,4 @@
-import { NgClass, NgForOf } from '@angular/common';
+import { NgClass } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
@@ -14,12 +14,11 @@ import { ItemsService } from '../../../services/items.service';
     standalone: true,
     selector: 'app-my-items',
     imports: [
-        FormsModule,
-        NgForOf,
-        NgClass,
-        TuiTable,
-        CategoryBadgeComponent
-    ],
+    FormsModule,
+    NgClass,
+    TuiTable,
+    CategoryBadgeComponent
+],
     templateUrl: './my-items.component.html',
     styleUrls: ['./my-items.component.scss'],
     providers: [

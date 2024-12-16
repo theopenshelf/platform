@@ -1,18 +1,21 @@
-<div class="library-card" *ngFor="let library of libraries" routerLink="/community/libraries/{{library.id}}"
+@for (library of libraries; track library) {
+  <div class="library-card" routerLink="/community/libraries/{{library.id}}"
     tuiAppearance="floating" tuiCardMedium>
     <h2 tuiTitle>
-        {{ library.name }}
-        <span tuiSubtitle>{{ library.location.address }}</span>
+      {{ library.name }}
+      <span tuiSubtitle>{{ library.location.address }}</span>
     </h2>
-
     <tui-avatar-stack direction="left">
-        <tui-avatar *ngFor="let member of library.members" [src]="member.username | tuiInitials"
-            [style.background]="member.username | tuiAutoColor" size="m">
+      @for (member of library.members; track member) {
+        <tui-avatar [src]="member.username | tuiInitials"
+          [style.background]="member.username | tuiAutoColor" size="m">
         </tui-avatar>
+      }
     </tui-avatar-stack>
-</div>
+  </div>
+}
 
 
 <div class="library-card add-library-card" (click)="addLibrary()" tuiAppearance="floating" tuiCardMedium>
-    <tui-icon icon="@tui.plus" [style.color]="'var(--tui-background-accent-1)'" />
+  <tui-icon icon="@tui.plus" [style.color]="'var(--tui-background-accent-1)'" />
 </div>

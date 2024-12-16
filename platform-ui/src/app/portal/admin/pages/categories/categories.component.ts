@@ -1,4 +1,4 @@
-import { CommonModule, NgForOf } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -15,15 +15,13 @@ import { CategoriesService, UICategory } from '../../services/categories.service
 @Component({
     standalone: true,
     imports: [
-        CategoryBadgeComponent,
-        RouterModule,
-        CommonModule,
-        FormsModule,
-        NgForOf,
-        TuiTable,
-        TuiTitle,
-        TuiButton,
-    ],
+    CategoryBadgeComponent,
+    RouterModule,
+    FormsModule,
+    TuiTable,
+    TuiTitle,
+    TuiButton
+],
     selector: 'app-categories',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],

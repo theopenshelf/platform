@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
@@ -27,24 +26,23 @@ const ICON =
         standalone: true, 
     selector: 'community-layout',
     imports: [
-        RouterLinkActive,
-        CommonModule,
-        NotificationsPopupComponent,
-        RouterOutlet,
-        TuiRoot,
-        FormsModule,
-        RouterLink,
-        TuiAppearance,
-        TuiButton,
-        TuiChevron,
-        TuiAppearance,
-        TuiDataList,
-        TuiDropdown,
-        TuiFade,
-        TuiIcon,
-        TuiNavigation,
-        TuiTabs,
-    ],
+    RouterLinkActive,
+    NotificationsPopupComponent,
+    RouterOutlet,
+    TuiRoot,
+    FormsModule,
+    RouterLink,
+    TuiAppearance,
+    TuiButton,
+    TuiChevron,
+    TuiAppearance,
+    TuiDataList,
+    TuiDropdown,
+    TuiFade,
+    TuiIcon,
+    TuiNavigation,
+    TuiTabs
+],
     templateUrl: './community-layout.component.html',
     styleUrl: './community-layout.component.scss',
     providers: [

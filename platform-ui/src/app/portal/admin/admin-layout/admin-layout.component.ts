@@ -1,4 +1,4 @@
-import {KeyValuePipe, NgForOf} from '@angular/common';
+import { KeyValuePipe } from '@angular/common';
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {RouterLink, RouterLinkActive} from '@angular/router';

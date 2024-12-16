@@ -8,10 +8,10 @@
     <label>Email</label>
     <input formControlName="email" type="email" />
 
-    <ng-container *ngIf="!userId">
-        <label>Password</label>
-        <input formControlName="password" type="password" />
-    </ng-container>
+    @if (!userId) {
+      <label>Password</label>
+      <input formControlName="password" type="password" />
+    }
     <!-- Address Fields -->
     <label>Flat number</label>
     <input formControlName="flatNumber" type="text" />
@@ -20,10 +20,10 @@
     <input formControlName="address" type="text" />
 
     <button type="submit" class="add-user" appearance="primary" size="m" tuiButton>
-            Save Changes
+      Save Changes
     </button>
     <button class="add-user" routerLink="/admin/users" appearance="secondary" size="m" tuiButton>
-        Cancel
+      Cancel
     </button>
   </form>
 </div>

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -10,11 +9,11 @@ import { UIUser, UsersService } from '../../services/users.service';
   standalone: true,
   selector: 'app-edit-user',
   imports: [
-    CommonModule,
     RouterLink,
     TuiButton,
     FormsModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule
+],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss',
   providers: [

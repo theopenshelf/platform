@@ -1,4 +1,4 @@
-import { AsyncPipe, CommonModule, NgForOf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TuiAppearance, TuiAutoColorPipe, TuiFallbackSrcPipe, TuiIcon, TuiInitialsPipe, TuiTitle } from '@taiga-ui/core';
@@ -11,10 +11,8 @@ import { LibrariesService } from '../../../services/libraries.service';
 @Component({
   selector: 'app-my-libraries',
   imports: [
-    CommonModule,
     RouterModule,
     AsyncPipe,
-    NgForOf,
     TuiAppearance,
     TuiAutoColorPipe,
     TuiAvatar,
@@ -25,7 +23,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiInitialsPipe,
     TuiCardLarge,
     TuiIcon
-  ],
+],
   templateUrl: './my-libraries.component.html',
   styleUrl: './my-libraries.component.scss',
   providers: [

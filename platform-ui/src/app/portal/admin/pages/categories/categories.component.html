@@ -1,31 +1,33 @@
 <h2>Categories</h2>
 <div class="top-actions">
-    <button tuiButton routerLink="/admin/categories/add">Add Category</button>
+  <button tuiButton routerLink="/admin/categories/add">Add Category</button>
 </div>
 <table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Template</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let category of categories">
-            <td>
-                <category-badge [category]="category"></category-badge>
-            </td>
-            <td>{{ category.template }}</td>
-            <td tuiTd class="action-icons">
-                <button [routerLink]="['/admin/categories', category.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-                    size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-                    Edit
-                </button>
-                <button (click)="deleteCategory(category)" appearance="outline" iconStart="@tui.trash-2" size="s"
-                    tuiIconButton type="button" [style.border-radius.%]="100">
-                    Delete
-                </button>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Template</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (category of categories; track category) {
+      <tr>
+        <td>
+          <category-badge [category]="category"></category-badge>
+        </td>
+        <td>{{ category.template }}</td>
+        <td tuiTd class="action-icons">
+          <button [routerLink]="['/admin/categories', category.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+            size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+            Edit
+          </button>
+          <button (click)="deleteCategory(category)" appearance="outline" iconStart="@tui.trash-2" size="s"
+            tuiIconButton type="button" [style.border-radius.%]="100">
+            Delete
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
 </table>

@@ -1,110 +1,115 @@
 <div class="table-container">
-    <!-- Column Selector Dropdown -->
+  <!-- Column Selector Dropdown -->
 
-    <div class="top-actions">
-        <button class="add-user" routerLink="/admin/users/add" i18n="@@borrowButton" appearance="primary" size="m"
-            tuiButton type="button">
+  <div class="top-actions">
+    <button class="add-user" routerLink="/admin/users/add" i18n="@@borrowButton" appearance="primary" size="m"
+      tuiButton type="button">
             <tui-icon icon="@tui.user" [style.height.rem]="1" />
 
             Add user
         </button>
-    </div>
+  </div>
 
-    <div class="column-selector">
-        <label>Select Columns:</label>
-        <div class="filter-checkbox" *ngFor="let column of availableColumns">
-            <input tuiCheckbox size="s" type="checkbox" [(ngModel)]="column.visible"
-                (change)="updateVisibleColumns()" />
+  <div class="column-selector">
+    <label>Select Columns:</label>
+    @for (column of availableColumns; track column) {
+      <div class="filter-checkbox">
+        <input tuiCheckbox size="s" type="checkbox" [(ngModel)]="column.visible"
+          (change)="updateVisibleColumns()" />
+        {{ column.label }}
+      </div>
+    }
+  </div>
+  <!-- Table -->
+  <table tuiTable [size]="size" class="compact-table">
+    <thead>
+      <tr>
+        <th tuiTh (click)="sort('username')">
+          Username
+          <span [class.sorted]="currentSort === 'username'">
+            {{ getSortIcon('username') }} <!-- Add sort indicator -->
+          </span>
+
+        </th>
+        @for (column of visibleColumns; track column) {
+          <th tuiTh (click)="sort(column.key)">
             {{ column.label }}
-        </div>
-    </div>
-    <!-- Table -->
-    <table tuiTable [size]="size" class="compact-table">
-        <thead>
-            <tr>
-                <th tuiTh (click)="sort('username')">
-                    Username
-                    <span [class.sorted]="currentSort === 'username'">
-                        {{ getSortIcon('username') }} <!-- Add sort indicator -->
-                    </span>
+            <span [class.sorted]="currentSort === column.key">
+              {{ getSortIcon(column.key) }} <!-- Add sort indicator -->
+            </span>
+          </th>
+        }
+        <th tuiTh>Actions</th>
+      </tr>
+    </thead>
+    <tbody tuiTbody>
+      @for (user of sortedUsers; track user) {
+        <tr>
+          <td tuiTd>
+            <div class="user-info">
+              <tui-avatar [src]="user.username | tuiInitials"
+              [style.background]="user.username | tuiAutoColor" size="s"></tui-avatar>
+              <span class="username ellipsis">{{ user.username }}</span>
+            </div>
+          </td>
+          @for (column of visibleColumns; track column) {
+            <td tuiTd>
+              <span tuiTitle>{{ getUserProperty(user, column.key) }}</span>
+            </td>
+          }
+          <td tuiTd class="action-icons">
+            <button [routerLink]="['/admin/users', user.id, 'messages']" appearance="outline"
+              iconStart="@tui.mail" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+              messages
+            </button>
+            <button (click)="setPassword(user)" appearance="outline"
+              iconStart="@tui.key" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+              password
+            </button>
+            <button [routerLink]="['/admin/users', user.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+              size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+              Edit
+            </button>
+            <button (click)="deleteUser(user)" appearance="outline" iconStart="@tui.trash-2" size="s"
+              tuiIconButton type="button" [style.border-radius.%]="100">
+              Delete
+            </button>
+            <button (click)="disableUser(user)" appearance="outline" iconStart="@tui.shield-ban" size="s"
+              tuiIconButton type="button" [style.border-radius.%]="100">
+              Disable
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 
-                </th>
-                <th *ngFor="let column of visibleColumns" tuiTh (click)="sort(column.key)">
-                    {{ column.label }}
-                    <span [class.sorted]="currentSort === column.key">
-                        {{ getSortIcon(column.key) }} <!-- Add sort indicator -->
-                    </span>
-                </th>
-                <th tuiTh>Actions</th>
-            </tr>
-        </thead>
-        <tbody tuiTbody>
-            <tr *ngFor="let user of sortedUsers">
-                <td tuiTd>
-                    <div class="user-info">
-                        <tui-avatar [src]="user.username | tuiInitials"
-                            [style.background]="user.username | tuiAutoColor" size="s"></tui-avatar>
-                        <span class="username ellipsis">{{ user.username }}</span>
-                    </div>
-                </td>
-                <td *ngFor="let column of visibleColumns" tuiTd>
-                    <span tuiTitle>{{ getUserProperty(user, column.key) }}</span>
-                </td>
-                <td tuiTd class="action-icons">
+  <div class="footer-actions">
 
-                    <button [routerLink]="['/admin/users', user.id, 'messages']" appearance="outline"
-                        iconStart="@tui.mail" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-                        messages
-                    </button>
-
-                    <button (click)="setPassword(user)" appearance="outline"
-                        iconStart="@tui.key" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-                        password
-                    </button>
-
-                    <button [routerLink]="['/admin/users', user.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-                        size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-                        Edit
-                    </button>
-                    <button (click)="deleteUser(user)" appearance="outline" iconStart="@tui.trash-2" size="s"
-                        tuiIconButton type="button" [style.border-radius.%]="100">
-                        Delete
-                    </button>
-                    <button (click)="disableUser(user)" appearance="outline" iconStart="@tui.shield-ban" size="s"
-                        tuiIconButton type="button" [style.border-radius.%]="100">
-                        Disable
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="footer-actions">
-
-    </div>
+  </div>
 </div>
 
 <ng-template
-    let-observer
-    [tuiDialogOptions]="{label: 'Set user ' + currentUser?.username + ' password', size: 's'}"
-    [(tuiDialog)]="openPasswordDialog"
->
-    <form
-        [formGroup]="passwordForm"
-        (ngSubmit)="setUserPassword()"
+  let-observer
+  [tuiDialogOptions]="{label: 'Set user ' + currentUser?.username + ' password', size: 's'}"
+  [(tuiDialog)]="openPasswordDialog"
+  >
+  <form
+    [formGroup]="passwordForm"
+    (ngSubmit)="setUserPassword()"
     >
-        <tui-input
-            formControlName="userPasswordControl"
-            tuiAutoFocus
+    <tui-input
+      formControlName="userPasswordControl"
+      tuiAutoFocus
+      >
+    </tui-input>
+    <p>
+      <button
+        tuiButton
+        type="submit"
         >
-        </tui-input>
-        <p>
-            <button
-                tuiButton
-                type="submit"
-            >
-                Ok
-            </button>
-        </p>
-    </form>
+        Ok
+      </button>
+    </p>
+  </form>
 </ng-template>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -10,7 +10,7 @@ import { ConfigService, UISettings } from '../../../../../services/config.servic
 @Component({
   standalone: true,
   selector: 'app-sign-in',
-  imports: [CommonModule, WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
+  imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   providers: [

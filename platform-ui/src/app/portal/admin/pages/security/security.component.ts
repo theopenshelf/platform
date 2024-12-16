@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiPlatform } from '@taiga-ui/cdk';
@@ -10,7 +10,7 @@ import { SecuritySettingsService, UISecuritySettings } from '../../services/secu
 @Component({
     standalone: true,
     selector: 'app-security',
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, TuiButton, TuiPlatform, TuiSwitch],
+    imports: [FormsModule, ReactiveFormsModule, TuiButton, TuiPlatform, TuiSwitch],
     templateUrl: './security.component.html',
     styleUrl: './security.component.scss',
     providers: [

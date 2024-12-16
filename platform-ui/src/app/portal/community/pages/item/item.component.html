@@ -1,67 +1,69 @@
-<div *ngIf="!item" class="item-container">
-  Not found
-</div>
-<div *ngIf="item" class="item-container">
-  <!-- Sidebar Section -->
-  <div class="sidebar">
-    <div class="details">
-      <div class="top-left-details">
-        <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
+@if (!item) {
+  <div class="item-container">
+    Not found
+  </div>
+}
+@if (item) {
+  <div class="item-container">
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+      <div class="details">
+        <div class="top-left-details">
+          <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
           [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button" (click)="markAsFavorite()"></button>
-        <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-          [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
+          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
+            [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
           [tuiHint]="borrowItemRecord ? 'Reserved from ' + borrowItemRecord.record.startDate + ' to ' + borrowItemRecord.record.endDate : 'No reservation yet'"></button>
+        </div>
       </div>
-    </div>
-    <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
-
-
-    <form [formGroup]="bookForm">
-      <tui-calendar-range  
-      [defaultViewedMonth]="defaultViewedMonth" 
-      [min]="min" 
-      [max]="max" 
-      [value]="selectedDate || null"
-      [markerHandler]="markerHandler" 
-      (valueChange)="onRangeChange($event)"
-      [disabledItemHandler]="disabledItemHandler"  
-    />
-
-      <button *ngIf="!borrowItemRecord" id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary"
-        size="m" tuiButton type="button">
+      <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
+      <form [formGroup]="bookForm">
+        <tui-calendar-range
+          [defaultViewedMonth]="defaultViewedMonth"
+          [min]="min"
+          [max]="max"
+          [value]="selectedDate || null"
+          [markerHandler]="markerHandler"
+          (valueChange)="onRangeChange($event)"
+          [disabledItemHandler]="disabledItemHandler"
+          />
+        @if (!borrowItemRecord) {
+          <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary"
+            size="m" tuiButton type="button">
         Borrow
       </button>
-      <button *ngIf="borrowItemRecord" id="cancel" i18n="@@cancelButton" (click)="cancelReservation()"
-        appearance="secondary" size="m" tuiButton type="button">
+        }
+        @if (borrowItemRecord) {
+          <button id="cancel" i18n="@@cancelButton" (click)="cancelReservation()"
+            appearance="secondary" size="m" tuiButton type="button">
         Cancel Reservation
       </button>
-    </form>
+        }
+      </form>
+    </div>
+    <!-- Details Section -->
+    <div class="details">
+      <div class="top-right-details">
+        <button class="borrow-counts" appearance="flat" size="m" tuiButton type="button">
+          {{ item.borrowCount }} borrow(s)
+        </button>
+        <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
+      </div>
+      <h1>{{ item.name }}</h1>
+      <div class="categories">
+        <category-badge [category]="item.category"></category-badge>
+      </div>
+      <div class="attributes">
+        <span class="location">
+          <tui-icon icon="@tui.map-pin" />
+          <span class="location-value">{{ item.located }}</span>
+        </span>
+        <span class="owner">
+          <tui-icon icon="@tui.user-round" />
+          <span class="owner-value">{{ item.owner }}</span>
+        </span>
+      </div>
+      <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
+    </div>
   </div>
-
-  <!-- Details Section -->
-  <div class="details">
-    <div class="top-right-details">
-      <button class="borrow-counts" appearance="flat" size="m" tuiButton type="button">
-        {{ item.borrowCount }} borrow(s)
-      </button>
-      <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
-    </div>
-    <h1>{{ item.name }}</h1>
-    <div class="categories">
-      <category-badge [category]="item.category"></category-badge>
-    </div>
-    <div class="attributes">
-      <span class="location">
-        <tui-icon icon="@tui.map-pin" />
-        <span class="location-value">{{ item.located }}</span>
-      </span>
-      <span class="owner">
-        <tui-icon icon="@tui.user-round" />
-        <span class="owner-value">{{ item.owner }}</span>
-      </span>
-
-    </div>
-    <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
-
-  </div>
-</div>
+}

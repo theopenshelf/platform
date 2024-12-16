@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,7 +14,6 @@ import { LibrariesService } from '../../../services/libraries.service';
 @Component({
   selector: 'app-library',
   imports: [
-    CommonModule,
     FormsModule,
     ItemCardComponent,
     TuiIcon,
@@ -24,7 +23,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiAvatar,
     TuiInitialsPipe,
     TuiAutoColorPipe
-  ],
+],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
   providers: [

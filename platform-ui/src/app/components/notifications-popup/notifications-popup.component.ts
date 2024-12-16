@@ -1,6 +1,5 @@
 import { Component, HostListener, ElementRef, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { NotificationsService, UINotification, NotificationType } from '../../services/notifications.service';
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Router, RouterLink } from '@angular/router';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
 import { TuiButton } from '@taiga-ui/core';
@@ -9,11 +8,10 @@ import { globalProviders, NOTIFICATIONS_SERVICE_TOKEN } from '../../global.provi
 @Component({
   standalone: true,
   selector: 'app-notifications-popup',
-  imports: [        
+  imports: [
     TuiBadgeNotification,
-    TuiButton,
-    CommonModule
-  ],
+    TuiButton
+],
   providers: [
     ...globalProviders
   ],

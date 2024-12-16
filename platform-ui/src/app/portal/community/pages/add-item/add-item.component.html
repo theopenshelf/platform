@@ -7,7 +7,9 @@
   <label for="category">Category</label>
   <select id="category" formControlName="category" [ngModel]="addItemForm.get('category')?.value">
     <option value="">-- Select Category --</option>
-    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+    @for (category of categories; track category) {
+      <option [value]="category.name">{{ category.name }}</option>
+    }
   </select>
 
   <label for="image">Upload Image</label>
@@ -15,11 +17,15 @@
     class="drag-drop-zone"
     (dragover)="allowDrag($event)"
     (drop)="onImageDrop($event)"
-  >
-    <p *ngIf="!imageFile">Drag and drop an image here, or click to select</p>
-    <p *ngIf="imageFile">File selected: {{ imageFile.name }}</p>
-    </div>
-  
+    >
+    @if (!imageFile) {
+      <p>Drag and drop an image here, or click to select</p>
+    }
+    @if (imageFile) {
+      <p>File selected: {{ imageFile.name }}</p>
+    }
+  </div>
+
   <label for="shortDescription">Short Description</label>
   <textarea
     id="shortDescription"

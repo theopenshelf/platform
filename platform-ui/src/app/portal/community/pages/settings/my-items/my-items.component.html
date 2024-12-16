@@ -1,38 +1,42 @@
 <div>
-    <h1>My Items</h1>
+  <h1>My Items</h1>
 
-    <p class="description">
-        This is the list of items you manage. You can add, edit, or delete items from this list to make them available for borrowing.
-    </p>
+  <p class="description">
+    This is the list of items you manage. You can add, edit, or delete items from this list to make them available for borrowing.
+  </p>
 
-    <!-- Filter Section -->
-    <div class="filters">
-        <label>
-            Category:
-            <select [(ngModel)]="categoryFilter">
-                <option value="">All</option>
-                <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
-            </select>
-        </label>
-    </div>
+  <!-- Filter Section -->
+  <div class="filters">
+    <label>
+      Category:
+      <select [(ngModel)]="categoryFilter">
+        <option value="">All</option>
+        @for (category of categories; track category) {
+          <option [value]="category.name">{{ category.name }}</option>
+        }
+      </select>
+    </label>
+  </div>
 
-    <!-- Items Table -->
-    <table tuiTable [size]="size">
-        <thead>
-            <tr>
-                <th tuiTh (click)="sort('name')">Item Name {{ getSortIndicator('name') }}</th>
-                <th tuiTh (click)="sort('description')">Description {{ getSortIndicator('description') }}</th>
-                <th tuiTh (click)="sort('category')">Category {{ getSortIndicator('category') }}</th>
-            </tr>
-        </thead>
-        <tbody tuiTbody>
-            <tr *ngFor="let item of filteredAndSortedData">
-                <td tuiTd>{{ item.name }}</td>
-                <td tuiTd>{{ item.description }}</td>
-                <td tuiTd>
-                    <category-badge [category]="item.category"></category-badge>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <!-- Items Table -->
+  <table tuiTable [size]="size">
+    <thead>
+      <tr>
+        <th tuiTh (click)="sort('name')">Item Name {{ getSortIndicator('name') }}</th>
+        <th tuiTh (click)="sort('description')">Description {{ getSortIndicator('description') }}</th>
+        <th tuiTh (click)="sort('category')">Category {{ getSortIndicator('category') }}</th>
+      </tr>
+    </thead>
+    <tbody tuiTbody>
+      @for (item of filteredAndSortedData; track item) {
+        <tr>
+          <td tuiTd>{{ item.name }}</td>
+          <td tuiTd>{{ item.description }}</td>
+          <td tuiTd>
+            <category-badge [category]="item.category"></category-badge>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </div>

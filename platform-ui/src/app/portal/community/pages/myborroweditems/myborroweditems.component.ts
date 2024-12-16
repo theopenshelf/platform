@@ -1,4 +1,4 @@
-import { CommonModule, NgClass, NgForOf } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -14,7 +14,7 @@ import { ItemsService } from '../../services/items.service';
 @Component({
   standalone: true,
   selector: 'app-myborroweditems',
-  imports: [CommonModule, RouterLink, FormsModule, NgForOf, NgClass, TuiTable, CategoryBadgeComponent],
+  imports: [CommonModule, RouterLink, FormsModule, NgClass, TuiTable, CategoryBadgeComponent],
   templateUrl: './myborroweditems.component.html',
   styleUrls: ['./myborroweditems.component.scss'],
   providers: [

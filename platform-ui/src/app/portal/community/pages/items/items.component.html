@@ -15,19 +15,22 @@
     <!-- Category Filter -->
     <div class="filter-group">
       <span i18n="@@categoryFilter">Category</span>
-      <label *ngFor="let category of categories">
-        <input type="checkbox" [value]="category.name" (change)="onCategoryChange($event)">
-        {{ category.name }}
-      </label>
+      @for (category of categories; track category) {
+        <label>
+          <input type="checkbox" [value]="category.name" (change)="onCategoryChange($event)">
+          {{ category.name }}
+        </label>
+      }
     </div>
   </aside>
 
 
   <main class="grid-container">
-    <item-card 
-      *ngFor="let item of filteredItems" 
-      [item]="item" 
-      [markAsFavorite]="markAsFavorite">
-    </item-card>
+    @for (item of filteredItems; track item) {
+      <item-card
+        [item]="item"
+        [markAsFavorite]="markAsFavorite">
+      </item-card>
+    }
   </main>
 </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton } from '@taiga-ui/core';
@@ -10,12 +10,10 @@ import { LocationsService } from '../../../services/locations.service';
     standalone: true,
     selector: 'app-locations',
     imports: [
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        TuiButton,
-
-    ],
+    FormsModule,
+    ReactiveFormsModule,
+    TuiButton
+],
     providers: [
         ...communityProviders,
     ],

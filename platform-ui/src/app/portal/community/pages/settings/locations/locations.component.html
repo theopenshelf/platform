@@ -1,75 +1,79 @@
 <div>
-    <h1>Manage Locations</h1>
+  <h1>Manage Locations</h1>
 
-    <!-- Description Section -->
-    <p class="description">
-        A location represents where your items are stored. Assign locations to your items so that others can find them and follow the provided instructions to borrow them.
-    </p>
+  <!-- Description Section -->
+  <p class="description">
+    A location represents where your items are stored. Assign locations to your items so that others can find them and follow the provided instructions to borrow them.
+  </p>
 
-    <!-- Location Form -->
-    <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-        <div class="form-field">
-            <label for="name">Location Name:</label>
-            <input id="name" formControlName="name" type="text" />
-        </div>
+  <!-- Location Form -->
+  <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+    <div class="form-field">
+      <label for="name">Location Name:</label>
+      <input id="name" formControlName="name" type="text" />
+    </div>
 
-        <div class="form-field">
-            <label for="instructions">Instructions:</label>
-            <textarea id="instructions" formControlName="instructions"></textarea>
-        </div>
+    <div class="form-field">
+      <label for="instructions">Instructions:</label>
+      <textarea id="instructions" formControlName="instructions"></textarea>
+    </div>
 
-        <div class="form-field">
-            <label for="address">Address:</label>
-            <input id="address" formControlName="address" type="text" />
-        </div>
+    <div class="form-field">
+      <label for="address">Address:</label>
+      <input id="address" formControlName="address" type="text" />
+    </div>
 
-        <button type="submit" appearance="primary" size="m" tuiButton  [disabled]="locationForm.invalid">
-            {{ editMode ? 'Update Location' : 'Add Location' }}
-        </button>
-        <button type="button" appearance="secondary" size="m" tuiButton *ngIf="editMode" (click)="cancelEdit()">Cancel</button>
-    </form>
+    <button type="submit" appearance="primary" size="m" tuiButton  [disabled]="locationForm.invalid">
+      {{ editMode ? 'Update Location' : 'Add Location' }}
+    </button>
+    @if (editMode) {
+      <button type="button" appearance="secondary" size="m" tuiButton (click)="cancelEdit()">Cancel</button>
+    }
+  </form>
 
-    <!-- Locations List -->
-    <h2>Your Locations</h2>
-    <table tuiTable>
-        <thead>
-            <tr>
-                <th tuiTh>Name</th>
-                <th tuiTh>Instructions</th>
-                <th tuiTh>Address</th>
-                <th tuiTh>Actions</th>
-            </tr>
-        </thead>
-        <tbody tuiTbody>
-            <tr *ngFor="let location of locations; let i = index">
-                <td tuiTd>{{ location.name }}</td>
-                <td tuiTd>{{ location.instructions }}</td>
-                <td tuiTd>{{ location.address }}</td>
-                <td tuiTd>
-                    <button
-                        (click)="editLocation(i)"
-                        appearance="outline"
-                        iconStart="@tui.pen"
-                        size="s"
-                        tuiIconButton
-                        type="button"
-                        [style.border-radius.%]="100"
-                    >
-                        Edit
-                    </button>
-                    <button
-                        (click)="deleteLocation(i)"
-                        appearance="outline"
-                        iconStart="@tui.trash-2"
-                        size="s"
-                        tuiIconButton
-                        type="button"
-                        [style.border-radius.%]="100"
-                    >
-                        Delete
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+  <!-- Locations List -->
+  <h2>Your Locations</h2>
+  <table tuiTable>
+    <thead>
+      <tr>
+        <th tuiTh>Name</th>
+        <th tuiTh>Instructions</th>
+        <th tuiTh>Address</th>
+        <th tuiTh>Actions</th>
+      </tr>
+    </thead>
+    <tbody tuiTbody>
+      @for (location of locations; track location; let i = $index) {
+        <tr>
+          <td tuiTd>{{ location.name }}</td>
+          <td tuiTd>{{ location.instructions }}</td>
+          <td tuiTd>{{ location.address }}</td>
+          <td tuiTd>
+            <button
+              (click)="editLocation(i)"
+              appearance="outline"
+              iconStart="@tui.pen"
+              size="s"
+              tuiIconButton
+              type="button"
+              [style.border-radius.%]="100"
+              >
+              Edit
+            </button>
+            <button
+              (click)="deleteLocation(i)"
+              appearance="outline"
+              iconStart="@tui.trash-2"
+              size="s"
+              tuiIconButton
+              type="button"
+              [style.border-radius.%]="100"
+              >
+              Delete
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
 </div>

@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -20,13 +20,12 @@ import { ItemsService } from '../../services/items.service';
     TuiHint,
     RouterLink,
     TuiIcon,
-    CommonModule,
     TuiAppearance,
     TuiButton,
     TuiTitle,
     FormsModule,
     TuiTextfield
-  ],
+],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss'],
   providers: [

@@ -1,20 +1,24 @@
-<h2 *ngIf="categoryId">Edit Category</h2>
-<h2 *ngIf="!categoryId">Add Category</h2>
+@if (categoryId) {
+  <h2>Edit Category</h2>
+}
+@if (!categoryId) {
+  <h2>Add Category</h2>
+}
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-    <label for="name">Category Name</label>
-    <input id="name" formControlName="name" type="text" placeholder="Enter category name" />
+  <label for="name">Category Name</label>
+  <input id="name" formControlName="name" type="text" placeholder="Enter category name" />
 
-    <tui-input-color class="b-form" [colors]="palette" formControlName="color">
-        Category color
-    </tui-input-color>
+  <tui-input-color class="b-form" [colors]="palette" formControlName="color">
+    Category color
+  </tui-input-color>
 
-    <label for="template">Template</label>
-    <quill-editor
+  <label for="template">Template</label>
+  <quill-editor
     formControlName="template"
     [modules]="editorConfig"
     style="height: 200px;"
   ></quill-editor>
 
 
-    <button type="submit" [disabled]="categoryForm.invalid">Save</button>
+  <button type="submit" [disabled]="categoryForm.invalid">Save</button>
 </form>

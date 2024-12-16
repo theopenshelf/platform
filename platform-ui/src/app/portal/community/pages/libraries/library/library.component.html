@@ -1,40 +1,48 @@
-<div *ngIf="!library">Not found</div>
-<div *ngIf="library" class="container">
+@if (!library) {
+  <div>Not found</div>
+}
+@if (library) {
+  <div class="container">
     <aside class="sidebar">
-
-        <h1>
-            <tui-icon icon="@tui.library" [style.color]="'var(--tui-background-accent-1)'" />
-            {{ library.name }}
-        </h1>
-        <p>{{ library.location.name }}</p>
-        <h3>Accessibility</h3>
-        <div class="toggle-container">
-            <label>Community </label>
-            <input tuiSwitch type="checkbox" [(ngModel)]="library.isCommunityAccessible" [showIcons]="true"
-                name="registrationToggle">
+      <h1>
+        <tui-icon icon="@tui.library" [style.color]="'var(--tui-background-accent-1)'" />
+        {{ library.name }}
+      </h1>
+      <p>{{ library.location.name }}</p>
+      <h3>Accessibility</h3>
+      <div class="toggle-container">
+        <label>Community </label>
+        <input tuiSwitch type="checkbox" [(ngModel)]="library.isCommunityAccessible" [showIcons]="true"
+          name="registrationToggle">
+      </div>
+      @if (!library.isCommunityAccessible) {
+        <div class="members">
+          <h4>Members</h4>
+          <tui-accordion class="container">
+            @for (member of library.members; track member) {
+              <tui-accordion-item>
+                <tui-avatar [src]="member.username | tuiInitials"
+                  [style.background]="member.username | tuiAutoColor" size="s">
+                </tui-avatar>
+                {{ member.username }}
+                <ng-template tuiAccordionItemContent>
+                  <div class="toggle-container">
+                    <label>Admin </label>
+                    <input tuiSwitch type="checkbox" [ngModel]="member.isAdmin" [showIcons]="true"
+                      name="registrationToggle">
+                  </div>
+                </ng-template>
+              </tui-accordion-item>
+            }
+          </tui-accordion>
         </div>
-        <div *ngIf="!library.isCommunityAccessible" class="members">
-            <h4>Members</h4>
-            <tui-accordion class="container">
-                <tui-accordion-item *ngFor="let member of library.members">
-                    <tui-avatar [src]="member.username | tuiInitials"
-                        [style.background]="member.username | tuiAutoColor" size="s">
-                    </tui-avatar>
-                    {{ member.username }}
-                    <ng-template tuiAccordionItemContent>
-                        <div class="toggle-container">
-                            <label>Admin </label>
-                            <input tuiSwitch type="checkbox" [ngModel]="member.isAdmin" [showIcons]="true"
-                                name="registrationToggle">
-                        </div>
-                    </ng-template>
-                </tui-accordion-item>
-
-            </tui-accordion>
-        </div>
+      }
     </aside>
     <main class="items grid-container">
-        <item-card *ngFor="let item of items" [item]="item" [markAsFavorite]="markAsFavorite">
+      @for (item of items; track item) {
+        <item-card [item]="item" [markAsFavorite]="markAsFavorite">
         </item-card>
+      }
     </main>
-</div>
+  </div>
+}

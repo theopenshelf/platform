@@ -6,12 +6,12 @@ import { WelcomeComponent } from '../../../../../components/welcome/welcome.comp
 import { globalProviders, AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import { ConfigService } from '../../../../../services/config.service';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   standalone: true, 
     selector: 'app-forgot-password',
-    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule, CommonModule],
+    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
     templateUrl: './forgot-password.component.html',
     styleUrl: './forgot-password.component.scss',
     providers: [

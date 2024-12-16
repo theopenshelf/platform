@@ -1,4 +1,4 @@
-import { CommonModule, NgForOf } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -25,23 +25,21 @@ import { ItemsService, UIItem } from '../../services/items.service';
 @Component({
     standalone: true,
     imports: [
-        CategoryBadgeComponent,
-        RouterModule,
-        CommonModule,
-        FormsModule,
-        NgForOf,
-        TuiAvatar,
-        TuiBadge,
-        TuiCell,
-        TuiDropdown,
-        TuiItemsWithMore,
-        TuiLink,
-        TuiStatus,
-        TuiTable,
-        TuiTitle,
-        TuiButton,
-        TuiIcon,
-    ],
+    CategoryBadgeComponent,
+    RouterModule,
+    FormsModule,
+    TuiAvatar,
+    TuiBadge,
+    TuiCell,
+    TuiDropdown,
+    TuiItemsWithMore,
+    TuiLink,
+    TuiStatus,
+    TuiTable,
+    TuiTitle,
+    TuiButton,
+    TuiIcon
+],
     selector: 'app-items',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.scss'],

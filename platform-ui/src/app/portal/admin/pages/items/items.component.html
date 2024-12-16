@@ -1,5 +1,5 @@
 <div class="top-actions">
-    <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="m"
+  <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="m"
     tuiButton type="button">
     <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
 
@@ -8,51 +8,53 @@
 </div>
 
 <table tuiTable>
-    <thead>
-        <tr>
-            <th tuiTh>Item Name</th>
-            <th tuiTh>Picture</th>
-            <th tuiTh>Categories</th>
-            <th tuiTh>Borrows</th>
-            <th tuiTh>Late Return %</th>
-            <th tuiTh>Average Duration (days)</th>
-            <th tuiTh>State</th>
-            <th tuiTh>Actions</th>
-        </tr>
-    </thead>
-    <tbody tuiTbody>
-        <tr *ngFor="let item of items">
-            <td tuiTd>
-                <span tuiTitle>{{ item.name }}</span>
-            </td>
-            <td tuiTd>
-                <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
-            </td>
-            <td tuiTd>
-                <category-badge [category]="item.category"></category-badge>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ item.borrowCount }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
-            </td>
-            <td tuiTd>
-                <span tuiTitle>{{ item.averageDuration }}</span>
-            </td>
-            <td tuiTd>
-                <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
-            </td>
-            <td tuiTd>
-                <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-                    size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-                    Edit
-                </button>
-                <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
-                    [style.border-radius.%]="100">
-                    Archive
-                </button>
-            </td>
-        </tr>
-    </tbody>
+  <thead>
+    <tr>
+      <th tuiTh>Item Name</th>
+      <th tuiTh>Picture</th>
+      <th tuiTh>Categories</th>
+      <th tuiTh>Borrows</th>
+      <th tuiTh>Late Return %</th>
+      <th tuiTh>Average Duration (days)</th>
+      <th tuiTh>State</th>
+      <th tuiTh>Actions</th>
+    </tr>
+  </thead>
+  <tbody tuiTbody>
+    @for (item of items; track item) {
+      <tr>
+        <td tuiTd>
+          <span tuiTitle>{{ item.name }}</span>
+        </td>
+        <td tuiTd>
+          <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+        </td>
+        <td tuiTd>
+          <category-badge [category]="item.category"></category-badge>
+        </td>
+        <td tuiTd>
+          <span tuiTitle>{{ item.borrowCount }}</span>
+        </td>
+        <td tuiTd>
+          <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
+        </td>
+        <td tuiTd>
+          <span tuiTitle>{{ item.averageDuration }}</span>
+        </td>
+        <td tuiTd>
+          <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
+        </td>
+        <td tuiTd>
+          <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+            size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+            Edit
+          </button>
+          <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
+            [style.border-radius.%]="100">
+            Archive
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
 </table>

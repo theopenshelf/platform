@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,13 +11,12 @@ import { CategoriesService, UICategory } from '../../services/categories.service
     standalone: true,
     selector: 'app-edit-category',
     imports: [
-        QuillModule,
-        TuiInputColorModule,
-        TuiTextfield,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule
-    ],
+    QuillModule,
+    TuiInputColorModule,
+    TuiTextfield,
+    FormsModule,
+    ReactiveFormsModule
+],
     templateUrl: './edit-category.component.html',
     styleUrls: ['./edit-category.component.scss'],
     providers: [

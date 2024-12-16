@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -38,28 +38,26 @@ export type User1 = {
 @Component({
     standalone: true,
     imports: [
-        TuiAutoFocus,
-        TuiButton,
-        TuiDialog,
-        TuiHint,
-        TuiInputModule,
-        ReactiveFormsModule,
-
-        TuiCheckbox,
-        TuiDialog,
-        TuiButton,
-        TuiAutoColorPipe,
-        TuiInitialsPipe,
-        TuiAvatar,
-        RouterModule,
-        FormsModule,
-        NgForOf,
-        TuiDropdown,
-        TuiTable,
-        TuiTitle,
-        TuiIcon,
-        TuiLink
-    ],
+    TuiAutoFocus,
+    TuiButton,
+    TuiDialog,
+    TuiHint,
+    TuiInputModule,
+    ReactiveFormsModule,
+    TuiCheckbox,
+    TuiDialog,
+    TuiButton,
+    TuiAutoColorPipe,
+    TuiInitialsPipe,
+    TuiAvatar,
+    RouterModule,
+    FormsModule,
+    TuiDropdown,
+    TuiTable,
+    TuiTitle,
+    TuiIcon,
+    TuiLink
+],
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],

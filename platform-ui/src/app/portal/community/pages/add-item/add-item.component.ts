@@ -1,8 +1,7 @@
-import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { QuillModule } from 'ngx-quill'; // Import ngx-quill if required
+import { QuillModule } from 'ngx-quill';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
@@ -13,7 +12,7 @@ import { ItemsService } from '../../services/items.service';
 @Component({
   selector: 'app-add-item',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, QuillModule], // Import required modules
+  imports: [ReactiveFormsModule, QuillModule],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.scss',
   providers: [
