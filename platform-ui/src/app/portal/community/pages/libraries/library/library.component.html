@@ -7,19 +7,19 @@
             {{ library.name }}
         </h1>
         <p>{{ library.location.name }}</p>
-        <h3>Visibility</h3>
+        <h3>Accessibility</h3>
         <div class="toggle-container">
-            <label>Community accessible </label>
-            <input tuiSwitch type="checkbox" [ngModel]="library.isCommunityAccessible" [showIcons]="true"
+            <label>Community </label>
+            <input tuiSwitch type="checkbox" [(ngModel)]="library.isCommunityAccessible" [showIcons]="true"
                 name="registrationToggle">
         </div>
-        <h3>Members</h3>
-        <div class="members">
+        <div *ngIf="!library.isCommunityAccessible" class="members">
+            <h4>Members</h4>
             <tui-accordion class="container">
                 <tui-accordion-item *ngFor="let member of library.members">
                     <tui-avatar [src]="member.username | tuiInitials"
-            [style.background]="member.username | tuiAutoColor" size="s">
-        </tui-avatar>
+                        [style.background]="member.username | tuiAutoColor" size="s">
+                    </tui-avatar>
                     {{ member.username }}
                     <ng-template tuiAccordionItemContent>
                         <div class="toggle-container">
