@@ -1,0 +1,68 @@
+@use 'theme' as *;
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border-width: 1px;
+    border-style: solid;
+    border-image: initial;
+    border-radius: 6px;
+    table-layout: fixed;
+    overflow: unset;
+    background-color: $light-color;
+}
+
+table thead tr:first-child td:last-child {
+    border-radius: 0 6px 0 0;
+}
+
+table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 6px;
+}
+
+table tbody tr:last-child .action-icons {
+    border-radius: 0 0 6px 0;
+}
+
+tbody tr {
+    background-color: $white
+        /* Subtle hover effect using theme */
+        /* Lighter background on hover */
+}
+
+th,
+td {
+    padding: 10px;
+    border: none;
+    /* No Vertical Lines */
+    padding: 0.75rem;
+    text-align: left;
+}
+
+
+tbody td {
+    border-top: 1px solid $border-color;
+    /* Use theme border color */
+    /* Row Divider */
+    vertical-align: middle;
+}
+
+/* Optional: Subtle horizontal divider for rows */
+tbody tr+tr {
+    border-top: 1px solid $dark-color;
+    /* Lighter divider using theme color */
+    /* Add a light divider between rows */
+    background-color: none
+        /* Subtle hover effect using theme */
+
+}
+
+tbody tr {
+    background-color: $white
+}
+
+/* Hover effect for table rows (optional) */
+tbody tr:hover {
+    background-color: $light-color
+}

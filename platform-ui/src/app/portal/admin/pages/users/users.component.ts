@@ -24,6 +24,7 @@ import { TuiInputModule } from '@taiga-ui/legacy';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { switchMap } from 'rxjs';
 import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
+import { TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
 
 
@@ -60,7 +61,8 @@ export type User1 = {
         TuiTitle,
         TuiIcon,
         TuiLink,
-        TuiTablePagination
+        TuiTablePagination,
+        TosTableComponent
     ],
     selector: 'app-users',
     templateUrl: './users.component.html',

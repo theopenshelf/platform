@@ -1,13 +1,17 @@
-<h2>Categories</h2>
 <div class="top-actions">
-  <button tuiButton routerLink="/admin/categories/add">Add Category</button>
+        
+    <button routerLink="/admin/categories/add" i18n="@@borrowButton" appearance="primary" size="s"
+    tuiButton type="button">
+    <tui-icon icon="@tui.plus" [style.height.rem]="1" />
+
+    Add Category</button>
 </div>
-<table>
+<table tosTable>
   <thead>
     <tr>
       <th>Name</th>
       <th>Template</th>
-      <th></th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +21,7 @@
           <category-badge [category]="category"></category-badge>
         </td>
         <td>{{ category.template }}</td>
-        <td tuiTd class="action-icons">
+        <td class="action-icons">
           <button [routerLink]="['/admin/categories', category.id, 'edit']" appearance="outline" iconStart="@tui.pen"
             size="s" tuiIconButton type="button" [style.border-radius.%]="100">
             Edit

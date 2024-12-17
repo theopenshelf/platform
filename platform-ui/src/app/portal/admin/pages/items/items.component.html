@@ -1,5 +1,5 @@
 <div class="top-actions">
-  <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="m"
+  <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="s"
     tuiButton type="button">
     <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
 
@@ -7,44 +7,44 @@
 </button>
 </div>
 
-<table tuiTable>
+<table tosTable>
   <thead>
     <tr>
-      <th tuiTh>Item Name</th>
-      <th tuiTh>Picture</th>
-      <th tuiTh>Categories</th>
-      <th tuiTh>Borrows</th>
-      <th tuiTh>Late Return %</th>
-      <th tuiTh>Average Duration (days)</th>
-      <th tuiTh>State</th>
-      <th tuiTh>Actions</th>
+      <th>Picture</th>
+      <th>Item Name</th>
+      <th>Categories</th>
+      <th>Borrows</th>
+      <th>Late Return %</th>
+      <th>Average Duration (days)</th>
+      <th>State</th>
+      <th>Actions</th>
     </tr>
   </thead>
-  <tbody tuiTbody>
+  <tbody>
     @for (item of items; track item) {
       <tr>
-        <td tuiTd>
-          <span tuiTitle>{{ item.name }}</span>
-        </td>
-        <td tuiTd>
+        <td>
           <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
         </td>
-        <td tuiTd>
+        <td>
+          <span tuiTitle>{{ item.name }}</span>
+        </td>
+        <td>
           <category-badge [category]="item.category"></category-badge>
         </td>
-        <td tuiTd>
+        <td>
           <span tuiTitle>{{ item.borrowCount }}</span>
         </td>
-        <td tuiTd>
+        <td>
           <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
         </td>
-        <td tuiTd>
+        <td>
           <span tuiTitle>{{ item.averageDuration }}</span>
         </td>
-        <td tuiTd>
+        <td>
           <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
         </td>
-        <td tuiTd>
+        <td>
           <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
             size="s" tuiIconButton type="button" [style.border-radius.%]="100">
             Edit
@@ -58,3 +58,7 @@
     }
   </tbody>
 </table>
+
+<div class="footer-actions">
+  <tui-table-pagination [page]="page" [size]="size" [total]="totalItems" (paginationChange)="onPagination($event)" />
+</div>
