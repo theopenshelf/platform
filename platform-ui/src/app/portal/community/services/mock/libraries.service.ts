@@ -26,11 +26,10 @@ export class MockLibrariesService implements LibrariesService {
                 isAdmin: false
             }
         ],
+        instructions: 'Instructions 1',
         location: {
-            id: '1',
             name: 'Location 1',
             address: '123 Main St, Anytown, USA',
-            instructions: 'Instructions 1',
         }
     }];
 
@@ -45,17 +44,26 @@ export class MockLibrariesService implements LibrariesService {
         return of(library);
     }
 
-    addLibrary(location: UILibrary): Observable<UILibrary> {
-        return of(location);
+    addLibrary(library: UILibrary): Observable<UILibrary> {
+        library.id = (this.libraries.length + 1).toString();
+        this.libraries.push(library);
+        return of(library);
     }
 
     // Update an existing library
-    updateLibrary(id: string, location: UILibrary): Observable<UILibrary> {
-        return of(location);
+    updateLibrary(id: string, updatedLibrary: UILibrary): Observable<UILibrary> {
+        const index = this.libraries.findIndex(library => library.id === id);
+        if (index === -1) {
+            throw new Error(`Library with id ${id} not found`);
+        }
+        updatedLibrary.id = id;
+        this.libraries[index] = updatedLibrary;
+        return of(updatedLibrary);
     }
 
     // Delete a library
     deleteLibrary(id: string): Observable<void> {
+        this.libraries = this.libraries.filter(library => library.id !== id);
         return of(undefined);
     }
 

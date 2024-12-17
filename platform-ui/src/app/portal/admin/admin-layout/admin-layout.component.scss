@@ -3,17 +3,89 @@
 /* General styling for main navigation */
 main {
     border: none;
-    padding: 0 10px;
-    padding-top: 20px;
-    width: 100%;
+    padding: 20px;
 }
 
 #logo {
     width: 40px;
 }
 
+header {
+    position: fixed;
+    height: 100px;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+}
+
 /* Dropdown button */
 button.dropdown {
     min-width: 200px;
     justify-content: flex-start;
+}
+
+
+/* Horizontal Menu */
+.horizontal-menu {
+    position: sticky;
+    top: 47px;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    background-color: #000000;
+    /* Use lighter gray for background */
+    padding: 0.5em 1em;
+    border-bottom: 1px solid #ccc;
+    /* Use theme border color */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    margin-bottom: 10px;
+}
+
+.horizontal-menu a {
+    position: relative;
+    /* Allow absolute positioning of the underline */
+    display: inline-block;
+    text-decoration: none;
+    color: $white;
+    /* Use dark text color from theme */
+    font-weight: bold;
+    padding: 0.5em 1em;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.horizontal-menu a tui-icon {
+    margin: 5px;
+}
+
+.horizontal-menu a:hover {
+    background-color: $dark-color;
+    /* Use lighter shade of primary color */
+    color: $white;
+    /* White text on hover */
+}
+
+.horizontal-menu a.active:hover {
+    background-color: inherit;
+    color: $white;
+    /* Use dark text color from theme */
+}
+
+.horizontal-menu a.active::after {
+    content: '';
+    /* Empty content for the pseudo-element */
+    position: absolute;
+    bottom: -8px;
+    /* Shift the line down by 5px */
+    left: 0;
+    width: 100%;
+    /* Full width of the link */
+    height: 4px;
+    /* Underline thickness */
+    background-color: $accent-color;
+    /* Underline color (match active link color) */
+    border-radius: 0;
+    /* No border radius for the line */
 }

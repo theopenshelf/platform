@@ -1,4 +1,7 @@
+@use 'theme' as *;
+
 .library-card {
+    position: relative;
     margin: 10px;
     float: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -26,3 +29,22 @@
 .add-library-card tui-icon {
     margin: auto;
 }   
+
+.library-icon {
+    float: left !important;
+}
+
+.item-actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 4%;
+    height: 14%;
+    border-top: 1px solid rgb(226, 232, 240);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.item-actions tui-icon {
+    color: $accent-color;
+}

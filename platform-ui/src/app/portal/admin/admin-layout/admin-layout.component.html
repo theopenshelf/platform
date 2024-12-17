@@ -27,31 +27,35 @@
                 </tui-data-list>
             </ng-template>
         </button>
-
     </header>
-    <div [style.display]="'flex'">
-        <aside [style.height.rem]="27" [tuiNavigationAside]="expanded">
-            <a iconStart="@tui.users" tuiAsideItem routerLink="/admin/users/">
-                Users
-            </a>
-            <a iconStart="@tui.package" tuiAsideItem routerLink="/admin/items/">
-                Items
-            </a>
-            <a iconStart="@tui.chart-column-stacked" tuiAsideItem routerLink="/admin/categories/">
-                Categories
-            </a>
-            <a iconStart="@tui.shield" tuiAsideItem routerLink="/admin/security/">
-                Security
-            </a>
-            <footer>
-                <button tuiAsideItem type="button" [iconStart]="expanded ? '@tui.chevron-left' : '@tui.chevron-right'"
-                    (click)="expanded = !expanded">
-                    {{ expanded ? 'Collapse' : 'Expand' }}
-                </button>
-            </footer>
-        </aside>
-        <main >
-            <router-outlet></router-outlet>
-        </main>
-    </div>
+
+    <nav id="menu" class="horizontal-menu">
+        <a routerLink="/admin/users/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
+            type="button" i18n="@@borrowItemButton">
+            <tui-icon icon="@tui.users" />
+            Users
+        </a>
+
+        <a routerLink="/admin/items/" routerLinkActive="active" appearance="secondary-grayscale"
+            iconStart="@tui.package" type="button" i18n="@@borrowItemButton">
+            <tui-icon icon="@tui.package" />
+            Items
+        </a>
+
+        <a routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
+            iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
+            <tui-icon icon="@tui.chart-column-stacked" />
+            Categories
+        </a>
+
+        <a routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale"
+            iconStart="@tui.shield" type="button" i18n="@@borrowItemButton">
+            <tui-icon icon="@tui.shield" />
+            Security
+        </a>
+
+    </nav>
+    <main >
+        <router-outlet></router-outlet>
+    </main>
 </tui-root>

@@ -6,6 +6,7 @@ export interface UILibrary {
     isCommunityAccessible: boolean;
     members: UIMember[];
     location: UILocation;
+    instructions: string;
 }
 
 export interface UIMember {

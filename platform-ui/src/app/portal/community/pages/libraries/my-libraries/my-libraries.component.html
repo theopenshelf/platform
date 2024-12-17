@@ -1,6 +1,12 @@
 @for (library of libraries; track library) {
+  
   <div class="library-card" routerLink="/community/libraries/{{library.id}}"
     tuiAppearance="floating" tuiCardMedium>
+
+    <div class="item-actions">
+      <tui-icon class="library-icon" icon="@tui.library" />
+    </div>
+
     <h2 tuiTitle>
       {{ library.name }}
       <span tuiSubtitle>{{ library.location.address }}</span>
@@ -16,6 +22,6 @@
 }
 
 
-<div class="library-card add-library-card" (click)="addLibrary()" tuiAppearance="floating" tuiCardMedium>
+<div class="library-card add-library-card" routerLink="/community/libraries/add-library" tuiAppearance="floating" tuiCardMedium>
   <tui-icon icon="@tui.plus" [style.color]="'var(--tui-background-accent-1)'" />
 </div>

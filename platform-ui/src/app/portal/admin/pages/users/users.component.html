@@ -1,81 +1,105 @@
 <div class="table-container">
   <!-- Column Selector Dropdown -->
+  <div class="table-top-actions">
+    <div class="add-users">
+      <button class="add-user" routerLink="/admin/users/add" i18n="@@borrowButton" appearance="primary" size="s"
+        tuiButton type="button">
+        <tui-icon icon="@tui.user" [style.height.rem]="1" />
+        Add user
+      </button>
+    </div>
 
-  <div class="top-actions">
-    <button class="add-user" routerLink="/admin/users/add" i18n="@@borrowButton" appearance="primary" size="m"
-      tuiButton type="button">
-            <tui-icon icon="@tui.user" [style.height.rem]="1" />
+    <div class="filter-actions">
+      <input type="text" placeholder="Filter users" [(ngModel)]="filterUser" (ngModelChange)="applyFilter()" />
+    </div>
 
-            Add user
-        </button>
+    <div class="column-selector">
+      <button
+        size="s"
+        tuiButton
+        type="button"
+        class="tui-space_right-3"
+        appearance="outline"
+        (click)="selectColumnsDialog(columnTemplate, 's')"
+        >
+        <tui-icon icon="@tui.align-justify" [style.height.rem]="1" />
+
+       Columns visibility
+      </button>
+
+      <ng-template #columnTemplate>
+        <div class="tui-container_fullwidth">
+          <div class="tui-row tui-form__row_multi-fields tui-row_adaptive">
+            <label class="tui-col_md-12">
+              @for (column of availableColumns; track column) {
+                <div>
+                  <div class="filter-checkbox">
+                    <input tuiCheckbox size="s" type="checkbox" [(ngModel)]="column.visible" (change)="updateVisibleColumns()" />
+                    {{ column.label }}
+                  </div>
+                </div>
+              }
+            </label>
+          </div>
+        </div>
+      </ng-template>
+    </div>
   </div>
 
-  <div class="column-selector">
-    <label>Select Columns:</label>
-    @for (column of availableColumns; track column) {
-      <div class="filter-checkbox">
-        <input tuiCheckbox size="s" type="checkbox" [(ngModel)]="column.visible"
-          (change)="updateVisibleColumns()" />
-        {{ column.label }}
-      </div>
-    }
-  </div>
   <!-- Table -->
-  <table tuiTable [size]="size" class="compact-table">
+  <table class="compact-table">
     <thead>
       <tr>
-        <th tuiTh (click)="sort('username')">
+        <th (click)="sort('username')">
           Username
           <span [class.sorted]="currentSort === 'username'">
-            {{ getSortIcon('username') }} <!-- Add sort indicator -->
+            {{ getSortIcon('username') }}
           </span>
-
         </th>
         @for (column of visibleColumns; track column) {
-          <th tuiTh (click)="sort(column.key)">
+          <th (click)="sort(column.key)">
             {{ column.label }}
             <span [class.sorted]="currentSort === column.key">
-              {{ getSortIcon(column.key) }} <!-- Add sort indicator -->
+              {{ getSortIcon(column.key) }}
             </span>
           </th>
         }
-        <th tuiTh>Actions</th>
+        <th>Actions</th>
       </tr>
     </thead>
-    <tbody tuiTbody>
+    <tbody>
       @for (user of sortedUsers; track user) {
         <tr>
-          <td tuiTd>
+          <td>
             <div class="user-info">
-              <tui-avatar [src]="user.username | tuiInitials"
-              [style.background]="user.username | tuiAutoColor" size="s"></tui-avatar>
+              <tui-avatar [src]="user.username | tuiInitials" [style.background]="user.username | tuiAutoColor" size="s"></tui-avatar>
               <span class="username ellipsis">{{ user.username }}</span>
             </div>
           </td>
           @for (column of visibleColumns; track column) {
-            <td tuiTd>
+            <td>
               <span tuiTitle>{{ getUserProperty(user, column.key) }}</span>
             </td>
           }
-          <td tuiTd class="action-icons">
-            <button [routerLink]="['/admin/users', user.id, 'messages']" appearance="outline"
-              iconStart="@tui.mail" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+          <td class="action-icons">
+            <button [routerLink]="['/admin/users', user.id, 'messages']" appearance="outline" iconStart="@tui.mail"
+              size="s" tuiIconButton type="button" [style.border-radius.%]="100">
               messages
             </button>
-            <button (click)="setPassword(user)" appearance="outline"
-              iconStart="@tui.key" size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+            <button (click)="setPassword(user)" appearance="outline" iconStart="@tui.key" size="s" tuiIconButton
+              type="button" [style.border-radius.%]="100">
               password
             </button>
-            <button [routerLink]="['/admin/users', user.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-              size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+            <button [routerLink]="['/admin/users', user.id, 'edit']" appearance="outline" iconStart="@tui.pen" size="s"
+              tuiIconButton type="button" [style.border-radius.%]="100">
               Edit
             </button>
-            <button (click)="deleteUser(user)" appearance="outline" iconStart="@tui.trash-2" size="s"
-              tuiIconButton type="button" [style.border-radius.%]="100">
+            <button (click)="deleteUser(user)" appearance="outline" iconStart="@tui.trash-2" size="s" tuiIconButton
+              type="button" [style.border-radius.%]="100">
               Delete
             </button>
-            <button (click)="disableUser(user)" appearance="outline" iconStart="@tui.shield-ban" size="s"
-              tuiIconButton type="button" [style.border-radius.%]="100">
+            <button (click)="disableUser(user)" appearance="outline" iconStart="@tui.shield-ban" size="s" tuiIconButton
+              type="button" [style.border-radius.%]="100">
               Disable
             </button>
           </td>
@@ -85,29 +109,17 @@
   </table>
 
   <div class="footer-actions">
-
+    <tui-table-pagination [page]="page" [size]="size" [total]="totalUsers" (paginationChange)="onPagination($event)" />
   </div>
 </div>
 
-<ng-template
-  let-observer
-  [tuiDialogOptions]="{label: 'Set user ' + currentUser?.username + ' password', size: 's'}"
-  [(tuiDialog)]="openPasswordDialog"
-  >
-  <form
-    [formGroup]="passwordForm"
-    (ngSubmit)="setUserPassword()"
-    >
-    <tui-input
-      formControlName="userPasswordControl"
-      tuiAutoFocus
-      >
+<ng-template let-observer [tuiDialogOptions]="{label: 'Set user ' + currentUser?.username + ' password', size: 's'}"
+  [(tuiDialog)]="openPasswordDialog">
+  <form [formGroup]="passwordForm" (ngSubmit)="setUserPassword()">
+    <tui-input formControlName="userPasswordControl" tuiAutoFocus>
     </tui-input>
     <p>
-      <button
-        tuiButton
-        type="submit"
-        >
+      <button tuiButton type="submit">
         Ok
       </button>
     </p>

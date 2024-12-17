@@ -1,4 +1,4 @@
-import { CommonModule, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -33,11 +33,11 @@ const plusTen = today.append({ day: 10 });
     CategoryBadgeComponent,
     TuiHint,
     TuiCalendarRange,
-    CommonModule,
     TuiButton,
     TuiIcon,
     ReactiveFormsModule,
-    TuiInputDateRangeModule],
+    TuiInputDateRangeModule
+],
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],

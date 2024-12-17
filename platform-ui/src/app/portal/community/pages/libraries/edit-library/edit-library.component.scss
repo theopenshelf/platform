@@ -1,0 +1,134 @@
+@use 'theme' as *;
+
+.library-form {
+
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Label */
+label {
+    font-weight: bold;
+    color: $dark-color; /* Dark text for labels */
+}
+
+/* Input, Textarea, Select */
+textarea,
+select,
+input[type="text"]  {
+    padding: 10px;
+    border: 1px solid $border-color; /* Subtle border color */
+    border-radius: 4px;
+    font-size: 1rem;
+    background-color: $white; /* Clean white background for form elements */
+    color: $dark-color; /* Dark text inside input fields */
+    width: 100%;
+}
+
+/* Button */
+button {
+    padding: 10px 20px;
+    background-color: $accent-color; /* Use primary color for the button */
+    color: $white; /* White text */
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:disabled {
+    background-color: $secondary-color; /* Disabled button background */
+    cursor: not-allowed;
+}
+
+
+    .switch-group {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+
+        label {
+            font-weight: bold;
+            color: $dark-color;
+        }
+    }
+
+    .members-section {
+        margin-top: 24px;
+        border-top: 1px solid $border-color;
+        padding-top: 20px;
+
+        h3 {
+            color: $dark-color;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+        }
+
+        .members-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .member-item {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                padding: 10px;
+                background-color: $light-color;
+                border-radius: 4px;
+                border: 1px solid $border-color;
+
+                span {
+                    flex: 1;
+                    color: $dark-color;
+                }
+
+                button {
+                    color: $danger-color;
+                    &:hover {
+                        background-color: rgba($danger-color, 0.1);
+                    }
+                }
+            }
+        }
+    }
+
+    .form-actions {
+        margin-top: 24px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+
+        button {
+            padding: 10px 20px;
+            background-color: $accent-color;
+            color: $white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:disabled {
+                background-color: $secondary-color;
+                cursor: not-allowed;
+            }
+
+            &:hover:not(:disabled) {
+                background-color: darken($accent-color, 10%);
+            }
+        }
+    }
+    quill-editor {
+        background-color: $white; /* Ensure the editor has a white background */
+        margin-bottom: 100px;
+        width: 100%;
+    }
+    
+}

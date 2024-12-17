@@ -1,24 +1,27 @@
-
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiTable } from '@taiga-ui/addon-table';
+import { TuiTable, TuiTablePagination, TuiTablePaginationEvent } from '@taiga-ui/addon-table';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
 import {
     TuiAlertService,
     TuiAutoColorPipe,
     TuiButton,
     TuiDialog,
+    TuiDialogContext,
     TuiDropdown,
     TuiHint,
     TuiIcon,
     TuiInitialsPipe,
     TuiLink,
-    TuiTitle,
+    TuiSizeL,
+    TuiSizeS,
+    TuiTitle
 } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
+import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { switchMap } from 'rxjs';
 import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { UIUser, UsersService } from '../../services/users.service';
@@ -38,26 +41,27 @@ export type User1 = {
 @Component({
     standalone: true,
     imports: [
-    TuiAutoFocus,
-    TuiButton,
-    TuiDialog,
-    TuiHint,
-    TuiInputModule,
-    ReactiveFormsModule,
-    TuiCheckbox,
-    TuiDialog,
-    TuiButton,
-    TuiAutoColorPipe,
-    TuiInitialsPipe,
-    TuiAvatar,
-    RouterModule,
-    FormsModule,
-    TuiDropdown,
-    TuiTable,
-    TuiTitle,
-    TuiIcon,
-    TuiLink
-],
+        TuiAutoFocus,
+        TuiButton,
+        TuiDialog,
+        TuiHint,
+        TuiInputModule,
+        ReactiveFormsModule,
+        TuiCheckbox,
+        TuiDialog,
+        TuiButton,
+        TuiAutoColorPipe,
+        TuiInitialsPipe,
+        TuiAvatar,
+        RouterModule,
+        FormsModule,
+        TuiDropdown,
+        TuiTable,
+        TuiTitle,
+        TuiIcon,
+        TuiLink,
+        TuiTablePagination
+    ],
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
@@ -68,21 +72,12 @@ export type User1 = {
 })
 export class UsersComponent {
     // Default Table Size
-    protected readonly size = 'm';
     protected users: UIUser[] = [];
     protected sortedUsers: UIUser[] = [];
     currentUser: UIUser | undefined;
-
-    constructor(
-        private dialogs: TuiResponsiveDialogService,
-        private alerts: TuiAlertService,
-        @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService
-    ) {
-        this.usersService.getUsers().subscribe(users => this.users = users);
-    }
-    // Mock Users Data
-
-
+    protected page = 0;
+    protected size = 10;
+    protected totalUsers = 0;
     // Available Columns for Display
     availableColumns = [
         { key: 'email', label: 'Email', visible: true },
@@ -106,14 +101,36 @@ export class UsersComponent {
 
     protected openPasswordDialog = false;
 
+    filterUser: string = '';
+
+    constructor(
+        private dialogs: TuiResponsiveDialogService,
+        private alerts: TuiAlertService,
+        @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService
+    ) {
+        this.usersService.getUsers().subscribe(users => this.users = users);
+    }
+
     updateVisibleColumns(): void {
         this.visibleColumns = this.availableColumns.filter((column) => column.visible);
     }
     ngOnInit(): void {
         this.updateVisibleColumns();
-        this.usersService.getUsers().subscribe(users => this.users = users);
+        this.usersService.getUsers().subscribe(users => {
+            this.users = users;
+            this.totalUsers = users.length;
+            this.applyFilter();  // Apply filter initially
+        });
         // Current Sorting Column
         this.sortedUsers = [...this.users];
+    }
+
+    applyFilter(): void {
+        const filterValue = this.filterUser.toLowerCase();
+        this.sortedUsers = this.users.filter(user =>
+            user.username.toLowerCase().includes(filterValue) ||
+            user.email.toLowerCase().includes(filterValue)
+        );
     }
 
     // Sort function with toggle for ascending/descending
@@ -197,6 +214,20 @@ export class UsersComponent {
                 });
             }
         }
+    }
+
+    protected onPagination({ page, size }: TuiTablePaginationEvent): void {
+        this.page = page;
+        this.size = size;
+    }
+
+    protected selectColumnsDialog(
+        content: PolymorpheusContent<TuiDialogContext>,
+        textFieldSize: TuiSizeL | TuiSizeS,
+    ): void {
+        this.dialogs.open(content, { data: { textFieldSize } }).subscribe(() => {
+            this.updateVisibleColumns();
+        });
     }
 
 }

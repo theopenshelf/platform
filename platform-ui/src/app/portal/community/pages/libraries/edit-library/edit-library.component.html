@@ -1,0 +1,65 @@
+<form
+    [formGroup]="editLibraryForm"
+    (ngSubmit)="onSubmit()"
+    class="library-form"
+>
+    <div class="form-group">
+        <label>Library Name</label>
+        <input
+            tuiTextfield
+            type="text"
+            formControlName="name"
+        >
+    </div>
+
+    <div formGroupName="location">
+        <div class="form-group">
+            <label>Location Name</label>
+            <input
+                tuiTextfield
+                type="text"
+                formControlName="name"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <input
+                tuiTextfield
+                type="text"
+                formControlName="address"
+            >
+        </div>
+    </div>
+
+    <div class="form-group switch-group">
+        <label>Community Accessible</label>
+        <input
+            tuiSwitch
+            type="checkbox"
+            formControlName="isCommunityAccessible"
+            [showIcons]="true"
+        >
+    </div>
+
+    <div class="form-group">
+        <label for="template">Instructions</label>
+        <br>
+        <quill-editor
+            formControlName="instructions"
+            [modules]="editorConfig"
+            style="height: 200px;"
+        ></quill-editor>
+    </div>
+
+    <div class="form-actions">
+        <button
+            tuiButton
+            type="submit"
+            appearance="primary"
+            [disabled]="editLibraryForm.invalid"
+        >
+            Save
+        </button>
+    </div>
+</form>

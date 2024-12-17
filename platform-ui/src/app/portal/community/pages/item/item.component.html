@@ -9,7 +9,7 @@
     <div class="sidebar">
       <div class="details">
         <div class="top-left-details">
-          <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
+          <button class="favorite" [class.selected]="item.favorite" iconStart="@tui.heart" tuiButton
           [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button" (click)="markAsFavorite()"></button>
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
             [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
