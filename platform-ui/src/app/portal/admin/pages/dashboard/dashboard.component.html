@@ -1,0 +1,54 @@
+<div class="dashboard-counters-container">
+  <div class="dashboard-card">
+    <div class="counter">5</div>
+    <div class="label">Users</div>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="counter">21</div>
+    <div class="label">Items</div>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="counter">3</div>
+    <div class="label">Libraries</div>
+  </div>
+</div>
+
+<div class="dashboard-charts-container">
+  <div class="dashboard-card">
+    <div class="chart-title">Total Borrows Over Time</div>
+    <tui-axes
+      class="axes"
+      [horizontalLines]="2"
+      [tuiLineChartHint]="hintContent"
+      [verticalLines]="4"
+      [axisXLabels]="labelsX"
+      [axisYLabels]="axisYLabels"
+
+    >
+      <tui-line-chart
+        [dots]="true"
+        [height]="200"
+        [value]="value"
+        [tuiHintContent]="hintContent"
+
+        [width]="400"
+        [x]="0"
+        [xStringify]="stringify"
+        [y]="0"
+        [yStringify]="stringify"
+      />
+    </tui-axes>
+
+    <ng-template
+    #hintContent
+    let-index="index"
+    let-value
+>
+    <div>Vertical: {{ value[0] }}</div>
+    <div>Horizontal: {{ value[1] }}</div>
+    <div>index: {{ index }}</div>
+</ng-template>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+@use 'theme' as *;
+
+.dashboard-counters-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; // Adjust the gap between cards as needed
+    margin-bottom: 15px;
+}
+
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    width: 100%;
+    height: 200px;
+
+    .counter {
+        color: $accent-color;
+        font-size: 48px;
+        font-weight: bold;
+        margin: 10px;
+    }
+
+    .label {
+        font-size: 24px;
+        color: $accent-color;
+    }
+}
+
+.axes {
+    block-size: 12.5rem;
+    inline-size: 25rem;
+    color: #bc71c9;
+}
