@@ -711,6 +711,127 @@ paths:
                     type: boolean
                     example: true
 
+  /admin/dashboards/data:
+    get:
+      operationId: getDashboardData
+      summary: Retrieve dashboard data over time
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Dashboard data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardBorrowesOverTimeData"
+
+  /admin/dashboards/metrics:
+    get:
+      operationId: getDashboardMetrics
+      summary: Retrieve dashboard metrics
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Dashboard metrics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardBorrowesMetrics"
+
+  /admin/dashboards/top-borrowers:
+    get:
+      operationId: getTopBorrowers
+      summary: Retrieve top borrowers
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Top borrowers retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BorrowerMetrics"
+
+  /admin/dashboards/top-items:
+    get:
+      operationId: getTopItems
+      summary: Retrieve top items
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Top items retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ItemMetrics"
+
+  /admin/dashboards/top-categories:
+    get:
+      operationId: getTopCategories
+      summary: Retrieve top categories
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Top categories retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CategoryMetrics"
+
+  /admin/dashboards/user-count:
+    get:
+      operationId: getUserCount
+      summary: Retrieve user count
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: User count retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 100
+
+  /admin/dashboards/item-count:
+    get:
+      operationId: getItemCount
+      summary: Retrieve item count
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Item count retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 200
+
+  /admin/dashboards/library-count:
+    get:
+      operationId: getLibraryCount
+      summary: Retrieve library count
+      tags:
+        - dashboards-admin-api
+      responses:
+        "200":
+          description: Library count retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: integer
+                example: 10
+
 components:
   #####################################################
   # Predefined Components
@@ -1049,6 +1170,92 @@ components:
         address:
           type: string
           example: "123 Main Street, City, Country"
+
+    DashboardBorrowesOverTimeData:
+      type: object
+      required:
+        - labelsX
+        - axisYLabels
+        - data
+      properties:
+        labelsX:
+          type: array
+          items:
+            type: string
+        axisYLabels:
+          type: array
+          items:
+            type: string
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChartCoordinates"
+
+    DashboardBorrowesMetrics:
+      type: object
+      required:
+        - metrics
+      properties:
+        metrics:
+          type: object
+          properties:
+            totalBorrows:
+              type: integer
+            totalReservations:
+              type: integer
+            itemsOnLoan:
+              type: integer
+            avgLoanDuration:
+              type: number
+            returnTimeliness:
+              type: number
+
+    BorrowerMetrics:
+      type: object
+      required:
+        - username
+        - totalBorrows
+      properties:
+        username:
+          type: string
+        totalBorrows:
+          type: integer
+
+    ChartCoordinates:
+      type: object
+      required:
+        - x
+        - y
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+
+    ItemMetrics:
+      type: object
+      required:
+        - item
+        - totalBorrows
+      properties:
+        item:
+          type: string
+        totalBorrows:
+          type: integer
+
+    CategoryMetrics:
+      type: object
+      required:
+        - category
+        - totalBorrows
+        - numberOfItems
+      properties:
+        category:
+          type: string
+        totalBorrows:
+          type: integer
+        borrowedItems:
+          type: integer
 
   responses:
     OK_200_GET_HELLO_WORLD:

@@ -1,31 +1,72 @@
-import { Component } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { TuiAxes, TuiLineChart, TuiLineChartHint } from '@taiga-ui/addon-charts';
-import { TuiContext } from '@taiga-ui/cdk';
 import { TuiHint, TuiPoint } from '@taiga-ui/core';
+import { adminProviders, DASHBOARD_SERVICE_TOKEN } from '../../admin.providers';
+import { DashboardService, UIBorrowerMetrics, UICategoryMetrics, UIDashboardBorrowesMetrics, UIDashboardBorrowesOverTimeData, UIItemMetrics } from '../../services/dashboard.service';
 
 @Component({
   imports: [TuiAxes, TuiLineChart, TuiHint, TuiLineChartHint],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  providers: [...adminProviders
+  ]
 })
-export class DashboardComponent {
-  protected readonly labelsX = ['Jan 2019', 'Feb', 'Mar', ''];
-  protected readonly axisYLabels = ['', '25%', '50%', '75%', '100%'];
+export class DashboardComponent implements OnInit {
+  protected labelsX: string[] = [];
+  protected axisYLabels: string[] = [];
+  protected value: readonly TuiPoint[] = [];
+  protected totalBorrows: number = 0;
+  protected totalReservations: number = 0;
+  protected itemsOnLoan: number = 0;
+  protected avgLoanDuration: string = '';
+  protected returnTimeliness: string = '';
+  protected topBorrowers: UIBorrowerMetrics[] = [];
+  protected topItems: UIItemMetrics[] = [];
+  protected topCategories: UICategoryMetrics[] = [];
+  protected userCount: number = 0;
+  protected itemCount: number = 0;
+  protected libraryCount: number = 0;
 
-  protected readonly value: readonly TuiPoint[] = [
-    [50, 50],
-    [100, 75],
-    [150, 50],
-    [200, 150],
-    [250, 155],
-    [300, 190],
-    [350, 90],
-  ];
+  constructor(@Inject(DASHBOARD_SERVICE_TOKEN) private dashboardService: DashboardService) { }
 
-  protected readonly stringify = String;
+  ngOnInit(): void {
+    this.dashboardService.getDashboardData().subscribe((data: UIDashboardBorrowesOverTimeData) => {
+      this.labelsX = data.labelsX;
+      this.axisYLabels = data.axisYLabels;
+      this.value = data.data;
+    });
 
-  protected readonly hintContent = ({
-    $implicit,
-  }: TuiContext<readonly TuiPoint[]>): number => $implicit[0]?.[1] ?? 0;
+    this.dashboardService.getDashboardMetrics().subscribe((metrics: UIDashboardBorrowesMetrics) => {
+      this.totalBorrows = metrics.totalBorrows;
+      this.totalReservations = metrics.totalReservations;
+      this.itemsOnLoan = metrics.itemsOnLoan;
+      this.avgLoanDuration = metrics.avgLoanDuration;
+      this.returnTimeliness = metrics.returnTimeliness;
+    });
+
+    this.dashboardService.getTopBorrowers().subscribe((borrowers: UIBorrowerMetrics[]) => {
+      this.topBorrowers = borrowers;
+    });
+
+    this.dashboardService.getTopItems().subscribe((items: UIItemMetrics[]) => {
+      this.topItems = items;
+    });
+
+    this.dashboardService.getTopCategories().subscribe((categories: UICategoryMetrics[]) => {
+      this.topCategories = categories;
+    });
+
+    this.dashboardService.getUserCount().subscribe((count: number) => {
+      this.userCount = count;
+    });
+
+    this.dashboardService.getItemCount().subscribe((count: number) => {
+      this.itemCount = count;
+    });
+
+    this.dashboardService.getLibraryCount().subscribe((count: number) => {
+      this.libraryCount = count;
+    });
+  }
 }
