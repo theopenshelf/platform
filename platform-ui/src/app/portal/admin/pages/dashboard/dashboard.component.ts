@@ -69,4 +69,8 @@ export class DashboardComponent implements OnInit {
       this.libraryCount = count;
     });
   }
+
+  stringify(value: number): string {
+    return value.toString();
+  }
 }
