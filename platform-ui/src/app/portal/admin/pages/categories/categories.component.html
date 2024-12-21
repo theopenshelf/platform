@@ -1,37 +1,25 @@
-<div class="top-actions">
-        
-    <button routerLink="/admin/categories/add" i18n="@@borrowButton" appearance="primary" size="s"
-    tuiButton type="button">
-    <tui-icon icon="@tui.plus" [style.height.rem]="1" />
+<tos-table [addActionRoute]="'/admin/categories/add'" [tableData]="categories" [columns]="columns">
+    <div add-action-content>
+      <tui-icon icon="@tui.plus" [style.height.rem]="1" />
 
-    Add Category</button>
-</div>
-<table tosTable>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Template</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (category of categories; track category) {
-      <tr>
-        <td>
-          <category-badge [category]="category"></category-badge>
-        </td>
-        <td>{{ category.template }}</td>
-        <td class="action-icons">
-          <button [routerLink]="['/admin/categories', category.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-            size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-            Edit
-          </button>
-          <button (click)="deleteCategory(category)" appearance="outline" iconStart="@tui.trash-2" size="s"
-            tuiIconButton type="button" [style.border-radius.%]="100">
-            Delete
-          </button>
-        </td>
-      </tr>
+      Add Category
+  </div>
+
+  <ng-template #itemRowTemplate let-item="item" let-column="column">
+    @if (column.key === 'name') {
+      <category-badge [category]="item"></category-badge>
     }
-  </tbody>
-</table>
+  </ng-template>
+
+  <ng-template #itemActionsTemplate let-item="item">
+    <button [routerLink]="['/admin/categories', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+    size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+    Edit
+  </button>
+  <button (click)="deleteCategory(item)" appearance="outline" iconStart="@tui.trash-2" size="s"
+    tuiIconButton type="button" [style.border-radius.%]="100">
+    Delete
+  </button>
+  </ng-template>
+</tos-table>
+

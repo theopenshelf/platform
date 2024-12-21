@@ -23,7 +23,8 @@ import { CategoriesService, UICategory } from '../../services/categories.service
         TuiTitle,
         TuiButton,
         TosTableComponent,
-        TuiIcon
+        TuiIcon,
+        TosTableComponent
     ],
     selector: 'app-categories',
     templateUrl: './categories.component.html',
@@ -33,7 +34,10 @@ import { CategoriesService, UICategory } from '../../services/categories.service
 export class CategoriesComponent {
 
     categories: UICategory[] = [];
-
+    columns = [
+        { key: 'name', label: 'Name', custom: true, visible: true, sortable: true },
+        { key: 'template', label: 'Template', visible: false },
+    ];
     public constructor(
         private dialogs: TuiResponsiveDialogService,
         private alerts: TuiAlertService,

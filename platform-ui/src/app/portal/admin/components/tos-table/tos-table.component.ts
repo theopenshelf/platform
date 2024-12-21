@@ -1,12 +1,154 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, computed, ContentChild, input, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
+import { TuiTable, TuiTablePagination, TuiTablePaginationEvent } from '@taiga-ui/addon-table';
+import { TuiAutoFocus } from '@taiga-ui/cdk';
+import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiDialog, TuiDialogContext, TuiDropdown, TuiHint, TuiIcon, TuiInitialsPipe, TuiLink, TuiSizeL, TuiSizeS, TuiTitle } from '@taiga-ui/core';
+import { TuiAvatar, TuiCheckbox } from '@taiga-ui/kit';
+
+import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
+
+export type Column = {
+  key: string;
+  label: string;
+  custom?: boolean;
+  visible: boolean;
+  sortable?: boolean;
+};
 
 @Component({
-  selector: 'table[tosTable]',
-  imports: [],
+  selector: 'tos-table',
+  imports: [
+    CommonModule,
+    TuiAutoFocus,
+    TuiButton,
+    TuiDialog,
+    TuiHint,
+    ReactiveFormsModule,
+    TuiCheckbox,
+    TuiDialog,
+    TuiButton,
+    TuiAutoColorPipe,
+    TuiInitialsPipe,
+    TuiAvatar,
+    RouterModule,
+    FormsModule,
+    TuiDropdown,
+    TuiTable,
+    TuiTitle,
+    TuiIcon,
+    TuiLink,
+    TuiTablePagination
+  ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',
   encapsulation: ViewEncapsulation.None
 })
 export class TosTableComponent {
+  public addActionRoute = input.required<string>();
+  public tableData = input.required<any[]>();
+  public filterInput = signal<string>('');
+  public columns = input.required<Column[]>();
+
+  @ContentChild('itemActionsTemplate', { read: TemplateRef }) itemActionsTemplate!: TemplateRef<any>;
+  @ContentChild('itemRowTemplate', { read: TemplateRef }) itemRowTemplate!: TemplateRef<any>;
+
+  protected currentSort = signal<string>('');
+  protected sortOrder = signal<{ [key: string]: boolean }>({});  // True for ascending, false for descending
+  protected page = 0;
+  protected size = 10;
+  protected total = computed(() => this.tableData().length);
+  protected visibleColumns = computed<Column[]>(() => {
+    return this.columns().filter(column =>
+      this.localColumnVisibility()[column.key] ?? column.visible
+    );
+  });
+  protected sortedData = computed<any[]>(() => {
+    return this.tableData()
+      .filter((item: any) => {
+        const filterValue = this.filterInput().toLowerCase();
+        const visibleKeys = this.visibleColumns().map(column => column.key);
+        return visibleKeys.some(key =>
+          String(item[key]).toLowerCase().includes(filterValue)
+        );
+      })
+      .sort((a, b) => {
+        const aValue = a[this.currentSort()];
+        const bValue = b[this.currentSort()];
+
+        if (this.sortOrder()[this.currentSort()]) {
+          return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+        } else {
+          return aValue < bValue ? 1 : (aValue > bValue ? -1 : 0);
+        }
+      });
+  });
+
+  // Local state to manage column visibility
+  private localColumnVisibility = signal<{ [key: string]: boolean }>({});
+
+  constructor(
+    private dialogs: TuiResponsiveDialogService,
+    private alerts: TuiAlertService,
+  ) {
+
+  }
+
+  ngOnInit(): void {
+    this.localColumnVisibility.set(
+      this.columns().reduce((acc, column) => {
+        acc[column.key] = column.visible;
+        return acc;
+      }, {} as { [key: string]: boolean })
+    );
+  }
+
+  protected selectColumnsDialog(
+    content: PolymorpheusContent<TuiDialogContext>,
+    textFieldSize: TuiSizeL | TuiSizeS,
+  ): void {
+    this.dialogs.open(content, { data: { textFieldSize } }).subscribe();
+  }
+
+  getDataProperty(data: any, key: string): any {
+    return data[key];
+  }
+
+  // Sort function with toggle for ascending/descending
+  sort(column: string): void {
+    const columnConfig = this.columns().find(col => col.key === column);
+    if (!columnConfig || !columnConfig.sortable) {
+      return; // Exit if the column is not sortable
+    }
+
+    // Toggle sort order
+    if (this.currentSort() === column) {
+      const newSortOrder = { ...this.sortOrder(), [column]: !this.sortOrder()[column] };
+      this.sortOrder.set(newSortOrder);
+    } else {
+      this.currentSort.set(column);
+      const newSortOrder = { ...this.sortOrder(), [column]: true }; // Default to ascending for new column
+      this.sortOrder.set(newSortOrder);
+    }
+  }
+
+
+  protected onPagination({ page, size }: TuiTablePaginationEvent): void {
+    this.page = page;
+    this.size = size;
+  }
+
+  // Get the sorting icon (up or down)
+  getSortIcon(column: string): string {
+    return this.sortOrder()[column] ? '↑' : '↓';
+  }
+
+  onColumnVisibilityChange(column: Column): void {
+    // Update the local visibility state
+    const updatedVisibility = { ...this.localColumnVisibility(), [column.key]: column.visible };
+    this.localColumnVisibility.set(updatedVisibility);
+  }
 
 }

@@ -1,64 +1,30 @@
-<div class="top-actions">
-  <button class="add-user" routerLink="/admin/items/add" i18n="@@borrowButton" appearance="primary" size="s"
-    tuiButton type="button">
+<tos-table [addActionRoute]="'/admin/items/add'" [tableData]="items" [columns]="columns">
+  <div add-action-content>
     <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
 
     Add item
+</div>
+
+<ng-template #itemRowTemplate let-item="item" let-column="column">
+  @if (column.key === 'img') {
+    <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+  } @if (column.key === 'category') {
+    <category-badge [category]="item.category"></category-badge>
+  } @if (column.key === 'state') {
+    <tui-badge [style.background-color]="item.state.statusColor" [style.color]="'white'">
+      {{ item.state.label }}
+    </tui-badge>
+  }
+</ng-template>
+
+<ng-template #itemActionsTemplate let-item="item">
+  <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
+  size="s" tuiIconButton type="button" [style.border-radius.%]="100">
+  Edit
 </button>
-</div>
-
-<table tosTable>
-  <thead>
-    <tr>
-      <th>Picture</th>
-      <th>Item Name</th>
-      <th>Categories</th>
-      <th>Borrows</th>
-      <th>Late Return %</th>
-      <th>Average Duration (days)</th>
-      <th>State</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (item of items; track item) {
-      <tr>
-        <td>
-          <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
-        </td>
-        <td>
-          <span tuiTitle>{{ item.name }}</span>
-        </td>
-        <td>
-          <category-badge [category]="item.category"></category-badge>
-        </td>
-        <td>
-          <span tuiTitle>{{ item.borrowCount }}</span>
-        </td>
-        <td>
-          <span tuiTitle>{{ item.lateReturnPercentage }}%</span>
-        </td>
-        <td>
-          <span tuiTitle>{{ item.averageDuration }}</span>
-        </td>
-        <td>
-          <span tuiStatus="{{ item.state }}">{{ item.state.label }}</span>
-        </td>
-        <td>
-          <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-            size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-            Edit
-          </button>
-          <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
-            [style.border-radius.%]="100">
-            Archive
-          </button>
-        </td>
-      </tr>
-    }
-  </tbody>
-</table>
-
-<div class="footer-actions">
-  <tui-table-pagination [page]="page" [size]="size" [total]="totalItems" (paginationChange)="onPagination($event)" />
-</div>
+<button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
+  [style.border-radius.%]="100">
+  Archive
+</button>
+</ng-template>
+</tos-table>

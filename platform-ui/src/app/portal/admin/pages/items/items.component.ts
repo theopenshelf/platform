@@ -1,8 +1,7 @@
-
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TuiTable, TuiTablePagination, TuiTablePaginationEvent } from '@taiga-ui/addon-table';
+import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
 import {
     TuiButton,
     TuiDropdown,
@@ -51,9 +50,22 @@ import { ItemsService, UIItem } from '../../services/items.service';
 })
 export class ItemsComponent {
     items: UIItem[] = [];
-    protected page = 0;
-    protected size = 10;
-    protected totalItems = 0;
+    columns = [
+        { key: 'img', label: 'Image', custom: true, visible: true, sortable: false },
+        { key: 'name', label: 'Name', custom: false, visible: true, sortable: true },
+        { key: 'located', label: 'Located', custom: false, visible: true, sortable: true },
+        { key: 'owner', label: 'Owner', custom: false, visible: true, sortable: true },
+        { key: 'imageUrl', label: 'Image URL', custom: false, visible: false, sortable: false },
+        { key: 'description', label: 'Description', custom: false, visible: false, sortable: false },
+        { key: 'shortDescription', label: 'Short Description', custom: false, visible: false, sortable: false },
+        { key: 'category', label: 'Category', custom: true, visible: true, sortable: true },
+        { key: 'favorite', label: 'Favorite', custom: false, visible: false, sortable: false },
+        { key: 'borrowCount', label: 'Borrow Count', custom: false, visible: true, sortable: true },
+        { key: 'lateReturnPercentage', label: 'Late Return %', custom: false, visible: true, sortable: true },
+        { key: 'averageDuration', label: 'Avg Duration', custom: false, visible: true, sortable: true },
+        { key: 'state', label: 'State', custom: true, visible: true, sortable: true },
+    ];
+
 
     public constructor(
         @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
@@ -64,12 +76,6 @@ export class ItemsComponent {
         // Fetch the items from the service
         this.itemsService.getItems().subscribe(items => {
             this.items = items
-            this.totalItems = items.length;
         });
-    }
-
-    protected onPagination({ page, size }: TuiTablePaginationEvent): void {
-        this.page = page;
-        this.size = size;
     }
 }
