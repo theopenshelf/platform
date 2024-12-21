@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
@@ -25,12 +25,9 @@ import { ItemsService } from '../../services/items.service';
     TuiTitle,
     FormsModule,
     TuiTextfield
-],
+  ],
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss'],
-  providers: [
-    ...communityProviders,
-  ]
+  styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent {
 

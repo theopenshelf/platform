@@ -20,10 +20,7 @@ import { ItemsService } from '../../../services/items.service';
     CategoryBadgeComponent
 ],
     templateUrl: './my-items.component.html',
-    styleUrls: ['./my-items.component.scss'],
-    providers: [
-        ...communityProviders,
-    ]
+    styleUrls: ['./my-items.component.scss']
 })
 export class MyItemsComponent {
     protected readonly sizes = ['l', 'm', 's'] as const;

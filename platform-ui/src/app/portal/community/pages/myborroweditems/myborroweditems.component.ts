@@ -16,10 +16,7 @@ import { ItemsService } from '../../services/items.service';
   selector: 'app-myborroweditems',
   imports: [CommonModule, RouterLink, FormsModule, NgClass, TuiTable, CategoryBadgeComponent],
   templateUrl: './myborroweditems.component.html',
-  styleUrls: ['./myborroweditems.component.scss'],
-  providers: [
-    ...communityProviders,
-  ]
+  styleUrls: ['./myborroweditems.component.scss']
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;

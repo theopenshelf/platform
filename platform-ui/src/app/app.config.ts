@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
 import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
 
 import { provideHttpClient } from "@angular/common/http";
@@ -18,7 +18,9 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes, withComponentInputBinding(), withRouterConfig({
+      paramsInheritanceStrategy: 'always',
+    })),
     NG_EVENT_PLUGINS,
     provideAnimationsAsync(),
     {

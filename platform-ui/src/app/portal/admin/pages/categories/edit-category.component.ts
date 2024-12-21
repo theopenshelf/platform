@@ -4,24 +4,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TuiTextfield } from '@taiga-ui/core';
 import { TUI_DEFAULT_INPUT_COLORS, TuiInputColorModule } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
-import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
+import { CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
 import { CategoriesService, UICategory } from '../../services/categories.service';
 
 @Component({
     standalone: true,
     selector: 'app-edit-category',
     imports: [
-    QuillModule,
-    TuiInputColorModule,
-    TuiTextfield,
-    FormsModule,
-    ReactiveFormsModule
-],
-    templateUrl: './edit-category.component.html',
-    styleUrls: ['./edit-category.component.scss'],
-    providers: [
-        ...adminProviders
+        QuillModule,
+        TuiInputColorModule,
+        TuiTextfield,
+        FormsModule,
+        ReactiveFormsModule
     ],
+    templateUrl: './edit-category.component.html',
+    styleUrls: ['./edit-category.component.scss']
 })
 export class EditCategoryComponent {
     categoryForm: FormGroup;

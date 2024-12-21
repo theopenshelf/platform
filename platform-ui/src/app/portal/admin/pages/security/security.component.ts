@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiPlatform } from '@taiga-ui/cdk';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiSwitch } from '@taiga-ui/kit';
-import { adminProviders, SECURITY_SETTINGS_SERVICE_TOKEN } from '../../admin.providers';
+import { SECURITY_SETTINGS_SERVICE_TOKEN } from '../../admin.providers';
 import { SecuritySettingsService, UISecuritySettings } from '../../services/security-settings.service';
 
 @Component({
@@ -12,10 +12,7 @@ import { SecuritySettingsService, UISecuritySettings } from '../../services/secu
     selector: 'app-security',
     imports: [FormsModule, ReactiveFormsModule, TuiButton, TuiPlatform, TuiSwitch],
     templateUrl: './security.component.html',
-    styleUrl: './security.component.scss',
-    providers: [
-        ...adminProviders
-    ]
+    styleUrl: './security.component.scss'
 })
 export class SecurityComponent {
     securitySettings: UISecuritySettings = { isRegistrationEnabled: false };

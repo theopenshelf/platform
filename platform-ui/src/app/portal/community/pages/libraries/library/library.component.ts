@@ -31,10 +31,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiAutoColorPipe
   ],
   templateUrl: './library.component.html',
-  styleUrl: './library.component.scss',
-  providers: [
-    ...communityProviders,
-  ]
+  styleUrl: './library.component.scss'
 })
 export class LibraryComponent {
   library: UILibrary | undefined;

@@ -20,10 +20,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiAvatar,
     TuiInitialsPipe,
     TuiAutoColorPipe
-],
-  providers: [
-    ...communityProviders,
-  ]
+]
 })
 export class EditLibraryComponent implements OnInit {
   editLibraryForm!: FormGroup;

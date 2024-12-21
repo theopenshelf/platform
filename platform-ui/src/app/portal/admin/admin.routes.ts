@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+import { globalProviders } from '../../global.provider';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
+import { adminProviders } from './admin.providers';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { EditCategoryComponent } from './pages/categories/edit-category.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -13,6 +15,10 @@ export const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    providers: [
+      ...adminProviders,
+      ...globalProviders,
+    ],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'users', component: UsersComponent },

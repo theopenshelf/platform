@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { QuillModule } from 'ngx-quill';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UICategory } from '../../models/UICategory';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
@@ -14,10 +14,7 @@ import { ItemsService } from '../../services/items.service';
   standalone: true,
   imports: [ReactiveFormsModule, QuillModule],
   templateUrl: './add-item.component.html',
-  styleUrl: './add-item.component.scss',
-  providers: [
-    ...communityProviders,
-  ]
+  styleUrl: './add-item.component.scss'
 })
 export class AddItemComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();

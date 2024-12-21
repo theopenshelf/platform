@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TuiAlertService, TuiButton } from '@taiga-ui/core';
-import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
+import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { UIUser, UsersService } from '../../services/users.service';
 
 @Component({
@@ -13,12 +13,9 @@ import { UIUser, UsersService } from '../../services/users.service';
     TuiButton,
     FormsModule,
     ReactiveFormsModule
-],
+  ],
   templateUrl: './edit-user.component.html',
-  styleUrl: './edit-user.component.scss',
-  providers: [
-    ...adminProviders
-  ]
+  styleUrl: './edit-user.component.scss'
 })
 export class EditUserComponent implements OnInit {
   user: UIUser = {} as UIUser;

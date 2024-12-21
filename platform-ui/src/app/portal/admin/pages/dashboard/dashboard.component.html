@@ -59,64 +59,70 @@
     </div>
 </div>
 
-<div class="dashboard-top-container">
-    <div class="dashboard-top-users">
-        <div class="chart-title">Top borrowers</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Total Borrows</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (borrower of topBorrowers; track borrower) {
+@defer (on viewport) {
+    <div class="dashboard-top-container">
+        <div class="dashboard-top-users">
+            <div class="chart-title">Top borrowers</div>
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ borrower.username }}</td>
-                        <td>{{ borrower.totalBorrows }}</td>
+                        <th>Username</th>
+                        <th>Total Borrows</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="dashboard-top-items">
-        <div class="chart-title">Top items</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Items</th>
-                    <th>Total Borrows</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (item of topItems; track item) {
+                </thead>
+                <tbody>
+                    @for (borrower of topBorrowers; track borrower) {
+                        <tr>
+                            <td>{{ borrower.username }}</td>
+                            <td>{{ borrower.totalBorrows }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="dashboard-top-items">
+            <div class="chart-title">Top items</div>
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ item.item }}</td>
-                        <td>{{ item.totalBorrows }}</td>
+                        <th>Items</th>
+                        <th>Total Borrows</th>
                     </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-    <div class="dashboard-top-categories">
-        <div class="chart-title">Top Categories</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Categories</th>
-                    <th>Total Borrows</th>
-                    <th>Number of Items</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (category of topCategories; track category) {
+                </thead>
+                <tbody>
+                    @for (item of topItems; track item) {
+                        <tr>
+                            <td>{{ item.item }}</td>
+                            <td>{{ item.totalBorrows }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="dashboard-top-categories">
+            <div class="chart-title">Top Categories</div>
+            <table>
+                <thead>
                     <tr>
-                        <td>{{ category.category }}</td>
-                        <td>{{ category.totalBorrows }}</td>
-                        <td>{{ category.numberOfItems }}</td>
+                        <th>Categories</th>
+                        <th>Total Borrows</th>
+                        <th>Number of Items</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @for (category of topCategories; track category) {
+                        <tr>
+                            <td>{{ category.category }}</td>
+                            <td>{{ category.totalBorrows }}</td>
+                            <td>{{ category.numberOfItems }}</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
+} @placeholder {
+    <div class="dashboard-top-container">
+        <p>Loading...</p>
+    </div>
+}

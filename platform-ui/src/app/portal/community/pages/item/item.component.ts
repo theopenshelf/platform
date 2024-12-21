@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, effect, Inject, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon } from '@taiga-ui/core';
@@ -36,13 +36,13 @@ const plusTen = today.append({ day: 10 });
     TuiButton,
     TuiIcon,
     ReactiveFormsModule,
-    TuiInputDateRangeModule
-],
+    TuiInputDateRangeModule,
+    RouterLink
+  ],
   selector: 'app-item',
   templateUrl: './item.component.html',
   styleUrls: ['./item.component.scss'],
   providers: [
-    ...communityProviders,
     DatePipe,
     {
       provide: DateAdapter,
@@ -50,6 +50,8 @@ const plusTen = today.append({ day: 10 });
     }]
 })
 export class ItemComponent {
+
+  itemId = input.required<string>();
 
   item: UIItem | undefined;
 
@@ -67,6 +69,8 @@ export class ItemComponent {
     return day.dayBefore(this.min);
   };
 
+
+
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private route: ActivatedRoute,
@@ -77,6 +81,14 @@ export class ItemComponent {
     private alerts: TuiAlertService,
     private router: Router
   ) {
+    effect(() => {
+      const itemId = this.itemId();
+      if (itemId) {
+        this.itemsService.getItem(itemId).subscribe(item => this.item = item);
+        this.itemsService.getItemBorrowRecords(itemId).subscribe(records => this.records = records);
+        this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => this.borrowItemRecord = borrowItemRecord || undefined);
+      }
+    })
   }
 
   get sanitizedDescription(): SafeHtml {
@@ -101,15 +113,6 @@ export class ItemComponent {
     }
     return [AVAILABLE]; // Not marked
   };
-
-  ngOnInit() {
-    const itemId = this.route.snapshot.paramMap.get('id');
-    if (itemId) {
-      this.itemsService.getItem(itemId).subscribe(item => this.item = item);
-      this.itemsService.getItemBorrowRecords(itemId).subscribe(records => this.records = records);
-      this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => this.borrowItemRecord = borrowItemRecord || undefined);
-    }
-  }
 
   updateCellAvailability() {
     setTimeout(() => {

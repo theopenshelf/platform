@@ -27,10 +27,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiIcon
   ],
   templateUrl: './my-libraries.component.html',
-  styleUrl: './my-libraries.component.scss',
-  providers: [
-    ...communityProviders,
-  ]
+  styleUrl: './my-libraries.component.scss'
 })
 export class MyLibrariesComponent {
   libraries: UILibrary[] = [];

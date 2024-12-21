@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+import { globalProviders } from '../../global.provider';
 import CommunityLayoutComponent from './community-layout/community-layout.component';
+import { communityProviders } from './community.provider';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { ItemComponent } from './pages/item/item.component';
 import { ItemsComponent } from './pages/items/items.component';
@@ -13,11 +15,15 @@ export const COMMUNITY_ROUTES: Routes = [
   {
     path: '',
     component: CommunityLayoutComponent,
+    providers: [
+      ...communityProviders,
+      ...globalProviders,
+    ],
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'items', component: ItemsComponent },
       { path: 'item/add', component: AddItemComponent },
-      { path: 'items/:id', component: ItemComponent },
+      { path: 'items/:itemId', component: ItemComponent },
       { path: 'my-borrowed-items', component: MyborroweditemsComponent },
       { path: 'libraries', component: MyLibrariesComponent },
       { path: 'libraries/add-library', component: EditLibraryComponent },

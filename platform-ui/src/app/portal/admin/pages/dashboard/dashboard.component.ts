@@ -1,16 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { TuiAxes, TuiLineChart, TuiLineChartHint } from '@taiga-ui/addon-charts';
 import { TuiHint, TuiPoint } from '@taiga-ui/core';
-import { adminProviders, DASHBOARD_SERVICE_TOKEN } from '../../admin.providers';
+import { DASHBOARD_SERVICE_TOKEN } from '../../admin.providers';
 import { DashboardService, UIBorrowerMetrics, UICategoryMetrics, UIDashboardBorrowesMetrics, UIDashboardBorrowesOverTimeData, UIItemMetrics } from '../../services/dashboard.service';
 
 @Component({
   imports: [TuiAxes, TuiLineChart, TuiHint, TuiLineChartHint],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
-  providers: [...adminProviders
-  ]
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   protected labelsX: string[] = [];

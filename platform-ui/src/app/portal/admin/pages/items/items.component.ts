@@ -19,7 +19,7 @@ import {
 
 import { TuiCell } from '@taiga-ui/layout';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { adminProviders, ITEMS_SERVICE_TOKEN } from '../../admin.providers';
+import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
 import { TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { ItemsService, UIItem } from '../../services/items.service';
 
@@ -47,9 +47,6 @@ import { ItemsService, UIItem } from '../../services/items.service';
     selector: 'app-items',
     templateUrl: './items.component.html',
     styleUrls: ['./items.component.scss'],
-    providers: [
-        ...adminProviders
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ItemsComponent {

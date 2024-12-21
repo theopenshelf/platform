@@ -1,12 +1,11 @@
 import { Component, Inject } from '@angular/core';
-import { provideRouter, RouterLink, RouterLinkActive, RouterModule, RouterOutlet } from '@angular/router';
-import { SETTINGS_ROUTES } from '../settings.routes';
-import { TuiAppearance, TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
-import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TuiPortals } from '@taiga-ui/cdk';
+import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
-import { AuthService, UserInfo } from '../../../../../services/auth.service';
+import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-settings-landing-page',

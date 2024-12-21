@@ -8,7 +8,7 @@ import { TuiAlertService, TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { switchMap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { adminProviders, CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
+import { CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
 import { TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { CategoriesService, UICategory } from '../../services/categories.service';
 
@@ -28,9 +28,6 @@ import { CategoriesService, UICategory } from '../../services/categories.service
     selector: 'app-categories',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
-    providers: [
-        ...adminProviders
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CategoriesComponent {

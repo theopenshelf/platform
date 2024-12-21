@@ -23,7 +23,7 @@ import { TUI_CONFIRM, TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/k
 import { TuiInputModule } from '@taiga-ui/legacy';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { switchMap } from 'rxjs';
-import { adminProviders, USERS_SERVICE_TOKEN } from '../../admin.providers';
+import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
 
@@ -67,10 +67,7 @@ export type User1 = {
     selector: 'app-users',
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        ...adminProviders
-    ]
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersComponent {
     // Default Table Size
