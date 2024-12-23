@@ -24,11 +24,12 @@ export class APIItemsService implements ItemsService {
                 imageUrl: item.imageUrl,
                 description: item.description,
                 shortDescription: item.shortDescription,
-                category: item.category
+                category: item.category,
+                libraryId: item.libraryId,
+                createdAt: new Date(item.createdAt)
             } as UIItem)))
         );
     }
-
     getItems(): Observable<UIItem[]> {
         return this.itemsApiService.getItems(false).pipe(
             map((items: Item[]) => items.map((item: Item) => ({
@@ -39,7 +40,9 @@ export class APIItemsService implements ItemsService {
                 imageUrl: item.imageUrl,
                 description: item.description,
                 shortDescription: item.shortDescription,
-                category: item.category
+                category: item.category,
+                libraryId: item.libraryId,
+                createdAt: new Date(item.createdAt)
             } as UIItem)))
         );
     }
@@ -54,7 +57,8 @@ export class APIItemsService implements ItemsService {
                 imageUrl: item.imageUrl,
                 description: item.description,
                 shortDescription: item.shortDescription,
-                category: item.category
+                category: item.category,
+                createdAt: new Date(item.createdAt)
             } as UIItem)))
         ).pipe(
             switchMap((items: UIItem[]) => {
@@ -126,7 +130,8 @@ export class APIItemsService implements ItemsService {
                 imageUrl: item.imageUrl,
                 description: item.description,
                 shortDescription: item.shortDescription,
-                category: item.category
+                category: item.category,
+                createdAt: new Date(item.createdAt)
             } as UIItem))
         );
     }
@@ -144,7 +149,10 @@ export class APIItemsService implements ItemsService {
     }
 
     addItem(item: UIItem): Observable<UIItem> {
-        return this.itemsApiService.addItem(item).pipe(
+        return this.itemsApiService.addItem({
+            ...item,
+            createdAt: item.createdAt.toISOString()
+        } as Item).pipe(
             map((item: Item) => ({
                 id: item.id,
                 name: item.name,
@@ -153,7 +161,8 @@ export class APIItemsService implements ItemsService {
                 imageUrl: item.imageUrl,
                 description: item.description,
                 shortDescription: item.shortDescription,
-                category: item.category
+                category: item.category,
+                createdAt: new Date(item.createdAt)
             } as UIItem))
         );
     }
@@ -168,6 +177,7 @@ export class APIItemsService implements ItemsService {
                 description: borrowItem.description,
                 shortDescription: borrowItem.shortDescription,
                 category: borrowItem.category,
+                createdAt: new Date(borrowItem.createdAt),
                 record: {
                     borrowedBy: borrowItem.record.borrowedBy,
                     startDate: borrowItem.record.startDate,
@@ -188,6 +198,7 @@ export class APIItemsService implements ItemsService {
                 description: item.description,
                 shortDescription: item.shortDescription,
                 category: item.category,
+                createdAt: new Date(item.createdAt),
                 record: (item as BorrowItem).record
             } as UIBorrowItem)))
         );
@@ -201,10 +212,13 @@ export class APIItemsService implements ItemsService {
 
     getMyBorrowItem(id: string): Observable<UIBorrowItem | null> {
         return this.getItem(id).pipe(
-            map((item: UIItem) => ({
-                ...item,
-                record: (item as BorrowItem).record
-            } as UIBorrowItem))
+            map((item: UIItem) => {
+                const borrowItem = item as unknown as BorrowItem;
+                return {
+                    ...item,
+                    record: borrowItem.record
+                } as UIBorrowItem;
+            })
         );
     }
     markAsFavorite(item: UIItem): Observable<void> {

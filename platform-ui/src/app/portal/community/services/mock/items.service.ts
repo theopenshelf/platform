@@ -29,7 +29,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'A magical adventure story.',
             category: MockCategoriesService.BOOKS,
             favorite: true,
-            borrowCount: 8
+            borrowCount: 8,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -41,7 +43,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'High-performance laptop.',
             category: MockCategoriesService.ELECTRONICS,
             favorite: false,
-            borrowCount: 2
+            borrowCount: 2,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -53,7 +57,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Comfortable cotton T-shirt.',
             category: MockCategoriesService.CLOTHING,
             favorite: false,
-            borrowCount: 0
+            borrowCount: 0,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -65,7 +71,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Ergonomic wireless mouse.',
             category: MockCategoriesService.ELECTRONICS,
             favorite: true,
-            borrowCount: 9
+            borrowCount: 9,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -77,7 +85,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Stylish denim jeans.',
             category: MockCategoriesService.CLOTHING,
             favorite: false,
-            borrowCount: 4
+            borrowCount: 4,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -89,7 +99,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Latest smartphone model.',
             category: MockCategoriesService.ELECTRONICS,
             favorite: false,
-            borrowCount: 1
+            borrowCount: 1,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -101,7 +113,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Classic Jazz Age novel.',
             category: MockCategoriesService.BOOKS,
             favorite: false,
-            borrowCount: 1
+            borrowCount: 1,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -113,7 +127,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Ergonomic gaming chair.',
             category: MockCategoriesService.ELECTRONICS,
             favorite: false,
-            borrowCount: 2
+            borrowCount: 2,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -125,7 +141,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Sleek leather wallet.',
             category: MockCategoriesService.CLOTHING,
             favorite: false,
-            borrowCount: 3
+            borrowCount: 3,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -137,7 +155,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Adjustable LED lamp.',
             category: MockCategoriesService.ELECTRONICS,
             favorite: false,
-            borrowCount: 18
+            borrowCount: 18,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -149,7 +169,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Warm winter jacket.',
             category: MockCategoriesService.CLOTHING,
             favorite: false,
-            borrowCount: 0
+            borrowCount: 0,
+            libraryId: '1',
+            createdAt: new Date()
         },
         {
             id: this.index++ + "",
@@ -161,7 +183,9 @@ export class MockItemsService implements ItemsService {
             shortDescription: 'Comprehensive cookbook.',
             category: MockCategoriesService.BOOKS,
             favorite: false,
-            borrowCount: 1
+            borrowCount: 1,
+            libraryId: '1',
+            createdAt: new Date()
         },
     ];
 
@@ -259,6 +283,7 @@ export class MockItemsService implements ItemsService {
 
     addItem(item: UIItem): Observable<UIItem> {
         item.id = this.index++ + "";
+        item.createdAt = new Date();
         this.items.push(item);
         return of(item);
     }

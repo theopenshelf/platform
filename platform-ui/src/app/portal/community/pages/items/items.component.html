@@ -1,36 +1,99 @@
 <div class="layout-container">
   <!-- Left Sidebar -->
   <aside class="sidebar">
-    <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
-      tuiButton type="button">
-      Add item
-    </button>
-    <!-- Text Filter Input -->
-    <fieldset tuiTextfieldSize="s" class="search">
-      <tui-textfield iconStart="@tui.search">
-        <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
-      </tui-textfield>
-    </fieldset>
+    <div class="top-actions-left">
 
-    <!-- Category Filter -->
-    <div class="filter-group">
-      <span i18n="@@categoryFilter">Category</span>
-      @for (category of categories; track category) {
-        <label>
-          <input type="checkbox" [value]="category.name" (change)="onCategoryChange($event)">
-          {{ category.name }}
-        </label>
-      }
+      <fieldset tuiTextfieldSize="m" class="search">
+        <tui-textfield iconStart="@tui.search">
+          <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
+        </tui-textfield>
+      </fieldset>
+    </div>
+
+    <div class="filters-section">
+
+      <h2 i18n="@@categoryFilter">
+        <tui-icon icon="@tui.sliders-horizontal" [style.height.rem]="1" />
+        Filter
+      </h2>
+
+      <div class="filter-group filter-availability">
+        <h3 i18n="@@availabilityFilter">Availability</h3>
+        <div class="filter-availability-switch">
+          <input tuiSwitch type="checkbox" [(ngModel)]="currentlyAvailable" [showIcons]="true"
+            name="currentlyAvailable">
+          <label>Currently available</label>
+        </div>
+      </div>
+      <!-- Category Filter -->
+      <div class="filter-group filter-categories">
+        <h3 i18n="@@categoryFilter">Categories</h3>
+        <ul>
+          @for (category of categories; track category) {
+          <li class="filter-category" (click)="toggleCategorySelection(category)">
+            <div class="filter-category-color" 
+              [class.active]="isCategorySelected(category)" 
+              [style.background-color]="category.color">
+              <tui-icon icon="@tui.check" [style.color]="'white'" />
+            </div>
+            {{ category.name }}
+          </li>
+          }
+        </ul>
+      </div>
+
+      <div class="filter-group filter-libraries">
+        <h3>Libraries</h3>
+        <ul>
+          @for (library of libraries; track library) {
+          <li class="filter-library">
+            <span class="filter-library-name">
+              <input
+                tuiCheckbox
+                type="checkbox"
+                [(ngModel)]="selectedLibraries[library.id]"
+                (change)="toggleLibrarySelection(library)"
+                size="s"
+              />
+              {{ library.name }}
+            </span>
+            <div class="filter-library-location">
+              <tui-icon icon="@tui.map-pin" />
+              {{ library.location.address }}
+            </div>
+          </li>
+          }
+        </ul>
+      </div>
     </div>
   </aside>
 
 
   <main class="grid-container">
-    @for (item of filteredItems; track item) {
-      <item-card
-        [item]="item"
-        [markAsFavorite]="markAsFavorite">
+    <div class="top-actions">
+
+      <div class="top-actions-right">
+
+        <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
+          tuiButton type="button">
+          <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
+          Add item
+        </button>
+
+        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="testValue"
+          [tuiTextfieldLabelOutside]="true">
+          Sort by
+          <input placeholder="Sort by" tuiTextfieldLegacy />
+          <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
+        </tui-select>
+      </div>
+    </div>
+
+    <div class="items-container">
+      @for (item of filteredAndSortedItems; track item) {
+      <item-card [item]="item" [markAsFavorite]="markAsFavorite">
       </item-card>
-    }
+      }
+    </div>
   </main>
 </div>

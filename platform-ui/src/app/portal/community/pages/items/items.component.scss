@@ -8,81 +8,212 @@
     gap: 1rem;
 }
 
-/* Add item container */
-.add-item {
-    width: 100%;
-}
-
-.add-item:hover {
-    background-color: $secondary-color;
-}
-
-/* Search container */
-.search {
-    padding-right: 0;
-    padding-left: 0;
-    border: 0;
-}
-
-/* Sidebar styling */
 .sidebar {
-    width: 250px;
-    background-color: $white; /* Light gray background from theme */
-    padding: 1rem;
-    border-radius: 16px;
-    border: 0px solid rgb(226, 232, 240);
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
-    margin-top: 17px;
+    width: 300px;
+    /* Light gray background from theme */
+    padding-top: 0;
+
+    .top-actions-left {
+
+        .search {
+            padding-right: 0;
+            padding-left: 0;
+            border: 0;
+        }
+    }
+
+    .filters-section {
+
+        h2 {
+            margin-top: 0;
+        }
+
+        padding: 1rem;
+        background-color: $white;
+        border-radius: 16px;
+        border: 0px solid rgb(226, 232, 240);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+        0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    }
+
+
+    .filter-group {
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+    }
+
+    /* Filter group styling */
+    .filter-categories {
+        margin-bottom: 1rem;
+
+
+        .filter-category {
+            list-style-type: none;
+
+            .filter-category-color {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin-right: 5px;
+                margin-top: 5px;
+                float: left;
+                opacity: 0.8;
+
+                tui-icon {
+                    height: 10px;
+                    width: 10px;
+                    position: relative;
+                    top: -5px;
+                    right: -5px;
+                    visibility: hidden;
+
+                }
+            }
+
+            .filter-category-color.active {
+                opacity: 1;
+
+                tui-icon {
+                    visibility: visible;
+                }
+            }
+
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .filter-category:hover {
+            position: relative;
+            left: 5px;
+        }
+    }
+
+    .filter-availability {
+        label {
+            display: inline-block;
+        }
+
+        input {
+            float: left;
+            margin-right: 10px;
+        }
+
+    }
+
+    .filter-libraries {
+
+        .filter-library-location {
+            color: $accent-color;
+        }
+    }
+
+    .filter-group span {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $dark-color;
+        /* Dark text color */
+    }
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
 }
 
-/* Filter group styling */
-.filter-group {
-    margin-bottom: 1rem;
-}
-
-.filter-group span {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
-    color: $dark-color; /* Dark text color */
-}
-
-.filter-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-
-
-/* Grid container styling */
 .grid-container {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
-    gap: 1rem;
-    padding: 1rem;
-    box-sizing: border-box;
+    width: 100%;
+
+    .items-container {
+        flex: 1;
+        display: grid;
+        gap: 1rem;
+        padding: 1rem 0;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    // Default to two columns
+    .items-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    // Switch to single column on smaller screens
+    @media (max-width: 1000px) {
+        .items-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    .top-actions {
+        padding-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .top-actions-right {
+        margin-left: auto;
+        width: 380px;
+
+        .sorting-select {
+            display: inline-block;
+        }
+
+
+        .add-item:hover {
+            background-color: $secondary-color;
+        }
+    }
 }
 
-.location tui-icon, .owner tui-icon {
-    width: 16px;
-    height: 16px;
-    position: relative;
-    top: -3px;
+@media (min-width: 600px) {
+    .top-actions-right {
+
+        .sorting-select {
+            width: 50%;
+        }
+
+        .add-item {
+            width: 48%;
+            margin-right: 2%;
+        }
+    }
 }
 
-.location, .owner {
-    color: rgb(100, 116, 139);
-    padding-right: 5px;
-    line-height: 16px;
-    vertical-align: middle; /* Adjust alignment within the line */
-}
+@media (max-width: 600px) {
+    .layout-container {
+        flex-direction: column;
+    }
 
-.shortDescription {
-    display: block;
-    padding-top: 5px;
-}
+    .sidebar {
+        width: 100%;
+        order: -1; // Move sidebar to the top
+    }
 
-.toggle-container {
-    display: flex;
-    align-items: center;
+    .grid-container {
+        width: 100%;
+    }
+
+    .top-actions-right {
+
+        .sorting-select,
+        .add-item {
+            width: 100%;
+            margin-right: 0; // Reset margin for full width
+        }
+
+        .add-item {
+            margin-bottom: 1rem;
+        }
+    }
 }

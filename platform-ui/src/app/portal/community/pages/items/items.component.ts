@@ -1,16 +1,21 @@
-
 import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
+import { TuiButton, TuiDataList, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { TuiCheckbox, TuiDataListWrapper, TuiSwitch } from '@taiga-ui/kit';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { UIItemWithRecords } from '../../models/UIItemWithRecords';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
+
+import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { CategoryBadgeComponent } from "../../../../components/category-badge/category-badge.component";
+import { UILibrary } from '../../models/UILibrary';
+import { LibrariesService } from '../../services/libraries.service';
 
 @Component({
   standalone: true,
@@ -23,8 +28,16 @@ import { ItemsService } from '../../services/items.service';
     TuiAppearance,
     TuiButton,
     TuiTitle,
+    TuiCheckbox,
     FormsModule,
-    TuiTextfield
+    TuiTextfield,
+    ReactiveFormsModule,
+    TuiDataList,
+    TuiDataListWrapper,
+    TuiSelectModule,
+    TuiTextfieldControllerModule,
+    CategoryBadgeComponent,
+    TuiSwitch
   ],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
@@ -38,10 +51,24 @@ export class ItemsComponent {
   // Text input for search filtering
   searchText = '';
   items: UIItemWithRecords[] = [];
+  currentlyAvailable: boolean = false;
+  libraries: UILibrary[] = [];
+
+  // Selected libraries
+  selectedLibraries: { [key: string]: boolean } = {};
+
+  protected sortingOptions = [
+    'Latest',
+    'Most borrowed',
+    'Favorites',
+  ];
+
+  protected testValue = new FormControl<string | null>(null);
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
+    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService
   ) { }
 
   ngOnInit() {
@@ -52,6 +79,9 @@ export class ItemsComponent {
     this.categoriesService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
+    this.librariesService.getLibraries().subscribe(libraries => {
+      this.libraries = libraries;
+    });
   }
 
   // Filtered items for the grid
@@ -60,18 +90,34 @@ export class ItemsComponent {
       const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category.name);
       const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
         item.description.toLowerCase().includes(this.searchText.toLowerCase());
-      return categoryMatch && textMatch;
+      const availabilityMatch = !this.currentlyAvailable || !item.isBookedToday;
+      const libraryMatch = Object.keys(this.selectedLibraries).length === 0 || this.selectedLibraries[item.libraryId];
+      return categoryMatch && textMatch && availabilityMatch && libraryMatch;
     });
   }
 
-  // Handle category checkbox changes
-  onCategoryChange(event: Event) {
-    const checkbox = event.target as HTMLInputElement;
-    if (checkbox.checked) {
-      this.selectedCategories.add(checkbox.value);
-    } else {
-      this.selectedCategories.delete(checkbox.value);
-    }
+  get filteredAndSortedItems() {
+    const filtered = this.items.filter(item => {
+      const categoryMatch = this.selectedCategories.size === 0 || this.selectedCategories.has(item.category.name);
+      const textMatch = item.name.toLowerCase().includes(this.searchText.toLowerCase()) ||
+        item.description.toLowerCase().includes(this.searchText.toLowerCase());
+      const availabilityMatch = !this.currentlyAvailable || !item.isBookedToday;
+      const libraryMatch = Object.keys(this.selectedLibraries).length === 0 || this.selectedLibraries[item.libraryId];
+      return categoryMatch && textMatch && availabilityMatch && libraryMatch;
+    });
+
+    return filtered.sort((a, b) => {
+      switch (this.testValue.value) {
+        case 'Latest':
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        case 'Most borrowed':
+          return (b.borrowCount || 0) - (a.borrowCount || 0);
+        case 'Favorites':
+          return (b.favorite ? 1 : 0) - (a.favorite ? 1 : 0);
+        default:
+          return 0;
+      }
+    });
   }
 
   // Handle text filter change
@@ -81,5 +127,26 @@ export class ItemsComponent {
 
   markAsFavorite(item: UIItem) {
     this.itemsService.markAsFavorite(item);
+  }
+
+  toggleCategorySelection(category: UICategory) {
+    if (this.selectedCategories.has(category.name)) {
+      this.selectedCategories.delete(category.name);
+    } else {
+      this.selectedCategories.add(category.name);
+    }
+  }
+
+  isCategorySelected(category: any): boolean {
+    // Implement your logic to determine if the category is selected
+    return this.selectedCategories.has(category.name);
+  }
+
+  toggleLibrarySelection(library: UILibrary) {
+    if (this.selectedLibraries[library.id]) {
+      delete this.selectedLibraries[library.id];
+    } else {
+      this.selectedLibraries[library.id] = true;
+    }
   }
 }

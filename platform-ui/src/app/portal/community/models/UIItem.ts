@@ -12,4 +12,6 @@ export interface UIItem {
     category: UICategory;
     favorite: boolean;
     borrowCount: number;
+    libraryId: string;
+    createdAt: Date;
 }
