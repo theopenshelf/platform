@@ -1,0 +1,130 @@
+@use 'theme' as *;
+
+/* Card styling */
+.borrow-item-card {
+    display: flex;
+    flex-direction: row;
+    /* Align children (image + content) horizontally */
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+}
+
+.borrow-item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Card container for image + content */
+.card-content {
+    display: flex;
+    width: 100%;
+}
+
+/* Image Section */
+.image-container {
+    width: 40%;
+    /* Image takes 1/3 of the card's width */
+    height: 200px;
+    border-right: 1px solid #ccc;
+}
+
+.item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-content {
+    padding-top: 10px;
+    padding-bottom: 5%;
+    padding-left: 3%;
+    padding-right: 2%;
+    width: 55%;
+    /* The content section takes the remaining 2/3 of the width */
+
+}
+
+/* Item Details Section (2/3 of the card's width) */
+.item-details {
+    height: 80%;
+    /* The content section takes the remaining 2/3 of the width */
+}
+
+/* Item Actions Section */
+.item-actions {
+    padding: 2% 0;
+    height: 14%;
+    /* The content section takes the remaining 2/3 of the width */
+    border-top: 1px solid rgb(226, 232, 240);
+    display: flex;
+
+}
+
+.item-actions button {
+    border-radius: 30px;
+    font-size: small;
+    font-weight: 600;
+}
+
+.borrow-counts {
+    color: $dark-color;
+    margin-left: auto;
+    /* Push this button to the right */
+}
+
+
+.item-details-top-right {
+    float: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.favorite,
+.reservation-state {
+    border-radius: 30px;
+    padding: 20px;
+    margin: 2px;
+    width: 30px;
+    height: 30px;
+}
+
+.item-card:hover {
+    cursor: pointer;
+}
+
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 25px;
+    border: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: $white;
+    /* White text for badges */
+    text-align: center;
+    height: 20px;
+    /* Ensure consistent width */
+}
+
+/* Status badges */
+.badge-reserved {
+    background-color: #3498db;
+    /* Light Blue */
+}
+
+.badge-borrowed {
+    background-color: #2ecc71;
+    /* Green */
+}
+
+.badge-returned {
+    background-color: #95a5a6;
+    /* Gray */
+}

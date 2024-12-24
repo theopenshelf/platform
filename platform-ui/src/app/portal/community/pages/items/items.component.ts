@@ -57,10 +57,15 @@ export class ItemsComponent {
   // Selected libraries
   selectedLibraries: { [key: string]: boolean } = {};
 
+  // Define static readonly variables for sorting options
+  static readonly SORT_RECENTLY_ADDED = 'Recently added';
+  static readonly SORT_MOST_BORROWED = 'Most borrowed';
+  static readonly SORT_FAVORITES = 'Favorites';
+
   protected sortingOptions = [
-    'Latest',
-    'Most borrowed',
-    'Favorites',
+    ItemsComponent.SORT_RECENTLY_ADDED,
+    ItemsComponent.SORT_MOST_BORROWED,
+    ItemsComponent.SORT_FAVORITES,
   ];
 
   protected testValue = new FormControl<string | null>(null);
@@ -108,11 +113,11 @@ export class ItemsComponent {
 
     return filtered.sort((a, b) => {
       switch (this.testValue.value) {
-        case 'Latest':
+        case ItemsComponent.SORT_RECENTLY_ADDED:
           return b.createdAt.getTime() - a.createdAt.getTime();
-        case 'Most borrowed':
+        case ItemsComponent.SORT_MOST_BORROWED:
           return (b.borrowCount || 0) - (a.borrowCount || 0);
-        case 'Favorites':
+        case ItemsComponent.SORT_FAVORITES:
           return (b.favorite ? 1 : 0) - (a.favorite ? 1 : 0);
         default:
           return 0;

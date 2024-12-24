@@ -104,3 +104,22 @@ button.dropdown {
     top: -8px !important;
     left: -4px !important;
 }
+
+/* Responsive styling for horizontal menu */
+@media (max-width: 768px) {
+    .horizontal-menu {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .horizontal-menu a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .horizontal-menu a tui-icon {
+        margin: 0 0 5px 0;
+        /* Adjust margin to center the icon above the label */
+    }
+}

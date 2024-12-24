@@ -288,7 +288,16 @@ export class MockItemsService implements ItemsService {
         return of(item);
     }
 
-    private borrowedItems: UIBorrowItem[] = [];
+    private borrowedItems: UIBorrowItem[] = [
+        {
+            ...this.items[0],
+            record: { id: '1', borrowedBy: 'me@example.com', startDate: '2024-01-01', endDate: '2024-01-07' }
+        },
+        {
+            ...this.items[2],
+            record: { id: '2', borrowedBy: 'me@example.com', startDate: '2024-01-01', endDate: '2024-01-07' }
+        }
+    ];
 
     borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIBorrowItem> {
         const borrowedItem = {

@@ -1,11 +1,14 @@
 import { CommonModule, NgClass } from '@angular/common';
 import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
+import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { CATEGORIES_SERVICE_TOKEN, communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
 import { UIBorrowItem } from '../../models/UIBorrowItem';
 import { UICategory } from '../../models/UICategory';
 import { CategoriesService } from '../../services/categories.service';
@@ -14,13 +17,28 @@ import { ItemsService } from '../../services/items.service';
 @Component({
   standalone: true,
   selector: 'app-myborroweditems',
-  imports: [CommonModule, RouterLink, FormsModule, NgClass, TuiTable, CategoryBadgeComponent],
+  imports: [
+    CommonModule,
+    RouterLink,
+    TuiTextfieldControllerModule,
+    FormsModule,
+    NgClass,
+    TuiTable,
+    CategoryBadgeComponent,
+    BorrowItemCardComponent,
+    TuiSelectModule,
+    TuiTextfield,
+    TuiIcon,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './myborroweditems.component.html',
   styleUrls: ['./myborroweditems.component.scss']
 })
 export class MyborroweditemsComponent {
   protected readonly sizes = ['l', 'm', 's'] as const;
   protected size = this.sizes[0];
+  protected searchText = '';
 
   // Sorting State
   protected sortColumn: string = 'status';
@@ -29,6 +47,27 @@ export class MyborroweditemsComponent {
   // Filters
   private categoryFilterSubject = new BehaviorSubject<string>('');
   private statusFilterSubject = new BehaviorSubject<string>('');
+  selectedCategories: Set<string> = new Set();
+
+  // Define static readonly variables for sorting options
+  static readonly SORT_RECENTLY_RESERVED = 'Recently reserved';
+  static readonly SORT_MOST_BORROWED = 'Most borrowed';
+  static readonly SORT_FAVORITES = 'Favorites';
+
+  protected sortingOptions = [
+    MyborroweditemsComponent.SORT_RECENTLY_RESERVED,
+    MyborroweditemsComponent.SORT_MOST_BORROWED,
+    MyborroweditemsComponent.SORT_FAVORITES,
+  ];
+
+  protected selectedStatuses: Set<string> = new Set();
+  protected statuses = [
+    { name: 'Reserved', color: '#3498db' }, // Light Blue
+    { name: 'Currently Borrowed', color: '#2ecc71' }, // Green
+    { name: 'Returned', color: '#95a5a6' } // Gray
+  ];
+
+  protected testValue = new FormControl<string | null>(null);
 
   // Create getters and setters for the filters
   protected get categoryFilter(): string {
@@ -45,7 +84,7 @@ export class MyborroweditemsComponent {
     this.statusFilterSubject.next(value);
   }
 
-  protected items$: Observable<UIBorrowItem[]>;
+  protected items: UIBorrowItem[] = [];
   categories: UICategory[] = [];
 
   // Status mapping for sorting
@@ -58,14 +97,18 @@ export class MyborroweditemsComponent {
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
-  ) {
-    this.items$ = this.getFilteredAndSortedData$();
-  }
+  ) { }
 
   ngOnInit() {
     this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
       this.categories = categories;
     });
+    this.getFilteredAndSortedData().subscribe((items) => {
+      this.items = items;
+    });
+  }
+  onTextFilterChange() {
+    // The filtering is handled in the getter `filteredItems`
   }
 
   // Helper function to calculate item status
@@ -138,7 +181,7 @@ export class MyborroweditemsComponent {
   }
 
   // Update getFilteredAndSortedData to use combineLatest
-  private getFilteredAndSortedData$(): Observable<UIBorrowItem[]> {
+  private getFilteredAndSortedData(): Observable<UIBorrowItem[]> {
     return combineLatest([
       this.itemsService.getMyBorrowItems(),
       this.categoryFilterSubject,
@@ -194,7 +237,9 @@ export class MyborroweditemsComponent {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    this.items$ = this.getFilteredAndSortedData$();
+    this.getFilteredAndSortedData().subscribe((items) => {
+      this.items = items;
+    });
   }
 
   protected getSortIndicator(column: string): string {
@@ -229,7 +274,27 @@ export class MyborroweditemsComponent {
         return '';
     }
   }
+  toggleCategorySelection(category: UICategory) {
+    if (this.selectedCategories.has(category.name)) {
+      this.selectedCategories.delete(category.name);
+    } else {
+      this.selectedCategories.add(category.name);
+    }
+  }
 
-  // Dynamic options for filters
-  protected readonly statuses = ['Currently Borrowed', 'Reserved', 'Returned'];
+  isCategorySelected(category: any): boolean {
+    // Implement your logic to determine if the category is selected
+    return this.selectedCategories.has(category.name);
+  }
+  toggleStatusSelection(status: string) {
+    if (this.selectedStatuses.has(status)) {
+      this.selectedStatuses.delete(status);
+    } else {
+      this.selectedStatuses.add(status);
+    }
+  }
+
+  isStatusSelected(status: string): boolean {
+    return this.selectedStatuses.has(status);
+  }
 }

@@ -1,0 +1,48 @@
+<div tuiAppearance="floating" class="borrow-item-card">
+    <!-- Flexbox container for the image and details -->
+    <div class="card-content">
+      <!-- Image Section -->
+      <div class="image-container" routerLink="/community/items/{{item.id}}">
+        <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+      </div>
+  
+  
+      <!-- Item Details -->
+  
+      <div class="item-content">
+        <div routerLink="/community/items/{{item.id}}" class="item-details">
+          <div class="item-details-top-right">
+            <span [ngClass]="getBadgeClass(computeStatus(item.record.startDate, item.record.endDate))">
+                {{ computeStatus(item.record.startDate, item.record.endDate) }}
+              </span>
+          </div>
+          <h2 tuiTitle>
+            {{ item.name }}
+          </h2>
+          <span class="location">
+            <span class="location-value">{{ item.located }}</span>
+            <tui-icon icon="@tui.map-pin" />
+          </span>
+          <span class="owner">
+            <span class="owner-value">{{ item.owner }}</span>
+            <tui-icon icon="@tui.user-round" />
+          </span>
+  
+        </div>
+  
+        <!-- Borrow Button -->
+        <div class="item-actions">  
+            <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
+              [appearance]="item.record ? 'primary' : 'outline'" size="m" type="button"
+              >
+            </button>
+            @if (item.record) {
+              <span>
+                Reserved from {{ item.record.startDate }} to {{ item.record.endDate }}
+              </span>
+            }
+
+        </div>
+      </div>
+    </div>
+  </div>

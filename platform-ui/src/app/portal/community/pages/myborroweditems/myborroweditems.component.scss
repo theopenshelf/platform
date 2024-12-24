@@ -1,87 +1,231 @@
 @use 'theme' as *;
 
-/* Table styling */
-table {
-    width: 100%;
-    border-spacing: 0;
-    background-color: $white;
-}
-
-table td, table th {
-    border-right: none;
-    border-left: none;
-}
-
-table th {
-    background-color: $light-color; /* Light background from theme */
-}
-
-/* Header styling */
-h1 {
-    margin: 30px 0;
-    color: $dark-color; /* Dark text for headings */
-}
-
-th {
-    cursor: pointer;
-    user-select: none;
-}
-
-th span {
-    margin-left: 4px;
-}
-
-tr:hover {
-    background-color: $light-color;
-}
-
-/* Filtering section styles */
-.filters {
+.layout-container {
     display: flex;
+    height: 100%;
+    margin: 0;
     gap: 1rem;
-    margin-bottom: 20px;
-    align-items: center;
 }
 
-.filters label {
-    font-weight: bold;
-    margin-right: 8px;
-    color: $dark-color; /* Dark text for labels */
+.sidebar {
+    width: 300px;
+    /* Light gray background from theme */
+    padding-top: 0;
+
+    .top-actions-left {
+
+        .search {
+            padding-right: 0;
+            padding-left: 0;
+            border: 0;
+        }
+    }
+
+    .filters-section {
+
+        h2 {
+            margin-top: 0;
+        }
+
+        padding: 1rem;
+        background-color: $white;
+        border-radius: 16px;
+        border: 0px solid rgb(226, 232, 240);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+        0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    }
+
+
+    .filter-group {
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style-type: none;
+        }
+    }
+
+    /* Filter group styling */
+    .filter-categories,
+    .filter-statuses {
+        margin-bottom: 1rem;
+
+        /* Status badges */
+        .badge-reserved {
+            background-color: #3498db;
+            /* Light Blue */
+        }
+
+        .badge-borrowed {
+            background-color: #2ecc71;
+            /* Green */
+        }
+
+        .badge-returned {
+            background-color: #95a5a6;
+            /* Gray */
+        }
+
+
+        .filter-category,
+        .filter-status {
+            list-style-type: none;
+
+            .filter-category-color,
+            .filter-status-color {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                margin-right: 5px;
+                margin-top: 5px;
+                float: left;
+                opacity: 0.8;
+
+                tui-icon {
+                    height: 10px;
+                    width: 10px;
+                    position: relative;
+                    top: -5px;
+                    right: -5px;
+                    visibility: hidden;
+
+                }
+            }
+
+            .filter-category-color.active,
+            .filter-status-color.active {
+                opacity: 1;
+
+                tui-icon {
+                    visibility: visible;
+                }
+            }
+
+            height: 30px;
+            line-height: 30px;
+            margin-bottom: 5px;
+        }
+
+        .filter-category:hover,
+        .filter-status:hover {
+            position: relative;
+            left: 5px;
+        }
+    }
+
+    .filter-availability {
+        label {
+            display: inline-block;
+        }
+
+        input {
+            float: left;
+            margin-right: 10px;
+        }
+
+    }
+
+    .filter-libraries {
+
+        .filter-library-location {
+            color: $accent-color;
+        }
+    }
+
+    .filter-group span {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+        color: $dark-color;
+        /* Dark text color */
+    }
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
 }
 
-.filters select {
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: 1px solid $border-color; /* Border color from theme */
-    background-color: $white; /* Light background from theme */
-    cursor: pointer;
-}
-.item-image {
-    max-width: 50px;
-    max-height: 50px;
-}
-/* Badge styles */
-.badge {
-    display: inline-block;
-    padding: 6px 12px;
-    border-radius: 12px;
-    border: none;
-    font-size: 0.9em;
-    font-weight: bold;
-    color: $white; /* White text for badges */
-    text-align: center;
-    min-width: 120px; /* Ensure consistent width */
+.grid-container {
+    width: 100%;
+
+    .items-container {
+        flex: 1;
+        display: grid;
+        gap: 1rem;
+        padding: 10px 0;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    // Default to two columns
+    .items-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    // Switch to single column on smaller screens
+    @media (max-width: 1000px) {
+        .items-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    .top-actions {
+        padding-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .top-actions-right {
+        margin-left: auto;
+        width: 200px;
+
+        .sorting-select {
+            display: inline-block;
+        }
+
+
+        .add-item:hover {
+            background-color: $secondary-color;
+        }
+    }
 }
 
-/* Status badges */
-.badge-reserved {
-    background-color: #3498db; /* Light Blue */
+
+@media (min-width: 600px) {
+    .top-actions-right {
+
+        .sorting-select {
+            width: 100%;
+        }
+    }
 }
 
-.badge-borrowed {
-    background-color: #2ecc71; /* Green */
-}
+@media (max-width: 600px) {
+    .layout-container {
+        flex-direction: column;
+    }
 
-.badge-returned {
-    background-color: #95a5a6; /* Gray */
+    .sidebar {
+        width: 100%;
+        order: -1; // Move sidebar to the top
+    }
+
+    .grid-container {
+        width: 100%;
+    }
+
+    .top-actions-right {
+        width: 100% !important;
+
+        .sorting-select {
+            width: 100%;
+            margin-right: 0; // Reset margin for full width
+        }
+    }
 }

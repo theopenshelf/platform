@@ -36,7 +36,7 @@ button.dropdown {
     display: flex;
     background-color: #000000;
     /* Use lighter gray for background */
-    padding: 0.5em 1em;
+    padding: 0.5em 0em;
     border-bottom: 1px solid #ccc;
     /* Use theme border color */
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
@@ -88,4 +88,28 @@ button.dropdown {
     /* Underline color (match active link color) */
     border-radius: 0;
     /* No border radius for the line */
+}
+
+/* Responsive styling for horizontal menu */
+@media (max-width: 768px) {
+    .horizontal-menu {
+        flex-direction: row;
+        /* Keep the menu items in a horizontal row */
+        justify-content: space-around;
+        /* Space out the menu items evenly */
+    }
+
+    .horizontal-menu a {
+        display: flex;
+        flex-direction: column;
+        /* Stack icon above the label */
+        align-items: center;
+        padding: 0.3em 0em;
+        font-size: 0.9em;
+    }
+
+    .horizontal-menu a tui-icon {
+        margin: 0 0 3px 0;
+        /* Adjust margin for compactness */
+    }
 }
