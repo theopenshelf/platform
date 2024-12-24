@@ -3,16 +3,18 @@
 /* Layout */
 .settings-container {
     display: flex;
-    flex-direction: column; /* Ensures header is at the top */
+    flex-direction: column;
+    /* Ensures header is at the top */
     height: 100vh;
-    padding: 0 40px;
+    padding: 0 0px;
 }
 
 /* Header */
 .settings-header {
     display: flex;
     align-items: center;
-    gap: 12px; /* Space between avatar and text */
+    gap: 12px;
+    /* Space between avatar and text */
     padding: 16px;
     width: 100%;
     border-bottom: solid #e6e6e6 1px;
@@ -32,7 +34,8 @@
 
 .username {
     font-size: 14px;
-    color: #888; /* Lighter color for username */
+    color: #888;
+    /* Lighter color for username */
 }
 
 /* Body */
@@ -45,8 +48,10 @@
 .settings-menu {
     width: 200px;
     padding: 0 16px;
-    height: calc(100vh - 64px); /* Adjust height to account for header */
-    overflow-y: auto; /* Scrollable menu if content overflows */
+    height: calc(100vh - 64px);
+    /* Adjust height to account for header */
+    overflow-y: auto;
+    /* Scrollable menu if content overflows */
 }
 
 .settings-menu ul {
@@ -61,23 +66,28 @@
 
 .settings-menu a {
     text-decoration: none;
-    color:  $dark-color; /* GitHub's blue color for links */
+    color: $dark-color;
+    /* GitHub's blue color for links */
     font-weight: bold;
     padding: 8px 12px;
     display: block;
     border-radius: 4px;
-    position: relative; /* Required for the vertical marker */
+    position: relative;
+    /* Required for the vertical marker */
 }
 
 /* Hover effect */
 .settings-menu a:hover {
-    background-color: $light-color; /* Light blue background on hover */
+    background-color: $light-color;
+    /* Light blue background on hover */
 }
 
 /* Active link styling */
 .settings-menu a.active {
-    background-color: $light-color; /* Subtle blue background for the active link */
-    color: $dark-color; /* Ensure text remains GitHub blue */
+    background-color: $light-color;
+    /* Subtle blue background for the active link */
+    color: $dark-color;
+    /* Ensure text remains GitHub blue */
     border-radius: 4px;
     font-weight: bold;
     position: relative;
@@ -89,10 +99,13 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 4px; /* Thickness of the vertical marker */
+    width: 4px;
+    /* Thickness of the vertical marker */
     height: 100%;
-    background-color:  $dark-color; /* GitHub blue for the marker */
-    border-radius: 2px; /* Rounding for the marker */
+    background-color: $dark-color;
+    /* GitHub blue for the marker */
+    border-radius: 2px;
+    /* Rounding for the marker */
 }
 
 .settings-menu a tui-icon {
@@ -107,11 +120,34 @@
 .settings-content {
     flex: 1;
     padding: 0 16px;
-    overflow-y: auto; /* Optional: make the content scrollable */
+    overflow-y: auto;
+    /* Optional: make the content scrollable */
     background-color: $white;
     border: 0px solid rgb(226, 232, 240);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
     border-radius: 16px;
     overflow: hidden;
     margin-bottom: 20px;
+}
+
+/* Add media query for phone-sized screens */
+@media (max-width: 768px) {
+    .settings-menu {
+        display: none;
+        visibility: visible !important; // Hide the phone menu by default
+        // Hide the regular menu on smaller screens
+    }
+
+    .settings-menu-phone {
+        margin-left: auto;
+        margin-right: 15px;
+    }
+}
+
+/* Default styles for larger screens */
+@media (min-width: 768px) {
+
+    .settings-menu-phone {
+        visibility: hidden; // Hide the phone menu by default
+    }
 }

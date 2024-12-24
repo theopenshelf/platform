@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TuiPortals } from '@taiga-ui/cdk';
-import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
+import { TuiAutoColorPipe, TuiButton, TuiDataList, TuiDropdown, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
@@ -14,9 +14,13 @@ import { AuthService, UserInfo } from '../../../../../services/auth.service';
     TuiInitialsPipe,
     TuiAvatar,
     TuiIcon,
+    TuiButton,
     RouterLinkActive,
     RouterOutlet,
-    RouterLink],
+    RouterLink,
+    TuiDataList,
+    TuiDropdown
+  ],
   providers: [
     ...globalProviders,
     tuiLayoutIconsProvider({ grid: '@tui.align-justify' }),
