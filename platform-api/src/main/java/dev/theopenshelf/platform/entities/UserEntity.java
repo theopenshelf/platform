@@ -2,16 +2,22 @@ package dev.theopenshelf.platform.entities;
 
 import java.util.UUID;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 import dev.theopenshelf.platform.model.User;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@Table("users")
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
 public class UserEntity {
     @Id
     private UUID id;

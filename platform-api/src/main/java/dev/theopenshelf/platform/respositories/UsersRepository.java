@@ -2,11 +2,10 @@ package dev.theopenshelf.platform.respositories;
 
 import java.util.UUID;
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import dev.theopenshelf.platform.entities.UserEntity;
-import reactor.core.publisher.Mono;
 
-public interface UsersRepository extends ReactiveCrudRepository<UserEntity, UUID> {
-    Mono<UserEntity> findByUsername(String login);
+public interface UsersRepository extends CrudRepository<UserEntity, UUID> {
+    UserEntity findByUsername(String login);
 }

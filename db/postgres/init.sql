@@ -4,7 +4,7 @@ CREATE TABLE "items" (
   "id" uuid UNIQUE DEFAULT uuid_generate_v4() PRIMARY KEY,
   "name" varchar,
   "description" varchar(40096),
-  "location" varchar,
+  "located" varchar,
   "created_at" timestamp
 );
 

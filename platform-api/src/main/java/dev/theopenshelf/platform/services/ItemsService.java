@@ -17,6 +17,6 @@ public class ItemsService {
     private final ItemsRepository itemsRepository;
 
     public Flux<Item> getAllItems() {
-        return itemsRepository.findAll().map(i -> i.toItem().build());
+        return Flux.fromIterable(itemsRepository.findAll()).map(i -> i.toItem().build());
     }
 }

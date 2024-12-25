@@ -1,12 +1,12 @@
 package dev.theopenshelf.platform.respositories;
 
+import java.util.List;
 import java.util.UUID;
 
-import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import dev.theopenshelf.platform.entities.ItemEntity;
-import reactor.core.publisher.Flux;
 
-public interface ItemsRepository extends ReactiveCrudRepository<ItemEntity, UUID> {
-    Flux<ItemEntity> findByLocation(String location);
+public interface ItemsRepository extends CrudRepository<ItemEntity, UUID> {
+    List<ItemEntity> findByLocated(String location);
 }

@@ -18,7 +18,7 @@ public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return usersRepository.findByUsername(username)
+        return Mono.just(usersRepository.findByUsername(username))
                 .map(user -> new User(user.getUsername(), user.getPassword(), Collections.emptyList()));
     }
 }

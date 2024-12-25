@@ -3,11 +3,11 @@ package dev.theopenshelf.platform;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Slf4j
 @SpringBootApplication
-@EnableR2dbcRepositories
+@EnableJpaRepositories
 public class Main {
 
     public static void main(String[] args) {

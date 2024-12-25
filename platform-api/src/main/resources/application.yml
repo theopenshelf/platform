@@ -4,11 +4,17 @@ server:
     enabled: false
 
 spring:
-  r2dbc:
-    url: r2dbc:postgresql://localhost:8433/theopenshelf
+  datasource:
+    url: jdbc:postgresql://localhost:8433/theopenshelf
     username: local
     password: local
-    initialization-mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update # "update" pour dev, "validate" ou "none" pour prod
+    show-sql: true # Affiche les requêtes SQL dans les logs
+    properties:
+      hibernate:
+        format_sql: true
 
 logging:
   level:

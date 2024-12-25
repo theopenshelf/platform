@@ -31,7 +31,7 @@ public class AuthApi implements AuthApiApiDelegate {
     public Mono<ResponseEntity<User>> login(Mono<LoginRequest> loginRequest, ServerWebExchange exchange) {
         return loginRequest
                 .flatMap(request -> authenticationManager.authenticate(UsernamePasswordAuthenticationToken.unauthenticated(request.getUsername(), request.getPassword())))
-                .zipWhen(authentication -> usersRepository.findByUsername(authentication.getName()))
+                .zipWhen(authentication -> Mono.just(usersRepository.findByUsername(authentication.getName())))
                 .flatMap(tuple -> {
                     SecurityContext context = SecurityContextHolder.createEmptyContext();
                     context.setAuthentication(tuple.getT1());
