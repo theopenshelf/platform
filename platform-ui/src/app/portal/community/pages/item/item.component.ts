@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, effect, Inject, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -9,11 +9,12 @@ import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon } from '
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
+import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { EMPTY, switchMap, tap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { communityProviders, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowItem } from '../../models/UIBorrowItem';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
@@ -37,7 +38,8 @@ const plusTen = today.append({ day: 10 });
     TuiIcon,
     ReactiveFormsModule,
     TuiInputDateRangeModule,
-    RouterLink
+    RouterLink,
+    JsonPipe
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -86,7 +88,13 @@ export class ItemComponent {
       if (itemId) {
         this.itemsService.getItem(itemId).subscribe(item => this.item = item);
         this.itemsService.getItemBorrowRecords(itemId).subscribe(records => this.records = records);
-        this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => this.borrowItemRecord = borrowItemRecord || undefined);
+        this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => {
+          if (borrowItemRecord && new Date(borrowItemRecord.record.endDate) > new Date()) {
+            this.borrowItemRecord = borrowItemRecord;
+          } else {
+            this.borrowItemRecord = undefined;
+          }
+        });
       }
     })
   }
@@ -142,7 +150,7 @@ export class ItemComponent {
     }
   }
 
-  borrowItem() {
+  borrowItem(header: PolymorpheusContent) {
     const data: TuiConfirmData = {
       content: 'Are you sure you want to disable this user?',  // Simple content
       yes: 'Yes, Disable',
@@ -153,6 +161,7 @@ export class ItemComponent {
       .open<boolean>(TUI_CONFIRM, {
         label: `Borrow ${this.item?.name}`,
         size: 'm',
+        header: header,
         data: {
           content: `Are you sure you want to borrow this item from ${this.selectedDate?.from.toLocalNativeDate().toLocaleDateString()} to ${this.selectedDate?.to.toLocalNativeDate().toLocaleDateString()}?`,
           yes: 'Yes, Borrow',
@@ -184,12 +193,13 @@ export class ItemComponent {
       .subscribe();
   }
 
-  cancelReservation() {
+  cancelReservation(header: PolymorpheusContent) {
     if (this.borrowItemRecord) {
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
           label: `Cancel Reservation for ${this.borrowItemRecord.name}`,
           size: 'm',
+          header: header,
           data: {
             content: `Are you sure you want to cancel your reservation for ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}?`,
             yes: 'Yes, Cancel',

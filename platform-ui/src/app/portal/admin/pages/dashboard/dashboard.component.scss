@@ -44,8 +44,8 @@
 }
 
 .chart-title {
-    font-size: 24px;
-    color: $accent-color;
+    font-size: 18px;
+    color: $dark-color;
     margin-top: 15px;
     margin-bottom: 25px;
 }
@@ -112,6 +112,23 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px; // Adjust the gap between cards as needed
     margin-bottom: 15px;
+
+    td {
+        color: $accent-color;
+        font-weight: 600;
+    }
+
+    tr:first-child td {
+        font-size: 24px;
+    }
+
+    tr:nth-child(2) td {
+        font-size: 18px;
+    }
+
+    tr:nth-child(3) td {
+        font-size: 18px;
+    }
 
     .dashboard-top-users,
     .dashboard-top-items,

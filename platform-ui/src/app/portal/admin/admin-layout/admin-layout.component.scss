@@ -25,6 +25,19 @@ button.dropdown {
     justify-content: flex-start;
 }
 
+@media (max-width: 768px) {
+
+    nav a {
+        min-width: 70px !important;
+    }
+}
+
+@media (min-width: 768px) {
+
+    nav a {
+        min-width: 120px !important;
+    }
+}
 
 /* Horizontal Menu */
 .horizontal-menu {
@@ -32,7 +45,7 @@ button.dropdown {
     top: 47px;
     left: 0;
     width: 100%;
-    z-index: 1000;
+    z-index: 1;
     display: flex;
     background-color: #000000;
     /* Use lighter gray for background */

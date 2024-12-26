@@ -20,7 +20,7 @@ import { TUI_CONFIRM, TuiAvatar, TuiCheckbox, TuiConfirmData } from '@taiga-ui/k
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { switchMap } from 'rxjs';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
-import { TosTableComponent } from '../../components/tos-table/tos-table.component';
+import { Column, TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
 
 
@@ -71,14 +71,14 @@ export class UsersComponent {
     currentUser: UIUser | undefined;
 
     // Available Columns for Display
-    columns = [
-        { key: 'username', label: 'Username', custom: true, visible: true, sortable: true },
-        { key: 'email', label: 'Email', visible: true, sortable: true },
-        { key: 'flatNumber', label: 'Flat Number', visible: true, sortable: true },
-        { key: 'address', label: 'Address', visible: false, sortable: false },
-        { key: 'borrowedItems', label: 'Borrowed Items', visible: true, sortable: true },
-        { key: 'returnedLate', label: 'Returned Late', visible: true, sortable: true },
-        { key: 'successRate', label: '% of Late', visible: true, sortable: true },
+    columns: Column[] = [
+        { key: 'username', label: 'Username', custom: true, visible: true, sortable: true, size: 'm' },
+        { key: 'email', label: 'Email', visible: true, sortable: true, size: 'm' },
+        { key: 'flatNumber', label: 'Flat Number', visible: true, sortable: true, size: 'm' },
+        { key: 'address', label: 'Address', visible: false, sortable: false, size: 'l' },
+        { key: 'borrowedItems', label: 'Borrowed Items', visible: true, sortable: true, size: 's' },
+        { key: 'returnedLate', label: 'Returned Late', visible: true, sortable: true, size: 's' },
+        { key: 'successRate', label: '% of Late', visible: true, sortable: true, size: 's' },
     ];
     passwordForm = new FormGroup({
         userPasswordControl: new FormControl(''),

@@ -1,139 +1,165 @@
 @use 'theme' as *;
 
 table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0px;
-    border-width: 1px;
-    border-style: solid;
-    border-image: initial;
-    border-radius: 6px;
-    table-layout: fixed;
-    overflow: unset;
-    background-color: $light-color;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-image: initial;
+  border-radius: 6px;
+  table-layout: fixed;
+  overflow: unset;
+  background-color: $light-color;
+  border-color: #ccc;
 }
 
 table thead tr:first-child td:last-child {
-    border-radius: 0 6px 0 0;
+  border-radius: 0 6px 0 0;
 }
 
 table tbody tr:last-child td:first-child {
-    border-radius: 0 0 0 6px;
+  border-radius: 0 0 0 6px;
 }
 
 table tbody tr:last-child .action-icons {
-    border-radius: 0 0 6px 0;
+  border-radius: 0 0 6px 0;
+  min-width: 200px;
 }
 
 tbody tr {
-    background-color: $white
-        /* Subtle hover effect using theme */
-        /* Lighter background on hover */
+  background-color: $white
+    /* Subtle hover effect using theme */
+    /* Lighter background on hover */
 }
 
 th,
 td {
-    padding: 10px;
-    border: none;
-    /* No Vertical Lines */
-    padding: 0.75rem;
-    text-align: left;
+  padding: 10px;
+  border: none;
+  /* No Vertical Lines */
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.size-s {
+  width: 100px;
+  /* Adjust this to your desired width */
+}
+
+.size-m {
+  width: 200px;
+  /* Adjust this to your desired width */
+}
+
+.size-l {
+  min-width: 400px;
+  /* Adjust this to your desired width */
 }
 
 
 tbody td {
-    border-top: 1px solid $border-color;
-    /* Use theme border color */
-    /* Row Divider */
-    vertical-align: middle;
+  border-top: 1px solid #ccc;
+  /* Use theme border color */
+  /* Row Divider */
+  vertical-align: middle;
 }
 
 /* Optional: Subtle horizontal divider for rows */
 tbody tr+tr {
-    border-top: 1px solid $dark-color;
-    /* Lighter divider using theme color */
-    /* Add a light divider between rows */
-    background-color: none
-        /* Subtle hover effect using theme */
+  border-top: 1px solid #ccc;
+  /* Lighter divider using theme color */
+  /* Add a light divider between rows */
+  background-color: none
+    /* Subtle hover effect using theme */
 
 }
 
 tbody tr {
-    background-color: $white
+  background-color: $white
 }
 
 /* Hover effect for table rows (optional) */
 tbody tr:hover {
-    background-color: $light-color
+  background-color: $light-color
 }
 
 .table-top-actions .add-action {
-    float: left;
+  float: left;
 }
 
 
 /* Column Selector */
 .column-selector {
-    margin-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.column-selector {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.column-selector label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.column-selector input {
+  margin-right: 0.25rem;
+}
+
+
+tui-dialog-backdrop {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 9999;
+}
+
+tui-dialog {
+  z-index: 9999 !important;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.filter-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.table-top-actions {
+  margin-bottom: 20px;
+}
+
+.table-top-actions .add-users {
+  float: left;
+}
+
+.table-top-actions .column-selector {
+  float: right;
+}
+
+.table-top-actions .filter-actions {
+  float: left;
+  margin-left: 10px;
+
+  input {
+    padding: 6px;
+    font-size: 1rem;
+    border: 1px solid $light-color;
+    border-radius: 5px;
+    transition: border-color 0.3s;
   }
-  
-  .column-selector {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  
-  .column-selector label {
-    font-weight: bold;
-    margin-right: 0.5rem;
-  }
-  
-  .column-selector input {
-    margin-right: 0.25rem;
-  }
-  
-  
-  tui-dialog-backdrop {
-    background-color: rgba(0, 0, 0, 0.6) !important;
-    z-index: 9999;
-  }
-  
-  tui-dialog {
-    z-index: 9999 !important;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  
-  .filter-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  
-  .table-top-actions {
-    margin-bottom: 20px;
-  }
-  
-  .table-top-actions .add-users {
-    float: left;
-  }
-  
-  .table-top-actions .column-selector {
-    float: right;
-  }
-  
-  .table-top-actions .filter-actions {
-    float: left;
-    margin-left: 10px;
-  
-    input {
-      padding: 6px;
-      font-size: 1rem;
-      border: 1px solid $light-color;
-      border-radius: 5px;
-      transition: border-color 0.3s;
-    }
-  }
+
+
+}
+
+.action-icons-header,
+.action-icons {
+  text-align: right;
+  /* Optional: Ensure the column is always at the end */
+  white-space: nowrap;
+}

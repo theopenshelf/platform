@@ -25,7 +25,8 @@
   border-bottom: 1px solid $light-color;
   background-color: $primary-color;
   position: sticky;
-  top: 0; /* Keeps the header static at the top */
+  top: 0;
+  /* Keeps the header static at the top */
   z-index: 10;
 }
 
@@ -36,15 +37,18 @@
 }
 
 .notification-item:hover {
-  background-color: $light-color; /* Change background color on hover */
+  background-color: $light-color;
+  /* Change background color on hover */
 }
 
 .notification-item {
   display: flex;
   align-items: flex-start;
   padding: 10px;
-  border-bottom: 1px solid #f0f0f0; /* No exact match in the theme */
-  gap: 10px; /* Space between elements */
+  border-bottom: 1px solid #f0f0f0;
+  /* No exact match in the theme */
+  gap: 10px;
+  /* Space between elements */
 }
 
 .notification-item img {
@@ -67,7 +71,8 @@
 .notification-date {
   font-size: 12px;
   color: $dark-color;
-  text-align: right; /* Align the date to the left */
+  text-align: right;
+  /* Align the date to the left */
 }
 
 .notification-text {

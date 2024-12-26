@@ -25,14 +25,16 @@
           {{ item.name }}
         </h2>
         <span class="location">
-          <span class="location-value">{{ item.located }}</span>
           <tui-icon icon="@tui.map-pin" />
+          <span class="location-value">{{ item.located }}</span>
         </span>
         <span class="owner">
-          <span class="owner-value">{{ item.owner }}</span>
           <tui-icon icon="@tui.user-round" />
+          <span class="owner-value">{{ item.owner }}</span>
         </span>
-        <span routerLink="/community/items/{{item.id}}" class="shortDescription">{{ item.shortDescription }}</span>
+        <span routerLink="/community/items/{{item.id}}" class="shortDescription">
+          {{ item.shortDescription }}
+        </span>
 
       </div>
 

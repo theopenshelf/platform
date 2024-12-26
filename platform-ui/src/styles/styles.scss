@@ -5,8 +5,16 @@ body tui-root {
     background-color: $background-color;
     font-family: "Inter var", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 tui-root {
     --tui-background-base: $background-color;
@@ -17,7 +25,19 @@ select {
     border-radius: 6px;
     border-width: 1px;
     border-style: solid;
-    border-color: rgb(203 213 225 / 1 ) !important;
+    border-color: rgb(203 213 225 / 1) !important;
     background-color: rgb(255 255 255 / 1) !important;
     height: 40px;
+}
+
+form {
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    border-radius: 16px;
+    margin-bottom: 40px;
 }

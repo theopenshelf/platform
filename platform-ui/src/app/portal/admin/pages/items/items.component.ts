@@ -19,7 +19,7 @@ import {
 import { TuiCell } from '@taiga-ui/layout';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
-import { TosTableComponent } from '../../components/tos-table/tos-table.component';
+import { Column, TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { ItemsService, UIItem } from '../../services/items.service';
 
 @Component({
@@ -50,20 +50,20 @@ import { ItemsService, UIItem } from '../../services/items.service';
 })
 export class ItemsComponent {
     items: UIItem[] = [];
-    columns = [
-        { key: 'img', label: 'Image', custom: true, visible: true, sortable: false },
-        { key: 'name', label: 'Name', custom: false, visible: true, sortable: true },
-        { key: 'located', label: 'Located', custom: false, visible: true, sortable: true },
-        { key: 'owner', label: 'Owner', custom: false, visible: true, sortable: true },
-        { key: 'imageUrl', label: 'Image URL', custom: false, visible: false, sortable: false },
-        { key: 'description', label: 'Description', custom: false, visible: false, sortable: false },
-        { key: 'shortDescription', label: 'Short Description', custom: false, visible: false, sortable: false },
-        { key: 'category', label: 'Category', custom: true, visible: true, sortable: true },
-        { key: 'favorite', label: 'Favorite', custom: false, visible: false, sortable: false },
-        { key: 'borrowCount', label: 'Borrow Count', custom: false, visible: true, sortable: true },
-        { key: 'lateReturnPercentage', label: 'Late Return %', custom: false, visible: true, sortable: true },
-        { key: 'averageDuration', label: 'Avg Duration', custom: false, visible: true, sortable: true },
-        { key: 'state', label: 'State', custom: true, visible: true, sortable: true },
+    columns: Column[] = [
+        { key: 'img', label: 'Image', custom: true, visible: true, sortable: false, size: 's' },
+        { key: 'name', label: 'Name', custom: false, visible: true, sortable: true, size: 'l' },
+        { key: 'located', label: 'Located', custom: false, visible: true, sortable: true, size: 'm' },
+        { key: 'owner', label: 'Owner', custom: false, visible: true, sortable: true, size: 'm' },
+        { key: 'imageUrl', label: 'Image URL', custom: false, visible: false, sortable: false, size: 'm' },
+        { key: 'description', label: 'Description', custom: false, visible: false, sortable: false, size: 'l' },
+        { key: 'shortDescription', label: 'Short Description', custom: false, visible: false, sortable: false, size: 'l' },
+        { key: 'category', label: 'Category', custom: true, visible: true, sortable: true, size: 'm' },
+        { key: 'favorite', label: 'Favorite', custom: false, visible: false, sortable: false, size: 's' },
+        { key: 'borrowCount', label: 'Borrow Count', custom: false, visible: true, sortable: true, size: 's' },
+        { key: 'lateReturnPercentage', label: 'Late Return %', custom: false, visible: true, sortable: true, size: 's' },
+        { key: 'averageDuration', label: 'Avg Duration', custom: false, visible: true, sortable: true, size: 's' },
+        { key: 'state', label: 'State', custom: true, visible: true, sortable: true, size: 's' },
     ];
 
 

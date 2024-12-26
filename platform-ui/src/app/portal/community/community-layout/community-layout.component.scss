@@ -10,6 +10,20 @@ main[tuiNavigationMain] {
     width: 40px;
 }
 
+@media (max-width: 768px) {
+
+    nav a {
+        min-width: 90px !important;
+    }
+}
+
+@media (min-width: 768px) {
+
+    nav a {
+        min-width: 120px !important;
+    }
+}
+
 aside[tuiNavigationAside]:after {
     inline-size: 14rem;
 }
@@ -38,7 +52,7 @@ button.dropdown {
     position: sticky;
     top: 47px;
     left: 0;
-    z-index: 1000;
+    z-index: 1;
     /* Ensure it appears above other elements */
 
     display: flex;

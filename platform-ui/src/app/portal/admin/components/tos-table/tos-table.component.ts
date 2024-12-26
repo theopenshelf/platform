@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component, computed, ContentChild, input, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ export type Column = {
   custom?: boolean;
   visible: boolean;
   sortable?: boolean;
+  size?: 's' | 'm' | 'l';
 };
 
 @Component({
@@ -51,6 +53,7 @@ export class TosTableComponent {
   public tableData = input.required<any[]>();
   public filterInput = signal<string>('');
   public columns = input.required<Column[]>();
+  isMobile: boolean = false;
 
   @ContentChild('itemActionsTemplate', { read: TemplateRef }) itemActionsTemplate!: TemplateRef<any>;
   @ContentChild('itemRowTemplate', { read: TemplateRef }) itemRowTemplate!: TemplateRef<any>;
@@ -92,6 +95,7 @@ export class TosTableComponent {
   constructor(
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
+    private breakpointObserver: BreakpointObserver
   ) {
 
   }
@@ -103,6 +107,12 @@ export class TosTableComponent {
         return acc;
       }, {} as { [key: string]: boolean })
     );
+
+    this.breakpointObserver
+      .observe([Breakpoints.Small, Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
   }
 
   protected selectColumnsDialog(

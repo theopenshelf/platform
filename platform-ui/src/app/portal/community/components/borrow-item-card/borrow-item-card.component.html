@@ -20,12 +20,12 @@
             {{ item.name }}
           </h2>
           <span class="location">
-            <span class="location-value">{{ item.located }}</span>
             <tui-icon icon="@tui.map-pin" />
+            <span class="location-value">{{ item.located }}</span>
           </span>
           <span class="owner">
-            <span class="owner-value">{{ item.owner }}</span>
             <tui-icon icon="@tui.user-round" />
+            <span class="owner-value">{{ item.owner }}</span>
           </span>
   
         </div>
@@ -37,9 +37,12 @@
               >
             </button>
             @if (item.record) {
-              <span>
-                Reserved from {{ item.record.startDate }} to {{ item.record.endDate }}
-              </span>
+              <div class="reservation-dates">
+                <span class="reservation-start">Start: </span>
+                <span class="reservation-start-date">{{ item.record.startDate | date:'MMM d, y' }}</span>
+                <span class="reservation-end">End: </span>
+                <span class="reservation-end-date">{{ item.record.endDate | date:'MMM d, y' }}</span>
+              </div>
             }
 
         </div>

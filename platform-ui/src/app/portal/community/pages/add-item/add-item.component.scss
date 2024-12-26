@@ -5,29 +5,29 @@
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid $border-color; /* Use theme border color */
+    border: 1px solid $border-color;
+    /* Use theme border color */
     border-radius: 8px;
-    background-color: $white; /* Clean white background */
+    background-color: $white;
+    /* Clean white background */
 }
 
 /* Heading */
 h2 {
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
-    color: $dark-color; /* Dark text for the heading */
+    color: $dark-color;
+    /* Dark text for the heading */
 }
 
 /* Form */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+
 
 /* Label */
 label {
     font-weight: bold;
-    color: $dark-color; /* Dark text for labels */
+    color: $dark-color;
+    /* Dark text for labels */
 }
 
 /* Input, Textarea, Select */
@@ -35,18 +35,23 @@ input,
 textarea,
 select {
     padding: 10px;
-    border: 1px solid $border-color; /* Subtle border color */
+    border: 1px solid $border-color;
+    /* Subtle border color */
     border-radius: 4px;
     font-size: 1rem;
-    background-color: $white; /* Clean white background for form elements */
-    color: $dark-color; /* Dark text inside input fields */
+    background-color: $white;
+    /* Clean white background for form elements */
+    color: $dark-color;
+    /* Dark text inside input fields */
 }
 
 /* Button */
 button {
     padding: 10px 20px;
-    background-color: $accent-color; /* Use primary color for the button */
-    color: $white; /* White text */
+    background-color: $accent-color;
+    /* Use primary color for the button */
+    color: $white;
+    /* White text */
     border: none;
     border-radius: 4px;
     font-size: 1rem;
@@ -55,13 +60,15 @@ button {
 }
 
 button:disabled {
-    background-color: $secondary-color; /* Disabled button background */
+    background-color: $secondary-color;
+    /* Disabled button background */
     cursor: not-allowed;
 }
 
 /* Quill Editor */
 quill-editor {
-    background-color: $white; /* Ensure the editor has a white background */
+    background-color: $white;
+    /* Ensure the editor has a white background */
     margin-bottom: 100px;
 }
 
@@ -69,16 +76,19 @@ quill-editor {
 .drag-drop-zone {
     width: 100%;
     height: 150px;
-    border: 2px dashed $primary-color; /* Use primary color for the dashed border */
+    border: 2px dashed $primary-color;
+    /* Use primary color for the dashed border */
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: $primary-color; /* Primary color for the text */
+    color: $primary-color;
+    /* Primary color for the text */
     text-align: center;
 }
 
 .drag-drop-zone:hover {
-    background-color: $light-color; /* Light background on hover */
+    background-color: $light-color;
+    /* Light background on hover */
 }

@@ -9,7 +9,7 @@ import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { switchMap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
-import { TosTableComponent } from '../../components/tos-table/tos-table.component';
+import { Column, TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { CategoriesService, UICategory } from '../../services/categories.service';
 
 
@@ -34,9 +34,9 @@ import { CategoriesService, UICategory } from '../../services/categories.service
 export class CategoriesComponent {
 
     categories: UICategory[] = [];
-    columns = [
-        { key: 'name', label: 'Name', custom: true, visible: true, sortable: true },
-        { key: 'template', label: 'Template', visible: false },
+    columns: Column[] = [
+        { key: 'name', label: 'Name', custom: true, visible: true, sortable: true, size: 'm' },
+        { key: 'template', label: 'Template', visible: false, size: 'l' },
     ];
     public constructor(
         private dialogs: TuiResponsiveDialogService,

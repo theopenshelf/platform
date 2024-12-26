@@ -16,7 +16,7 @@ $warning-color: #a85700;
 $white: #ffffff;
 $black: #000000;
 
-$font-family: 'Arial', sans-serif;
+$font-family: "Inter var", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
 $background-color: #f1f5f9;
 
@@ -32,8 +32,10 @@ $background-color: #f1f5f9;
   --tui-background-neutral-2-hover: rgba(0, 0, 0, 0.1);
   --tui-background-neutral-2-pressed: rgba(0, 0, 0, 0.14);
   --tui-background-accent-1: #FB8C02;
-  --tui-background-accent-1-hover: #dd8a24;;
-  --tui-background-accent-1-pressed:#A0641A;;
+  --tui-background-accent-1-hover: #dd8a24;
+  ;
+  --tui-background-accent-1-pressed: #A0641A;
+  ;
   --tui-background-accent-2: #ff7043;
   --tui-background-accent-2-hover: #ff9a94;
   --tui-background-accent-2-pressed: #e7716a;
@@ -101,45 +103,45 @@ $background-color: #f1f5f9;
   --tui-chart-categorical-21: #3682db;
   --tui-chart-categorical-22: #34b41f;
   // Shadows
-  }
+}
 
 // Create a custom theme for buttons
 @mixin button-styles($bg-color, $text-color: $white) {
-    background-color: $bg-color;
-    color: $text-color;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-  
-    &:hover {
-      background-color: darken($bg-color, 10%);
-    }
+  background-color: $bg-color;
+  color: $text-color;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($bg-color, 10%);
   }
-  
-  // Apply styles globally
-  body {
-    font-family: $font-family;
-    background-color: $background-color;
-    color: $dark-color;
-  }
-  
-  .primary-button {
-    @include button-styles($primary-color);
-  }
-  
-  .accent-button {
-    @include button-styles($accent-color);
-  }
-  
-  .card {
-    background-color: $white;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  header {
-    background-color: $primary-color;
-    color: $white;
-    padding: 20px;
-  }
+}
+
+// Apply styles globally
+body {
+  font-family: $font-family;
+  background-color: $background-color;
+  color: $dark-color;
+}
+
+.primary-button {
+  @include button-styles($primary-color);
+}
+
+.accent-button {
+  @include button-styles($accent-color);
+}
+
+.card {
+  background-color: $white;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  background-color: $primary-color;
+  color: $white;
+  padding: 20px;
+}

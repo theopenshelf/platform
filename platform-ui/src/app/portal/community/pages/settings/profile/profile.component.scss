@@ -7,18 +7,34 @@ form {
     gap: 16px;
 }
 
+
+form {
+    background-color: $white;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    border: none;
+    box-shadow: none !important;
+    border-radius: 16px;
+    margin-bottom: 40px;
+}
+
 label {
     font-weight: bold;
     margin-bottom: 4px;
-    color: $dark-color; /* Dark text from theme */
+    color: $dark-color;
+    /* Dark text from theme */
 }
 
 input {
     padding: 8px;
-    border: 1px solid $border-color; /* Border color from theme */
+    border: 1px solid $border-color;
+    /* Border color from theme */
     border-radius: 4px;
     font-size: 14px;
-    background-color: $white; /* Light background from theme */
+    background-color: $white;
+    /* Light background from theme */
 }
 
 /* Row and Column Flexbox layout */
@@ -34,8 +50,10 @@ input {
 /* Button styling */
 button {
     padding: 12px;
-    background-color: $accent-color; /* Primary color from theme */
-    color: $white; /* White text for contrast */
+    background-color: $accent-color;
+    /* Primary color from theme */
+    color: $white;
+    /* White text for contrast */
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -43,5 +61,6 @@ button {
 }
 
 button:hover {
-    background-color: $secondary-color; /* Darker shade of primary color */
+    background-color: $secondary-color;
+    /* Darker shade of primary color */
 }

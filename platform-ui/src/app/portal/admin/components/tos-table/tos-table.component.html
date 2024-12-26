@@ -40,28 +40,53 @@
         </div>
     </div>
     <!-- Table -->
+    @if (isMobile) {
+        @for (item of sortedData(); track item) {
+            <div class="card">
+                <ul>
+                @for (column of visibleColumns(); track column) {
+                <li>
+                    @if (column.custom) {
+                    <ng-container
+                        *ngTemplateOutlet="itemRowTemplate; context: { item: item, column: column }"></ng-container>
+                    } @else {
+                    <span tuiTitle>{{ getDataProperty(item, column.key) }}</span>
+                    }
+                </li>
+
+                }
+                    <li class="action-icons">
+                        <ng-container *ngTemplateOutlet="itemActionsTemplate; context: { item: item }"></ng-container>
+                    </li>
+                </ul>
+            </div>
+            }
+    } @else {
     <table class="compact-table">
         <thead>
             <tr>
                 @for (column of visibleColumns(); track column) {
-                <th *ngIf="column.sortable" (click)="sort(column.key)">
-                    {{ column.label }}
-                    <span [class.sorted]="currentSort() === column.key">
-                        {{ getSortIcon(column.key) }}
-                    </span>
-                </th>
-                <th *ngIf="!column.sortable">
-                    {{ column.label }}
-                </th>
+                    @if (column.sortable) {
+                        <th [class]="'size-' + column.size" (click)="sort(column.key)">
+                            {{ column.label }}
+                            <span [class.sorted]="currentSort() === column.key">
+                                {{ getSortIcon(column.key) }}
+                            </span>
+                        </th>
+                    } @else {
+                        <th [class]="'size-' + column.size">
+                            {{ column.label }}
+                        </th>
+                    }
                 }
-                <th>Actions</th>
+                <th class="action-icons-header"></th>
             </tr>
         </thead>
         <tbody>
             @for (item of sortedData(); track item) {
             <tr>
                 @for (column of visibleColumns(); track column) {
-                <td>
+                <td [class]="'size-' + column.size">
                     @if (column.custom) {
                     <ng-container
                         *ngTemplateOutlet="itemRowTemplate; context: { item: item, column: column }"></ng-container>
@@ -82,4 +107,5 @@
     <div class="footer-actions">
         <tui-table-pagination [page]="page" [size]="size" [total]="total()" (paginationChange)="onPagination($event)" />
     </div>
+    }
 </div>
