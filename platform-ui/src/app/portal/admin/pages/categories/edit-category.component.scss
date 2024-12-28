@@ -6,20 +6,15 @@ form {
     gap: 1rem;
 }
 
-input, textarea {
+input,
+textarea {
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 button {
-    align-self: flex-start;
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    width: 100%;
 }
 
 button:disabled {
@@ -29,6 +24,7 @@ button:disabled {
 
 /* Quill Editor */
 quill-editor {
-    background-color: $white; /* Ensure the editor has a white background */
+    background-color: var(--tos-background-base);
+    /* Ensure the editor has a white background */
     margin-bottom: 100px;
 }

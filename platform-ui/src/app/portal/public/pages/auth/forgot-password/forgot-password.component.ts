@@ -1,29 +1,30 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import {RouterLink, RouterLinkActive} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
-import { globalProviders, AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
+import { AUTH_SERVICE_TOKEN, globalProviders } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import { ConfigService } from '../../../../../services/config.service';
 
 
 @Component({
-  standalone: true, 
-    selector: 'app-forgot-password',
-    imports: [WelcomeComponent, RouterLink, ReactiveFormsModule, FormsModule],
-    templateUrl: './forgot-password.component.html',
-    styleUrl: './forgot-password.component.scss',
-    providers: [
-      ...globalProviders,
-  ]})
+  standalone: true,
+  selector: 'app-forgot-password',
+  imports: [WelcomeComponent, TuiButton, TuiTextfield, RouterLink, ReactiveFormsModule, FormsModule],
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.scss',
+  providers: [
+    ...globalProviders,
+  ]
+})
 export class ForgotPasswordComponent {
   signInForm: FormGroup;
   config: any;
 
   constructor(
-    private fb: FormBuilder, 
-    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService, 
+    private fb: FormBuilder,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private configService: ConfigService,
     private router: Router
   ) {

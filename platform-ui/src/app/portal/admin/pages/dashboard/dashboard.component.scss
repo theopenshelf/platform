@@ -23,7 +23,7 @@
     height: 200px;
 
     .counter {
-        color: $accent-color;
+        color: var(--tos-text-action);
         font-size: 48px;
         font-weight: bold;
         margin: 10px;
@@ -32,7 +32,7 @@
 
     .label {
         font-size: 24px;
-        color: $accent-color;
+        color: var(--tos-text-action);
         text-align: center;
     }
 }
@@ -45,7 +45,7 @@
 
 .chart-title {
     font-size: 18px;
-    color: $dark-color;
+    color: var(--tos-background-accent-1);
     margin-top: 15px;
     margin-bottom: 25px;
 }
@@ -89,7 +89,7 @@
             height: 200px;
 
             .counter {
-                color: $accent-color;
+                color: var(--tos-text-action);
                 font-size: 48px;
                 font-weight: bold;
                 margin: 20px;
@@ -99,7 +99,7 @@
 
             .label {
                 font-size: 24px;
-                color: $accent-color;
+                color: var(--tos-text-action);
                 text-align: center;
             }
         }
@@ -114,7 +114,7 @@
     margin-bottom: 15px;
 
     td {
-        color: $accent-color;
+        color: var(--tos-text-action);
         font-weight: 600;
     }
 

@@ -6,35 +6,41 @@
     class="library-form"
 >
     <div class="form-group">
-        <label>Library Name</label>
-        <input
-            tuiTextfield
-            type="text"
-            formControlName="name"
-        >
-    </div>
-
-    <div formGroupName="location">
-        <div class="form-group">
-            <label>Location Name</label>
+        <tui-textfield>
+            <label tuiLabel>Library Name</label>
             <input
+                id="library-name"
                 tuiTextfield
                 type="text"
                 formControlName="name"
             >
-        </div>
+        </tui-textfield>
+    </div>
 
-        <div class="form-group">
-            <label>Address</label>
+    <div formGroupName="location">
+        <tui-textfield>
+            <label tuiLabel>Location Name</label>
             <input
+                id="location-name"
+                tuiTextfield
+                type="text"
+                formControlName="name"
+            >
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Address</label>
+            <input
+                id="address"
                 tuiTextfield
                 type="text"
                 formControlName="address"
             >
-        </div>
+        </tui-textfield>
     </div>
 
     <div class="form-group switch-group">
+
         <label>Community Accessible</label>
         <input
             tuiSwitch
@@ -54,14 +60,12 @@
         ></quill-editor>
     </div>
 
-    <div class="form-actions">
-        <button
-            tuiButton
-            type="submit"
-            appearance="primary"
-            [disabled]="editLibraryForm.invalid"
-        >
-            Save
-        </button>
-    </div>
+    <button
+        tuiButton
+        type="submit"
+        appearance="accent"
+        [disabled]="editLibraryForm.invalid"
+    >
+        Save
+    </button>
 </form>

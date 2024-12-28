@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiAlertService, TuiButton } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiPassword } from '@taiga-ui/kit';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { UIUser, UsersService } from '../../services/users.service';
 
@@ -12,7 +13,11 @@ import { UIUser, UsersService } from '../../services/users.service';
     RouterLink,
     TuiButton,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TuiButton,
+    TuiTextfield,
+    TuiIcon,
+    TuiPassword,
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss'

@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiButton, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiLabel, TuiTextfield } from '@taiga-ui/core';
 import { TUI_DEFAULT_INPUT_COLORS, TuiInputColorModule } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
 import { CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
@@ -14,6 +14,7 @@ import { CategoriesService, UICategory } from '../../services/categories.service
         QuillModule,
         TuiInputColorModule,
         TuiTextfield,
+        TuiLabel,
         FormsModule,
         ReactiveFormsModule,
         TuiButton,

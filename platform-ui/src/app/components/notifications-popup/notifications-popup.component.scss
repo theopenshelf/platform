@@ -3,7 +3,7 @@
 .notifications-popup {
   width: 400px;
   max-height: 400px;
-  border: 1px solid $light-color;
+  border: 1px solid var(--tos-border-normal);
   background: white;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -22,8 +22,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid $light-color;
-  background-color: $primary-color;
+  border-bottom: 1px solid var(--tos-border-normal);
+  background-color: var(--tos-background-accent-1);
   position: sticky;
   top: 0;
   /* Keeps the header static at the top */
@@ -33,11 +33,11 @@
 .notifications-list {
   flex: 1;
   overflow-y: auto;
-  color: $primary-color;
+  color: var(--tos-text-primary);
 }
 
 .notification-item:hover {
-  background-color: $light-color;
+  background-color: var(--tos-background-neutral-1);
   /* Change background color on hover */
 }
 
@@ -58,7 +58,7 @@
 }
 
 .notification-item.unread {
-  background: $light-color;
+  background: var(--tos-background-neutral-2);
 }
 
 .notification-content {
@@ -70,7 +70,7 @@
 
 .notification-date {
   font-size: 12px;
-  color: $dark-color;
+  color: var(--tos-background-accent-1);
   text-align: right;
   /* Align the date to the left */
 }

@@ -2,27 +2,15 @@
 
 /* Availability Styling */
 ::ng-deep .not-available {
-  background-color: rgba($danger-color, 0.476) !important;
+  background-color: var(--tos-status-negative-pale) !important;
   /* Use theme's danger color */
 }
 
 ::ng-deep .my-booking {
-  background-color: rgba(144, 238, 144, 0.476) !important;
+  background-color: var(--tos-status-positive-pale) !important;
   /* Light green background */
 }
 
-
-/* Title Section */
-.title {
-  height: 60px;
-  background-color: $danger-color;
-  /* Light gray background from theme */
-  text-align: center;
-  padding: 30px;
-  margin-bottom: 30px;
-  color: $dark-color;
-  /* Dark text for readability */
-}
 
 /* Flexbox Container for Item */
 .item-container {
@@ -35,7 +23,7 @@
 
 /* Sidebar Styling */
 .sidebar {
-  background-color: $white;
+  background-color: var(--tos-background-base);
   border-radius: 16px;
   padding: 10px;
   flex: 1;
@@ -67,9 +55,9 @@
   margin-top: 15px;
   padding: 10px;
   width: 100%;
-  background-color: $accent-color;
+  background-color: var(--tos-text-action);
   /* Primary color for buttons */
-  color: $white;
+  color: var(--tos-text-primary-on-accent-1);
   /* White text */
   border: none;
   border-radius: 5px;
@@ -77,27 +65,22 @@
   transition: background-color 0.3s ease;
 }
 
-.book-button[disabled] {
-  background-color: $secondary-color;
-  /* Disabled button color */
-  cursor: not-allowed;
-}
 
 .reserve-button {
-  background-color: $warning-color;
+  background-color: var(--tos-background-accent-2-pressed);
   /* Reserve button using warning color */
 }
 
 .reserve-button:hover,
 .book-button:hover {
-  background-color: darken($primary-color, 10%);
+  background-color: var(--tos-text-action-hover);
   /* Darken on hover */
 }
 
 /* Unavailable Status */
 .unavailable {
   margin-top: 10px;
-  color: $danger-color;
+  color: var(--tos-status-negative);
   /* Red color for unavailable status */
 }
 
@@ -109,13 +92,13 @@
 
 .details h2 {
   margin-top: 0;
-  color: $dark-color;
+  color: var(--tos-background-accent-1);
   /* Dark color for heading */
 }
 
 /* Review Section */
 .review {
-  border-top: 1px solid $border-color;
+  border-top: 1px solid var(--tos-border-normal);
   /* Use theme border color */
   padding-top: 10px;
   margin-top: 10px;
@@ -123,13 +106,13 @@
 
 .review strong {
   display: block;
-  color: $dark-color;
+  color: var(--tos-background-accent-1);
   /* Ensure the strong text is dark */
 }
 
 .review span {
   font-size: 0.9em;
-  color: $dark-color;
+  color: var(--tos-background-accent-1);
   /* Muted text for review details */
 }
 
@@ -150,16 +133,12 @@ button#cancel {
 }
 
 button#borrow {
-  background-color: $accent-color;
+  background-color: var(--tos-text-action);
   /* Primary button color */
-  color: $white;
+  color: var(--tos-text-primary-on-accent-1);
   /* White text */
 }
 
-button#borrow:hover {
-  background-color: darken($secondary-color, 10%);
-  /* Darken on hover */
-}
 
 /* Category badges */
 .badge-books {

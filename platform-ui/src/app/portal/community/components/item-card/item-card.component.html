@@ -10,7 +10,7 @@
     <!-- Item Details -->
 
     <div class="item-content">
-      <div class="item-details">
+      <div routerLink="/community/items/{{item.id}}" class="item-details">
         <div class="item-details-top-right">
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
             [appearance]="item.myBooking ? 'primary' : 'outline'" size="m" type="button"

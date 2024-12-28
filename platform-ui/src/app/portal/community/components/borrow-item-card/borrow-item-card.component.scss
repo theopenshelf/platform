@@ -116,7 +116,7 @@
     }
 
     .borrow-counts {
-        color: $dark-color;
+        color: var(--tos-background-accent-1);
         margin-left: auto;
     }
 }
@@ -138,7 +138,7 @@
     border: none;
     font-size: 0.9em;
     font-weight: bold;
-    color: $white;
+    color: var(--tos-text-primary-on-accent-1);
     text-align: center;
     height: 20px;
 }

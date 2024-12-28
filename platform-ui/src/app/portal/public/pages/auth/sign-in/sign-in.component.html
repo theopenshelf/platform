@@ -1,32 +1,36 @@
 <div id="login-container">
   <div id="login-form-section">
-    <h2>Sign In</h2>
+    <h2>Welcome back.</h2>
     @if (config.isRegistrationEnabled) {
-      <p>
-        Don't have an account?
-        <a routerLink="/sign-up">Sign Up</a>
-      </p>
+    <p>
+      Don't have an account?
+      <a routerLink="/sign-up">Sign Up</a>
+    </p>
     }
 
-    <form
-      [formGroup]="signInForm"
-      (ngSubmit)="onSubmit()"
-      >
-      <label>Username</label>
-      <input
-        formControlName="username"
-        type="text"
-        >
-      <label>Password</label>
-      <input
-        formControlName="password"
-        type="password"
-        >
-      <button type="submit">Sign In</button>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
+      <tui-textfield>
+        <label tuiLabel>Username</label>
+        <input formControlName="username" type="text" tuiTextfield>
+      </tui-textfield>
+
+
+      <tui-textfield>
+        <label tuiLabel>Password</label>
+        <input formControlName="password" type="password" tuiTextfield>
+        <tui-icon tuiPassword />
+
+      </tui-textfield>
+
+      <p class="forgot-password-link">
+        <a routerLink="/forgot-password">Forgot Password?</a>
+      </p>
+
+      <button appearance="accent" tuiButton size="l" type="submit">
+        Log In
+      </button>
     </form>
-    <p>
-      <a routerLink="/forgot-password">Forgot Password?</a>
-    </p>
+
   </div>
   <div id="login-welcome-section">
     <app-welcome></app-welcome>

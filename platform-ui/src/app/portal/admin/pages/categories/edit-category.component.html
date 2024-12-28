@@ -5,8 +5,10 @@
   <h2>Add Category</h2>
 }
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-  <label for="name">Category Name</label>
-  <input id="name" formControlName="name" type="text" placeholder="Enter category name" />
+  <tui-textfield>
+    <label tuiLabel>Category Name</label>
+    <input id="name" formControlName="name" type="text" placeholder="Enter category name" tuiTextfield>
+  </tui-textfield>
 
   <tui-input-color class="b-form" [colors]="palette" formControlName="color">
     Category color
@@ -20,5 +22,5 @@
   ></quill-editor>
 
 
-  <button type="submit" appearance="primary" size="s" tuiButton [disabled]="categoryForm.invalid">Save</button>
+  <button type="submit" appearance="accent" size="m" tuiButton [disabled]="categoryForm.invalid">Save</button>
 </form>

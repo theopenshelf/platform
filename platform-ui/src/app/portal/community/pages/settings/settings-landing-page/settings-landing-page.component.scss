@@ -66,7 +66,7 @@
 
 .settings-menu a {
     text-decoration: none;
-    color: $dark-color;
+    color: var(--tos-background-accent-1);
     /* GitHub's blue color for links */
     font-weight: bold;
     padding: 8px 12px;
@@ -78,15 +78,15 @@
 
 /* Hover effect */
 .settings-menu a:hover {
-    background-color: $light-color;
+    background-color: var(--tos-background-neutral-1);
     /* Light blue background on hover */
 }
 
 /* Active link styling */
 .settings-menu a.active {
-    background-color: $light-color;
+    background-color: var(--tos-background-neutral-1);
     /* Subtle blue background for the active link */
-    color: $dark-color;
+    color: var(--tos-background-accent-1);
     /* Ensure text remains GitHub blue */
     border-radius: 4px;
     font-weight: bold;
@@ -102,14 +102,14 @@
     width: 4px;
     /* Thickness of the vertical marker */
     height: 100%;
-    background-color: $dark-color;
+    background-color: var(--tos-background-accent-1);
     /* GitHub blue for the marker */
     border-radius: 2px;
     /* Rounding for the marker */
 }
 
 .settings-menu a tui-icon {
-    color: $dark-color;
+    color: var(--tos-background-accent-1);
 }
 
 .settings-menu tui-icon {
@@ -122,7 +122,7 @@
     padding: 0 16px;
     overflow-y: auto;
     /* Optional: make the content scrollable */
-    background-color: $white;
+    background-color: var(--tos-background-base);
     border: 0px solid rgb(226, 232, 240);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
     border-radius: 16px;

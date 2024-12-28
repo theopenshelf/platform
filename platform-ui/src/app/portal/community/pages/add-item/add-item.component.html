@@ -1,16 +1,25 @@
 <h2>Add a New Item</h2>
 <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
-  <label for="name">Item Name</label>
-  <input id="name" formControlName="name" type="text" placeholder="Enter item name" />
+  <tui-textfield>
+    <label tuiLabel>Item Name</label>
+    <input id="name" formControlName="name" type="text" placeholder="Enter item name" tuiTextfield>
+  </tui-textfield>
 
 
-  <label for="category">Category</label>
-  <select id="category" formControlName="category" [ngModel]="addItemForm.get('category')?.value">
-    <option value="">-- Select Category --</option>
-    @for (category of categories; track category) {
-      <option [value]="category.name">{{ category.name }}</option>
-    }
-  </select>
+  <tui-combo-box
+      formControlName="category"
+      [stringify]="stringify"
+      [tuiTextfieldLabelOutside]="true"
+  >
+
+      <tui-data-list-wrapper
+      *tuiDataList
+      [items]="categories"
+      [itemContent]="stringify | tuiStringifyContent"
+
+    />
+  </tui-combo-box>
+
 
   <label for="image">Upload Image</label>
   <div
@@ -26,13 +35,16 @@
     }
   </div>
 
-  <label for="shortDescription">Short Description</label>
-  <textarea
-    id="shortDescription"
-    formControlName="shortDescription"
-    placeholder="Enter a short description (max 150 characters)"
-    maxlength="150"
-  ></textarea>
+  <tui-textarea
+  formControlName="shortDescription"
+  class="tui-space_top-4"
+  placeholder="Enter a short description (max 150 characters)"
+
+  maxlength="150"
+
+  >
+  Short Description
+</tui-textarea>
 
   <label for="description">Description</label>
   <quill-editor
@@ -42,5 +54,5 @@
   ></quill-editor>
 
 
-  <button type="submit" [disabled]="addItemForm.invalid">Add Item</button>
+  <button type="submit" tuiButton size="m" appearance="accent" [disabled]="addItemForm.invalid">Add Item</button>
 </form>

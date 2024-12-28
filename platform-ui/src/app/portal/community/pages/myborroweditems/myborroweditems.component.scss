@@ -28,7 +28,7 @@
         }
 
         padding: 1rem;
-        background-color: $white;
+        background-color: var(--tos-background-base);
         border-radius: 16px;
         border: 0px solid rgb(226, 232, 240);
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
@@ -136,7 +136,7 @@
     .filter-libraries {
 
         .filter-library-location {
-            color: $accent-color;
+            color: var(--tos-text-action);
         }
     }
 
@@ -144,7 +144,7 @@
         display: block;
         margin-bottom: 0.5rem;
         font-weight: bold;
-        color: $dark-color;
+        color: var(--tos-background-accent-1);
         /* Dark text color */
     }
 
@@ -193,11 +193,6 @@
 
         .sorting-select {
             display: inline-block;
-        }
-
-
-        .add-item:hover {
-            background-color: $secondary-color;
         }
     }
 }

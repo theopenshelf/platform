@@ -8,15 +8,18 @@
 
 .star {
   font-size: 24px;
-  color: $light-color; /* Default star color (gray) */
+  color: var(--tos-background-neutral-1);
+  /* Default star color (gray) */
 }
 
 .star.filled {
-  color: $accent-color; /* Filled star color (orange) */
+  color: var(--tos-text-action);
+  /* Filled star color (orange) */
 }
 
 .star.half {
-  color: $light-color; /* Half-filled star fallback color */
+  color: var(--tos-background-neutral-1);
+  /* Half-filled star fallback color */
   position: relative;
 }
 
@@ -26,5 +29,6 @@
   left: 0;
   width: 50%;
   overflow: hidden;
-  color: $accent-color; /* Match filled star color */
+  color: var(--tos-text-action);
+  /* Match filled star color */
 }

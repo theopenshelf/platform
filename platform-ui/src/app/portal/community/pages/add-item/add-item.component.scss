@@ -5,10 +5,10 @@
     max-width: 500px;
     margin: 0 auto;
     padding: 20px;
-    border: 1px solid $border-color;
+    border: 1px solid var(--tos-border-normal);
     /* Use theme border color */
     border-radius: 8px;
-    background-color: $white;
+    background-color: var(--tos-background-base);
     /* Clean white background */
 }
 
@@ -16,58 +16,17 @@
 h2 {
     text-align: left;
     margin-bottom: 20px;
-    color: $dark-color;
+    color: var(--tos-background-accent-1);
     /* Dark text for the heading */
 }
 
 /* Form */
 
 
-/* Label */
-label {
-    font-weight: bold;
-    color: $dark-color;
-    /* Dark text for labels */
-}
-
-/* Input, Textarea, Select */
-input,
-textarea,
-select {
-    padding: 10px;
-    border: 1px solid $border-color;
-    /* Subtle border color */
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: $white;
-    /* Clean white background for form elements */
-    color: $dark-color;
-    /* Dark text inside input fields */
-}
-
-/* Button */
-button {
-    padding: 10px 20px;
-    background-color: $accent-color;
-    /* Use primary color for the button */
-    color: $white;
-    /* White text */
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:disabled {
-    background-color: $secondary-color;
-    /* Disabled button background */
-    cursor: not-allowed;
-}
 
 /* Quill Editor */
 quill-editor {
-    background-color: $white;
+    background-color: var(--tos-background-base);
     /* Ensure the editor has a white background */
     margin-bottom: 100px;
 }
@@ -76,19 +35,19 @@ quill-editor {
 .drag-drop-zone {
     width: 100%;
     height: 150px;
-    border: 2px dashed $primary-color;
+    border: 2px dashed var(--tos-text-action);
     /* Use primary color for the dashed border */
     border-radius: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    color: $primary-color;
+    color: var(--tos-text-action);
     /* Primary color for the text */
     text-align: center;
 }
 
 .drag-drop-zone:hover {
-    background-color: $light-color;
+    background-color: var(--tos-background-neutral-1);
     /* Light background on hover */
 }

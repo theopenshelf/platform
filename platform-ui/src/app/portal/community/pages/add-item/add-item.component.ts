@@ -1,6 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
+import { TuiComboBoxModule, TuiSelectModule, TuiTextareaModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -12,7 +15,20 @@ import { ItemsService } from '../../services/items.service';
 @Component({
   selector: 'app-add-item',
   standalone: true,
-  imports: [ReactiveFormsModule, QuillModule],
+  imports: [ReactiveFormsModule,
+    QuillModule,
+    TuiButton,
+    TuiStringifyContentPipe,
+    TuiTextfieldControllerModule,
+    TuiTextfield,
+    TuiIcon,
+    TuiComboBoxModule,
+    TuiDataListWrapper,
+    TuiSelectModule,
+    RouterLink,
+    TuiTextareaModule,
+    ReactiveFormsModule,
+    FormsModule],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.scss'
 })
@@ -120,4 +136,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  protected readonly stringify = (category: UICategory): string =>
+    category ? `${category.name}` : 'Category';
 }

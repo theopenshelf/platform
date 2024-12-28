@@ -4,7 +4,8 @@
 .grid-container {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 equal-width columns */
     gap: 1rem;
     padding: 1rem;
     box-sizing: border-box;
@@ -12,13 +13,16 @@
 
 .container {
     display: flex;
-    flex-direction: row; /* Align children in a row */
-    align-items: flex-start; /* Align items to the top */
+    flex-direction: row;
+    /* Align children in a row */
+    align-items: flex-start;
+    /* Align items to the top */
 }
 
 .sidebar {
-    flex: 0 0 250px; /* Fixed width for the sidebar */
-    background-color: $white;
+    flex: 0 0 250px;
+    /* Fixed width for the sidebar */
+    background-color: var(--tos-background-base);
     padding: 1rem;
     border-radius: 16px;
     border: 0px solid rgb(226, 232, 240);
@@ -32,7 +36,7 @@
 
 tui-accordion-item {
     width: 100%;
-}   
+}
 
 .toggle-container {
     display: flex;
@@ -47,7 +51,7 @@ tui-accordion-item {
 .library-actions {
     float: right;
 }
-  
+
 .library-actions button {
     margin: 0 2px;
     border-radius: 30px;

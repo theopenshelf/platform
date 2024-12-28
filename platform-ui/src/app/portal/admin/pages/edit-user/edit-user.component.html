@@ -2,24 +2,35 @@
   <h2>Edit User</h2>
 
   <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
-    <label>Username</label>
-    <input formControlName="username" type="text" />
+    <tui-textfield>
+      <label tuiLabel>Username</label>
+      <input formControlName="username" type="text" tuiTextfield>
+    </tui-textfield>
 
-    <label>Email</label>
-    <input formControlName="email" type="email" />
+    <tui-textfield>
+      <label tuiLabel>Email</label>
+      <input formControlName="email" type="email" tuiTextfield>
+    </tui-textfield>
 
     @if (!userId) {
-      <label>Password</label>
-      <input formControlName="password" type="password" />
+      <tui-textfield>
+        <label tuiLabel>Password</label>
+        <input formControlName="password" type="password" tuiTextfield>
+        <tui-icon tuiPassword />
+      </tui-textfield>
     }
     <!-- Address Fields -->
-    <label>Flat number</label>
-    <input formControlName="flatNumber" type="text" />
+    <tui-textfield>
+      <label tuiLabel>Flat number</label>
+      <input formControlName="flatNumber" type="text" tuiTextfield>
+    </tui-textfield>
 
-    <label>Street Address</label>
-    <input formControlName="address" type="text" />
+    <tui-textfield>
+      <label tuiLabel>Street Address</label>
+      <input formControlName="address" type="text" tuiTextfield>
+    </tui-textfield>
 
-    <button type="submit" class="add-user" appearance="primary" size="m" tuiButton>
+    <button type="submit" class="add-user" appearance="accent" size="m" tuiButton>
       Save Changes
     </button>
     <button class="add-user" routerLink="/admin/users" appearance="secondary" size="m" tuiButton>

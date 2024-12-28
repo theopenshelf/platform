@@ -1,33 +1,8 @@
 @use 'theme' as *;
 
-/* Table styles */
-table {
-    width: 100%;  
-    border-spacing: 0;
-    background-color: $white;
-}
-
-table td, table th {
-    border-right: none;
-    border-left: none;
-}
-
-table th {
-    background-color: $light-color; /* Light background from theme */
-}
-
 h1 {
     margin: 30px 0;
-    color: $dark-color; /* Dark text from theme */
-}
-
-th {
-    cursor: pointer;
-    user-select: none;
-}
-
-th span {
-    margin-left: 4px;
+    color: var(--tos-background-accent-1);
 }
 
 /* Filtering section styles */
@@ -36,20 +11,20 @@ th span {
     gap: 1rem;
     margin-bottom: 20px;
     align-items: center;
-}
 
-.filters label {
-    font-weight: bold;
-    margin-right: 8px;
-    color: $dark-color; /* Dark text from theme */
-}
+    label {
+        font-weight: bold;
+        margin-right: 8px;
+        color: var(--tos-background-accent-1);
+    }
 
-.filters select {
-    padding: 6px 12px;
-    border-radius: 4px;
-    border: 1px solid $border-color; /* Border color from theme */
-    background-color: $white; /* Light background from theme */
-    cursor: pointer;
+    select {
+        padding: 6px 12px;
+        border-radius: 4px;
+        border: 1px solid var(--tos-border-normal);
+        background-color: var(--tos-background-base);
+        cursor: pointer;
+    }
 }
 
 /* Category badges */
@@ -59,27 +34,27 @@ th span {
     border-radius: 12px;
     font-size: 0.9em;
     font-weight: bold;
-    color: $white; /* White text for contrast */
+    color: var(--tos-text-primary-on-accent-1);
     text-align: center;
-    min-width: 120px; /* Ensure consistent width */
-}
+    min-width: 120px;
 
-.badge-books {
-    background-color: #9b59b6;
-}
+    &-books {
+        background-color: #9b59b6;
+    }
 
-.badge-electronics {
-    background-color: #e67e22;
-}
+    &-electronics {
+        background-color: #e67e22;
+    }
 
-.badge-clothing {
-    background-color: #1abc9c;
+    &-clothing {
+        background-color: #1abc9c;
+    }
 }
 
 /* Description styling */
 .description {
     margin-bottom: 2rem;
     font-size: 1rem;
-    color: $dark-color; /* Lighter text color from theme */
+    color: var(--tos-background-accent-1);
     line-height: 1.5;
 }

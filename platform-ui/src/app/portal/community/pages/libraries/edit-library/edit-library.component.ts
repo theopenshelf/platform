@@ -2,10 +2,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiAutoColorPipe, TuiInitialsPipe } from '@taiga-ui/core';
+import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
 import { TuiAvatar, TuiSwitch } from '@taiga-ui/kit';
 import { QuillModule } from 'ngx-quill';
-import { communityProviders, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
+import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { UILibrary } from '../../../models/UILibrary';
 import { LibrariesService } from '../../../services/libraries.service';
 
@@ -17,10 +17,13 @@ import { LibrariesService } from '../../../services/libraries.service';
     QuillModule,
     ReactiveFormsModule,
     TuiSwitch,
+    TuiButton,
+    TuiTextfield,
+    TuiIcon,
     TuiAvatar,
     TuiInitialsPipe,
     TuiAutoColorPipe
-]
+  ]
 })
 export class EditLibraryComponent implements OnInit {
   editLibraryForm!: FormGroup;

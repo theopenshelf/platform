@@ -90,7 +90,7 @@
     }
 
     .borrow-counts {
-        color: $dark-color;
+        color: var(--tos-background-accent-1);
         margin-left: auto;
     }
 }

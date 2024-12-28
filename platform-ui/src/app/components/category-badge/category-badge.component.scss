@@ -9,7 +9,9 @@
     border: none;
     font-size: 0.9em;
     font-weight: bold;
-    color: $white; /* White text for badges */
+    color: var(--tos-text-primary-on-accent-1);
+    /* White text for badges */
     text-align: center;
-    min-width: 120px; /* Ensure consistent width */
+    min-width: 120px;
+    /* Ensure consistent width */
 }

@@ -7,28 +7,14 @@
   height: 100vh;
 }
 
-.address-section {
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid $light-color; /* Replaced with $light-color */
-  border-radius: 4px;
-  background-color: $light-color; /* Replaced with $light-color */
-}
-
-.address-section legend {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
 .row {
   display: flex;
   justify-content: space-between;
   gap: 20px;
-}
 
-.column {
-  flex: 1;
+  .column {
+    flex: 1;
+  }
 }
 
 #signup-form-section {
@@ -37,81 +23,42 @@
   justify-content: center;
   align-items: center;
   flex: 1;
-  background-color: $white; /* Replaced with $light-color */
+  background-color: var(--tos-background-base);
   font-family: Arial, sans-serif;
   height: 100vh;
   padding: 20px;
-}
 
-#signup-form-section h2 {
-  width: 100%;
-  font-size: 1.8rem;
-  color: $dark-color; /* Replaced with $dark-color */
-  margin-bottom: 10px;
-}
+  h2 {
+    width: 100%;
+    font-size: 1.8rem;
+    color: var(--tos-background-accent-1);
+    margin-bottom: 10px;
+  }
 
-#signup-form-section p {
-  width: 100%;
-  font-size: 0.9rem;
-  color: $dark-color; /* Replaced with $dark-color */
-  margin-bottom: 15px;
-}
+  p {
+    width: 100%;
+    font-size: 0.9rem;
+    color: var(--tos-background-accent-1);
+    margin-bottom: 15px;
+  }
 
-#signup-form-section form {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 
-#signup-form-section label {
-  font-size: 0.85rem;
-  color: $primary-color; /* Replaced with $primary-color */
-  margin-bottom: 5px;
-}
+  }
 
-#signup-form-section input {
-  padding: 10px;
-  font-size: 1rem;
-  border: 1px solid $light-color; /* Replaced with $light-color */
-  border-radius: 5px;
-  transition: border-color 0.3s;
-}
+  a {
+    color: var(--tos-text-action);
+    text-decoration: none;
+    transition: color 0.3s;
 
-#signup-form-section input:focus {
-  border-color: $accent-color; /* Replaced with $accent-color */
-  outline: none;
-}
-
-#signup-form-section input,
-#signup-form-section button {
-  width: 100%;
-  box-sizing: border-box;
-}
-
-#signup-form-section button {
-  padding: 10px 15px;
-  font-size: 1rem;
-  background-color: $accent-color; /* Replaced with $accent-color */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-#signup-form-section button:hover {
-  background-color: darken($accent-color, 10%); /* Darken accent color for hover */
-}
-
-#signup-form-section a {
-  color: $link-color; /* Replaced with $link-color */
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-#signup-form-section a:hover {
-  color: darken($link-color, 10%); /* Darken link color for hover */
+    &:hover {
+      color: var(--tos-text-action-hover);
+    }
+  }
 }
 
 #signup-welcome-section {
@@ -121,10 +68,17 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background-color: $primary-color; /* Replaced with $primary-color */
-  color: $light-color; /* Replaced with $light-color */
+  background-color: var(--tos-background-accent-1);
+  color: var(--tos-text-primary-on-accent-1);
   width: 100%;
   min-height: 400px;
   position: relative;
   overflow: hidden;
+}
+
+form {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0px;
+  margin-bottom: 0px;
 }

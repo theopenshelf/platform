@@ -3,48 +3,17 @@
 .library-form {
 
 
-/* Form */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+    /* Form */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
 
-/* Label */
-label {
-    font-weight: bold;
-    color: $dark-color; /* Dark text for labels */
-}
+        button {
+            width: 100%;
+        }
+    }
 
-/* Input, Textarea, Select */
-textarea,
-select,
-input[type="text"]  {
-    padding: 10px;
-    border: 1px solid $border-color; /* Subtle border color */
-    border-radius: 4px;
-    font-size: 1rem;
-    background-color: $white; /* Clean white background for form elements */
-    color: $dark-color; /* Dark text inside input fields */
-    width: 100%;
-}
-
-/* Button */
-button {
-    padding: 10px 20px;
-    background-color: $accent-color; /* Use primary color for the button */
-    color: $white; /* White text */
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:disabled {
-    background-color: $secondary-color; /* Disabled button background */
-    cursor: not-allowed;
-}
 
 
     .switch-group {
@@ -55,17 +24,17 @@ button:disabled {
 
         label {
             font-weight: bold;
-            color: $dark-color;
+            color: var(--tos-background-accent-1);
         }
     }
 
     .members-section {
         margin-top: 24px;
-        border-top: 1px solid $border-color;
+        border-top: 1px solid var(--tos-border-normal);
         padding-top: 20px;
 
         h3 {
-            color: $dark-color;
+            color: var(--tos-background-accent-1);
             margin-bottom: 16px;
             font-size: 1.1rem;
         }
@@ -80,55 +49,25 @@ button:disabled {
                 align-items: center;
                 gap: 12px;
                 padding: 10px;
-                background-color: $light-color;
+                background-color: var(--tos-background-neutral-1);
                 border-radius: 4px;
-                border: 1px solid $border-color;
+                border: 1px solid var(--tos-border-normal);
 
                 span {
                     flex: 1;
-                    color: $dark-color;
-                }
-
-                button {
-                    color: $danger-color;
-                    &:hover {
-                        background-color: rgba($danger-color, 0.1);
-                    }
+                    color: var(--tos-background-accent-1);
                 }
             }
         }
     }
 
-    .form-actions {
-        margin-top: 24px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 12px;
 
-        button {
-            padding: 10px 20px;
-            background-color: $accent-color;
-            color: $white;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
 
-            &:disabled {
-                background-color: $secondary-color;
-                cursor: not-allowed;
-            }
-
-            &:hover:not(:disabled) {
-                background-color: darken($accent-color, 10%);
-            }
-        }
-    }
     quill-editor {
-        background-color: $white; /* Ensure the editor has a white background */
+        background-color: var(--tos-background-base);
+        /* Ensure the editor has a white background */
         margin-bottom: 100px;
         width: 100%;
     }
-    
+
 }

@@ -10,7 +10,7 @@ table {
   border-radius: 6px;
   table-layout: fixed;
   overflow: unset;
-  background-color: $light-color;
+  background-color: var(--tos-background-neutral-1);
   border-color: #ccc;
 }
 
@@ -28,7 +28,7 @@ table tbody tr:last-child .action-icons {
 }
 
 tbody tr {
-  background-color: $white
+  background-color: var(--tos-background-base)
     /* Subtle hover effect using theme */
     /* Lighter background on hover */
 }
@@ -76,12 +76,12 @@ tbody tr+tr {
 }
 
 tbody tr {
-  background-color: $white
+  background-color: var(--tos-background-base)
 }
 
 /* Hover effect for table rows (optional) */
 tbody tr:hover {
-  background-color: $light-color
+  background-color: var(--tos-background-neutral-1-hover);
 }
 
 .table-top-actions .add-action {
@@ -149,7 +149,7 @@ tui-dialog {
   input {
     padding: 6px;
     font-size: 1rem;
-    border: 1px solid $light-color;
+    border: 1px solid var(--tos-border-normal);
     border-radius: 5px;
     transition: border-color 0.3s;
   }

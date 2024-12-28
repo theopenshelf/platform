@@ -4,54 +4,81 @@
         (ngSubmit)="onSave()"
     >
         <h1>Edit your profile</h1>
-        <label>Email</label>
-        <input
-            formControlName="email"
-            type="email"
-            placeholder="Enter your email"
-        >
 
-        <label>Password</label>
-        <input
-            formControlName="password"
-            type="password"
-            placeholder="Enter your password"
-        >
+        <tui-textfield>
+            <label tuiLabel>Email</label>
+            <input
+                formControlName="email"
+                type="email"
+                placeholder="Enter your email"
+                tuiTextfield
+            >
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>Password</label>
+            <input
+                formControlName="password"
+                type="password"
+                placeholder="Enter your password"
+                tuiTextfield
+            >
+            <tui-icon tuiPassword />
+        </tui-textfield>
 
         <!-- Address Fields -->
-        <label>Street Address</label>
-        <input
-            formControlName="streetAddress"
-            type="text"
-            placeholder="Enter your street address"
-        >
+        <tui-textfield>
+            <label tuiLabel>Street Address</label>
+            <input
+                formControlName="streetAddress"
+                type="text"
+                placeholder="Enter your street address"
+                tuiTextfield
+            >
+        </tui-textfield>
 
         <div class="row">
             <div class="column">
-                <label>City</label>
-                <input
-                    formControlName="city"
-                    type="text"
-                    placeholder="Enter your city"
-                >
+                <tui-textfield>
+                    <label tuiLabel>City</label>
+                    <input
+                        formControlName="city"
+                        type="text"
+                        placeholder="Enter your city"
+                        tuiTextfield
+                    >
+                </tui-textfield>
             </div>
             <div class="column">
-                <label>Postal Code</label>
-                <input
-                    formControlName="postalCode"
-                    type="text"
-                    placeholder="Enter your postal code"
-                >
+                <tui-textfield>
+                    <label tuiLabel>Postal Code</label>
+                    <input
+                        formControlName="postalCode"
+                        type="text"
+                        placeholder="Enter your postal code"
+                        tuiTextfield
+                    >
+                </tui-textfield>
             </div>
         </div>
 
-        <label>Country</label>
-        <input
-            formControlName="country"
-            type="text"
-            placeholder="Enter your country"
-        >
+        <tui-textfield>
+            <label tuiLabel>Country</label>
+            <input
+                formControlName="country"
+                type="text"
+                placeholder="Enter your country"
+                tuiTextfield
+            >
+        </tui-textfield>
 
-        <button type="submit">Save</button>
+        <button
+                appearance="accent"
+                tuiButton
+                size="l"
+                type="submit"
+            >
+            Save
+        </button>
     </form>
 </div>
