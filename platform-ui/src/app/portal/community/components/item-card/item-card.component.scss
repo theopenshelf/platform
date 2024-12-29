@@ -80,20 +80,22 @@
     padding: 2% 0;
     height: 14%;
     border-top: 1px solid rgb(226, 232, 240);
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 
     button {
         border-radius: 30px;
         font-size: small;
         font-weight: 600;
-        margin-right: 10px;
     }
-
-
 
     .borrow-counts {
         color: var(--tos-background-accent-1);
-        margin-left: auto;
+    }
+
+    .details-button {
+        padding: 10px;
     }
 }
 

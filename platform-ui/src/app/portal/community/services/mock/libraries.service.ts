@@ -10,7 +10,7 @@ export class MockLibrariesService implements LibrariesService {
 
     private libraries: UILibrary[] = [{
         id: '1',
-        name: 'Library 1',
+        name: 'Common space',
         isCommunityAccessible: true,
         members: [
             {
@@ -26,9 +26,9 @@ export class MockLibrariesService implements LibrariesService {
                 isAdmin: false
             }
         ],
-        instructions: 'Instructions 1',
+        instructions: 'Please follow the guidelines for community usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.',
         location: {
-            name: 'Location 1',
+            name: 'Bat B',
             address: '123 Main St, Anytown, USA',
         }
     }];

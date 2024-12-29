@@ -1,17 +1,19 @@
 import { Component, Inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiIcon, TuiIconPipe, TuiInitialsPipe } from '@taiga-ui/core';
-import { TUI_CONFIRM, TuiAccordion, TuiAvatar, TuiConfirmData, TuiSwitch } from '@taiga-ui/kit';
+import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiDataList, TuiIcon, TuiIconPipe, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+import { TUI_CONFIRM, TuiAccordion, TuiAvatar, TuiConfirmData, TuiDataListWrapper, TuiSwitch } from '@taiga-ui/kit';
+import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { communityProviders, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
+import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
 import { UIItemWithRecords } from '../../../models/UIItemWithRecords';
 import { UILibrary } from '../../../models/UILibrary';
 import { ItemsService } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
+import { ItemsComponent } from '../../items/items.component';
 
 @Component({
   selector: 'app-library',
@@ -28,14 +30,33 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiButton,
     TuiIcon,
     TuiInitialsPipe,
-    TuiAutoColorPipe
+    TuiAutoColorPipe,
+    TuiTextfieldControllerModule,
+    ReactiveFormsModule,
+    TuiTextfield,
+    TuiDataList,
+    TuiDataListWrapper,
+    TuiSelectModule,
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss'
 })
 export class LibraryComponent {
+  searchText = '';
+  selectedSortingOption = ItemsComponent.SORT_RECENTLY_ADDED; // Default sorting option
+
   library: UILibrary | undefined;
   items: UIItemWithRecords[] = [];
+  filteredItems: UIItemWithRecords[] = [];
+
+  protected sortingOptions = [
+    ItemsComponent.SORT_RECENTLY_ADDED,
+    ItemsComponent.SORT_MOST_BORROWED,
+    ItemsComponent.SORT_FAVORITES,
+  ];
+
+  protected testValue = new FormControl<string | null>(null);
+
   markAsFavorite: (item: UIItemWithRecords) => void = (item) => {
     console.log(`Item ${item.id} marked as favorite.`);
   };
@@ -59,6 +80,28 @@ export class LibraryComponent {
         this.items = items;
       });
     }
+  }
+
+  // Handle text filter change
+  onTextFilterChange() {
+    // The filtering is handled in the getter `filteredItems`
+  }
+
+  get filteredAndSortedItems() {
+    const filtered = this.items.filter(item => item.name.toLowerCase().includes(this.searchText.toLowerCase()));
+
+    return filtered.sort((a, b) => {
+      switch (this.testValue.value) {
+        case ItemsComponent.SORT_RECENTLY_ADDED:
+          return b.createdAt.getTime() - a.createdAt.getTime();
+        case ItemsComponent.SORT_MOST_BORROWED:
+          return (b.borrowCount || 0) - (a.borrowCount || 0);
+        case ItemsComponent.SORT_FAVORITES:
+          return (b.favorite ? 1 : 0) - (a.favorite ? 1 : 0);
+        default:
+          return 0;
+      }
+    });
   }
 
   deleteLibrary(library: UILibrary): void {

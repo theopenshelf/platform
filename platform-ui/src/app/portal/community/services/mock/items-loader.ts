@@ -14,9 +14,9 @@ const mapCategory = (category: string): UICategory => {
             return MockCategoriesService.CLOTHING;
         case 'diy':
             return MockCategoriesService.DIY;
-        case 'beauty_health':
+        case 'beauty health':
             return MockCategoriesService.BEAUTY_HEALTH;
-        case 'sports_outdoors':
+        case 'sports outdoors':
             return MockCategoriesService.SPORTS_OUTDOORS;
         case 'camping':
             return MockCategoriesService.CAMPING;

@@ -12,7 +12,6 @@
 }
 
 .library-card:hover {
-    cursor: pointer;
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -30,7 +29,11 @@
     margin: auto;
 }
 
-
+button {
+    border-radius: 30px;
+    font-size: small;
+    font-weight: 600;
+}
 
 .item-actions {
     position: absolute;
@@ -45,4 +48,12 @@
 
 .item-actions tui-icon {
     color: var(--tos-text-primary);
+}
+
+button.items-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: small;
+    font-weight: 600;
 }

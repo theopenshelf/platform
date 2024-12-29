@@ -13,8 +13,8 @@ export class MockCategoriesService implements CategoriesService {
     public static ELECTRONICS: UICategory = { id: MockCategoriesService.index++ + "", name: 'electronics', color: '#1d71ac', template: 'Electronics Template' };
     public static CLOTHING: UICategory = { id: MockCategoriesService.index++ + "", name: 'clothing', color: '#8a1bcc', template: 'Clothing Template' };
     public static DIY: UICategory = { id: MockCategoriesService.index++ + "", name: 'diy', color: '#f58220', template: 'DIY Template' };
-    public static BEAUTY_HEALTH: UICategory = { id: MockCategoriesService.index++ + "", name: 'beauty_health', color: '#e17ac4', template: 'Beauty & Health Template' };
-    public static SPORTS_OUTDOORS: UICategory = { id: MockCategoriesService.index++ + "", name: 'sports_outdoors', color: '#2a7f3d', template: 'Sports & Outdoors Template' };
+    public static BEAUTY_HEALTH: UICategory = { id: MockCategoriesService.index++ + "", name: 'beauty health', color: '#e17ac4', template: 'Beauty & Health Template' };
+    public static SPORTS_OUTDOORS: UICategory = { id: MockCategoriesService.index++ + "", name: 'sports outdoors', color: '#2a7f3d', template: 'Sports & Outdoors Template' };
     public static CAMPING: UICategory = { id: MockCategoriesService.index++ + "", name: 'camping', color: '#4f9c38', template: 'Camping Template' };
     public static GARDENING: UICategory = { id: MockCategoriesService.index++ + "", name: 'gardening', color: '#4ca24c', template: 'Gardening Template' };
     public static VEHICLE: UICategory = { id: MockCategoriesService.index++ + "", name: 'vehicle', color: '#019cdb', template: 'Vehicle Template' };

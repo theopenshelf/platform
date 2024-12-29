@@ -30,22 +30,40 @@
   
         </div>
   
-        <!-- Borrow Button -->
-        <div class="item-actions">  
-            <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-              [appearance]="item.record ? 'primary' : 'outline'" size="m" type="button"
-              >
-            </button>
-            @if (item.record) {
-              <div class="reservation-dates">
-                <span class="reservation-start">Start: </span>
-                <span class="reservation-start-date">{{ item.record.startDate | date:'MMM d, y' }}</span>
-                <span class="reservation-end">End: </span>
-                <span class="reservation-end-date">{{ item.record.endDate | date:'MMM d, y' }}</span>
-              </div>
-            }
 
+
+        <div class="item-actions">
+          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
+          [appearance]="item.record ? 'primary' : 'outline'" size="m" type="button"
+          >
+        </button>
+  
+  
+  
+        @if (item.record) {
+          <div class="reservation-dates-grid">
+            <div class="reservation-start">
+                <span class="reservation-start-date">{{ item.record.startDate | date:'MMM d, y' }}</span>
+            </div>
+            <div class="reservation-arrow">
+              <tui-icon icon="@tui.arrow-right" />
+            </div>
+
+            <div class="reservation-end">
+                <span class="reservation-end-date">{{ item.record.endDate | date:'MMM d, y' }}</span>
+            </div>
+          </div>
+        }
+  
+          <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item.id}}" tuiButton
+            type="button">
+            More
+            <tui-icon icon="@tui.arrow-right" />
+  
+          </button>
+  
         </div>
+        
       </div>
     </div>
   </div>

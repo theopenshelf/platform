@@ -19,7 +19,7 @@
 
           <button class="favorite" [ngClass]="{'selected': item.favorite}" iconStart="@tui.heart" tuiButton
             [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
-          (click)="markAsFavorite(item)"></button>
+            (click)="markAsFavorite(item)"></button>
         </div>
         <h2 tuiTitle>
           {{ item.name }}
@@ -41,26 +41,27 @@
       <!-- Borrow Button -->
       <div class="item-actions">
         @if (!item.isBookedToday) {
-          <button appearance="outline" size="m" routerLink="/community/items/{{item.id}}"
-            tuiButton type="button">
-            Available now
-          </button>
+        <button appearance="outline" size="m" routerLink="/community/items/{{item.id}}" tuiButton type="button">
+          Available now
+        </button>
         }
         @if (item.isBookedToday) {
-          <button appearance="secondary" size="m" routerLink="/community/items/{{item.id}}"
-            tuiButton type="button">
-            Currently borrowed
-          </button>
+        <button appearance="secondary" size="m" routerLink="/community/items/{{item.id}}" tuiButton type="button">
+          Currently borrowed
+        </button>
         }
 
-        <button appearance="outline" class="accent" size="m" routerLink="/community/items/{{item.id}}"
-          tuiButton type="button">
-          More details
-        </button>
 
-       
+
         <button class="borrow-counts" disabled appearance="flat" size="m" tuiButton type="button">
           {{ item.borrowCount }} borrow(s)
+        </button>
+
+        <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item.id}}" tuiButton
+          type="button">
+          More
+          <tui-icon icon="@tui.arrow-right" />
+
         </button>
 
       </div>

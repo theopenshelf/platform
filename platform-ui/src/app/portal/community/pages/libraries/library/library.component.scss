@@ -1,58 +1,162 @@
 @use 'theme' as *;
 
 /* Grid container styling */
-.grid-container {
-    flex: 1;
+.layout-container {
+    display: flex;
+    height: 100%;
+    margin: 0;
+    gap: 1rem;
+
+    .sidebar {
+        width: 350px;
+        /* Light gray background from theme */
+        padding-top: 0;
+
+        .top-actions-left {
+
+            .search {
+                padding-right: 0;
+                padding-left: 0;
+                border: 0;
+            }
+        }
+
+        .library-section {
+
+            h2 {
+                margin-top: 0;
+            }
+
+
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--tos-background-base);
+            border-radius: 16px;
+            border: 0px solid rgb(226, 232, 240);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+            0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+            h1,
+            h3 {
+                margin: 0;
+            }
+
+            .library-actions {
+                float: right;
+
+                button {
+                    margin: 0 2px;
+                    border-radius: 30px;
+                }
+            }
+
+            .toggle-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                label {
+                    margin-right: 10px;
+                }
+            }
+
+
+        }
+
+
+    }
+
+    .grid-container {
+        width: 100%;
+
+        .top-actions {
+            padding-top: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .top-actions-right {
+                margin-left: auto;
+                width: 380px;
+
+                .sorting-select {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .items-container {
+            flex: 1;
+            display: grid;
+            gap: 1rem;
+            padding: 10px 0;
+            box-sizing: border-box;
+            width: 100%;
+            grid-template-columns: repeat(2, 1fr);
+
+            @media (max-width: 1400px) {
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+@media (min-width: 800px) {
+    .top-actions-right {
+        .sorting-select {
+            width: 50%;
+        }
+
+        .add-item {
+            width: 48%;
+            margin-right: 2%;
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .layout-container {
+        flex-direction: column;
+
+        .sidebar {
+            width: 100%;
+            order: -1; // Move sidebar to the top
+        }
+
+        .grid-container {
+            width: 100%;
+
+            .top-actions-right {
+                width: 100% !important;
+
+                .sorting-select,
+                .add-item {
+                    width: 100%;
+                    margin-right: 0; // Reset margin for full width
+                }
+
+                .add-item {
+                    margin-bottom: 1rem;
+                }
+            }
+        }
+    }
+}
+
+.top-actions-right {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    /* 2 equal-width columns */
-    gap: 1rem;
-    padding: 1rem;
-    box-sizing: border-box;
+    gap: 1rem; // Optional: Add gap between grid items
+
+    .sorting-select,
+    .add-item {
+        width: 100%; // Ensure full width within grid item
+    }
 }
 
-.container {
-    display: flex;
-    flex-direction: row;
-    /* Align children in a row */
-    align-items: flex-start;
-    /* Align items to the top */
-}
-
-.sidebar {
-    flex: 0 0 250px;
-    /* Fixed width for the sidebar */
-    background-color: var(--tos-background-base);
-    padding: 1rem;
-    border-radius: 16px;
-    border: 0px solid rgb(226, 232, 240);
-    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
-    margin-top: 17px;
-}
-
-.sidebar h1 {
-    margin: 0;
-}
-
-tui-accordion-item {
-    width: 100%;
-}
-
-.toggle-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.toggle-container label {
-    margin-right: 10px;
-}
-
-.library-actions {
-    float: right;
-}
-
-.library-actions button {
-    margin: 0 2px;
-    border-radius: 30px;
+// Adjust grid for smaller screens
+@media (max-width: 800px) {
+    .top-actions-right {
+        grid-template-columns: 1fr; // Change to single column
+    }
 }

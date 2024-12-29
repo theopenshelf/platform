@@ -184,27 +184,15 @@
 
     .top-actions-right {
         margin-left: auto;
-        width: 380px;
+        width: 200px;
 
         .sorting-select {
             display: inline-block;
+            width: 100%;
         }
     }
 }
 
-@media (min-width: 800px) {
-    .top-actions-right {
-
-        .sorting-select {
-            width: 50%;
-        }
-
-        .add-item {
-            width: 48%;
-            margin-right: 2%;
-        }
-    }
-}
 
 @media (max-width: 800px) {
     .layout-container {
@@ -223,14 +211,5 @@
     .top-actions-right {
         width: 100% !important;
 
-        .sorting-select,
-        .add-item {
-            width: 100%;
-            margin-right: 0; // Reset margin for full width
-        }
-
-        .add-item {
-            margin-bottom: 1rem;
-        }
     }
 }

@@ -1,6 +1,6 @@
 @for (library of libraries; track library) {
   
-  <div class="library-card" routerLink="/community/libraries/{{library.id}}"
+  <div class="library-card"
     tuiAppearance="floating" tuiCardMedium>
 
     <div class="item-actions">
@@ -18,6 +18,13 @@
         </tui-avatar>
       }
     </tui-avatar-stack>
+
+    <button appearance="outline" class="accent items-button" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
+      type="button">
+      See items
+      <tui-icon icon="@tui.arrow-right" />
+
+    </button>
   </div>
 }
 
