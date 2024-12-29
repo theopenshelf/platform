@@ -8,7 +8,8 @@
     border: 0px solid rgb(226, 232, 240);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
     padding: 20px;
-    width: 300px;
+    width: 400px;
+    height: 200px;
 }
 
 .library-card:hover {
@@ -50,10 +51,29 @@ button {
     color: var(--tos-text-primary);
 }
 
-button.items-button {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: small;
-    font-weight: 600;
+
+
+.bottom-actions {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2px; // Optional: Adjust the gap between grid items
+
+
+    button {
+        font-size: small;
+        font-weight: 600;
+        margin: 2px;
+    }
+
+    .Accessibility {
+        grid-column: span 4;
+    }
+
+    .items-count {
+        grid-column: span 4;
+    }
+
+    .items-button {
+        grid-column: span 4;
+    }
 }

@@ -11,20 +11,30 @@
       {{ library.name }}
       <span tuiSubtitle>{{ library.location.address }}</span>
     </h2>
-    <tui-avatar-stack direction="left">
-      @for (member of library.members; track member) {
-        <tui-avatar [src]="member.username | tuiInitials"
-          [style.background]="member.username | tuiAutoColor" size="m">
-        </tui-avatar>
-      }
-    </tui-avatar-stack>
 
-    <button appearance="outline" class="accent items-button" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
-      type="button">
-      See items
-      <tui-icon icon="@tui.arrow-right" />
+    <div class="bottom-actions">
+      <div class="Accessibility">
+        <tui-avatar-stack direction="left">
+          @for (member of library.members; track member) {
+            <tui-avatar [src]="member.username | tuiInitials"
+              [style.background]="member.username | tuiAutoColor" size="m">
+            </tui-avatar>
+          }
+        </tui-avatar-stack>
+      </div>
 
-    </button>
+      <button appearance="outline" disabled class="items-count" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
+        type="button">
+        8 item(s)
+      </button>
+
+      <button appearance="outline" class="accent items-button" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
+        type="button">
+        See items
+        <tui-icon icon="@tui.arrow-right" />
+      </button>
+    </div>
+    
   </div>
 }
 
