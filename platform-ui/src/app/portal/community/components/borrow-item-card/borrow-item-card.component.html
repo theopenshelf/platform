@@ -2,31 +2,29 @@
     <!-- Flexbox container for the image and details -->
     <div class="card-content">
       <!-- Image Section -->
-      <div class="image-container" routerLink="/community/items/{{item.id}}">
-        <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+      <div class="image-container" routerLink="/community/items/{{item().id}}">
+        <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
       </div>
   
   
       <!-- Item Details -->
   
       <div class="item-content">
-        <div routerLink="/community/items/{{item.id}}" class="item-details">
+        <div routerLink="/community/items/{{item().id}}" class="item-details">
           <div class="item-details-top-right">
-            <span [ngClass]="getBadgeClass(computeStatus(item.record.startDate, item.record.endDate))">
-                {{ computeStatus(item.record.startDate, item.record.endDate) }}
+            <span [ngClass]="getBadgeClass(computeStatus(item().record.startDate, item().record.endDate))">
+                {{ computeStatus(item().record.startDate, item().record.endDate) }}
               </span>
           </div>
           <h2 tuiTitle>
-            {{ item.name }}
+            {{ item().name }}
           </h2>
-          <span class="location">
-            <tui-icon icon="@tui.map-pin" />
-            <span class="location-value">{{ item.located }}</span>
-          </span>
-          <span class="owner">
-            <tui-icon icon="@tui.user-round" />
-            <span class="owner-value">{{ item.owner }}</span>
-          </span>
+          @if (library()) {
+            <span class="library">
+              <tui-icon icon="@tui.library" />
+              <span class="library-value">{{ library()?.name }}</span>
+            </span>
+          }
   
         </div>
   
@@ -34,28 +32,28 @@
 
         <div class="item-actions">
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-          [appearance]="item.record ? 'primary' : 'outline'" size="m" type="button"
+          [appearance]="item().record ? 'primary' : 'outline'" size="m" type="button"
           >
         </button>
   
   
   
-        @if (item.record) {
+        @if (item().record) {
           <div class="reservation-dates-grid">
             <div class="reservation-start">
-                <span class="reservation-start-date">{{ item.record.startDate | date:'MMM d, y' }}</span>
+                <span class="reservation-start-date">{{ item().record.startDate | date:'MMM d, y' }}</span>
             </div>
             <div class="reservation-arrow">
               <tui-icon icon="@tui.arrow-right" />
             </div>
 
             <div class="reservation-end">
-                <span class="reservation-end-date">{{ item.record.endDate | date:'MMM d, y' }}</span>
+                <span class="reservation-end-date">{{ item().record.endDate | date:'MMM d, y' }}</span>
             </div>
           </div>
         }
   
-          <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item.id}}" tuiButton
+          <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item() .id}}" tuiButton
             type="button">
             More
             <tui-icon icon="@tui.arrow-right" />

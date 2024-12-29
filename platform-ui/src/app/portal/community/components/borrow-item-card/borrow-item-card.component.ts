@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, input, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiAppearance, TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from '@taiga-ui/core';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { UILibrary } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
 
 @Component({
@@ -25,7 +26,8 @@ import { ItemsService } from '../../services/items.service';
 })
 export class BorrowItemCardComponent {
 
-  @Input() item: UIBorrowItem = {} as UIBorrowItem;
+  public item = input.required<UIBorrowItem>();
+  public library = input<UILibrary>();
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService

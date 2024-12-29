@@ -7,12 +7,14 @@ import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
-import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
 import { UIBorrowItem } from '../../models/UIBorrowItem';
 import { UICategory } from '../../models/UICategory';
+import { UILibrary } from '../../models/UILibrary';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
+import { LibrariesService } from '../../services/libraries.service';
 
 @Component({
   standalone: true,
@@ -36,6 +38,7 @@ import { ItemsService } from '../../services/items.service';
   styleUrls: ['./myborroweditems.component.scss']
 })
 export class MyborroweditemsComponent {
+
   protected readonly sizes = ['l', 'm', 's'] as const;
   protected size = this.sizes[0];
   protected searchText = '';
@@ -86,6 +89,7 @@ export class MyborroweditemsComponent {
 
   protected items: UIBorrowItem[] = [];
   categories: UICategory[] = [];
+  libraries: UILibrary[] = [];
 
   // Status mapping for sorting
   private statusPriority = {
@@ -96,7 +100,8 @@ export class MyborroweditemsComponent {
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService
+    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService
   ) { }
 
   ngOnInit() {
@@ -106,7 +111,15 @@ export class MyborroweditemsComponent {
     this.getFilteredAndSortedData().subscribe((items) => {
       this.items = items;
     });
+    this.librariesService.getLibraries().subscribe(libraries => {
+      this.libraries = libraries;
+    });
   }
+
+  getLibrary(libraryId: string): UILibrary | undefined {
+    return this.libraries.find(library => library.id === libraryId);
+  }
+
   onTextFilterChange() {
     // The filtering is handled in the getter `filteredItems`
   }
