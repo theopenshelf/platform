@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, Input } from '@angular/core';
+import { Component, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiAppearance, TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from '@taiga-ui/core';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { UILibrary } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
 
 @Component({
@@ -25,13 +26,14 @@ import { ItemsService } from '../../services/items.service';
 })
 export class ItemCardComponent {
 
-  @Input() item: UIItemWithRecords = {} as UIItemWithRecords;
+  public item = input.required<UIItemWithRecords>();
+  public library = input<UILibrary>();
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
   ) { }
 
-  @Input() markAsFavorite: (item: UIItemWithRecords) => void = (item) => {
+  markAsFavorite: (item: UIItemWithRecords) => void = (item) => {
     this.itemsService.markAsFavorite(item).subscribe({
       next: () => console.log(`Item ${item.id} marked as favorite.`),
       error: (err) => console.error('Error marking item as favorite:', err)

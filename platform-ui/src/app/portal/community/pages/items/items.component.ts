@@ -44,6 +44,7 @@ import { LibrariesService } from '../../services/libraries.service';
 })
 export class ItemsComponent {
 
+
   // Categories for the filter
   categories: UICategory[] = [];
   // Selected categories
@@ -87,6 +88,9 @@ export class ItemsComponent {
     this.librariesService.getLibraries().subscribe(libraries => {
       this.libraries = libraries;
     });
+  }
+  getLibrary(libraryId: string): UILibrary | undefined {
+    return this.libraries.find(library => library.id === libraryId);
   }
 
   // Filtered items for the grid

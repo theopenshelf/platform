@@ -85,7 +85,7 @@
 
     <div class="items-container">
       @for (item of filteredAndSortedItems; track item) {
-      <item-card [item]="item" [markAsFavorite]="markAsFavorite">
+      <item-card [item]="item" [library]="getLibrary(item.libraryId)">
       </item-card>
       }
     </div>
