@@ -48,8 +48,9 @@
 
     a {
       color: var(--tos-text-action);
-      text-decoration: none;
       transition: color 0.3s;
+      font-weight: 600;
+
 
       &:hover {
         color: var(--tos-text-action-hover);
