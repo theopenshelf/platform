@@ -23,7 +23,7 @@
     height: 200px;
 
     .counter {
-        color: var(--tos-text-action);
+        color: var(--tos-text-accent);
         font-size: 48px;
         font-weight: bold;
         margin: 10px;
@@ -45,7 +45,7 @@
 
 .chart-title {
     font-size: 18px;
-    color: var(--tos-background-accent-1);
+    color: var(--tos-text-secondary);
     margin-top: 15px;
     margin-bottom: 25px;
 }
@@ -89,7 +89,7 @@
             height: 200px;
 
             .counter {
-                color: var(--tos-text-action);
+                color: var(--tos-text-accent);
                 font-size: 48px;
                 font-weight: bold;
                 margin: 20px;
@@ -119,10 +119,13 @@
     }
 
     tr:first-child td {
+        color: var(--tos-text-accent);
         font-size: 24px;
     }
 
     tr:nth-child(2) td {
+        color: var(--tos-text-accent);
+
         font-size: 18px;
     }
 
