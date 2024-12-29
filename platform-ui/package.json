@@ -9,7 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate:api-client": "openapi-generator-cli generate -i ../openapi.yaml -g typescript-angular -o src/app/api-client --skip-validate-spec"  
+    "generate:api-client": "openapi-generator-cli generate -i ../openapi.yaml -g typescript-angular -o src/app/api-client --skip-validate-spec"
   },
   "private": true,
   "dependencies": {
@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^19.0.4",
     "@angular/platform-browser-dynamic": "^19.0.4",
     "@angular/router": "^19.0.4",
+    "@faker-js/faker": "^9.3.0",
     "@taiga-ui/addon-charts": "^4.18.0",
     "@taiga-ui/addon-commerce": "^4.18.0",
     "@taiga-ui/addon-doc": "^4.18.0",
@@ -35,7 +36,9 @@
     "@taiga-ui/kit": "^4.15.0",
     "@taiga-ui/layout": "^4.18.0",
     "angular-calendar": "^0.31.1",
+    "axios": "^1.7.9",
     "date-fns": "^4.1.0",
+    "fs": "^0.0.1-security",
     "ngx-quill": "^27.0.0",
     "quill": "^2.0.3",
     "rxjs": "~7.8.0",
