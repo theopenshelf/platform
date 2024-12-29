@@ -30,9 +30,7 @@
     margin: auto;
 }
 
-.library-icon {
-    float: left !important;
-}
+
 
 .item-actions {
     position: absolute;
@@ -46,5 +44,5 @@
 }
 
 .item-actions tui-icon {
-    color: var(--tos-text-action);
+    color: var(--tos-text-primary);
 }

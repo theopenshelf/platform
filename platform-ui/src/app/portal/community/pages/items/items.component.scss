@@ -167,7 +167,7 @@
     }
 
     // Switch to single column on smaller screens
-    @media (max-width: 1000px) {
+    @media (max-width: 1400px) {
         .items-container {
             grid-template-columns: 1fr;
         }
@@ -192,7 +192,7 @@
     }
 }
 
-@media (min-width: 600px) {
+@media (min-width: 800px) {
     .top-actions-right {
 
         .sorting-select {
@@ -206,7 +206,7 @@
     }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
     .layout-container {
         flex-direction: column;
     }

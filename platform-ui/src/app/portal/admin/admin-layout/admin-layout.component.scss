@@ -57,6 +57,7 @@ button.dropdown {
 }
 
 .horizontal-menu a {
+    text-align: center;
     position: relative;
     /* Allow absolute positioning of the underline */
     display: inline-block;
@@ -74,9 +75,9 @@ button.dropdown {
 }
 
 .horizontal-menu a:hover {
-    background-color: var(--tos-background-accent-1);
+    background-color: var(--tos-background-neutral-1);
     /* Use lighter shade of primary color */
-    color: var(--tos-text-primary-on-accent-1);
+    color: var(--tos-text-accent);
     /* White text on hover */
 }
 
@@ -97,7 +98,7 @@ button.dropdown {
     /* Full width of the link */
     height: 4px;
     /* Underline thickness */
-    background-color: var(--tos-text-action);
+    background-color: var(--tos-background-accent-2);
     /* Underline color (match active link color) */
     border-radius: 0;
     /* No border radius for the line */

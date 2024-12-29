@@ -2,7 +2,7 @@
   <!-- Flexbox container for the image and details -->
   <div class="card-content">
     <!-- Image Section -->
-    <div class="image-container" routerLink="/community/items/{{item.id}}">
+    <div class="image-container">
       <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
     </div>
 
@@ -10,7 +10,7 @@
     <!-- Item Details -->
 
     <div class="item-content">
-      <div routerLink="/community/items/{{item.id}}" class="item-details">
+      <div class="item-details">
         <div class="item-details-top-right">
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
             [appearance]="item.myBooking ? 'primary' : 'outline'" size="m" type="button"
@@ -21,7 +21,7 @@
             [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
           (click)="markAsFavorite(item)"></button>
         </div>
-        <h2 routerLink="/community/items/{{item.id}}" tuiTitle>
+        <h2 tuiTitle>
           {{ item.name }}
         </h2>
         <span class="location">
@@ -32,7 +32,7 @@
           <tui-icon icon="@tui.user-round" />
           <span class="owner-value">{{ item.owner }}</span>
         </span>
-        <span routerLink="/community/items/{{item.id}}" class="shortDescription">
+        <span class="shortDescription">
           {{ item.shortDescription }}
         </span>
 
@@ -52,6 +52,13 @@
             Currently borrowed
           </button>
         }
+
+        <button appearance="outline" class="accent" size="m" routerLink="/community/items/{{item.id}}"
+          tuiButton type="button">
+          More details
+        </button>
+
+       
         <button class="borrow-counts" appearance="flat" size="m" tuiButton type="button">
           {{ item.borrowCount }} borrow(s)
         </button>

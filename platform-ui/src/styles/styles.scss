@@ -46,3 +46,7 @@ form {
         margin-bottom: 15px;
     }
 }
+
+button.accent[tuiButton][data-appearance="outline"] {
+    color: var(--tos-text-accent);
+}

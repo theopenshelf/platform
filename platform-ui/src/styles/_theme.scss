@@ -10,7 +10,8 @@ $background-base: #fff;
 $background-base-alt: #f6f6f6;
 
 // Calculate the lightened color using Sass
-$lightened-action-color: lighten(#FB8C02, 20%);
+$lightened-action-color: lighten(#1b1f3b, 20%);
+$lightened-accent-color: lighten(#FB8C02, 20%);
 
 :root {
   // Backgrounds
@@ -26,7 +27,7 @@ $lightened-action-color: lighten(#FB8C02, 20%);
   --tos-background-accent-1-hover: #4d6283;
   --tos-background-accent-1-pressed: #2b446d;
   --tos-background-accent-2: #FB8C02;
-  --tos-background-accent-2-hover: #{$lightened-action-color};
+  --tos-background-accent-2-hover: #{$lightened-accent-color};
   --tos-background-accent-2-pressed: #d97a02;
   --tos-background-accent-opposite: #000;
   --tos-background-accent-opposite-hover: #333;
@@ -59,9 +60,11 @@ $lightened-action-color: lighten(#FB8C02, 20%);
   --tos-text-primary: #1b1f3b;
   --tos-text-secondary: rgba(27, 31, 59, 0.65);
   --tos-text-tertiary: rgba(27, 31, 59, 0.4);
+  --tos-text-accent: #FB8C02;
+  --tos-text-accent-hover: #FB8C02;
   --tos-text-primary-on-accent-1: #fff;
   --tos-text-primary-on-accent-2: #fff;
-  --tos-text-action: #FB8C02;
+  --tos-text-action: #1b1f3b;
   --tos-text-action-hover: #{$lightened-action-color};
   --tos-text-positive: #3aa981;
   --tos-text-positive-hover: #7ac5aa;

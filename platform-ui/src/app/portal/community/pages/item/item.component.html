@@ -10,7 +10,7 @@
     <div class="details">
       <div class="top-left-details">
         <button class="favorite" [class.selected]="item.favorite" iconStart="@tui.heart" tuiButton
-          [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button"
+          [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
           (click)="markAsFavorite()"></button>
         <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
           [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
@@ -23,7 +23,7 @@
         [value]="selectedDate || null" [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
         [disabledItemHandler]="disabledItemHandler" />
       @if (!borrowItemRecord) {
-      <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="primary" size="m" [disabled]="!selectedDate" tuiButton
+      <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="accent" size="m" [disabled]="!selectedDate" tuiButton
         type="button">
         Borrow
       </button>
@@ -39,7 +39,7 @@
   <!-- Details Section -->
   <div class="details">
     <div class="top-right-details">
-      <button class="borrow-counts" appearance="flat" size="m" tuiButton type="button">
+      <button class="borrow-counts" appearance="outline" size="m" tuiButton type="button">
         {{ item.borrowCount }} borrow(s)
       </button>
       <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
@@ -66,7 +66,7 @@
   <div class="header">
     <tui-icon
     icon="@tui.calendar-check"
-    [style.color]="'var(--tui-background-accent-1)'"
+    [style.color]="'var(--tos-text-primary-on-accent-1)'"
 />
   </div>
 </ng-template>
@@ -75,7 +75,7 @@
   <div class="header">
     <tui-icon
     icon="@tui.calendar-x"
-    [style.color]="'var(--tui-background-accent-1)'"
+    [style.color]="'var(--tos-text-primary-on-accent-1)'"
 />
   </div>
 </ng-template>

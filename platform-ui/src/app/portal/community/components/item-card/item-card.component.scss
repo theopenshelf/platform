@@ -16,7 +16,6 @@
     &:hover {
         transform: translateY(-5px);
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
     }
 
     h2 {
@@ -87,7 +86,10 @@
         border-radius: 30px;
         font-size: small;
         font-weight: 600;
+        margin-right: 10px;
     }
+
+
 
     .borrow-counts {
         color: var(--tos-background-accent-1);
@@ -99,6 +101,11 @@
     float: right;
     display: flex;
     justify-content: flex-end;
+
+
+    button.favorite[tuiButton][data-appearance="outline"] {
+        color: var(--tos-text-accent);
+    }
 }
 
 .favorite,

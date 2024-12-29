@@ -71,11 +71,7 @@
   /* Reserve button using warning color */
 }
 
-.reserve-button:hover,
-.book-button:hover {
-  background-color: var(--tos-text-action-hover);
-  /* Darken on hover */
-}
+
 
 /* Unavailable Status */
 .unavailable {
@@ -130,13 +126,6 @@ button#cancel {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
-
-button#borrow {
-  background-color: var(--tos-text-action);
-  /* Primary button color */
-  color: var(--tos-text-primary-on-accent-1);
-  /* White text */
 }
 
 
@@ -212,4 +201,16 @@ button#borrow {
   margin: 5px;
   width: 30px;
   height: 30px;
+}
+
+button.favorite[tuiButton][data-appearance="outline"] {
+  color: var(--tos-text-accent);
+}
+
+form {
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
 }
