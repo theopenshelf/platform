@@ -205,7 +205,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>openapi.yaml</inputSpec>
+                            <inputSpec>${project.basedir}/../openapi.yaml</inputSpec>
                             <generatorName>spring</generatorName>
                             <apiPackage>dev.theopenshelf.platform.api</apiPackage>
                             <modelPackage>dev.theopenshelf.platform.model</modelPackage>
