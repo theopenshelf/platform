@@ -92,3 +92,23 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
+
+      - name: Deploy
+        uses: qcastel/github-actions-trigger-deploy@master
+        with:
+          branch-name: main
+
+          git-release-bot-name: "bot-theopenshelf"
+          git-release-bot-email: "bot@theopenshelf.dev"
+
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+          repository: git@github.com:theopenshelf/platform-deployment.git
+
+          images-names: "platform-api;platform-ui"
+
+          version: ${{ env.app-version }}
+
+          gpg-enabled: true
+          gpg-key-id: ${{ secrets.GPG_KEY_ID }}
+          gpg-key: ${{ secrets.GPG_KEY }}
