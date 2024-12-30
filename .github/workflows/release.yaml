@@ -4,12 +4,11 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: "!contains(github.event.head_commit.message, '[ci skip]')"
+    if: "!contains(github.event.head_commit.message, '[ci skip]') && startsWith(github.event.head_commit.message, '[release]')"
 
     steps:
       - uses: actions/checkout@v1
