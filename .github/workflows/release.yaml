@@ -42,7 +42,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_GITHUB_TOKEN }}
         with:
           release-branch-name: "main"
-          maven-project-folder: "platform-api/"
 
           git-release-bot-name: "bot-theopenshelf"
           git-release-bot-email: "bot@theopenshelf.dev"
