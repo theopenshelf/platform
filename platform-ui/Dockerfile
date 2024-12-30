@@ -13,33 +13,26 @@ WORKDIR /usr/local/app
 COPY ./ /usr/local/app/
 COPY ./openapi.yaml /usr/local/
 
+# Set the environment variable for Angular environment
+ENV NODE_ENV=development
+
 # Install all the dependencies
 RUN npm ci  # Use npm ci for a clean install based on package-lock.json
 
-# Generate the build of the application
-RUN npm run build
-
+# Generate the build of the application with the development environment
+RUN npm run build -- --configuration=development
 
 # Stage 2: Serve app with nginx server
-
-# Use official nginx image as the base image
 FROM nginx:latest
 
-# Remove default nginx static content
-RUN rm -rf /usr/share/nginx/html/*
+# Copy the custom nginx configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
-# Copy the build output to replace the default nginx contents.
-COPY --from=build /usr/local/app/dist/platform-ui /usr/share/nginx/html
+# Copy the built Angular app from the build stage to the Nginx directory
+COPY --from=build /usr/local/app/dist/platform-ui/browser/ /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
 
-# Use a non-root user for better security
-# USER nginx  # Comment out this line
-
-# Ensure the necessary directories have the correct permissions
-RUN mkdir -p /var/cache/nginx/client_temp && \
-    chown -R nginx:nginx /var/cache/nginx
-
-# Switch to the nginx user after setting permissions
-USER nginx
+# Start the Nginx server
+CMD ["nginx", "-g", "daemon off;"]
