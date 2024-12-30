@@ -58,4 +58,5 @@ jobs:
         with:
           context: ./platform-ui
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
