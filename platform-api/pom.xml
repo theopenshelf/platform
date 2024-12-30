@@ -256,6 +256,9 @@
                             <password>${env.DOCKER_REGISTRY_PASSWORD}</password>
                         </auth>
                     </to>
+                    <systemProperties>
+                        <jib.serialize>true</jib.serialize>
+                    </systemProperties>
                 </configuration>
             </plugin>
             <plugin>
