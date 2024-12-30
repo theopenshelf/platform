@@ -252,8 +252,8 @@
                             <tag>latest</tag>
                         </tags>
                         <auth>
-                            <username>local</username>
-                            <password>local</password>
+                            <username>${env.DOCKER_REGISTRY_USERNAME}</username>
+                            <password>${env.DOCKER_REGISTRY_PASSWORD}</password>
                         </auth>
                     </to>
                 </configuration>
