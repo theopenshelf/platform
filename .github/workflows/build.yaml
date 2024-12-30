@@ -1,4 +1,4 @@
-name: release version
+name: Build and Test
 
 on:
   push:
@@ -34,7 +34,7 @@ jobs:
         uses: qcastel/github-actions-maven-cmd@master
         with:
           maven-args: "clean verify -Ddockerfile.skip -DdockerCompose.skip -Djib.skip"
-      
+
       # Angular
       - name: Clear npm cache
         run: npm cache clean --force
