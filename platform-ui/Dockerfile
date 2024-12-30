@@ -35,4 +35,11 @@ COPY --from=build /usr/local/app/dist/platform-ui /usr/share/nginx/html
 EXPOSE 80
 
 # Use a non-root user for better security
+# USER nginx  # Comment out this line
+
+# Ensure the necessary directories have the correct permissions
+RUN mkdir -p /var/cache/nginx/client_temp && \
+    chown -R nginx:nginx /var/cache/nginx
+
+# Switch to the nginx user after setting permissions
 USER nginx
