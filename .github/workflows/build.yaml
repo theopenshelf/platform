@@ -3,7 +3,7 @@ name: release version
 on:
   push:
     branches:
-      - release
+      - main
 
 jobs:
   build:
@@ -17,7 +17,6 @@ jobs:
         id: vars
         run: |
           sudo apt-get install libxml2-utils
-          cp openapi.yaml platform-ui/
           cd platform-api
           export VERSION=`xmllint --xpath '/*[local-name()="project"]/*[local-name()="version"]/text()' pom.xml | sed -e  "s/-SNAPSHOT$//"`
           echo "app-version=$VERSION"
@@ -35,7 +34,7 @@ jobs:
         uses: qcastel/github-actions-maven-cmd@master
         with:
           maven-args: "clean verify -Ddockerfile.skip -DdockerCompose.skip -Djib.skip"
-
+      
       # Angular
       - name: Clear npm cache
         run: npm cache clean --force
@@ -44,18 +43,3 @@ jobs:
           cd platform-ui
           npm ci # Install dependencies
           npm run build -- --configuration production # Build the project
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io/theopenshelf
-          username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          context: ./platform-ui
-          push: true
-          tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
