@@ -18,7 +18,7 @@
         <javax.version>4.0.1</javax.version>
         <javax.validation.version>2.0.1.Final</javax.validation.version>
         <java.version>21</java.version>
-        <jwt.nimbus.version>9.48</jwt.nimbus.version>
+        <jwt.nimbus.version>10.0</jwt.nimbus.version>
         <bouncycastle.version>1.70</bouncycastle.version>
         <hoverfly.version>0.14.0</hoverfly.version>
         <google.jib.version>3.4.4</google.jib.version>
