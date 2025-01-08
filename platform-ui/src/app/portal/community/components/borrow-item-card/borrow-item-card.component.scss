@@ -183,3 +183,12 @@
 .details-button {
     margin-left: auto;
 }
+
+@media (max-width: 768px) {
+
+    .details-button {
+        .details-button-text {
+            display: none;
+        }
+    }
+}

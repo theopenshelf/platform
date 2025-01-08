@@ -1,9 +1,10 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiButton, TuiDataList, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
+import { TuiAccordion, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { CategoryBadgeComponent } from "../../../../components/category-badge/category-badge.component";
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
@@ -36,7 +37,8 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiTextfieldControllerModule,
     CategoryBadgeComponent,
     TuiSwitch,
-    TuiPagination
+    TuiPagination,
+    TuiAccordion
   ],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
@@ -67,14 +69,22 @@ export class ItemsComponent implements OnInit {
   protected sortControl = new FormControl<string | null>(null);
   currentPage: number = 1;
   itemsPerPage: number = 8; // Adjust this number as needed
+  isMobile: boolean = false;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
-    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit() {
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
+
+
     this.fetchItems(false);
     this.categoriesService.getCategories().subscribe(categories => {
       this.categories = categories;

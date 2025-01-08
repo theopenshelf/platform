@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { TuiAxes, TuiLineChart, TuiLineChartHint } from '@taiga-ui/addon-charts';
-import { TuiHint, TuiPoint } from '@taiga-ui/core';
+import { TuiHint, TuiIcon, TuiPoint } from '@taiga-ui/core';
 import { DASHBOARD_SERVICE_TOKEN } from '../../admin.providers';
 import { DashboardService, UIBorrowerMetrics, UICategoryMetrics, UIDashboardBorrowesMetrics, UIDashboardBorrowesOverTimeData, UIItemMetrics } from '../../services/dashboard.service';
 
 @Component({
-  imports: [TuiAxes, TuiLineChart, TuiHint, TuiLineChartHint],
+  imports: [TuiAxes, TuiLineChart, TuiHint, TuiLineChartHint, TuiIcon],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']

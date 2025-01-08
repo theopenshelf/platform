@@ -1,18 +1,19 @@
-import { DatePipe, JsonPipe } from '@angular/common';
-import { Component, effect, Inject, input } from '@angular/core';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { Component, effect, inject, Inject, INJECTOR, Injector, input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiNotification } from '@taiga-ui/core';
-import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
+import { TuiMobileCalendar, TuiMobileCalendarDropdown, TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
+import { TuiBooleanHandler, tuiControlValue, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
+import { TUI_MONTHS, TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiNotification } from '@taiga-ui/core';
+import { TUI_CALENDAR_DATE_STREAM, TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { EMPTY, switchMap, tap } from 'rxjs';
+import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowItem } from '../../models/UIBorrowItem';
@@ -40,7 +41,9 @@ const plusTen = today.append({ day: 10 });
     TuiInputDateRangeModule,
     RouterLink,
     JsonPipe,
-    TuiNotification
+    TuiNotification,
+    TuiMobileCalendar,
+    AsyncPipe
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -66,7 +69,7 @@ export class ItemComponent {
   protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
   protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
   records: UIBorrowRecord[] = [];
-  selectedDate: TuiDayRange | undefined;
+  selectedDate: TuiDayRange | null | undefined;
   borrowItemRecord: UIBorrowItem | undefined;
   disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
     return day.dayBefore(this.min);
@@ -98,6 +101,54 @@ export class ItemComponent {
         });
       }
     })
+
+    this.control = new FormControl<TuiDayRange | null | undefined>(this.selectedDate)
+
+    this.control.valueChanges.subscribe((value: TuiDayRange | null | undefined) => {
+      this.selectedDate = value;
+    });
+
+    this.date$ = combineLatest([
+      tuiControlValue<TuiDayRange>(this.control),
+      this.months$,
+    ]).pipe(
+      map(([value, months]) => {
+        if (!value) {
+          return 'Choose a date range';
+        }
+
+        return value.isSingleDay
+          ? `${months[value.from.month]} ${value.from.day}, ${value.from.year}`
+          : `${months[value.from.month]} ${value.from.day}, ${value.from.year} - ${months[value.to.month]
+          } ${value.to.day}, ${value.to.year}`;
+      }),
+    );
+
+    this.dialog$ = this.dialogs.open(
+      new PolymorpheusComponent(
+        TuiMobileCalendarDropdown,
+        Injector.create({
+          providers: [
+            {
+              provide: TUI_CALENDAR_DATE_STREAM,
+              useValue: tuiControlValue(this.control),
+            },
+          ],
+          parent: this.injector,
+        }),
+      ),
+      {
+        size: 'fullscreen',
+        closeable: false,
+        data: {
+          single: false,
+          min: this.min,
+          max: this.max,
+          disabledItemHandler: this.disabledItemHandlerForMobile,
+        },
+      },
+    );
+
   }
 
   get sanitizedDescription(): SafeHtml {
@@ -235,4 +286,43 @@ export class ItemComponent {
         return '';
     }
   }
+
+  //mobile calendar
+
+  private readonly injector = inject(INJECTOR);
+  private readonly months$ = inject(TUI_MONTHS);
+  private readonly control;
+
+  private readonly dialog$: Observable<TuiDayRange>;
+
+  protected readonly date$;
+
+  protected get empty(): boolean {
+    return !this.control.value;
+  }
+
+  protected onClick(): void {
+    this.dialog$.subscribe((value) => this.control.setValue(value));
+  }
+
+  // Marker handler based on borrow records
+  protected disabledItemHandlerForMobile = (day: TuiDay): boolean => {
+    this.updateCellAvailability();
+    if (day.dayBefore(this.min)) {
+      return true;
+    }
+    for (const record of this.records) {
+      const startDate = TuiDay.fromLocalNativeDate(new Date(record.startDate));
+      const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
+
+      if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
+        if (record == this.borrowItemRecord?.record) {
+          return true; // Marked day
+        }
+        return true; // Marked day
+      }
+    }
+    return false; // Not marked
+  };
+
 }

@@ -10,62 +10,65 @@
       </fieldset>
     </div>
 
-    <div class="filters-section">
-
-      <h2 i18n="@@categoryFilter">
-        <tui-icon icon="@tui.sliders-horizontal" [style.height.rem]="1" />
-        Filter
-      </h2>
-
-      <div class="filter-group filter-availability">
-        <h3 i18n="@@availabilityFilter">Availability</h3>
-        <div class="filter-availability-switch">
-          <input tuiSwitch type="checkbox" [(ngModel)]="currentlyAvailable" [showIcons]="true"
-            name="currentlyAvailable">
-          <label>Currently available</label>
-        </div>
-      </div>
-      <!-- Category Filter -->
-      <div class="filter-group filter-categories">
-        <h3 i18n="@@categoryFilter">Categories</h3>
-        <ul>
-          @for (category of categories; track category) {
-          <li class="filter-category" (click)="toggleCategorySelection(category)">
-            <div class="filter-category-color" 
-              [class.active]="isCategorySelected(category)" 
-              [style.background-color]="category.color">
-              <tui-icon icon="@tui.check" [style.color]="'white'" />
+    <tui-accordion class="filters-section">
+      <tui-accordion-item [open]="!isMobile">
+        <h2 i18n="@@categoryFilter">
+          <tui-icon icon="@tui.sliders-horizontal"  />
+          Filter
+        </h2>
+          <ng-template tuiAccordionItemContent>
+            <div class="filter-group filter-availability">
+              <h3 i18n="@@availabilityFilter">Availability</h3>
+              <div class="filter-availability-switch">
+                <input tuiSwitch type="checkbox" [(ngModel)]="currentlyAvailable" [showIcons]="true"
+                  name="currentlyAvailable">
+                <label>Currently available</label>
+              </div>
             </div>
-            {{ category.name }}
-          </li>
-          }
-        </ul>
-      </div>
-
-      <div class="filter-group filter-libraries">
-        <h3>Libraries</h3>
-        <ul>
-          @for (library of libraries; track library) {
-          <li class="filter-library">
-            <span class="filter-library-name">
-              <input
-                tuiCheckbox
-                type="checkbox"
-                [(ngModel)]="selectedLibraries[library.id]"
-                (change)="toggleLibrarySelection(library)"
-                size="s"
-              />
-              <label>{{ library.name }}</label>
-            </span>
-            <div class="filter-library-location">
-              <tui-icon icon="@tui.map-pin" />
-              {{ library.location.address }}
+            <!-- Category Filter -->
+            <div class="filter-group filter-categories">
+              <h3 i18n="@@categoryFilter">Categories</h3>
+              <ul>
+                @for (category of categories; track category) {
+                <li class="filter-category" (click)="toggleCategorySelection(category)">
+                  <div class="filter-category-color" 
+                    [class.active]="isCategorySelected(category)" 
+                    [style.background-color]="category.color">
+                    <tui-icon icon="@tui.check" [style.color]="'white'" />
+                  </div>
+                  {{ category.name }}
+                </li>
+                }
+              </ul>
             </div>
-          </li>
-          }
-        </ul>
-      </div>
-    </div>
+      
+            <div class="filter-group filter-libraries">
+              <h3>Libraries</h3>
+              <ul>
+                @for (library of libraries; track library) {
+                <li class="filter-library">
+                  <span class="filter-library-name">
+                    <input
+                      tuiCheckbox
+                      type="checkbox"
+                      [(ngModel)]="selectedLibraries[library.id]"
+                      (change)="toggleLibrarySelection(library)"
+                      size="s"
+                    />
+                    <label>{{ library.name }}</label>
+                  </span>
+                  <div class="filter-library-location">
+                    <tui-icon icon="@tui.map-pin" />
+                    {{ library.location.address }}
+                  </div>
+                </li>
+                }
+              </ul>
+            </div>
+                    </ng-template>
+      </tui-accordion-item>
+  </tui-accordion>
+
   </aside>
 
 

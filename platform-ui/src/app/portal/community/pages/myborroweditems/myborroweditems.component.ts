@@ -1,9 +1,11 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule, NgClass } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiAccordion } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
@@ -32,12 +34,13 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiTextfield,
     TuiIcon,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TuiAccordion
   ],
   templateUrl: './myborroweditems.component.html',
   styleUrls: ['./myborroweditems.component.scss']
 })
-export class MyborroweditemsComponent {
+export class MyborroweditemsComponent implements OnInit {
 
   protected readonly sizes = ['l', 'm', 's'] as const;
   protected size = this.sizes[0];
@@ -98,10 +101,13 @@ export class MyborroweditemsComponent {
     'Returned': 3,
   };
 
+  isMobile: boolean = false;
+
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
-    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    private breakpointObserver: BreakpointObserver
   ) { }
 
   ngOnInit() {
@@ -114,6 +120,11 @@ export class MyborroweditemsComponent {
     this.librariesService.getLibraries().subscribe(libraries => {
       this.libraries = libraries;
     });
+
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
   }
 
   getLibrary(libraryId: string): UILibrary | undefined {

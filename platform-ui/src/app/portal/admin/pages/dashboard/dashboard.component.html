@@ -1,17 +1,33 @@
 <div class="dashboard-models-container">
     <div class="dashboard-card">
-        <div class="counter">{{ userCount }}</div>
-        <div class="label">Users</div>
+        <div class="counter-icon">
+            <tui-icon size="xl" icon="@tui.users" />
+
+        </div>
+        <div class="counter-container">
+            <div class="label">Users</div>
+            <div class="counter">{{ userCount }}</div>
+        </div>
     </div>
 
     <div class="dashboard-card">
-        <div class="counter">{{ itemCount }}</div>
-        <div class="label">Items</div>
+        <div class="counter-icon">
+            <tui-icon size="xl" icon="@tui.package" />
+        </div>
+        <div class="counter-container">
+            <div class="label">Items</div>
+            <div class="counter">{{ itemCount }}</div>
+        </div>
     </div>
 
     <div class="dashboard-card">
-        <div class="counter">{{ libraryCount }}</div>
-        <div class="label">Libraries</div>
+        <div class="counter-icon">
+            <tui-icon size="xl" icon="@tui.library" />
+        </div>
+        <div class="counter-container">
+            <div class="label">Libraries</div>
+            <div class="counter">{{ libraryCount }}</div>
+        </div>
     </div>
 </div>
 

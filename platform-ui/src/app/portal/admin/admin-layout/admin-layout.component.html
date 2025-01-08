@@ -61,7 +61,10 @@
         </a>
 
     </nav>
-    <main >
-        <router-outlet></router-outlet>
-    </main>
+
+    <div [style.display]="'flex'">
+        <main tuiNavigationMain>
+            <router-outlet></router-outlet>
+        </main>
+    </div>
 </tui-root>

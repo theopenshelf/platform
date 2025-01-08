@@ -117,3 +117,13 @@
     width: 30px;
     height: 30px;
 }
+
+@media (max-width: 768px) {
+    .borrow-counts {
+        display: none;
+    }
+
+    .item-actions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

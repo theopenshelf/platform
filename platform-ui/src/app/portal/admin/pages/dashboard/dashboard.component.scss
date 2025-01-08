@@ -19,21 +19,43 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 0px solid rgb(226, 232, 240);
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
-    width: 100%;
     height: 200px;
+    border-left: 15px solid #001d45;
+
+
+    display: grid;
+    grid-template-columns: 1fr 1fr; // Adjust the ratio as needed
+    align-items: center;
+
+
+    .counter-icon {
+        justify-self: center; // Center the icon in its grid cell
+
+        tui-icon {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    .counter-container {
+
+        align-items: left;
+        border-left: 2px solid #cccccc;
+        padding-left: 50px;
+
+    }
 
     .counter {
         color: var(--tos-text-accent);
         font-size: 48px;
         font-weight: bold;
-        margin: 10px;
-        text-align: center;
+        margin: 15px 0;
+
     }
 
     .label {
         font-size: 24px;
         color: var(--tos-text-action);
-        text-align: center;
     }
 }
 
@@ -99,7 +121,7 @@
 
             .label {
                 font-size: 24px;
-                color: var(--tos-text-action);
+                color: var(--tos-text-primary-on-accent-1);
                 text-align: center;
             }
         }
@@ -162,5 +184,19 @@
                 }
             }
         }
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-models-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .dashboard-top-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .dashboard-borrow-container {
+        grid-template-columns: repeat(1, 1fr);
     }
 }

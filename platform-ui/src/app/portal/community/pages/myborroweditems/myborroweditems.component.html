@@ -10,45 +10,46 @@
       </fieldset>
     </div>
 
-    <div class="filters-section">
-      <h2 i18n="@@categoryFilter">
-        <tui-icon icon="@tui.sliders-horizontal" [style.height.rem]="1" />
-        Filter
-      </h2>
+    <tui-accordion class="filters-section">
+      <tui-accordion-item [open]="!isMobile">
+        <h2 i18n="@@categoryFilter">
+          <tui-icon icon="@tui.sliders-horizontal" />
+          Filter
+        </h2>
+        <ng-template tuiAccordionItemContent>
 
-      <div class="filter-group filter-statuses">
-        <h3>Status</h3>
-        <ul>
-          @for (status of statuses; track status) {
-          <li class="filter-status" (click)="toggleStatusSelection(status.name)">
-            <div class="filter-status-color" 
-              [class.active]="isStatusSelected(status.name)" 
-              [style.background-color]="status.color">
-              <tui-icon icon="@tui.check" [style.color]="'white'" />
-            </div>
-            {{ status.name }}
-          </li>
-          }
-        </ul>
-      </div>
-     <!-- Category Filter -->
-     <div class="filter-group filter-categories">
-      <h3 i18n="@@categoryFilter">Categories</h3>
-      <ul>
-        @for (category of categories; track category) {
-        <li class="filter-category" (click)="toggleCategorySelection(category)">
-          <div class="filter-category-color" 
-            [class.active]="isCategorySelected(category)" 
-            [style.background-color]="category.color">
-            <tui-icon icon="@tui.check" [style.color]="'white'" />
+          <div class="filter-group filter-statuses">
+            <h3>Status</h3>
+            <ul>
+              @for (status of statuses; track status) {
+              <li class="filter-status" (click)="toggleStatusSelection(status.name)">
+                <div class="filter-status-color" [class.active]="isStatusSelected(status.name)"
+                  [style.background-color]="status.color">
+                  <tui-icon icon="@tui.check" [style.color]="'white'" />
+                </div>
+                {{ status.name }}
+              </li>
+              }
+            </ul>
           </div>
-          {{ category.name }}
-        </li>
-        }
-      </ul>
-    </div>
-    
-  </div>
+          <!-- Category Filter -->
+          <div class="filter-group filter-categories">
+            <h3 i18n="@@categoryFilter">Categories</h3>
+            <ul>
+              @for (category of categories; track category) {
+              <li class="filter-category" (click)="toggleCategorySelection(category)">
+                <div class="filter-category-color" [class.active]="isCategorySelected(category)"
+                  [style.background-color]="category.color">
+                  <tui-icon icon="@tui.check" [style.color]="'white'" />
+                </div>
+                {{ category.name }}
+              </li>
+              }
+            </ul>
+          </div>
+        </ng-template>
+      </tui-accordion-item>
+    </tui-accordion>
   </aside>
 
   <main class="grid-container">
@@ -65,11 +66,11 @@
       </div>
     </div>
 
-  <div class="items-container">
-    @for (item of items; track item) {
-    <borrow-item-card [item]="item" [library]="getLibrary(item.libraryId)">
-    </borrow-item-card>
-    }
+    <div class="items-container">
+      @for (item of items; track item) {
+      <borrow-item-card [item]="item" [library]="getLibrary(item.libraryId)">
+      </borrow-item-card>
+      }
     </div>
   </main>
 </div>

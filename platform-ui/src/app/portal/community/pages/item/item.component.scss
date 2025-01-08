@@ -40,9 +40,9 @@
 .item-image {
   border: 1px solid #ccc;
   /* Use theme border color */
-  width: 80%;
+  max-width: 60%;
+  max-height: 300px;
   border-radius: 8px;
-  margin: 10%;
   margin-bottom: 20px;
   margin-top: 0;
 }
@@ -213,4 +213,45 @@ form {
   border-radius: 0px;
   margin-bottom: 0px;
   padding: 0px;
+}
+
+.mobile-calendar {
+  display: none;
+}
+
+@media (max-width: 1200px) {
+
+  .item-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: 577px;
+    order: -1; // Move sidebar to the top
+  }
+
+  .grid-container {
+    width: 100%;
+  }
+
+  .top-actions-right {
+    width: 100% !important;
+
+  }
+
+  .mobile-calendar {
+    display: none;
+  }
+}
+
+@media (max-width: 680px) {
+
+  .desktop-calendar {
+    display: none;
+  }
+
+  .mobile-calendar {
+    display: block;
+  }
 }

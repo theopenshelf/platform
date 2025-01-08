@@ -16,6 +16,7 @@ import {
     TuiStatus
 } from '@taiga-ui/kit';
 
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { TuiCell } from '@taiga-ui/layout';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
@@ -66,16 +67,16 @@ export class ItemsComponent {
         { key: 'state', label: 'State', custom: true, visible: true, sortable: true, size: 's' },
     ];
 
-
     public constructor(
-        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
+        @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+        private breakpointObserver: BreakpointObserver
     ) {
     }
 
     ngOnInit() {
         // Fetch the items from the service
         this.itemsService.getItems().subscribe(items => {
-            this.items = items
+            this.items = items;
         });
     }
 }
