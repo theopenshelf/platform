@@ -23,14 +23,19 @@
         [value]="selectedDate || null" [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
         [disabledItemHandler]="disabledItemHandler" />
       @if (!borrowItemRecord) {
-      <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="accent" size="m" [disabled]="!selectedDate" tuiButton
-        type="button">
-        Borrow
-      </button>
+        @if (!selectedDate) {
+        <tui-notification size="s">
+          Select a date to borrow
+        </tui-notification>
+        }
+        <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="accent" size="m"
+          [disabled]="!selectedDate" tuiButton type="button">
+          Borrow
+        </button>
       }
       @if (borrowItemRecord) {
-      <button id="cancel" i18n="@@cancelButton" (click)="cancelReservation(headerCancel)" appearance="secondary" size="m" tuiButton
-        type="button">
+      <button id="cancel" i18n="@@cancelButton" (click)="cancelReservation(headerCancel)" appearance="secondary"
+        size="m" tuiButton type="button">
         Cancel Reservation
       </button>
       }
@@ -64,19 +69,13 @@
 
 <ng-template #headerBorrowConfirm>
   <div class="header">
-    <tui-icon
-    icon="@tui.calendar-check"
-    [style.color]="'var(--tos-text-primary-on-accent-1)'"
-/>
+    <tui-icon icon="@tui.calendar-check" [style.color]="'var(--tos-text-primary-on-accent-1)'" />
   </div>
 </ng-template>
 
 <ng-template #headerCancel>
   <div class="header">
-    <tui-icon
-    icon="@tui.calendar-x"
-    [style.color]="'var(--tos-text-primary-on-accent-1)'"
-/>
+    <tui-icon icon="@tui.calendar-x" [style.color]="'var(--tos-text-primary-on-accent-1)'" />
   </div>
 </ng-template>
 }

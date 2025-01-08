@@ -6,9 +6,31 @@ import { UIItemWithRecords } from '../models/UIItemWithRecords';
 
 export interface ItemsService {
     getMyOwnedItems(): Observable<UIItem[]>;
-    getItems(): Observable<UIItem[]>;
+    getItems(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: string,
+        sortOrder?: string,
+        page?: number,
+        pageSize?: number
+    ): Observable<UIItem[]>;
     getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]>;
-    getItemsWithRecords(): Observable<UIItemWithRecords[]>;
+    getItemsWithRecords(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: string,
+        sortOrder?: string,
+        page?: number,
+        pageSize?: number
+    ): Observable<UIItemWithRecords[]>;
     getItem(id: string): Observable<UIItem>;
     getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]>;
     addItem(item: UIItem): Observable<UIItem>;

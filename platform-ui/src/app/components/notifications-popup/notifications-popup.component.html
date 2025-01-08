@@ -10,23 +10,40 @@
   <div class="notifications-popup">
     <div class="header">
       <h3>Notifications</h3>
+      <button
+        class="close-button"
+        iconStart="@tui.x"
+        (click)="closePopup()"
+        tuiIconButton
+        type="button"
+    >
+        Close
+    </button>
     </div>
     <div class="notifications-list">
       @for (notification of notifications; track notification) {
         <div
           class="notification-item"
           [class.unread]="!notification.alreadyRead"
-          (click)="onNotificationClick(notification)"
           >
           <img
+            class="notification-image"
             [src]="getNotificationImage(notification)"
             alt="{{ notification.payload?.item?.name || 'Notification' }}"
             />
           <div class="notification-content">
-            <p class="notification-text">
+            <h4 class="notification-text">
               {{ getNotificationText(notification.type) }}
-            </p>
-            <small class="notification-date">{{ notification.date }}</small>
+            </h4>
+            <button appearance="outline" class="accent details-button" size="s" (click)="onNotificationClick(notification)" tuiButton
+            type="button">
+            More
+            <tui-icon icon="@tui.arrow-right" />
+          </button>
+            <small class="notification-date">{{ notification.date | timeago}}</small>
+            @if (!notification.alreadyRead) {
+              <span class="unread-icon"></span>
+            }
           </div>
         </div>
       }

@@ -29,6 +29,7 @@
         }
 
         padding: 1rem;
+        margin-bottom: 15px;
         background-color: var(--tos-background-base);
         border-radius: 16px;
         border: 0px solid rgb(226, 232, 240);
@@ -212,4 +213,8 @@
         width: 100% !important;
 
     }
+}
+
+tui-pagination {
+    margin-bottom: 15px;
 }

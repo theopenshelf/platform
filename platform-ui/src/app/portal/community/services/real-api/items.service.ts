@@ -30,8 +30,30 @@ export class APIItemsService implements ItemsService {
             } as UIItem)))
         );
     }
-    getItems(): Observable<UIItem[]> {
-        return this.itemsApiService.getItems(false).pipe(
+    getItems(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: 'createdAt' | 'borrowCount' | 'favorite',
+        sortOrder?: 'asc' | 'desc',
+        page: number = 1,
+        pageSize: number = 10
+    ): Observable<UIItem[]> {
+        return this.itemsApiService.getItems(
+            currentUser,
+            borrowedByCurrentUser,
+            libraryIds,
+            categories,
+            searchText,
+            currentlyAvailable,
+            sortBy,
+            sortOrder,
+            page,
+            pageSize
+        ).pipe(
             map((items: Item[]) => items.map((item: Item) => ({
                 id: item.id,
                 name: item.name,
@@ -48,7 +70,7 @@ export class APIItemsService implements ItemsService {
     }
 
     getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]> {
-        return this.itemsApiService.getItems(false, false, libraryId).pipe(
+        return this.itemsApiService.getItems(false, false, [libraryId]).pipe(
             map((items: Item[]) => items.map((item: Item) => ({
                 id: item.id,
                 name: item.name,
@@ -89,9 +111,30 @@ export class APIItemsService implements ItemsService {
         );
     }
 
-    getItemsWithRecords(): Observable<UIItemWithRecords[]> {
-
-        return this.getItems().pipe(
+    getItemsWithRecords(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: 'createdAt' | 'borrowCount' | 'favorite',
+        sortOrder?: 'asc' | 'desc',
+        page: number = 1,
+        pageSize: number = 10
+    ): Observable<UIItemWithRecords[]> {
+        return this.getItems(
+            currentUser,
+            borrowedByCurrentUser,
+            libraryIds,
+            categories,
+            searchText,
+            currentlyAvailable,
+            sortBy,
+            sortOrder,
+            page,
+            pageSize
+        ).pipe(
             switchMap((items: UIItem[]) => {
                 const test = items.map(item => {
                     let borrowRecords: UIBorrowRecord[] = [];

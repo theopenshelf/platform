@@ -5,7 +5,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiBooleanHandler, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiNotification } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
@@ -39,7 +39,8 @@ const plusTen = today.append({ day: 10 });
     ReactiveFormsModule,
     TuiInputDateRangeModule,
     RouterLink,
-    JsonPipe
+    JsonPipe,
+    TuiNotification
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',

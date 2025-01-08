@@ -1,17 +1,20 @@
-import { Component, HostListener, ElementRef, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { NotificationsService, UINotification, NotificationType } from '../../services/notifications.service';
-import { Router, RouterLink } from '@angular/router';
+import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
-import { TuiButton } from '@taiga-ui/core';
 import { globalProviders, NOTIFICATIONS_SERVICE_TOKEN } from '../../global.provider';
+import { NotificationsService, NotificationType, UINotification } from '../../services/notifications.service';
+import { SharedModule } from '../shared-module/shared-module.component';
 
 @Component({
   standalone: true,
   selector: 'app-notifications-popup',
   imports: [
     TuiBadgeNotification,
-    TuiButton
-],
+    TuiButton,
+    TuiIcon,
+    SharedModule
+  ],
   providers: [
     ...globalProviders
   ],
@@ -24,11 +27,11 @@ export class NotificationsPopupComponent implements OnInit {
 
   @Input() isPopupVisible: boolean = false;  // Popup visibility controlled by the parent
   @Output() isPopupVisibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();  // Emit changes to the parent
-  
+
   constructor(
     private elRef: ElementRef,
-    private router: Router, 
-    @Inject(NOTIFICATIONS_SERVICE_TOKEN) private notificationsService: NotificationsService) {}
+    private router: Router,
+    @Inject(NOTIFICATIONS_SERVICE_TOKEN) private notificationsService: NotificationsService) { }
   ngOnInit() {
     this.notificationsService.getNotifications().subscribe((notifications: UINotification[]) => {
       this.notifications = notifications;
@@ -72,7 +75,7 @@ export class NotificationsPopupComponent implements OnInit {
       case NotificationType.ITEM_BORROW_RESERVATION_DATE_START:
       case NotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
         return notification.payload?.item ? `/community/items/${notification.payload.item.id}` : null;
-  
+
       // Add other cases if needed for different notification types
       default:
         return null;
@@ -92,7 +95,9 @@ export class NotificationsPopupComponent implements OnInit {
     // Handle notification click depending on its type or other properties
     const link = this.getNotificationLink(notification);
     if (link) {
-      this.router.navigate([link]);
+      this.router.navigate([link]).then(() => {
+        this.closePopup();
+      });
     }
   }
 

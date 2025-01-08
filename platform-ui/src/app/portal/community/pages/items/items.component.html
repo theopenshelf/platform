@@ -74,7 +74,7 @@
 
       <div class="top-actions-right">
 
-        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="testValue"
+        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortControl"
           [tuiTextfieldLabelOutside]="true">
           Sort by
           <input placeholder="Sort by" tuiTextfieldLegacy />
@@ -84,10 +84,15 @@
     </div>
 
     <div class="items-container">
-      @for (item of filteredAndSortedItems; track item) {
+      @for (item of items; track item) {
       <item-card [item]="item" [library]="getLibrary(item.libraryId)">
       </item-card>
       }
     </div>
+    <tui-pagination
+    [index]="currentPage"
+    [length]="totalPages"
+    (indexChange)="goToPage($event)"
+/>
   </main>
 </div>
