@@ -17,6 +17,7 @@ export class APICategoriesService implements CategoriesService {
                 id: category.id,
                 name: category.name,
                 color: category.color,
+                icon: category.icon,
                 template: category.template
             } as UICategory)))
         );

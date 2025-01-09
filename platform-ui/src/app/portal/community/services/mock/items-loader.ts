@@ -50,6 +50,7 @@ export const loadItems = (): UIItem[] => {
         var borrowRecords = generateRandomRecords(Math.floor(Math.random() * 11))
         return {
             ...item,
+            category: mapCategory(item.category),
             borrowRecords: item.borrowRecords.map((record) => ({
                 id: record.id,
                 startDate: new Date(record.startDate),

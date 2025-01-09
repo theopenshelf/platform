@@ -1,6 +1,9 @@
 @use 'theme' as *;
 
 .layout-container {
+    padding: 0 30px;
+    padding-top: 20px;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

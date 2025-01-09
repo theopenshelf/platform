@@ -6,7 +6,104 @@
     height: 100%;
     margin: 0;
     gap: 1rem;
+    padding: 0 30px;
 }
+
+.search-bar-container {
+    width: 100%;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 20px;
+    background-color: var(--tos-background-base-alt-2);
+    padding-top: 20px;
+}
+
+.search-bar {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    width: 80%;
+    padding: 10px 30px;
+
+    margin: 0 auto;
+    margin-bottom: 20px;
+
+    >*:not(:last-child) {
+        border-right: 1px solid lightgray; // Adjust the color and width as needed
+    }
+
+    background-color: #fff;
+    border-radius: 80px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.2s ease,
+    box-shadow 0.2s ease;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+    0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+    .search-input {
+        padding: 0;
+
+        input {
+            width: calc(100% - 40px);
+            margin-left: 6px;
+            font-size: large;
+            border: 0;
+            box-shadow: none;
+            outline: none;
+        }
+    }
+
+    .search-date-range {
+        width: 100%;
+    }
+}
+
+.categories-container {
+
+    .category {
+
+        display: flex;
+        flex-direction: column;
+        /* Arrange items vertically */
+        align-items: center;
+        /* Center items horizontally */
+        text-align: center;
+        /* Center text */
+        padding-bottom: 12px;
+
+    }
+
+    .category:hover {
+        cursor: pointer;
+        color: var(--tos-text-accent);
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--tos-text-accent);
+    }
+
+    .category.active {
+        color: var(--tos-text-primary);
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--tos-text-primary);
+    }
+
+    .category-name {
+        margin-top: 0.5rem;
+        /* Add some space between icon and text */
+    }
+}
+
+.categories-carousel-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.carousel {
+    inline-size: 25rem;
+    flex-shrink: 0;
+}
+
+
 
 .sidebar {
     width: 300px;
@@ -166,11 +263,17 @@
 
     // Default to two columns
     .items-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
     }
 
     // Switch to single column on smaller screens
     @media (max-width: 1400px) {
+        .items-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 800px) {
         .items-container {
             grid-template-columns: 1fr;
         }

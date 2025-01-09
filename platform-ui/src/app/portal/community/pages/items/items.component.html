@@ -1,6 +1,73 @@
+<div class="search-bar-container">
+  <div class="search-bar">
+    <div class="search-input">
+      <p>
+        <tui-icon icon="@tui.search" />
+        <input [(ngModel)]="searchText" placeholder="What object are you looking for?" (input)="onTextFilterChange()" />
+      </p>
+
+    </div>
+
+    <div class="search-date-range">
+
+      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+        [tuiAppearanceState]="openDropdownWhen ? 'active' : null" [tuiDropdownAlign]="'center'"
+        [tuiDropdown]="dropdownwhen" [(tuiDropdownOpen)]="openDropdownWhen">
+        <tui-icon icon="@tui.calendar-clock" />
+        When do you need it?
+      </button>
+
+      <ng-template #dropdownwhen let-close>
+        <tui-calendar-range />
+      </ng-template>
+    </div>
+
+    <div class="sort-by">
+
+      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+        [tuiAppearanceState]="openDropdownSort ? 'active' : null" [tuiDropdown]="dropdownsort"
+        [(tuiDropdownOpen)]="openDropdownSort">
+        <tui-icon icon="@tui.arrow-down-up" />
+        Sort by
+      </button>
+
+      <ng-template #dropdownsort let-close>
+        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortControl"
+          [tuiTextfieldLabelOutside]="true">
+          Sort by
+          <input placeholder="Sort by" tuiTextfieldLegacy />
+          <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
+        </tui-select>
+      </ng-template>
+    </div>
+  </div>
+
+  <div class="categories-container">
+
+
+    <div tuiCarouselButtons class="categories-carousel-wrapper">
+      <button iconStart="@tui.chevron-left" tuiIconButton type="button" (click)="carousel.prev()">
+        Previous
+      </button>
+      <tui-carousel #carousel [draggable]="true" [itemsCount]="10" [(index)]="categoriesIndex">
+        @for (category of categories; track category) {
+        <div *tuiItem class="category"  [class.active]="isCategorySelected(category)" (click)="toggleCategorySelection(category)">
+          <tui-icon [icon]="category.icon" />
+          {{ category.name }}
+        </div>
+        }
+      </tui-carousel>
+      <button iconStart="@tui.chevron-right" tuiIconButton type="button" (click)="carousel.next()">
+        Next
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <div class="layout-container">
   <!-- Left Sidebar -->
-  <aside class="sidebar">
+  <aside style="display: none;" class="sidebar">
     <div class="top-actions-left">
 
       <fieldset tuiTextfieldSize="m" class="search">
@@ -64,8 +131,10 @@
     </tui-accordion>
   </aside>
 
+
+
   <main class="grid-container">
-    <div class="top-actions">
+    <div class="top-actions" style="display: none;">
 
       <div class="top-actions-right">
 

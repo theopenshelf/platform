@@ -1099,11 +1099,14 @@ components:
         - name
         - color
         - template
+        - icon
       properties:
         id:
           type: string
           format: uuid
         name:
+          type: string
+        icon:
           type: string
         color:
           type: string

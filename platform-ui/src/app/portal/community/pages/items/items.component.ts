@@ -1,19 +1,23 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TuiDataList, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
+import { TuiDay } from '@taiga-ui/cdk';
+import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { TuiAccordion, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
-import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { TuiAccordion, TuiCalendarRange, TuiCarousel, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
+import { TuiInputDateRangeModule, TuiSelectModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
+import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { UILibrary } from '../../models/UILibrary';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
+
+
 
 @Component({
   standalone: true,
@@ -33,7 +37,14 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiTextfieldControllerModule,
     TuiSwitch,
     TuiPagination,
-    TuiAccordion
+    TuiAccordion,
+    TuiInputDateRangeModule,
+    TuiUnfinishedValidator,
+    TuiButton,
+    TuiDataList,
+    TuiDropdown,
+    TuiCalendarRange,
+    TuiCarousel
   ],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss']
@@ -51,6 +62,9 @@ export class ItemsComponent implements OnInit {
   currentlyAvailable: boolean = false;
   selectedLibraries: { [key: string]: boolean } = {};
 
+  protected readonly min = TuiDay.currentLocal();
+  protected readonly max = this.min.append({ year: 1 });
+
   // Sorting properties
   static readonly SORT_RECENTLY_ADDED = 'Recently added';
   static readonly SORT_MOST_BORROWED = 'Most borrowed';
@@ -64,7 +78,7 @@ export class ItemsComponent implements OnInit {
 
   // Pagination properties
   totalPages: number = 10;
-  currentPage: number = 1;
+  currentPage: number = 0;
   itemsPerPage: number = 8; // Adjust this number as needed
 
   // Responsive design
@@ -124,7 +138,7 @@ export class ItemsComponent implements OnInit {
     });
   }
 
-  private updatePagination(itemsPagination: any) {
+  private updatePagination(itemsPagination: UIItemsPagination) {
     this.totalPages = itemsPagination.totalPages;
     this.currentPage = itemsPagination.currentPage;
     this.itemsPerPage = itemsPagination.itemsPerPage;
@@ -132,7 +146,7 @@ export class ItemsComponent implements OnInit {
   }
 
   resetItems() {
-    this.currentPage = 1;
+    this.currentPage = 0;
     this.fetchItems();
   }
 
@@ -196,4 +210,20 @@ export class ItemsComponent implements OnInit {
     this.currentPage = page;
     this.fetchItems();
   }
+
+  protected openDropdownWhen = false;
+
+  protected closeDropdownWhen(): void {
+    this.openDropdownWhen = false;
+  }
+
+
+  protected openDropdownSort = false;
+
+  protected closeDropdownSort(): void {
+    this.openDropdownSort = false;
+  }
+
+  protected categoriesIndex = 0;
+
 }

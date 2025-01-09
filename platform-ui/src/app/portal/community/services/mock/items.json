@@ -8,12 +8,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1518337204671-d648c3e13cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Otis Chips is the latest in a series of similar products from Schimmel - Renner",
     "shortDescription": "Ventito tibi cresco depraedor turba summisse agnosco damno tam.",
-    "category": {
-      "id": "1",
-      "name": "books",
-      "color": "#b71964",
-      "template": "Book Template"
-    },
+    "category": "books",
     "favorite": true,
     "borrowCount": 2,
     "libraryId": "1",
@@ -73,12 +68,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1663784294206-9b508132baf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New turquoise Shoes with ergonomic design for cheerful comfort",
     "shortDescription": "Absum bonus accendo nesciunt dignissimos spiritus sustineo modi.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": false,
     "borrowCount": 9,
     "libraryId": "1",
@@ -102,12 +92,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1514896856000-91cb6de818e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Chicken designed to make you stand out with crushing looks",
     "shortDescription": "Tertius in umquam.",
-    "category": {
-      "id": "14",
-      "name": "travel",
-      "color": "#f09830",
-      "template": "Travel Template"
-    },
+    "category": "travel",
     "favorite": false,
     "borrowCount": 2,
     "libraryId": "1",
@@ -167,12 +152,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1501839814414-3d83e4f5f48d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Unbranded Hat designed with Plastic for noted performance",
     "shortDescription": "Ut itaque curto cum claustrum solutio voluptatibus usque curto consequatur.",
-    "category": {
-      "id": "11",
-      "name": "kids",
-      "color": "#e0b100",
-      "template": "Kids Template"
-    },
+    "category": "kids",
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
@@ -196,12 +176,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Ergonomic Computer made with Fresh for all-day lustrous support",
     "shortDescription": "Ciminatio artificiose terror sollicito.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": true,
     "borrowCount": 2,
     "libraryId": "1",
@@ -237,12 +212,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1451481454041-104482d8e284?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Introducing the Comoros-inspired Tuna, blending powerless style with local craftsmanship",
     "shortDescription": "Laboriosam ceno demonstro abscido.",
-    "category": {
-      "id": "11",
-      "name": "kids",
-      "color": "#e0b100",
-      "template": "Kids Template"
-    },
+    "category": "kids",
     "favorite": false,
     "borrowCount": 12,
     "libraryId": "1",
@@ -284,12 +254,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1595804850773-4a3fe3444a71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New lime Chips with ergonomic design for feline comfort",
     "shortDescription": "Cornu supplanto certus.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": true,
     "borrowCount": 20,
     "libraryId": "1",
@@ -331,12 +296,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Tuna designed to make you stand out with magnificent looks",
     "shortDescription": "Vos amet animadverto cursim sapiente dedico adfectus.",
-    "category": {
-      "id": "1",
-      "name": "books",
-      "color": "#b71964",
-      "template": "Book Template"
-    },
+    "category": "books",
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
@@ -390,12 +350,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Featuring Technetium-enhanced technology, our Car offers unparalleled big performance",
     "shortDescription": "Vestigium degusto decimus provident ullus bis.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
@@ -455,12 +410,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1654764746519-e4cd61715b78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Belle Shirt is the latest in a series of frivolous products from Gleichner - Kerluke",
     "shortDescription": "Vacuus vox conqueror currus abbas beatae.",
-    "category": {
-      "id": "5",
-      "name": "beauty health",
-      "color": "#e17ac4",
-      "template": "Beauty & Health Template"
-    },
+    "category": "beauty health",
     "favorite": false,
     "borrowCount": 7,
     "libraryId": "1",
@@ -532,12 +482,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1631378297854-185cff6b0986?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The sleek and sardonic Mouse comes with lavender LED lighting for smart functionality",
     "shortDescription": "Damno aut verus crapula bellicus toties.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
@@ -591,12 +536,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1640622308238-70e5f22fe0be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Featuring Strontium-enhanced technology, our Bacon offers unparalleled faraway performance",
     "shortDescription": "Arcesso ex cupio thema.",
-    "category": {
-      "id": "2",
-      "name": "electronics",
-      "color": "#1d71ac",
-      "template": "Electronics Template"
-    },
+    "category": "electronics",
     "favorite": true,
     "borrowCount": 8,
     "libraryId": "1",
@@ -632,12 +572,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Our sweet-inspired Bacon brings a taste of luxury to your super lifestyle",
     "shortDescription": "Cupio quas ter vilicus depulso trans sui asporto.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
@@ -667,12 +602,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1631981782640-9eec0cca25f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Innovative Bike featuring disloyal technology and Rubber construction",
     "shortDescription": "Ubi illum ratione.",
-    "category": {
-      "id": "8",
-      "name": "gardening",
-      "color": "#4ca24c",
-      "template": "Gardening Template"
-    },
+    "category": "gardening",
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
@@ -756,12 +686,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1602449204748-331279a2ed37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Savor the salty essence in our Soap, designed for aware culinary adventures",
     "shortDescription": "Tolero vae utilis.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": false,
     "borrowCount": 19,
     "libraryId": "1",
@@ -803,12 +728,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Ergonomic Pizza made with Plastic for all-day deafening support",
     "shortDescription": "Sollicito abbas demonstro sponte sollers collum solutio in aetas cultura.",
-    "category": {
-      "id": "9",
-      "name": "vehicle",
-      "color": "#019cdb",
-      "template": "Vehicle Template"
-    },
+    "category": "vehicle",
     "favorite": true,
     "borrowCount": 7,
     "libraryId": "1",
@@ -886,12 +806,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1593414220166-085caeae0382?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Lehner, Witting and Dicki's most advanced Shirt technology increases shabby capabilities",
     "shortDescription": "Vobis depono animadverto.",
-    "category": {
-      "id": "12",
-      "name": "events",
-      "color": "#e7315c",
-      "template": "Events Template"
-    },
+    "category": "events",
     "favorite": false,
     "borrowCount": 18,
     "libraryId": "1",
@@ -957,12 +872,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1555703484-89d93b41e658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Mouse designed to make you stand out with fantastic looks",
     "shortDescription": "Vulariter amor damnatio calco.",
-    "category": {
-      "id": "7",
-      "name": "camping",
-      "color": "#4f9c38",
-      "template": "Camping Template"
-    },
+    "category": "camping",
     "favorite": true,
     "borrowCount": 5,
     "libraryId": "1",
@@ -992,12 +902,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1483247416020-58799b6de4c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Verna Gloves is the latest in a series of brave products from Hauck - Kessler",
     "shortDescription": "Crapula venia ulciscor spiritus pecus triumphus synagoga.",
-    "category": {
-      "id": "14",
-      "name": "travel",
-      "color": "#f09830",
-      "template": "Travel Template"
-    },
+    "category": "travel",
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
@@ -1021,12 +926,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the sea lion-like agility of our Shirt, perfect for which users",
     "shortDescription": "Ventito arto tonsor administratio suppellex sustineo laudantium adsum quo.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": false,
     "borrowCount": 8,
     "libraryId": "1",
@@ -1043,12 +943,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Our frog-friendly Pants ensures right comfort for your pets",
     "shortDescription": "Quod cohaero verto.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": false,
     "borrowCount": 13,
     "libraryId": "1",
@@ -1084,12 +979,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1521782462922-9318be1cfd04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New indigo Soap with ergonomic design for interesting comfort",
     "shortDescription": "Tolero suffragium triumphus debitis.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": false,
     "borrowCount": 3,
     "libraryId": "1",
@@ -1155,12 +1045,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Savor the juicy essence in our Hat, designed for proper culinary adventures",
     "shortDescription": "Sum termes subseco cohors coepi ventosus damnatio tego arx.",
-    "category": {
-      "id": "11",
-      "name": "kids",
-      "color": "#e0b100",
-      "template": "Kids Template"
-    },
+    "category": "kids",
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
@@ -1238,12 +1123,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Hirthe, Hilpert and Kreiger's most advanced Bacon technology increases emotional capabilities",
     "shortDescription": "Turbo patruus suscipio caecus conculco.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
@@ -1267,12 +1147,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our fresh-inspired Bike brings a taste of luxury to your qualified lifestyle",
     "shortDescription": "Celer crustulum quis veritatis accedo nisi cometes.",
-    "category": {
-      "id": "14",
-      "name": "travel",
-      "color": "#f09830",
-      "template": "Travel Template"
-    },
+    "category": "travel",
     "favorite": true,
     "borrowCount": 0,
     "libraryId": "1",
@@ -1350,12 +1225,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New Bacon model with 88 GB RAM, 775 GB storage, and animated features",
     "shortDescription": "Collum suscipit vilis.",
-    "category": {
-      "id": "3",
-      "name": "clothing",
-      "color": "#8a1bcc",
-      "template": "Clothing Template"
-    },
+    "category": "clothing",
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
@@ -1403,12 +1273,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1543422018-8e0700ca5eec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our giraffe-friendly Mouse ensures physical comfort for your pets",
     "shortDescription": "Deporto compello adopto in trucido advenio tergiversatio.",
-    "category": {
-      "id": "5",
-      "name": "beauty health",
-      "color": "#e17ac4",
-      "template": "Beauty & Health Template"
-    },
+    "category": "beauty health",
     "favorite": false,
     "borrowCount": 7,
     "libraryId": "1",
@@ -1444,12 +1309,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1519752235002-1f7189299e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the bee-like agility of our Mouse, perfect for normal users",
     "shortDescription": "Voluptatibus animus somnus curriculum cultellus voluptate ago tricesimus.",
-    "category": {
-      "id": "9",
-      "name": "vehicle",
-      "color": "#019cdb",
-      "template": "Vehicle Template"
-    },
+    "category": "vehicle",
     "favorite": false,
     "borrowCount": 19,
     "libraryId": "1",
@@ -1491,12 +1351,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1696441303859-80b1ac0d25b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Marguerite Pizza is the latest in a series of earnest products from Howe - Hermann",
     "shortDescription": "Decor cibo tabella creator demo.",
-    "category": {
-      "id": "6",
-      "name": "sports outdoors",
-      "color": "#2a7f3d",
-      "template": "Sports & Outdoors Template"
-    },
+    "category": "sports outdoors",
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
@@ -1538,12 +1393,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Innovative Soap featuring handsome technology and Steel construction",
     "shortDescription": "A voco cruentus timidus ceno delibero comburo acquiro confero terga.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": true,
     "borrowCount": 1,
     "libraryId": "1",
@@ -1609,12 +1459,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1527018165407-85e7b1ddf0d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our fresh-inspired Gloves brings a taste of luxury to your sour lifestyle",
     "shortDescription": "Tametsi thymum adipiscor creator aspicio ter stipes impedit.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
@@ -1656,12 +1501,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the gloomy new Chair with an exciting mix of Plastic ingredients",
     "shortDescription": "Subvenio undique pecus vapulus eius.",
-    "category": {
-      "id": "5",
-      "name": "beauty health",
-      "color": "#e17ac4",
-      "template": "Beauty & Health Template"
-    },
+    "category": "beauty health",
     "favorite": true,
     "borrowCount": 12,
     "libraryId": "1",
@@ -1697,12 +1537,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the giraffe-like agility of our Mouse, perfect for minty users",
     "shortDescription": "Caelestis delectus vulticulus timidus aeger natus causa deduco pel strenuus.",
-    "category": {
-      "id": "3",
-      "name": "clothing",
-      "color": "#8a1bcc",
-      "template": "Clothing Template"
-    },
+    "category": "clothing",
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
@@ -1726,12 +1561,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our moist-inspired Towels brings a taste of luxury to your self-reliant lifestyle",
     "shortDescription": "Vigor culpo supra.",
-    "category": {
-      "id": "14",
-      "name": "travel",
-      "color": "#f09830",
-      "template": "Travel Template"
-    },
+    "category": "travel",
     "favorite": true,
     "borrowCount": 13,
     "libraryId": "1",
@@ -1809,12 +1639,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1730584474338-aa8d9d186bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New turquoise Towels with ergonomic design for male comfort",
     "shortDescription": "Tendo decumbo adduco adulescens vomito volo.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": true,
     "borrowCount": 10,
     "libraryId": "1",
@@ -1868,12 +1693,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Featuring Potassium-enhanced technology, our Gloves offers unparalleled ripe performance",
     "shortDescription": "Adsum aequus titulus adstringo aestas tripudio statim succurro.",
-    "category": {
-      "id": "4",
-      "name": "diy",
-      "color": "#f58220",
-      "template": "DIY Template"
-    },
+    "category": "diy",
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
@@ -1951,12 +1771,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1690166444493-b3f5fbcd4762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the bird-like agility of our Cheese, perfect for dazzling users",
     "shortDescription": "Vilitas coepi deprimo nostrum conitor.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": false,
     "borrowCount": 0,
     "libraryId": "1",
@@ -1992,12 +1807,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the cow-like agility of our Cheese, perfect for weary users",
     "shortDescription": "Spargo reprehenderit pecco rem caecus comitatus vorago ademptio occaecati esse.",
-    "category": {
-      "id": "5",
-      "name": "beauty health",
-      "color": "#e17ac4",
-      "template": "Beauty & Health Template"
-    },
+    "category": "beauty health",
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
@@ -2021,12 +1831,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1512774320837-4e666ee94f16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Integrated content-based forecast Chicken offers reliable performance and private design",
     "shortDescription": "Alo eligendi ceno ab accusator curto vulpes tenuis decimus.",
-    "category": {
-      "id": "13",
-      "name": "multimedia",
-      "color": "#1e9ee7",
-      "template": "Multimedia Template"
-    },
+    "category": "multimedia",
     "favorite": false,
     "borrowCount": 5,
     "libraryId": "1",
@@ -2050,12 +1855,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1603140841869-b1f3527c55ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Beulah Hat is the latest in a series of secondary products from Runolfsson, Runolfsson and Okuneva",
     "shortDescription": "Demo quaerat capio adduco aliqua colo ancilla bibo dapifer.",
-    "category": {
-      "id": "15",
-      "name": "safety",
-      "color": "#f57d2b",
-      "template": "Safety Template"
-    },
+    "category": "safety",
     "favorite": true,
     "borrowCount": 1,
     "libraryId": "1",
@@ -2127,12 +1927,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1680264524729-503ae538cf33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Experience the mint green brilliance of our Soap, perfect for shameful environments",
     "shortDescription": "Unde vaco atque labore solutio quas arcesso depereo.",
-    "category": {
-      "id": "8",
-      "name": "gardening",
-      "color": "#4ca24c",
-      "template": "Gardening Template"
-    },
+    "category": "gardening",
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
@@ -2162,12 +1957,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Hackett Group's most advanced Shoes technology increases gigantic capabilities",
     "shortDescription": "Utique vulgivagus verbum demo deorsum acer caelum.",
-    "category": {
-      "id": "1",
-      "name": "books",
-      "color": "#b71964",
-      "template": "Book Template"
-    },
+    "category": "books",
     "favorite": true,
     "borrowCount": 7,
     "libraryId": "1",
@@ -2221,12 +2011,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1589923188900-85dae523342b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Licensed Ball designed with Frozen for granular performance",
     "shortDescription": "Caste thesaurus tres.",
-    "category": {
-      "id": "8",
-      "name": "gardening",
-      "color": "#4ca24c",
-      "template": "Gardening Template"
-    },
+    "category": "gardening",
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
@@ -2310,12 +2095,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1687977686478-13b75f82225e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the deer-like agility of our Salad, perfect for square users",
     "shortDescription": "Demum tempore thesis teres celo.",
-    "category": {
-      "id": "13",
-      "name": "multimedia",
-      "color": "#1e9ee7",
-      "template": "Multimedia Template"
-    },
+    "category": "multimedia",
     "favorite": false,
     "borrowCount": 10,
     "libraryId": "1",
@@ -2393,12 +2173,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the kangaroo-like agility of our Shoes, perfect for tired users",
     "shortDescription": "Defessus avarus cumque deinde.",
-    "category": {
-      "id": "9",
-      "name": "vehicle",
-      "color": "#019cdb",
-      "template": "Vehicle Template"
-    },
+    "category": "vehicle",
     "favorite": true,
     "borrowCount": 5,
     "libraryId": "1",
@@ -2434,12 +2209,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Ergonomic Shoes made with Metal for all-day honorable support",
     "shortDescription": "Est celo aranea denuo appositus blanditiis templum comis quae.",
-    "category": {
-      "id": "11",
-      "name": "kids",
-      "color": "#e0b100",
-      "template": "Kids Template"
-    },
+    "category": "kids",
     "favorite": true,
     "borrowCount": 20,
     "libraryId": "1",
@@ -2511,12 +2281,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Introducing the Mali-inspired Bike, blending worthy style with local craftsmanship",
     "shortDescription": "Vilitas amicitia crepusculum aveho ars paens volubilis beneficium creta torqueo.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": false,
     "borrowCount": 6,
     "libraryId": "1",
@@ -2540,12 +2305,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1492709560992-3fa75e9e887b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Innovative Soap featuring frivolous technology and Concrete construction",
     "shortDescription": "Earum cunabula vinum hic adopto.",
-    "category": {
-      "id": "14",
-      "name": "travel",
-      "color": "#f09830",
-      "template": "Travel Template"
-    },
+    "category": "travel",
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
@@ -2599,12 +2359,7 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Luxurious Pizza designed with Granite for polite performance",
     "shortDescription": "Callide celer volutabrum summa speciosus adinventitias.",
-    "category": {
-      "id": "11",
-      "name": "kids",
-      "color": "#e0b100",
-      "template": "Kids Template"
-    },
+    "category": "kids",
     "favorite": false,
     "borrowCount": 0,
     "libraryId": "1",
@@ -2664,12 +2419,7 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "The pink Table combines Northern Mariana Islands aesthetics with Tantalum-based durability",
     "shortDescription": "Coniuratio ultio curia chirographum.",
-    "category": {
-      "id": "10",
-      "name": "home",
-      "color": "#d08000",
-      "template": "Home Template"
-    },
+    "category": "home",
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
