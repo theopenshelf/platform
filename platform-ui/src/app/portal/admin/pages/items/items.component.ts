@@ -75,8 +75,8 @@ export class ItemsComponent {
 
     ngOnInit() {
         // Fetch the items from the service
-        this.itemsService.getItems().subscribe(items => {
-            this.items = items;
+        this.itemsService.getItems().subscribe(itemsPagination => {
+            this.items = itemsPagination.items;
         });
     }
 }

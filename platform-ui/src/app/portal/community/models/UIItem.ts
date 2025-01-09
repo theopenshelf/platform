@@ -1,3 +1,4 @@
+import { UIBorrowRecord } from "./UIBorrowRecord";
 import { UICategory } from "./UICategory";
 
 
@@ -13,5 +14,8 @@ export interface UIItem {
     favorite: boolean;
     borrowCount: number;
     libraryId: string;
-    createdAt: Date;
+    borrowRecords: UIBorrowRecord[];
+    isBookedToday: boolean;
+    myBooking: UIBorrowRecord | undefined;
+    createdAt: Date | undefined;
 }

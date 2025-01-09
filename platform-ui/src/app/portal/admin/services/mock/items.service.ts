@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { ItemsService, UIItem } from '../items.service';
+import { ItemsService, UIItem, UIItemsPagination } from '../items.service';
 import { MockCategoriesService } from './categories.service';
 
 
@@ -24,6 +24,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 8,
             lateReturnPercentage: 5,
             averageDuration: 14,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' },
         },
         {
@@ -39,6 +41,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 2,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -54,6 +58,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 0,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -69,6 +75,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 9,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -84,6 +92,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 4,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -99,6 +109,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 1,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -114,6 +126,8 @@ export class MockItemsService implements ItemsService {
             borrowCount: 0,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
         {
@@ -129,12 +143,40 @@ export class MockItemsService implements ItemsService {
             borrowCount: 1,
             lateReturnPercentage: 0,
             averageDuration: 0,
+            libraryId: 'lib1',
+            createdAt: new Date(),
             state: { label: 'Available', statusColor: 'positive' }
         },
     ];
 
-    getItems(): Observable<UIItem[]> {
-        return of(this.items);
+    getItems(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: string,
+        sortOrder: 'asc' | 'desc' = 'asc',
+        page: number = 1,
+        pageSize: number = 10
+    ): Observable<UIItemsPagination> {
+        let filteredItems = this.items;
+        // ... filtering logic ...
+
+        // Pagination logic
+        const totalItems = filteredItems.length;
+        const totalPages = Math.ceil(totalItems / pageSize);
+        const startIndex = (page - 1) * pageSize;
+        const paginatedItems = filteredItems.slice(startIndex, startIndex + pageSize);
+
+        return of({
+            totalPages,
+            totalItems,
+            currentPage: page,
+            itemsPerPage: pageSize,
+            items: paginatedItems
+        });
     }
 
     getItem(id: string): Observable<UIItem> {

@@ -1,16 +1,14 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { TuiButton, TuiDataList, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from "@taiga-ui/core";
+import { TuiDataList, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAccordion, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import { CategoryBadgeComponent } from "../../../../components/category-badge/category-badge.component";
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UICategory } from '../../models/UICategory';
-import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
@@ -22,11 +20,8 @@ import { LibrariesService } from '../../services/libraries.service';
   imports: [
     ItemCardComponent,
     TuiHint,
-    RouterLink,
     TuiIcon,
     TuiAppearance,
-    TuiButton,
-    TuiTitle,
     TuiCheckbox,
     FormsModule,
     TuiTextfield,
@@ -35,7 +30,6 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiDataListWrapper,
     TuiSelectModule,
     TuiTextfieldControllerModule,
-    CategoryBadgeComponent,
     TuiSwitch,
     TuiPagination,
     TuiAccordion
@@ -44,20 +38,19 @@ import { LibrariesService } from '../../services/libraries.service';
   styleUrls: ['./items.component.scss']
 })
 export class ItemsComponent implements OnInit {
-  totalPages: number = 10;
 
-  goToPage(page: number) {
-    this.currentPage = page;
-    this.fetchItems(false);
-  }
-
+  // Data properties
+  items: UIItem[] = [];
   categories: UICategory[] = [];
+  libraries: UILibrary[] = [];
+
+  // Filter properties
   selectedCategories: Set<string> = new Set();
   searchText = '';
-  items: UIItemWithRecords[] = [];
   currentlyAvailable: boolean = false;
-  libraries: UILibrary[] = [];
   selectedLibraries: { [key: string]: boolean } = {};
+
+  // Sorting properties
   static readonly SORT_RECENTLY_ADDED = 'Recently added';
   static readonly SORT_MOST_BORROWED = 'Most borrowed';
   static readonly SORT_FAVORITES = 'Favorites';
@@ -67,8 +60,13 @@ export class ItemsComponent implements OnInit {
     ItemsComponent.SORT_FAVORITES,
   ];
   protected sortControl = new FormControl<string | null>(null);
+
+  // Pagination properties
+  totalPages: number = 10;
   currentPage: number = 1;
   itemsPerPage: number = 8; // Adjust this number as needed
+
+  // Responsive design
   isMobile: boolean = false;
 
   constructor(
@@ -79,27 +77,36 @@ export class ItemsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.observeBreakpoints();
+    this.initializeData();
+    this.setupSortControl();
+  }
+
+  private observeBreakpoints() {
     this.breakpointObserver.observe([Breakpoints.Handset])
       .subscribe(result => {
         this.isMobile = result.matches;
       });
+  }
 
-
-    this.fetchItems(false);
+  private initializeData() {
+    this.fetchItems();
     this.categoriesService.getCategories().subscribe(categories => {
       this.categories = categories;
     });
     this.librariesService.getLibraries().subscribe(libraries => {
       this.libraries = libraries;
     });
+  }
 
+  private setupSortControl() {
     this.sortControl.valueChanges.subscribe(() => {
       this.resetItems();
     });
   }
 
-  fetchItems(append: boolean) {
-    this.itemsService.getItemsWithRecords(
+  fetchItems() {
+    this.itemsService.getItems(
       false,
       false,
       Object.keys(this.selectedLibraries),
@@ -110,19 +117,21 @@ export class ItemsComponent implements OnInit {
       this.getSortOrder(),
       this.currentPage,
       this.itemsPerPage
-    ).subscribe(items => {
-      if (append) {
-        this.items = [...this.items, ...items];
-      } else {
-        this.items = items;
-      }
+    ).subscribe(itemsPagination => {
+      this.updatePagination(itemsPagination);
     });
   }
 
+  private updatePagination(itemsPagination: any) {
+    this.totalPages = itemsPagination.totalPages;
+    this.currentPage = itemsPagination.currentPage;
+    this.itemsPerPage = itemsPagination.itemsPerPage;
+    this.items = itemsPagination.items;
+  }
 
   resetItems() {
     this.currentPage = 1;
-    this.fetchItems(false);
+    this.fetchItems();
   }
 
   getSortBy(): string | undefined {
@@ -165,7 +174,7 @@ export class ItemsComponent implements OnInit {
     this.resetItems();
   }
 
-  markAsFavorite(item: UIItemWithRecords) {
+  markAsFavorite(item: UIItem) {
     this.itemsService.markAsFavorite(item).subscribe();
   }
 
@@ -175,5 +184,10 @@ export class ItemsComponent implements OnInit {
 
   getLibrary(libraryId: string): UILibrary | undefined {
     return this.libraries.find(library => library.id === libraryId);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.fetchItems();
   }
 }

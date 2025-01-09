@@ -1,3 +1,4 @@
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { MockCategoriesService } from './categories.service'; // Import the mock categories service
@@ -43,9 +44,64 @@ const mapCategory = (category: string): UICategory => {
 };
 
 export const loadItems = (): UIItem[] => {
-    return items.map(item => ({
-        ...item,
-        category: mapCategory(item.category),
-        createdAt: new Date(item.createdAt) // Convert string to Date
-    }));
-}; 
+
+    const today = new Date().toISOString().split('T')[0];
+    var itemsLoaded = items.map(item => {
+        var borrowRecords = generateRandomRecords(Math.floor(Math.random() * 11))
+        return {
+            ...item,
+            borrowRecords: item.borrowRecords.map((record) => ({
+                id: record.id,
+                startDate: new Date(record.startDate),
+                endDate: new Date(record.endDate),
+                borrowedBy: record.borrowedBy
+            } as UIBorrowRecord)),
+            isBookedToday: borrowRecords.some(record =>
+                record.startDate <= today && today <= record.endDate
+            ),
+            myBooking: (() => {
+                const record = borrowRecords.find(record =>
+                    record.borrowedBy === 'me@example.com' && record.startDate > today
+                );
+                return record ? {
+                    id: record.id,
+                    startDate: new Date(record.startDate),
+                    endDate: new Date(record.endDate),
+                    borrowedBy: record.borrowedBy
+                } : undefined;
+            })(),
+            createdAt: new Date(item.createdAt) // Convert string to Date
+        };
+    });
+
+    return itemsLoaded;
+};
+
+function getRandomEmail() {
+    const domains = ['example.com', 'test.com', 'sample.org'];
+    const names = ['john', 'jane', 'doe', 'user', 'admin'];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+    return `${randomName}@${randomDomain}`;
+}
+
+function getRandomDate(start: Date, end: Date) {
+    const date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
+}
+
+function generateRandomRecords(numRecords: number) {
+    const records = [];
+    for (let i = 0; i < numRecords; i++) {
+        const email = Math.random() > 0.5 ? 'me@example.com' : getRandomEmail();
+        const startDate = getRandomDate(new Date('2024-01-01'), new Date('2025-12-31'));
+        const endDate = new Date(new Date(startDate).getTime() + (Math.floor(Math.random() * 7) + 1) * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        records.push({
+            id: (i + 1).toString(),
+            borrowedBy: email,
+            startDate: startDate,
+            endDate: endDate
+        });
+    }
+    return records;
+}

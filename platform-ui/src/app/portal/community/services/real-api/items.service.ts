@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
-import { BorrowItem, BorrowRecord, Item, ItemsCommunityApiService } from '../../../../api-client';
-import { UIBorrowItem } from '../../models/UIBorrowItem';
+import { map, Observable } from 'rxjs';
+import { BorrowRecord, Item, ItemsCommunityApiService } from '../../../../api-client';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
-import { UIItemWithRecords } from '../../models/UIItemWithRecords';
+import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { ItemsService } from '../items.service';
 
 
@@ -14,22 +13,7 @@ import { ItemsService } from '../items.service';
 export class APIItemsService implements ItemsService {
     constructor(private itemsApiService: ItemsCommunityApiService) { }
 
-    getMyOwnedItems(): Observable<UIItem[]> {
-        return this.itemsApiService.getItems(true).pipe(
-            map((items: Item[]) => items.map((item: Item) => ({
-                id: item.id,
-                name: item.name,
-                located: item.located,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                libraryId: item.libraryId,
-                createdAt: new Date(item.createdAt)
-            } as UIItem)))
-        );
-    }
+
     getItems(
         currentUser?: boolean,
         borrowedByCurrentUser?: boolean,
@@ -41,7 +25,7 @@ export class APIItemsService implements ItemsService {
         sortOrder?: 'asc' | 'desc',
         page: number = 1,
         pageSize: number = 10
-    ): Observable<UIItem[]> {
+    ): Observable<UIItemsPagination> {
         return this.itemsApiService.getItems(
             currentUser,
             borrowedByCurrentUser,
@@ -54,112 +38,24 @@ export class APIItemsService implements ItemsService {
             page,
             pageSize
         ).pipe(
-            map((items: Item[]) => items.map((item: Item) => ({
-                id: item.id,
-                name: item.name,
-                located: item.located,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                libraryId: item.libraryId,
-                createdAt: new Date(item.createdAt)
-            } as UIItem)))
-        );
-    }
-
-    getItemsByLibrary(libraryId: string): Observable<UIItemWithRecords[]> {
-        return this.itemsApiService.getItems(false, false, [libraryId]).pipe(
-            map((items: Item[]) => items.map((item: Item) => ({
-                id: item.id,
-                name: item.name,
-                located: item.located,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                createdAt: new Date(item.createdAt)
-            } as UIItem)))
-        ).pipe(
-            switchMap((items: UIItem[]) => {
-                const test = items.map(item => {
-                    let borrowRecords: UIBorrowRecord[] = [];
-                    return this.getItemBorrowRecords(item.id).pipe(
-                        map(records => {
-                            borrowRecords = records;
-                            const today = new Date().toISOString().split('T')[0];
-
-                            const itemWithRecords: UIItemWithRecords = {
-                                ...item,
-                                borrowRecords,
-                                isBookedToday: borrowRecords.some(record =>
-                                    record.startDate <= today && today <= record.endDate
-                                ),
-                                myBooking: borrowRecords.find(record =>
-                                    record.borrowedBy === 'me@example.com' && record.startDate > today
-                                )
-                            };
-
-                            return itemWithRecords;
-                        })
-                    );
-                });
-                return forkJoin(test);
-            })
-        );
-    }
-
-    getItemsWithRecords(
-        currentUser?: boolean,
-        borrowedByCurrentUser?: boolean,
-        libraryIds?: string[],
-        categories?: string[],
-        searchText?: string,
-        currentlyAvailable?: boolean,
-        sortBy?: 'createdAt' | 'borrowCount' | 'favorite',
-        sortOrder?: 'asc' | 'desc',
-        page: number = 1,
-        pageSize: number = 10
-    ): Observable<UIItemWithRecords[]> {
-        return this.getItems(
-            currentUser,
-            borrowedByCurrentUser,
-            libraryIds,
-            categories,
-            searchText,
-            currentlyAvailable,
-            sortBy,
-            sortOrder,
-            page,
-            pageSize
-        ).pipe(
-            switchMap((items: UIItem[]) => {
-                const test = items.map(item => {
-                    let borrowRecords: UIBorrowRecord[] = [];
-                    return this.getItemBorrowRecords(item.id).pipe(
-                        map(records => {
-                            borrowRecords = records;
-                            const today = new Date().toISOString().split('T')[0];
-
-                            const itemWithRecords: UIItemWithRecords = {
-                                ...item,
-                                borrowRecords,
-                                isBookedToday: borrowRecords.some(record =>
-                                    record.startDate <= today && today <= record.endDate
-                                ),
-                                myBooking: borrowRecords.find(record =>
-                                    record.borrowedBy === 'me@example.com' && record.startDate > today
-                                )
-                            };
-
-                            return itemWithRecords;
-                        })
-                    );
-                });
-                return forkJoin(test);
-            })
+            map(response => ({
+                totalPages: response.totalPages,
+                totalItems: response.totalItems,
+                currentPage: response.currentPage,
+                itemsPerPage: response.itemsPerPage,
+                items: response.items.map((item: Item) => ({
+                    id: item.id,
+                    name: item.name,
+                    located: item.located,
+                    owner: item.owner,
+                    imageUrl: item.imageUrl,
+                    description: item.description,
+                    shortDescription: item.shortDescription,
+                    category: item.category,
+                    libraryId: item.libraryId,
+                    createdAt: item.createdAt ? new Date(item.createdAt) : undefined
+                } as UIItem))
+            }))
         );
     }
 
@@ -174,96 +70,62 @@ export class APIItemsService implements ItemsService {
                 description: item.description,
                 shortDescription: item.shortDescription,
                 category: item.category,
-                createdAt: new Date(item.createdAt)
+                createdAt: item.createdAt ? new Date(item.createdAt) : undefined
             } as UIItem))
-        );
-    }
-
-    getItemBorrowRecords(id: string): Observable<UIBorrowRecord[]> {
-        return this.itemsApiService.getItemBorrowRecords(id).pipe(
-            map((records: BorrowRecord[]) => records.map((record: BorrowRecord) => ({
-                id: id,
-                startDate: record.startDate,
-                endDate: record.endDate,
-                item: this.itemsApiService.getItem(id),
-                borrowedBy: record.borrowedBy
-            } as UIBorrowRecord)))
         );
     }
 
     addItem(item: UIItem): Observable<UIItem> {
-        return this.itemsApiService.addItem({
+        const apiItem = {
             ...item,
-            createdAt: item.createdAt.toISOString()
-        } as Item).pipe(
+            borrowRecords: item.borrowRecords.map((record: UIBorrowRecord) => ({
+                id: record.id,
+                startDate: record.startDate ? record.startDate.toISOString() : undefined,
+                endDate: record.endDate ? record.endDate.toISOString() : undefined,
+                borrowedBy: record.borrowedBy
+            } as BorrowRecord)),
+            createdAt: item.createdAt?.toISOString()
+        };
+
+        return this.itemsApiService.addItem(apiItem).pipe(
             map((item: Item) => ({
-                id: item.id,
-                name: item.name,
-                located: item.located,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                createdAt: new Date(item.createdAt)
-            } as UIItem))
+                ...item,
+                createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+                borrowRecords: item.borrowRecords.map((record: BorrowRecord) => ({
+                    id: record.id,
+                    startDate: record.startDate ? new Date(record.startDate) : undefined,
+                    endDate: record.endDate ? new Date(record.endDate) : undefined,
+                    borrowedBy: record.borrowedBy
+                } as UIBorrowRecord)),
+                isBookedToday: item.isBookedToday,
+                myBooking: undefined
+            }))
         );
     }
-    borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIBorrowItem> {
+
+    borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIItem> {
         return this.itemsApiService.borrowItem(item.id, { startDate, endDate }).pipe(
-            map((borrowItem: BorrowItem) => ({
-                id: borrowItem.id,
-                name: borrowItem.name,
-                located: borrowItem.located,
-                owner: borrowItem.owner,
-                imageUrl: borrowItem.imageUrl,
-                description: borrowItem.description,
-                shortDescription: borrowItem.shortDescription,
-                category: borrowItem.category,
-                createdAt: new Date(borrowItem.createdAt),
-                record: {
-                    borrowedBy: borrowItem.record.borrowedBy,
-                    startDate: borrowItem.record.startDate,
-                    endDate: borrowItem.record.endDate
-                }
-            } as UIBorrowItem))
+            map((item: Item) => ({
+                ...item,
+                createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+                borrowRecords: item.borrowRecords.map((record: BorrowRecord) => ({
+                    id: record.id,
+                    startDate: record.startDate ? new Date(record.startDate) : undefined,
+                    endDate: record.endDate ? new Date(record.endDate) : undefined,
+                    borrowedBy: record.borrowedBy
+                } as UIBorrowRecord)),
+                isBookedToday: item.isBookedToday,
+                myBooking: undefined
+            }))
         );
     }
 
-    getMyBorrowItems(): Observable<UIBorrowItem[]> {
-        return this.itemsApiService.getItems(false, true).pipe(
-            map((items: Item[]) => items.map((item: Item) => ({
-                id: item.id,
-                name: item.name,
-                located: item.located,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                createdAt: new Date(item.createdAt),
-                record: (item as BorrowItem).record
-            } as UIBorrowItem)))
+    cancelReservation(item: UIItem, borrowRecord: UIBorrowRecord): Observable<UIItem> {
+        return this.itemsApiService.deleteBorrowRecord(item.id, borrowRecord.id).pipe(
+            map(() => item)
         );
     }
 
-    cancelReservation(borrowRecord: UIBorrowItem): Observable<void> {
-        return this.itemsApiService.deleteBorrowRecord(borrowRecord.id, borrowRecord.record.id).pipe(
-            map(() => undefined)
-        );
-    }
-
-    getMyBorrowItem(id: string): Observable<UIBorrowItem | null> {
-        return this.getItem(id).pipe(
-            map((item: UIItem) => {
-                const borrowItem = item as unknown as BorrowItem;
-                return {
-                    ...item,
-                    record: borrowItem.record
-                } as UIBorrowItem;
-            })
-        );
-    }
     markAsFavorite(item: UIItem): Observable<void> {
         return this.itemsApiService.markAsFavorite(item.id).pipe(
             map(() => undefined)

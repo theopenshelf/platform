@@ -15,6 +15,16 @@ export interface UIItem {
     lateReturnPercentage: number;
     averageDuration: number;
     state: { label: string, statusColor: string };
+    libraryId: string;
+    createdAt: Date;
+}
+
+export interface UIItemsPagination {
+    totalPages: number;
+    totalItems: number;
+    currentPage: number;
+    itemsPerPage: number;
+    items: UIItem[];
 }
 
 export interface UIBorrowRecord {
@@ -23,12 +33,20 @@ export interface UIBorrowRecord {
     endDate: string;
 }
 
-export interface UIBorrowItem extends UIItem {
-    record: UIBorrowRecord;
-}
 
 export interface ItemsService {
-    getItems(): Observable<UIItem[]>;
+    getItems(
+        currentUser?: boolean,
+        borrowedByCurrentUser?: boolean,
+        libraryIds?: string[],
+        categories?: string[],
+        searchText?: string,
+        currentlyAvailable?: boolean,
+        sortBy?: string,
+        sortOrder?: 'asc' | 'desc',
+        page?: number,
+        pageSize?: number
+    ): Observable<UIItemsPagination>;
     getItem(id: string): Observable<UIItem>;
     addItem(item: UIItem): Observable<UIItem>;
 }

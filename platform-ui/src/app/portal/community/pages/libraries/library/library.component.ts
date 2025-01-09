@@ -9,7 +9,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
-import { UIItemWithRecords } from '../../../models/UIItemWithRecords';
+import { UIItem } from '../../../models/UIItem';
 import { UILibrary } from '../../../models/UILibrary';
 import { ItemsService } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
@@ -46,8 +46,8 @@ export class LibraryComponent {
   selectedSortingOption = ItemsComponent.SORT_RECENTLY_ADDED; // Default sorting option
 
   library: UILibrary | undefined;
-  items: UIItemWithRecords[] = [];
-  filteredItems: UIItemWithRecords[] = [];
+  items: UIItem[] = [];
+  filteredItems: UIItem[] = [];
 
   protected sortingOptions = [
     ItemsComponent.SORT_RECENTLY_ADDED,
@@ -57,7 +57,7 @@ export class LibraryComponent {
 
   protected testValue = new FormControl<string | null>(null);
 
-  markAsFavorite: (item: UIItemWithRecords) => void = (item) => {
+  markAsFavorite: (item: UIItem) => void = (item) => {
     console.log(`Item ${item.id} marked as favorite.`);
   };
 
@@ -71,13 +71,17 @@ export class LibraryComponent {
   }
 
   ngOnInit() {
-    const itemId = this.route.snapshot.paramMap.get('id');
-    if (itemId) {
-      this.librariesService.getLibrary(itemId).subscribe((library) => {
+    const libraryId = this.route.snapshot.paramMap.get('id');
+    if (libraryId) {
+      this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
       });
-      this.itemsService.getItemsByLibrary(itemId).subscribe((items) => {
-        this.items = items;
+      this.itemsService.getItems(
+        undefined,
+        undefined,
+        [libraryId],
+      ).subscribe((itemsPagination) => {
+        this.items = itemsPagination.items;
       });
     }
   }
@@ -93,7 +97,7 @@ export class LibraryComponent {
     return filtered.sort((a, b) => {
       switch (this.testValue.value) {
         case ItemsComponent.SORT_RECENTLY_ADDED:
-          return b.createdAt.getTime() - a.createdAt.getTime();
+          return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
         case ItemsComponent.SORT_MOST_BORROWED:
           return (b.borrowCount || 0) - (a.borrowCount || 0);
         case ItemsComponent.SORT_FAVORITES:

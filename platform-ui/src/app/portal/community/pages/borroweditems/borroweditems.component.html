@@ -68,9 +68,14 @@
 
     <div class="items-container">
       @for (item of items; track item) {
-      <borrow-item-card [item]="item" [library]="getLibrary(item.libraryId)">
-      </borrow-item-card>
+
       }
     </div>
+
+    <tui-pagination
+      [index]="currentPage"
+      [length]="totalPages"
+      (indexChange)="goToPage($event)"
+    />
   </main>
 </div>

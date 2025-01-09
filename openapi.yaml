@@ -241,13 +241,11 @@ paths:
             default: 10
       responses:
         "200":
-          description: A list of items
+          description: A paginated list of items
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Item"
+                $ref: "#/components/schemas/PaginatedItemsResponse"
     post:
       operationId: addItem
       summary: Add a new item
@@ -356,7 +354,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/BorrowItem"
+                $ref: "#/components/schemas/Item"
 
   /community/items/{item-id}/actions/favorite:
     parameters:
@@ -503,7 +501,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Item"
+                $ref: "#/components/schemas/ItemStat"
 
   /admin/items/categories:
     get:
@@ -527,15 +525,83 @@ paths:
       summary: Retrieve all items
       tags:
         - items-admin-api
+      parameters:
+        - name: currentUser
+          in: query
+          description: Filter items by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedByCurrentUser
+          in: query
+          description: Filter items borrowed by current user
+          required: false
+          schema:
+            type: boolean
+        - name: libraryIds
+          in: query
+          description: Filter items by library IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: categories
+          in: query
+          description: Filter items by categories
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: searchText
+          in: query
+          description: Filter items by search text in name or description
+          required: false
+          schema:
+            type: string
+        - name: currentlyAvailable
+          in: query
+          description: Filter items by availability
+          required: false
+          schema:
+            type: boolean
+        - name: sortBy
+          in: query
+          description: Sort items by a specific field
+          required: false
+          schema:
+            type: string
+            enum: [createdAt, borrowCount, favorite]
+        - name: sortOrder
+          in: query
+          description: Sort order (asc or desc)
+          required: false
+          schema:
+            type: string
+            enum: [asc, desc]
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+
       responses:
         "200":
-          description: A list of items
+          description: A paginated list of items
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Item"
+                $ref: "#/components/schemas/PaginatedItemsStatsResponse"
 
     post:
       operationId: addAdminItem
@@ -547,14 +613,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Item"
+              $ref: "#/components/schemas/ItemStat"
       responses:
         "201":
           description: Item created successfully
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Item"
+                $ref: "#/components/schemas/ItemStat"
 
   /admin/users:
     get:
@@ -955,7 +1021,9 @@ components:
         - favorite
         - borrowCount
         - libraryId
-        - createdAt
+        - borrowRecords
+        - isBookedToday
+
       properties:
         id:
           type: string
@@ -995,14 +1063,24 @@ components:
           type: string
           format: date-time
           example: "2023-11-15T13:45:30Z"
+        borrowRecords:
+          type: array
+          items:
+            $ref: "#/components/schemas/BorrowRecord"
+        isBookedToday:
+          type: boolean
 
     BorrowRecord:
       type: object
       required:
+        - id
         - borrowedBy
         - startDate
         - endDate
       properties:
+        id:
+          type: string
+          format: uuid
         borrowedBy:
           type: string
           example: "someone_else@example.com"
@@ -1031,33 +1109,6 @@ components:
           type: string
         template:
           type: string
-    BorrowItem:
-      allOf:
-        - $ref: "#/components/schemas/Item"
-        - type: object
-          required:
-            - record
-          properties:
-            record:
-              $ref: "#/components/schemas/BorrowRecord"
-              example:
-                borrowedBy: "me@example.com"
-                startDate: "2023-11-01"
-                endDate: "2023-11-10"
-
-    ItemWithRecords:
-      allOf:
-        - $ref: "#/components/schemas/Item"
-        - type: object
-          properties:
-            borrowRecords:
-              type: array
-              items:
-                $ref: "#/components/schemas/BorrowRecord"
-            isBookedToday:
-              type: boolean
-            myBooking:
-              $ref: "#/components/schemas/BorrowRecord"
 
     RequestBorrowItem:
       type: object
@@ -1145,6 +1196,8 @@ components:
         - lateReturnPercentage
         - averageDuration
         - state
+        - createdAt
+        - libraryId
       properties:
         id:
           type: string
@@ -1177,6 +1230,14 @@ components:
               type: string
             statusColor:
               type: string
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-11-15T13:45:30Z"
+        libraryId:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
 
     UserWithStats:
       type: object
@@ -1317,6 +1378,57 @@ components:
         borrowedItems:
           type: integer
 
+    PaginatedItemsResponse:
+      type: object
+      required:
+        - totalPages
+        - totalItems
+        - currentPage
+        - itemsPerPage
+        - items
+      properties:
+        totalPages:
+          type: integer
+          example: 10
+        totalItems:
+          type: integer
+          example: 100
+        currentPage:
+          type: integer
+          example: 1
+        itemsPerPage:
+          type: integer
+          example: 10
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/Item"
+
+    PaginatedItemsStatsResponse:
+      type: object
+      required:
+        - totalPages
+        - totalItems
+        - currentPage
+        - itemsPerPage
+        - items
+      properties:
+        totalPages:
+          type: integer
+          example: 10
+        totalItems:
+          type: integer
+          example: 100
+        currentPage:
+          type: integer
+          example: 1
+        itemsPerPage:
+          type: integer
+          example: 10
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemStat"
   responses:
     OK_200_GET_HELLO_WORLD:
       description: OK

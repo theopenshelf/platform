@@ -8,11 +8,61 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1518337204671-d648c3e13cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Otis Chips is the latest in a series of similar products from Schimmel - Renner",
     "shortDescription": "Ventito tibi cresco depraedor turba summisse agnosco damno tam.",
-    "category": "books",
+    "category": {
+      "id": "1",
+      "name": "books",
+      "color": "#b71964",
+      "template": "Book Template"
+    },
     "favorite": true,
     "borrowCount": 2,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z"
+    "createdAt": "2024-12-29T20:51:37.186Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@test.com",
+        "startDate": "2025-08-21",
+        "endDate": "2025-08-28"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-29",
+        "endDate": "2024-02-04"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-10-27",
+        "endDate": "2024-11-02"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-28",
+        "endDate": "2024-12-01"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-05-02",
+        "endDate": "2025-05-07"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-10-31",
+        "endDate": "2024-11-02"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "5",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-05-02",
+      "endDate": "2025-05-07"
+    }
   },
   {
     "id": "2",
@@ -23,11 +73,25 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1663784294206-9b508132baf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New turquoise Shoes with ergonomic design for cheerful comfort",
     "shortDescription": "Absum bonus accendo nesciunt dignissimos spiritus sustineo modi.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": false,
     "borrowCount": 9,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z"
+    "createdAt": "2024-12-29T20:51:37.203Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@test.com",
+        "startDate": "2024-08-09",
+        "endDate": "2024-08-14"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "3",
@@ -38,11 +102,61 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1514896856000-91cb6de818e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Chicken designed to make you stand out with crushing looks",
     "shortDescription": "Tertius in umquam.",
-    "category": "travel",
+    "category": {
+      "id": "14",
+      "name": "travel",
+      "color": "#f09830",
+      "template": "Travel Template"
+    },
     "favorite": false,
     "borrowCount": 2,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.265Z"
+    "createdAt": "2024-12-29T20:51:37.265Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2024-07-10",
+        "endDate": "2024-07-17"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-09-20",
+        "endDate": "2025-09-27"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2025-06-20",
+        "endDate": "2025-06-23"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2025-10-21",
+        "endDate": "2025-10-28"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-19",
+        "endDate": "2024-07-22"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "john@example.com",
+        "startDate": "2025-06-26",
+        "endDate": "2025-06-28"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-09-20",
+      "endDate": "2025-09-27"
+    }
   },
   {
     "id": "4",
@@ -53,11 +167,25 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1501839814414-3d83e4f5f48d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Unbranded Hat designed with Plastic for noted performance",
     "shortDescription": "Ut itaque curto cum claustrum solutio voluptatibus usque curto consequatur.",
-    "category": "kids",
+    "category": {
+      "id": "11",
+      "name": "kids",
+      "color": "#e0b100",
+      "template": "Kids Template"
+    },
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.161Z"
+    "createdAt": "2024-12-29T20:51:37.161Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@example.com",
+        "startDate": "2024-10-29",
+        "endDate": "2024-11-04"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "5",
@@ -68,11 +196,37 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Ergonomic Computer made with Fresh for all-day lustrous support",
     "shortDescription": "Ciminatio artificiose terror sollicito.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": true,
     "borrowCount": 2,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.145Z"
+    "createdAt": "2024-12-29T20:51:37.145Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-12-27",
+        "endDate": "2026-01-03"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "john@test.com",
+        "startDate": "2025-05-13",
+        "endDate": "2025-05-19"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2025-07-15",
+        "endDate": "2025-07-19"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "6",
@@ -83,11 +237,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1451481454041-104482d8e284?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Introducing the Comoros-inspired Tuna, blending powerless style with local craftsmanship",
     "shortDescription": "Laboriosam ceno demonstro abscido.",
-    "category": "kids",
+    "category": {
+      "id": "11",
+      "name": "kids",
+      "color": "#e0b100",
+      "template": "Kids Template"
+    },
     "favorite": false,
     "borrowCount": 12,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z"
+    "createdAt": "2024-12-29T20:51:37.187Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-15",
+        "endDate": "2025-01-21"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-08",
+        "endDate": "2025-12-13"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-02-08",
+        "endDate": "2024-02-10"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-01-15",
+      "endDate": "2025-01-21"
+    }
   },
   {
     "id": "7",
@@ -98,11 +284,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1595804850773-4a3fe3444a71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New lime Chips with ergonomic design for feline comfort",
     "shortDescription": "Cornu supplanto certus.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": true,
     "borrowCount": 20,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.151Z"
+    "createdAt": "2024-12-29T20:51:37.151Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-09-15",
+        "endDate": "2025-09-17"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2024-03-08",
+        "endDate": "2024-03-09"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-09",
+        "endDate": "2024-07-15"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-09-15",
+      "endDate": "2025-09-17"
+    }
   },
   {
     "id": "8",
@@ -113,11 +331,55 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Tuna designed to make you stand out with magnificent looks",
     "shortDescription": "Vos amet animadverto cursim sapiente dedico adfectus.",
-    "category": "books",
+    "category": {
+      "id": "1",
+      "name": "books",
+      "color": "#b71964",
+      "template": "Book Template"
+    },
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.222Z"
+    "createdAt": "2024-12-29T20:51:37.222Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@example.com",
+        "startDate": "2024-11-27",
+        "endDate": "2024-11-29"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2025-11-10",
+        "endDate": "2025-11-17"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-28",
+        "endDate": "2024-04-30"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@test.com",
+        "startDate": "2025-01-31",
+        "endDate": "2025-02-03"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2024-01-05",
+        "endDate": "2024-01-11"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "jane@sample.org",
+        "startDate": "2024-10-16",
+        "endDate": "2024-10-20"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "9",
@@ -128,11 +390,61 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Featuring Technetium-enhanced technology, our Car offers unparalleled big performance",
     "shortDescription": "Vestigium degusto decimus provident ullus bis.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.251Z"
+    "createdAt": "2024-12-29T20:51:37.251Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-16",
+        "endDate": "2025-07-20"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-04-03",
+        "endDate": "2025-04-10"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-05",
+        "endDate": "2024-07-08"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-08-19",
+        "endDate": "2024-08-24"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2025-04-09",
+        "endDate": "2025-04-13"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "user@test.com",
+        "startDate": "2024-01-28",
+        "endDate": "2024-01-29"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-07-16",
+      "endDate": "2025-07-20"
+    }
   },
   {
     "id": "10",
@@ -143,11 +455,73 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1654764746519-e4cd61715b78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Belle Shirt is the latest in a series of frivolous products from Gleichner - Kerluke",
     "shortDescription": "Vacuus vox conqueror currus abbas beatae.",
-    "category": "beauty health",
+    "category": {
+      "id": "5",
+      "name": "beauty health",
+      "color": "#e17ac4",
+      "template": "Beauty & Health Template"
+    },
     "favorite": false,
     "borrowCount": 7,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.152Z"
+    "createdAt": "2024-12-29T20:51:37.152Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-29",
+        "endDate": "2024-02-04"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "john@example.com",
+        "startDate": "2025-11-21",
+        "endDate": "2025-11-22"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2024-11-02",
+        "endDate": "2024-11-08"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-10",
+        "endDate": "2024-04-11"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "user@test.com",
+        "startDate": "2025-07-17",
+        "endDate": "2025-07-22"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2024-08-30",
+        "endDate": "2024-09-06"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-05-20",
+        "endDate": "2024-05-22"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2025-05-07",
+        "endDate": "2025-05-14"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2024-11-29",
+        "endDate": "2024-12-01"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "11",
@@ -158,11 +532,55 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1631378297854-185cff6b0986?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The sleek and sardonic Mouse comes with lavender LED lighting for smart functionality",
     "shortDescription": "Damno aut verus crapula bellicus toties.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z"
+    "createdAt": "2024-12-29T20:51:37.203Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-05",
+        "endDate": "2025-01-09"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-16"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-10",
+        "endDate": "2025-01-11"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-20",
+        "endDate": "2025-10-26"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-28",
+        "endDate": "2025-07-30"
+      }
+    ],
+    "isBookedToday": true,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-02-13",
+      "endDate": "2025-02-16"
+    }
   },
   {
     "id": "12",
@@ -173,11 +591,37 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1640622308238-70e5f22fe0be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Featuring Strontium-enhanced technology, our Bacon offers unparalleled faraway performance",
     "shortDescription": "Arcesso ex cupio thema.",
-    "category": "electronics",
+    "category": {
+      "id": "2",
+      "name": "electronics",
+      "color": "#1d71ac",
+      "template": "Electronics Template"
+    },
     "favorite": true,
     "borrowCount": 8,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.151Z"
+    "createdAt": "2024-12-29T20:51:37.151Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-14",
+        "endDate": "2025-01-19"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2025-10-31",
+        "endDate": "2025-11-06"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-01-14",
+      "endDate": "2025-01-19"
+    }
   },
   {
     "id": "13",
@@ -188,11 +632,31 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Our sweet-inspired Bacon brings a taste of luxury to your super lifestyle",
     "shortDescription": "Cupio quas ter vilicus depulso trans sui asporto.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.312Z"
+    "createdAt": "2024-12-29T20:51:37.312Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-07-11",
+        "endDate": "2025-07-14"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-03-24",
+        "endDate": "2025-03-29"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "14",
@@ -203,11 +667,85 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1631981782640-9eec0cca25f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Innovative Bike featuring disloyal technology and Rubber construction",
     "shortDescription": "Ubi illum ratione.",
-    "category": "gardening",
+    "category": {
+      "id": "8",
+      "name": "gardening",
+      "color": "#4ca24c",
+      "template": "Gardening Template"
+    },
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.162Z"
+    "createdAt": "2024-12-29T20:51:37.162Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@example.com",
+        "startDate": "2025-01-23",
+        "endDate": "2025-01-25"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-27",
+        "endDate": "2025-02-01"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-08-31",
+        "endDate": "2025-09-05"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2025-08-11",
+        "endDate": "2025-08-17"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-26",
+        "endDate": "2025-12-29"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-06-08",
+        "endDate": "2025-06-14"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-05-22",
+        "endDate": "2025-05-28"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-26",
+        "endDate": "2024-04-30"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-12-30",
+        "endDate": "2025-01-04"
+      },
+      {
+        "id": "10",
+        "borrowedBy": "user@test.com",
+        "startDate": "2025-07-17",
+        "endDate": "2025-07-24"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-01-27",
+      "endDate": "2025-02-01"
+    }
   },
   {
     "id": "15",
@@ -218,11 +756,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1602449204748-331279a2ed37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Savor the salty essence in our Soap, designed for aware culinary adventures",
     "shortDescription": "Tolero vae utilis.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": false,
     "borrowCount": 19,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z"
+    "createdAt": "2024-12-29T20:51:37.189Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-26",
+        "endDate": "2024-01-27"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-12-29",
+        "endDate": "2026-01-04"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-05-24",
+        "endDate": "2024-05-31"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-08-02",
+        "endDate": "2024-08-03"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "16",
@@ -233,11 +803,79 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Ergonomic Pizza made with Plastic for all-day deafening support",
     "shortDescription": "Sollicito abbas demonstro sponte sollers collum solutio in aetas cultura.",
-    "category": "vehicle",
+    "category": {
+      "id": "9",
+      "name": "vehicle",
+      "color": "#019cdb",
+      "template": "Vehicle Template"
+    },
     "favorite": true,
     "borrowCount": 7,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.544Z"
+    "createdAt": "2024-12-29T20:51:37.544Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2025-03-31",
+        "endDate": "2025-04-05"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2025-09-20",
+        "endDate": "2025-09-22"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "user@example.com",
+        "startDate": "2024-12-21",
+        "endDate": "2024-12-22"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2024-06-22",
+        "endDate": "2024-06-27"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-31",
+        "endDate": "2025-08-03"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-08-13",
+        "endDate": "2025-08-15"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-04",
+        "endDate": "2024-04-11"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-08",
+        "endDate": "2025-07-10"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-19",
+        "endDate": "2025-10-24"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "5",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-07-31",
+      "endDate": "2025-08-03"
+    }
   },
   {
     "id": "17",
@@ -248,11 +886,67 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1593414220166-085caeae0382?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Lehner, Witting and Dicki's most advanced Shirt technology increases shabby capabilities",
     "shortDescription": "Vobis depono animadverto.",
-    "category": "events",
+    "category": {
+      "id": "12",
+      "name": "events",
+      "color": "#e7315c",
+      "template": "Events Template"
+    },
     "favorite": false,
     "borrowCount": 18,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z"
+    "createdAt": "2024-12-29T20:51:37.203Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@example.com",
+        "startDate": "2024-05-12",
+        "endDate": "2024-05-14"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-03-29",
+        "endDate": "2025-03-31"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-27",
+        "endDate": "2024-02-01"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2025-02-08",
+        "endDate": "2025-02-11"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "user@test.com",
+        "startDate": "2025-04-25",
+        "endDate": "2025-04-30"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-09",
+        "endDate": "2024-11-10"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-14",
+        "endDate": "2024-01-16"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-03-29",
+      "endDate": "2025-03-31"
+    }
   },
   {
     "id": "18",
@@ -263,11 +957,31 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1555703484-89d93b41e658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Stylish Mouse designed to make you stand out with fantastic looks",
     "shortDescription": "Vulariter amor damnatio calco.",
-    "category": "camping",
+    "category": {
+      "id": "7",
+      "name": "camping",
+      "color": "#4f9c38",
+      "template": "Camping Template"
+    },
     "favorite": true,
     "borrowCount": 5,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z"
+    "createdAt": "2024-12-29T20:51:37.186Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2024-07-05",
+        "endDate": "2024-07-12"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-06-29",
+        "endDate": "2024-07-02"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "19",
@@ -278,11 +992,25 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1483247416020-58799b6de4c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Verna Gloves is the latest in a series of brave products from Hauck - Kessler",
     "shortDescription": "Crapula venia ulciscor spiritus pecus triumphus synagoga.",
-    "category": "travel",
+    "category": {
+      "id": "14",
+      "name": "travel",
+      "color": "#f09830",
+      "template": "Travel Template"
+    },
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z"
+    "createdAt": "2024-12-29T20:51:37.187Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2024-01-02",
+        "endDate": "2024-01-03"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "20",
@@ -293,11 +1021,18 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the sea lion-like agility of our Shirt, perfect for which users",
     "shortDescription": "Ventito arto tonsor administratio suppellex sustineo laudantium adsum quo.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": false,
     "borrowCount": 8,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.302Z"
+    "createdAt": "2024-12-29T20:51:37.302Z",
+    "borrowRecords": [],
+    "isBookedToday": false
   },
   {
     "id": "21",
@@ -308,11 +1043,37 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Our frog-friendly Pants ensures right comfort for your pets",
     "shortDescription": "Quod cohaero verto.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": false,
     "borrowCount": 13,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.305Z"
+    "createdAt": "2024-12-29T20:51:37.305Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2025-07-17",
+        "endDate": "2025-07-18"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-29",
+        "endDate": "2026-01-02"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-12-29",
+      "endDate": "2026-01-02"
+    }
   },
   {
     "id": "22",
@@ -323,11 +1084,67 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1521782462922-9318be1cfd04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New indigo Soap with ergonomic design for interesting comfort",
     "shortDescription": "Tolero suffragium triumphus debitis.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": false,
     "borrowCount": 3,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.260Z"
+    "createdAt": "2024-12-29T20:51:37.260Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-11-14",
+        "endDate": "2025-11-20"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2025-05-25",
+        "endDate": "2025-05-30"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-17",
+        "endDate": "2025-02-24"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-21",
+        "endDate": "2025-12-28"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "user@test.com",
+        "startDate": "2025-06-28",
+        "endDate": "2025-07-05"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-31",
+        "endDate": "2024-08-05"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-14",
+        "endDate": "2024-11-18"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-11-14",
+      "endDate": "2025-11-20"
+    }
   },
   {
     "id": "23",
@@ -338,11 +1155,79 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Savor the juicy essence in our Hat, designed for proper culinary adventures",
     "shortDescription": "Sum termes subseco cohors coepi ventosus damnatio tego arx.",
-    "category": "kids",
+    "category": {
+      "id": "11",
+      "name": "kids",
+      "color": "#e0b100",
+      "template": "Kids Template"
+    },
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.173Z"
+    "createdAt": "2024-12-29T20:51:37.173Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2024-09-16",
+        "endDate": "2024-09-21"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2024-11-11",
+        "endDate": "2024-11-14"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-22",
+        "endDate": "2025-02-24"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@example.com",
+        "startDate": "2025-04-21",
+        "endDate": "2025-04-24"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-13",
+        "endDate": "2024-07-14"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-05-28",
+        "endDate": "2024-06-04"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-17",
+        "endDate": "2024-01-24"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-12-06",
+        "endDate": "2024-12-13"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-09-20",
+        "endDate": "2024-09-24"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "3",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-02-22",
+      "endDate": "2025-02-24"
+    }
   },
   {
     "id": "24",
@@ -353,11 +1238,25 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Hirthe, Hilpert and Kreiger's most advanced Bacon technology increases emotional capabilities",
     "shortDescription": "Turbo patruus suscipio caecus conculco.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.308Z"
+    "createdAt": "2024-12-29T20:51:37.308Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-03",
+        "endDate": "2024-11-04"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "25",
@@ -368,11 +1267,79 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our fresh-inspired Bike brings a taste of luxury to your qualified lifestyle",
     "shortDescription": "Celer crustulum quis veritatis accedo nisi cometes.",
-    "category": "travel",
+    "category": {
+      "id": "14",
+      "name": "travel",
+      "color": "#f09830",
+      "template": "Travel Template"
+    },
     "favorite": true,
     "borrowCount": 0,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z"
+    "createdAt": "2024-12-29T20:51:37.189Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2024-01-24",
+        "endDate": "2024-01-31"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2025-06-10",
+        "endDate": "2025-06-16"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-09-17",
+        "endDate": "2024-09-19"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-08-18",
+        "endDate": "2025-08-22"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2025-03-25",
+        "endDate": "2025-03-30"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "jane@sample.org",
+        "startDate": "2025-11-09",
+        "endDate": "2025-11-11"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-28",
+        "endDate": "2025-02-01"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-18",
+        "endDate": "2024-04-20"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2025-02-27",
+        "endDate": "2025-03-02"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "4",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-08-18",
+      "endDate": "2025-08-22"
+    }
   },
   {
     "id": "26",
@@ -383,11 +1350,49 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New Bacon model with 88 GB RAM, 775 GB storage, and animated features",
     "shortDescription": "Collum suscipit vilis.",
-    "category": "clothing",
+    "category": {
+      "id": "3",
+      "name": "clothing",
+      "color": "#8a1bcc",
+      "template": "Clothing Template"
+    },
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z"
+    "createdAt": "2024-12-29T20:51:37.186Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-04-23",
+        "endDate": "2024-04-28"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-11-23",
+        "endDate": "2025-11-25"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-12-10",
+        "endDate": "2024-12-14"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2025-06-19",
+        "endDate": "2025-06-26"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-11-23",
+      "endDate": "2025-11-25"
+    }
   },
   {
     "id": "27",
@@ -398,11 +1403,37 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1543422018-8e0700ca5eec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our giraffe-friendly Mouse ensures physical comfort for your pets",
     "shortDescription": "Deporto compello adopto in trucido advenio tergiversatio.",
-    "category": "beauty health",
+    "category": {
+      "id": "5",
+      "name": "beauty health",
+      "color": "#e17ac4",
+      "template": "Beauty & Health Template"
+    },
     "favorite": false,
     "borrowCount": 7,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z"
+    "createdAt": "2024-12-29T20:51:37.214Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-11-15",
+        "endDate": "2025-11-19"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-08-21",
+        "endDate": "2025-08-26"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-11-15",
+      "endDate": "2025-11-19"
+    }
   },
   {
     "id": "28",
@@ -413,11 +1444,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1519752235002-1f7189299e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the bee-like agility of our Mouse, perfect for normal users",
     "shortDescription": "Voluptatibus animus somnus curriculum cultellus voluptate ago tricesimus.",
-    "category": "vehicle",
+    "category": {
+      "id": "9",
+      "name": "vehicle",
+      "color": "#019cdb",
+      "template": "Vehicle Template"
+    },
     "favorite": false,
     "borrowCount": 19,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.447Z"
+    "createdAt": "2024-12-29T20:51:37.447Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-05-02",
+        "endDate": "2024-05-05"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-04-27",
+        "endDate": "2025-04-28"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-27",
+        "endDate": "2026-01-01"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-04-27",
+      "endDate": "2025-04-28"
+    }
   },
   {
     "id": "29",
@@ -428,11 +1491,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1696441303859-80b1ac0d25b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Marguerite Pizza is the latest in a series of earnest products from Howe - Hermann",
     "shortDescription": "Decor cibo tabella creator demo.",
-    "category": "sports outdoors",
+    "category": {
+      "id": "6",
+      "name": "sports outdoors",
+      "color": "#2a7f3d",
+      "template": "Sports & Outdoors Template"
+    },
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.631Z"
+    "createdAt": "2024-12-29T20:51:37.631Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-17",
+        "endDate": "2025-02-20"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-06-12",
+        "endDate": "2025-06-17"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-27",
+        "endDate": "2025-11-01"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-02-17",
+      "endDate": "2025-02-20"
+    }
   },
   {
     "id": "30",
@@ -443,11 +1538,67 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Innovative Soap featuring handsome technology and Steel construction",
     "shortDescription": "A voco cruentus timidus ceno delibero comburo acquiro confero terga.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": true,
     "borrowCount": 1,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.274Z"
+    "createdAt": "2024-12-29T20:51:37.274Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@example.com",
+        "startDate": "2024-01-09",
+        "endDate": "2024-01-11"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2025-01-06",
+        "endDate": "2025-01-13"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2025-05-18",
+        "endDate": "2025-05-25"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@test.com",
+        "startDate": "2024-12-13",
+        "endDate": "2024-12-15"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2024-06-22",
+        "endDate": "2024-06-24"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-12",
+        "endDate": "2025-02-14"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-09-11",
+        "endDate": "2024-09-16"
+      }
+    ],
+    "isBookedToday": true,
+    "myBooking": {
+      "id": "6",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-02-12",
+      "endDate": "2025-02-14"
+    }
   },
   {
     "id": "31",
@@ -458,11 +1609,43 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1527018165407-85e7b1ddf0d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our fresh-inspired Gloves brings a taste of luxury to your sour lifestyle",
     "shortDescription": "Tametsi thymum adipiscor creator aspicio ter stipes impedit.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.259Z"
+    "createdAt": "2024-12-29T20:51:37.259Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-03-23",
+        "endDate": "2024-03-24"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-18",
+        "endDate": "2025-07-24"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-03-12",
+        "endDate": "2025-03-13"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-07-18",
+      "endDate": "2025-07-24"
+    }
   },
   {
     "id": "32",
@@ -473,11 +1656,37 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the gloomy new Chair with an exciting mix of Plastic ingredients",
     "shortDescription": "Subvenio undique pecus vapulus eius.",
-    "category": "beauty health",
+    "category": {
+      "id": "5",
+      "name": "beauty health",
+      "color": "#e17ac4",
+      "template": "Beauty & Health Template"
+    },
     "favorite": true,
     "borrowCount": 12,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z"
+    "createdAt": "2024-12-29T20:51:37.189Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-12-03",
+        "endDate": "2024-12-10"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-11-23",
+        "endDate": "2024-11-29"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-06-15",
+        "endDate": "2024-06-16"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "33",
@@ -488,11 +1697,25 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the giraffe-like agility of our Mouse, perfect for minty users",
     "shortDescription": "Caelestis delectus vulticulus timidus aeger natus causa deduco pel strenuus.",
-    "category": "clothing",
+    "category": {
+      "id": "3",
+      "name": "clothing",
+      "color": "#8a1bcc",
+      "template": "Clothing Template"
+    },
     "favorite": false,
     "borrowCount": 1,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.283Z"
+    "createdAt": "2024-12-29T20:51:37.283Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2025-03-23",
+        "endDate": "2025-03-27"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "34",
@@ -503,11 +1726,79 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Our moist-inspired Towels brings a taste of luxury to your self-reliant lifestyle",
     "shortDescription": "Vigor culpo supra.",
-    "category": "travel",
+    "category": {
+      "id": "14",
+      "name": "travel",
+      "color": "#f09830",
+      "template": "Travel Template"
+    },
     "favorite": true,
     "borrowCount": 13,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.222Z"
+    "createdAt": "2024-12-29T20:51:37.222Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-29",
+        "endDate": "2025-02-02"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-05-23",
+        "endDate": "2025-05-25"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2024-12-22",
+        "endDate": "2024-12-29"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@example.com",
+        "startDate": "2024-02-12",
+        "endDate": "2024-02-15"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-09-27",
+        "endDate": "2025-09-29"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "user@example.com",
+        "startDate": "2025-07-30",
+        "endDate": "2025-08-06"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "john@example.com",
+        "startDate": "2024-12-03",
+        "endDate": "2024-12-05"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-03-06",
+        "endDate": "2025-03-08"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-02-16",
+        "endDate": "2025-02-22"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-01-29",
+      "endDate": "2025-02-02"
+    }
   },
   {
     "id": "35",
@@ -518,11 +1809,55 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1730584474338-aa8d9d186bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "New turquoise Towels with ergonomic design for male comfort",
     "shortDescription": "Tendo decumbo adduco adulescens vomito volo.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": true,
     "borrowCount": 10,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.308Z"
+    "createdAt": "2024-12-29T20:51:37.308Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "john@test.com",
+        "startDate": "2024-03-11",
+        "endDate": "2024-03-18"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-06-13",
+        "endDate": "2025-06-15"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2025-01-12",
+        "endDate": "2025-01-15"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-08",
+        "endDate": "2024-11-12"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-04-30",
+        "endDate": "2025-05-06"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-06-13",
+      "endDate": "2025-06-15"
+    }
   },
   {
     "id": "36",
@@ -533,11 +1868,79 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Featuring Potassium-enhanced technology, our Gloves offers unparalleled ripe performance",
     "shortDescription": "Adsum aequus titulus adstringo aestas tripudio statim succurro.",
-    "category": "diy",
+    "category": {
+      "id": "4",
+      "name": "diy",
+      "color": "#f58220",
+      "template": "DIY Template"
+    },
     "favorite": true,
     "borrowCount": 14,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.300Z"
+    "createdAt": "2024-12-29T20:51:37.300Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-22",
+        "endDate": "2024-11-27"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-12-09",
+        "endDate": "2025-12-14"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-01-01",
+        "endDate": "2025-01-08"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@test.com",
+        "startDate": "2025-02-21",
+        "endDate": "2025-02-22"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-06-26",
+        "endDate": "2025-06-30"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2024-09-01",
+        "endDate": "2024-09-04"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-06-29",
+        "endDate": "2024-07-05"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-05-11",
+        "endDate": "2024-05-14"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-06-29",
+        "endDate": "2025-07-06"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "5",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-06-26",
+      "endDate": "2025-06-30"
+    }
   },
   {
     "id": "37",
@@ -548,11 +1951,37 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1690166444493-b3f5fbcd4762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the bird-like agility of our Cheese, perfect for dazzling users",
     "shortDescription": "Vilitas coepi deprimo nostrum conitor.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": false,
     "borrowCount": 0,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.188Z"
+    "createdAt": "2024-12-29T20:51:37.188Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-08-19",
+        "endDate": "2025-08-22"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-04-09",
+        "endDate": "2025-04-10"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-08-19",
+      "endDate": "2025-08-22"
+    }
   },
   {
     "id": "38",
@@ -563,11 +1992,25 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the cow-like agility of our Cheese, perfect for weary users",
     "shortDescription": "Spargo reprehenderit pecco rem caecus comitatus vorago ademptio occaecati esse.",
-    "category": "beauty health",
+    "category": {
+      "id": "5",
+      "name": "beauty health",
+      "color": "#e17ac4",
+      "template": "Beauty & Health Template"
+    },
     "favorite": false,
     "borrowCount": 15,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.168Z"
+    "createdAt": "2024-12-29T20:51:37.168Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-01-05",
+        "endDate": "2025-01-09"
+      }
+    ],
+    "isBookedToday": true
   },
   {
     "id": "39",
@@ -578,11 +2021,25 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1512774320837-4e666ee94f16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Integrated content-based forecast Chicken offers reliable performance and private design",
     "shortDescription": "Alo eligendi ceno ab accusator curto vulpes tenuis decimus.",
-    "category": "multimedia",
+    "category": {
+      "id": "13",
+      "name": "multimedia",
+      "color": "#1e9ee7",
+      "template": "Multimedia Template"
+    },
     "favorite": false,
     "borrowCount": 5,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z"
+    "createdAt": "2024-12-29T20:51:37.214Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-05-08",
+        "endDate": "2024-05-14"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "40",
@@ -593,11 +2050,73 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1603140841869-b1f3527c55ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "The Beulah Hat is the latest in a series of secondary products from Runolfsson, Runolfsson and Okuneva",
     "shortDescription": "Demo quaerat capio adduco aliqua colo ancilla bibo dapifer.",
-    "category": "safety",
+    "category": {
+      "id": "15",
+      "name": "safety",
+      "color": "#f57d2b",
+      "template": "Safety Template"
+    },
     "favorite": true,
     "borrowCount": 1,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.216Z"
+    "createdAt": "2024-12-29T20:51:37.216Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@example.com",
+        "startDate": "2025-09-11",
+        "endDate": "2025-09-14"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "user@example.com",
+        "startDate": "2025-03-19",
+        "endDate": "2025-03-23"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-02-01",
+        "endDate": "2024-02-04"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-23",
+        "endDate": "2025-10-28"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-07-22",
+        "endDate": "2024-07-27"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-07-05",
+        "endDate": "2024-07-12"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-09",
+        "endDate": "2025-12-15"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2024-06-01",
+        "endDate": "2024-06-07"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "4",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-10-23",
+      "endDate": "2025-10-28"
+    }
   },
   {
     "id": "41",
@@ -608,11 +2127,31 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1680264524729-503ae538cf33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Experience the mint green brilliance of our Soap, perfect for shameful environments",
     "shortDescription": "Unde vaco atque labore solutio quas arcesso depereo.",
-    "category": "gardening",
+    "category": {
+      "id": "8",
+      "name": "gardening",
+      "color": "#4ca24c",
+      "template": "Gardening Template"
+    },
     "favorite": true,
     "borrowCount": 16,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z"
+    "createdAt": "2024-12-29T20:51:37.214Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-11-30",
+        "endDate": "2025-12-06"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-11-30",
+      "endDate": "2025-12-06"
+    }
   },
   {
     "id": "42",
@@ -623,11 +2162,55 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Hackett Group's most advanced Shoes technology increases gigantic capabilities",
     "shortDescription": "Utique vulgivagus verbum demo deorsum acer caelum.",
-    "category": "books",
+    "category": {
+      "id": "1",
+      "name": "books",
+      "color": "#b71964",
+      "template": "Book Template"
+    },
     "favorite": true,
     "borrowCount": 7,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.212Z"
+    "createdAt": "2024-12-29T20:51:37.212Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-08-31",
+        "endDate": "2025-09-07"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-04-01",
+        "endDate": "2024-04-02"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2025-01-27",
+        "endDate": "2025-01-29"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-08-09",
+        "endDate": "2024-08-10"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "john@test.com",
+        "startDate": "2024-09-23",
+        "endDate": "2024-09-30"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-08-31",
+      "endDate": "2025-09-07"
+    }
   },
   {
     "id": "43",
@@ -638,11 +2221,85 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1589923188900-85dae523342b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Licensed Ball designed with Frozen for granular performance",
     "shortDescription": "Caste thesaurus tres.",
-    "category": "gardening",
+    "category": {
+      "id": "8",
+      "name": "gardening",
+      "color": "#4ca24c",
+      "template": "Gardening Template"
+    },
     "favorite": true,
     "borrowCount": 6,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.196Z"
+    "createdAt": "2024-12-29T20:51:37.196Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@test.com",
+        "startDate": "2024-09-18",
+        "endDate": "2024-09-22"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2024-04-02",
+        "endDate": "2024-04-05"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2025-03-26",
+        "endDate": "2025-03-30"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-11-01",
+        "endDate": "2024-11-04"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "jane@sample.org",
+        "startDate": "2024-07-16",
+        "endDate": "2024-07-22"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-08",
+        "endDate": "2025-02-10"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-16",
+        "endDate": "2025-02-17"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "jane@sample.org",
+        "startDate": "2024-12-05",
+        "endDate": "2024-12-07"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2024-10-03",
+        "endDate": "2024-10-08"
+      },
+      {
+        "id": "10",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-08-03",
+        "endDate": "2024-08-07"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "6",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-02-08",
+      "endDate": "2025-02-10"
+    }
   },
   {
     "id": "44",
@@ -653,11 +2310,79 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1687977686478-13b75f82225e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Discover the deer-like agility of our Salad, perfect for square users",
     "shortDescription": "Demum tempore thesis teres celo.",
-    "category": "multimedia",
+    "category": {
+      "id": "13",
+      "name": "multimedia",
+      "color": "#1e9ee7",
+      "template": "Multimedia Template"
+    },
     "favorite": false,
     "borrowCount": 10,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.284Z"
+    "createdAt": "2024-12-29T20:51:37.284Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "user@example.com",
+        "startDate": "2025-02-20",
+        "endDate": "2025-02-24"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2024-03-14",
+        "endDate": "2024-03-16"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-12-10",
+        "endDate": "2024-12-14"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-03-31",
+        "endDate": "2024-04-02"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2024-11-14",
+        "endDate": "2024-11-19"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2024-03-29",
+        "endDate": "2024-03-31"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2024-08-01",
+        "endDate": "2024-08-05"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-04",
+        "endDate": "2025-10-11"
+      },
+      {
+        "id": "9",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-02-10",
+        "endDate": "2025-02-12"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "8",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-10-04",
+      "endDate": "2025-10-11"
+    }
   },
   {
     "id": "45",
@@ -668,11 +2393,37 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Discover the kangaroo-like agility of our Shoes, perfect for tired users",
     "shortDescription": "Defessus avarus cumque deinde.",
-    "category": "vehicle",
+    "category": {
+      "id": "9",
+      "name": "vehicle",
+      "color": "#019cdb",
+      "template": "Vehicle Template"
+    },
     "favorite": true,
     "borrowCount": 5,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.548Z"
+    "createdAt": "2024-12-29T20:51:37.548Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-12-01",
+        "endDate": "2025-12-08"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-06-24",
+        "endDate": "2024-06-30"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "1",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-12-01",
+      "endDate": "2025-12-08"
+    }
   },
   {
     "id": "46",
@@ -683,11 +2434,73 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Ergonomic Shoes made with Metal for all-day honorable support",
     "shortDescription": "Est celo aranea denuo appositus blanditiis templum comis quae.",
-    "category": "kids",
+    "category": {
+      "id": "11",
+      "name": "kids",
+      "color": "#e0b100",
+      "template": "Kids Template"
+    },
     "favorite": true,
     "borrowCount": 20,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.238Z"
+    "createdAt": "2024-12-29T20:51:37.238Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2025-02-05",
+        "endDate": "2025-02-08"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-05-02",
+        "endDate": "2024-05-04"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-09",
+        "endDate": "2025-10-16"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "doe@test.com",
+        "startDate": "2024-11-01",
+        "endDate": "2024-11-08"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-16",
+        "endDate": "2024-01-17"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-03",
+        "endDate": "2024-07-05"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-10-22",
+        "endDate": "2025-10-24"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-03-19",
+        "endDate": "2025-03-21"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "3",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-10-09",
+      "endDate": "2025-10-16"
+    }
   },
   {
     "id": "47",
@@ -698,11 +2511,25 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "Introducing the Mali-inspired Bike, blending worthy style with local craftsmanship",
     "shortDescription": "Vilitas amicitia crepusculum aveho ars paens volubilis beneficium creta torqueo.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": false,
     "borrowCount": 6,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.259Z"
+    "createdAt": "2024-12-29T20:51:37.259Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "doe@sample.org",
+        "startDate": "2024-06-10",
+        "endDate": "2024-06-15"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "48",
@@ -713,11 +2540,55 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1492709560992-3fa75e9e887b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Innovative Soap featuring frivolous technology and Concrete construction",
     "shortDescription": "Earum cunabula vinum hic adopto.",
-    "category": "travel",
+    "category": {
+      "id": "14",
+      "name": "travel",
+      "color": "#f09830",
+      "template": "Travel Template"
+    },
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.205Z"
+    "createdAt": "2024-12-29T20:51:37.205Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-11-10",
+        "endDate": "2024-11-14"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "jane@example.com",
+        "startDate": "2025-01-01",
+        "endDate": "2025-01-07"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "admin@example.com",
+        "startDate": "2025-04-01",
+        "endDate": "2025-04-06"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "john@sample.org",
+        "startDate": "2025-08-10",
+        "endDate": "2025-08-12"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "admin@sample.org",
+        "startDate": "2024-02-27",
+        "endDate": "2024-03-05"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "jane@test.com",
+        "startDate": "2024-11-07",
+        "endDate": "2024-11-13"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "49",
@@ -728,11 +2599,61 @@
     "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
     "description": "Luxurious Pizza designed with Granite for polite performance",
     "shortDescription": "Callide celer volutabrum summa speciosus adinventitias.",
-    "category": "kids",
+    "category": {
+      "id": "11",
+      "name": "kids",
+      "color": "#e0b100",
+      "template": "Kids Template"
+    },
     "favorite": false,
     "borrowCount": 0,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z"
+    "createdAt": "2024-12-29T20:51:37.187Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "jane@sample.org",
+        "startDate": "2025-09-17",
+        "endDate": "2025-09-24"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "doe@example.com",
+        "startDate": "2024-08-16",
+        "endDate": "2024-08-21"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-08-04",
+        "endDate": "2024-08-06"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "user@sample.org",
+        "startDate": "2025-01-28",
+        "endDate": "2025-01-29"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "user@test.com",
+        "startDate": "2025-06-09",
+        "endDate": "2025-06-13"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-07-03",
+        "endDate": "2024-07-09"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "user@test.com",
+        "startDate": "2024-01-25",
+        "endDate": "2024-01-29"
+      }
+    ],
+    "isBookedToday": false
   },
   {
     "id": "50",
@@ -743,10 +2664,72 @@
     "pexelsUrl": "https://via.placeholder.com/500",
     "description": "The pink Table combines Northern Mariana Islands aesthetics with Tantalum-based durability",
     "shortDescription": "Coniuratio ultio curia chirographum.",
-    "category": "home",
+    "category": {
+      "id": "10",
+      "name": "home",
+      "color": "#d08000",
+      "template": "Home Template"
+    },
     "favorite": false,
     "borrowCount": 11,
     "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.256Z"
+    "createdAt": "2024-12-29T20:51:37.256Z",
+    "borrowRecords": [
+      {
+        "id": "1",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-01-28",
+        "endDate": "2024-01-29"
+      },
+      {
+        "id": "2",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-05-29",
+        "endDate": "2025-06-04"
+      },
+      {
+        "id": "3",
+        "borrowedBy": "me@example.com",
+        "startDate": "2024-04-05",
+        "endDate": "2024-04-11"
+      },
+      {
+        "id": "4",
+        "borrowedBy": "admin@test.com",
+        "startDate": "2024-10-07",
+        "endDate": "2024-10-13"
+      },
+      {
+        "id": "5",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-05-31",
+        "endDate": "2025-06-03"
+      },
+      {
+        "id": "6",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-03"
+      },
+      {
+        "id": "7",
+        "borrowedBy": "me@example.com",
+        "startDate": "2025-07-27",
+        "endDate": "2025-07-29"
+      },
+      {
+        "id": "8",
+        "borrowedBy": "john@test.com",
+        "startDate": "2025-09-13",
+        "endDate": "2025-09-15"
+      }
+    ],
+    "isBookedToday": false,
+    "myBooking": {
+      "id": "2",
+      "borrowedBy": "me@example.com",
+      "startDate": "2025-05-29",
+      "endDate": "2025-06-04"
+    }
   }
 ]

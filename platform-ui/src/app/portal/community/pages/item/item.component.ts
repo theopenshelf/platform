@@ -1,5 +1,5 @@
 import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
-import { Component, effect, inject, Inject, INJECTOR, Injector, input } from '@angular/core';
+import { Component, inject, Inject, INJECTOR, Injector, input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -16,7 +16,6 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
-import { UIBorrowItem } from '../../models/UIBorrowItem';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { ItemsService } from '../../services/items.service';
@@ -55,11 +54,12 @@ const plusTen = today.append({ day: 10 });
       useFactory: adapterFactory,
     }]
 })
-export class ItemComponent {
+export class ItemComponent implements OnInit {
 
   itemId = input.required<string>();
 
   item: UIItem | undefined;
+  borrowItemRecordsForCurrentUser: UIBorrowRecord[] = [];
 
   protected readonly bookForm = new FormGroup({
     testValue: new FormControl(),
@@ -70,11 +70,11 @@ export class ItemComponent {
   protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
   records: UIBorrowRecord[] = [];
   selectedDate: TuiDayRange | null | undefined;
-  borrowItemRecord: UIBorrowItem | undefined;
+
   disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
     return day.dayBefore(this.min);
   };
-
+  currentUser: any = "me@example.com"; //TODO: get current user from auth service
 
 
   constructor(
@@ -87,21 +87,6 @@ export class ItemComponent {
     private alerts: TuiAlertService,
     private router: Router
   ) {
-    effect(() => {
-      const itemId = this.itemId();
-      if (itemId) {
-        this.itemsService.getItem(itemId).subscribe(item => this.item = item);
-        this.itemsService.getItemBorrowRecords(itemId).subscribe(records => this.records = records);
-        this.itemsService.getMyBorrowItem(itemId).subscribe(borrowItemRecord => {
-          if (borrowItemRecord && new Date(borrowItemRecord.record.endDate) > new Date()) {
-            this.borrowItemRecord = borrowItemRecord;
-          } else {
-            this.borrowItemRecord = undefined;
-          }
-        });
-      }
-    })
-
     this.control = new FormControl<TuiDayRange | null | undefined>(this.selectedDate)
 
     this.control.valueChanges.subscribe((value: TuiDayRange | null | undefined) => {
@@ -148,11 +133,17 @@ export class ItemComponent {
         },
       },
     );
+  }
 
+  ngOnInit() {
+    this.itemsService.getItem(this.itemId()).subscribe(item => {
+      this.item = item;
+      this.borrowItemRecordsForCurrentUser = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser.id);
+    });
   }
 
   get sanitizedDescription(): SafeHtml {
-    return this.item ? this.sanitizer.bypassSecurityTrustHtml(this.item.description) : '';
+    return this.sanitizer.bypassSecurityTrustHtml(this.item?.description ?? '');
   }
   // Marker handler based on borrow records
   protected markerHandler = (day: TuiDay): [string] => {
@@ -165,7 +156,8 @@ export class ItemComponent {
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
 
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
-        if (record == this.borrowItemRecord?.record) {
+
+        if (this.item?.borrowRecords.find(record => record.borrowedBy === this.currentUser.id)) {
           return [BOOKED_BY_ME]; // Marked day
         }
         return [BOOKED]; // Marked day
@@ -186,7 +178,7 @@ export class ItemComponent {
           const dotColor = window.getComputedStyle(dot).backgroundColor;
           if (dotColor == BEFORE_TODAY) {
             cell.classList.add('t-cell_disabled');
-          } else if (dotColor == BOOKED_BY_ME && this.borrowItemRecord) {
+          } else if (dotColor == BOOKED_BY_ME) {
             cell.classList.add('my-booking');
           } else if (dotColor == BOOKED) {
             cell.classList.add('not-available');
@@ -196,6 +188,7 @@ export class ItemComponent {
       });
     });
   }
+
   public onRangeChange(range: TuiDayRange | null): void {
     if (range) {
       this.selectedDate = range;
@@ -227,15 +220,10 @@ export class ItemComponent {
             this.selectedDate?.from.toLocalNativeDate().toISOString().split('T')[0] ?? '',
             this.selectedDate?.to.toLocalNativeDate().toISOString().split('T')[0] ?? ''
           ).pipe(
-            tap(borrowItemRecord => {
-              this.borrowItemRecord = borrowItemRecord;
-            })
-          ).pipe(
-            tap(() => {
-              if (this.borrowItemRecord) {
-                this.alerts.open(`Successfully borrowed ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}`, { appearance: 'positive' }).subscribe();
-                this.router.navigate(['/community/my-borrowed-items']);
-              }
+            tap(item => {
+              this.item = item;
+              this.alerts.open(`Successfully borrowed ${this.item?.name} from ${this.selectedDate?.from.toLocalNativeDate()} to ${this.selectedDate?.to.toLocalNativeDate()}`, { appearance: 'positive' }).subscribe();
+              this.router.navigate(['/community/borrowed-items']);
             })
           );
           return EMPTY;
@@ -246,24 +234,30 @@ export class ItemComponent {
   }
 
   cancelReservation(header: PolymorpheusContent) {
-    if (this.borrowItemRecord) {
+    const borrowRecord = this.item?.borrowRecords
+      .filter(record => record.borrowedBy === this.currentUser.id)
+      .find(record => record.startDate <= new Date() && new Date() <= record.endDate);
+
+    if (borrowRecord) {
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
-          label: `Cancel Reservation for ${this.borrowItemRecord.name}`,
+          label: `Cancel Reservation for ${this.item?.name}`,
           size: 'm',
           header: header,
           data: {
-            content: `Are you sure you want to cancel your reservation for ${this.borrowItemRecord.name} from ${this.borrowItemRecord.record.startDate} to ${this.borrowItemRecord.record.endDate}?`,
+            content: `Are you sure you want to cancel your reservation for ${this.item?.name} from ${borrowRecord.startDate} to ${borrowRecord.endDate}?`,
             yes: 'Yes, Cancel',
             no: 'Keep Reservation'
           },
         })
         .pipe(switchMap((response) => {
           if (response) {
-            this.itemsService.cancelReservation(this.borrowItemRecord!);
-            this.borrowItemRecord = undefined;
-            this.updateCellAvailability();
-            return this.alerts.open('Reservation cancelled successfully', { appearance: 'success' });
+            this.itemsService.cancelReservation(this.item!, borrowRecord).subscribe(item => {
+              this.item = item;
+              this.updateCellAvailability();
+              this.alerts.open('Reservation cancelled successfully', { appearance: 'success' });
+            });
+            return EMPTY;
           }
           return EMPTY;
         }))
@@ -316,9 +310,6 @@ export class ItemComponent {
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
 
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
-        if (record == this.borrowItemRecord?.record) {
-          return true; // Marked day
-        }
         return true; // Marked day
       }
     }

@@ -1,18 +1,15 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiAccordion } from '@taiga-ui/kit';
+import { TuiAccordion, TuiPagination } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
-import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
+import { BehaviorSubject } from 'rxjs';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
-import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
-import { UIBorrowItem } from '../../models/UIBorrowItem';
 import { UICategory } from '../../models/UICategory';
+import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
@@ -23,24 +20,21 @@ import { LibrariesService } from '../../services/libraries.service';
   selector: 'app-myborroweditems',
   imports: [
     CommonModule,
-    RouterLink,
     TuiTextfieldControllerModule,
     FormsModule,
-    NgClass,
     TuiTable,
-    CategoryBadgeComponent,
-    BorrowItemCardComponent,
     TuiSelectModule,
     TuiTextfield,
     TuiIcon,
     FormsModule,
     ReactiveFormsModule,
-    TuiAccordion
+    TuiAccordion,
+    TuiPagination
   ],
-  templateUrl: './myborroweditems.component.html',
-  styleUrls: ['./myborroweditems.component.scss']
+  templateUrl: './borroweditems.component.html',
+  styleUrls: ['./borroweditems.component.scss']
 })
-export class MyborroweditemsComponent implements OnInit {
+export class BorrowedItemsComponent implements OnInit {
 
   protected readonly sizes = ['l', 'm', 's'] as const;
   protected size = this.sizes[0];
@@ -61,9 +55,9 @@ export class MyborroweditemsComponent implements OnInit {
   static readonly SORT_FAVORITES = 'Favorites';
 
   protected sortingOptions = [
-    MyborroweditemsComponent.SORT_RECENTLY_RESERVED,
-    MyborroweditemsComponent.SORT_MOST_BORROWED,
-    MyborroweditemsComponent.SORT_FAVORITES,
+    BorrowedItemsComponent.SORT_RECENTLY_RESERVED,
+    BorrowedItemsComponent.SORT_MOST_BORROWED,
+    BorrowedItemsComponent.SORT_FAVORITES,
   ];
 
   protected selectedStatuses: Set<string> = new Set();
@@ -90,7 +84,7 @@ export class MyborroweditemsComponent implements OnInit {
     this.statusFilterSubject.next(value);
   }
 
-  protected items: UIBorrowItem[] = [];
+  protected items: UIItem[] = [];
   categories: UICategory[] = [];
   libraries: UILibrary[] = [];
 
@@ -103,6 +97,10 @@ export class MyborroweditemsComponent implements OnInit {
 
   isMobile: boolean = false;
 
+  currentPage: number = 0;
+  totalPages: number = 1;
+  itemsPerPage: number = 8; // Adjust this number as needed
+
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
@@ -114,8 +112,22 @@ export class MyborroweditemsComponent implements OnInit {
     this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
       this.categories = categories;
     });
-    this.getFilteredAndSortedData().subscribe((items) => {
-      this.items = items;
+    this.itemsService.getItems(
+      undefined,
+      true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe((itemsPagination) => {
+      this.totalPages = itemsPagination.totalPages;
+      this.currentPage = itemsPagination.currentPage;
+      this.itemsPerPage = itemsPagination.itemsPerPage;
+      this.items = itemsPagination.items;
     });
     this.librariesService.getLibraries().subscribe(libraries => {
       this.libraries = libraries;
@@ -204,40 +216,6 @@ export class MyborroweditemsComponent implements OnInit {
     }
   }
 
-  // Update getFilteredAndSortedData to use combineLatest
-  private getFilteredAndSortedData(): Observable<UIBorrowItem[]> {
-    return combineLatest([
-      this.itemsService.getMyBorrowItems(),
-      this.categoryFilterSubject,
-      this.statusFilterSubject
-    ]).pipe(
-      map(([items, categoryFilter, statusFilter]) => {
-        let result = items.filter((item: UIBorrowItem) => {
-          const status = this.computeStatus(item.record.startDate, item.record.endDate);
-          return (
-            (!categoryFilter || item.category.name === categoryFilter) &&
-            (!statusFilter || status === statusFilter)
-          );
-        });
-
-        // Sort by the selected column
-        if (this.sortColumn) {
-          result = [...result].sort((a, b) => {
-            const aValue = this.getSortableValue(a, this.sortColumn!);
-            const bValue = this.getSortableValue(b, this.sortColumn!);
-
-            if (this.sortDirection === 'asc') {
-              return aValue > bValue ? 1 : -1;
-            } else {
-              return aValue < bValue ? 1 : -1;
-            }
-          });
-        }
-
-        return result;
-      })
-    );
-  }
 
   // Get sortable value for a column
   private getSortableValue(item: any, column: string): any {
@@ -261,8 +239,23 @@ export class MyborroweditemsComponent implements OnInit {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-    this.getFilteredAndSortedData().subscribe((items) => {
-      this.items = items;
+
+    this.itemsService.getItems(
+      undefined,
+      true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe((itemsPagination) => {
+      this.totalPages = itemsPagination.totalPages;
+      this.currentPage = itemsPagination.currentPage;
+      this.itemsPerPage = itemsPagination.itemsPerPage;
+      this.items = itemsPagination.items;
     });
   }
 
@@ -320,5 +313,26 @@ export class MyborroweditemsComponent implements OnInit {
 
   isStatusSelected(status: string): boolean {
     return this.selectedStatuses.has(status);
+  }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    this.itemsService.getItems(
+      undefined,
+      true,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe((itemsPagination) => {
+      this.totalPages = itemsPagination.totalPages;
+      this.currentPage = itemsPagination.currentPage;
+      this.itemsPerPage = itemsPagination.itemsPerPage;
+      this.items = itemsPagination.items;
+    });
   }
 }

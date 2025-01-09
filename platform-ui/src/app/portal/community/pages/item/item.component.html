@@ -14,8 +14,8 @@
           [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
           (click)="markAsFavorite()"></button>
         <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-          [appearance]="borrowItemRecord ? 'primary' : 'outline'" size="m" type="button"
-          [tuiHint]="borrowItemRecord ? 'Reserved from ' + borrowItemRecord.record.startDate + ' to ' + borrowItemRecord.record.endDate : 'No reservation yet'"></button>
+          [appearance]="borrowItemRecordsForCurrentUser.length > 0 ? 'primary' : 'outline'" size="m" type="button"
+          [tuiHint]="borrowItemRecordsForCurrentUser.length > 0 ? 'Reserved from ' + borrowItemRecordsForCurrentUser[0].startDate + ' to ' + borrowItemRecordsForCurrentUser[0].endDate : 'No reservation yet'"></button>
       </div>
     </div>
     <form [formGroup]="bookForm">
@@ -43,23 +43,15 @@
         </span>
     </div>
     
-      @if (!borrowItemRecord) {
-        @if (!selectedDate) {
+      @if (!selectedDate) {
         <tui-notification size="s">
           Select a date to borrow
         </tui-notification>
-        }
-        <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="accent" size="m"
-          [disabled]="!selectedDate" tuiButton type="button">
-          Borrow
-        </button>
       }
-      @if (borrowItemRecord) {
-      <button id="cancel" i18n="@@cancelButton" (click)="cancelReservation(headerCancel)" appearance="secondary"
-        size="m" tuiButton type="button">
-        Cancel Reservation
+      <button id="borrow" i18n="@@borrowButton" (click)="borrowItem(headerBorrowConfirm)" appearance="accent" size="m"
+        [disabled]="!selectedDate" tuiButton type="button">
+        Borrow
       </button>
-      }
     </form>
   </div>
   <!-- Details Section -->
