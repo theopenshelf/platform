@@ -75,6 +75,8 @@ export class ItemComponent implements OnInit {
     return day.dayBefore(this.min);
   };
   currentUser: any = "me@example.com"; //TODO: get current user from auth service
+  isReserved = this.borrowItemRecordsForCurrentUser.length > 0;
+  nextReservation = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
 
 
   constructor(
@@ -138,7 +140,9 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe(item => {
       this.item = item;
-      this.borrowItemRecordsForCurrentUser = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser.id);
+      this.borrowItemRecordsForCurrentUser = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser);
+      this.isReserved = this.borrowItemRecordsForCurrentUser.length > 0;
+      this.nextReservation = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
     });
   }
 
@@ -151,7 +155,7 @@ export class ItemComponent implements OnInit {
     if (day.dayBefore(this.min)) {
       return [BEFORE_TODAY];
     }
-    for (const record of this.records) {
+    for (const record of this.item?.borrowRecords || []) {
       const startDate = TuiDay.fromLocalNativeDate(new Date(record.startDate));
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
 
@@ -315,5 +319,9 @@ export class ItemComponent implements OnInit {
     }
     return false; // Not marked
   };
+
+  formatReservationDate(date: Date): string | null {
+    return this.datePipe.transform(date, 'EEE d MMM');
+  }
 
 }

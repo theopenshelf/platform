@@ -9,6 +9,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
+import { UIBorrowRecord } from '../../../models/UIBorrowRecord';
 import { UIItem } from '../../../models/UIItem';
 import { UILibrary } from '../../../models/UILibrary';
 import { ItemsService } from '../../../services/items.service';
@@ -42,12 +43,14 @@ import { ItemsComponent } from '../../items/items.component';
   styleUrl: './library.component.scss'
 })
 export class LibraryComponent {
+
   searchText = '';
   selectedSortingOption = ItemsComponent.SORT_RECENTLY_ADDED; // Default sorting option
 
   library: UILibrary | undefined;
   items: UIItem[] = [];
   filteredItems: UIItem[] = [];
+  currentUser: any = "me@example.com"; //TODO: get current user from auth service
 
   protected sortingOptions = [
     ItemsComponent.SORT_RECENTLY_ADDED,
@@ -132,4 +135,7 @@ export class LibraryComponent {
     this.librariesService.deleteLibrary(library.id).subscribe();
   }
 
+  getBorrowRecords(itemId: string): UIBorrowRecord[] {
+    return this.items.find(item => item.id === itemId)?.borrowRecords.filter(record => record.endDate >= new Date() && record.borrowedBy === this.currentUser) || [];
+  }
 }

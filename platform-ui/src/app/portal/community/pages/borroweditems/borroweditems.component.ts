@@ -8,6 +8,7 @@ import { TuiAccordion, TuiPagination } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { BehaviorSubject } from 'rxjs';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
+import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
@@ -29,7 +30,8 @@ import { LibrariesService } from '../../services/libraries.service';
     FormsModule,
     ReactiveFormsModule,
     TuiAccordion,
-    TuiPagination
+    TuiPagination,
+    BorrowItemCardComponent
   ],
   templateUrl: './borroweditems.component.html',
   styleUrls: ['./borroweditems.component.scss']

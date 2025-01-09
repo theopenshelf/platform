@@ -94,7 +94,7 @@
     <div class="items-container">
 
       @for (item of filteredAndSortedItems; track item) {
-      <item-card [item]="item">
+      <item-card [item]="item" [borrowRecords]="getBorrowRecords(item.id)">
       </item-card>
       }
     </div>

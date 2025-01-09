@@ -11,6 +11,7 @@ import { ItemsService } from '../../services/items.service';
 
 @Component({
   selector: 'borrow-item-card',
+  standalone: true,
   imports: [
     TuiHint,
     RouterLink,
@@ -33,14 +34,11 @@ export class BorrowItemCardComponent {
   public currentBorrowRecord = computed(() => {
     const now = TuiDay.fromLocalNativeDate(new Date());
 
-    const record = this.item().borrowRecords.find(record => {
-      const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
-      return now.daySameOrBefore(endDate);
-    });
-
-    if (!record) {
-      throw new Error('No valid borrow record found');
-    }
+    const record = this.item().borrowRecords.filter(record => {
+      return new Date() >= record.endDate;
+    }).sort((a, b) => {
+      return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
+    })[0];
 
     return record;
   });
@@ -62,8 +60,15 @@ export class BorrowItemCardComponent {
     }
   }
 
-  protected computeStatus(borrowedOn: Date, dueDate: Date): 'Reserved' | 'Currently Borrowed' | 'Returned' {
+  protected computeStatus(): 'Reserved' | 'Currently Borrowed' | 'Returned' {
     const now = new Date();
+
+    if (!this.currentBorrowRecord()) {
+      return 'Returned';
+    }
+
+    const borrowedOn = this.currentBorrowRecord().startDate;
+    const dueDate = this.currentBorrowRecord().endDate;
 
     if (now < borrowedOn) {
       return 'Reserved';

@@ -7,6 +7,7 @@ import { TuiAccordion, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
@@ -68,6 +69,7 @@ export class ItemsComponent implements OnInit {
 
   // Responsive design
   isMobile: boolean = false;
+  currentUser: any = "me@example.com"; //TODO: get current user from auth service
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
@@ -184,6 +186,10 @@ export class ItemsComponent implements OnInit {
 
   getLibrary(libraryId: string): UILibrary | undefined {
     return this.libraries.find(library => library.id === libraryId);
+  }
+
+  getBorrowRecords(itemId: string): UIBorrowRecord[] {
+    return this.items.find(item => item.id === itemId)?.borrowRecords.filter(record => record.endDate >= new Date() && record.borrowedBy === this.currentUser) || [];
   }
 
   goToPage(page: number) {

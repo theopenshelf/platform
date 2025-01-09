@@ -12,8 +12,8 @@
       <div class="item-content">
         <div routerLink="/community/items/{{item().id}}" class="item-details">
           <div class="item-details-top-right">
-            <span [ngClass]="getBadgeClass(computeStatus(currentBorrowRecord().startDate, currentBorrowRecord().endDate))">
-                    {{ computeStatus(currentBorrowRecord().startDate, currentBorrowRecord().endDate) }}
+            <span [ngClass]="getBadgeClass(computeStatus())">
+                    {{ computeStatus() }}
               </span>
           </div>
           <h2 tuiTitle>
@@ -31,14 +31,15 @@
 
 
         <div class="item-actions">
-          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-          [appearance]="currentBorrowRecord() ? 'primary' : 'outline'" size="m" type="button"
-          >
-        </button>
+
   
   
   
         @if (currentBorrowRecord()) {
+          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
+          [appearance]="currentBorrowRecord() ? 'primary' : 'outline'" size="m" type="button"
+          >
+        </button>
           <div class="reservation-dates-grid">
             <div class="reservation-start">
                 <span class="reservation-start-date">{{ currentBorrowRecord().startDate | date:'MMM d, y' }}</span>

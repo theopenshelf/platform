@@ -80,7 +80,7 @@
 
     <div class="items-container">
       @for (item of items; track item) {
-      <item-card [item]="item" [library]="getLibrary(item.libraryId)">
+      <item-card [item]="item" [borrowRecords]="getBorrowRecords(item.id)" [library]="getLibrary(item.libraryId)">
       </item-card>
       }
     </div>
