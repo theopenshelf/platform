@@ -1,16 +1,14 @@
 <div class="search-bar-container">
   <div class="search-bar">
     <div class="search-input">
-      <p>
-        <tui-icon icon="@tui.search" />
-        <input [(ngModel)]="searchText" placeholder="What object are you looking for?" (input)="onTextFilterChange()" />
-      </p>
+      <tui-icon icon="@tui.search" />
+      <input [(ngModel)]="searchText" placeholder="What object are you looking for?" (input)="onTextFilterChange()" />
 
     </div>
 
     <div class="categories-filtering">
 
-      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+      <button appearance="flat" size="l" tuiButton topRight tuiDropdownAlign="right" type="button"
         [tuiAppearanceState]="openDropdownCategories ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdowncategories" [(tuiDropdownOpen)]="openDropdownCategories">
         <tui-icon icon="@tui.chart-bar-stacked" />
@@ -33,7 +31,7 @@
 
     <div class="search-date-range">
 
-      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+      <button appearance="flat" size="l" tuiButton topRight tuiDropdownAlign="right" type="button"
         [tuiAppearanceState]="openDropdownWhen ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhen" [(tuiDropdownOpen)]="openDropdownWhen">
         <tui-icon icon="@tui.calendar-clock" />
@@ -41,13 +39,38 @@
       </button>
 
       <ng-template #dropdownwhen let-close>
-        <tui-calendar-range />
+
+        <div class="calendar-container">
+          <tui-calendar-range />
+        </div>
+      </ng-template>
+    </div>
+
+    <div class="search-where">
+
+      <button appearance="flat" size="l" tuiButton topRight tuiDropdownAlign="right" type="button"
+        [tuiAppearanceState]="openDropdownWhere ? 'active' : null" [tuiDropdownAlign]="'center'"
+        [tuiDropdown]="dropdownwhere" [(tuiDropdownOpen)]="openDropdownWhere">
+        <tui-icon icon="@tui.library" />
+        Which library?
+      </button>
+
+      <ng-template #dropdownwhere let-close>
+        <div class="libraries-container">
+          @for (library of libraries; track library) {
+          <div class="library" [class.active]="isLibrarySelected(library)" (click)="toggleLibrarySelection(library)">
+            <tui-icon icon="@tui.library" />
+
+            {{ library.name }}
+          </div>
+          }
+        </div>
       </ng-template>
     </div>
 
     <div class="sort-by">
 
-      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+      <button appearance="flat" size="l" tuiButton topRight tuiDropdownAlign="center" type="button"
         [tuiAppearanceState]="openDropdownSort ? 'active' : null" [tuiDropdown]="dropdownsort"
         [(tuiDropdownOpen)]="openDropdownSort">
         <tui-icon icon="@tui.arrow-down-up" />
@@ -55,98 +78,28 @@
       </button>
 
       <ng-template #dropdownsort let-close>
-        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortControl"
-          [tuiTextfieldLabelOutside]="true">
-          Sort by
-          <input placeholder="Sort by" tuiTextfieldLegacy />
-          <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
-        </tui-select>
+        <tui-data-list>
+          <tui-opt-group>
+            @for (sortingOption of sortingOptions; track sortingOption) {
+              <button
+                  class="sorting-option"
+                  tuiOption
+                  type="button"
+                  [class.active]="isSortingSelected(sortingOption)" (click)="toggleSortBy(sortingOption)"
+              >
+                  {{ sortingOption }}
+              </button>
+            } 
+          </tui-opt-group>
+        </tui-data-list>
       </ng-template>
     </div>
   </div>
 </div>
 
 <div class="layout-container">
-  <!-- Left Sidebar -->
-  <aside style="display: none;" class="sidebar">
-    <div class="top-actions-left">
-
-      <fieldset tuiTextfieldSize="m" class="search">
-        <tui-textfield iconStart="@tui.search">
-          <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
-        </tui-textfield>
-      </fieldset>
-    </div>
-
-    <tui-accordion class="filters-section">
-      <tui-accordion-item [open]="!isMobile">
-        <h2 i18n="@@categoryFilter">
-          <tui-icon icon="@tui.sliders-horizontal" />
-          Filter
-        </h2>
-        <ng-template tuiAccordionItemContent>
-          <div class="filter-group filter-availability">
-            <h3 i18n="@@availabilityFilter">Availability</h3>
-            <div class="filter-availability-switch">
-              <input tuiSwitch type="checkbox" [(ngModel)]="currentlyAvailable" [showIcons]="true"
-                name="currentlyAvailable">
-              <label>Currently available</label>
-            </div>
-          </div>
-          <!-- Category Filter -->
-          <div class="filter-group filter-categories">
-            <h3 i18n="@@categoryFilter">Categories</h3>
-            <ul>
-              @for (category of categories; track category) {
-              <li class="filter-category" (click)="toggleCategorySelection(category)">
-                <div class="filter-category-color" [class.active]="isCategorySelected(category)"
-                  [style.background-color]="category.color">
-                  <tui-icon icon="@tui.check" [style.color]="'white'" />
-                </div>
-                {{ category.name }}
-              </li>
-              }
-            </ul>
-          </div>
-
-          <div class="filter-group filter-libraries">
-            <h3>Libraries</h3>
-            <ul>
-              @for (library of libraries; track library) {
-              <li class="filter-library">
-                <span class="filter-library-name">
-                  <input tuiCheckbox type="checkbox" [(ngModel)]="selectedLibraries[library.id]"
-                    (change)="toggleLibrarySelection(library)" size="s" />
-                  <label>{{ library.name }}</label>
-                </span>
-                <div class="filter-library-location">
-                  <tui-icon icon="@tui.map-pin" />
-                  {{ library.location.address }}
-                </div>
-              </li>
-              }
-            </ul>
-          </div>
-        </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
-  </aside>
-
-
 
   <main class="grid-container">
-    <div class="top-actions" style="display: none;">
-
-      <div class="top-actions-right">
-
-        <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortControl"
-          [tuiTextfieldLabelOutside]="true">
-          Sort by
-          <input placeholder="Sort by" tuiTextfieldLegacy />
-          <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
-        </tui-select>
-      </div>
-    </div>
 
     <div class="items-container">
       @for (item of items; track item) {

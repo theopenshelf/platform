@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
@@ -74,7 +74,7 @@ export class ItemsComponent implements OnInit {
     ItemsComponent.SORT_MOST_BORROWED,
     ItemsComponent.SORT_FAVORITES,
   ];
-  protected sortControl = new FormControl<string | null>(null);
+  protected currentSortingOption: string | null = null;
 
   // Pagination properties
   totalPages: number = 10;
@@ -95,7 +95,6 @@ export class ItemsComponent implements OnInit {
   ngOnInit() {
     this.observeBreakpoints();
     this.initializeData();
-    this.setupSortControl();
   }
 
   private observeBreakpoints() {
@@ -115,11 +114,6 @@ export class ItemsComponent implements OnInit {
     });
   }
 
-  private setupSortControl() {
-    this.sortControl.valueChanges.subscribe(() => {
-      this.resetItems();
-    });
-  }
 
   fetchItems() {
     this.itemsService.getItems(
@@ -151,7 +145,7 @@ export class ItemsComponent implements OnInit {
   }
 
   getSortBy(): string | undefined {
-    switch (this.sortControl.value) {
+    switch (this.currentSortingOption) {
       case ItemsComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
       case ItemsComponent.SORT_MOST_BORROWED:
@@ -181,12 +175,25 @@ export class ItemsComponent implements OnInit {
     this.resetItems();
   }
 
+  isLibrarySelected(library: UILibrary): boolean {
+    return this.selectedLibraries[library.id] !== undefined;
+  }
+
   toggleLibrarySelection(library: UILibrary) {
     if (this.selectedLibraries[library.id]) {
       delete this.selectedLibraries[library.id];
     } else {
       this.selectedLibraries[library.id] = true;
     }
+    this.resetItems();
+  }
+
+  isSortingSelected(sortingOption: string): boolean {
+    return this.currentSortingOption === sortingOption;
+  }
+
+  toggleSortBy(sortingOption: string) {
+    this.currentSortingOption = sortingOption;
     this.resetItems();
   }
 
@@ -231,5 +238,11 @@ export class ItemsComponent implements OnInit {
 
   protected closeDropdownCategories(): void {
     this.openDropdownCategories = false;
+  }
+
+  protected openDropdownWhere = false;
+
+  protected closeDropdownWhere(): void {
+    this.openDropdownWhere = false;
   }
 }
