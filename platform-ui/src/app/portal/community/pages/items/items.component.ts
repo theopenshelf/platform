@@ -226,4 +226,10 @@ export class ItemsComponent implements OnInit {
 
   protected categoriesIndex = 0;
 
+
+  protected openDropdownCategories = false;
+
+  protected closeDropdownCategories(): void {
+    this.openDropdownCategories = false;
+  }
 }

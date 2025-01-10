@@ -19,7 +19,7 @@
 
 .search-bar {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     width: 80%;
     padding: 10px 30px;
@@ -60,9 +60,20 @@
 }
 
 .categories-container {
+    width: 400px;
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 30px 30px;
+
 
     .category {
+        min-height: 60px; // Set a fixed minimum height for all categories
 
+        border: 1px solid var(--tos-border-normal);
+        border-radius: 10px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
         /* Arrange items vertically */
@@ -71,6 +82,7 @@
         text-align: center;
         /* Center text */
         padding-bottom: 12px;
+        color: var(--tos-text-secondary);
 
     }
 
@@ -84,7 +96,12 @@
     .category.active {
         color: var(--tos-text-primary);
         padding-bottom: 10px;
-        border-bottom: 2px solid var(--tos-text-primary);
+        border: 2px solid var(--tos-text-primary);
+        box-shadow:
+            inset 0 2px 5px rgba(0, 0, 0, 0.1), // Top shadow
+            inset 0 -2px 5px rgba(0, 0, 0, 0.1),
+            0 1px 3px 0 rgb(0 0 0 / .3),
+
     }
 
     .category-name {

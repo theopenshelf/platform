@@ -8,6 +8,29 @@
 
     </div>
 
+    <div class="categories-filtering">
+
+      <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
+        [tuiAppearanceState]="openDropdownCategories ? 'active' : null" [tuiDropdownAlign]="'center'"
+        [tuiDropdown]="dropdowncategories" [(tuiDropdownOpen)]="openDropdownCategories">
+        <tui-icon icon="@tui.chart-bar-stacked" />
+        which categories?
+      </button>
+
+      <ng-template #dropdowncategories let-close>
+
+        <div class="categories-container">
+        @for (category of categories; track category) {
+          <div class="category"  [class.active]="isCategorySelected(category)" (click)="toggleCategorySelection(category)">
+            <tui-icon [icon]="category.icon" />
+            {{ category.name }}
+          </div>
+          }
+        </div>
+        </ng-template>
+      </div>
+
+
     <div class="search-date-range">
 
       <button appearance="flat" size="m" tuiButton topRight tuiDropdownAlign="right" type="button"
@@ -40,28 +63,6 @@
         </tui-select>
       </ng-template>
     </div>
-  </div>
-
-  <div class="categories-container">
-
-
-    <div tuiCarouselButtons class="categories-carousel-wrapper">
-      <button iconStart="@tui.chevron-left" tuiIconButton type="button" (click)="carousel.prev()">
-        Previous
-      </button>
-      <tui-carousel #carousel [draggable]="true" [itemsCount]="10" [(index)]="categoriesIndex">
-        @for (category of categories; track category) {
-        <div *tuiItem class="category"  [class.active]="isCategorySelected(category)" (click)="toggleCategorySelection(category)">
-          <tui-icon [icon]="category.icon" />
-          {{ category.name }}
-        </div>
-        }
-      </tui-carousel>
-      <button iconStart="@tui.chevron-right" tuiIconButton type="button" (click)="carousel.next()">
-        Next
-      </button>
-    </div>
-
   </div>
 </div>
 
