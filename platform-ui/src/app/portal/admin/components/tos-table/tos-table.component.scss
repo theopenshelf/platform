@@ -14,8 +14,19 @@ table {
   border-color: #ccc;
 }
 
-table thead tr:first-child td:last-child {
+table thead tr {
+  background-color: var(--tos-background-base);
+}
+
+
+table thead tr:first-child th:last-child {
   border-radius: 0 6px 0 0;
+  clip-path: inset(0 0 0 0 round 0 6px 0 0);
+}
+
+table thead tr:first-child th:first-child {
+  border-radius: 6px 0 0 0;
+  clip-path: inset(0 0 0 0 round 6px 0 0 0);
 }
 
 table tbody tr:last-child td:first-child {
@@ -65,15 +76,6 @@ tbody td {
   vertical-align: middle;
 }
 
-/* Optional: Subtle horizontal divider for rows */
-tbody tr+tr {
-  border-top: 1px solid #ccc;
-  /* Lighter divider using theme color */
-  /* Add a light divider between rows */
-  background-color: none
-    /* Subtle hover effect using theme */
-
-}
 
 tbody tr {
   background-color: var(--tos-background-base)
