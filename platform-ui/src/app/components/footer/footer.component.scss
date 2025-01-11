@@ -133,8 +133,19 @@ footer {
                 }
             }
 
+            width: 100%;
             grid-template-columns: 1fr 2fr 2fr;
 
+        }
+
+        .footer-copyright {
+            grid-template-columns: 1fr;
+        }
+
+        .footer-copyright-right {
+
+            justify-content: left !important;
+            gap: 0 !important;
         }
     }
 

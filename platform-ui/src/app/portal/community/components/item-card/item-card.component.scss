@@ -7,6 +7,7 @@
     justify-content: space-between;
     background-color: #fff;
     border-radius: 16px;
+    height: 200px;
     overflow: hidden;
     text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -120,11 +121,19 @@
 }
 
 @media (max-width: 768px) {
+    .item-card {
+        height: 250px !important;
+
+        .image-container {
+            height: 250px !important;
+        }
+    }
+
     .borrow-counts {
         display: none;
     }
 
     .item-actions {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr) !important;
     }
 }
