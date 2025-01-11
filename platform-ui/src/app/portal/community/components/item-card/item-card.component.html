@@ -35,16 +35,10 @@
 
       <!-- Borrow Button -->
       <div class="item-actions">
-        @if (!item().isBookedToday) {
-        <button appearance="outline" size="m" routerLink="/community/items/{{item().id}}" tuiButton type="button">
-          Available now
-        </button>
-        }
-        @if (item().isBookedToday) {
-        <button appearance="secondary" size="m" routerLink="/community/items/{{item().id}}" tuiButton type="button">
-          Currently borrowed
-        </button>
-        }
+        <div class="item-categories">
+            <tui-icon [icon]="item().category.icon" />
+            <span class="category-name">{{ item().category.name }}</span>
+        </div>
 
         <button class="borrow-counts" disabled appearance="flat" size="m" tuiButton type="button">
           {{ item().borrowCount }} borrow(s)

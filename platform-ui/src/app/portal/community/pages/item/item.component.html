@@ -67,10 +67,12 @@
       <h1>{{ item.name }}</h1>
       <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
 
-      <div class="categories">
-        <category-badge [category]="item.category"></category-badge>
-      </div>
+
       <div class="attributes">
+        <span class="category">
+          <tui-icon [icon]="item.category.icon" />
+          <span class="category-value">{{ item.category.name }}</span>
+        </span>
         <span class="location">
           <tui-icon icon="@tui.map-pin" />
           <span class="location-value">{{ item.located }}</span>
@@ -79,6 +81,7 @@
           <tui-icon icon="@tui.user-round" />
           <span class="owner-value">{{ item.owner }}</span>
         </span>
+        
       </div>
       <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
     </div>

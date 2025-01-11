@@ -18,6 +18,12 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
+    .item-categories {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
     .card-content {
         display: flex;
         width: 100%;
