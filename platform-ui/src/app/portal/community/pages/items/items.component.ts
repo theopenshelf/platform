@@ -1,4 +1,4 @@
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
@@ -79,7 +79,7 @@ export class ItemsComponent implements OnInit {
   // Pagination properties
   totalPages: number = 10;
   currentPage: number = 0;
-  itemsPerPage: number = 8; // Adjust this number as needed
+  itemsPerPage: number = 12; // Default value
 
   // Responsive design
   isMobile: boolean = false;
@@ -93,15 +93,7 @@ export class ItemsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.observeBreakpoints();
     this.initializeData();
-  }
-
-  private observeBreakpoints() {
-    this.breakpointObserver.observe([Breakpoints.Handset])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
   }
 
   private initializeData() {
