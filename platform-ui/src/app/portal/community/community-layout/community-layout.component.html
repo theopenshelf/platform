@@ -71,4 +71,49 @@
             <router-outlet></router-outlet>
         </main>
     </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-branding">
+                <img alt="The Open Shelf" src="/logo-bright.png" />
+            </div>
+            <div class="footer-links">
+                <h3 class="footer-help-title">Useful links</h3>
+                <ul>
+                    <li><a>My neighborhood</a></li>
+                    <li><a>How borrowing works</a></li>
+                    <li><a>Share/give an object</a></li>
+                </ul>
+            </div>
+            <div class="footer-help">
+                <h3 class="footer-help-title">Need help?</h3>
+                <ul>
+                    <li><a>Help center</a></li>
+                    <li><a>Contact us</a></li>
+                    <li><a>FAQ</a></li>
+                    <li><a>Feedback</a></li>
+                </ul>
+            </div>
+            
+        </div>
+
+        <div class="footer-copyright">
+            <div class="footer-copyright-left">
+                <span class="copyright"><tui-icon icon="@tui.copyright" /> 2025 TheOpenShelf</span>
+                <a>Privacy policy</a>
+                <a>Terms of Borrowing</a>
+            </div>
+            <div class="footer-copyright-right">
+                <a class="github-link" href="https://github.com/theopenshelf" target="_blank">
+                    <tui-icon icon="@tui.github" />
+                </a>
+                <span class="powered-by">Powered by <tui-icon icon="@tui.heart" /> TheOpenShelf</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTop" class="scroll-to-top" (click)="scrollToTop()">
+        <tui-icon icon="@tui.arrow-up"></tui-icon>
+    </button>
 </tui-root>
