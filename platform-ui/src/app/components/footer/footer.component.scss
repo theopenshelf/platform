@@ -126,7 +126,15 @@ footer {
 
     footer {
         .footer-container {
-            grid-template-columns: 1fr 1fr 1fr;
+
+            .footer-branding {
+                img {
+                    width: 80px;
+                }
+            }
+
+            grid-template-columns: 1fr 2fr 2fr;
+
         }
     }
 
