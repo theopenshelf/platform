@@ -215,6 +215,8 @@ export class ItemsComponent implements OnInit {
 
   goToPage(page: number) {
     this.currentPage = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.fetchItems();
   }
 

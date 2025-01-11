@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
@@ -16,6 +16,7 @@ import {
     TuiTabs
 } from '@taiga-ui/kit';
 import { tuiLayoutIconsProvider, TuiNavigation } from '@taiga-ui/layout';
+import { FooterComponent } from '../../../components/footer/footer.component';
 import { NotificationsPopupComponent } from "../../../components/notifications-popup/notifications-popup.component";
 
 
@@ -26,6 +27,7 @@ const ICON =
     standalone: true,
     selector: 'community-layout',
     imports: [
+        FooterComponent,
         RouterLinkActive,
         NotificationsPopupComponent,
         RouterOutlet,
@@ -60,20 +62,4 @@ export default class CommunityLayoutComponent extends TuiPortals {
         super();
     }
 
-
-    @HostListener('window:scroll', [])
-    onWindowScroll() {
-        const scrollToTopButton = document.getElementById('scrollToTop');
-        if (scrollToTopButton) {
-            if (window.pageYOffset > 300) {
-                scrollToTopButton.classList.add('show');
-            } else {
-                scrollToTopButton.classList.remove('show');
-            }
-        }
-    }
-
-    scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
 }
