@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
 import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
@@ -89,10 +90,18 @@ export class ItemsComponent implements OnInit {
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchText = params['searchText'] || '';
+      this.currentlyAvailable = params['currentlyAvailable'] === 'true';
+      this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
+      this.selectedLibraries = params['selectedLibraries'] ? JSON.parse(params['selectedLibraries']) : {};
+    });
     this.initializeData();
   }
 
@@ -155,6 +164,7 @@ export class ItemsComponent implements OnInit {
   }
 
   onTextFilterChange() {
+    this.updateQueryParams();
     this.resetItems();
   }
 
@@ -164,6 +174,7 @@ export class ItemsComponent implements OnInit {
     } else {
       this.selectedCategories.add(category.name);
     }
+    this.updateQueryParams();
     this.resetItems();
   }
 
@@ -177,6 +188,7 @@ export class ItemsComponent implements OnInit {
     } else {
       this.selectedLibraries[library.id] = true;
     }
+    this.updateQueryParams();
     this.resetItems();
   }
 
@@ -238,5 +250,28 @@ export class ItemsComponent implements OnInit {
 
   protected closeDropdownWhere(): void {
     this.openDropdownWhere = false;
+  }
+
+  private updateQueryParams() {
+    const queryParams: any = {};
+
+    if (this.searchText) {
+      queryParams.searchText = this.searchText;
+    }
+    if (this.currentlyAvailable) {
+      queryParams.currentlyAvailable = this.currentlyAvailable;
+    }
+    if (this.selectedCategories.size > 0) {
+      queryParams.selectedCategories = Array.from(this.selectedCategories).join(',');
+    }
+    if (Object.keys(this.selectedLibraries).length > 0) {
+      queryParams.selectedLibraries = JSON.stringify(this.selectedLibraries);
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
   }
 }

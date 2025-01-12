@@ -42,7 +42,8 @@ const plusTen = today.append({ day: 10 });
     JsonPipe,
     TuiNotification,
     TuiMobileCalendar,
-    AsyncPipe
+    AsyncPipe,
+    DatePipe
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -75,8 +76,11 @@ export class ItemComponent implements OnInit {
     return day.dayBefore(this.min);
   };
   currentUser: any = "me@example.com"; //TODO: get current user from auth service
-  isReserved = this.borrowItemRecordsForCurrentUser.length > 0;
-  nextReservation = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
+  isReserved = false;
+  nextReservation: UIBorrowRecord | undefined = undefined;
+  itemsReturned: UIBorrowRecord[] = [];
+  itemsReserved: UIBorrowRecord[] = [];
+  itemsCurrentlyBorrowed: UIBorrowRecord | undefined;
 
 
   constructor(
@@ -140,9 +144,14 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe(item => {
       this.item = item;
-      this.borrowItemRecordsForCurrentUser = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser);
-      this.isReserved = this.borrowItemRecordsForCurrentUser.length > 0;
+      this.borrowItemRecordsForCurrentUser = item.borrowRecords
+        .filter(record => record.borrowedBy === this.currentUser)
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+      this.isReserved = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).length > 0;
       this.nextReservation = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
+      this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(record => record.endDate < new Date());
+      this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(record => record.endDate > new Date());
+      this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(record => record.startDate <= new Date() && new Date() <= record.endDate);
     });
   }
 
@@ -237,19 +246,18 @@ export class ItemComponent implements OnInit {
       .subscribe();
   }
 
-  cancelReservation(header: PolymorpheusContent) {
-    const borrowRecord = this.item?.borrowRecords
-      .filter(record => record.borrowedBy === this.currentUser.id)
-      .find(record => record.startDate <= new Date() && new Date() <= record.endDate);
+  cancelReservation(borrowRecord: UIBorrowRecord) {
 
     if (borrowRecord) {
+      const startDate = this.datePipe.transform(borrowRecord.startDate, 'EEE d MMM');
+      const endDate = this.datePipe.transform(borrowRecord.endDate, 'EEE d MMM');
+
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
           label: `Cancel Reservation for ${this.item?.name}`,
           size: 'm',
-          header: header,
           data: {
-            content: `Are you sure you want to cancel your reservation for ${this.item?.name} from ${borrowRecord.startDate} to ${borrowRecord.endDate}?`,
+            content: `Are you sure you want to cancel your reservation for ${this.item?.name} from ${startDate} to ${endDate}?`,
             yes: 'Yes, Cancel',
             no: 'Keep Reservation'
           },
@@ -268,6 +276,37 @@ export class ItemComponent implements OnInit {
         .subscribe();
     }
   }
+
+  returnItem(borrowRecord: UIBorrowRecord) {
+    const startDate = this.datePipe.transform(borrowRecord.startDate, 'EEE d MMM');
+    const endDate = this.datePipe.transform(borrowRecord.endDate, 'EEE d MMM');
+
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: `Return ${this.item?.name}`,
+        size: 'm',
+        data: {
+          content: `Confirm you have returned ${this.item?.name} from ${startDate} to ${endDate}?`,
+          yes: 'Yes, It is returned',
+          no: 'No, I have not returned it yet'
+        },
+      })
+      .pipe(switchMap((response) => {
+        if (response) {
+          //TODO call dedicated endpoint to return item
+          this.itemsService.cancelReservation(this.item!, borrowRecord).subscribe(item => {
+            this.item = item;
+            this.updateCellAvailability();
+            this.alerts.open('Item returned successfully', { appearance: 'success' });
+          });
+          return EMPTY;
+        }
+        return EMPTY;
+      }))
+      .subscribe();
+  }
+
+
 
   markAsFavorite() {
     this.itemsService.markAsFavorite(this.item!);
@@ -320,8 +359,11 @@ export class ItemComponent implements OnInit {
     return false; // Not marked
   };
 
-  formatReservationDate(date: Date): string | null {
-    return this.datePipe.transform(date, 'EEE d MMM');
+  formatReservationDate(date: Date | undefined): string | null {
+    if (date) {
+      return this.datePipe.transform(date, 'EEE d MMM');
+    }
+    return null;
   }
 
 }

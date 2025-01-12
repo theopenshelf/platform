@@ -15,10 +15,24 @@
             (click)="markAsFavorite()"></button>
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
           [appearance]="isReserved ? 'primary' : 'outline'" size="m" type="button"
-          [tuiHint]="isReserved ? 'Your next reservation: ' + formatReservationDate(nextReservation.startDate) + ' - ' + formatReservationDate(nextReservation.endDate) : 'You have no upcoming reservations'">
+          [tuiHint]="isReserved ? 'Your next reservation: ' + formatReservationDate(nextReservation?.startDate) + ' - ' + formatReservationDate(nextReservation?.endDate) : 'You have no upcoming reservations'">
         </button>
       </div>
     </div>
+    <div class="return-item-container">
+   @if (itemsCurrentlyBorrowed) {
+    <h2>You have this item currently borrowed</h2>
+    <div class="return-item-details">
+    <tui-icon icon="@tui.calendar-clock" />
+    {{ itemsCurrentlyBorrowed.startDate | date:'MMM d, y' }} - {{ itemsCurrentlyBorrowed.endDate | date:'MMM d, y' }}
+  </div>
+    <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="primary" size="m"
+     tuiButton type="button">
+    Return item
+  </button>
+  }
+</div>
+    
     <form [formGroup]="bookForm">
         <tui-calendar-range class="desktop-calendar" [defaultViewedMonth]="defaultViewedMonth" [min]="min" [max]="max"
           [value]="selectedDate || null" [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
@@ -54,6 +68,20 @@
           Borrow
         </button>
       </form>
+
+      <div class="reservations">
+        <h4>Your next reservations</h4>
+        @for (record of itemsReserved; track record) {
+          <div class="reservation-record">
+            <tui-icon icon="@tui.calendar-clock" />
+            {{ record.startDate | date:'MMM d, y' }} - {{ record.endDate | date:'MMM d, y' }}
+            <button class="cancel-button" (click)="cancelReservation(record)" appearance="outline" size="s"
+             tuiButton type="button">
+            <tui-icon icon="@tui.x" />
+            </button>
+          </div>
+        }
+      </div>
     </div>
     <!-- Details Section -->
     <div class="details">
@@ -84,6 +112,15 @@
         
       </div>
       <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
+      <div class="borrow-records">
+        <h4>Your previous reservations</h4>
+        @for (record of itemsReturned; track record) {
+          <div class="borrow-record">
+            <tui-icon icon="@tui.calendar-clock" />
+            {{ record.startDate | date:'MMM d, y' }} - {{ record.endDate | date:'MMM d, y' }}
+          </div>
+        }
+      </div>
     </div>
   </div>
 

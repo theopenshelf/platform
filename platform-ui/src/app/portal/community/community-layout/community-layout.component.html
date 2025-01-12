@@ -42,20 +42,20 @@
     <nav id="menu" class="horizontal-menu">
         <!-- Buttons -->
         <a routerLink="/community/items" routerLinkActive="active" appearance="secondary-grayscale"
-            iconStart="@tui.package" type="button" i18n="@@borrowItemButton">
+            type="button" i18n="@@borrowItemButton">
             <tui-icon icon="@tui.package" />
             Items
         </a>
 
-        <a routerLink="/community/borrowed-items" routerLinkActive="active" iconStart="@tui.shopping-basket"
+        <a routerLink="/community/borrowed-items" routerLinkActive="active" 
             appearance="secondary-grayscale" tuiChevron type="button">
-            <tui-icon icon="@tui.shopping-basket" />
+            <tui-icon class="borrowed-icon" icon="/gift.png" />
 
             <span>Borrowed items</span>
 
         </a>
 
-        <a routerLink="/community/libraries" routerLinkActive="active" iconStart="@tui.shopping-basket"
+        <a routerLink="/community/libraries" routerLinkActive="active" 
             appearance="secondary-grayscale" tuiChevron type="button">
             <tui-icon icon="@tui.library" />
 

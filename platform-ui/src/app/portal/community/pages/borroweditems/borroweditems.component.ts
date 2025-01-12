@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiAccordion, TuiPagination } from '@taiga-ui/kit';
@@ -107,10 +108,18 @@ export class BorrowedItemsComponent implements OnInit {
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.searchText = params['searchText'] || '';
+      this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
+      this.selectedStatuses = new Set(params['selectedStatuses'] ? params['selectedStatuses'].split(',') : []);
+    });
+
     this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
       this.categories = categories;
     });
@@ -146,6 +155,7 @@ export class BorrowedItemsComponent implements OnInit {
   }
 
   onTextFilterChange() {
+    this.updateQueryParams();
     // The filtering is handled in the getter `filteredItems`
   }
 
@@ -299,6 +309,7 @@ export class BorrowedItemsComponent implements OnInit {
     } else {
       this.selectedCategories.add(category.name);
     }
+    this.updateQueryParams();
   }
 
   isCategorySelected(category: any): boolean {
@@ -311,6 +322,7 @@ export class BorrowedItemsComponent implements OnInit {
     } else {
       this.selectedStatuses.add(status);
     }
+    this.updateQueryParams();
   }
 
   isStatusSelected(status: string): boolean {
@@ -337,6 +349,26 @@ export class BorrowedItemsComponent implements OnInit {
       this.currentPage = itemsPagination.currentPage;
       this.itemsPerPage = itemsPagination.itemsPerPage;
       this.items = itemsPagination.items;
+    });
+  }
+
+  private updateQueryParams() {
+    const queryParams: any = {};
+
+    if (this.searchText) {
+      queryParams.searchText = this.searchText;
+    }
+    if (this.selectedCategories.size > 0) {
+      queryParams.selectedCategories = Array.from(this.selectedCategories).join(',');
+    }
+    if (this.selectedStatuses.size > 0) {
+      queryParams.selectedStatuses = Array.from(this.selectedStatuses).join(',');
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
     });
   }
 }
