@@ -166,8 +166,8 @@ export class ItemsComponent implements OnInit {
   }
 
   onTextFilterChange() {
-    this.updateQueryParams();
     this.resetItems();
+    this.updateQueryParams();
   }
 
   toggleCategorySelection(category: UICategory) {
@@ -176,8 +176,8 @@ export class ItemsComponent implements OnInit {
     } else {
       this.selectedCategories.add(category.name);
     }
-    this.updateQueryParams();
     this.resetItems();
+    this.updateQueryParams();
   }
 
   isLibrarySelected(library: UILibrary): boolean {
@@ -190,8 +190,8 @@ export class ItemsComponent implements OnInit {
     } else {
       this.selectedLibraries[library.id] = true;
     }
-    this.updateQueryParams();
     this.resetItems();
+    this.updateQueryParams();
   }
 
   isSortingSelected(sortingOption: string): boolean {
@@ -222,8 +222,8 @@ export class ItemsComponent implements OnInit {
   goToPage(page: number) {
     this.currentPage = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.updateQueryParams();
     this.fetchItems();
+    this.updateQueryParams();
   }
 
   protected openDropdownWhen = false;
