@@ -101,8 +101,10 @@ export class ItemsComponent implements OnInit {
       this.currentlyAvailable = params['currentlyAvailable'] === 'true';
       this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
       this.selectedLibraries = params['selectedLibraries'] ? JSON.parse(params['selectedLibraries']) : {};
+      this.currentPage = + params['page'] - 1 || 0;
     });
     this.initializeData();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   private initializeData() {
@@ -220,7 +222,7 @@ export class ItemsComponent implements OnInit {
   goToPage(page: number) {
     this.currentPage = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
+    this.updateQueryParams();
     this.fetchItems();
   }
 
@@ -267,6 +269,7 @@ export class ItemsComponent implements OnInit {
     if (Object.keys(this.selectedLibraries).length > 0) {
       queryParams.selectedLibraries = JSON.stringify(this.selectedLibraries);
     }
+    queryParams.page = this.currentPage + 1;
 
     this.router.navigate([], {
       relativeTo: this.route,

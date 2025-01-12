@@ -304,39 +304,9 @@
     "borrowRecords": [
       {
         "id": "1",
-        "borrowedBy": "john@example.com",
-        "startDate": "2024-11-27",
-        "endDate": "2024-11-29"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "doe@test.com",
-        "startDate": "2025-11-10",
-        "endDate": "2025-11-17"
-      },
-      {
-        "id": "3",
         "borrowedBy": "me@example.com",
-        "startDate": "2024-04-28",
-        "endDate": "2024-04-30"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "john@test.com",
-        "startDate": "2025-01-31",
-        "endDate": "2025-02-03"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "admin@test.com",
-        "startDate": "2024-01-05",
-        "endDate": "2024-01-11"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "jane@sample.org",
-        "startDate": "2024-10-16",
-        "endDate": "2024-10-20"
+        "startDate": "2025-01-01",
+        "endDate": "2025-12-30"
       }
     ],
     "isBookedToday": false

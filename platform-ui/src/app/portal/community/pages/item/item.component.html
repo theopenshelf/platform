@@ -21,7 +21,7 @@
     </div>
     <div class="return-item-container">
    @if (itemsCurrentlyBorrowed) {
-    <h2>You have this item currently borrowed</h2>
+    <h2>You currently have this item borrowed</h2>
     <div class="return-item-details">
     <tui-icon icon="@tui.calendar-clock" />
     {{ itemsCurrentlyBorrowed.startDate | date:'MMM d, y' }} - {{ itemsCurrentlyBorrowed.endDate | date:'MMM d, y' }}
@@ -70,16 +70,18 @@
       </form>
 
       <div class="reservations">
-        <h4>Your next reservations</h4>
-        @for (record of itemsReserved; track record) {
-          <div class="reservation-record">
-            <tui-icon icon="@tui.calendar-clock" />
-            {{ record.startDate | date:'MMM d, y' }} - {{ record.endDate | date:'MMM d, y' }}
-            <button class="cancel-button" (click)="cancelReservation(record)" appearance="outline" size="s"
-             tuiButton type="button">
-            <tui-icon icon="@tui.x" />
-            </button>
-          </div>
+        @if (itemsReserved.length > 0) {
+          <h4>Your next reservations</h4>
+          @for (record of itemsReserved; track record) {
+            <div class="reservation-record">
+              <tui-icon icon="@tui.calendar-clock" />
+              {{ record.startDate | date:'MMM d, y' }} - {{ record.endDate | date:'MMM d, y' }}
+              <button class="cancel-button" (click)="cancelReservation(record)" appearance="outline" size="s"
+              tuiButton type="button">
+              <tui-icon icon="@tui.x" />
+              </button>
+            </div>
+          }
         }
       </div>
     </div>
@@ -113,12 +115,14 @@
       </div>
       <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
       <div class="borrow-records">
-        <h4>Your previous reservations</h4>
+        @if (itemsReturned.length > 0) {
+          <h4>Your previous reservations</h4>
         @for (record of itemsReturned; track record) {
           <div class="borrow-record">
             <tui-icon icon="@tui.calendar-clock" />
             {{ record.startDate | date:'MMM d, y' }} - {{ record.endDate | date:'MMM d, y' }}
-          </div>
+            </div>
+          }
         }
       </div>
     </div>

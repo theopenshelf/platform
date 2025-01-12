@@ -150,3 +150,9 @@ form {
     border-radius: 16px;
     margin-bottom: 40px;
 }
+
+.borrow-item-button tui-badge-notification {
+    background-color: var(--tos-text-accent);
+    color: var(--tos-text-primary);
+    position: relative;
+}

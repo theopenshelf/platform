@@ -153,6 +153,7 @@ export class ItemComponent implements OnInit {
       this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(record => record.endDate > new Date());
       this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(record => record.startDate <= new Date() && new Date() <= record.endDate);
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   get sanitizedDescription(): SafeHtml {

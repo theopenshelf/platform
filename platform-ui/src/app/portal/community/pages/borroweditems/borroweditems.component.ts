@@ -99,6 +99,7 @@ export class BorrowedItemsComponent implements OnInit {
   };
 
   isMobile: boolean = false;
+  currentUser: any = "me@example.com"; //TODO: get current user from auth service
 
   currentPage: number = 0;
   totalPages: number = 1;
@@ -114,10 +115,12 @@ export class BorrowedItemsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.route.queryParams.subscribe(params => {
       this.searchText = params['searchText'] || '';
       this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
       this.selectedStatuses = new Set(params['selectedStatuses'] ? params['selectedStatuses'].split(',') : []);
+      this.currentPage = +params['page'] - 1 || 0;
     });
 
     this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
@@ -138,7 +141,10 @@ export class BorrowedItemsComponent implements OnInit {
       this.totalPages = itemsPagination.totalPages;
       this.currentPage = itemsPagination.currentPage;
       this.itemsPerPage = itemsPagination.itemsPerPage;
-      this.items = itemsPagination.items;
+      this.items = itemsPagination.items.map(item => {
+        item.borrowRecords = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser);
+        return item;
+      });
     });
     this.librariesService.getLibraries().subscribe(libraries => {
       this.libraries = libraries;
@@ -228,49 +234,6 @@ export class BorrowedItemsComponent implements OnInit {
     }
   }
 
-
-  // Get sortable value for a column
-  private getSortableValue(item: any, column: string): any {
-    switch (column) {
-      case 'startDate':
-      case 'endDate':
-        return new Date(item["record"][column]); // Sort by actual date
-      case 'status':
-        const status = this.computeStatus(item.record.startDate, item.record.endDate);
-        return this.statusPriority[status]; // Sort by status priority
-      default:
-        return item[column]; // Default sorting
-    }
-  }
-
-  // Update sort method to refresh the Observable
-  protected sort(column: string): void {
-    if (this.sortColumn === column) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.sortColumn = column;
-      this.sortDirection = 'asc';
-    }
-
-    this.itemsService.getItems(
-      undefined,
-      true,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      undefined,
-      this.currentPage,
-      this.itemsPerPage
-    ).subscribe((itemsPagination) => {
-      this.totalPages = itemsPagination.totalPages;
-      this.currentPage = itemsPagination.currentPage;
-      this.itemsPerPage = itemsPagination.itemsPerPage;
-      this.items = itemsPagination.items;
-    });
-  }
-
   protected getSortIndicator(column: string): string {
     if (this.sortColumn === column) {
       return this.sortDirection === 'asc' ? '↑' : '↓';
@@ -333,6 +296,8 @@ export class BorrowedItemsComponent implements OnInit {
     this.currentPage = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
+    this.updateQueryParams();
+
     this.itemsService.getItems(
       undefined,
       true,
@@ -348,7 +313,10 @@ export class BorrowedItemsComponent implements OnInit {
       this.totalPages = itemsPagination.totalPages;
       this.currentPage = itemsPagination.currentPage;
       this.itemsPerPage = itemsPagination.itemsPerPage;
-      this.items = itemsPagination.items;
+      this.items = itemsPagination.items.map(item => {
+        item.borrowRecords = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser);
+        return item;
+      });
     });
   }
 
@@ -364,6 +332,7 @@ export class BorrowedItemsComponent implements OnInit {
     if (this.selectedStatuses.size > 0) {
       queryParams.selectedStatuses = Array.from(this.selectedStatuses).join(',');
     }
+    queryParams.page = this.currentPage + 1;
 
     this.router.navigate([], {
       relativeTo: this.route,

@@ -43,6 +43,27 @@ export class BorrowItemCardComponent {
     return record;
   });
 
+  public status = computed(() => {
+    const now = new Date();
+    var reservations = this.item().borrowRecords.filter(record => {
+      return now <= record.endDate;
+    })
+    if (reservations.length == 0) {
+      return 'Returned';
+    }
+
+    var currentlyBorrowed = reservations.find(record => {
+      return record.startDate <= now && now <= record.endDate;
+    });
+
+    if (currentlyBorrowed) {
+      debugger;
+      return 'Currently Borrowed';
+    }
+
+    return 'Reserved';
+  });
+
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
   ) { }
@@ -67,12 +88,9 @@ export class BorrowItemCardComponent {
       return 'Returned';
     }
 
-    const borrowedOn = this.currentBorrowRecord().startDate;
-    const dueDate = this.currentBorrowRecord().endDate;
-
-    if (now < borrowedOn) {
+    if (now < this.currentBorrowRecord().startDate) {
       return 'Reserved';
-    } else if (now >= borrowedOn && now <= dueDate) {
+    } else if (now <= this.currentBorrowRecord().endDate) {
       return 'Currently Borrowed';
     } else {
       return 'Returned';

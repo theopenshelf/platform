@@ -32,9 +32,9 @@ export class ItemCardComponent {
   public library = input<UILibrary>();
   public borrowRecords = input.required<UIBorrowRecord[]>();
 
-  public isReserved = computed(() => this.borrowRecords().length > 0);
+  public isReserved = computed(() => this.borrowRecords().filter(record => record.endDate >= new Date()).length > 0);
   public nextReservation = computed(() => {
-    return this.borrowRecords().filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
+    return this.borrowRecords().filter(record => record.endDate >= new Date()).sort((a, b) => a.endDate.getTime() - b.endDate.getTime())[0];
   });
 
   constructor(

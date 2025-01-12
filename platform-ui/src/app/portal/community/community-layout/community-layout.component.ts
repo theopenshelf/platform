@@ -11,6 +11,7 @@ import {
     TuiIcon, TuiRoot
 } from "@taiga-ui/core";
 import {
+    TuiBadgeNotification,
     TuiChevron,
     TuiFade,
     TuiTabs
@@ -43,7 +44,8 @@ const ICON =
         TuiFade,
         TuiIcon,
         TuiNavigation,
-        TuiTabs
+        TuiTabs,
+        TuiBadgeNotification
     ],
     templateUrl: './community-layout.component.html',
     styleUrl: './community-layout.component.scss',

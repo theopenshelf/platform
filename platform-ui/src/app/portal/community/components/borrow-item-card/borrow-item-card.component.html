@@ -12,8 +12,8 @@
       <div class="item-content">
         <div routerLink="/community/items/{{item().id}}" class="item-details">
           <div class="item-details-top-right">
-            <span [ngClass]="getBadgeClass(computeStatus())">
-                    {{ computeStatus() }}
+            <span [ngClass]="getBadgeClass(status())">
+                    {{ status() }}
               </span>
           </div>
           <h2 tuiTitle>
