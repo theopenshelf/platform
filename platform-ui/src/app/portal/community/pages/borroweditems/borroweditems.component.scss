@@ -21,6 +21,13 @@
             padding-left: 0;
             border: 0;
         }
+
+
+        .sorting-select {
+            width: 100%;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
     }
 
     .filters-section {
@@ -199,9 +206,6 @@
         margin-left: auto;
         width: 200px;
 
-        .sorting-select {
-            display: inline-block;
-        }
     }
 }
 

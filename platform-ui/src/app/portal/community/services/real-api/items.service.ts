@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { BorrowRecord, Item, ItemsCommunityApiService } from '../../../../api-client';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { ItemsService } from '../items.service';
@@ -17,6 +18,7 @@ export class APIItemsService implements ItemsService {
     getItems(
         currentUser?: boolean,
         borrowedByCurrentUser?: boolean,
+        status?: UIBorrowStatus,
         libraryIds?: string[],
         categories?: string[],
         searchText?: string,
@@ -28,6 +30,13 @@ export class APIItemsService implements ItemsService {
         startDate?: Date,
         endDate?: Date
     ): Observable<UIItemsPagination> {
+        const statusMapping: Record<UIBorrowStatus, 'returned' | 'borrowed' | 'reserved'> = {
+            [UIBorrowStatus.Returned]: 'returned',
+            [UIBorrowStatus.CurrentlyBorrowed]: 'borrowed',
+            [UIBorrowStatus.Reserved]: 'reserved'
+        };
+
+        const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status ? statusMapping[status] : undefined;
         return this.itemsApiService.getItems(
             currentUser,
             borrowedByCurrentUser,
@@ -40,7 +49,8 @@ export class APIItemsService implements ItemsService {
             page,
             pageSize,
             startDate?.toISOString(),
-            endDate?.toISOString()
+            endDate?.toISOString(),
+            statusValue
         ).pipe(
             map(response => ({
                 totalPages: response.totalPages,

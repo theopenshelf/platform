@@ -57,7 +57,6 @@ export class ItemsComponent implements OnInit {
   protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
   protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
 
-
   // Data properties
   items: UIItem[] = [];
   categories: UICategory[] = [];
@@ -131,6 +130,7 @@ export class ItemsComponent implements OnInit {
     this.itemsService.getItems(
       false,
       false,
+      undefined,
       Object.keys(this.selectedLibraries),
       Array.from(this.selectedCategories),
       this.searchText,

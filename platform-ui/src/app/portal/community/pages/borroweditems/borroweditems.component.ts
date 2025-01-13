@@ -5,11 +5,12 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiAccordion, TuiPagination } from '@taiga-ui/kit';
+import { TuiAccordion, TuiPagination, TuiTabs } from '@taiga-ui/kit';
 import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { BehaviorSubject } from 'rxjs';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
+import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
@@ -32,7 +33,8 @@ import { LibrariesService } from '../../services/libraries.service';
     ReactiveFormsModule,
     TuiAccordion,
     TuiPagination,
-    BorrowItemCardComponent
+    BorrowItemCardComponent,
+    TuiTabs
   ],
   templateUrl: './borroweditems.component.html',
   styleUrls: ['./borroweditems.component.scss']
@@ -63,11 +65,12 @@ export class BorrowedItemsComponent implements OnInit {
     BorrowedItemsComponent.SORT_FAVORITES,
   ];
 
-  protected selectedStatuses: Set<string> = new Set();
+  protected selectedStatus: UIBorrowStatus = UIBorrowStatus.Returned;
+
   protected statuses = [
-    { name: 'Reserved', color: '#3498db' }, // Light Blue
-    { name: 'Currently Borrowed', color: '#2ecc71' }, // Green
-    { name: 'Returned', color: '#95a5a6' } // Gray
+    { status: UIBorrowStatus.Returned, name: 'Returned', color: '#95a5a6', icon: '@tui.archive' }, // Gray
+    { status: UIBorrowStatus.CurrentlyBorrowed, name: 'Currently Borrowed', color: '#2ecc71', icon: '/gift.png' }, // Green
+    { status: UIBorrowStatus.Reserved, name: 'Reserved', color: '#3498db', icon: '@tui.calendar-clock' }, // Light Blue
   ];
 
   protected testValue = new FormControl<string | null>(null);
@@ -105,6 +108,8 @@ export class BorrowedItemsComponent implements OnInit {
   totalPages: number = 1;
   itemsPerPage: number = 8; // Adjust this number as needed
 
+  protected activeStatusIndex = 0;
+
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
@@ -119,16 +124,30 @@ export class BorrowedItemsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.searchText = params['searchText'] || '';
       this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
-      this.selectedStatuses = new Set(params['selectedStatuses'] ? params['selectedStatuses'].split(',') : []);
+      this.selectedStatus = params['selectedStatus'] ? params['selectedStatus'] : UIBorrowStatus.Returned;
       this.currentPage = +params['page'] - 1 || 0;
+      this.activeStatusIndex = this.statuses.findIndex(status => status.status === this.selectedStatus);
     });
 
     this.categoriesService.getCategories().subscribe((categories: UICategory[]) => {
       this.categories = categories;
     });
+    this.fetchItems();
+    this.librariesService.getLibraries().subscribe(libraries => {
+      this.libraries = libraries;
+    });
+
+    this.breakpointObserver.observe([Breakpoints.Handset])
+      .subscribe(result => {
+        this.isMobile = result.matches;
+      });
+  }
+
+  private fetchItems(): void {
     this.itemsService.getItems(
       undefined,
       true,
+      this.selectedStatus,
       undefined,
       undefined,
       undefined,
@@ -146,14 +165,12 @@ export class BorrowedItemsComponent implements OnInit {
         return item;
       });
     });
-    this.librariesService.getLibraries().subscribe(libraries => {
-      this.libraries = libraries;
-    });
+  }
 
-    this.breakpointObserver.observe([Breakpoints.Handset])
-      .subscribe(result => {
-        this.isMobile = result.matches;
-      });
+  protected selectStatus(status: UIBorrowStatus): void {
+    this.selectedStatus = status;
+    this.fetchItems();
+    this.updateQueryParams();
   }
 
   getLibrary(libraryId: string): UILibrary | undefined {
@@ -279,17 +296,13 @@ export class BorrowedItemsComponent implements OnInit {
     // Implement your logic to determine if the category is selected
     return this.selectedCategories.has(category.name);
   }
-  toggleStatusSelection(status: string) {
-    if (this.selectedStatuses.has(status)) {
-      this.selectedStatuses.delete(status);
-    } else {
-      this.selectedStatuses.add(status);
-    }
+  toggleStatusSelection(status: UIBorrowStatus) {
+    this.selectedStatus = status;
     this.updateQueryParams();
   }
 
-  isStatusSelected(status: string): boolean {
-    return this.selectedStatuses.has(status);
+  isStatusSelected(status: UIBorrowStatus): boolean {
+    return this.selectedStatus === status;
   }
 
   goToPage(page: number) {
@@ -301,6 +314,7 @@ export class BorrowedItemsComponent implements OnInit {
     this.itemsService.getItems(
       undefined,
       true,
+      this.selectedStatus,
       undefined,
       undefined,
       undefined,
@@ -329,8 +343,8 @@ export class BorrowedItemsComponent implements OnInit {
     if (this.selectedCategories.size > 0) {
       queryParams.selectedCategories = Array.from(this.selectedCategories).join(',');
     }
-    if (this.selectedStatuses.size > 0) {
-      queryParams.selectedStatuses = Array.from(this.selectedStatuses).join(',');
+    if (this.selectedStatus) {
+      queryParams.selectedStatus = this.selectedStatus;
     }
     queryParams.page = this.currentPage + 1;
 

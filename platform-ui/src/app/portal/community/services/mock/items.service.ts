@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { ItemsService } from '../items.service';
@@ -19,6 +20,7 @@ export class MockItemsService implements ItemsService {
     getItems(
         currentUser?: boolean,
         borrowedByCurrentUser?: boolean,
+        status?: UIBorrowStatus,
         libraryIds?: string[],
         categories?: string[],
         searchText?: string,
@@ -39,7 +41,11 @@ export class MockItemsService implements ItemsService {
             filteredItems = filteredItems.filter(item =>
                 item.borrowRecords.some(record => record.borrowedBy === 'me@example.com')
             );
+            if (status) {
+                filteredItems = filteredItems.filter(item => this.matchesStatus(status, item));
+            }
         }
+
         if (libraryIds && libraryIds.length > 0) {
             filteredItems = filteredItems.filter(item => libraryIds.includes(item.libraryId));
         }
@@ -127,5 +133,18 @@ export class MockItemsService implements ItemsService {
     markAsFavorite(item: UIItem): Observable<void> {
         item.favorite = !item.favorite;
         return of(undefined);
+    }
+
+    matchesStatus(status: UIBorrowStatus, item: UIItem): boolean {
+        const now = new Date();
+
+        switch (status) {
+            case UIBorrowStatus.Returned:
+                return item.borrowRecords.filter(record => record.endDate < now).length > 0;
+            case UIBorrowStatus.CurrentlyBorrowed:
+                return item.borrowRecords.find(record => record.startDate <= now && now <= record.endDate) !== undefined;
+            case UIBorrowStatus.Reserved:
+                return item.borrowRecords.filter(record => now < record.startDate).length > 0;
+        }
     }
 }

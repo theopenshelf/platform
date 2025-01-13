@@ -253,6 +253,13 @@ paths:
           schema:
             type: string
             format: date
+        - name: status
+          in: query
+          description: Filter items by status
+          required: false
+          schema:
+            type: string
+            enum: [returned, borrowed, reserved]
       responses:
         "200":
           description: A paginated list of items
@@ -608,6 +615,13 @@ paths:
           schema:
             type: integer
             default: 10
+        - name: status
+          in: query
+          description: Filter items by status
+          required: false
+          schema:
+            type: string
+            enum: [available, borrowed, reserved]
 
       responses:
         "200":

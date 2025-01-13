@@ -82,6 +82,7 @@ export class LibraryComponent {
       this.itemsService.getItems(
         undefined,
         undefined,
+        undefined,
         [libraryId],
       ).subscribe((itemsPagination) => {
         this.items = itemsPagination.items;
