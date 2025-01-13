@@ -41,7 +41,7 @@
       <ng-template #dropdownwhen let-close>
 
         <div class="calendar-container">
-          <tui-calendar-range />
+          <tui-calendar-range [defaultViewedMonth]="defaultViewedMonth" [min]="min" [max]="max" [value]="selectedDate || null" (valueChange)="onRangeChange($event)" />
         </div>
       </ng-template>
     </div>

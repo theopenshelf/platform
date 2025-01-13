@@ -239,6 +239,20 @@ paths:
           schema:
             type: integer
             default: 10
+        - name: startDate
+          in: query
+          description: Filter items by start date
+          required: false
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: Filter items by end date
+          required: false
+          schema:
+            type: string
+            format: date
       responses:
         "200":
           description: A paginated list of items

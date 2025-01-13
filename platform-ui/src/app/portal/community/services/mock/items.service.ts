@@ -26,7 +26,9 @@ export class MockItemsService implements ItemsService {
         sortBy?: string,
         sortOrder: 'asc' | 'desc' = 'asc',
         page: number = 0,
-        pageSize: number = 10
+        pageSize: number = 10,
+        startDate?: Date,
+        endDate?: Date
     ): Observable<UIItemsPagination> {
         let filteredItems = this.items;
         // Filtering logic
@@ -55,6 +57,14 @@ export class MockItemsService implements ItemsService {
                 !item.borrowRecords.some(record => record.startDate <= new Date() && new Date() <= record.endDate)
             );
         }
+        if (startDate && endDate) {
+            filteredItems = filteredItems.filter(item =>
+                item.borrowRecords.filter(record =>
+                    (record.startDate <= endDate && record.endDate >= startDate)
+                ).length === 0
+            );
+        }
+
 
         // Sorting logic
         if (sortBy) {

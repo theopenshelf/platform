@@ -24,7 +24,9 @@ export class APIItemsService implements ItemsService {
         sortBy?: 'createdAt' | 'borrowCount' | 'favorite',
         sortOrder?: 'asc' | 'desc',
         page: number = 1,
-        pageSize: number = 10
+        pageSize: number = 10,
+        startDate?: Date,
+        endDate?: Date
     ): Observable<UIItemsPagination> {
         return this.itemsApiService.getItems(
             currentUser,
@@ -36,7 +38,9 @@ export class APIItemsService implements ItemsService {
             sortBy,
             sortOrder,
             page,
-            pageSize
+            pageSize,
+            startDate?.toISOString(),
+            endDate?.toISOString()
         ).pipe(
             map(response => ({
                 totalPages: response.totalPages,

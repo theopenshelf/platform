@@ -2,7 +2,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
 import { TuiAccordion, TuiCalendarRange, TuiCarousel, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
@@ -52,6 +52,12 @@ import { LibrariesService } from '../../services/libraries.service';
 })
 export class ItemsComponent implements OnInit {
 
+  private readonly today = new Date();
+  protected readonly defaultViewedMonth = new TuiMonth(this.today.getFullYear(), this.today.getMonth());
+  protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
+  protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
+
+
   // Data properties
   items: UIItem[] = [];
   categories: UICategory[] = [];
@@ -62,9 +68,7 @@ export class ItemsComponent implements OnInit {
   searchText = '';
   currentlyAvailable: boolean = false;
   selectedLibraries: { [key: string]: boolean } = {};
-
-  protected readonly min = TuiDay.currentLocal();
-  protected readonly max = this.min.append({ year: 1 });
+  selectedDate: TuiDayRange | null | undefined;
 
   // Sorting properties
   static readonly SORT_RECENTLY_ADDED = 'Recently added';
@@ -101,7 +105,12 @@ export class ItemsComponent implements OnInit {
       this.currentlyAvailable = params['currentlyAvailable'] === 'true';
       this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
       this.selectedLibraries = params['selectedLibraries'] ? JSON.parse(params['selectedLibraries']) : {};
-      this.currentPage = + params['page'] - 1 || 0;
+      this.currentPage = +params['page'] - 1 || 0;
+      if (params['startDate'] && params['endDate']) {
+        const start = params['startDate'].split('.').map(Number) as [number, number, number];
+        const end = params['endDate'].split('.').map(Number) as [number, number, number];
+        this.selectedDate = new TuiDayRange(new TuiDay(start[2], start[1] - 1, start[0]), new TuiDay(end[2], end[1] - 1, end[0]));
+      }
     });
     this.initializeData();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -129,7 +138,9 @@ export class ItemsComponent implements OnInit {
       this.getSortBy(),
       this.getSortOrder(),
       this.currentPage,
-      this.itemsPerPage
+      this.itemsPerPage,
+      this.selectedDate?.from.toLocalNativeDate(),
+      this.selectedDate?.to.toLocalNativeDate()
     ).subscribe(itemsPagination => {
       this.updatePagination(itemsPagination);
     });
@@ -203,6 +214,14 @@ export class ItemsComponent implements OnInit {
     this.resetItems();
   }
 
+  public onRangeChange(range: TuiDayRange | null): void {
+    if (range) {
+      this.selectedDate = range;
+      this.resetItems();
+      this.updateQueryParams();
+    }
+  }
+
   markAsFavorite(item: UIItem) {
     this.itemsService.markAsFavorite(item).subscribe();
   }
@@ -268,6 +287,10 @@ export class ItemsComponent implements OnInit {
     }
     if (Object.keys(this.selectedLibraries).length > 0) {
       queryParams.selectedLibraries = JSON.stringify(this.selectedLibraries);
+    }
+    if (this.selectedDate) {
+      queryParams.startDate = this.selectedDate.from.toString();
+      queryParams.endDate = this.selectedDate.to.toString();
     }
     queryParams.page = this.currentPage + 1;
 

@@ -14,7 +14,9 @@ export interface ItemsService {
         sortBy?: string,
         sortOrder?: string,
         page?: number,
-        pageSize?: number
+        pageSize?: number,
+        startDate?: Date,
+        endDate?: Date
     ): Observable<UIItemsPagination>;
 
     getItem(id: string): Observable<UIItem>;
