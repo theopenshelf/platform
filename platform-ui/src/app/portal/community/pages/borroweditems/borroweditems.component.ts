@@ -162,6 +162,7 @@ export class BorrowedItemsComponent implements OnInit {
       this.activeStatusIndex = this.statuses.findIndex(
         (status) => status.status === this.selectedStatus,
       );
+      this.fetchItems();
     });
 
     this.categoriesService
@@ -169,7 +170,6 @@ export class BorrowedItemsComponent implements OnInit {
       .subscribe((categories: UICategory[]) => {
         this.categories = categories;
       });
-    this.fetchItems();
     this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });
@@ -450,6 +450,8 @@ export class BorrowedItemsComponent implements OnInit {
       queryParams.selectedCategories = Array.from(this.selectedCategories).join(
         ',',
       );
+    } else {
+      queryParams.selectedCategories = undefined;
     }
     if (this.selectedStatus) {
       queryParams.selectedStatus = this.selectedStatus;
