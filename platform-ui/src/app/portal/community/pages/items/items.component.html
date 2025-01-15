@@ -107,6 +107,8 @@
       </item-card>
       }
     </div>
-    <tui-pagination [index]="currentPage" [length]="totalPages" (indexChange)="goToPage($event)" />
+    @if (totalPages > 1) {
+      <tui-pagination [index]="currentPage" [length]="totalPages" (indexChange)="goToPage($event)" />
+    }
   </main>
 </div>

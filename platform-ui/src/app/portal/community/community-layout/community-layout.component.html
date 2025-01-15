@@ -10,13 +10,16 @@
         </span>
         <hr />
 
-        <div class="borrow-item-button">
-            <button  tuiButton routerLink="/community/borrowed-items" [queryParams]="{ selectedStatus: 'borrowed' }" size="m" type="button">
-                <tui-icon icon="/gift-white.png" />
-                <tui-badge-notification class="unreadNotificationsCount" size="s">3
-                </tui-badge-notification>
-            </button>
-        </div>
+        @if (totalItemsCurrentlyBorrowed > 0) {
+            <div class="borrow-item-button">
+                <button  tuiButton routerLink="/community/borrowed-items" [queryParams]="{ selectedStatus: 'borrowed' }" size="m" type="button">
+                    <tui-icon icon="/gift-white.png" />
+                    <tui-badge-notification class="unreadNotificationsCount" size="s">
+                        {{ totalItemsCurrentlyBorrowed }}
+                    </tui-badge-notification>
+                </button>
+            </div>
+        }
         <app-notifications-popup></app-notifications-popup>
 
         <button iconStart="@tui.ellipsis" tuiIconButton type="button" tuiChevron tuiDropdownOpen

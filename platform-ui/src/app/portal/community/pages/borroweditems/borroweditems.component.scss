@@ -14,6 +14,15 @@
     /* Light gray background from theme */
     padding-top: 0;
 
+    h3.filter-title {
+        margin: 0;
+    }
+
+    h3.filter-category-title {
+        margin-top: 0;
+        margin-bottom: 30px;
+    }
+
     .top-actions-left {
 
         .search {
@@ -84,39 +93,9 @@
         }
 
 
-        .filter-category,
-        .filter-status {
+        .filter-category {
             list-style-type: none;
-
-            .filter-category-color,
-            .filter-status-color {
-                width: 20px;
-                height: 20px;
-                border-radius: 50%;
-                margin-right: 5px;
-                margin-top: 5px;
-                float: left;
-                opacity: 0.8;
-
-                tui-icon {
-                    height: 10px;
-                    width: 10px;
-                    position: relative;
-                    top: -5px;
-                    right: -5px;
-                    visibility: hidden;
-
-                }
-            }
-
-            .filter-category-color.active,
-            .filter-status-color.active {
-                opacity: 1;
-
-                tui-icon {
-                    visibility: visible;
-                }
-            }
+            color: var(--tos-text-tertiary);
 
             height: 30px;
             line-height: 30px;
@@ -127,6 +106,15 @@
         .filter-status:hover {
             position: relative;
             left: 5px;
+        }
+
+        .filter-category.active {
+            opacity: 1;
+            color: var(--tos-text-primary);
+
+            tui-icon {
+                visibility: visible;
+            }
         }
     }
 

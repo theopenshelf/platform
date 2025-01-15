@@ -31,12 +31,10 @@ export class BorrowItemCardComponent {
   public item = input.required<UIItem>();
   public library = input<UILibrary>();
 
-  public currentBorrowRecord = computed(() => {
+  public nextBorrowRecord = computed(() => {
     const now = TuiDay.fromLocalNativeDate(new Date());
 
-    const record = this.item().borrowRecords.filter(record => {
-      return new Date() >= record.endDate;
-    }).sort((a, b) => {
+    const record = this.item().borrowRecords.sort((a, b) => {
       return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
     })[0];
 
@@ -48,32 +46,4 @@ export class BorrowItemCardComponent {
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
   ) { }
 
-  protected getBadgeClass(status: 'Reserved' | 'Currently Borrowed' | 'Returned'): string {
-    switch (status) {
-      case 'Reserved':
-        return 'badge badge-reserved';
-      case 'Currently Borrowed':
-        return 'badge badge-borrowed';
-      case 'Returned':
-        return 'badge badge-returned';
-      default:
-        return '';
-    }
-  }
-
-  protected computeStatus(): 'Reserved' | 'Currently Borrowed' | 'Returned' {
-    const now = new Date();
-
-    if (!this.currentBorrowRecord()) {
-      return 'Returned';
-    }
-
-    if (now < this.currentBorrowRecord().startDate) {
-      return 'Reserved';
-    } else if (now <= this.currentBorrowRecord().endDate) {
-      return 'Currently Borrowed';
-    } else {
-      return 'Returned';
-    }
-  }
 }

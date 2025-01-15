@@ -160,10 +160,7 @@ export class BorrowedItemsComponent implements OnInit {
       this.totalPages = itemsPagination.totalPages;
       this.currentPage = itemsPagination.currentPage;
       this.itemsPerPage = itemsPagination.itemsPerPage;
-      this.items = itemsPagination.items.map(item => {
-        item.borrowRecords = item.borrowRecords.filter(record => record.borrowedBy === this.currentUser);
-        return item;
-      });
+      this.items = itemsPagination.items;
     });
   }
 

@@ -20,22 +20,19 @@
 
     <tui-accordion class="filters-section">
       <tui-accordion-item [open]="!isMobile">
-        <h2 i18n="@@categoryFilter">
+        <h3 class="filter-title" i18n="@@categoryFilter">
           <tui-icon icon="@tui.sliders-horizontal" />
           Filter
-        </h2>
+        </h3>
         <ng-template tuiAccordionItemContent>
 
           <!-- Category Filter -->
           <div class="filter-group filter-categories">
-            <h3 i18n="@@categoryFilter">Categories</h3>
+            <h3 class="filter-category-title" i18n="@@categoryFilter">Categories</h3>
             <ul>
               @for (category of categories; track category) {
-              <li class="filter-category" (click)="toggleCategorySelection(category)">
-                <div class="filter-category-color" [class.active]="isCategorySelected(category)"
-                  [style.background-color]="category.color">
-                  <tui-icon icon="@tui.check" [style.color]="'white'" />
-                </div>
+              <li class="filter-category" [class.active]="isCategorySelected(category)" (click)="toggleCategorySelection(category)">
+                <tui-icon [icon]="category.icon" />
                 {{ category.name }}
               </li>
               }
@@ -71,10 +68,12 @@
       }
     </div>
 
-    <tui-pagination
-      [index]="currentPage"
-      [length]="totalPages"
-      (indexChange)="goToPage($event)"
+    @if (totalPages > 1) {
+      <tui-pagination
+        [index]="currentPage"
+        [length]="totalPages"
+        (indexChange)="goToPage($event)"
     />
+    }
   </main>
 </div>
