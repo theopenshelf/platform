@@ -94,7 +94,7 @@ export class BorrowedItemsComponent implements OnInit {
     }, // Light Blue
   ];
 
-  protected testValue = new FormControl<string | null>(null);
+  protected sortingControl = new FormControl<string | null>(null);
 
   // Create getters and setters for the filters
   protected get categoryFilter(): string {
@@ -125,6 +125,11 @@ export class BorrowedItemsComponent implements OnInit {
   isMobile: boolean = false;
   currentUser: any = 'me@example.com'; //TODO: get current user from auth service
 
+  // Sorting properties
+
+  protected currentSortingOption: string | null = null;
+
+
   currentPage: number = 0;
   totalPages: number = 1;
   itemsPerPage: number = 8; // Adjust this number as needed
@@ -139,7 +144,7 @@ export class BorrowedItemsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -174,6 +179,13 @@ export class BorrowedItemsComponent implements OnInit {
       .subscribe((result) => {
         this.isMobile = result.matches;
       });
+
+    // Subscribe to changes in the sortingControl
+    this.sortingControl.valueChanges.subscribe((newValue) => {
+      if (newValue) {
+        this.toggleSortBy(newValue);
+      }
+    });
   }
 
   private fetchItems(): void {
@@ -183,11 +195,11 @@ export class BorrowedItemsComponent implements OnInit {
         true,
         this.selectedStatus,
         undefined,
+        Array.from(this.selectedCategories),
+        this.searchText,
         undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
+        this.getSortBy(),
+        this.getSortOrder(),
         this.currentPage,
         this.itemsPerPage,
       )
@@ -205,11 +217,45 @@ export class BorrowedItemsComponent implements OnInit {
     this.updateQueryParams();
   }
 
+  isSortingSelected(sortingOption: string): boolean {
+    return this.currentSortingOption === sortingOption;
+  }
+
+  toggleSortBy(sortingOption: string) {
+    this.currentSortingOption = sortingOption;
+    this.resetItems();
+  }
+
+  resetItems() {
+    this.currentPage = 0;
+    this.fetchItems();
+  }
+
+
   getLibrary(libraryId: string): UILibrary | undefined {
     return this.libraries.find((library) => library.id === libraryId);
   }
 
+  getSortBy(): string | undefined {
+    switch (this.currentSortingOption) {
+      case BorrowedItemsComponent.SORT_RECENTLY_RESERVED:
+        return 'createdAt';
+      case BorrowedItemsComponent.SORT_MOST_BORROWED:
+        return 'borrowCount';
+      case BorrowedItemsComponent.SORT_FAVORITES:
+        return 'favorite';
+      default:
+        return undefined;
+    }
+  }
+
+  getSortOrder(): string | undefined {
+    // Assuming default sort order is descending
+    return 'desc';
+  }
+
   onTextFilterChange() {
+    this.fetchItems();
     this.updateQueryParams();
     // The filtering is handled in the getter `filteredItems`
   }
@@ -256,7 +302,7 @@ export class BorrowedItemsComponent implements OnInit {
 
     const diffInDays = Math.round(
       (targetMidnight.getTime() - nowMidnight.getTime()) /
-        (1000 * 60 * 60 * 24),
+      (1000 * 60 * 60 * 24),
     );
 
     if (column === 'startDate') {
@@ -344,6 +390,7 @@ export class BorrowedItemsComponent implements OnInit {
       this.selectedCategories.add(category.name);
     }
     this.updateQueryParams();
+    this.fetchItems();
   }
 
   isCategorySelected(category: any): boolean {
@@ -352,6 +399,7 @@ export class BorrowedItemsComponent implements OnInit {
   }
   toggleStatusSelection(status: UIBorrowStatus) {
     this.selectedStatus = status;
+    this.fetchItems();
     this.updateQueryParams();
   }
 

@@ -11,18 +11,6 @@
       </h2>
 
       <div class="bottom-actions">
-        <div class="Accessibility">
-          <tui-avatar-stack direction="left">
-            @for (member of library.members; track member) {
-              <tui-avatar
-                [src]="member.username | tuiInitials"
-                [style.background]="member.username | tuiAutoColor"
-                size="m"
-              >
-              </tui-avatar>
-            }
-          </tui-avatar-stack>
-        </div>
 
         <button
           appearance="outline"

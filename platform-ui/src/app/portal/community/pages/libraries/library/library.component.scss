@@ -21,11 +21,13 @@
                 padding-right: 0;
                 padding-left: 0;
                 border: 0;
+                margin: 0;
             }
 
             .add-item {
                 width: 100%;
                 margin-top: 10px;
+                margin-bottom: 3px;
             }
 
             .sorting-select {
@@ -106,6 +108,15 @@
             box-sizing: border-box;
             width: 100%;
             grid-template-columns: repeat(2, 1fr);
+
+            .no-items {
+                font-size: 1.5rem;
+                color: var(--tos-text-tertiary);
+                margin: 0 auto;
+                width: 100%;
+                text-align: center;
+                grid-column: 1 / -1;
+            }
 
             @media (max-width: 1400px) {
                 grid-template-columns: 1fr;

@@ -16,12 +16,13 @@
       <tui-select
         tuiTextfieldSize="m"
         class="sorting-select"
-        [formControl]="testValue"
+        [formControl]="sortingControl"
         [tuiTextfieldLabelOutside]="true"
       >
         Sort by
         <input placeholder="Sort by" tuiTextfieldLegacy />
         <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
+        
       </tui-select>
     </div>
 
@@ -75,6 +76,11 @@
           [item]="item"
           [library]="getLibrary(item.libraryId)"
         ></borrow-item-card>
+      }
+      @if (items.length === 0) {
+        <div class="no-items">
+          <p><tui-icon icon="@tui.search-x" /> No item found</p>
+        </div>
       }
     </div>
 

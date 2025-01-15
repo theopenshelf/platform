@@ -14,12 +14,21 @@
         <h2 tuiTitle>
           {{ item().name }}
         </h2>
-        @if (library()) {
-          <span class="library">
-            <tui-icon icon="@tui.library" />
-            <span class="library-value">{{ library()?.name }}</span>
-          </span>
-        }
+        <div class="item-subtitle">
+          <div class="item-categories">
+            <tui-icon [icon]="item().category.icon" />
+            <span class="category-name">{{ item().category.name }}</span>
+          </div>
+          @if (library()) {
+            <span class="library">
+              <tui-icon icon="@tui.library" />
+              <span class="library-value">{{ library()?.name }}</span>
+            </span>
+          }
+        </div>
+        <span class="shortDescription">
+          {{ item().shortDescription }}
+        </span>
       </div>
 
       <div class="item-actions">

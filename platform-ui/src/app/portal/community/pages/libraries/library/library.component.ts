@@ -23,6 +23,7 @@ import {
   TuiAvatar,
   TuiConfirmData,
   TuiDataListWrapper,
+  TuiPagination,
   TuiSwitch,
 } from '@taiga-ui/kit';
 import {
@@ -38,6 +39,7 @@ import {
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
 import { UIBorrowRecord } from '../../../models/UIBorrowRecord';
 import { UIItem } from '../../../models/UIItem';
+import { UIItemsPagination } from '../../../models/UIItemsPagination';
 import { UILibrary } from '../../../models/UILibrary';
 import { ItemsService } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
@@ -65,6 +67,8 @@ import { ItemsComponent } from '../../items/items.component';
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
+    TuiPagination,
+
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -77,6 +81,12 @@ export class LibraryComponent {
   items: UIItem[] = [];
   filteredItems: UIItem[] = [];
   currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+
+  // Pagination properties
+  totalPages: number = 10;
+  currentPage: number = 0;
+  itemsPerPage: number = 12; // Default value
+
 
   protected sortingOptions = [
     ItemsComponent.SORT_RECENTLY_ADDED,
@@ -97,20 +107,36 @@ export class LibraryComponent {
     private alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
+  ) { }
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
+        this.fetchItems();
       });
-      this.itemsService
-        .getItems(undefined, undefined, undefined, [libraryId])
-        .subscribe((itemsPagination) => {
-          this.items = itemsPagination.items;
-        });
     }
+  }
+
+  fetchItems() {
+    if (this.library?.id) {
+      this.itemsService
+        .getItems(undefined, undefined, undefined, [this.library?.id], undefined, undefined, undefined, undefined, undefined, this.currentPage, this.itemsPerPage)
+        .subscribe((itemsPagination) => this.updatePagination(itemsPagination));
+    }
+  }
+
+  private updatePagination(itemsPagination: UIItemsPagination) {
+    this.totalPages = itemsPagination.totalPages;
+    this.currentPage = itemsPagination.currentPage;
+    this.itemsPerPage = itemsPagination.itemsPerPage;
+    this.items = itemsPagination.items;
+  }
+
+  resetItems() {
+    this.currentPage = 0;
+    this.fetchItems();
   }
 
   // Handle text filter change
@@ -154,8 +180,8 @@ export class LibraryComponent {
         switchMap((response) => {
           this.alerts.open(
             'Library <strong>' +
-              library.name +
-              '</strong> deleted successfully',
+            library.name +
+            '</strong> deleted successfully',
             { appearance: 'positive' },
           );
           this.router.navigate(['/community/libraries']);
@@ -178,4 +204,11 @@ export class LibraryComponent {
         ) || []
     );
   }
+
+  goToPage(page: number) {
+    this.currentPage = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.fetchItems();
+  }
+
 }

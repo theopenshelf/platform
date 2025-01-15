@@ -154,6 +154,11 @@
         >
         </item-card>
       }
+      @if (items.length === 0) {
+        <div class="no-items">
+          <p><tui-icon icon="@tui.search-x" /> No item found</p>
+        </div>
+      }
     </div>
     @if (totalPages > 1) {
       <tui-pagination

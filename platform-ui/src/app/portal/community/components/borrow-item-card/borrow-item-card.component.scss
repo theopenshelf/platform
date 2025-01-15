@@ -30,7 +30,11 @@
         flex-direction: row;
     }
 
-    .library {
+    .item-subtitle {
+        margin-top: 10px;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+
         tui-icon {
             margin-right: 2px;
             width: 16px;
@@ -39,7 +43,7 @@
         }
 
         color: #525252;
-        margin-right: 5px;
+
     }
 
     .reservation-start,
