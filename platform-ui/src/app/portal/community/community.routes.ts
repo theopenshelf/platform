@@ -7,18 +7,15 @@ import { BorrowedItemsComponent } from './pages/borroweditems/borroweditems.comp
 import { ItemComponent } from './pages/item/item.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { EditLibraryComponent } from './pages/libraries/edit-library/edit-library.component';
-import { LibraryComponent } from './pages/libraries/library/library.component';
 import { LibrariesComponent } from './pages/libraries/libraries/libraries.component';
+import { LibraryComponent } from './pages/libraries/library/library.component';
+import { WishlistComponent } from './pages/wishlist/wishlist.component';
 
 export const COMMUNITY_ROUTES: Routes = [
-
   {
     path: '',
     component: CommunityLayoutComponent,
-    providers: [
-      ...communityProviders,
-      ...globalProviders,
-    ],
+    providers: [...communityProviders, ...globalProviders],
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'items', component: ItemsComponent },
@@ -29,9 +26,13 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'libraries/add-library', component: EditLibraryComponent },
       { path: 'libraries/:id', component: LibraryComponent },
       { path: 'libraries/:id/edit', component: EditLibraryComponent },
+      { path: 'wishlist', component: WishlistComponent },
       {
         path: 'settings',
-        loadChildren: () => import('./pages/settings/settings.routes').then(m => m.SETTINGS_ROUTES),
+        loadChildren: () =>
+          import('./pages/settings/settings.routes').then(
+            (m) => m.SETTINGS_ROUTES,
+          ),
       },
     ],
   },

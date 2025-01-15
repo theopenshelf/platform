@@ -8,9 +8,8 @@ describe('CommunityLandingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CommunityLayoutComponent]
-    })
-    .compileComponents();
+      imports: [CommunityLayoutComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CommunityLayoutComponent);
     component = fixture.componentInstance;

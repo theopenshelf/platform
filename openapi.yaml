@@ -260,6 +260,12 @@ paths:
           schema:
             type: string
             enum: [returned, borrowed, reserved]
+        - name: favorite
+          in: query
+          description: Filter items by favorite status
+          required: false
+          schema:
+            type: boolean
       responses:
         "200":
           description: A paginated list of items

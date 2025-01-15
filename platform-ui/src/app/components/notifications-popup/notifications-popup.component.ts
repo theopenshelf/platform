@@ -1,48 +1,64 @@
-import { Component, ElementRef, EventEmitter, HostListener, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
-import { globalProviders, NOTIFICATIONS_SERVICE_TOKEN } from '../../global.provider';
-import { NotificationsService, NotificationType, UINotification } from '../../services/notifications.service';
+import {
+  globalProviders,
+  NOTIFICATIONS_SERVICE_TOKEN,
+} from '../../global.provider';
+import {
+  NotificationsService,
+  NotificationType,
+  UINotification,
+} from '../../services/notifications.service';
 import { SharedModule } from '../shared-module/shared-module.component';
 
 @Component({
   standalone: true,
   selector: 'app-notifications-popup',
-  imports: [
-    TuiBadgeNotification,
-    TuiButton,
-    TuiIcon,
-    SharedModule
-  ],
-  providers: [
-    ...globalProviders
-  ],
+  imports: [TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
+  providers: [...globalProviders],
   templateUrl: './notifications-popup.component.html',
-  styleUrls: ['./notifications-popup.component.scss']
+  styleUrls: ['./notifications-popup.component.scss'],
 })
 export class NotificationsPopupComponent implements OnInit {
   notifications: UINotification[] = [];
   protected unreadNotificationsCount: number = 0;
 
-  @Input() isPopupVisible: boolean = false;  // Popup visibility controlled by the parent
-  @Output() isPopupVisibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();  // Emit changes to the parent
+  @Input() isPopupVisible: boolean = false; // Popup visibility controlled by the parent
+  @Output() isPopupVisibleChange: EventEmitter<boolean> =
+    new EventEmitter<boolean>(); // Emit changes to the parent
 
   constructor(
     private elRef: ElementRef,
     private router: Router,
-    @Inject(NOTIFICATIONS_SERVICE_TOKEN) private notificationsService: NotificationsService) { }
+    @Inject(NOTIFICATIONS_SERVICE_TOKEN)
+    private notificationsService: NotificationsService,
+  ) {}
   ngOnInit() {
-    this.notificationsService.getNotifications().subscribe((notifications: UINotification[]) => {
-      this.notifications = notifications;
-      this.notificationsService.acknowledgeNotifications(this.notifications);
-      this.unreadNotificationsCount = this.notificationsService.getUnreadNotificationsCount();
-    });
+    this.notificationsService
+      .getNotifications()
+      .subscribe((notifications: UINotification[]) => {
+        this.notifications = notifications;
+        this.notificationsService.acknowledgeNotifications(this.notifications);
+        this.unreadNotificationsCount =
+          this.notificationsService.getUnreadNotificationsCount();
+      });
   }
 
   toggleNotificationsPopup() {
     this.isPopupVisible = !this.isPopupVisible;
-    this.unreadNotificationsCount = this.notificationsService.getUnreadNotificationsCount();
+    this.unreadNotificationsCount =
+      this.notificationsService.getUnreadNotificationsCount();
   }
 
   markAsRead(notification: UINotification): void {
@@ -74,7 +90,9 @@ export class NotificationsPopupComponent implements OnInit {
       case NotificationType.ITEM_DUE:
       case NotificationType.ITEM_BORROW_RESERVATION_DATE_START:
       case NotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
-        return notification.payload?.item ? `/community/items/${notification.payload.item.id}` : null;
+        return notification.payload?.item
+          ? `/community/items/${notification.payload.item.id}`
+          : null;
 
       // Add other cases if needed for different notification types
       default:

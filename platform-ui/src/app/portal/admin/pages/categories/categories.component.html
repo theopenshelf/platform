@@ -1,25 +1,42 @@
-<tos-table [addActionRoute]="'/admin/categories/add'" [tableData]="categories" [columns]="columns">
-    <div add-action-content>
-      <tui-icon icon="@tui.plus" [style.height.rem]="1" />
+<tos-table
+  [addActionRoute]="'/admin/categories/add'"
+  [tableData]="categories"
+  [columns]="columns"
+>
+  <div add-action-content>
+    <tui-icon icon="@tui.plus" [style.height.rem]="1" />
 
-      Add Category
+    Add Category
   </div>
 
   <ng-template #itemRowTemplate let-item="item" let-column="column">
-    @if (column.key === 'name') {
+    @if (column.key === "name") {
       <category-badge [category]="item"></category-badge>
     }
   </ng-template>
 
   <ng-template #itemActionsTemplate let-item="item">
-    <button [routerLink]="['/admin/categories', item.id, 'edit']" appearance="outline" iconStart="@tui.pen"
-    size="s" tuiIconButton type="button" [style.border-radius.%]="100">
-    Edit
-  </button>
-  <button (click)="deleteCategory(item)" appearance="outline" iconStart="@tui.trash-2" size="s"
-    tuiIconButton type="button" [style.border-radius.%]="100">
-    Delete
-  </button>
+    <button
+      [routerLink]="['/admin/categories', item.id, 'edit']"
+      appearance="outline"
+      iconStart="@tui.pen"
+      size="s"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+    >
+      Edit
+    </button>
+    <button
+      (click)="deleteCategory(item)"
+      appearance="outline"
+      iconStart="@tui.trash-2"
+      size="s"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+    >
+      Delete
+    </button>
   </ng-template>
 </tos-table>
-

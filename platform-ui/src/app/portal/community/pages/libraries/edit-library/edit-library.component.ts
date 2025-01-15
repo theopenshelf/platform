@@ -1,8 +1,18 @@
-
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+import {
+  TuiAutoColorPipe,
+  TuiButton,
+  TuiIcon,
+  TuiInitialsPipe,
+  TuiTextfield,
+} from '@taiga-ui/core';
 import { TuiAvatar, TuiSwitch } from '@taiga-ui/kit';
 import { QuillModule } from 'ngx-quill';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
@@ -22,8 +32,8 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiIcon,
     TuiAvatar,
     TuiInitialsPipe,
-    TuiAutoColorPipe
-  ]
+    TuiAutoColorPipe,
+  ],
 })
 export class EditLibraryComponent implements OnInit {
   editLibraryForm!: FormGroup;
@@ -31,22 +41,22 @@ export class EditLibraryComponent implements OnInit {
 
   editorConfig = {
     toolbar: [
-      ['bold', 'italic', 'underline', 'strike'],        // Text formatting
-      [{ 'header': 1 }, { 'header': 2 }],              // Headers
-      [{ 'list': 'ordered' }, { 'list': 'bullet' }],   // Lists
-      [{ 'indent': '-1' }, { 'indent': '+1' }],        // Indentation
-      [{ 'align': [] }],                               // Text alignment
-      ['link', 'image'],                               // Links and images
-      ['clean']                                        // Remove formatting
-    ]
+      ['bold', 'italic', 'underline', 'strike'], // Text formatting
+      [{ header: 1 }, { header: 2 }], // Headers
+      [{ list: 'ordered' }, { list: 'bullet' }], // Lists
+      [{ indent: '-1' }, { indent: '+1' }], // Indentation
+      [{ align: [] }], // Text alignment
+      ['link', 'image'], // Links and images
+      ['clean'], // Remove formatting
+    ],
   };
 
-  constructor(@Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+  constructor(
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) {
-  }
+    private fb: FormBuilder,
+  ) {}
 
   ngOnInit() {
     this.editLibraryForm = this.fb.group({
@@ -56,7 +66,7 @@ export class EditLibraryComponent implements OnInit {
       location: this.fb.group({
         name: ['', Validators.required],
         address: ['', Validators.required],
-      })
+      }),
     });
     this.libraryId = this.route.snapshot.paramMap.get('id');
     if (this.libraryId) {
@@ -70,9 +80,11 @@ export class EditLibraryComponent implements OnInit {
     if (this.editLibraryForm.valid) {
       const updatedLibrary: UILibrary = this.editLibraryForm.value;
       if (this.libraryId) {
-        this.librariesService.updateLibrary(this.libraryId, updatedLibrary).subscribe(() => {
-          this.router.navigate(['/community/libraries', this.libraryId]);
-        });
+        this.librariesService
+          .updateLibrary(this.libraryId, updatedLibrary)
+          .subscribe(() => {
+            this.router.navigate(['/community/libraries', this.libraryId]);
+          });
       } else {
         this.librariesService.addLibrary(updatedLibrary).subscribe(() => {
           this.router.navigate(['/community/libraries']);
@@ -80,5 +92,4 @@ export class EditLibraryComponent implements OnInit {
       }
     }
   }
-
 }

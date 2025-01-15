@@ -1,15 +1,23 @@
-import { APP_INITIALIZER, ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { provideRouter, withComponentInputBinding, withRouterConfig } from '@angular/router';
-import { NG_EVENT_PLUGINS } from "@taiga-ui/event-plugins";
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  provideZoneChangeDetection,
+} from '@angular/core';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withRouterConfig,
+} from '@angular/router';
+import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
-import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { environment } from "../environments/environment";
-import { BASE_PATH } from "./api-client";
+import { environment } from '../environments/environment';
+import { BASE_PATH } from './api-client';
 import { routes } from './app.routes';
-import { globalProviders } from "./global.provider";
-import { ConfigService } from "./services/config.service";
+import { globalProviders } from './global.provider';
+import { ConfigService } from './services/config.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,9 +26,13 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding(), withRouterConfig({
-      paramsInheritanceStrategy: 'always',
-    })),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withRouterConfig({
+        paramsInheritanceStrategy: 'always',
+      }),
+    ),
     NG_EVENT_PLUGINS,
     provideAnimationsAsync(),
     {
@@ -29,7 +41,7 @@ export const appConfig: ApplicationConfig = {
         return () => configService.loadConfig();
       },
       deps: [ConfigService],
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 };

@@ -1,5 +1,4 @@
-
 export interface UILocation {
-    name: string;
-    address: string;
+  name: string;
+  address: string;
 }

@@ -3,7 +3,14 @@ import { Component, computed, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiDay } from '@taiga-ui/cdk';
-import { TuiAppearance, TuiButton, TuiHint, TuiIcon, TuiTextfield, TuiTitle } from '@taiga-ui/core';
+import {
+  TuiAppearance,
+  TuiButton,
+  TuiHint,
+  TuiIcon,
+  TuiTextfield,
+  TuiTitle,
+} from '@taiga-ui/core';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
@@ -21,13 +28,12 @@ import { ItemsService } from '../../services/items.service';
     TuiButton,
     TuiTitle,
     FormsModule,
-    TuiTextfield
+    TuiTextfield,
   ],
   templateUrl: './borrow-item-card.component.html',
-  styleUrl: './borrow-item-card.component.scss'
+  styleUrl: './borrow-item-card.component.scss',
 })
 export class BorrowItemCardComponent {
-
   public item = input.required<UIItem>();
   public library = input<UILibrary>();
 
@@ -41,9 +47,7 @@ export class BorrowItemCardComponent {
     return record;
   });
 
-
   constructor(
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService
-  ) { }
-
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+  ) {}
 }

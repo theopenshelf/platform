@@ -1,97 +1,60 @@
 <div id="login-container">
-    <div id="login-form-section">
-        <img class="logo" src="/logo-bright.png" alt="The Open Shelf" />
-        <h2>Sign up</h2>
-        <p>
-            Already registered?
-            <a routerLink="/login">Sign in</a>
-        </p>
+  <div id="login-form-section">
+    <img class="logo" src="/logo-bright.png" alt="The Open Shelf" />
+    <h2>Sign up</h2>
+    <p>
+      Already registered?
+      <a routerLink="/login">Sign in</a>
+    </p>
 
-        <form
-            [formGroup]="signUpForm"
-            (ngSubmit)="onSubmit()"
-        >
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
+      <tui-textfield>
+        <label tuiLabel>Username</label>
+        <input formControlName="username" type="text" tuiTextfield />
+      </tui-textfield>
 
-            <tui-textfield>
-                <label tuiLabel>Username</label>
-                <input
-                    formControlName="username"
-                    type="text"
-                    tuiTextfield
-                >
-            </tui-textfield>
+      <tui-textfield>
+        <label tuiLabel>Email</label>
+        <input formControlName="email" type="email" tuiTextfield />
+      </tui-textfield>
 
-            <tui-textfield>
-                <label tuiLabel>Email</label>
-                <input
-                    formControlName="email"
-                    type="email"
-                    tuiTextfield
-                >
-            </tui-textfield>
+      <tui-textfield>
+        <label tuiLabel>Password</label>
+        <input formControlName="password" type="password" tuiTextfield />
+        <tui-icon tuiPassword />
+      </tui-textfield>
 
-            <tui-textfield>
-                <label tuiLabel>Password</label>
-                <input
-                    formControlName="password"
-                    type="password"
-                    tuiTextfield
-                >
-                <tui-icon tuiPassword />
-            </tui-textfield>
+      <tui-textfield>
+        <label tuiLabel>Street Address</label>
+        <input formControlName="streetAddress" type="text" tuiTextfield />
+      </tui-textfield>
 
-            <tui-textfield>
-                <label tuiLabel>Street Address</label>
-                <input
-                    formControlName="streetAddress"
-                    type="text"
-                    tuiTextfield
-                >
-            </tui-textfield>
+      <div class="row">
+        <div class="column">
+          <tui-textfield>
+            <label tuiLabel>City</label>
+            <input formControlName="city" type="text" tuiTextfield />
+          </tui-textfield>
+        </div>
+        <div class="column">
+          <tui-textfield>
+            <label tuiLabel>Postal Code</label>
+            <input formControlName="postalCode" type="text" tuiTextfield />
+          </tui-textfield>
+        </div>
+      </div>
 
-            <div class="row">
-                <div class="column">
-                    <tui-textfield>
-                        <label tuiLabel>City</label>
-                        <input
-                            formControlName="city"
-                            type="text"
-                            tuiTextfield
-                        >
-                    </tui-textfield>
-                </div>
-                <div class="column">
-                    <tui-textfield>
-                        <label tuiLabel>Postal Code</label>
-                        <input
-                            formControlName="postalCode"
-                            type="text"
-                            tuiTextfield
-                        >
-                    </tui-textfield>
-                </div>
-            </div>
+      <tui-textfield>
+        <label tuiLabel>Country</label>
+        <input formControlName="country" type="text" tuiTextfield />
+      </tui-textfield>
 
-            <tui-textfield>
-                <label tuiLabel>Country</label>
-                <input
-                    formControlName="country"
-                    type="text"
-                    tuiTextfield
-                >
-            </tui-textfield>
-
-            <button
-                appearance="accent"
-                tuiButton
-                size="l"
-                type="submit"
-            >
-                Sign up
-            </button>
-        </form>
-    </div>
-    <div id="login-welcome-section">
-        <app-welcome></app-welcome>
-    </div>
+      <button appearance="accent" tuiButton size="l" type="submit">
+        Sign up
+      </button>
+    </form>
+  </div>
+  <div id="login-welcome-section">
+    <app-welcome></app-welcome>
+  </div>
 </div>

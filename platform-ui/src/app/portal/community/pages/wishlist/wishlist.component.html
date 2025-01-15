@@ -56,28 +56,16 @@
   </aside>
 
   <main class="grid-container">
-    <tui-tabs [(activeItemIndex)]="activeStatusIndex">
-      @for (status of statuses; track status) {
-        <button
-          [iconStart]="status.icon"
-          tuiTab
-          type="button"
-          (click)="selectStatus(status.status)"
-        >
-          {{ status.name }}
-        </button>
-      }
-    </tui-tabs>
-
     <div class="items-container">
       @for (item of items; track item) {
-        <borrow-item-card
+        <item-card
           [item]="item"
+          [borrowRecords]="getBorrowRecords(item.id)"
           [library]="getLibrary(item.libraryId)"
-        ></borrow-item-card>
+        >
+        </item-card>
       }
     </div>
-
     @if (totalPages > 1) {
       <tui-pagination
         [index]="currentPage"

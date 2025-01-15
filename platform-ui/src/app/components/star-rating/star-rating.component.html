@@ -1,10 +1,7 @@
 <div class="star-rating">
   @for (star of [1, 2, 3, 4, 5]; track star; let i = $index) {
-    <span
-      class="star"
-      [class.filled]="i < stars"
-      [class.half]="i >= stars"
+    <span class="star" [class.filled]="i < stars" [class.half]="i >= stars"
       >&#9733;</span
-      >
-    }
-  </div>
+    >
+  }
+</div>

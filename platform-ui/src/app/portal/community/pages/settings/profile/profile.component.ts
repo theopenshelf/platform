@@ -1,5 +1,10 @@
 import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
@@ -9,16 +14,9 @@ import { TuiPassword } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule,
-    TuiButton,
-    TuiPassword,
-    TuiTextfield,
-    TuiIcon,
-
-  ],
+  imports: [ReactiveFormsModule, TuiButton, TuiPassword, TuiTextfield, TuiIcon],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
-
 })
 export class ProfileComponent {
   profileForm: FormGroup;
@@ -26,8 +24,7 @@ export class ProfileComponent {
   constructor(
     private fb: FormBuilder,
     @Inject(PROFILE_SERVICE_TOKEN) private profileService: ProfileService,
-    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService
-
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
   ) {
     this.profileForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -35,7 +32,7 @@ export class ProfileComponent {
       streetAddress: [''],
       city: [''],
       postalCode: [''],
-      country: ['']
+      country: [''],
     });
   }
 
@@ -50,12 +47,13 @@ export class ProfileComponent {
 
   onSave(): void {
     if (this.profileForm.valid) {
-      this.profileService.updateProfile(this.profileForm.value).subscribe(profile => {
-        console.log('Profile data saved:', profile);
-      });
+      this.profileService
+        .updateProfile(this.profileForm.value)
+        .subscribe((profile) => {
+          console.log('Profile data saved:', profile);
+        });
     } else {
       console.error('Form is invalid');
     }
   }
 }
-

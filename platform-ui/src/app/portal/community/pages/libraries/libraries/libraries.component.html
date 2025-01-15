@@ -1,9 +1,6 @@
 <div class="layout-container">
-    @for (library of libraries; track library) {
-    
-    <div class="library-card"
-      tuiAppearance="floating" tuiCardMedium>
-
+  @for (library of libraries; track library) {
+    <div class="library-card" tuiAppearance="floating" tuiCardMedium>
       <div class="item-actions">
         <tui-icon class="library-icon" icon="@tui.library" />
       </div>
@@ -17,31 +14,52 @@
         <div class="Accessibility">
           <tui-avatar-stack direction="left">
             @for (member of library.members; track member) {
-              <tui-avatar [src]="member.username | tuiInitials"
-                [style.background]="member.username | tuiAutoColor" size="m">
+              <tui-avatar
+                [src]="member.username | tuiInitials"
+                [style.background]="member.username | tuiAutoColor"
+                size="m"
+              >
               </tui-avatar>
             }
           </tui-avatar-stack>
         </div>
 
-        <button appearance="outline" disabled class="items-count" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
-          type="button">
+        <button
+          appearance="outline"
+          disabled
+          class="items-count"
+          size="m"
+          routerLink="/community/libraries/{{ library.id }}"
+          tuiButton
+          type="button"
+        >
           8 item(s)
         </button>
 
-        <button appearance="outline" class="accent items-button" size="m" routerLink="/community/libraries/{{library.id}}" tuiButton
-          type="button">
+        <button
+          appearance="outline"
+          class="accent items-button"
+          size="m"
+          routerLink="/community/libraries/{{ library.id }}"
+          tuiButton
+          type="button"
+        >
           See items
           <tui-icon icon="@tui.arrow-right" />
         </button>
       </div>
-      
     </div>
   }
 
-
-
-  <div class="library-card add-library-card" routerLink="/community/libraries/add-library" tuiAppearance="floating" tuiCardMedium>
-    <tui-icon icon="@tui.plus" [style.color]="'var(--tui-background-accent-1)'" />
+  <div
+    class="library-card add-library-card"
+    routerLink="/community/libraries/add-library"
+    tuiAppearance="floating"
+    tuiCardMedium
+  >
+    <tui-icon
+      icon="@tui.plus"
+      [style.color]="'var(--tui-background-accent-1)'"
+    />
   </div>
 </div>

@@ -1,73 +1,117 @@
 <tui-root>
-    <!-- Ignore this part, it is only here to position drawer inside the example block -->
-    <div class="custom-portal"><ng-container #viewContainer /></div>
-    <header tuiNavigationHeader>
-        <span tuiNavigationLogo>
-            <img id="logo" src="/logo-simple.png" />
-            <span tuiFade>The Open Shelf</span>
-        </span>
-        <hr />
+  <!-- Ignore this part, it is only here to position drawer inside the example block -->
+  <div class="custom-portal"><ng-container #viewContainer /></div>
+  <header tuiNavigationHeader>
+    <span tuiNavigationLogo>
+      <img id="logo" src="/logo-simple.png" />
+      <span tuiFade>The Open Shelf</span>
+    </span>
+    <hr />
 
-        <app-notifications-popup></app-notifications-popup>
+    <app-notifications-popup></app-notifications-popup>
 
+    <button
+      iconStart="@tui.ellipsis"
+      tuiIconButton
+      type="button"
+      tuiChevron
+      tuiDropdownOpen
+      [tuiDropdown]="settings"
+    >
+      <ng-template #settings>
+        <tui-data-list size="s">
+          <button
+            routerLink="/community"
+            class="dropdown"
+            iconStart="@tui.users"
+            tuiButton
+            type="button"
+          >
+            Community portal
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/auth/sign-out"
+            class="dropdown"
+            iconStart="@tui.log-out"
+            tuiButton
+            type="button"
+          >
+            Log out
+          </button>
+        </tui-data-list>
+      </ng-template>
+    </button>
+  </header>
 
-        <button iconStart="@tui.ellipsis" tuiIconButton type="button" tuiChevron tuiDropdownOpen
-            [tuiDropdown]="settings">
-            <ng-template #settings>
-                <tui-data-list size="s">
-                    <button routerLink="/community" class="dropdown" iconStart="@tui.users" tuiButton type="button">
-                        Community portal
-                    </button>
-                </tui-data-list>
-                <tui-data-list size="s">
-                    <button routerLink="/auth/sign-out" class="dropdown" iconStart="@tui.log-out" tuiButton
-                        type="button">
-                        Log out
-                    </button>
-                </tui-data-list>
-            </ng-template>
-        </button>
-    </header>
+  <nav id="menu" class="horizontal-menu">
+    <a
+      routerLink="/admin/dashboard/"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      iconStart="@tui.users"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.layout-dashboard" />
+      Dashboard
+    </a>
 
-    <nav id="menu" class="horizontal-menu">
-        <a routerLink="/admin/dashboard/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
-            type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.layout-dashboard" />
-            Dashboard
-        </a>
+    <a
+      routerLink="/admin/users/"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      iconStart="@tui.users"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.users" />
+      Users
+    </a>
 
-        <a routerLink="/admin/users/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
-            type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.users" />
-            Users
-        </a>
+    <a
+      routerLink="/admin/items/"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      iconStart="@tui.package"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.package" />
+      Items
+    </a>
 
-        <a routerLink="/admin/items/" routerLinkActive="active" appearance="secondary-grayscale"
-            iconStart="@tui.package" type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.package" />
-            Items
-        </a>
+    <a
+      routerLink="/admin/categories/"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      iconStart="@tui.chart-column-stacked"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.chart-column-stacked" />
+      Categories
+    </a>
 
-        <a routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
-            iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.chart-column-stacked" />
-            Categories
-        </a>
+    <a
+      routerLink="/admin/security/"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      iconStart="@tui.shield"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.shield" />
+      Security
+    </a>
+  </nav>
 
-        <a routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale"
-            iconStart="@tui.shield" type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.shield" />
-            Security
-        </a>
+  <div [style.display]="'flex'">
+    <main tuiNavigationMain>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 
-    </nav>
-
-    <div [style.display]="'flex'">
-        <main tuiNavigationMain>
-            <router-outlet></router-outlet>
-        </main>
-    </div>
-
-    <tos-footer></tos-footer>
-
+  <tos-footer></tos-footer>
 </tui-root>

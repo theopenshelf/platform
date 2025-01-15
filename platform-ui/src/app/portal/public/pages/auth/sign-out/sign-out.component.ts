@@ -8,10 +8,6 @@ import { globalProviders } from '../../../../../global.provider';
   imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './sign-out.component.html',
   styleUrl: './sign-out.component.scss',
-  providers: [
-    ...globalProviders,
-  ]
+  providers: [...globalProviders],
 })
-export class SignOutComponent {
-
-}
+export class SignOutComponent {}

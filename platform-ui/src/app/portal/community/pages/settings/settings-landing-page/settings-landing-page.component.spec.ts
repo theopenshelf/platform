@@ -8,9 +8,8 @@ describe('SettingsLandingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsLandingPageComponent]
-    })
-    .compileComponents();
+      imports: [SettingsLandingPageComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsLandingPageComponent);
     component = fixture.componentInstance;

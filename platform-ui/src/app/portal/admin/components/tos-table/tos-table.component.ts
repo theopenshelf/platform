@@ -1,12 +1,38 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, computed, ContentChild, input, signal, TemplateRef, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  computed,
+  ContentChild,
+  input,
+  signal,
+  TemplateRef,
+  ViewEncapsulation,
+} from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiTable, TuiTablePagination, TuiTablePaginationEvent } from '@taiga-ui/addon-table';
+import {
+  TuiTable,
+  TuiTablePagination,
+  TuiTablePaginationEvent,
+} from '@taiga-ui/addon-table';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
-import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiDialog, TuiDialogContext, TuiDropdown, TuiHint, TuiIcon, TuiInitialsPipe, TuiLink, TuiSizeL, TuiSizeS, TuiTitle } from '@taiga-ui/core';
+import {
+  TuiAlertService,
+  TuiAutoColorPipe,
+  TuiButton,
+  TuiDialog,
+  TuiDialogContext,
+  TuiDropdown,
+  TuiHint,
+  TuiIcon,
+  TuiInitialsPipe,
+  TuiLink,
+  TuiSizeL,
+  TuiSizeS,
+  TuiTitle,
+} from '@taiga-ui/core';
 import { TuiAvatar, TuiCheckbox } from '@taiga-ui/kit';
 
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
@@ -42,11 +68,11 @@ export type Column = {
     TuiTitle,
     TuiIcon,
     TuiLink,
-    TuiTablePagination
+    TuiTablePagination,
   ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class TosTableComponent {
   public addActionRoute = input.required<string>();
@@ -55,26 +81,28 @@ export class TosTableComponent {
   public columns = input.required<Column[]>();
   isMobile: boolean = false;
 
-  @ContentChild('itemActionsTemplate', { read: TemplateRef }) itemActionsTemplate!: TemplateRef<any>;
-  @ContentChild('itemRowTemplate', { read: TemplateRef }) itemRowTemplate!: TemplateRef<any>;
+  @ContentChild('itemActionsTemplate', { read: TemplateRef })
+  itemActionsTemplate!: TemplateRef<any>;
+  @ContentChild('itemRowTemplate', { read: TemplateRef })
+  itemRowTemplate!: TemplateRef<any>;
 
   protected currentSort = signal<string>('');
-  protected sortOrder = signal<{ [key: string]: boolean }>({});  // True for ascending, false for descending
+  protected sortOrder = signal<{ [key: string]: boolean }>({}); // True for ascending, false for descending
   protected page = 0;
   protected size = 10;
   protected total = computed(() => this.tableData().length);
   protected visibleColumns = computed<Column[]>(() => {
-    return this.columns().filter(column =>
-      this.localColumnVisibility()[column.key] ?? column.visible
+    return this.columns().filter(
+      (column) => this.localColumnVisibility()[column.key] ?? column.visible,
     );
   });
   protected sortedData = computed<any[]>(() => {
     return this.tableData()
       .filter((item: any) => {
         const filterValue = this.filterInput().toLowerCase();
-        const visibleKeys = this.visibleColumns().map(column => column.key);
-        return visibleKeys.some(key =>
-          String(item[key]).toLowerCase().includes(filterValue)
+        const visibleKeys = this.visibleColumns().map((column) => column.key);
+        return visibleKeys.some((key) =>
+          String(item[key]).toLowerCase().includes(filterValue),
         );
       })
       .sort((a, b) => {
@@ -82,9 +110,9 @@ export class TosTableComponent {
         const bValue = b[this.currentSort()];
 
         if (this.sortOrder()[this.currentSort()]) {
-          return aValue > bValue ? 1 : (aValue < bValue ? -1 : 0);
+          return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
         } else {
-          return aValue < bValue ? 1 : (aValue > bValue ? -1 : 0);
+          return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
         }
       });
   });
@@ -95,22 +123,23 @@ export class TosTableComponent {
   constructor(
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
-    private breakpointObserver: BreakpointObserver
-  ) {
-
-  }
+    private breakpointObserver: BreakpointObserver,
+  ) {}
 
   ngOnInit(): void {
     this.localColumnVisibility.set(
-      this.columns().reduce((acc, column) => {
-        acc[column.key] = column.visible;
-        return acc;
-      }, {} as { [key: string]: boolean })
+      this.columns().reduce(
+        (acc, column) => {
+          acc[column.key] = column.visible;
+          return acc;
+        },
+        {} as { [key: string]: boolean },
+      ),
     );
 
     this.breakpointObserver
       .observe([Breakpoints.Small, Breakpoints.Handset])
-      .subscribe(result => {
+      .subscribe((result) => {
         this.isMobile = result.matches;
       });
   }
@@ -128,14 +157,17 @@ export class TosTableComponent {
 
   // Sort function with toggle for ascending/descending
   sort(column: string): void {
-    const columnConfig = this.columns().find(col => col.key === column);
+    const columnConfig = this.columns().find((col) => col.key === column);
     if (!columnConfig || !columnConfig.sortable) {
       return; // Exit if the column is not sortable
     }
 
     // Toggle sort order
     if (this.currentSort() === column) {
-      const newSortOrder = { ...this.sortOrder(), [column]: !this.sortOrder()[column] };
+      const newSortOrder = {
+        ...this.sortOrder(),
+        [column]: !this.sortOrder()[column],
+      };
       this.sortOrder.set(newSortOrder);
     } else {
       this.currentSort.set(column);
@@ -143,7 +175,6 @@ export class TosTableComponent {
       this.sortOrder.set(newSortOrder);
     }
   }
-
 
   protected onPagination({ page, size }: TuiTablePaginationEvent): void {
     this.page = page;
@@ -157,8 +188,10 @@ export class TosTableComponent {
 
   onColumnVisibilityChange(column: Column): void {
     // Update the local visibility state
-    const updatedVisibility = { ...this.localColumnVisibility(), [column.key]: column.visible };
+    const updatedVisibility = {
+      ...this.localColumnVisibility(),
+      [column.key]: column.visible,
+    };
     this.localColumnVisibility.set(updatedVisibility);
   }
-
 }

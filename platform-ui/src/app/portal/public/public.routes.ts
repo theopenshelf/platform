@@ -14,11 +14,11 @@ export const PUBLIC_ROUTES: Routes = [
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'login', component: SignInComponent },
-        { path: 'sign-out', component: SignOutComponent },
-        { path: 'sign-up', component: SignUpComponent },
-        { path: 'forgot-password', component: ForgotPasswordComponent },
-        { path: 'reset-password', component: ResetPasswordComponent },
-        { path: 'email-confirmation', component: EmailConfirmationComponent },
-      ],
+      { path: 'sign-out', component: SignOutComponent },
+      { path: 'sign-up', component: SignUpComponent },
+      { path: 'forgot-password', component: ForgotPasswordComponent },
+      { path: 'reset-password', component: ResetPasswordComponent },
+      { path: 'email-confirmation', component: EmailConfirmationComponent },
+    ],
   },
 ];

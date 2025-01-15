@@ -3,24 +3,22 @@
     <img class="logo" src="/logo-bright.png" alt="The Open Shelf" />
     <h2>Welcome back.</h2>
     @if (config.isRegistrationEnabled) {
-    <p>
-      Don't have an account?
-      <a routerLink="/sign-up">Sign Up</a>
-    </p>
+      <p>
+        Don't have an account?
+        <a routerLink="/sign-up">Sign Up</a>
+      </p>
     }
 
     <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
       <tui-textfield>
         <label tuiLabel>Username</label>
-        <input formControlName="username" type="text" tuiTextfield>
+        <input formControlName="username" type="text" tuiTextfield />
       </tui-textfield>
-
 
       <tui-textfield>
         <label tuiLabel>Password</label>
-        <input formControlName="password" type="password" tuiTextfield>
+        <input formControlName="password" type="password" tuiTextfield />
         <tui-icon tuiPassword />
-
       </tui-textfield>
 
       <p class="forgot-password-link">
@@ -31,10 +29,8 @@
         Log In
       </button>
     </form>
-
   </div>
   <div id="login-welcome-section">
     <app-welcome></app-welcome>
   </div>
-
 </div>

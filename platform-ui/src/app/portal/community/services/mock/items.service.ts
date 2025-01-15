@@ -7,144 +7,182 @@ import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
 
-
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
 export class MockItemsService implements ItemsService {
+  private index = 1;
 
-    private index = 1;
+  private items: UIItem[] = loadItems();
 
-    private items: UIItem[] = loadItems();
-
-    getItems(
-        currentUser?: boolean,
-        borrowedByCurrentUser?: boolean,
-        status?: UIBorrowStatus,
-        libraryIds?: string[],
-        categories?: string[],
-        searchText?: string,
-        currentlyAvailable?: boolean,
-        sortBy?: string,
-        sortOrder: 'asc' | 'desc' = 'asc',
-        page: number = 0,
-        pageSize: number = 10,
-        startDate?: Date,
-        endDate?: Date
-    ): Observable<UIItemsPagination> {
-        let filteredItems = this.items;
-        // Filtering logic
-        if (currentUser) {
-            filteredItems = filteredItems.filter(item => item.owner === 'me@example.com');
-        }
-        if (borrowedByCurrentUser) {
-            filteredItems = filteredItems.filter(item =>
-                item.borrowRecords.some(record => record.borrowedBy === 'me@example.com')
-            );
-            if (status) {
-                filteredItems = filteredItems.filter(item => this.matchesStatus(status, item));
-            }
-        }
-
-        if (libraryIds && libraryIds.length > 0) {
-            filteredItems = filteredItems.filter(item => libraryIds.includes(item.libraryId));
-        }
-        if (categories && categories.length > 0) {
-            filteredItems = filteredItems.filter(item => categories.includes(item.category.name));
-        }
-        if (searchText) {
-            const lowerCaseSearchText = searchText.toLowerCase();
-            filteredItems = filteredItems.filter(item =>
-                item.name.toLowerCase().includes(lowerCaseSearchText)
-            );
-        }
-        if (currentlyAvailable) {
-            filteredItems = filteredItems.filter(item =>
-                !item.borrowRecords.some(record => record.startDate <= new Date() && new Date() <= record.endDate)
-            );
-        }
-        if (startDate && endDate) {
-            filteredItems = filteredItems.filter(item =>
-                item.borrowRecords.filter(record =>
-                    (record.startDate <= endDate && record.endDate >= startDate)
-                ).length === 0
-            );
-        }
-
-
-        // Sorting logic
-        if (sortBy) {
-            filteredItems = filteredItems.sort((a, b) => {
-                const aValue = a[sortBy as keyof UIItem] ?? '';
-                const bValue = b[sortBy as keyof UIItem] ?? '';
-                if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
-                if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
-                return 0;
-            });
-        }
-
-        // Pagination logic
-        const totalItems = filteredItems.length;
-        const totalPages = Math.ceil(totalItems / pageSize);
-        const startIndex = page * pageSize;
-        const paginatedItems = filteredItems.slice(startIndex, startIndex + pageSize);
-
-        return of({
-            totalPages,
-            totalItems,
-            currentPage: page,
-            itemsPerPage: pageSize,
-            items: paginatedItems
-        });
+  getItems(
+    currentUser?: boolean,
+    borrowedByCurrentUser?: boolean,
+    status?: UIBorrowStatus,
+    libraryIds?: string[],
+    categories?: string[],
+    searchText?: string,
+    currentlyAvailable?: boolean,
+    sortBy?: string,
+    sortOrder: 'asc' | 'desc' = 'asc',
+    page: number = 0,
+    pageSize: number = 10,
+    startDate?: Date,
+    endDate?: Date,
+    favorite?: boolean,
+  ): Observable<UIItemsPagination> {
+    let filteredItems = this.items;
+    // Filtering logic
+    if (currentUser) {
+      filteredItems = filteredItems.filter(
+        (item) => item.owner === 'me@example.com',
+      );
+    }
+    if (borrowedByCurrentUser) {
+      filteredItems = filteredItems.filter((item) =>
+        item.borrowRecords.some(
+          (record) => record.borrowedBy === 'me@example.com',
+        ),
+      );
+      if (status) {
+        filteredItems = filteredItems.filter((item) =>
+          this.matchesStatus(status, item),
+        );
+      }
     }
 
-    getItem(id: string): Observable<UIItem> {
-        return of(this.items.find((i) => i.id === id) as UIItem);
+    if (favorite) {
+      filteredItems = filteredItems.filter((item) => item.favorite);
     }
 
-
-    addItem(item: UIItem): Observable<UIItem> {
-        item.id = this.index++ + "";
-        item.createdAt = new Date();
-        this.items.push(item);
-        return of(item);
+    if (libraryIds && libraryIds.length > 0) {
+      filteredItems = filteredItems.filter((item) =>
+        libraryIds.includes(item.libraryId),
+      );
+    }
+    if (categories && categories.length > 0) {
+      filteredItems = filteredItems.filter((item) =>
+        categories.includes(item.category.name),
+      );
+    }
+    if (searchText) {
+      const lowerCaseSearchText = searchText.toLowerCase();
+      filteredItems = filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(lowerCaseSearchText),
+      );
+    }
+    if (currentlyAvailable) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          !item.borrowRecords.some(
+            (record) =>
+              record.startDate <= new Date() && new Date() <= record.endDate,
+          ),
+      );
+    }
+    if (startDate && endDate) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          item.borrowRecords.filter(
+            (record) =>
+              record.startDate <= endDate && record.endDate >= startDate,
+          ).length === 0,
+      );
     }
 
-    borrowItem(item: UIItem, startDate: string, endDate: string): Observable<UIItem> {
-        const borrowRecord: UIBorrowRecord = {
-            id: this.index++ + "",
-            startDate: new Date(startDate),
-            endDate: new Date(endDate),
-            borrowedBy: 'me@example.com'
-        };
-
-        // Optionally, you can add the record to the item itself if needed
-        item.borrowRecords = item.borrowRecords || [];
-        item.borrowRecords.push(borrowRecord);
-
-        return of(item);
+    // Sorting logic
+    if (sortBy) {
+      filteredItems = filteredItems.sort((a, b) => {
+        const aValue = a[sortBy as keyof UIItem] ?? '';
+        const bValue = b[sortBy as keyof UIItem] ?? '';
+        if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+        if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+        return 0;
+      });
     }
 
-    cancelReservation(item: UIItem, borrowRecord: UIBorrowRecord): Observable<UIItem> {
-        item.borrowRecords = item.borrowRecords.filter(record => record.id !== borrowRecord.id);
-        return of(item);
-    }
+    // Pagination logic
+    const totalItems = filteredItems.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const startIndex = page * pageSize;
+    const paginatedItems = filteredItems.slice(
+      startIndex,
+      startIndex + pageSize,
+    );
 
-    markAsFavorite(item: UIItem): Observable<void> {
-        item.favorite = !item.favorite;
-        return of(undefined);
-    }
+    return of({
+      totalPages,
+      totalItems,
+      currentPage: page,
+      itemsPerPage: pageSize,
+      items: paginatedItems,
+    });
+  }
 
-    matchesStatus(status: UIBorrowStatus, item: UIItem): boolean {
-        const now = new Date();
+  getItem(id: string): Observable<UIItem> {
+    return of(this.items.find((i) => i.id === id) as UIItem);
+  }
 
-        switch (status) {
-            case UIBorrowStatus.Returned:
-                return item.borrowRecords.filter(record => record.endDate < now).length > 0;
-            case UIBorrowStatus.CurrentlyBorrowed:
-                return item.borrowRecords.find(record => record.startDate <= now && now <= record.endDate) !== undefined;
-            case UIBorrowStatus.Reserved:
-                return item.borrowRecords.filter(record => now < record.startDate).length > 0;
-        }
+  addItem(item: UIItem): Observable<UIItem> {
+    item.id = this.index++ + '';
+    item.createdAt = new Date();
+    this.items.push(item);
+    return of(item);
+  }
+
+  borrowItem(
+    item: UIItem,
+    startDate: string,
+    endDate: string,
+  ): Observable<UIItem> {
+    const borrowRecord: UIBorrowRecord = {
+      id: this.index++ + '',
+      startDate: new Date(startDate),
+      endDate: new Date(endDate),
+      borrowedBy: 'me@example.com',
+    };
+
+    // Optionally, you can add the record to the item itself if needed
+    item.borrowRecords = item.borrowRecords || [];
+    item.borrowRecords.push(borrowRecord);
+
+    return of(item);
+  }
+
+  cancelReservation(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    item.borrowRecords = item.borrowRecords.filter(
+      (record) => record.id !== borrowRecord.id,
+    );
+    return of(item);
+  }
+
+  markAsFavorite(item: UIItem): Observable<void> {
+    item.favorite = !item.favorite;
+    return of(undefined);
+  }
+
+  matchesStatus(status: UIBorrowStatus, item: UIItem): boolean {
+    const now = new Date();
+
+    switch (status) {
+      case UIBorrowStatus.Returned:
+        return (
+          item.borrowRecords.filter((record) => record.endDate < now).length > 0
+        );
+      case UIBorrowStatus.CurrentlyBorrowed:
+        return (
+          item.borrowRecords.find(
+            (record) => record.startDate <= now && now <= record.endDate,
+          ) !== undefined
+        );
+      case UIBorrowStatus.Reserved:
+        return (
+          item.borrowRecords.filter((record) => now < record.startDate).length >
+          0
+        );
     }
+  }
 }

@@ -6,7 +6,7 @@ import { UICategory } from '../../portal/admin/services/categories.service';
   selector: 'category-badge',
   imports: [],
   templateUrl: './category-badge.component.html',
-  styleUrl: './category-badge.component.scss'
+  styleUrl: './category-badge.component.scss',
 })
 export class CategoryBadgeComponent {
   @Input() category!: UICategory;

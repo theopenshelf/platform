@@ -1,9 +1,16 @@
-<button iconStart="@tui.bell" (click)="toggleNotificationsPopup()" tuiIconButton type="button" i18n="@@notificationsButton">
-    Notifications
-    @if (unreadNotificationsCount > 0) {
-<tui-badge-notification class="unreadNotificationsCount" size="s">{{ unreadNotificationsCount }}
+<button
+  iconStart="@tui.bell"
+  (click)="toggleNotificationsPopup()"
+  tuiIconButton
+  type="button"
+  i18n="@@notificationsButton"
+>
+  Notifications
+  @if (unreadNotificationsCount > 0) {
+    <tui-badge-notification class="unreadNotificationsCount" size="s"
+      >{{ unreadNotificationsCount }}
     </tui-badge-notification>
-}
+  }
 </button>
 
 @if (isPopupVisible) {
@@ -16,31 +23,39 @@
         (click)="closePopup()"
         tuiIconButton
         type="button"
-    >
+      >
         Close
-    </button>
+      </button>
     </div>
     <div class="notifications-list">
       @for (notification of notifications; track notification) {
         <div
           class="notification-item"
           [class.unread]="!notification.alreadyRead"
-          >
+        >
           <img
             class="notification-image"
             [src]="getNotificationImage(notification)"
             alt="{{ notification.payload?.item?.name || 'Notification' }}"
-            />
+          />
           <div class="notification-content">
             <h4 class="notification-text">
               {{ getNotificationText(notification.type) }}
             </h4>
-            <button appearance="outline" class="accent details-button" size="s" (click)="onNotificationClick(notification)" tuiButton
-            type="button">
-            More
-            <tui-icon icon="@tui.arrow-right" />
-          </button>
-            <small class="notification-date">{{ notification.date | timeago}}</small>
+            <button
+              appearance="outline"
+              class="accent details-button"
+              size="s"
+              (click)="onNotificationClick(notification)"
+              tuiButton
+              type="button"
+            >
+              More
+              <tui-icon icon="@tui.arrow-right" />
+            </button>
+            <small class="notification-date">{{
+              notification.date | timeago
+            }}</small>
             @if (!notification.alreadyRead) {
               <span class="unread-icon"></span>
             }

@@ -10,14 +10,33 @@
     <div class="item-content">
       <div class="item-details">
         <div class="item-details-top-right">
-          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-            [appearance]="isReserved() ? 'primary' : 'outline'" size="m" type="button"
-            [tuiHint]="isReserved() ? 'Your next reservation: ' + formatReservationDate(nextReservation().startDate) + ' - ' + formatReservationDate(nextReservation().endDate) : 'You have no upcoming reservations'">
-          </button>
+          <button
+            class="reservation-state"
+            iconStart="@tui.calendar-clock"
+            tuiButton
+            [appearance]="isReserved() ? 'primary' : 'outline'"
+            size="m"
+            type="button"
+            [tuiHint]="
+              isReserved()
+                ? 'Your next reservation: ' +
+                  formatReservationDate(nextReservation().startDate) +
+                  ' - ' +
+                  formatReservationDate(nextReservation().endDate)
+                : 'You have no upcoming reservations'
+            "
+          ></button>
 
-          <button class="favorite" [ngClass]="{'selected': item().favorite}" iconStart="@tui.heart" tuiButton
-            [appearance]="item().favorite ? 'primary' : 'outline'" size="s" type="button"
-            (click)="markAsFavorite(item())"></button>
+          <button
+            class="favorite"
+            [ngClass]="{ selected: item().favorite }"
+            iconStart="@tui.heart"
+            tuiButton
+            [appearance]="item().favorite ? 'primary' : 'outline'"
+            size="s"
+            type="button"
+            (click)="markAsFavorite(item())"
+          ></button>
         </div>
         <h2 tuiTitle>
           {{ item().name }}
@@ -36,16 +55,29 @@
       <!-- Borrow Button -->
       <div class="item-actions">
         <div class="item-categories">
-            <tui-icon [icon]="item().category.icon" />
-            <span class="category-name">{{ item().category.name }}</span>
+          <tui-icon [icon]="item().category.icon" />
+          <span class="category-name">{{ item().category.name }}</span>
         </div>
 
-        <button class="borrow-counts" disabled appearance="flat" size="m" tuiButton type="button">
+        <button
+          class="borrow-counts"
+          disabled
+          appearance="flat"
+          size="m"
+          tuiButton
+          type="button"
+        >
           {{ item().borrowCount }} borrow(s)
         </button>
 
-        <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item().id}}" tuiButton
-          type="button">
+        <button
+          appearance="outline"
+          class="accent details-button"
+          size="m"
+          routerLink="/community/items/{{ item().id }}"
+          tuiButton
+          type="button"
+        >
           More
           <tui-icon icon="@tui.arrow-right" />
         </button>

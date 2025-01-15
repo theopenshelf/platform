@@ -7,7 +7,13 @@
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
   <tui-textfield>
     <label tuiLabel>Category Name</label>
-    <input id="name" formControlName="name" type="text" placeholder="Enter category name" tuiTextfield>
+    <input
+      id="name"
+      formControlName="name"
+      type="text"
+      placeholder="Enter category name"
+      tuiTextfield
+    />
   </tui-textfield>
 
   <tui-input-color class="b-form" [colors]="palette" formControlName="color">
@@ -18,9 +24,16 @@
   <quill-editor
     formControlName="template"
     [modules]="editorConfig"
-    style="height: 200px;"
+    style="height: 200px"
   ></quill-editor>
 
-
-  <button type="submit" appearance="accent" size="m" tuiButton [disabled]="categoryForm.invalid">Save</button>
+  <button
+    type="submit"
+    appearance="accent"
+    size="m"
+    tuiButton
+    [disabled]="categoryForm.invalid"
+  >
+    Save
+  </button>
 </form>

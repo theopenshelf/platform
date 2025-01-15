@@ -3,11 +3,35 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from "@taiga-ui/core";
+import {
+  TuiButton,
+  TuiDataList,
+  TuiDropdown,
+  TuiHint,
+  TuiIcon,
+  TuiTextfield,
+} from '@taiga-ui/core';
 import { TuiAppearance } from '@taiga-ui/core/directives/appearance';
-import { TuiAccordion, TuiCalendarRange, TuiCarousel, TuiCheckbox, TuiDataListWrapper, TuiPagination, TuiSwitch } from '@taiga-ui/kit';
-import { TuiInputDateRangeModule, TuiSelectModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
-import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
+import {
+  TuiAccordion,
+  TuiCalendarRange,
+  TuiCarousel,
+  TuiCheckbox,
+  TuiDataListWrapper,
+  TuiPagination,
+  TuiSwitch,
+} from '@taiga-ui/kit';
+import {
+  TuiInputDateRangeModule,
+  TuiSelectModule,
+  TuiTextfieldControllerModule,
+  TuiUnfinishedValidator,
+} from '@taiga-ui/legacy';
+import {
+  CATEGORIES_SERVICE_TOKEN,
+  ITEMS_SERVICE_TOKEN,
+  LIBRARIES_SERVICE_TOKEN,
+} from '../../community.provider';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UICategory } from '../../models/UICategory';
@@ -17,8 +41,6 @@ import { UILibrary } from '../../models/UILibrary';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
-
-
 
 @Component({
   standalone: true,
@@ -45,17 +67,23 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiDataList,
     TuiDropdown,
     TuiCalendarRange,
-    TuiCarousel
+    TuiCarousel,
   ],
   templateUrl: './items.component.html',
-  styleUrls: ['./items.component.scss']
+  styleUrls: ['./items.component.scss'],
 })
 export class ItemsComponent implements OnInit {
-
   private readonly today = new Date();
-  protected readonly defaultViewedMonth = new TuiMonth(this.today.getFullYear(), this.today.getMonth());
+  protected readonly defaultViewedMonth = new TuiMonth(
+    this.today.getFullYear(),
+    this.today.getMonth(),
+  );
   protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
-  protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
+  protected readonly max: TuiDay = new TuiDay(
+    this.today.getFullYear() + 1,
+    this.today.getMonth(),
+    this.today.getDate(),
+  );
 
   // Data properties
   items: UIItem[] = [];
@@ -87,28 +115,46 @@ export class ItemsComponent implements OnInit {
 
   // Responsive design
   isMobile: boolean = false;
-  currentUser: any = "me@example.com"; //TODO: get current user from auth service
+  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    @Inject(CATEGORIES_SERVICE_TOKEN) private categoriesService: CategoriesService,
+    @Inject(CATEGORIES_SERVICE_TOKEN)
+    private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.searchText = params['searchText'] || '';
       this.currentlyAvailable = params['currentlyAvailable'] === 'true';
-      this.selectedCategories = new Set(params['selectedCategories'] ? params['selectedCategories'].split(',') : []);
-      this.selectedLibraries = params['selectedLibraries'] ? JSON.parse(params['selectedLibraries']) : {};
+      this.selectedCategories = new Set(
+        params['selectedCategories']
+          ? params['selectedCategories'].split(',')
+          : [],
+      );
+      this.selectedLibraries = params['selectedLibraries']
+        ? JSON.parse(params['selectedLibraries'])
+        : {};
       this.currentPage = +params['page'] - 1 || 0;
       if (params['startDate'] && params['endDate']) {
-        const start = params['startDate'].split('.').map(Number) as [number, number, number];
-        const end = params['endDate'].split('.').map(Number) as [number, number, number];
-        this.selectedDate = new TuiDayRange(new TuiDay(start[2], start[1] - 1, start[0]), new TuiDay(end[2], end[1] - 1, end[0]));
+        const start = params['startDate'].split('.').map(Number) as [
+          number,
+          number,
+          number,
+        ];
+        const end = params['endDate'].split('.').map(Number) as [
+          number,
+          number,
+          number,
+        ];
+        this.selectedDate = new TuiDayRange(
+          new TuiDay(start[2], start[1] - 1, start[0]),
+          new TuiDay(end[2], end[1] - 1, end[0]),
+        );
       }
     });
     this.initializeData();
@@ -117,33 +163,34 @@ export class ItemsComponent implements OnInit {
 
   private initializeData() {
     this.fetchItems();
-    this.categoriesService.getCategories().subscribe(categories => {
+    this.categoriesService.getCategories().subscribe((categories) => {
       this.categories = categories;
     });
-    this.librariesService.getLibraries().subscribe(libraries => {
+    this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });
   }
 
-
   fetchItems() {
-    this.itemsService.getItems(
-      false,
-      false,
-      undefined,
-      Object.keys(this.selectedLibraries),
-      Array.from(this.selectedCategories),
-      this.searchText,
-      this.currentlyAvailable,
-      this.getSortBy(),
-      this.getSortOrder(),
-      this.currentPage,
-      this.itemsPerPage,
-      this.selectedDate?.from.toLocalNativeDate(),
-      this.selectedDate?.to.toLocalNativeDate()
-    ).subscribe(itemsPagination => {
-      this.updatePagination(itemsPagination);
-    });
+    this.itemsService
+      .getItems(
+        false,
+        false,
+        undefined,
+        Object.keys(this.selectedLibraries),
+        Array.from(this.selectedCategories),
+        this.searchText,
+        this.currentlyAvailable,
+        this.getSortBy(),
+        this.getSortOrder(),
+        this.currentPage,
+        this.itemsPerPage,
+        this.selectedDate?.from.toLocalNativeDate(),
+        this.selectedDate?.to.toLocalNativeDate(),
+      )
+      .subscribe((itemsPagination) => {
+        this.updatePagination(itemsPagination);
+      });
   }
 
   private updatePagination(itemsPagination: UIItemsPagination) {
@@ -231,11 +278,19 @@ export class ItemsComponent implements OnInit {
   }
 
   getLibrary(libraryId: string): UILibrary | undefined {
-    return this.libraries.find(library => library.id === libraryId);
+    return this.libraries.find((library) => library.id === libraryId);
   }
 
   getBorrowRecords(itemId: string): UIBorrowRecord[] {
-    return this.items.find(item => item.id === itemId)?.borrowRecords.filter(record => record.endDate >= new Date() && record.borrowedBy === this.currentUser) || [];
+    return (
+      this.items
+        .find((item) => item.id === itemId)
+        ?.borrowRecords.filter(
+          (record) =>
+            record.endDate >= new Date() &&
+            record.borrowedBy === this.currentUser,
+        ) || []
+    );
   }
 
   goToPage(page: number) {
@@ -251,7 +306,6 @@ export class ItemsComponent implements OnInit {
     this.openDropdownWhen = false;
   }
 
-
   protected openDropdownSort = false;
 
   protected closeDropdownSort(): void {
@@ -259,7 +313,6 @@ export class ItemsComponent implements OnInit {
   }
 
   protected categoriesIndex = 0;
-
 
   protected openDropdownCategories = false;
 
@@ -283,7 +336,9 @@ export class ItemsComponent implements OnInit {
       queryParams.currentlyAvailable = this.currentlyAvailable;
     }
     if (this.selectedCategories.size > 0) {
-      queryParams.selectedCategories = Array.from(this.selectedCategories).join(',');
+      queryParams.selectedCategories = Array.from(this.selectedCategories).join(
+        ',',
+      );
     }
     if (Object.keys(this.selectedLibraries).length > 0) {
       queryParams.selectedLibraries = JSON.stringify(this.selectedLibraries);
@@ -297,7 +352,7 @@ export class ItemsComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: queryParams,
-      queryParamsHandling: 'merge'
+      queryParamsHandling: 'merge',
     });
   }
 }

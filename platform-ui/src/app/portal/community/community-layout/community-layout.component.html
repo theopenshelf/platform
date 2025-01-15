@@ -1,86 +1,132 @@
 <tui-root>
-    <!-- Position drawer inside the example block -->
-    <div class="custom-portal"><ng-container #viewContainer /></div>
+  <!-- Position drawer inside the example block -->
+  <div class="custom-portal"><ng-container #viewContainer /></div>
 
-    <!-- Header -->
-    <header tuiNavigationHeader>
-        <span tuiNavigationLogo>
-            <img id="logo" src="/logo-simple.png" />
-            <span tuiFade>The Open Shelf</span>
-        </span>
-        <hr />
+  <!-- Header -->
+  <header tuiNavigationHeader>
+    <span tuiNavigationLogo>
+      <img id="logo" src="/logo-simple.png" />
+      <span tuiFade>The Open Shelf</span>
+    </span>
+    <hr />
 
-        @if (totalItemsCurrentlyBorrowed > 0) {
-            <div class="borrow-item-button">
-                <button  tuiButton routerLink="/community/borrowed-items" [queryParams]="{ selectedStatus: 'borrowed' }" size="m" type="button">
-                    <tui-icon icon="/gift-white.png" />
-                    <tui-badge-notification class="unreadNotificationsCount" size="s">
-                        {{ totalItemsCurrentlyBorrowed }}
-                    </tui-badge-notification>
-                </button>
-            </div>
-        }
-        <app-notifications-popup></app-notifications-popup>
-
-        <button iconStart="@tui.ellipsis" tuiIconButton type="button" tuiChevron tuiDropdownOpen
-            [tuiDropdown]="settings">
-            <ng-template #settings>
-                <tui-data-list size="s">
-                    <button routerLink="/community/settings" class="dropdown" iconStart="@tui.settings" tuiButton
-                        type="button">
-                        Settings
-                    </button>
-                </tui-data-list>
-                <tui-data-list size="s">
-                    <button routerLink="/admin" class="dropdown" iconStart="@tui.lock" tuiButton type="button">
-                        Admin panel
-                    </button>
-
-                </tui-data-list>
-                <tui-data-list size="s">
-                    <button routerLink="/auth/sign-out" class="dropdown" iconStart="@tui.log-out" tuiButton
-                        type="button">
-                        Log out
-                    </button>
-
-                </tui-data-list>
-            </ng-template>
+    @if (totalItemsCurrentlyBorrowed > 0) {
+      <div class="borrow-item-button">
+        <button
+          tuiButton
+          routerLink="/community/borrowed-items"
+          [queryParams]="{ selectedStatus: 'borrowed' }"
+          size="m"
+          type="button"
+        >
+          <tui-icon icon="/gift-white.png" />
+          <tui-badge-notification class="unreadNotificationsCount" size="s">
+            {{ totalItemsCurrentlyBorrowed }}
+          </tui-badge-notification>
         </button>
-    </header>
+      </div>
+    }
+    <button
+      iconStart="@tui.heart"
+      tuiIconButton
+      class="wishlist-button"
+      routerLink="/community/wishlist"
+      size="s"
+      type="button"
+    ></button>
+    <app-notifications-popup></app-notifications-popup>
 
-    <!-- Horizontal Menu -->
-    <nav id="menu" class="horizontal-menu">
-        <!-- Buttons -->
-        <a routerLink="/community/items" routerLinkActive="active" appearance="secondary-grayscale"
-            type="button" i18n="@@borrowItemButton">
-            <tui-icon icon="@tui.package" />
-            Items
-        </a>
+    <button
+      iconStart="@tui.ellipsis"
+      tuiIconButton
+      type="button"
+      tuiChevron
+      tuiDropdownOpen
+      [tuiDropdown]="settings"
+    >
+      <ng-template #settings>
+        <tui-data-list size="s">
+          <button
+            routerLink="/community/settings"
+            class="dropdown"
+            iconStart="@tui.settings"
+            tuiButton
+            type="button"
+          >
+            Settings
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/admin"
+            class="dropdown"
+            iconStart="@tui.lock"
+            tuiButton
+            type="button"
+          >
+            Admin panel
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/auth/sign-out"
+            class="dropdown"
+            iconStart="@tui.log-out"
+            tuiButton
+            type="button"
+          >
+            Log out
+          </button>
+        </tui-data-list>
+      </ng-template>
+    </button>
+  </header>
 
-        <a routerLink="/community/borrowed-items" routerLinkActive="active" 
-            appearance="secondary-grayscale" tuiChevron type="button">
-            <tui-icon class="borrowed-icon" icon="/gift.png" />
+  <!-- Horizontal Menu -->
+  <nav id="menu" class="horizontal-menu">
+    <!-- Buttons -->
+    <a
+      routerLink="/community/items"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      type="button"
+      i18n="@@borrowItemButton"
+    >
+      <tui-icon icon="@tui.package" />
+      Items
+    </a>
 
-            <span>Borrowed items</span>
+    <a
+      routerLink="/community/borrowed-items"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      tuiChevron
+      type="button"
+    >
+      <tui-icon class="borrowed-icon" icon="/gift.png" />
 
-        </a>
+      <span>Borrowed items</span>
+    </a>
 
-        <a routerLink="/community/libraries" routerLinkActive="active" 
-            appearance="secondary-grayscale" tuiChevron type="button">
-            <tui-icon icon="@tui.library" />
+    <a
+      routerLink="/community/libraries"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      tuiChevron
+      type="button"
+    >
+      <tui-icon icon="@tui.library" />
 
-            <span>Libraries</span>
+      <span>Libraries</span>
+    </a>
+  </nav>
 
-        </a>
+  <!-- Main Content -->
+  <div [style.display]="'flex'">
+    <main tuiNavigationMain>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
 
-    </nav>
-
-    <!-- Main Content -->
-    <div [style.display]="'flex'">
-        <main tuiNavigationMain>
-            <router-outlet></router-outlet>
-        </main>
-    </div>
-
-    <tos-footer></tos-footer>
+  <tos-footer></tos-footer>
 </tui-root>

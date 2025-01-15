@@ -1,12 +1,42 @@
 import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
-import { Component, inject, Inject, INJECTOR, Injector, input, OnInit } from '@angular/core';
+import {
+  Component,
+  inject,
+  Inject,
+  INJECTOR,
+  Injector,
+  input,
+  OnInit,
+} from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiMobileCalendar, TuiMobileCalendarDropdown, TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiBooleanHandler, tuiControlValue, TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { TUI_MONTHS, TuiAlertService, TuiButton, TuiDialogService, TuiHint, TuiIcon, TuiNotification } from '@taiga-ui/core';
-import { TUI_CALENDAR_DATE_STREAM, TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
+import {
+  TuiMobileCalendar,
+  TuiMobileCalendarDropdown,
+  TuiResponsiveDialogService,
+} from '@taiga-ui/addon-mobile';
+import {
+  TuiBooleanHandler,
+  tuiControlValue,
+  TuiDay,
+  TuiDayRange,
+  TuiMonth,
+} from '@taiga-ui/cdk';
+import {
+  TUI_MONTHS,
+  TuiAlertService,
+  TuiButton,
+  TuiDialogService,
+  TuiHint,
+  TuiIcon,
+  TuiNotification,
+} from '@taiga-ui/core';
+import {
+  TUI_CALENDAR_DATE_STREAM,
+  TUI_CONFIRM,
+  TuiConfirmData,
+} from '@taiga-ui/kit';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
@@ -43,7 +73,7 @@ const plusTen = today.append({ day: 10 });
     TuiNotification,
     TuiMobileCalendar,
     AsyncPipe,
-    DatePipe
+    DatePipe,
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -53,10 +83,10 @@ const plusTen = today.append({ day: 10 });
     {
       provide: DateAdapter,
       useFactory: adapterFactory,
-    }]
+    },
+  ],
 })
 export class ItemComponent implements OnInit {
-
   itemId = input.required<string>();
 
   item: UIItem | undefined;
@@ -66,22 +96,28 @@ export class ItemComponent implements OnInit {
     testValue: new FormControl(),
   });
   private readonly today = new Date();
-  protected readonly defaultViewedMonth = new TuiMonth(this.today.getFullYear(), this.today.getMonth());
+  protected readonly defaultViewedMonth = new TuiMonth(
+    this.today.getFullYear(),
+    this.today.getMonth(),
+  );
   protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
-  protected readonly max: TuiDay = new TuiDay(this.today.getFullYear() + 1, this.today.getMonth(), this.today.getDate());
+  protected readonly max: TuiDay = new TuiDay(
+    this.today.getFullYear() + 1,
+    this.today.getMonth(),
+    this.today.getDate(),
+  );
   records: UIBorrowRecord[] = [];
   selectedDate: TuiDayRange | null | undefined;
 
   disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
     return day.dayBefore(this.min);
   };
-  currentUser: any = "me@example.com"; //TODO: get current user from auth service
+  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
   isReserved = false;
   nextReservation: UIBorrowRecord | undefined = undefined;
   itemsReturned: UIBorrowRecord[] = [];
   itemsReserved: UIBorrowRecord[] = [];
   itemsCurrentlyBorrowed: UIBorrowRecord | undefined;
-
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
@@ -91,13 +127,17 @@ export class ItemComponent implements OnInit {
     private datePipe: DatePipe,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
-    private router: Router
+    private router: Router,
   ) {
-    this.control = new FormControl<TuiDayRange | null | undefined>(this.selectedDate)
+    this.control = new FormControl<TuiDayRange | null | undefined>(
+      this.selectedDate,
+    );
 
-    this.control.valueChanges.subscribe((value: TuiDayRange | null | undefined) => {
-      this.selectedDate = value;
-    });
+    this.control.valueChanges.subscribe(
+      (value: TuiDayRange | null | undefined) => {
+        this.selectedDate = value;
+      },
+    );
 
     this.date$ = combineLatest([
       tuiControlValue<TuiDayRange>(this.control),
@@ -110,8 +150,9 @@ export class ItemComponent implements OnInit {
 
         return value.isSingleDay
           ? `${months[value.from.month]} ${value.from.day}, ${value.from.year}`
-          : `${months[value.from.month]} ${value.from.day}, ${value.from.year} - ${months[value.to.month]
-          } ${value.to.day}, ${value.to.year}`;
+          : `${months[value.from.month]} ${value.from.day}, ${value.from.year} - ${
+              months[value.to.month]
+            } ${value.to.day}, ${value.to.year}`;
       }),
     );
 
@@ -142,16 +183,28 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.itemsService.getItem(this.itemId()).subscribe(item => {
+    this.itemsService.getItem(this.itemId()).subscribe((item) => {
       this.item = item;
       this.borrowItemRecordsForCurrentUser = item.borrowRecords
-        .filter(record => record.borrowedBy === this.currentUser)
+        .filter((record) => record.borrowedBy === this.currentUser)
         .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
-      this.isReserved = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).length > 0;
-      this.nextReservation = this.borrowItemRecordsForCurrentUser.filter(record => record.startDate > new Date()).sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
-      this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(record => record.endDate < new Date());
-      this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(record => record.endDate > new Date());
-      this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(record => record.startDate <= new Date() && new Date() <= record.endDate);
+      this.isReserved =
+        this.borrowItemRecordsForCurrentUser.filter(
+          (record) => record.startDate > new Date(),
+        ).length > 0;
+      this.nextReservation = this.borrowItemRecordsForCurrentUser
+        .filter((record) => record.startDate > new Date())
+        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
+      this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
+        (record) => record.endDate < new Date(),
+      );
+      this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(
+        (record) => record.endDate > new Date(),
+      );
+      this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(
+        (record) =>
+          record.startDate <= new Date() && new Date() <= record.endDate,
+      );
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -170,8 +223,11 @@ export class ItemComponent implements OnInit {
       const endDate = TuiDay.fromLocalNativeDate(new Date(record.endDate));
 
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
-
-        if (this.item?.borrowRecords.find(record => record.borrowedBy === this.currentUser.id)) {
+        if (
+          this.item?.borrowRecords.find(
+            (record) => record.borrowedBy === this.currentUser.id,
+          )
+        ) {
           return [BOOKED_BY_ME]; // Marked day
         }
         return [BOOKED]; // Marked day
@@ -183,7 +239,7 @@ export class ItemComponent implements OnInit {
   updateCellAvailability() {
     setTimeout(() => {
       const cells = document.querySelectorAll('.t-cell');
-      cells.forEach(cell => {
+      cells.forEach((cell) => {
         const dot = cell.querySelector('.t-dot');
         if (dot) {
           cell.classList.remove('not-available');
@@ -211,7 +267,7 @@ export class ItemComponent implements OnInit {
 
   borrowItem(header: PolymorpheusContent) {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to disable this user?',  // Simple content
+      content: 'Are you sure you want to disable this user?', // Simple content
       yes: 'Yes, Disable',
       no: 'Cancel',
     };
@@ -224,34 +280,54 @@ export class ItemComponent implements OnInit {
         data: {
           content: `Are you sure you want to borrow this item from ${this.selectedDate?.from.toLocalNativeDate().toLocaleDateString()} to ${this.selectedDate?.to.toLocalNativeDate().toLocaleDateString()}?`,
           yes: 'Yes, Borrow',
-          no: 'Cancel'
+          no: 'Cancel',
         },
       })
-      .pipe(switchMap((response) => {
-        if (response) {
-          return this.itemsService.borrowItem(
-            this.item!,
-            this.selectedDate?.from.toLocalNativeDate().toISOString().split('T')[0] ?? '',
-            this.selectedDate?.to.toLocalNativeDate().toISOString().split('T')[0] ?? ''
-          ).pipe(
-            tap(item => {
-              this.item = item;
-              this.alerts.open(`Successfully borrowed ${this.item?.name} from ${this.selectedDate?.from.toLocalNativeDate()} to ${this.selectedDate?.to.toLocalNativeDate()}`, { appearance: 'positive' }).subscribe();
-              this.router.navigate(['/community/borrowed-items']);
-            })
-          );
+      .pipe(
+        switchMap((response) => {
+          if (response) {
+            return this.itemsService
+              .borrowItem(
+                this.item!,
+                this.selectedDate?.from
+                  .toLocalNativeDate()
+                  .toISOString()
+                  .split('T')[0] ?? '',
+                this.selectedDate?.to
+                  .toLocalNativeDate()
+                  .toISOString()
+                  .split('T')[0] ?? '',
+              )
+              .pipe(
+                tap((item) => {
+                  this.item = item;
+                  this.alerts
+                    .open(
+                      `Successfully borrowed ${this.item?.name} from ${this.selectedDate?.from.toLocalNativeDate()} to ${this.selectedDate?.to.toLocalNativeDate()}`,
+                      { appearance: 'positive' },
+                    )
+                    .subscribe();
+                  this.router.navigate(['/community/borrowed-items']);
+                }),
+              );
+            return EMPTY;
+          }
           return EMPTY;
-        }
-        return EMPTY;
-      }))
+        }),
+      )
       .subscribe();
   }
 
   cancelReservation(borrowRecord: UIBorrowRecord) {
-
     if (borrowRecord) {
-      const startDate = this.datePipe.transform(borrowRecord.startDate, 'EEE d MMM');
-      const endDate = this.datePipe.transform(borrowRecord.endDate, 'EEE d MMM');
+      const startDate = this.datePipe.transform(
+        borrowRecord.startDate,
+        'EEE d MMM',
+      );
+      const endDate = this.datePipe.transform(
+        borrowRecord.endDate,
+        'EEE d MMM',
+      );
 
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
@@ -260,26 +336,35 @@ export class ItemComponent implements OnInit {
           data: {
             content: `Are you sure you want to cancel your reservation for ${this.item?.name} from ${startDate} to ${endDate}?`,
             yes: 'Yes, Cancel',
-            no: 'Keep Reservation'
+            no: 'Keep Reservation',
           },
         })
-        .pipe(switchMap((response) => {
-          if (response) {
-            this.itemsService.cancelReservation(this.item!, borrowRecord).subscribe(item => {
-              this.item = item;
-              this.updateCellAvailability();
-              this.alerts.open('Reservation cancelled successfully', { appearance: 'success' });
-            });
+        .pipe(
+          switchMap((response) => {
+            if (response) {
+              this.itemsService
+                .cancelReservation(this.item!, borrowRecord)
+                .subscribe((item) => {
+                  this.item = item;
+                  this.updateCellAvailability();
+                  this.alerts.open('Reservation cancelled successfully', {
+                    appearance: 'success',
+                  });
+                });
+              return EMPTY;
+            }
             return EMPTY;
-          }
-          return EMPTY;
-        }))
+          }),
+        )
         .subscribe();
     }
   }
 
   returnItem(borrowRecord: UIBorrowRecord) {
-    const startDate = this.datePipe.transform(borrowRecord.startDate, 'EEE d MMM');
+    const startDate = this.datePipe.transform(
+      borrowRecord.startDate,
+      'EEE d MMM',
+    );
     const endDate = this.datePipe.transform(borrowRecord.endDate, 'EEE d MMM');
 
     this.dialogs
@@ -289,25 +374,29 @@ export class ItemComponent implements OnInit {
         data: {
           content: `Confirm you have returned ${this.item?.name} from ${startDate} to ${endDate}?`,
           yes: 'Yes, It is returned',
-          no: 'No, I have not returned it yet'
+          no: 'No, I have not returned it yet',
         },
       })
-      .pipe(switchMap((response) => {
-        if (response) {
-          //TODO call dedicated endpoint to return item
-          this.itemsService.cancelReservation(this.item!, borrowRecord).subscribe(item => {
-            this.item = item;
-            this.updateCellAvailability();
-            this.alerts.open('Item returned successfully', { appearance: 'success' });
-          });
+      .pipe(
+        switchMap((response) => {
+          if (response) {
+            //TODO call dedicated endpoint to return item
+            this.itemsService
+              .cancelReservation(this.item!, borrowRecord)
+              .subscribe((item) => {
+                this.item = item;
+                this.updateCellAvailability();
+                this.alerts.open('Item returned successfully', {
+                  appearance: 'success',
+                });
+              });
+            return EMPTY;
+          }
           return EMPTY;
-        }
-        return EMPTY;
-      }))
+        }),
+      )
       .subscribe();
   }
-
-
 
   markAsFavorite() {
     this.itemsService.markAsFavorite(this.item!);
@@ -366,5 +455,4 @@ export class ItemComponent implements OnInit {
     }
     return null;
   }
-
 }

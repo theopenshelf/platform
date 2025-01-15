@@ -1,7 +1,18 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { TuiAlertService, TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import {
+  TuiAlertService,
+  TuiButton,
+  TuiIcon,
+  TuiTextfield,
+} from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { UIUser, UsersService } from '../../services/users.service';
@@ -20,7 +31,7 @@ import { UIUser, UsersService } from '../../services/users.service';
     TuiPassword,
   ],
   templateUrl: './edit-user.component.html',
-  styleUrl: './edit-user.component.scss'
+  styleUrl: './edit-user.component.scss',
 })
 export class EditUserComponent implements OnInit {
   user: UIUser = {} as UIUser;
@@ -32,20 +43,20 @@ export class EditUserComponent implements OnInit {
     @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
     private fb: FormBuilder,
     private alerts: TuiAlertService,
-    private router: Router
+    private router: Router,
   ) {
     this.editUserForm = this.fb.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       flatNumber: [''],
-      address: ['']
+      address: [''],
     });
   }
 
   ngOnInit() {
     this.userId = this.route.snapshot.paramMap.get('id');
     if (this.userId) {
-      this.usersService.getUser(this.userId).subscribe(user => {
+      this.usersService.getUser(this.userId).subscribe((user) => {
         this.user = user;
         this.editUserForm.patchValue(this.user);
       });
@@ -55,7 +66,7 @@ export class EditUserComponent implements OnInit {
         password: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         flatNumber: [''],
-        address: ['']
+        address: [''],
       });
     }
   }
@@ -69,7 +80,11 @@ export class EditUserComponent implements OnInit {
       this.user.flatNumber = updatedUser.flatNumber;
       this.user.address = updatedUser.address;
       this.usersService.saveUser(this.user);
-      this.alerts.open(`Successfully saved ${this.user.username}`, { appearance: 'positive' }).subscribe();
+      this.alerts
+        .open(`Successfully saved ${this.user.username}`, {
+          appearance: 'positive',
+        })
+        .subscribe();
       this.router.navigate(['/admin/users']);
     }
   }

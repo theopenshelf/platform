@@ -8,9 +8,8 @@ describe('BorrowItemCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BorrowItemCardComponent]
-    })
-    .compileComponents();
+      imports: [BorrowItemCardComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BorrowItemCardComponent);
     component = fixture.componentInstance;

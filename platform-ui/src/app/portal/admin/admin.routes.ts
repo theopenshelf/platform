@@ -10,15 +10,11 @@ import { ItemsComponent } from './pages/items/items.component';
 import { SecurityComponent } from './pages/security/security.component';
 import { UsersComponent } from './pages/users/users.component';
 
-
 export const ADMIN_ROUTES: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    providers: [
-      ...adminProviders,
-      ...globalProviders,
-    ],
+    providers: [...adminProviders, ...globalProviders],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'users', component: UsersComponent },

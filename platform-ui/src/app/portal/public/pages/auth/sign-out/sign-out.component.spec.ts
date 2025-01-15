@@ -8,9 +8,8 @@ describe('SignOutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SignOutComponent]
-    })
-    .compileComponents();
+      imports: [SignOutComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SignOutComponent);
     component = fixture.componentInstance;

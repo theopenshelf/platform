@@ -1,65 +1,67 @@
 <div tuiAppearance="floating" class="borrow-item-card">
-    <!-- Flexbox container for the image and details -->
-    <div class="card-content">
-      <!-- Image Section -->
-      <div class="image-container" routerLink="/community/items/{{item().id}}">
-        <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
+  <!-- Flexbox container for the image and details -->
+  <div class="card-content">
+    <!-- Image Section -->
+    <div class="image-container" routerLink="/community/items/{{ item().id }}">
+      <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
+    </div>
+
+    <!-- Item Details -->
+
+    <div class="item-content">
+      <div routerLink="/community/items/{{ item().id }}" class="item-details">
+        <div class="item-details-top-right"></div>
+        <h2 tuiTitle>
+          {{ item().name }}
+        </h2>
+        @if (library()) {
+          <span class="library">
+            <tui-icon icon="@tui.library" />
+            <span class="library-value">{{ library()?.name }}</span>
+          </span>
+        }
       </div>
-  
-  
-      <!-- Item Details -->
-  
-      <div class="item-content">
-        <div routerLink="/community/items/{{item().id}}" class="item-details">
-          <div class="item-details-top-right">
-          </div>
-          <h2 tuiTitle>
-            {{ item().name }}
-          </h2>
-          @if (library()) {
-            <span class="library">
-              <tui-icon icon="@tui.library" />
-              <span class="library-value">{{ library()?.name }}</span>
-            </span>
-          }
-  
-        </div>
-  
 
-
-        <div class="item-actions">
-
-  
-  
-  
+      <div class="item-actions">
         @if (nextBorrowRecord()) {
-          <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-          [appearance]="'primary'" size="m" type="button"
-          >
-        </button>
+          <button
+            class="reservation-state"
+            iconStart="@tui.calendar-clock"
+            tuiButton
+            [appearance]="'primary'"
+            size="m"
+            type="button"
+          ></button>
           <div class="reservation-dates-grid">
             <div class="reservation-start">
-                <span class="reservation-start-date">{{ nextBorrowRecord().startDate | date:'MMM d, y' }}</span>
+              <span class="reservation-start-date">{{
+                nextBorrowRecord().startDate | date: "MMM d, y"
+              }}</span>
             </div>
             <div class="reservation-arrow">
               <tui-icon icon="@tui.arrow-right" />
             </div>
 
             <div class="reservation-end">
-                <span class="reservation-end-date">{{ nextBorrowRecord().endDate | date:'MMM d, y' }}</span>
+              <span class="reservation-end-date">{{
+                nextBorrowRecord().endDate | date: "MMM d, y"
+              }}</span>
             </div>
           </div>
         }
-  
-          <button appearance="outline" class="accent details-button" size="m" routerLink="/community/items/{{item() .id}}" tuiButton
-            type="button">
-            <span class="details-button-text">More</span>
-            <tui-icon icon="@tui.arrow-right" />
-  
-          </button>
-  
-        </div>
-        
+
+        <button
+          appearance="outline"
+          class="accent details-button"
+          size="m"
+          routerLink="/community/items/{{ item().id }}"
+          tuiButton
+          type="button"
+        >
+          <span class="details-button-text">More</span>
+          <tui-icon icon="@tui.arrow-right" />
+        </button>
       </div>
     </div>
   </div>
+</div>

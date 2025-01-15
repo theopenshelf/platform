@@ -1,13 +1,40 @@
 import { Component, Inject } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink, RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink,
+  RouterModule,
+} from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiDataList, TuiIcon, TuiIconPipe, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
-import { TUI_CONFIRM, TuiAccordion, TuiAvatar, TuiConfirmData, TuiDataListWrapper, TuiSwitch } from '@taiga-ui/kit';
-import { TuiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import {
+  TuiAlertService,
+  TuiAutoColorPipe,
+  TuiButton,
+  TuiDataList,
+  TuiIcon,
+  TuiIconPipe,
+  TuiInitialsPipe,
+  TuiTextfield,
+} from '@taiga-ui/core';
+import {
+  TUI_CONFIRM,
+  TuiAccordion,
+  TuiAvatar,
+  TuiConfirmData,
+  TuiDataListWrapper,
+  TuiSwitch,
+} from '@taiga-ui/kit';
+import {
+  TuiSelectModule,
+  TuiTextfieldControllerModule,
+} from '@taiga-ui/legacy';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
+import {
+  ITEMS_SERVICE_TOKEN,
+  LIBRARIES_SERVICE_TOKEN,
+} from '../../../community.provider';
 import { ItemCardComponent } from '../../../components/item-card/item-card.component';
 import { UIBorrowRecord } from '../../../models/UIBorrowRecord';
 import { UIItem } from '../../../models/UIItem';
@@ -40,17 +67,16 @@ import { ItemsComponent } from '../../items/items.component';
     TuiSelectModule,
   ],
   templateUrl: './library.component.html',
-  styleUrl: './library.component.scss'
+  styleUrl: './library.component.scss',
 })
 export class LibraryComponent {
-
   searchText = '';
   selectedSortingOption = ItemsComponent.SORT_RECENTLY_ADDED; // Default sorting option
 
   library: UILibrary | undefined;
   items: UIItem[] = [];
   filteredItems: UIItem[] = [];
-  currentUser: any = "me@example.com"; //TODO: get current user from auth service
+  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
 
   protected sortingOptions = [
     ItemsComponent.SORT_RECENTLY_ADDED,
@@ -64,14 +90,14 @@ export class LibraryComponent {
     console.log(`Item ${item.id} marked as favorite.`);
   };
 
-  constructor(@Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+  constructor(
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
@@ -79,14 +105,11 @@ export class LibraryComponent {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
       });
-      this.itemsService.getItems(
-        undefined,
-        undefined,
-        undefined,
-        [libraryId],
-      ).subscribe((itemsPagination) => {
-        this.items = itemsPagination.items;
-      });
+      this.itemsService
+        .getItems(undefined, undefined, undefined, [libraryId])
+        .subscribe((itemsPagination) => {
+          this.items = itemsPagination.items;
+        });
     }
   }
 
@@ -96,7 +119,9 @@ export class LibraryComponent {
   }
 
   get filteredAndSortedItems() {
-    const filtered = this.items.filter(item => item.name.toLowerCase().includes(this.searchText.toLowerCase()));
+    const filtered = this.items.filter((item) =>
+      item.name.toLowerCase().includes(this.searchText.toLowerCase()),
+    );
 
     return filtered.sort((a, b) => {
       switch (this.testValue.value) {
@@ -114,7 +139,7 @@ export class LibraryComponent {
 
   deleteLibrary(library: UILibrary): void {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to delete this user?',  // Simple content
+      content: 'Are you sure you want to delete this user?', // Simple content
       yes: 'Yes, Delete',
       no: 'Cancel',
     };
@@ -125,18 +150,32 @@ export class LibraryComponent {
         size: 'm',
         data,
       })
-      .pipe(switchMap((response) => {
-        this.alerts.open('Library <strong>' + library.name + '</strong> deleted successfully', { appearance: 'positive' });
-        this.router.navigate(['/community/libraries']);
-        return of(true);
-      }))
+      .pipe(
+        switchMap((response) => {
+          this.alerts.open(
+            'Library <strong>' +
+              library.name +
+              '</strong> deleted successfully',
+            { appearance: 'positive' },
+          );
+          this.router.navigate(['/community/libraries']);
+          return of(true);
+        }),
+      )
       .subscribe();
-
 
     this.librariesService.deleteLibrary(library.id).subscribe();
   }
 
   getBorrowRecords(itemId: string): UIBorrowRecord[] {
-    return this.items.find(item => item.id === itemId)?.borrowRecords.filter(record => record.endDate >= new Date() && record.borrowedBy === this.currentUser) || [];
+    return (
+      this.items
+        .find((item) => item.id === itemId)
+        ?.borrowRecords.filter(
+          (record) =>
+            record.endDate >= new Date() &&
+            record.borrowedBy === this.currentUser,
+        ) || []
+    );
   }
 }

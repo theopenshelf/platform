@@ -1,13 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {
-  TuiDataList,
-  TuiDropdown,
-  TuiIcon
-} from "@taiga-ui/core";
-import {
-  TuiTabs
-} from '@taiga-ui/kit';
+import { TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
+import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
 
 @Component({
@@ -18,13 +12,12 @@ import { TuiNavigation } from '@taiga-ui/layout';
     TuiDropdown,
     TuiIcon,
     TuiNavigation,
-    TuiTabs
+    TuiTabs,
   ],
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.scss'
+  styleUrl: './footer.component.scss',
 })
 export class FooterComponent {
-
   @HostListener('window:scroll', [])
   onWindowScroll() {
     const scrollToTopButton = document.getElementById('scrollToTop');

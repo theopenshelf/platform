@@ -7,9 +7,8 @@ describe('LibrariesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibrariesComponent]
-    })
-      .compileComponents();
+      imports: [LibrariesComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LibrariesComponent);
     component = fixture.componentInstance;

@@ -11,21 +11,29 @@ import { APINotificationsService } from './services/real-api/notifications.servi
 import { APIPublicSettingsService } from './services/real-api/settings.service';
 import { PublicSettingsService } from './services/settings.service';
 
-export const NOTIFICATIONS_SERVICE_TOKEN = new InjectionToken<NotificationsService>('NotificationsService');
-export const AUTH_SERVICE_TOKEN = new InjectionToken<AuthService>('AuthService');
-export const PUBLIC_SETTINGS_SERVICE_TOKEN = new InjectionToken<PublicSettingsService>('PublicSettingsService');
+export const NOTIFICATIONS_SERVICE_TOKEN =
+  new InjectionToken<NotificationsService>('NotificationsService');
+export const AUTH_SERVICE_TOKEN = new InjectionToken<AuthService>(
+  'AuthService',
+);
+export const PUBLIC_SETTINGS_SERVICE_TOKEN =
+  new InjectionToken<PublicSettingsService>('PublicSettingsService');
 
 export const globalProviders: Provider[] = [
-    {
-        provide: AUTH_SERVICE_TOKEN,
-        useExisting: environment.useMockApi ? MockAuthService : APIAuthService,
-    },
-    {
-        provide: NOTIFICATIONS_SERVICE_TOKEN,
-        useExisting: environment.useMockApi ? MockNotificationsService : APINotificationsService,
-    },
-    {
-        provide: PUBLIC_SETTINGS_SERVICE_TOKEN,
-        useExisting: environment.useMockApi ? MockPublicSettingsService : APIPublicSettingsService,
-    }
+  {
+    provide: AUTH_SERVICE_TOKEN,
+    useExisting: environment.useMockApi ? MockAuthService : APIAuthService,
+  },
+  {
+    provide: NOTIFICATIONS_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockNotificationsService
+      : APINotificationsService,
+  },
+  {
+    provide: PUBLIC_SETTINGS_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockPublicSettingsService
+      : APIPublicSettingsService,
+  },
 ];

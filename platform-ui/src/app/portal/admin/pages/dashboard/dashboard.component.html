@@ -1,145 +1,158 @@
 <div class="dashboard-models-container">
-    <div class="dashboard-card">
-        <div class="counter-icon">
-            <tui-icon size="xl" icon="@tui.users" />
-
-        </div>
-        <div class="counter-container">
-            <div class="label">Users</div>
-            <div class="counter">{{ userCount }}</div>
-        </div>
+  <div class="dashboard-card">
+    <div class="counter-icon">
+      <tui-icon size="xl" icon="@tui.users" />
     </div>
-
-    <div class="dashboard-card">
-        <div class="counter-icon">
-            <tui-icon size="xl" icon="@tui.package" />
-        </div>
-        <div class="counter-container">
-            <div class="label">Items</div>
-            <div class="counter">{{ itemCount }}</div>
-        </div>
+    <div class="counter-container">
+      <div class="label">Users</div>
+      <div class="counter">{{ userCount }}</div>
     </div>
+  </div>
 
-    <div class="dashboard-card">
-        <div class="counter-icon">
-            <tui-icon size="xl" icon="@tui.library" />
-        </div>
-        <div class="counter-container">
-            <div class="label">Libraries</div>
-            <div class="counter">{{ libraryCount }}</div>
-        </div>
+  <div class="dashboard-card">
+    <div class="counter-icon">
+      <tui-icon size="xl" icon="@tui.package" />
     </div>
+    <div class="counter-container">
+      <div class="label">Items</div>
+      <div class="counter">{{ itemCount }}</div>
+    </div>
+  </div>
+
+  <div class="dashboard-card">
+    <div class="counter-icon">
+      <tui-icon size="xl" icon="@tui.library" />
+    </div>
+    <div class="counter-container">
+      <div class="label">Libraries</div>
+      <div class="counter">{{ libraryCount }}</div>
+    </div>
+  </div>
 </div>
 
-
 @defer (on viewport) {
-    <div class="dashboard-top-container">
-        <div class="dashboard-top-users">
-            <div class="chart-title">Top borrowers</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Total Borrows</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (borrower of topBorrowers; track borrower) {
-                        <tr>
-                            <td>{{ borrower.username }}</td>
-                            <td>{{ borrower.totalBorrows }}</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="dashboard-top-items">
-            <div class="chart-title">Top items</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Items</th>
-                        <th>Total Borrows</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (item of topItems; track item) {
-                        <tr>
-                            <td>{{ item.item }}</td>
-                            <td>{{ item.totalBorrows }}</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div class="dashboard-top-categories">
-            <div class="chart-title">Top Categories</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Categories</th>
-                        <th>Total Borrows</th>
-                        <th>Number of Items</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (category of topCategories; track category) {
-                        <tr>
-                            <td>{{ category.category }}</td>
-                            <td>{{ category.totalBorrows }}</td>
-                            <td>{{ category.numberOfItems }}</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+  <div class="dashboard-top-container">
+    <div class="dashboard-top-users">
+      <div class="chart-title">Top borrowers</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Total Borrows</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (borrower of topBorrowers; track borrower) {
+            <tr>
+              <td>{{ borrower.username }}</td>
+              <td>{{ borrower.totalBorrows }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="dashboard-top-items">
+      <div class="chart-title">Top items</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Items</th>
+            <th>Total Borrows</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of topItems; track item) {
+            <tr>
+              <td>{{ item.item }}</td>
+              <td>{{ item.totalBorrows }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div class="dashboard-top-categories">
+      <div class="chart-title">Top Categories</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Categories</th>
+            <th>Total Borrows</th>
+            <th>Number of Items</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (category of topCategories; track category) {
+            <tr>
+              <td>{{ category.category }}</td>
+              <td>{{ category.totalBorrows }}</td>
+              <td>{{ category.numberOfItems }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="dashboard-borrow-container">
+    <div class="dashboard-borrow-over-time">
+      <div class="chart-title">Total Borrows Over Time</div>
+      <tui-axes
+        class="axes"
+        [horizontalLines]="2"
+        [tuiLineChartHint]="hintContent"
+        [verticalLines]="4"
+        [axisXLabels]="labelsX"
+        [axisYLabels]="axisYLabels"
+      >
+        <tui-line-chart
+          [dots]="true"
+          [height]="200"
+          [value]="value"
+          [tuiHintContent]="hintContent"
+          [width]="600"
+          [x]="0"
+          [xStringify]="stringify"
+          [y]="0"
+          [yStringify]="stringify"
+        />
+      </tui-axes>
+
+      <ng-template #hintContent let-index="index" let-value>
+        <div>Vertical: {{ value[0] }}</div>
+        <div>Horizontal: {{ value[1] }}</div>
+        <div>index: {{ index }}</div>
+      </ng-template>
     </div>
 
-    <div class="dashboard-borrow-container">
-        <div class="dashboard-borrow-over-time">
-            <div class="chart-title">Total Borrows Over Time</div>
-            <tui-axes class="axes" [horizontalLines]="2" [tuiLineChartHint]="hintContent" [verticalLines]="4"
-                [axisXLabels]="labelsX" [axisYLabels]="axisYLabels">
-                <tui-line-chart [dots]="true" [height]="200" [value]="value" [tuiHintContent]="hintContent" [width]="600"
-                    [x]="0" [xStringify]="stringify" [y]="0" [yStringify]="stringify" />
-            </tui-axes>
-    
-            <ng-template #hintContent let-index="index" let-value>
-                <div>Vertical: {{ value[0] }}</div>
-                <div>Horizontal: {{ value[1] }}</div>
-                <div>index: {{ index }}</div>
-            </ng-template>
+    <div>
+      <div class="chart-title">Overview</div>
+
+      <div class="metric-cards">
+        <div class="metric-card">
+          <div class="counter">{{ totalBorrows }}</div>
+          <div class="label">Total Borrows</div>
         </div>
-    
-        <div>
-            <div class="chart-title">Overview</div>
-    
-            <div class="metric-cards">
-                <div class="metric-card">
-                    <div class="counter">{{ totalBorrows }}</div>
-                    <div class="label">Total Borrows</div>
-                </div>
-                <div class="metric-card">
-                    <div class="counter">{{ totalReservations }}</div>
-                    <div class="label">Total Reservations</div>
-                </div>
-                <div class="metric-card">
-                    <div class="counter">{{ itemsOnLoan }}</div>
-                    <div class="label">Items currently on loan</div>
-                </div>
-                <div class="metric-card">
-                    <div class="counter">{{ avgLoanDuration }}</div>
-                    <div class="label">Avg loan duration</div>
-                </div>
-                <div class="metric-card">
-                    <div class="counter">{{ returnTimeliness }}</div>
-                    <div class="label">Return Timeliness</div>
-                </div>
-            </div>
+        <div class="metric-card">
+          <div class="counter">{{ totalReservations }}</div>
+          <div class="label">Total Reservations</div>
         </div>
+        <div class="metric-card">
+          <div class="counter">{{ itemsOnLoan }}</div>
+          <div class="label">Items currently on loan</div>
+        </div>
+        <div class="metric-card">
+          <div class="counter">{{ avgLoanDuration }}</div>
+          <div class="label">Avg loan duration</div>
+        </div>
+        <div class="metric-card">
+          <div class="counter">{{ returnTimeliness }}</div>
+          <div class="label">Return Timeliness</div>
+        </div>
+      </div>
     </div>
+  </div>
 } @placeholder {
-    <div class="dashboard-top-container">
-        <p>Loading...</p>
-    </div>
+  <div class="dashboard-top-container">
+    <p>Loading...</p>
+  </div>
 }

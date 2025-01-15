@@ -8,13 +8,16 @@ import { AuthService } from '../services/auth.service';
 })
 export class CommunityGuard implements CanActivate {
   constructor(
-    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService, 
-    private router: Router
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
+    private router: Router,
   ) {}
 
   canActivate(): boolean {
-    if (this.authService.isAuthenticated() && this.authService.hasRole('community')) {
-        return true;
+    if (
+      this.authService.isAuthenticated() &&
+      this.authService.hasRole('community')
+    ) {
+      return true;
     }
     this.router.navigate(['/']); // Redirect to the home page if unauthorized
     return false;

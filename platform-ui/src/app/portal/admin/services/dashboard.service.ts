@@ -1,52 +1,51 @@
-import { TuiPoint } from "@taiga-ui/core";
+import { TuiPoint } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
 
 // Define types for return values
 export interface UIDashboardBorrowesOverTimeData {
-    labelsX: string[];
-    axisYLabels: string[];
-    data: readonly TuiPoint[];
+  labelsX: string[];
+  axisYLabels: string[];
+  data: readonly TuiPoint[];
 }
 
 export interface UIDashboardBorrowesMetrics {
-    totalBorrows: number;
-    totalReservations: number;
-    itemsOnLoan: number;
-    avgLoanDuration: string;
-    returnTimeliness: string;
+  totalBorrows: number;
+  totalReservations: number;
+  itemsOnLoan: number;
+  avgLoanDuration: string;
+  returnTimeliness: string;
 }
 
 export interface UIBorrowerMetrics {
-    username: string;
-    totalBorrows: number;
+  username: string;
+  totalBorrows: number;
 }
 
 export interface UIItemMetrics {
-    item: string;
-    totalBorrows: number;
+  item: string;
+  totalBorrows: number;
 }
 
 export interface UICategoryMetrics {
-    category: string;
-    totalBorrows: number;
-    numberOfItems: number;
+  category: string;
+  totalBorrows: number;
+  numberOfItems: number;
 }
 
 export interface DashboardService {
+  getDashboardData(): Observable<UIDashboardBorrowesOverTimeData>;
 
-    getDashboardData(): Observable<UIDashboardBorrowesOverTimeData>;
+  getUserCount(): Observable<number>;
 
-    getUserCount(): Observable<number>;
+  getItemCount(): Observable<number>;
 
-    getItemCount(): Observable<number>;
+  getLibraryCount(): Observable<number>;
 
-    getLibraryCount(): Observable<number>;
+  getDashboardMetrics(): Observable<UIDashboardBorrowesMetrics>;
 
-    getDashboardMetrics(): Observable<UIDashboardBorrowesMetrics>;
+  getTopBorrowers(): Observable<UIBorrowerMetrics[]>;
 
-    getTopBorrowers(): Observable<UIBorrowerMetrics[]>;
+  getTopItems(): Observable<UIItemMetrics[]>;
 
-    getTopItems(): Observable<UIItemMetrics[]>;
-
-    getTopCategories(): Observable<UICategoryMetrics[]>;
+  getTopCategories(): Observable<UICategoryMetrics[]>;
 }

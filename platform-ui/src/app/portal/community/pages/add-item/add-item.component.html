@@ -2,31 +2,33 @@
 <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
   <tui-textfield>
     <label tuiLabel>Item Name</label>
-    <input id="name" formControlName="name" type="text" placeholder="Enter item name" tuiTextfield>
+    <input
+      id="name"
+      formControlName="name"
+      type="text"
+      placeholder="Enter item name"
+      tuiTextfield
+    />
   </tui-textfield>
 
-
   <tui-combo-box
-      formControlName="category"
-      [stringify]="stringify"
-      [tuiTextfieldLabelOutside]="true"
+    formControlName="category"
+    [stringify]="stringify"
+    [tuiTextfieldLabelOutside]="true"
   >
-
-      <tui-data-list-wrapper
+    <tui-data-list-wrapper
       *tuiDataList
       [items]="categories"
       [itemContent]="stringify | tuiStringifyContent"
-
     />
   </tui-combo-box>
-
 
   <label for="image">Upload Image</label>
   <div
     class="drag-drop-zone"
     (dragover)="allowDrag($event)"
     (drop)="onImageDrop($event)"
-    >
+  >
     @if (!imageFile) {
       <p>Drag and drop an image here, or click to select</p>
     }
@@ -36,23 +38,28 @@
   </div>
 
   <tui-textarea
-  formControlName="shortDescription"
-  class="tui-space_top-4"
-  placeholder="Enter a short description (max 150 characters)"
-
-  maxlength="150"
-
+    formControlName="shortDescription"
+    class="tui-space_top-4"
+    placeholder="Enter a short description (max 150 characters)"
+    maxlength="150"
   >
-  Short Description
-</tui-textarea>
+    Short Description
+  </tui-textarea>
 
   <label for="description">Description</label>
   <quill-editor
     formControlName="description"
     [modules]="editorConfig"
-    style="height: 200px;"
+    style="height: 200px"
   ></quill-editor>
 
-
-  <button type="submit" tuiButton size="m" appearance="accent" [disabled]="addItemForm.invalid">Add Item</button>
+  <button
+    type="submit"
+    tuiButton
+    size="m"
+    appearance="accent"
+    [disabled]="addItemForm.invalid"
+  >
+    Add Item
+  </button>
 </form>

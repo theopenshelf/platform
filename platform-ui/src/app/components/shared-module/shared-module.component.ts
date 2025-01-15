@@ -2,11 +2,7 @@ import { NgModule } from '@angular/core';
 import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
-  imports: [
-    TimeagoModule.forRoot(),
-  ],
-  exports: [
-    TimeagoModule,
-  ],
+  imports: [TimeagoModule.forRoot()],
+  exports: [TimeagoModule],
 })
-export class SharedModule { }
+export class SharedModule {}
