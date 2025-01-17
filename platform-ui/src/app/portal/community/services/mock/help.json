@@ -1,0 +1,244 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "General",
+      "icon": "@tui.globe"
+    },
+    {
+      "id": "2",
+      "name": "Account",
+      "icon": "user"
+    },
+    {
+      "id": "3",
+      "name": "Billing",
+      "icon": "credit-card"
+    },
+    {
+      "id": "4",
+      "name": "Technical Support",
+      "icon": "settings"
+    },
+    {
+      "id": "5",
+      "name": "Privacy",
+      "icon": "lock"
+    },
+    {
+      "id": "6",
+      "name": "Security",
+      "icon": "shield"
+    },
+    {
+      "id": "7",
+      "name": "Feedback",
+      "icon": "message-circle"
+    },
+    {
+      "id": "8",
+      "name": "Updates",
+      "icon": "bell-ring"
+    }
+  ],
+  "articles": [
+    {
+      "id": "1",
+      "title": "How to use the app",
+      "content": "This article provides a comprehensive guide on how to use the app effectively. It covers the basic functionalities, navigation tips, and advanced features. Users will learn how to customize their settings, manage notifications, and utilize the app's tools to enhance productivity. Additionally, troubleshooting common issues and accessing support are discussed. By the end of this article, users should feel confident in navigating and utilizing the app to its fullest potential.",
+      "category_id": "1"
+    },
+    {
+      "id": "2",
+      "title": "Creating an Account",
+      "content": "Creating an account is the first step to accessing all the features of our service. This article walks you through the registration process, including filling out your personal information, verifying your email address, and setting up a secure password. We also provide tips on choosing a strong password and keeping your account information safe. Once registered, you'll be able to personalize your profile and start using the app immediately.",
+      "category_id": "2"
+    },
+    {
+      "id": "3",
+      "title": "Resetting Password",
+      "content": "If you've forgotten your password or need to reset it for security reasons, this article will guide you through the process. We explain how to initiate a password reset from the login screen, receive a reset link via email, and create a new password. Additionally, we offer advice on creating a strong password and maintaining account security. Remember to update your password regularly to protect your account from unauthorized access.",
+      "category_id": "2"
+    },
+    {
+      "id": "4",
+      "title": "Understanding Your Bill",
+      "content": "Billing can often be confusing, but this article aims to clarify the details of your bill. We break down each section of your bill, explaining charges, fees, and any applicable taxes. You'll learn how to read your billing statement, understand your payment options, and manage your billing preferences. We also provide information on how to dispute charges and contact customer support for billing inquiries.",
+      "category_id": "3"
+    },
+    {
+      "id": "5",
+      "title": "Troubleshooting Login Issues",
+      "content": "Experiencing login issues can be frustrating, but this article offers solutions to common problems. We cover scenarios such as forgotten passwords, account lockouts, and two-factor authentication errors. Step-by-step instructions are provided to help you regain access to your account. Additionally, we discuss how to update your login credentials and ensure your account remains secure.",
+      "category_id": "4"
+    },
+    {
+      "id": "6",
+      "title": "Privacy Settings Overview",
+      "content": "Your privacy is important to us, and this article explains how to manage your privacy settings. We guide you through the process of adjusting who can see your information, how to control data sharing, and setting up privacy alerts. Learn how to review your privacy settings regularly and make informed decisions about your data. We also provide tips on protecting your personal information online.",
+      "category_id": "5"
+    },
+    {
+      "id": "7",
+      "title": "Enhancing Account Security",
+      "content": "Security is a top priority, and this article provides tips on enhancing your account security. We discuss the importance of using strong, unique passwords, enabling two-factor authentication, and recognizing phishing attempts. Learn how to monitor your account for suspicious activity and what steps to take if you suspect a security breach. Keeping your account secure is a shared responsibility, and we provide the tools to help you do so.",
+      "category_id": "6"
+    },
+    {
+      "id": "8",
+      "title": "Providing Feedback",
+      "content": "We value your feedback and encourage you to share your thoughts on our services. This article explains how to submit feedback, whether it's a suggestion, compliment, or complaint. We outline the different channels available for providing feedback and how we use your input to improve our offerings. Your feedback is crucial in helping us deliver the best possible experience.",
+      "category_id": "7"
+    },
+    {
+      "id": "9",
+      "title": "Latest App Updates",
+      "content": "Stay informed about the latest updates to our app with this article. We provide details on new features, improvements, and bug fixes. Learn how to update your app to the latest version and take advantage of the enhancements. We also discuss upcoming features and how you can participate in beta testing. Keeping your app updated ensures you have the best experience possible.",
+      "category_id": "8"
+    },
+    {
+      "id": "10",
+      "title": "General Tips for New Users",
+      "content": "Welcome to our app! This article is designed to help new users get started. We cover the basics of setting up your profile, exploring the main features, and customizing your experience. You'll also find tips on how to connect with other users and make the most of the community features. Whether you're here for personal use or professional networking, these tips will help you get the most out of your experience.",
+      "category_id": "1"
+    },
+    {
+      "id": "11",
+      "title": "Managing Your Account Settings",
+      "content": "Your account settings are crucial for personalizing your experience. This article guides you through the various settings available, including notification preferences, privacy controls, and account security options. Learn how to update your profile information, link social media accounts, and manage your subscription settings. Keeping your account settings up-to-date ensures a seamless and secure experience.",
+      "category_id": "2"
+    },
+    {
+      "id": "12",
+      "title": "Understanding Subscription Plans",
+      "content": "Choosing the right subscription plan is important for accessing the features you need. This article explains the different plans available, including their benefits, costs, and limitations. We also provide guidance on how to upgrade or downgrade your plan, manage your billing cycle, and take advantage of promotional offers. Understanding your subscription options helps you make informed decisions about your service.",
+      "category_id": "3"
+    },
+    {
+      "id": "13",
+      "title": "Resolving Technical Issues",
+      "content": "Technical issues can disrupt your experience, but this article offers solutions to common problems. We cover topics such as app crashes, connectivity issues, and performance slowdowns. Step-by-step troubleshooting guides are provided to help you resolve these issues quickly. Additionally, we discuss how to report bugs and contact technical support for further assistance.",
+      "category_id": "4"
+    },
+    {
+      "id": "14",
+      "title": "Data Privacy and Protection",
+      "content": "Protecting your data is a top priority, and this article explains how we safeguard your information. We discuss our data privacy policies, how we collect and use your data, and the measures we take to protect it. Learn about your rights regarding data access and deletion, and how to manage your data preferences. Understanding our commitment to data privacy helps you feel secure in using our services.",
+      "category_id": "5"
+    },
+    {
+      "id": "15",
+      "title": "Recognizing and Avoiding Scams",
+      "content": "Online scams are a growing concern, and this article provides tips on recognizing and avoiding them. We discuss common scam tactics, such as phishing emails and fraudulent websites, and how to protect yourself from falling victim. Learn how to verify the authenticity of communications, report suspicious activity, and keep your personal information safe. Staying informed about scams helps you navigate the online world safely.",
+      "category_id": "6"
+    },
+    {
+      "id": "16",
+      "title": "How to Submit a Feature Request",
+      "content": "We welcome your ideas for new features and improvements. This article explains how to submit a feature request, including the information we need to evaluate your suggestion. We outline the process for reviewing and implementing new features, and how you can track the progress of your request. Your input is valuable in shaping the future of our app, and we encourage you to share your ideas.",
+      "category_id": "7"
+    },
+    {
+      "id": "17",
+      "title": "Participating in Beta Testing",
+      "content": "Join our beta testing program to get early access to new features and provide feedback. This article explains how to sign up for beta testing, what to expect during the testing phase, and how to provide feedback on your experience. Participating in beta testing gives you a chance to influence the development of our app and help us deliver the best possible experience to all users.",
+      "category_id": "8"
+    },
+    {
+      "id": "18",
+      "title": "Navigating the App Interface",
+      "content": "This article provides tips on navigating the app interface efficiently. Learn about the layout, key features, and shortcuts to enhance your user experience.",
+      "category_id": "1"
+    },
+    {
+      "id": "19",
+      "title": "Customizing Your Dashboard",
+      "content": "Discover how to customize your dashboard to suit your preferences. This article covers widget management, layout adjustments, and personalization options.",
+      "category_id": "1"
+    },
+    {
+      "id": "20",
+      "title": "Advanced Account Settings",
+      "content": "Explore advanced settings to optimize your account. This article guides you through security enhancements, privacy controls, and notification preferences.",
+      "category_id": "2"
+    },
+    {
+      "id": "21",
+      "title": "Managing Multiple Accounts",
+      "content": "Learn how to manage multiple accounts efficiently. This article provides strategies for switching between accounts and keeping your information organized.",
+      "category_id": "2"
+    },
+    {
+      "id": "22",
+      "title": "Understanding Billing Cycles",
+      "content": "Gain insights into how billing cycles work. This article explains billing periods, due dates, and how to avoid late fees.",
+      "category_id": "3"
+    },
+    {
+      "id": "23",
+      "title": "Setting Up Auto-Pay",
+      "content": "Automate your payments with ease. This article walks you through setting up auto-pay and managing your payment methods.",
+      "category_id": "3"
+    },
+    {
+      "id": "24",
+      "title": "Technical Support FAQs",
+      "content": "Find answers to common technical questions. This article compiles frequently asked questions and solutions for quick troubleshooting.",
+      "category_id": "4"
+    },
+    {
+      "id": "25",
+      "title": "Optimizing App Performance",
+      "content": "Enhance your app's performance with these tips. This article covers memory management, app updates, and device compatibility.",
+      "category_id": "4"
+    },
+    {
+      "id": "26",
+      "title": "Privacy Policy Overview",
+      "content": "Understand our privacy policy in detail. This article explains how we handle your data and your rights as a user.",
+      "category_id": "5"
+    },
+    {
+      "id": "27",
+      "title": "Data Encryption Explained",
+      "content": "Learn about data encryption and its importance. This article discusses encryption methods and how they protect your information.",
+      "category_id": "5"
+    },
+    {
+      "id": "28",
+      "title": "Security Best Practices",
+      "content": "Adopt best practices for securing your account. This article provides guidelines on password management, two-factor authentication, and more.",
+      "category_id": "6"
+    },
+    {
+      "id": "29",
+      "title": "Identifying Phishing Attempts",
+      "content": "Stay safe from phishing scams. This article teaches you how to recognize phishing attempts and protect your personal information.",
+      "category_id": "6"
+    },
+    {
+      "id": "30",
+      "title": "Effective Feedback Techniques",
+      "content": "Learn how to provide constructive feedback. This article offers tips on articulating your thoughts and ensuring your feedback is impactful.",
+      "category_id": "7"
+    },
+    {
+      "id": "31",
+      "title": "Feedback and Improvement Cycle",
+      "content": "Understand how your feedback contributes to improvements. This article explains the feedback loop and how we implement changes based on user input.",
+      "category_id": "7"
+    },
+    {
+      "id": "32",
+      "title": "Upcoming Features Preview",
+      "content": "Get a sneak peek at upcoming features. This article highlights new developments and how they will enhance your app experience.",
+      "category_id": "8"
+    },
+    {
+      "id": "33",
+      "title": "Participating in User Surveys",
+      "content": "Contribute to our app's development by participating in surveys. This article explains how your input shapes future updates.",
+      "category_id": "8"
+    }
+  ]
+}

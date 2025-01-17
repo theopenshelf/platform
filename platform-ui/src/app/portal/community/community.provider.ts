@@ -1,14 +1,17 @@
 import { InjectionToken, Provider } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { CategoriesService } from './services/categories.service';
+import { HelpService } from './services/help.service';
 import { ItemsService } from './services/items.service';
 import { LibrariesService } from './services/libraries.service';
 import { MockCategoriesService } from './services/mock/categories.service';
+import { MockHelpService } from './services/mock/help.service';
 import { MockItemsService } from './services/mock/items.service';
 import { MockLibrariesService } from './services/mock/libraries.service';
 import { MockProfileService } from './services/mock/profile.service';
 import { ProfileService } from './services/profile.service';
 import { APICategoriesService } from './services/real-api/categories.service';
+import { APIHelpService } from './services/real-api/help.service';
 import { APIItemsService } from './services/real-api/items.service';
 import { ApiProfileService } from './services/real-api/profile.service';
 
@@ -23,6 +26,9 @@ export const PROFILE_SERVICE_TOKEN = new InjectionToken<ProfileService>(
 );
 export const LIBRARIES_SERVICE_TOKEN = new InjectionToken<LibrariesService>(
   'LibrariesService',
+);
+export const HELP_SERVICE_TOKEN = new InjectionToken<HelpService>(
+  'HelpService',
 );
 
 export const communityProviders: Provider[] = [
@@ -47,5 +53,11 @@ export const communityProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockLibrariesService
       : MockLibrariesService,
+  },
+  {
+    provide: HELP_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockHelpService
+      : APIHelpService,
   },
 ];

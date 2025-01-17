@@ -1,0 +1,56 @@
+<div class="help-center-container">
+
+    <div class="search-bar">
+        <div class="search-input">
+            <tui-icon icon="@tui.search" />
+            <input
+            [(ngModel)]="searchText"
+            placeholder="What object are you looking for?"
+            (input)="onTextFilterChange()"
+                        />
+          </div>
+    </div>
+
+    <div class="content-container">
+        <aside>
+            <ul>
+                @for (category of categories; track category.id) {
+                <li [class.active]="selectedCategoryId === category.id" (click)="selectCategory(category.id)">
+                    <tui-icon
+                        class="category-icon"
+                        [icon]="category.icon"
+                    ></tui-icon>
+                    {{ category.name }}
+                    <tui-icon
+                        class="arrow-right"
+                        icon="@tui.chevron-right"
+                    ></tui-icon>
+                </li>
+                }
+            </ul>
+        </aside>
+
+        <main>
+            <h2>
+                {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'Search Results' }}
+            </h2>
+            @if (articles.length === 0) {
+                <div class="no-items">
+                    <p><tui-icon icon="@tui.search-x" /> No article found</p>
+                </div>
+            }
+            <div class="container-faq">
+                <tui-accordion>
+                    @for (article of articles; track article.id) {
+                    <tui-accordion-item>
+                        {{ article.title }}
+                        <ng-template tuiAccordionItemContent>
+                            {{ article.content }}
+                        </ng-template>
+                    </tui-accordion-item>
+                    }   
+                </tui-accordion>
+            </div>
+        </main>
+    </div>
+</div>

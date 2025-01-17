@@ -1,5 +1,6 @@
 import { Component, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
@@ -13,6 +14,7 @@ import { TuiNavigation } from '@taiga-ui/layout';
     TuiIcon,
     TuiNavigation,
     TuiTabs,
+    RouterLink
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',

@@ -982,6 +982,45 @@ paths:
                 type: integer
                 example: 10
 
+  /community/help/categories:
+    get:
+      operationId: getHelpCategories
+      summary: Retrieve all help categories
+      tags:
+        - help-api
+      responses:
+        "200":
+          description: A list of help categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpCategory"
+
+  /community/help/articles:
+    get:
+      operationId: getHelpArticles
+      summary: Retrieve help articles by category ID
+      tags:
+        - help-api
+      parameters:
+        - name: categoryId
+          in: query
+          description: The ID of the category to filter articles
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of help articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpArticle"
+
 components:
   #####################################################
   # Predefined Components
@@ -1466,6 +1505,29 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/ItemStat"
+
+    HelpCategory:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        icon:
+          type: string
+
+    HelpArticle:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        content:
+          type: string
+        category:
+          $ref: "#/components/schemas/HelpCategory"
+
   responses:
     OK_200_GET_HELLO_WORLD:
       description: OK

@@ -4,6 +4,7 @@ import CommunityLayoutComponent from './community-layout/community-layout.compon
 import { communityProviders } from './community.provider';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { BorrowedItemsComponent } from './pages/borroweditems/borroweditems.component';
+import { HelpCenterComponent } from './pages/help-center/help-center.component';
 import { ItemComponent } from './pages/item/item.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { EditLibraryComponent } from './pages/libraries/edit-library/edit-library.component';
@@ -27,6 +28,7 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'libraries/:id', component: LibraryComponent },
       { path: 'libraries/:id/edit', component: EditLibraryComponent },
       { path: 'wishlist', component: WishlistComponent },
+      { path: 'help-center', component: HelpCenterComponent },
       {
         path: 'settings',
         loadChildren: () =>

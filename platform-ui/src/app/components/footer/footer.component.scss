@@ -7,6 +7,11 @@ footer {
     padding: 20px;
     margin-top: 30px;
 
+    a {
+        color: var(--tos-text-primary);
+        text-decoration: none;
+    }
+
     a:hover {
         color: var(--tos-text-accent);
         cursor: pointer;
