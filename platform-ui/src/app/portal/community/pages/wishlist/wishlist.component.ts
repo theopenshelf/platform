@@ -10,12 +10,13 @@ import {
   TuiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
+import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
 } from '../../community.provider';
-import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
 import { ItemCardComponent } from '../../components/item-card/item-card.component';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UICategory } from '../../models/UICategory';
@@ -48,7 +49,7 @@ import { LibrariesService } from '../../services/libraries.service';
   styleUrl: './wishlist.component.scss',
 })
 export class WishlistComponent implements OnInit {
-  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+  currentUser: UserInfo;
 
   // Data properties
   items: UIItem[] = [];
@@ -81,10 +82,13 @@ export class WishlistComponent implements OnInit {
     @Inject(CATEGORIES_SERVICE_TOKEN)
     private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
+    this.currentUser = this.authService.getCurrentUserInfo()
+  }
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -136,7 +140,7 @@ export class WishlistComponent implements OnInit {
         ?.borrowRecords.filter(
           (record) =>
             record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser,
+            record.borrowedBy === this.currentUser.email,
         ) || []
     );
   }

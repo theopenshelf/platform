@@ -11,6 +11,8 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { BehaviorSubject } from 'rxjs';
+import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
@@ -123,7 +125,7 @@ export class BorrowedItemsComponent implements OnInit {
   };
 
   isMobile: boolean = false;
-  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+  currentUser: UserInfo;
 
   // Sorting properties
 
@@ -141,10 +143,13 @@ export class BorrowedItemsComponent implements OnInit {
     @Inject(CATEGORIES_SERVICE_TOKEN)
     private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
+    this.currentUser = this.authService.getCurrentUserInfo();
+   }
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

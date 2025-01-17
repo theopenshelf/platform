@@ -16,13 +16,14 @@ export class APIAuthService implements AuthService {
     firstName: 'unknown',
     lastName: 'unknown',
     username: 'unknown',
+    email: 'unknown',
   };
 
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
     private alerts: TuiAlertService,
-  ) {}
+  ) { }
 
   getCurrentUserInfo(): UserInfo {
     return this.userInfo;
@@ -42,6 +43,7 @@ export class APIAuthService implements AuthService {
             this.userInfo.firstName = user.firstName;
             this.userInfo.lastName = user.lastName;
             this.userInfo.username = user.username;
+            this.userInfo.email = user.email ?? 'unknown';
             observer.next(true);
             observer.complete();
           },

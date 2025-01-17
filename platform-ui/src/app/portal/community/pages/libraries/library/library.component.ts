@@ -13,9 +13,8 @@ import {
   TuiButton,
   TuiDataList,
   TuiIcon,
-  TuiIconPipe,
   TuiInitialsPipe,
-  TuiTextfield,
+  TuiTextfield
 } from '@taiga-ui/core';
 import {
   TUI_CONFIRM,
@@ -32,6 +31,8 @@ import {
 } from '@taiga-ui/legacy';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../../services/auth.service';
 import {
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
@@ -67,7 +68,7 @@ import { ItemsComponent } from '../../items/items.component';
     TuiDataListWrapper,
     TuiSelectModule,
     TuiPagination
-],
+  ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
@@ -78,7 +79,7 @@ export class LibraryComponent {
   library: UILibrary | undefined;
   items: UIItem[] = [];
   filteredItems: UIItem[] = [];
-  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+  currentUser: UserInfo;
 
   // Pagination properties
   totalPages: number = 10;
@@ -101,11 +102,14 @@ export class LibraryComponent {
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+  ) {
+    this.currentUser = this.authService.getCurrentUserInfo();
+  }
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
@@ -202,7 +206,7 @@ export class LibraryComponent {
         ?.borrowRecords.filter(
           (record) =>
             record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser,
+            record.borrowedBy === this.currentUser.email,
         ) || []
     );
   }

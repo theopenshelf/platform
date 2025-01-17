@@ -43,6 +43,8 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
+import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
@@ -106,7 +108,7 @@ export class ItemComponent implements OnInit {
   disabledItemHandler: TuiBooleanHandler<TuiDay> = (day: TuiDay) => {
     return day.dayBefore(this.min);
   };
-  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+  currentUser: UserInfo;
   isReserved = false;
   nextReservation: UIBorrowRecord | undefined = undefined;
   itemsReturned: UIBorrowRecord[] = [];
@@ -115,6 +117,7 @@ export class ItemComponent implements OnInit {
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private dialogService: TuiDialogService,
@@ -123,6 +126,7 @@ export class ItemComponent implements OnInit {
     private alerts: TuiAlertService,
     private router: Router,
   ) {
+    this.currentUser = this.authService.getCurrentUserInfo();
     this.control = new FormControl<TuiDayRange | null | undefined>(
       this.selectedDate,
     );
@@ -179,7 +183,7 @@ export class ItemComponent implements OnInit {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
       this.item = item;
       this.borrowItemRecordsForCurrentUser = item.borrowRecords
-        .filter((record) => record.borrowedBy === this.currentUser)
+        .filter((record) => record.borrowedBy === this.currentUser.email)
         .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
       this.isReserved =
         this.borrowItemRecordsForCurrentUser.filter(
@@ -218,7 +222,7 @@ export class ItemComponent implements OnInit {
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
         if (
           this.item?.borrowRecords.find(
-            (record) => record.borrowedBy === this.currentUser.id,
+            (record) => record.borrowedBy === this.currentUser.email,
           )
         ) {
           return [BOOKED_BY_ME]; // Marked day

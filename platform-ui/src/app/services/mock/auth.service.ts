@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { AuthApiService, ResponseHelloWorld, User } from '../../api-client';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthApiService } from '../../api-client';
 import { AuthService, UserInfo } from '../auth.service';
 
 @Injectable({
@@ -15,13 +15,14 @@ export class MockAuthService implements AuthService {
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
-  ) {}
+  ) { }
 
   getCurrentUserInfo(): UserInfo {
     return {
       firstName: 'Quentin',
       lastName: 'Castel',
       username: 'qcastel',
+      email: 'me@example.com',
     };
   }
 

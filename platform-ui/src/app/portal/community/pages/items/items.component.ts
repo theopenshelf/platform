@@ -16,17 +16,16 @@ import {
   TuiAccordion,
   TuiCalendarRange,
   TuiCarousel,
-  TuiCheckbox,
   TuiDataListWrapper,
-  TuiPagination,
-  TuiSwitch,
+  TuiPagination
 } from '@taiga-ui/kit';
 import {
   TuiInputDateRangeModule,
   TuiSelectModule,
-  TuiTextfieldControllerModule,
-  TuiUnfinishedValidator,
+  TuiTextfieldControllerModule
 } from '@taiga-ui/legacy';
+import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
@@ -65,7 +64,7 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiDropdown,
     TuiCalendarRange,
     TuiCarousel
-],
+  ],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss'],
 })
@@ -112,17 +111,20 @@ export class ItemsComponent implements OnInit {
 
   // Responsive design
   isMobile: boolean = false;
-  currentUser: any = 'me@example.com'; //TODO: get current user from auth service
+  currentUser: UserInfo;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN)
     private categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
+    this.currentUser = this.authService.getCurrentUserInfo();
+  }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -282,7 +284,7 @@ export class ItemsComponent implements OnInit {
         ?.borrowRecords.filter(
           (record) =>
             record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser,
+            record.borrowedBy === this.currentUser.email,
         ) || []
     );
   }
