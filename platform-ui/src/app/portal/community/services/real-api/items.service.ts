@@ -9,30 +9,32 @@ import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
-import { ItemsService } from '../items.service';
+import { GetItemsParams, ItemsService } from '../items.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class APIItemsService implements ItemsService {
-  constructor(private itemsApiService: ItemsCommunityApiService) {}
+  constructor(private itemsApiService: ItemsCommunityApiService) { }
 
-  getItems(
-    currentUser?: boolean,
-    borrowedByCurrentUser?: boolean,
-    status?: UIBorrowStatus,
-    libraryIds?: string[],
-    categories?: string[],
-    searchText?: string,
-    currentlyAvailable?: boolean,
-    sortBy?: 'createdAt' | 'borrowCount' | 'favorite',
-    sortOrder?: 'asc' | 'desc',
-    page: number = 1,
-    pageSize: number = 10,
-    startDate?: Date,
-    endDate?: Date,
-    favorite?: boolean,
-  ): Observable<UIItemsPagination> {
+  getItems(params: GetItemsParams): Observable<UIItemsPagination> {
+    const {
+      currentUser,
+      borrowedByCurrentUser,
+      status,
+      libraryIds,
+      categories,
+      searchText,
+      currentlyAvailable,
+      sortBy,
+      sortOrder,
+      page = 1,
+      pageSize = 10,
+      startDate,
+      endDate,
+      favorite,
+    } = params;
+
     const statusMapping: Record<
       UIBorrowStatus,
       'returned' | 'borrowed' | 'reserved'

@@ -13,11 +13,9 @@ import {
   TuiRoot,
 } from '@taiga-ui/core';
 import {
-  TuiBadge,
-  TuiBadgeNotification,
   TuiChevron,
   TuiFade,
-  TuiTabs,
+  TuiTabs
 } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
 import { FooterComponent } from '../../../components/footer/footer.component';
@@ -38,7 +36,6 @@ const ICON =
     RouterLink,
     RouterLinkActive,
     TuiAppearance,
-    TuiBadgeNotification,
     TuiButton,
     TuiChevron,
     TuiDataList,
@@ -46,8 +43,7 @@ const ICON =
     TuiFade,
     TuiIcon,
     TuiNavigation,
-    TuiTabs,
-    TuiBadge,
+    TuiTabs
   ],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss',

@@ -7,13 +7,10 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  TuiAutoColorPipe,
   TuiButton,
-  TuiIcon,
-  TuiInitialsPipe,
-  TuiTextfield,
+  TuiTextfield
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiSwitch } from '@taiga-ui/kit';
+import { TuiSwitch } from '@taiga-ui/kit';
 import { QuillModule } from 'ngx-quill';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { UILibrary } from '../../../models/UILibrary';
@@ -28,11 +25,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     ReactiveFormsModule,
     TuiSwitch,
     TuiButton,
-    TuiTextfield,
-    TuiIcon,
-    TuiAvatar,
-    TuiInitialsPipe,
-    TuiAutoColorPipe,
+    TuiTextfield
   ],
 })
 export class EditLibraryComponent implements OnInit {
@@ -56,7 +49,7 @@ export class EditLibraryComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.editLibraryForm = this.fb.group({

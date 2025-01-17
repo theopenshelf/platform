@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
+import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
 import {
   TuiAlertService,
@@ -17,15 +17,12 @@ import {
   TuiDropdown,
   TuiHint,
   TuiIcon,
-  TuiInitialsPipe,
-  TuiLink,
-  TuiTitle,
+  TuiInitialsPipe
 } from '@taiga-ui/core';
 import {
   TUI_CONFIRM,
   TuiAvatar,
-  TuiCheckbox,
-  TuiConfirmData,
+  TuiConfirmData
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { switchMap } from 'rxjs';
@@ -56,7 +53,6 @@ export type User1 = {
     TuiHint,
     TuiInputModule,
     ReactiveFormsModule,
-    TuiCheckbox,
     TuiDialog,
     TuiButton,
     TuiAutoColorPipe,
@@ -66,11 +62,8 @@ export type User1 = {
     FormsModule,
     TuiDropdown,
     TuiTable,
-    TuiTitle,
     TuiIcon,
-    TuiLink,
-    TuiTablePagination,
-    TosTableComponent,
+    TosTableComponent
   ],
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -207,8 +200,8 @@ export class UsersComponent {
             this.alerts
               .open(
                 'User <strong>' +
-                  this.currentUser?.username +
-                  '</strong> password set successfully',
+                this.currentUser?.username +
+                '</strong> password set successfully',
                 { appearance: 'positive' },
               )
               .subscribe();

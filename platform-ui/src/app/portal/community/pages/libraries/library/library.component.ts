@@ -53,7 +53,6 @@ import { ItemsComponent } from '../../items/items.component';
     FormsModule,
     ItemCardComponent,
     TuiIcon,
-    TuiIconPipe,
     TuiAccordion,
     TuiSwitch,
     TuiAvatar,
@@ -67,9 +66,8 @@ import { ItemsComponent } from '../../items/items.component';
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
-    TuiPagination,
-
-  ],
+    TuiPagination
+],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
@@ -122,7 +120,11 @@ export class LibraryComponent {
   fetchItems() {
     if (this.library?.id) {
       this.itemsService
-        .getItems(undefined, undefined, undefined, [this.library?.id], undefined, undefined, undefined, undefined, undefined, this.currentPage, this.itemsPerPage)
+        .getItems({
+          libraryIds: [this.library.id],
+          page: this.currentPage,
+          pageSize: this.itemsPerPage,
+        })
         .subscribe((itemsPagination) => this.updatePagination(itemsPagination));
     }
   }

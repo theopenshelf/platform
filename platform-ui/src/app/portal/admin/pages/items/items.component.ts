@@ -1,23 +1,18 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { TuiTable, TuiTablePagination } from '@taiga-ui/addon-table';
+import { TuiTable } from '@taiga-ui/addon-table';
 import {
   TuiButton,
   TuiDropdown,
-  TuiIcon,
-  TuiLink,
-  TuiTitle,
+  TuiIcon
 } from '@taiga-ui/core';
 import {
-  TuiAvatar,
   TuiBadge,
-  TuiItemsWithMore,
-  TuiStatus,
+  TuiItemsWithMore
 } from '@taiga-ui/kit';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { TuiCell } from '@taiga-ui/layout';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
 import {
@@ -32,19 +27,13 @@ import { ItemsService, UIItem } from '../../services/items.service';
     CategoryBadgeComponent,
     RouterModule,
     FormsModule,
-    TuiAvatar,
     TuiBadge,
-    TuiCell,
     TuiDropdown,
     TuiItemsWithMore,
-    TuiLink,
-    TuiStatus,
     TuiTable,
-    TuiTitle,
     TuiButton,
     TuiIcon,
-    TosTableComponent,
-    TuiTablePagination,
+    TosTableComponent
   ],
   selector: 'app-items',
   templateUrl: './items.component.html',
@@ -163,7 +152,7 @@ export class ItemsComponent {
   public constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private breakpointObserver: BreakpointObserver,
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Fetch the items from the service

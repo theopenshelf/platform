@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   Component,
   inject,
@@ -10,11 +10,10 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
-  TuiMobileCalendar,
   TuiMobileCalendarDropdown,
-  TuiResponsiveDialogService,
+  TuiResponsiveDialogService
 } from '@taiga-ui/addon-mobile';
 import {
   TuiBooleanHandler,
@@ -44,7 +43,6 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
-import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
@@ -61,19 +59,15 @@ const plusTen = today.append({ day: 10 });
 @Component({
   standalone: true,
   imports: [
-    CategoryBadgeComponent,
     TuiHint,
     TuiCalendarRange,
     TuiButton,
     TuiIcon,
     ReactiveFormsModule,
     TuiInputDateRangeModule,
-    RouterLink,
-    JsonPipe,
     TuiNotification,
-    TuiMobileCalendar,
     AsyncPipe,
-    DatePipe,
+    DatePipe
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -150,9 +144,8 @@ export class ItemComponent implements OnInit {
 
         return value.isSingleDay
           ? `${months[value.from.month]} ${value.from.day}, ${value.from.year}`
-          : `${months[value.from.month]} ${value.from.day}, ${value.from.year} - ${
-              months[value.to.month]
-            } ${value.to.day}, ${value.to.year}`;
+          : `${months[value.from.month]} ${value.from.day}, ${value.from.year} - ${months[value.to.month]
+          } ${value.to.day}, ${value.to.year}`;
       }),
     );
 

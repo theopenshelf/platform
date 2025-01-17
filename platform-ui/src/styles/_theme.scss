@@ -1,4 +1,5 @@
 // Define your color palette
+@use "sass:color";
 
 
 // Optionally, define neutral colors and any other common colors
@@ -10,8 +11,8 @@ $background-base: #fff;
 $background-base-alt: #f6f6f6;
 
 // Calculate the lightened color using Sass
-$lightened-action-color: lighten(#1b1f3b, 20%);
-$lightened-accent-color: lighten(#FB8C02, 20%);
+$lightened-action-color: color.adjust(#1b1f3b, $lightness: 20%);
+$lightened-accent-color: color.adjust(#FB8C02, $lightness: 20%);
 
 :root {
   // Backgrounds

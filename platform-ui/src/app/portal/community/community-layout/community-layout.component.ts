@@ -71,19 +71,12 @@ export default class CommunityLayoutComponent extends TuiPortals {
 
   ngOnInit() {
     this.itemsService
-      .getItems(
-        undefined,
-        true,
-        UIBorrowStatus.CurrentlyBorrowed,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        1,
-        1,
-      )
+      .getItems({
+        borrowedByCurrentUser: true,
+        status: UIBorrowStatus.CurrentlyBorrowed,
+        page: 1,
+        pageSize: 1,
+      })
       .subscribe((itemsPagination) => {
         this.totalItemsCurrentlyBorrowed = itemsPagination.totalItems;
       });

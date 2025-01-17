@@ -2,13 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
   TuiAppearance,
-  TuiAutoColorPipe,
   TuiButton,
   TuiIcon,
-  TuiInitialsPipe,
-  TuiTitle,
+  TuiTitle
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiAvatarStack } from '@taiga-ui/kit';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { UILibrary } from '../../../models/UILibrary';
@@ -19,14 +16,10 @@ import { LibrariesService } from '../../../services/libraries.service';
   imports: [
     RouterModule,
     TuiAppearance,
-    TuiAutoColorPipe,
-    TuiAvatar,
-    TuiAvatarStack,
     TuiCardMedium,
     TuiTitle,
-    TuiInitialsPipe,
     TuiButton,
-    TuiIcon,
+    TuiIcon
   ],
   templateUrl: './libraries.component.html',
   styleUrl: './libraries.component.scss',

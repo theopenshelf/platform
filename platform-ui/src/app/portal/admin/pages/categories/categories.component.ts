@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiAlertService, TuiButton, TuiIcon, TuiTitle } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { switchMap } from 'rxjs';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
@@ -24,7 +24,6 @@ import {
     RouterModule,
     FormsModule,
     TuiTable,
-    TuiTitle,
     TuiButton,
     TosTableComponent,
     TuiIcon,
@@ -53,7 +52,7 @@ export class CategoriesComponent {
     private alerts: TuiAlertService,
     @Inject(CATEGORIES_SERVICE_TOKEN)
     private categoriesService: CategoriesService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Fetch the categories from the service
@@ -79,8 +78,8 @@ export class CategoriesComponent {
         switchMap((response) =>
           this.alerts.open(
             'Category <strong>' +
-              category.name +
-              '</strong> deleted successfully',
+            category.name +
+            '</strong> deleted successfully',
             { appearance: 'positive' },
           ),
         ),

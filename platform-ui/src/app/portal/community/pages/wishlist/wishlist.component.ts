@@ -42,7 +42,6 @@ import { LibrariesService } from '../../services/libraries.service';
     ReactiveFormsModule,
     TuiAccordion,
     TuiPagination,
-    BorrowItemCardComponent,
     TuiTabs,
   ],
   templateUrl: './wishlist.component.html',
@@ -85,7 +84,7 @@ export class WishlistComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -110,7 +109,7 @@ export class WishlistComponent implements OnInit {
     return this.selectedCategories.has(category.name);
   }
 
-  getSortBy(): string | undefined {
+  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | undefined {
     switch (this.currentSortingOption) {
       case WishlistComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
@@ -121,7 +120,7 @@ export class WishlistComponent implements OnInit {
     }
   }
 
-  getSortOrder(): string | undefined {
+  getSortOrder(): 'asc' | 'desc' | undefined {
     // Assuming default sort order is descending
     return 'desc';
   }
@@ -197,22 +196,17 @@ export class WishlistComponent implements OnInit {
 
   fetchItems() {
     this.itemsService
-      .getItems(
-        false,
-        false,
-        undefined,
-        Object.keys(this.selectedLibraries),
-        Array.from(this.selectedCategories),
-        this.searchText,
-        this.currentlyAvailable,
-        this.getSortBy(),
-        this.getSortOrder(),
-        this.currentPage,
-        this.itemsPerPage,
-        undefined,
-        undefined,
-        true,
-      )
+      .getItems({
+        libraryIds: Object.keys(this.selectedLibraries),
+        categories: Array.from(this.selectedCategories),
+        searchText: this.searchText,
+        currentlyAvailable: this.currentlyAvailable,
+        sortBy: this.getSortBy(),
+        sortOrder: this.getSortOrder(),
+        page: this.currentPage,
+        pageSize: this.itemsPerPage,
+        favorite: true,
+      })
       .subscribe((itemsPagination) => {
         this.updatePagination(itemsPagination);
       });

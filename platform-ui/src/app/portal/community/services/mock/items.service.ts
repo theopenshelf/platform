@@ -4,7 +4,7 @@ import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
-import { ItemsService } from '../items.service';
+import { GetItemsParams, ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
 
 @Injectable({
@@ -15,22 +15,24 @@ export class MockItemsService implements ItemsService {
 
   private items: UIItem[] = loadItems();
 
-  getItems(
-    currentUser?: boolean,
-    borrowedByCurrentUser?: boolean,
-    status?: UIBorrowStatus,
-    libraryIds?: string[],
-    categories?: string[],
-    searchText?: string,
-    currentlyAvailable?: boolean,
-    sortBy?: string,
-    sortOrder: 'asc' | 'desc' = 'asc',
-    page: number = 0,
-    pageSize: number = 10,
-    startDate?: Date,
-    endDate?: Date,
-    favorite?: boolean,
-  ): Observable<UIItemsPagination> {
+  getItems(params: GetItemsParams): Observable<UIItemsPagination> {
+    const {
+      currentUser,
+      borrowedByCurrentUser,
+      status,
+      libraryIds,
+      categories,
+      searchText,
+      currentlyAvailable,
+      sortBy,
+      sortOrder = 'asc',
+      page = 0,
+      pageSize = 10,
+      startDate,
+      endDate,
+      favorite,
+    } = params;
+
     let filteredItems = this.items;
     // Filtering logic
     if (currentUser) {

@@ -1,6 +1,5 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TuiPlatform } from '@taiga-ui/cdk';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiSwitch } from '@taiga-ui/kit';
 import { SECURITY_SETTINGS_SERVICE_TOKEN } from '../../admin.providers';
@@ -16,7 +15,6 @@ import {
     FormsModule,
     ReactiveFormsModule,
     TuiButton,
-    TuiPlatform,
     TuiSwitch,
   ],
   templateUrl: './security.component.html',

@@ -17,23 +17,18 @@ import {
   TuiTablePagination,
   TuiTablePaginationEvent,
 } from '@taiga-ui/addon-table';
-import { TuiAutoFocus } from '@taiga-ui/cdk';
 import {
   TuiAlertService,
-  TuiAutoColorPipe,
   TuiButton,
-  TuiDialog,
   TuiDialogContext,
   TuiDropdown,
   TuiHint,
   TuiIcon,
-  TuiInitialsPipe,
-  TuiLink,
   TuiSizeL,
   TuiSizeS,
-  TuiTitle,
+  TuiTitle
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiCheckbox } from '@taiga-ui/kit';
+import { TuiCheckbox } from '@taiga-ui/kit';
 
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 
@@ -50,25 +45,18 @@ export type Column = {
   selector: 'tos-table',
   imports: [
     CommonModule,
-    TuiAutoFocus,
     TuiButton,
-    TuiDialog,
     TuiHint,
     ReactiveFormsModule,
     TuiCheckbox,
-    TuiDialog,
     TuiButton,
-    TuiAutoColorPipe,
-    TuiInitialsPipe,
-    TuiAvatar,
     RouterModule,
     FormsModule,
     TuiDropdown,
     TuiTable,
     TuiTitle,
     TuiIcon,
-    TuiLink,
-    TuiTablePagination,
+    TuiTablePagination
   ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',
@@ -124,7 +112,7 @@ export class TosTableComponent {
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private breakpointObserver: BreakpointObserver,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.localColumnVisibility.set(

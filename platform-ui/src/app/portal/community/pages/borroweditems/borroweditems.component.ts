@@ -190,19 +190,16 @@ export class BorrowedItemsComponent implements OnInit {
 
   private fetchItems(): void {
     this.itemsService
-      .getItems(
-        undefined,
-        true,
-        this.selectedStatus,
-        undefined,
-        Array.from(this.selectedCategories),
-        this.searchText,
-        undefined,
-        this.getSortBy(),
-        this.getSortOrder(),
-        this.currentPage,
-        this.itemsPerPage,
-      )
+      .getItems({
+        borrowedByCurrentUser: true,
+        status: this.selectedStatus,
+        categories: Array.from(this.selectedCategories),
+        searchText: this.searchText,
+        sortBy: this.getSortBy(),
+        sortOrder: this.getSortOrder(),
+        page: this.currentPage,
+        pageSize: this.itemsPerPage,
+      })
       .subscribe((itemsPagination) => {
         this.totalPages = itemsPagination.totalPages;
         this.currentPage = itemsPagination.currentPage;
@@ -236,7 +233,7 @@ export class BorrowedItemsComponent implements OnInit {
     return this.libraries.find((library) => library.id === libraryId);
   }
 
-  getSortBy(): string | undefined {
+  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | undefined {
     switch (this.currentSortingOption) {
       case BorrowedItemsComponent.SORT_RECENTLY_RESERVED:
         return 'createdAt';
@@ -249,7 +246,7 @@ export class BorrowedItemsComponent implements OnInit {
     }
   }
 
-  getSortOrder(): string | undefined {
+  getSortOrder(): 'asc' | 'desc' | undefined {
     // Assuming default sort order is descending
     return 'desc';
   }
@@ -410,34 +407,8 @@ export class BorrowedItemsComponent implements OnInit {
   goToPage(page: number) {
     this.currentPage = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
     this.updateQueryParams();
-
-    this.itemsService
-      .getItems(
-        undefined,
-        true,
-        this.selectedStatus,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        undefined,
-        this.currentPage,
-        this.itemsPerPage,
-      )
-      .subscribe((itemsPagination) => {
-        this.totalPages = itemsPagination.totalPages;
-        this.currentPage = itemsPagination.currentPage;
-        this.itemsPerPage = itemsPagination.itemsPerPage;
-        this.items = itemsPagination.items.map((item) => {
-          item.borrowRecords = item.borrowRecords.filter(
-            (record) => record.borrowedBy === this.currentUser,
-          );
-          return item;
-        });
-      });
+    this.fetchItems();
   }
 
   private updateQueryParams() {

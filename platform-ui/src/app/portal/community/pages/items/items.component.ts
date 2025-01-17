@@ -50,7 +50,6 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiHint,
     TuiIcon,
     TuiAppearance,
-    TuiCheckbox,
     FormsModule,
     TuiTextfield,
     ReactiveFormsModule,
@@ -58,17 +57,15 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiDataListWrapper,
     TuiSelectModule,
     TuiTextfieldControllerModule,
-    TuiSwitch,
     TuiPagination,
     TuiAccordion,
     TuiInputDateRangeModule,
-    TuiUnfinishedValidator,
     TuiButton,
     TuiDataList,
     TuiDropdown,
     TuiCalendarRange,
-    TuiCarousel,
-  ],
+    TuiCarousel
+],
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.scss'],
 })
@@ -125,7 +122,7 @@ export class ItemsComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -173,21 +170,18 @@ export class ItemsComponent implements OnInit {
 
   fetchItems() {
     this.itemsService
-      .getItems(
-        false,
-        false,
-        undefined,
-        Object.keys(this.selectedLibraries),
-        Array.from(this.selectedCategories),
-        this.searchText,
-        this.currentlyAvailable,
-        this.getSortBy(),
-        this.getSortOrder(),
-        this.currentPage,
-        this.itemsPerPage,
-        this.selectedDate?.from.toLocalNativeDate(),
-        this.selectedDate?.to.toLocalNativeDate(),
-      )
+      .getItems({
+        libraryIds: Object.keys(this.selectedLibraries),
+        categories: Array.from(this.selectedCategories),
+        searchText: this.searchText,
+        currentlyAvailable: this.currentlyAvailable,
+        sortBy: this.getSortBy(),
+        sortOrder: this.getSortOrder(),
+        page: this.currentPage,
+        pageSize: this.itemsPerPage,
+        startDate: this.selectedDate?.from.toLocalNativeDate(),
+        endDate: this.selectedDate?.to.toLocalNativeDate(),
+      })
       .subscribe((itemsPagination) => {
         this.updatePagination(itemsPagination);
       });
@@ -205,7 +199,7 @@ export class ItemsComponent implements OnInit {
     this.fetchItems();
   }
 
-  getSortBy(): string | undefined {
+  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | undefined {
     switch (this.currentSortingOption) {
       case ItemsComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
@@ -218,7 +212,7 @@ export class ItemsComponent implements OnInit {
     }
   }
 
-  getSortOrder(): string | undefined {
+  getSortOrder(): 'asc' | 'desc' | undefined {
     // Assuming default sort order is descending
     return 'desc';
   }

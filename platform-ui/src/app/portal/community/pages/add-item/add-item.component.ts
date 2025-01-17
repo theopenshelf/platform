@@ -36,15 +36,13 @@ import { ItemsService } from '../../services/items.service';
     TuiStringifyContentPipe,
     TuiTextfieldControllerModule,
     TuiTextfield,
-    TuiIcon,
     TuiComboBoxModule,
     TuiDataListWrapper,
     TuiSelectModule,
-    RouterLink,
     TuiTextareaModule,
     ReactiveFormsModule,
-    FormsModule,
-  ],
+    FormsModule
+],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.scss',
 })
