@@ -11,9 +11,10 @@
 }
 
 .sidebar {
-    width: 300px;
+    width: 350px;
     /* Light gray background from theme */
     padding-top: 0;
+
 
     h3.filter-title {
         margin: 0;
@@ -37,10 +38,15 @@
             width: 100%;
             display: inline-block;
             margin-bottom: 10px;
+
+            input {
+                min-height: 55px;
+            }
         }
     }
 
     .filters-section {
+
 
         h2 {
             margin-top: 0;
@@ -48,7 +54,6 @@
         }
 
         background-color: var(--tos-background-base);
-        border-radius: 16px;
         border: 0px solid rgb(226, 232, 240);
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
         0 1px 2px -1px rgb(0 0 0 / .1) !important;

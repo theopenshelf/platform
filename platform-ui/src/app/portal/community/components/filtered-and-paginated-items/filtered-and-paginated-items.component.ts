@@ -6,7 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAppearance, TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiAccordion, TuiCalendarRange, TuiCarousel, TuiDataListWrapper, TuiPagination, TuiTabs } from '@taiga-ui/kit';
+import { TuiAccordion } from '@taiga-ui/experimental';
+import { TuiCalendarRange, TuiCarousel, TuiDataListWrapper, TuiPagination, TuiTabs } from '@taiga-ui/kit';
 import {
   TuiInputDateRangeModule,
   TuiSelectModule,
