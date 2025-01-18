@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiAccordion, TuiPagination, TuiTabs } from '@taiga-ui/kit';
+import { TuiTextfield } from '@taiga-ui/core';
+import { TuiAccordion, TuiTabs } from '@taiga-ui/kit';
 import {
   TuiSelectModule,
   TuiTextfieldControllerModule,
@@ -27,11 +27,9 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiTable,
     TuiSelectModule,
     TuiTextfield,
-    TuiIcon,
     FormsModule,
     ReactiveFormsModule,
     TuiAccordion,
-    TuiPagination,
     BorrowItemCardComponent,
     TuiTabs,
     FilteredAndPaginatedItemsComponent

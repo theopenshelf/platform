@@ -4,9 +4,11 @@ import { Component, ContentChild, Inject, input, OnInit, TemplateRef } from '@an
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiIcon, TuiTextfield } from '@taiga-ui/core';
-import { TuiAccordion, TuiPagination, TuiTabs } from '@taiga-ui/kit';
+import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
+import { TuiAppearance, TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiAccordion, TuiCalendarRange, TuiCarousel, TuiDataListWrapper, TuiPagination, TuiTabs } from '@taiga-ui/kit';
 import {
+  TuiInputDateRangeModule,
   TuiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
@@ -29,7 +31,6 @@ import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 
 
-
 @Component({
   standalone: true,
   selector: 'filtered-and-paginated-items',
@@ -47,6 +48,16 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiAccordion,
     TuiPagination,
     TuiTabs,
+    TuiHint,
+    TuiAppearance,
+    TuiDataList,
+    TuiDataListWrapper,
+    TuiInputDateRangeModule,
+    TuiButton,
+    TuiDataList,
+    TuiDropdown,
+    TuiCalendarRange,
+    TuiCarousel
   ],
   templateUrl: './filtered-and-paginated-items.component.html',
   styleUrl: './filtered-and-paginated-items.component.scss'
@@ -66,16 +77,31 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
   ];
 
   // Input properties
-  public getItemsParams = input.required<GetItemsParams>();
+  public getItemsParams = input<GetItemsParams>({});
   public enableStatusFiltering = input<boolean>(false);
   public enableCategoriesFiltering = input<boolean>(true);
   public categoriesFilteringOpened = input<boolean>(true);
+  public enableSearchBar = input<boolean>(false);
+
+
   public sortingOptions = input<string[]>(FilteredAndPaginatedItemsComponent.defaultSortingOptions);
   @ContentChild('sidebarTemplate', { read: TemplateRef })
   sidebarTemplate!: TemplateRef<any>;
   @ContentChild('itemTemplate', { read: TemplateRef })
   itemTemplate!: TemplateRef<any>;
 
+
+  private readonly today = new Date();
+  protected readonly defaultViewedMonth = new TuiMonth(
+    this.today.getFullYear(),
+    this.today.getMonth(),
+  );
+  protected readonly min: TuiDay = TuiDay.fromLocalNativeDate(this.today);
+  protected readonly max: TuiDay = new TuiDay(
+    this.today.getFullYear() + 1,
+    this.today.getMonth(),
+    this.today.getDate(),
+  );
 
   // User information
   currentUser: UserInfo;
@@ -95,8 +121,8 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
   searchText = '';
   currentlyAvailable: boolean = false;
   selectedLibraries: { [key: string]: boolean } = {};
+  selectedDate: TuiDayRange | null | undefined;
 
-  protected currentSortingOption: string | null = null;
   protected selectedStatus: UIBorrowStatus | undefined = this.enableStatusFiltering() ? UIBorrowStatus.Returned : undefined;
 
   protected statuses = [
@@ -124,7 +150,7 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
 
 
   // UI properties
-  protected testValue = new FormControl<string | null>(null);
+  protected sortingSelected = new FormControl<string | null>(null);
   isMobile: boolean = false;
 
   constructor(
@@ -138,6 +164,10 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
     private router: Router,
   ) {
     this.currentUser = this.authService.getCurrentUserInfo()
+    this.sortingSelected.valueChanges.subscribe((value) => {
+      this.resetItems();
+      this.updateQueryParams();
+    });
   }
 
   ngOnInit() {
@@ -156,7 +186,43 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
       this.activeStatusIndex = this.statuses.findIndex(
         (status) => status.status === this.selectedStatus,
       );
+      if (params['sortingOption']) {
+        this.sortingSelected.setValue(params['sortingOption']);
+      }
+
       this.fetchItems();
+    });
+
+
+    this.route.queryParams.subscribe((params) => {
+      this.searchText = params['searchText'] || '';
+      this.selectedStatus = params['selectedStatus']
+      this.selectedCategories = new Set(
+        params['selectedCategories']
+          ? params['selectedCategories'].split(',')
+          : [],
+      );
+      this.selectedLibraries = params['selectedLibraries']
+        ? JSON.parse(params['selectedLibraries'])
+        : {};
+      this.currentPage = +params['page'] - 1 || 0;
+      if (params['startDate'] && params['endDate']) {
+        const start = params['startDate'].split('.').map(Number) as [
+          number,
+          number,
+          number,
+        ];
+        const end = params['endDate'].split('.').map(Number) as [
+          number,
+          number,
+          number,
+        ];
+        this.selectedDate = new TuiDayRange(
+          new TuiDay(start[2], start[1] - 1, start[0]),
+          new TuiDay(end[2], end[1] - 1, end[0]),
+        );
+        this.fetchItems();
+      }
     });
 
     this.categoriesService
@@ -183,6 +249,7 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
 
   onTextFilterChange() {
     this.resetItems();
+    this.updateQueryParams();
   }
 
   toggleCategorySelection(category: UICategory) {
@@ -203,9 +270,14 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
     this.resetItems();
   }
 
-  toggleSortBy(sortingOption: string) {
-    this.currentSortingOption = sortingOption;
-    this.resetItems();
+
+
+  public onRangeChange(range: TuiDayRange | null): void {
+    if (range) {
+      this.selectedDate = range;
+      this.resetItems();
+      this.updateQueryParams();
+    }
   }
 
   // Helper methods
@@ -218,11 +290,11 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
   }
 
   isSortingSelected(sortingOption: string): boolean {
-    return this.currentSortingOption === sortingOption;
+    return this.sortingSelected.value === sortingOption;
   }
 
   getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | undefined {
-    switch (this.currentSortingOption) {
+    switch (this.sortingSelected.value) {
       case FilteredAndPaginatedItemsComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
       case FilteredAndPaginatedItemsComponent.SORT_MOST_BORROWED:
@@ -278,6 +350,8 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
         sortOrder: this.getSortOrder(),
         page: this.currentPage,
         pageSize: this.itemsPerPage,
+        startDate: this.selectedDate?.from.toLocalNativeDate(),
+        endDate: this.selectedDate?.to.toLocalNativeDate(),
       })
       .subscribe((itemsPagination) => {
         this.updatePagination(itemsPagination);
@@ -290,22 +364,64 @@ export class FilteredAndPaginatedItemsComponent implements OnInit {
     this.updateQueryParams();
   }
 
+  toggleSortBy(sortingOption: string) {
+    this.sortingSelected.setValue(sortingOption);
+    this.resetItems();
+    this.updateQueryParams();
+  }
+
+  protected openDropdownCategories = false;
+
+  protected closeDropdownCategories(): void {
+    this.openDropdownCategories = false;
+  }
+
+  protected openDropdownWhere = false;
+
+  protected closeDropdownWhere(): void {
+    this.openDropdownWhere = false;
+  }
+
+
+  protected openDropdownWhen = false;
+
+  protected closeDropdownWhen(): void {
+    this.openDropdownWhen = false;
+  }
+
+  protected openDropdownSort = false;
+
+  protected closeDropdownSort(): void {
+    this.openDropdownSort = false;
+  }
+
+
   private updateQueryParams() {
     const queryParams: any = {};
 
     if (this.searchText) {
       queryParams.searchText = this.searchText;
     }
+    if (this.currentlyAvailable) {
+      queryParams.currentlyAvailable = this.currentlyAvailable;
+    }
     if (this.selectedCategories.size > 0) {
       queryParams.selectedCategories = Array.from(this.selectedCategories).join(
         ',',
       );
-    } else {
-      queryParams.selectedCategories = undefined;
+    }
+    if (Object.keys(this.selectedLibraries).length > 0) {
+      queryParams.selectedLibraries = JSON.stringify(this.selectedLibraries);
+    }
+    if (this.selectedDate) {
+      queryParams.startDate = this.selectedDate.from.toString();
+      queryParams.endDate = this.selectedDate.to.toString();
     }
     if (this.selectedStatus) {
       queryParams.selectedStatus = this.selectedStatus;
     }
+
+    queryParams.sortingOption = this.sortingSelected.value;
     queryParams.page = this.currentPage + 1;
 
     this.router.navigate([], {

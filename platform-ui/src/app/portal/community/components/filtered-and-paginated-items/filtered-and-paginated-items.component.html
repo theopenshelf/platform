@@ -1,51 +1,202 @@
+@if (enableSearchBar()) {
+<div class="search-bar-container">
+    <div class="search-bar">
+      <div class="search-input">
+        <tui-icon icon="@tui.search" />
+        <input
+          [(ngModel)]="searchText"
+          placeholder="What object are you looking for?"
+          (input)="onTextFilterChange()"
+        />
+      </div>
+  
+      <div class="categories-filtering">
+        <button
+          appearance="flat"
+          size="l"
+          tuiButton
+          topRight
+          tuiDropdownAlign="right"
+          type="button"
+          [tuiAppearanceState]="openDropdownCategories ? 'active' : null"
+          [tuiDropdownAlign]="'center'"
+          [tuiDropdown]="dropdowncategories"
+          [(tuiDropdownOpen)]="openDropdownCategories"
+        >
+          <tui-icon icon="@tui.chart-bar-stacked" />
+          which categories?
+        </button>
+  
+        <ng-template #dropdowncategories let-close>
+          <div class="categories-container">
+            @for (category of categories; track category) {
+              <div
+                class="category"
+                [class.active]="isCategorySelected(category)"
+                (click)="toggleCategorySelection(category)"
+              >
+                <tui-icon [icon]="category.icon" />
+                {{ category.name }}
+              </div>
+            }
+          </div>
+        </ng-template>
+      </div>
+  
+      <div class="search-date-range">
+        <button
+          appearance="flat"
+          size="l"
+          tuiButton
+          topRight
+          tuiDropdownAlign="right"
+          type="button"
+          [tuiAppearanceState]="openDropdownWhen ? 'active' : null"
+          [tuiDropdownAlign]="'center'"
+          [tuiDropdown]="dropdownwhen"
+          [(tuiDropdownOpen)]="openDropdownWhen"
+        >
+          <tui-icon icon="@tui.calendar-clock" />
+          When do you need it?
+        </button>
+  
+        <ng-template #dropdownwhen let-close>
+          <div class="calendar-container">
+            <tui-calendar-range
+              [defaultViewedMonth]="defaultViewedMonth"
+              [min]="min"
+              [max]="max"
+              [value]="selectedDate || null"
+              (valueChange)="onRangeChange($event)"
+            />
+          </div>
+        </ng-template>
+      </div>
+  
+      <div class="search-where">
+        <button
+          appearance="flat"
+          size="l"
+          tuiButton
+          topRight
+          tuiDropdownAlign="right"
+          type="button"
+          [tuiAppearanceState]="openDropdownWhere ? 'active' : null"
+          [tuiDropdownAlign]="'center'"
+          [tuiDropdown]="dropdownwhere"
+          [(tuiDropdownOpen)]="openDropdownWhere"
+        >
+          <tui-icon icon="@tui.library" />
+          Which library?
+        </button>
+  
+        <ng-template #dropdownwhere let-close>
+          <div class="libraries-container">
+            @for (library of libraries; track library) {
+              <div
+                class="library"
+                [class.active]="isLibrarySelected(library)"
+                (click)="toggleLibrarySelection(library)"
+              >
+                <tui-icon icon="@tui.library" />
+  
+                {{ library.name }}
+              </div>
+            }
+          </div>
+        </ng-template>
+      </div>
+  
+      <div class="sort-by">
+        <button
+          appearance="flat"
+          size="l"
+          tuiButton
+          topRight
+          tuiDropdownAlign="center"
+          type="button"
+          [tuiAppearanceState]="openDropdownSort ? 'active' : null"
+          [tuiDropdown]="dropdownsort"
+          [(tuiDropdownOpen)]="openDropdownSort"
+        >
+          <tui-icon icon="@tui.arrow-down-up" />
+          Sort by
+        </button>
+  
+        <ng-template #dropdownsort let-close>
+          <tui-data-list>
+            <tui-opt-group>
+              @for (sortingOption of sortingOptions(); track sortingOption) {
+                <button
+                  class="sorting-option"
+                  tuiOption
+                  type="button"
+                  [class.active]="isSortingSelected(sortingOption)"
+                  (click)="toggleSortBy(sortingOption)"
+                >
+                  {{ sortingOption }}
+                </button>
+              }
+            </tui-opt-group>
+          </tui-data-list>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+}
+
+
 <div class="layout-container">
     <!-- Filter Section -->
-    <aside class="sidebar">
-        <div class="top-actions-left">
-            <fieldset tuiTextfieldSize="m" class="search">
-                <tui-textfield iconStart="@tui.search">
-                    <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
-                </tui-textfield>
-            </fieldset>
 
-            <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="testValue"
-                [tuiTextfieldLabelOutside]="true">
-                Sort by
-                <input placeholder="Sort by" tuiTextfieldLegacy />
-                <tui-data-list-wrapper *tuiDataList [items]="sortingOptions()" />
-            </tui-select>
-        </div>
+    @if (!enableSearchBar()) {
+        <aside class="sidebar">
+            <div class="top-actions-left">
+                <fieldset tuiTextfieldSize="m" class="search">
+                    <tui-textfield iconStart="@tui.search">
+                        <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
+                    </tui-textfield>
+                </fieldset>
 
-        @if (enableCategoriesFiltering()) {
-        <tui-accordion class="filters-section">
-            <tui-accordion-item [open]="!isMobile && categoriesFilteringOpened()">
-                <h3 class="filter-title" i18n="@@categoryFilter">
-                    <tui-icon icon="@tui.sliders-horizontal" />
-                    Filter
-                </h3>
-                <ng-template tuiAccordionItemContent>
-                    <!-- Category Filter -->
-                    <div class="filter-group filter-categories">
-                        <h3 class="filter-category-title" i18n="@@categoryFilter">
-                            Categories
-                        </h3>
-                        <ul>
-                            @for (category of categories; track category) {
-                            <li class="filter-category" [class.active]="isCategorySelected(category)"
-                                (click)="toggleCategorySelection(category)">
-                                <tui-icon [icon]="category.icon" />
-                                {{ category.name }}
-                            </li>
-                            }
-                        </ul>
-                    </div>
-                </ng-template>
-            </tui-accordion-item>
-        </tui-accordion>
-        }
+                <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortingSelected"
+                    [tuiTextfieldLabelOutside]="true">
+                    Sort by
+                    <input placeholder="Sort by" tuiTextfieldLegacy />
+                    <tui-data-list-wrapper *tuiDataList [items]="sortingOptions()" />
+                </tui-select>
+            </div>
 
-        <ng-container *ngTemplateOutlet="sidebarTemplate"></ng-container>
-    </aside>
+            @if (enableCategoriesFiltering()) {
+            <tui-accordion class="filters-section">
+                <tui-accordion-item [open]="!isMobile && categoriesFilteringOpened()">
+                    <h3 class="filter-title" i18n="@@categoryFilter">
+                        <tui-icon icon="@tui.sliders-horizontal" />
+                        Filter
+                    </h3>
+                    <ng-template tuiAccordionItemContent>
+                        <!-- Category Filter -->
+                        <div class="filter-group filter-categories">
+                            <h3 class="filter-category-title" i18n="@@categoryFilter">
+                                Categories
+                            </h3>
+                            <ul>
+                                @for (category of categories; track category) {
+                                <li class="filter-category" [class.active]="isCategorySelected(category)"
+                                    (click)="toggleCategorySelection(category)">
+                                    <tui-icon [icon]="category.icon" />
+                                    {{ category.name }}
+                                </li>
+                                }
+                            </ul>
+                        </div>
+                    </ng-template>
+                </tui-accordion-item>
+            </tui-accordion>
+            }
+
+            <ng-container *ngTemplateOutlet="sidebarTemplate"></ng-container>
+        </aside>
+    }
 
     <main class="grid-container">
 
@@ -64,15 +215,19 @@
         </tui-tabs>
         }
 
-        <div class="items-container">
+        <div class="items-container" [class.items-with-sidebar]="enableStatusFiltering()">
             @for (item of items; track item) {
-
-            @if (itemTemplate) {
-            <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }"></ng-container>
-            } @else {
-            <item-card [item]="item" [borrowRecords]="getBorrowRecords(item.id)" [library]="getLibrary(item.libraryId)">
-            </item-card>
+                @if (itemTemplate) {
+                <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }"></ng-container>
+                } @else {
+                <item-card [item]="item" [borrowRecords]="getBorrowRecords(item.id)" [library]="getLibrary(item.libraryId)">
+                </item-card>
+                }
             }
+            @if (items.length === 0) {
+                <div class="no-items">
+                <p><tui-icon icon="@tui.search-x" /> No item found</p>
+                </div>
             }
         </div>
         @if (totalPages > 1) {
