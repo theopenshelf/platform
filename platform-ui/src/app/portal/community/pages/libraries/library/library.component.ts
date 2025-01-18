@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
   Router,
@@ -22,29 +22,20 @@ import {
   TuiAvatar,
   TuiConfirmData,
   TuiDataListWrapper,
-  TuiPagination,
-  TuiSwitch,
+  TuiSwitch
 } from '@taiga-ui/kit';
 import {
   TuiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
-import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
-import { AuthService, UserInfo } from '../../../../../services/auth.service';
+import { of, switchMap } from 'rxjs';
 import {
-  ITEMS_SERVICE_TOKEN,
-  LIBRARIES_SERVICE_TOKEN,
+  LIBRARIES_SERVICE_TOKEN
 } from '../../../community.provider';
-import { ItemCardComponent } from '../../../components/item-card/item-card.component';
-import { UIBorrowRecord } from '../../../models/UIBorrowRecord';
-import { UIItem } from '../../../models/UIItem';
-import { UIItemsPagination } from '../../../models/UIItemsPagination';
+import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { UILibrary } from '../../../models/UILibrary';
-import { ItemsService } from '../../../services/items.service';
+import { GetItemsParams } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
-import { ItemsComponent } from '../../items/items.component';
 
 @Component({
   selector: 'app-library',
@@ -52,7 +43,6 @@ import { ItemsComponent } from '../../items/items.component';
     RouterModule,
     RouterLink,
     FormsModule,
-    ItemCardComponent,
     TuiIcon,
     TuiAccordion,
     TuiSwitch,
@@ -67,106 +57,34 @@ import { ItemsComponent } from '../../items/items.component';
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
-    TuiPagination
+    FilteredAndPaginatedItemsComponent
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
 export class LibraryComponent {
-  searchText = '';
-  selectedSortingOption = ItemsComponent.SORT_RECENTLY_ADDED; // Default sorting option
+  public getItemsParams: GetItemsParams = { libraryIds: [] };
 
   library: UILibrary | undefined;
-  items: UIItem[] = [];
-  filteredItems: UIItem[] = [];
-  currentUser: UserInfo;
-
-  // Pagination properties
-  totalPages: number = 10;
-  currentPage: number = 0;
-  itemsPerPage: number = 12; // Default value
-
-
-  protected sortingOptions = [
-    ItemsComponent.SORT_RECENTLY_ADDED,
-    ItemsComponent.SORT_MOST_BORROWED,
-    ItemsComponent.SORT_FAVORITES,
-  ];
-
-  protected testValue = new FormControl<string | null>(null);
-
-  markAsFavorite: (item: UIItem) => void = (item) => {
-    console.log(`Item ${item.id} marked as favorite.`);
-  };
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.currentUser = this.authService.getCurrentUserInfo();
   }
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
     if (libraryId) {
+
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
-        this.fetchItems();
+        this.getItemsParams = { libraryIds: [this.library.id] };
       });
     }
-  }
-
-  fetchItems() {
-    if (this.library?.id) {
-      this.itemsService
-        .getItems({
-          libraryIds: [this.library.id],
-          page: this.currentPage,
-          pageSize: this.itemsPerPage,
-        })
-        .subscribe((itemsPagination) => this.updatePagination(itemsPagination));
-    }
-  }
-
-  private updatePagination(itemsPagination: UIItemsPagination) {
-    this.totalPages = itemsPagination.totalPages;
-    this.currentPage = itemsPagination.currentPage;
-    this.itemsPerPage = itemsPagination.itemsPerPage;
-    this.items = itemsPagination.items;
-  }
-
-  resetItems() {
-    this.currentPage = 0;
-    this.fetchItems();
-  }
-
-  // Handle text filter change
-  onTextFilterChange() {
-    // The filtering is handled in the getter `filteredItems`
-  }
-
-  get filteredAndSortedItems() {
-    const filtered = this.items.filter((item) =>
-      item.name.toLowerCase().includes(this.searchText.toLowerCase()),
-    );
-
-    return filtered.sort((a, b) => {
-      switch (this.testValue.value) {
-        case ItemsComponent.SORT_RECENTLY_ADDED:
-          return (b.createdAt?.getTime() || 0) - (a.createdAt?.getTime() || 0);
-        case ItemsComponent.SORT_MOST_BORROWED:
-          return (b.borrowCount || 0) - (a.borrowCount || 0);
-        case ItemsComponent.SORT_FAVORITES:
-          return (b.favorite ? 1 : 0) - (a.favorite ? 1 : 0);
-        default:
-          return 0;
-      }
-    });
   }
 
   deleteLibrary(library: UILibrary): void {
@@ -183,7 +101,7 @@ export class LibraryComponent {
         data,
       })
       .pipe(
-        switchMap((response) => {
+        switchMap(() => {
           this.alerts.open(
             'Library <strong>' +
             library.name +
@@ -197,24 +115,6 @@ export class LibraryComponent {
       .subscribe();
 
     this.librariesService.deleteLibrary(library.id).subscribe();
-  }
-
-  getBorrowRecords(itemId: string): UIBorrowRecord[] {
-    return (
-      this.items
-        .find((item) => item.id === itemId)
-        ?.borrowRecords.filter(
-          (record) =>
-            record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser.email,
-        ) || []
-    );
-  }
-
-  goToPage(page: number) {
-    this.currentPage = page;
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.fetchItems();
   }
 
 }

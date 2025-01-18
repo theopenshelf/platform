@@ -1,95 +1,14 @@
-<div class="layout-container">
-  <!-- Filter Section -->
-  <aside class="sidebar">
-    <div class="top-actions-left">
-      <fieldset tuiTextfieldSize="m" class="search">
-        <tui-textfield iconStart="@tui.search">
-          <input
-            [(ngModel)]="searchText"
-            placeholder="Search"
-            tuiTextfield
-            (input)="onTextFilterChange()"
-          />
-        </tui-textfield>
-      </fieldset>
-
-      <tui-select
-        tuiTextfieldSize="m"
-        class="sorting-select"
-        [formControl]="sortingControl"
-        [tuiTextfieldLabelOutside]="true"
-      >
-        Sort by
-        <input placeholder="Sort by" tuiTextfieldLegacy />
-        <tui-data-list-wrapper *tuiDataList [items]="sortingOptions" />
-        
-      </tui-select>
-    </div>
-
-    <tui-accordion class="filters-section">
-      <tui-accordion-item [open]="!isMobile">
-        <h3 class="filter-title" i18n="@@categoryFilter">
-          <tui-icon icon="@tui.sliders-horizontal" />
-          Filter
-        </h3>
-        <ng-template tuiAccordionItemContent>
-          <!-- Category Filter -->
-          <div class="filter-group filter-categories">
-            <h3 class="filter-category-title" i18n="@@categoryFilter">
-              Categories
-            </h3>
-            <ul>
-              @for (category of categories; track category) {
-                <li
-                  class="filter-category"
-                  [class.active]="isCategorySelected(category)"
-                  (click)="toggleCategorySelection(category)"
-                >
-                  <tui-icon [icon]="category.icon" />
-                  {{ category.name }}
-                </li>
-              }
-            </ul>
-          </div>
-        </ng-template>
-      </tui-accordion-item>
-    </tui-accordion>
-  </aside>
-
-  <main class="grid-container">
-    <tui-tabs [(activeItemIndex)]="activeStatusIndex">
-      @for (status of statuses; track status) {
-        <button
-          [iconStart]="status.icon"
-          tuiTab
-          type="button"
-          (click)="selectStatus(status.status)"
-        >
-          {{ status.name }}
-        </button>
-      }
-    </tui-tabs>
-
-    <div class="items-container">
-      @for (item of items; track item) {
+<filtered-and-paginated-items
+    [getItemsParams]="getItemsParams"
+    [enableStatusFiltering]="true"
+>
+    <ng-template
+        #itemTemplate
+        let-item="item"
+    >
         <borrow-item-card
-          [item]="item"
-          [library]="getLibrary(item.libraryId)"
+            [item]="item"
+            [library]="getLibrary(item.libraryId)"
         ></borrow-item-card>
-      }
-      @if (items.length === 0) {
-        <div class="no-items">
-          <p><tui-icon icon="@tui.search-x" /> No item found</p>
-        </div>
-      }
-    </div>
-
-    @if (totalPages > 1) {
-      <tui-pagination
-        [index]="currentPage"
-        [length]="totalPages"
-        (indexChange)="goToPage($event)"
-      />
-    }
-  </main>
-</div>
+    </ng-template>
+</filtered-and-paginated-items>

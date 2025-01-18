@@ -1,151 +1,49 @@
 @use 'theme' as *;
 
-/* Grid container styling */
-.layout-container {
-    padding: 0 30px;
-    padding-top: 20px;
-
-    display: flex;
-    height: 100%;
-    margin: 0;
-    gap: 1rem;
-
-    .sidebar {
-        width: 350px;
-        /* Light gray background from theme */
-        padding-top: 0;
-
-        .top-actions-left {
-
-            .search {
-                padding-right: 0;
-                padding-left: 0;
-                border: 0;
-                margin: 0;
-            }
-
-            .add-item {
-                width: 100%;
-                margin-top: 10px;
-                margin-bottom: 3px;
-            }
-
-            .sorting-select {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-        }
-
-        .library-section {
-
-            h2 {
-                margin-top: 0;
-            }
-
-
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background-color: var(--tos-background-base);
-            border-radius: 16px;
-            border: 0px solid rgb(226, 232, 240);
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
-            0 1px 2px -1px rgb(0 0 0 / .1) !important;
-
-            h1,
-            h3 {
-                margin: 0;
-            }
-
-            .library-actions {
-                float: right;
-
-                button {
-                    margin: 0 2px;
-                    border-radius: 30px;
-                }
-            }
-
-            .toggle-container {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-
-                label {
-                    margin-right: 10px;
-                }
-            }
-
-
-        }
-
-
-    }
-
-    .grid-container {
-        width: 100%;
-
-        .top-actions {
-            padding-top: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            .top-actions-right {
-                margin-left: auto;
-                width: 380px;
-
-                .sorting-select {
-                    display: inline-block;
-                }
-            }
-        }
-
-        .items-container {
-            flex: 1;
-            display: grid;
-            gap: 1rem;
-            padding: 10px 0;
-            box-sizing: border-box;
-            width: 100%;
-            grid-template-columns: repeat(2, 1fr);
-
-            .no-items {
-                font-size: 1.5rem;
-                color: var(--tos-text-tertiary);
-                margin: 0 auto;
-                width: 100%;
-                text-align: center;
-                grid-column: 1 / -1;
-            }
-
-            @media (max-width: 1400px) {
-                grid-template-columns: 1fr;
-            }
-        }
-    }
+.add-item {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    width: 100%;
 }
 
+.library-section {
 
-@media (max-width: 800px) {
-    .layout-container {
-        flex-direction: column;
+    h2 {
+        margin-top: 0;
+    }
 
-        .sidebar {
-            width: 100%;
-            order: -1; // Move sidebar to the top
-        }
 
-        .grid-container {
-            width: 100%;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: var(--tos-background-base);
+    border-radius: 16px;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+    0 1px 2px -1px rgb(0 0 0 / .1) !important;
 
+    h1,
+    h3 {
+        margin: 0;
+    }
+
+    .library-actions {
+        float: right;
+
+        button {
+            margin: 0 2px;
+            border-radius: 30px;
         }
     }
-}
 
+    .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-// Adjust grid for smaller screens
-@media (max-width: 800px) {
-    .top-actions-right {
-        grid-template-columns: 1fr; // Change to single column
+        label {
+            margin-right: 10px;
+        }
     }
+
+
 }
