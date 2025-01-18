@@ -1021,6 +1021,143 @@ paths:
                 items:
                   $ref: "#/components/schemas/HelpArticle"
 
+  /community/custom-pages/:
+    get:
+      operationId: getCustomPageRefs
+      summary: Retrieve all custom page references
+      tags:
+        - custom-pages-community-api
+      responses:
+        "200":
+          description: A list of custom page references with position and title
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    ref:
+                      type: string
+                    position:
+                      type: string
+                      enum: ["footer-links", "copyright", "footer-help"]
+                    title:
+                      type: string
+
+  /community/custom-pages/{page-ref}:
+    parameters:
+      - name: page-ref
+        in: path
+        description: Reference of the custom page
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: getCustomPage
+      summary: Retrieve a custom page by reference
+      tags:
+        - custom-pages-community-api
+      responses:
+        "200":
+          description: A single custom page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+        "404":
+          description: Custom page not found
+
+  /admin/custom-pages:
+    get:
+      operationId: getAdminCustomPages
+      summary: Retrieve all custom pages
+      tags:
+        - custom-pages-admin-api
+      responses:
+        "200":
+          description: A list of custom pages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomPage"
+
+    post:
+      operationId: createCustomPage
+      summary: Create a new custom page
+      tags:
+        - custom-pages-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPage"
+      responses:
+        "201":
+          description: Custom page created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+
+  /admin/custom-pages/{page-ref}:
+    parameters:
+      - name: page-ref
+        in: path
+        description: Reference of the custom page
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: getAdminCustomPage
+      summary: Retrieve a specific custom page by reference
+      tags:
+        - custom-pages-admin-api
+      responses:
+        "200":
+          description: A single custom page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+        "404":
+          description: Custom page not found
+
+    put:
+      operationId: updateCustomPage
+      summary: Update a custom page
+      tags:
+        - custom-pages-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPage"
+      responses:
+        "200":
+          description: Custom page updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+        "404":
+          description: Custom page not found
+
+    delete:
+      operationId: deleteCustomPage
+      summary: Delete a custom page
+      tags:
+        - custom-pages-admin-api
+      responses:
+        "204":
+          description: Custom page deleted successfully
+        "404":
+          description: Custom page not found
+
 components:
   #####################################################
   # Predefined Components
@@ -1527,6 +1664,27 @@ components:
           type: string
         category:
           $ref: "#/components/schemas/HelpCategory"
+
+    CustomPage:
+      type: object
+      required:
+        - id
+        - ref
+        - position
+        - title
+        - content
+      properties:
+        id:
+          type: string
+        ref:
+          type: string
+        position:
+          type: string
+          enum: ["footer-links", "copyright", "footer-help"]
+        title:
+          type: string
+        content:
+          type: string
 
   responses:
     OK_200_GET_HELLO_WORLD:

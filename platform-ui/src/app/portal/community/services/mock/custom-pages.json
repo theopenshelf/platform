@@ -1,0 +1,37 @@
+[
+    {
+        "id": "1",
+        "position": "footer-links",
+        "ref": "my-neighborhood",
+        "title": "My neighborhood",
+        "content": "This is the content of the first custom page."
+    },
+    {
+        "id": "2",
+        "position": "footer-links",
+        "ref": "how-borrowing-works",
+        "title": "How borrowing works",
+        "content": "This is the content of the first custom page."
+    },
+    {
+        "id": "3",
+        "position": "footer-links",
+        "ref": "share-give-an-object",
+        "title": "Share/give an object",
+        "content": "This is the content of the first custom page."
+    },
+    {
+        "id": "4",
+        "position": "copyright",
+        "ref": "privacy-policy",
+        "title": "Privacy policy",
+        "content": "This is the content of the first custom page."
+    },
+    {
+        "id": "5",
+        "position": "copyright",
+        "ref": "terms-of-use",
+        "title": "Terms of use",
+        "content": "This is the content of the first custom page."
+    }
+]
