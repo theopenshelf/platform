@@ -86,9 +86,6 @@ tbody tr:hover {
   background-color: var(--tos-background-neutral-1-hover);
 }
 
-.table-top-actions .add-action {
-  float: left;
-}
 
 
 /* Column Selector */
@@ -113,18 +110,6 @@ tbody tr:hover {
 }
 
 
-tui-dialog-backdrop {
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  z-index: 9999;
-}
-
-tui-dialog {
-  z-index: 9999 !important;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
 
 .filter-checkbox {
   display: flex;
@@ -133,20 +118,44 @@ tui-dialog {
 }
 
 .table-top-actions {
-  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 10fr;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+
+    .add-action button,
+    .column-selector button,
+    .filter-actions input {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      width: 100%;
+      text-align: center !important;
+      margin-bottom: 10px !important;
+    }
+
+    .add-action {
+      margin-right: 0 !important;
+    }
+
+    .column-selector {
+      display: none !important;
+    }
+  }
 }
 
-.table-top-actions .add-users {
-  float: left;
+.table-top-actions .add-action {
+  display: flex;
+  min-width: 120px;
+  margin-right: 10px;
 }
 
 .table-top-actions .column-selector {
-  float: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .table-top-actions .filter-actions {
-  float: left;
-  margin-left: 10px;
 
   input {
     padding: 6px;
@@ -155,8 +164,6 @@ tui-dialog {
     border-radius: 5px;
     transition: border-color 0.3s;
   }
-
-
 }
 
 .action-icons-header,
@@ -164,4 +171,29 @@ tui-dialog {
   text-align: right;
   /* Optional: Ensure the column is always at the end */
   white-space: nowrap;
+}
+
+.card {
+  padding: 0;
+  background-color: #fff;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  text-align: left;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 0px solid rgb(226, 232, 240);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+  .card-content {
+    width: 100%;
+    height: 87%;
+  }
+
+  .action-icons {
+    padding-top: 1%;
+    height: 12%;
+    text-align: left;
+    border-top: 1px solid rgb(226, 232, 240);
+    padding-left: 10px;
+  }
 }

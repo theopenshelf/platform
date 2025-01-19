@@ -142,8 +142,6 @@ export class APIItemsService implements ItemsService {
               borrowedBy: record.borrowedBy,
             }) as UIBorrowRecord,
         ),
-        isBookedToday: item.isBookedToday,
-        myBooking: undefined,
       })),
     );
   }
@@ -170,8 +168,6 @@ export class APIItemsService implements ItemsService {
                 borrowedBy: record.borrowedBy,
               }) as UIBorrowRecord,
           ),
-          isBookedToday: item.isBookedToday,
-          myBooking: undefined,
         })),
       );
   }

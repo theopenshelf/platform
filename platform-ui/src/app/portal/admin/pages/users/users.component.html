@@ -8,13 +8,60 @@
     Add user
   </div>
 
+
+  <ng-template #cardTemplate let-item="item">
+    <div class="card-content">
+      <div class="user-content">
+        <div class="user-details">
+          <div class="user-info">
+            <tui-avatar
+              [src]="item.username | tuiInitials"
+              [style.background]="item.username | tuiAutoColor"
+              size="s"
+            ></tui-avatar>
+            <h2>{{ item.username }}</h2>
+          </div>
+
+          <div class="user-details-top-right">
+            <span class="email">
+              <tui-icon icon="@tui.mail" />
+              {{ item.email }}
+            </span>
+            <span class="flatNumber">
+              <tui-icon icon="@tui.home" />
+              {{ item.flatNumber }} - {{ item.address }}
+            </span>
+    
+          </div>
+
+        </div>
+        <div class="stats">
+          <span class="borrowedItems">
+            <tui-icon icon="/gift.png" />
+            {{ item.borrowedItems }}
+          </span>
+          <span class="returnedLate">
+            <tui-icon icon="@tui.clock" />
+            {{ item.returnedLate }} %
+          </span>
+          <span class="successRate">
+            <tui-icon icon="@tui.check" />
+            {{ item.successRate }} %
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
   <ng-template #itemActionsTemplate let-item="item">
-    <button
-      [routerLink]="['/admin/users', item.id, 'messages']"
-      appearance="outline"
-      iconStart="@tui.mail"
-      size="s"
-      tuiIconButton
+    <div class="user-actions">
+      <button
+        [routerLink]="['/admin/users', item.id, 'messages']"
+        appearance="outline"
+        iconStart="@tui.mail"
+        size="s"
+        tuiIconButton
       type="button"
       [style.border-radius.%]="100"
     >
@@ -61,9 +108,10 @@
       tuiIconButton
       type="button"
       [style.border-radius.%]="100"
-    >
-      Disable
-    </button>
+      >
+        Disable
+      </button>
+    </div>
   </ng-template>
 
   <ng-template #itemRowTemplate let-item="item" let-column="column">

@@ -14,7 +14,5 @@ export interface UIItem {
   borrowCount: number;
   libraryId: string;
   borrowRecords: UIBorrowRecord[];
-  isBookedToday: boolean;
-  myBooking: UIBorrowRecord | undefined;
   createdAt: Date | undefined;
 }

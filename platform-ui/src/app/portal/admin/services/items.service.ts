@@ -1,36 +1,19 @@
 import { Observable } from 'rxjs';
-import { UICategory } from './categories.service';
+import { UIItem } from '../../community/models/UIItem';
 
-export interface UIItem {
-  id: string;
-  name: string;
-  located: string;
-  owner: string;
-  imageUrl: string;
-  description: string;
-  shortDescription: string;
-  category: UICategory;
-  favorite: boolean;
+export interface UIItemWithStats extends UIItem {
+
   borrowCount: number;
   lateReturnPercentage: number;
   averageDuration: number;
-  state: { label: string; statusColor: string };
-  libraryId: string;
-  createdAt: Date;
 }
 
-export interface UIItemsPagination {
+export interface UIItemWithStatsPagination {
   totalPages: number;
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
-  items: UIItem[];
-}
-
-export interface UIBorrowRecord {
-  borrowedBy: string;
-  startDate: string;
-  endDate: string;
+  items: UIItemWithStats[];
 }
 
 export interface ItemsService {
@@ -45,7 +28,7 @@ export interface ItemsService {
     sortOrder?: 'asc' | 'desc',
     page?: number,
     pageSize?: number,
-  ): Observable<UIItemsPagination>;
-  getItem(id: string): Observable<UIItem>;
-  addItem(item: UIItem): Observable<UIItem>;
+  ): Observable<UIItemWithStatsPagination>;
+  getItem(id: string): Observable<UIItemWithStats>;
+  addItem(item: UIItem): Observable<UIItemWithStats>;
 }

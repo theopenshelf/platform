@@ -19,7 +19,7 @@ import {
   Column,
   TosTableComponent,
 } from '../../components/tos-table/tos-table.component';
-import { ItemsService, UIItem } from '../../services/items.service';
+import { ItemsService, UIItemWithStats } from '../../services/items.service';
 
 @Component({
   standalone: true,
@@ -41,7 +41,7 @@ import { ItemsService, UIItem } from '../../services/items.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemsComponent {
-  items: UIItem[] = [];
+  items: UIItemWithStats[] = [];
   columns: Column[] = [
     {
       key: 'img',
@@ -71,7 +71,7 @@ export class ItemsComponent {
       key: 'owner',
       label: 'Owner',
       custom: false,
-      visible: true,
+      visible: false,
       sortable: true,
       size: 'm',
     },
@@ -135,14 +135,6 @@ export class ItemsComponent {
       key: 'averageDuration',
       label: 'Avg Duration',
       custom: false,
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-    {
-      key: 'state',
-      label: 'State',
-      custom: true,
       visible: true,
       sortable: true,
       size: 's',

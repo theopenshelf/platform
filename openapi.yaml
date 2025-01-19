@@ -1232,7 +1232,6 @@ components:
         - borrowCount
         - libraryId
         - borrowRecords
-        - isBookedToday
 
       properties:
         id:
@@ -1277,8 +1276,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/BorrowRecord"
-        isBookedToday:
-          type: boolean
 
     BorrowRecord:
       type: object
@@ -1394,63 +1391,20 @@ components:
           additionalProperties: true
 
     ItemStat:
-      type: object
-      required:
-        - id
-        - name
-        - located
-        - owner
-        - imageUrl
-        - description
-        - shortDescription
-        - category
-        - favorite
-        - borrowCount
-        - lateReturnPercentage
-        - averageDuration
-        - state
-        - createdAt
-        - libraryId
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        located:
-          type: string
-        owner:
-          type: string
-        imageUrl:
-          type: string
-        description:
-          type: string
-        shortDescription:
-          type: string
-        category:
-          $ref: "#/components/schemas/Category"
-        favorite:
-          type: boolean
-        borrowCount:
-          type: integer
-        lateReturnPercentage:
-          type: number
-        averageDuration:
-          type: number
-        state:
-          type: object
+      allOf:
+        - $ref: "#/components/schemas/Item"
+        - type: object
+          required:
+            - borrowCount
+            - lateReturnPercentage
+            - averageDuration
           properties:
-            label:
-              type: string
-            statusColor:
-              type: string
-        createdAt:
-          type: string
-          format: date-time
-          example: "2023-11-15T13:45:30Z"
-        libraryId:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
+            borrowCount:
+              type: integer
+            lateReturnPercentage:
+              type: number
+            averageDuration:
+              type: number
 
     UserWithStats:
       type: object

@@ -4,3 +4,17 @@
     float: left;
     margin-bottom: 10px;
 }
+
+.category-content {
+    height: 80px;
+}
+
+.category-actions {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    justify-content: left;
+    align-items: left;
+    text-align: left !important;
+    padding-bottom: 10px;
+}

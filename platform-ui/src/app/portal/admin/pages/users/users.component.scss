@@ -19,3 +19,54 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+
+.user-content {
+  width: 100%;
+
+  h2 {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+
+
+  .user-details {
+    height: 85%;
+    padding: 10px;
+
+    .user-info {
+      margin-bottom: 10px;
+    }
+
+    .user-details-top-right {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      justify-content: center;
+    }
+  }
+
+
+  .stats {
+    height: 15%;
+    border-top: 1px solid #e7e7e7;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding-top: 10px;
+    justify-content: left;
+    text-align: left;
+    padding-left: 15px;
+    padding-bottom: 10px;
+  }
+}
+
+.user-actions {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  justify-content: left;
+  align-items: left;
+  text-align: left !important;
+  padding-bottom: 10px;
+}

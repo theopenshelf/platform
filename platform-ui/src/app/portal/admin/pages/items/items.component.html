@@ -1,52 +1,84 @@
-<tos-table
-  [addActionRoute]="'/admin/items/add'"
-  [tableData]="items"
-  [columns]="columns"
->
+<tos-table [addActionRoute]="'/admin/items/add'" [tableData]="items" [columns]="columns">
   <div add-action-content>
     <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
 
     Add item
   </div>
 
+  <ng-template #cardTemplate let-item="item">
+    <div class="card-content">
+      <div class="image-container">
+        <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+      </div>
+      <div class="item-content">
+        <div class="item-details">
+          <h2 tuiTitle>
+            {{ item.name }}
+          </h2>
+
+          <div class="item-details-top-right">
+            <span class="library">
+              <tui-icon icon="@tui.library" />
+              {{ item.libraryId }}
+            </span>
+            <span class="owner">
+              <tui-icon icon="@tui.user" />
+              {{ item.owner }}
+            </span>
+            <span class="category">
+              <tui-icon [icon]="item.category.icon"></tui-icon>
+              {{ item.category.name }}
+            </span>
+          </div>
+
+          <span class="shortDescription">
+            {{ item.shortDescription }}
+          </span>
+
+        </div>
+        <div class="stats">
+          <span class="borrowCount">
+            <tui-icon icon="/gift.png" />
+            {{ item.borrowCount }}
+          </span>
+          <span class="lateReturnPercentage">
+            <tui-icon icon="@tui.clock" />
+            {{ item.lateReturnPercentage }} %
+          </span>
+          <span class="averageDuration">
+            <tui-icon icon="@tui.calendar" />
+            {{ item.averageDuration }} days
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  
   <ng-template #itemRowTemplate let-item="item" let-column="column">
     @if (column.key === "img") {
-      <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
+    <img [src]="item.imageUrl" [alt]="item.name" class="item-image" />
     }
     @if (column.key === "category") {
-      <category-badge [category]="item.category"></category-badge>
-    }
-    @if (column.key === "state") {
-      <tui-badge
-        [style.background-color]="item.state.statusColor"
-        [style.color]="'white'"
-      >
-        {{ item.state.label }}
-      </tui-badge>
+    <tui-icon [icon]="item.category.icon"></tui-icon>
+    {{ item.category.name }}
     }
   </ng-template>
 
   <ng-template #itemActionsTemplate let-item="item">
-    <button
-      [routerLink]="['/admin/items/', item.id, 'edit']"
-      appearance="outline"
-      iconStart="@tui.pen"
-      size="s"
-      tuiIconButton
-      type="button"
-      [style.border-radius.%]="100"
-    >
-      Edit
-    </button>
-    <button
-      appearance="outline"
-      iconStart="@tui.archive"
-      size="s"
-      tuiIconButton
-      type="button"
-      [style.border-radius.%]="100"
-    >
-      Archive
-    </button>
+    <div class="items-actions">
+      <div class="action">
+        <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen" size="s"
+          tuiIconButton type="button" [style.border-radius.%]="100">
+          Edit
+        </button>
+      </div>
+      <div class="action">
+
+        <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
+          [style.border-radius.%]="100">
+          Archive
+        </button>
+      </div>
+    </div>
   </ng-template>
 </tos-table>

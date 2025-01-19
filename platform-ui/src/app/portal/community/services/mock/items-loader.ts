@@ -59,23 +59,6 @@ export const loadItems = (): UIItem[] => {
             borrowedBy: record.borrowedBy,
           }) as UIBorrowRecord,
       ),
-      isBookedToday: borrowRecords.some(
-        (record) => record.startDate <= today && today <= record.endDate,
-      ),
-      myBooking: (() => {
-        const record = borrowRecords.find(
-          (record) =>
-            record.borrowedBy === 'me@example.com' && record.startDate > today,
-        );
-        return record
-          ? {
-              id: record.id,
-              startDate: new Date(record.startDate),
-              endDate: new Date(record.endDate),
-              borrowedBy: record.borrowedBy,
-            }
-          : undefined;
-      })(),
       createdAt: new Date(item.createdAt), // Convert string to Date
     };
   });
@@ -108,7 +91,7 @@ function generateRandomRecords(numRecords: number) {
     );
     const endDate = new Date(
       new Date(startDate).getTime() +
-        (Math.floor(Math.random() * 7) + 1) * 24 * 60 * 60 * 1000,
+      (Math.floor(Math.random() * 7) + 1) * 24 * 60 * 60 * 1000,
     )
       .toISOString()
       .split('T')[0];

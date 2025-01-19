@@ -4,6 +4,7 @@ export interface UICategory {
   id: string;
   name: string;
   color: string;
+  icon: string;
   template: string;
 }
 

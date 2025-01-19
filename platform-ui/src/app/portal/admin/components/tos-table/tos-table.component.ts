@@ -67,12 +67,14 @@ export class TosTableComponent {
   public tableData = input.required<any[]>();
   public filterInput = signal<string>('');
   public columns = input.required<Column[]>();
-  isMobile: boolean = false;
+  isMobile: boolean = true;
 
   @ContentChild('itemActionsTemplate', { read: TemplateRef })
   itemActionsTemplate!: TemplateRef<any>;
   @ContentChild('itemRowTemplate', { read: TemplateRef })
   itemRowTemplate!: TemplateRef<any>;
+  @ContentChild('cardTemplate', { read: TemplateRef })
+  cardTemplate!: TemplateRef<any>;
 
   protected currentSort = signal<string>('');
   protected sortOrder = signal<{ [key: string]: boolean }>({}); // True for ascending, false for descending

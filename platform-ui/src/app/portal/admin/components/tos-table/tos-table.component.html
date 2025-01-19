@@ -24,9 +24,8 @@
         size="s"
         tuiButton
         type="button"
-        class="tui-space_right-3"
         appearance="outline"
-        (click)="selectColumnsDialog(columnTemplate, 's')"
+        (click)="selectColumnsDialog(columnTemplate, 'l')"
       >
         <tui-icon icon="@tui.align-justify" [style.height.rem]="1" />
 
@@ -59,31 +58,22 @@
   </div>
   <!-- Table -->
   @if (isMobile) {
-    @for (item of sortedData(); track item) {
-      <div class="card">
-        <ul>
-          @for (column of visibleColumns(); track column) {
-            <li>
-              @if (column.custom) {
-                <ng-container
-                  *ngTemplateOutlet="
-                    itemRowTemplate;
-                    context: { item: item, column: column }
-                  "
-                ></ng-container>
-              } @else {
-                <span tuiTitle>{{ getDataProperty(item, column.key) }}</span>
-              }
-            </li>
-          }
-          <li class="action-icons">
+    <div class="mobile-table">
+      @for (item of sortedData(); track item) {
+        <div class="card">
+          <div class="card-content">
+            <ng-container
+              *ngTemplateOutlet="cardTemplate; context: { item: item }"
+            ></ng-container>
+          </div>
+          <div class="action-icons">
             <ng-container
               *ngTemplateOutlet="itemActionsTemplate; context: { item: item }"
             ></ng-container>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </div>
     }
+    </div>
   } @else {
     <table class="compact-table">
       <thead>

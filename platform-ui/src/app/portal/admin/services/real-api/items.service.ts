@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
+  BorrowRecord,
   ItemsAdminApiService,
   ItemStat,
   PaginatedItemsStatsResponse,
 } from '../../../../api-client';
-import { ItemsService, UIItem, UIItemsPagination } from '../items.service';
+import { UIBorrowRecord } from '../../../community/models/UIBorrowRecord';
+import { ItemsService, UIItemWithStats, UIItemWithStatsPagination } from '../items.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiItemsService implements ItemsService {
-  constructor(private itemsAdminApiService: ItemsAdminApiService) {}
+  constructor(private itemsAdminApiService: ItemsAdminApiService) { }
 
   getItems(
     currentUser?: boolean,
@@ -24,7 +26,7 @@ export class ApiItemsService implements ItemsService {
     sortOrder?: 'asc' | 'desc',
     page?: number,
     pageSize?: number,
-  ): Observable<UIItemsPagination> {
+  ): Observable<UIItemWithStatsPagination> {
     return this.itemsAdminApiService.getAdminItems().pipe(
       map((response: PaginatedItemsStatsResponse) => ({
         totalPages: response.totalPages,
@@ -34,57 +36,63 @@ export class ApiItemsService implements ItemsService {
         items: response.items.map(
           (item: ItemStat) =>
             ({
-              id: item.id,
-              name: item.name,
-              description: item.description,
-              category: item.category,
-              owner: item.owner,
-              imageUrl: item.imageUrl,
-              shortDescription: item.shortDescription,
-              favorite: item.favorite,
-              borrowCount: item.borrowCount,
-              lateReturnPercentage: item.lateReturnPercentage,
-              averageDuration: item.averageDuration,
-              state: item.state,
-              libraryId: item.libraryId,
-              createdAt: new Date(item.createdAt),
-              located: item.located,
-            }) as UIItem,
+              ...item,
+              createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+              borrowRecords: item.borrowRecords.map(
+                (record: BorrowRecord) =>
+                  ({
+                    id: record.id,
+                    startDate: record.startDate
+                      ? new Date(record.startDate)
+                      : undefined,
+                    endDate: record.endDate ? new Date(record.endDate) : undefined,
+                    borrowedBy: record.borrowedBy,
+                  }) as UIBorrowRecord,
+              ),
+            }) as UIItemWithStats,
         ),
       })),
     );
   }
 
-  getItem(id: string): Observable<UIItem> {
+  getItem(id: string): Observable<UIItemWithStats> {
     return this.itemsAdminApiService.getAdminItemById(id).pipe(
       map(
         (item: ItemStat) =>
           ({
-            id: item.id,
-            name: item.name,
-            description: item.description,
-            category: item.category,
-            owner: item.owner,
-            imageUrl: item.imageUrl,
-            shortDescription: item.shortDescription,
-            favorite: item.favorite,
-            borrowCount: item.borrowCount,
-            lateReturnPercentage: item.lateReturnPercentage,
-            averageDuration: item.averageDuration,
-            state: item.state,
-            libraryId: item.libraryId,
-            createdAt: new Date(item.createdAt),
-            located: item.located,
-          }) as UIItem,
+            ...item,
+            createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+            borrowRecords: item.borrowRecords.map(
+              (record: BorrowRecord) =>
+                ({
+                  id: record.id,
+                  startDate: record.startDate
+                    ? new Date(record.startDate)
+                    : undefined,
+                  endDate: record.endDate ? new Date(record.endDate) : undefined,
+                  borrowedBy: record.borrowedBy,
+                }) as UIBorrowRecord,
+            ),
+          }) as UIItemWithStats,
       ),
     );
   }
 
-  addItem(item: UIItem): Observable<UIItem> {
+  addItem(item: UIItemWithStats): Observable<UIItemWithStats> {
     const itemStat: ItemStat = {
       ...item,
-      createdAt: new Date().toISOString(),
-      libraryId: item.libraryId || '',
+      borrowRecords: item.borrowRecords.map(
+        (record: UIBorrowRecord) =>
+          ({
+            id: record.id,
+            startDate: record.startDate
+              ? record.startDate.toISOString()
+              : undefined,
+            endDate: record.endDate ? record.endDate.toISOString() : undefined,
+            borrowedBy: record.borrowedBy,
+          }) as BorrowRecord,
+      ),
+      createdAt: item.createdAt?.toISOString(),
     };
 
     return this.itemsAdminApiService.addAdminItem(itemStat).pipe(
@@ -92,8 +100,19 @@ export class ApiItemsService implements ItemsService {
         (item: ItemStat) =>
           ({
             ...item,
-            createdAt: new Date(item.createdAt),
-          }) as UIItem,
+            createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+            borrowRecords: item.borrowRecords.map(
+              (record: BorrowRecord) =>
+                ({
+                  id: record.id,
+                  startDate: record.startDate
+                    ? new Date(record.startDate)
+                    : undefined,
+                  endDate: record.endDate ? new Date(record.endDate) : undefined,
+                  borrowedBy: record.borrowedBy,
+                }) as UIBorrowRecord,
+            ),
+          }) as UIItemWithStats,
       ),
     );
   }

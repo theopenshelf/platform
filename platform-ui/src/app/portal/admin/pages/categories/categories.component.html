@@ -11,17 +11,28 @@
 
   <ng-template #itemRowTemplate let-item="item" let-column="column">
     @if (column.key === "name") {
-      <category-badge [category]="item"></category-badge>
+      <tui-icon [icon]="item.icon" />
+      {{ item.name }}
     }
   </ng-template>
 
+
+  <ng-template #cardTemplate let-item="item">
+    <div class="category-content">
+      <tui-icon [icon]="item.icon" />
+      {{ item.name }}
+
+    </div>
+  </ng-template>
+
   <ng-template #itemActionsTemplate let-item="item">
-    <button
-      [routerLink]="['/admin/categories', item.id, 'edit']"
-      appearance="outline"
-      iconStart="@tui.pen"
-      size="s"
-      tuiIconButton
+    <div class="category-actions">
+      <button
+        [routerLink]="['/admin/categories', item.id, 'edit']"
+        appearance="outline"
+        iconStart="@tui.pen"
+        size="s"
+        tuiIconButton
       type="button"
       [style.border-radius.%]="100"
     >
@@ -36,7 +47,8 @@
       type="button"
       [style.border-radius.%]="100"
     >
-      Delete
-    </button>
+        Delete
+      </button>
+    </div>
   </ng-template>
 </tos-table>

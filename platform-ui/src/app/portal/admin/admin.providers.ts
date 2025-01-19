@@ -1,6 +1,9 @@
 import { InjectionToken, Provider } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import { CUSTOM_PAGE_SERVICE_TOKEN } from '../community/community.provider';
+import { MockCustomPageService } from '../community/services/mock/custom-pages.service';
 import { APICategoriesService } from '../community/services/real-api/categories.service';
+import { APICustomPageService } from '../community/services/real-api/custom-pages.service';
 import { APIItemsService } from '../community/services/real-api/items.service';
 import { CategoriesService } from './services/categories.service';
 import { DashboardService } from './services/dashboard.service';
@@ -57,5 +60,11 @@ export const adminProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockDashboardService
       : ApiDashboardService,
+  },
+  {
+    provide: CUSTOM_PAGE_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockCustomPageService
+      : APICustomPageService,
   },
 ];
