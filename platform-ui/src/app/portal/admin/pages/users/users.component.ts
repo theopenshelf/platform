@@ -25,13 +25,13 @@ import {
   TuiConfirmData
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
-import { switchMap } from 'rxjs';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,
   TosTableComponent,
 } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
+import { map } from 'rxjs';
 
 export type User1 = {
   id: string;
@@ -149,15 +149,14 @@ export class UsersComponent {
         size: 'm',
         data,
       })
-      .pipe(
-        switchMap((response) =>
+      .subscribe(response => {
+        if (response) {
           this.alerts.open(
             'User <strong>' + user.username + '</strong> deleted successfully',
             { appearance: 'positive' },
-          ),
-        ),
-      )
-      .subscribe();
+          ).subscribe();
+        }
+      });
   }
 
   disableUser(user: UIUser): void {
@@ -173,20 +172,39 @@ export class UsersComponent {
         size: 'm',
         data,
       })
-      .pipe(
-        switchMap((response) =>
+      .subscribe((response) => {
+        if (response) {
           this.alerts.open(
             'User <strong>' + user.username + '</strong> Disable successfully',
             { appearance: 'positive' },
-          ),
-        ),
-      )
-      .subscribe();
+          ).subscribe();
+        }
+      });
   }
 
   protected setPassword(user: UIUser): void {
     this.openPasswordDialog = true;
     this.currentUser = user;
+  }
+
+  getDataFunction = (
+    searchText?: string,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc',
+    page?: number,
+    pageSize?: number
+  ) => {
+    return this.usersService.getUsers().pipe(
+      map((users) => {
+        return {
+          totalPages: 1,
+          totalItems: users.length,
+          currentPage: 0,
+          itemsPerPage: users.length,
+          items: users
+        }
+      })
+    );
   }
 
   setUserPassword() {

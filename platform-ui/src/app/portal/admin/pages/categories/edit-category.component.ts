@@ -7,7 +7,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TuiButton, TuiLabel, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiLabel, TuiTextfield } from '@taiga-ui/core';
+import { TuiTooltip } from '@taiga-ui/kit';
 import {
   TUI_DEFAULT_INPUT_COLORS,
   TuiInputColorModule,
@@ -29,7 +30,9 @@ import {
     TuiLabel,
     FormsModule,
     ReactiveFormsModule,
+    TuiIcon,
     TuiButton,
+    TuiTooltip,
   ],
   templateUrl: './edit-category.component.html',
   styleUrls: ['./edit-category.component.scss'],
@@ -62,7 +65,7 @@ export class EditCategoryComponent {
   ) {
     this.categoryForm = this.fb.group({
       name: ['', Validators.required],
-      color: ['', Validators.required],
+      icon: ['', Validators.required],
       template: ['', Validators.required],
     });
   }

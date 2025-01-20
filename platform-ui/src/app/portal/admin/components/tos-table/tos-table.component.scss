@@ -38,6 +38,11 @@ table tbody tr:last-child .action-icons {
   min-width: 200px;
 }
 
+table .action-icons,
+table .action-icons-header {
+  width: 170px;
+}
+
 tbody tr {
   background-color: var(--tos-background-base)
     /* Subtle hover effect using theme */

@@ -1,6 +1,6 @@
 <tos-table
   [addActionRoute]="'/admin/users/add'"
-  [tableData]="users"
+  [getDataFunction]="getDataFunction"
   [columns]="columns"
 >
   <div add-action-content>
@@ -56,17 +56,6 @@
 
   <ng-template #itemActionsTemplate let-item="item">
     <div class="user-actions">
-      <button
-        [routerLink]="['/admin/users', item.id, 'messages']"
-        appearance="outline"
-        iconStart="@tui.mail"
-        size="s"
-        tuiIconButton
-      type="button"
-      [style.border-radius.%]="100"
-    >
-      messages
-    </button>
     <button
       (click)="setPassword(item)"
       appearance="outline"
@@ -136,10 +125,10 @@
   }"
   [(tuiDialog)]="openPasswordDialog"
 >
-  <form [formGroup]="passwordForm" (ngSubmit)="setUserPassword()">
+  <form class="password-form" [formGroup]="passwordForm" (ngSubmit)="setUserPassword()">
     <tui-input formControlName="userPasswordControl" tuiAutoFocus> </tui-input>
     <p>
-      <button tuiButton type="submit">Ok</button>
+      <button class="password-form-button" tuiButton type="submit">Change password</button>
     </p>
   </form>
 </ng-template>

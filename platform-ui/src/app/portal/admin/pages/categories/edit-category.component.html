@@ -16,9 +16,20 @@
     />
   </tui-textfield>
 
-  <tui-input-color class="b-form" [colors]="palette" formControlName="color">
-    Category color
-  </tui-input-color>
+  <tui-textfield
+  [iconStart]="categoryForm.get('icon')?.value"
+  >
+    <label tuiLabel>Category Icon</label>
+    <input
+      id="icon"
+      formControlName="icon"
+      type="text"
+      placeholder="Enter category icon"
+      tuiTextfield
+    />
+    <tui-icon tuiTooltip="Supported icons from https://taiga-ui.dev/components/icon" />
+
+  </tui-textfield>
 
   <label for="template">Template</label>
   <quill-editor

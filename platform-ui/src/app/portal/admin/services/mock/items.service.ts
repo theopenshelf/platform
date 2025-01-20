@@ -30,7 +30,71 @@ export class MockItemsService implements ItemsService {
     pageSize: number = 10,
   ): Observable<UIItemWithStatsPagination> {
     let filteredItems = this.items;
-    // ... filtering logic ...
+
+    // Filtering logic
+    if (currentUser) {
+      filteredItems = filteredItems.filter(
+        (item) => item.owner === 'me@example.com',
+      );
+    }
+    if (borrowedByCurrentUser) {
+      filteredItems = filteredItems.filter((item) =>
+        item.borrowRecords.some(
+          (record) => record.borrowedBy === 'me@example.com',
+        ),
+      );
+    }
+    if (libraryIds && libraryIds.length > 0) {
+      filteredItems = filteredItems.filter((item) =>
+        libraryIds.includes(item.libraryId),
+      );
+    }
+    if (categories && categories.length > 0) {
+      filteredItems = filteredItems.filter((item) =>
+        categories.includes(item.category.name),
+      );
+    }
+    if (searchText) {
+      const lowerCaseSearchText = searchText.toLowerCase();
+      filteredItems = filteredItems.filter((item) =>
+        item.name.toLowerCase().includes(lowerCaseSearchText),
+      );
+    }
+
+    if (currentlyAvailable) {
+      filteredItems = filteredItems.filter(
+        (item) =>
+          !item.borrowRecords.some(
+            (record) =>
+              record.startDate <= new Date() && new Date() <= record.endDate,
+          ),
+      );
+    }
+
+    // Sorting logic
+    if (sortBy) {
+      filteredItems = filteredItems.sort((a, b) => {
+        let aValue, bValue;
+
+        if (sortBy === 'category') {
+          aValue = a.category.name;
+          bValue = b.category.name;
+        } else {
+          aValue = a[sortBy as keyof UIItemWithStats];
+          bValue = b[sortBy as keyof UIItemWithStats];
+        }
+
+        if (!aValue || !bValue) {
+          return 0;
+        }
+
+        if (sortOrder === 'asc') {
+          return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
+        } else {
+          return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
+        }
+      });
+    }
 
     // Pagination logic
     const totalItems = filteredItems.length;
@@ -51,7 +115,11 @@ export class MockItemsService implements ItemsService {
   }
 
   getItem(id: string): Observable<UIItemWithStats> {
-    return of(this.items.find((i) => i.id === id) as UIItemWithStats);
+    const item = this.items.find((i) => i.id === id);
+    if (!item) {
+      throw new Error('Item not found');
+    }
+    return of(item);
   }
 
   addItem(item: UIItemWithStats): Observable<UIItemWithStats> {

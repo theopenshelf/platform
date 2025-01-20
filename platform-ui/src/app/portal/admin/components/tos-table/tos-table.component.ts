@@ -13,9 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import {
-  TuiTable,
-  TuiTablePagination,
-  TuiTablePaginationEvent,
+  TuiTable
 } from '@taiga-ui/addon-table';
 import {
   TuiAlertService,
@@ -28,9 +26,10 @@ import {
   TuiSizeS,
   TuiTitle
 } from '@taiga-ui/core';
-import { TuiCheckbox } from '@taiga-ui/kit';
+import { TuiCheckbox, TuiPagination } from '@taiga-ui/kit';
 
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
+import { Observable } from 'rxjs';
 
 export type Column = {
   key: string;
@@ -40,6 +39,14 @@ export type Column = {
   sortable?: boolean;
   size?: 's' | 'm' | 'l';
 };
+
+export interface ItemPagination {
+  totalPages: number;
+  totalItems: number;
+  currentPage: number;
+  itemsPerPage: number;
+  items: any[];
+}
 
 @Component({
   selector: 'tos-table',
@@ -56,7 +63,7 @@ export type Column = {
     TuiTable,
     TuiTitle,
     TuiIcon,
-    TuiTablePagination
+    TuiPagination
   ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',
@@ -64,9 +71,16 @@ export type Column = {
 })
 export class TosTableComponent {
   public addActionRoute = input.required<string>();
-  public tableData = input.required<any[]>();
   public filterInput = signal<string>('');
   public columns = input.required<Column[]>();
+  public getDataFunction = input.required<(
+    searchText?: string,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc',
+    page?: number,
+    pageSize?: number
+  ) => Observable<ItemPagination>>();
+
   isMobile: boolean = true;
 
   @ContentChild('itemActionsTemplate', { read: TemplateRef })
@@ -77,38 +91,26 @@ export class TosTableComponent {
   cardTemplate!: TemplateRef<any>;
 
   protected currentSort = signal<string>('');
-  protected sortOrder = signal<{ [key: string]: boolean }>({}); // True for ascending, false for descending
-  protected page = 0;
-  protected size = 10;
+  public tableData = signal<any[]>([]);
+
+  // Pagination properties
+  totalPages: number = 10;
+  currentPage: number = 1;
+  itemsPerPage: number = 12; // Default value
+
+
   protected total = computed(() => this.tableData().length);
   protected visibleColumns = computed<Column[]>(() => {
     return this.columns().filter(
       (column) => this.localColumnVisibility()[column.key] ?? column.visible,
     );
   });
-  protected sortedData = computed<any[]>(() => {
-    return this.tableData()
-      .filter((item: any) => {
-        const filterValue = this.filterInput().toLowerCase();
-        const visibleKeys = this.visibleColumns().map((column) => column.key);
-        return visibleKeys.some((key) =>
-          String(item[key]).toLowerCase().includes(filterValue),
-        );
-      })
-      .sort((a, b) => {
-        const aValue = a[this.currentSort()];
-        const bValue = b[this.currentSort()];
 
-        if (this.sortOrder()[this.currentSort()]) {
-          return aValue > bValue ? 1 : aValue < bValue ? -1 : 0;
-        } else {
-          return aValue < bValue ? 1 : aValue > bValue ? -1 : 0;
-        }
-      });
-  });
 
   // Local state to manage column visibility
   private localColumnVisibility = signal<{ [key: string]: boolean }>({});
+  sortedColumn: string = '';
+  sortOrder: boolean = true;
 
   constructor(
     private dialogs: TuiResponsiveDialogService,
@@ -117,6 +119,8 @@ export class TosTableComponent {
   ) { }
 
   ngOnInit(): void {
+    this.fetchData();
+
     this.localColumnVisibility.set(
       this.columns().reduce(
         (acc, column) => {
@@ -147,33 +151,30 @@ export class TosTableComponent {
 
   // Sort function with toggle for ascending/descending
   sort(column: string): void {
+
     const columnConfig = this.columns().find((col) => col.key === column);
     if (!columnConfig || !columnConfig.sortable) {
       return; // Exit if the column is not sortable
     }
-
-    // Toggle sort order
-    if (this.currentSort() === column) {
-      const newSortOrder = {
-        ...this.sortOrder(),
-        [column]: !this.sortOrder()[column],
-      };
-      this.sortOrder.set(newSortOrder);
+    if (this.sortedColumn === column) {
+      this.sortOrder = !this.sortOrder;
     } else {
-      this.currentSort.set(column);
-      const newSortOrder = { ...this.sortOrder(), [column]: true }; // Default to ascending for new column
-      this.sortOrder.set(newSortOrder);
+      this.sortedColumn = column;
+      this.sortOrder = true;
     }
+
+    this.fetchData();
   }
 
-  protected onPagination({ page, size }: TuiTablePaginationEvent): void {
-    this.page = page;
-    this.size = size;
+  goToPage(page: number) {
+    this.currentPage = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.fetchData();
   }
 
   // Get the sorting icon (up or down)
   getSortIcon(column: string): string {
-    return this.sortOrder()[column] ? '↑' : '↓';
+    return this.sortedColumn === column ? (this.sortOrder ? '↑' : '↓') : '';
   }
 
   onColumnVisibilityChange(column: Column): void {
@@ -184,4 +185,20 @@ export class TosTableComponent {
     };
     this.localColumnVisibility.set(updatedVisibility);
   }
+
+  fetchData() {
+    this.getDataFunction()(
+      this.filterInput(),
+      this.sortedColumn,
+      this.sortOrder ? 'asc' : 'desc',
+      this.currentPage,
+      this.itemsPerPage
+    ).subscribe((itemsPagination) => {
+      this.tableData.set(itemsPagination.items);
+      this.totalPages = itemsPagination.totalPages;
+      this.currentPage = itemsPagination.currentPage;
+      this.itemsPerPage = itemsPagination.itemsPerPage;
+    });
+  }
 }
+

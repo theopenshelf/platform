@@ -152,4 +152,14 @@ export class ItemsComponent {
       this.items = itemsPagination.items;
     });
   }
+
+  getDataFunction = (
+    searchText?: string,
+    sortBy?: string,
+    sortOrder?: 'asc' | 'desc',
+    page?: number,
+    pageSize?: number
+  ) => {
+    return this.itemsService.getItems(undefined, undefined, undefined, undefined, searchText, undefined, sortBy, sortOrder, page, pageSize);
+  }
 }
