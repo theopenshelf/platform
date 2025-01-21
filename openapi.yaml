@@ -982,6 +982,150 @@ paths:
                 type: integer
                 example: 10
 
+  /admin/help/categories:
+    get:
+      operationId: getHelpCategories
+      summary: Retrieve all help categories
+      tags:
+        - help-admin-api
+      responses:
+        "200":
+          description: A list of help categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpCategory"
+    post:
+      operationId: createHelpCategory
+      summary: Create a new help category
+      tags:
+        - help-admin-api
+      requestBody:
+        description: The category to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCategory"
+      responses:
+        "201":
+          description: Help category created successfully
+    delete:
+      operationId: deleteHelpCategory
+      summary: Delete a help category
+      tags:
+        - help-admin-api
+      parameters:
+        - name: categoryId
+          in: query
+          description: The ID of the category to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Help category deleted successfully
+    put:
+      operationId: updateHelpCategory
+      summary: Update a help category
+      tags:
+        - help-admin-api
+      parameters:
+        - name: categoryId
+          in: query
+          description: The ID of the category to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The updated category data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpCategory"
+      responses:
+        "200":
+          description: Help category updated successfully
+
+  /admin/help/articles:
+    get:
+      operationId: getHelpArticles
+      summary: Retrieve help articles by category ID
+      tags:
+        - help-admin-api
+      parameters:
+        - name: categoryId
+          in: query
+          description: The ID of the category to filter articles
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A list of help articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/HelpArticle"
+    post:
+      operationId: createHelpArticle
+      summary: Create a new help article
+      tags:
+        - help-admin-api
+      requestBody:
+        description: The article to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticle"
+      responses:
+        "201":
+          description: Help article created successfully
+    delete:
+      operationId: deleteHelpArticle
+      summary: Delete a help article
+      tags:
+        - help-admin-api
+      parameters:
+        - name: articleId
+          in: query
+          description: The ID of the article to delete
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Help article deleted successfully
+    put:
+      operationId: updateHelpArticle
+      summary: Update a help article
+      tags:
+        - help-admin-api
+      parameters:
+        - name: articleId
+          in: query
+          description: The ID of the article to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: The updated article data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/HelpArticle"
+      responses:
+        "200":
+          description: Help article updated successfully
+
+
   /community/help/categories:
     get:
       operationId: getHelpCategories
@@ -997,7 +1141,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/HelpCategory"
-
+    
   /community/help/articles:
     get:
       operationId: getHelpArticles
@@ -1020,7 +1164,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/HelpArticle"
-
+   
   /community/custom-pages/:
     get:
       operationId: getCustomPageRefs

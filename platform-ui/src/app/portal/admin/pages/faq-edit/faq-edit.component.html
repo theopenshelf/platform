@@ -1,0 +1,114 @@
+<div class="content-container">
+    <aside>
+        <div class="categories-container">
+            <ul>
+            @for (category of categories; track category.id) {
+            <li [class.active]="selectedCategoryId === category.id" (click)="selectCategory(category.id)">
+                <tui-icon
+                    class="category-icon"
+                    [icon]="category.icon"
+                ></tui-icon>
+                {{ category.name }}
+                <button
+                class="edit-button"
+                appearance="primary"
+                iconStart="@tui.pencil"
+                size="s"
+                tuiIconButton
+                type="button"
+                (click)="editCategory(category)"
+            >
+                Edit
+            </button>
+
+                
+            </li>
+            }
+            <li>
+  
+
+            </li>
+        </ul>
+        </div>
+        <button class="add-category-button" tuiButton>Add new category</button>
+
+    </aside>
+
+    <main>
+        <h2>
+            {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'Search Results' }}
+        </h2>
+        @if (articles.length === 0) {
+            <div class="no-items">
+                <p><tui-icon icon="@tui.search-x" /> No article found</p>
+            </div>
+        }
+        <div class="container-faq">
+            <tui-accordion>
+                @for (article of articles; track article.id) {
+                <tui-accordion-item>
+                    <button
+                    class="edit-button"
+                    appearance="primary"
+                    iconStart="@tui.pencil"
+                    size="s"
+                    tuiIconButton
+                    type="button"
+                    (click)="editArticle(article)"
+                >
+                    Edit
+                </button>
+                    {{ article.title }} 
+
+                    <ng-template tuiAccordionItemContent>
+                        {{ article.content }}
+                    </ng-template>
+                </tui-accordion-item>
+                }   
+            </tui-accordion>
+        </div>
+        <div class="add-article-button-container">
+            <button class="add-article-button" tuiButton>Add new article</button>
+        </div>
+
+    </main>
+</div>
+
+<ng-template
+  let-observer
+  [tuiDialogOptions]="{
+    label: 'Edit category ' + currentCategory?.name,
+    size: 's',
+  }"
+  [(tuiDialog)]="openCategoryDialog"
+>
+  <form class="password-form" [formGroup]="categoryForm" (ngSubmit)="setCategory()">
+    <tui-input formControlName="name" tuiAutoFocus> </tui-input>
+    <tui-input formControlName="icon" tuiAutoFocus> </tui-input>
+    <p>
+      <button class="password-form-button" tuiButton type="submit">Save</button>
+    </p>
+  </form>
+</ng-template>
+
+<ng-template
+  let-observer
+  [tuiDialogOptions]="{
+    label: 'Edit article ' + currentArticle?.title,
+    size: 's',
+  }"
+  [(tuiDialog)]="openArticleDialog"
+>
+  <form class="password-form" [formGroup]="articleForm" (ngSubmit)="setArticle()">
+    <tui-input formControlName="title" tuiAutoFocus> </tui-input>
+    <quill-editor
+    formControlName="content"
+    [modules]="editorConfig"
+    style="height: 200px"
+  ></quill-editor>
+
+    <p>
+      <button class="password-form-button" tuiButton type="submit">Save</button>
+    </p>
+  </form>
+</ng-template>

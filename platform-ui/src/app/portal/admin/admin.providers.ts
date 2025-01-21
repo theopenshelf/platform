@@ -18,6 +18,9 @@ import { ApiSecuritySettingsService } from './services/real-api/security-setting
 import { ApiUsersService } from './services/real-api/users.service';
 import { SecuritySettingsService } from './services/security-settings.service';
 import { UsersService } from './services/users.service';
+import { APICustomPagesService } from './services/real-api/custom-pages.service';
+import { CustomPagesService } from './services/custom-pages.service';
+import { MockCustomPagesService } from './services/mock/custom-pages.service';
 
 export const CATEGORIES_SERVICE_TOKEN = new InjectionToken<CategoriesService>(
   'CategoriesService',
@@ -32,6 +35,9 @@ export const SECURITY_SETTINGS_SERVICE_TOKEN =
   new InjectionToken<SecuritySettingsService>('SecuritySettingsService');
 export const DASHBOARD_SERVICE_TOKEN = new InjectionToken<DashboardService>(
   'DashboardService',
+);
+export const CUSTOM_PAGES_SERVICE_TOKEN = new InjectionToken<CustomPagesService>(
+  'CustomPagesService',
 );
 
 export const adminProviders: Provider[] = [
@@ -66,5 +72,11 @@ export const adminProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockCustomPageService
       : APICustomPageService,
+  },
+  {
+    provide: CUSTOM_PAGES_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockCustomPagesService
+      : APICustomPagesService,
   },
 ];

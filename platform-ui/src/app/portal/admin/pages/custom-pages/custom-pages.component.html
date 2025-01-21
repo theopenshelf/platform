@@ -1,0 +1,52 @@
+<tos-table
+  [addActionRoute]="'/admin/users/add'"
+  [getDataFunction]="getDataFunction"
+  [columns]="columns"
+>
+  <div add-action-content>
+    <tui-icon icon="@tui.user" [style.height.rem]="1" />
+    Add user
+  </div>
+
+
+  <ng-template #cardTemplate let-item="item">
+    <div class="page-content">
+        {{ item.ref }}
+        {{ item.title }}
+
+    </div>
+  </ng-template>
+
+
+  <ng-template #itemActionsTemplate let-item="item">
+    <div class="user-actions">
+
+    <button
+      [routerLink]="['/admin/pages', item.ref, 'edit']"
+      appearance="outline"
+      iconStart="@tui.pen"
+      size="s"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+    >
+      Edit
+    </button>
+    <button
+      (click)="deletePage(item)"
+      appearance="outline"
+      iconStart="@tui.trash-2"
+      size="s"
+      tuiIconButton
+      type="button"
+      [style.border-radius.%]="100"
+    >
+      Delete
+    </button>
+    </div>
+  </ng-template>
+
+  <ng-template #itemRowTemplate let-item="item" let-column="column">
+    
+  </ng-template>
+</tos-table>

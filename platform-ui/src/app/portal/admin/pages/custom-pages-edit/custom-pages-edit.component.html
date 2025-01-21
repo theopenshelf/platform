@@ -1,0 +1,58 @@
+@if (pageId) {
+    <h2>Edit Page</h2>
+  }
+  @if (!pageId) {
+    <h2>Add Page</h2>
+  }
+  <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
+    <tui-textfield>
+      <label tuiLabel>Reference</label>
+      <input
+        id="ref"
+        formControlName="ref"
+        type="text"
+        placeholder="Enter page reference"
+        tuiTextfield
+      />
+    </tui-textfield>
+  
+    <tui-textfield>
+        <label tuiLabel>Position</label>
+        <input
+          id="position"
+          formControlName="position"
+          type="text"
+          placeholder="Enter page position"
+          tuiTextfield
+        />
+      </tui-textfield>
+
+    <tui-textfield>
+        <label tuiLabel>Title</label>
+        <input
+          id="title"
+          formControlName="title"
+          type="text"
+          placeholder="Enter page title"
+          tuiTextfield
+        />
+      </tui-textfield>
+
+    <label for="content">Content</label>
+    <quill-editor
+      formControlName="content"
+      [modules]="editorConfig"
+      style="height: 200px"
+    ></quill-editor>
+  
+    <button
+      type="submit"
+      appearance="accent"
+      size="m"
+      tuiButton
+      [disabled]="pageForm.invalid"
+    >
+      Save
+    </button>
+  </form>
+  
