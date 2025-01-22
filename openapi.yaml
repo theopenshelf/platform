@@ -984,7 +984,7 @@ paths:
 
   /admin/help/categories:
     get:
-      operationId: getHelpCategories
+      operationId: getAdminHelpCategories
       summary: Retrieve all help categories
       tags:
         - help-admin-api
@@ -1052,7 +1052,7 @@ paths:
 
   /admin/help/articles:
     get:
-      operationId: getHelpArticles
+      operationId: getAdminHelpArticles
       summary: Retrieve help articles by category ID
       tags:
         - help-admin-api
