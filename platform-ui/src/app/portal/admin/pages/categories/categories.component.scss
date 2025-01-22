@@ -10,11 +10,20 @@
 }
 
 .category-actions {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    justify-content: left;
-    align-items: left;
-    text-align: left !important;
-    padding-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+
+    button {
+        margin: 0 10px;
+    }
+}
+
+.category-content {
+    padding-top: 10px;
+    text-align: center;
+
+    tui-icon {
+        display: block;
+        margin: auto;
+    }
 }

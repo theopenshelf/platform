@@ -1,0 +1,21 @@
+.page-content {
+    padding: 10px;
+
+    h3 {
+        margin: 0;
+    }
+
+    .page-details {
+        padding: 10px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+        label {
+            font-weight: bold;
+        }
+    }
+}
+
+.page-actions {
+    padding: 10px;
+}

@@ -11,15 +11,22 @@
 
   <ng-template #cardTemplate let-item="item">
     <div class="page-content">
-        {{ item.ref }}
-        {{ item.title }}
+      <h3>{{ item.title }}</h3>
+      <div class="page-details">
+        <label>Ref</label>
+            <span>{{ item.ref }}</span>
+       
+     
+        <label>Position</label>
+        <span>{{ item.position }}</span>
 
+      </div>
     </div>
   </ng-template>
 
 
   <ng-template #itemActionsTemplate let-item="item">
-    <div class="user-actions">
+    <div class="page-actions">
 
     <button
       [routerLink]="['/admin/pages', item.ref, 'edit']"
