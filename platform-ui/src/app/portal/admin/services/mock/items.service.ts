@@ -9,7 +9,7 @@ import { ItemsService, UIItemWithStats, UIItemWithStatsPagination } from '../ite
 export class MockItemsService implements ItemsService {
   private index = 1;
 
-  private items: UIItemWithStats[] = loadItems().map(item => ({
+  public items: UIItemWithStats[] = loadItems().map(item => ({
     ...item,
     createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
     lateReturnPercentage: Math.floor(Math.random() * 21),

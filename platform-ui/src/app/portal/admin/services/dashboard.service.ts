@@ -1,11 +1,10 @@
-import { TuiPoint } from '@taiga-ui/core';
 import { Observable } from 'rxjs';
 
 // Define types for return values
 export interface UIDashboardBorrowesOverTimeData {
   labelsX: string[];
   axisYLabels: string[];
-  data: readonly TuiPoint[];
+  data: ReadonlyArray<readonly number[]>;
 }
 
 export interface UIDashboardBorrowesMetrics {
@@ -28,6 +27,7 @@ export interface UIItemMetrics {
 
 export interface UICategoryMetrics {
   category: string;
+  icon: string;
   totalBorrows: number;
   numberOfItems: number;
 }

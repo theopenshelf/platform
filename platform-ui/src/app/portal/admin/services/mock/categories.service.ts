@@ -114,7 +114,7 @@ export class MockCategoriesService implements CategoriesService {
     icon: '@tui.shield',
   };
 
-  private categories: UICategory[] = [
+  public categories: UICategory[] = [
     MockCategoriesService.BOOKS,
     MockCategoriesService.ELECTRONICS,
     MockCategoriesService.CLOTHING,

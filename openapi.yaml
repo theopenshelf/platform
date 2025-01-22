@@ -1678,10 +1678,13 @@ components:
       type: object
       required:
         - category
+        - icon
         - totalBorrows
         - numberOfItems
       properties:
         category:
+          type: string
+        icon:
           type: string
         totalBorrows:
           type: integer

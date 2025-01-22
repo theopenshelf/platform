@@ -20,7 +20,7 @@ import {
   providedIn: 'root',
 })
 export class ApiDashboardService implements DashboardService {
-  constructor(private dashboardsAdminApiService: DashboardsAdminApiService) {}
+  constructor(private dashboardsAdminApiService: DashboardsAdminApiService) { }
 
   getDashboardData(): Observable<UIDashboardBorrowesOverTimeData> {
     return this.dashboardsAdminApiService.getDashboardData().pipe(
@@ -76,6 +76,7 @@ export class ApiDashboardService implements DashboardService {
       map((data: CategoryMetrics[]) =>
         data.map((category) => ({
           category: category.category,
+          icon: category.icon,
           totalBorrows: category.totalBorrows,
           numberOfItems: category.borrowedItems ?? 0,
         })),

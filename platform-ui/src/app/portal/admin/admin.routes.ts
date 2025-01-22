@@ -6,7 +6,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 import { EditCategoryComponent } from './pages/categories/edit-category.component';
 import { CustomPagesEditComponent } from './pages/custom-pages-edit/custom-pages-edit.component';
 import { CustomPagesComponent } from './pages/custom-pages/custom-pages.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { DashboardComponent } from './pages/dashboards/dashboard.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { HelpCenterEditComponent } from './pages/help-center/help-center-edit.component';
 import { ItemsComponent } from './pages/items/items.component';

@@ -73,8 +73,8 @@ $lightened-accent-color: color.adjust(#FB8C02, $lightness: 20%);
   --tos-text-negative: #dd4c1e;
   --tos-text-negative-hover: #e38163;
   // Charts
-  --tos-chart-categorical-00: var(--tos-background-accent-1);
-  --tos-chart-categorical-01: #ea97c4;
+  --tos-chart-categorical-00: #FB8C02;
+  --tos-chart-categorical-01: #3b619d;
   --tos-chart-categorical-02: #a0c5df;
   --tos-chart-categorical-03: #fee797;
   --tos-chart-categorical-04: #b0b0b0;

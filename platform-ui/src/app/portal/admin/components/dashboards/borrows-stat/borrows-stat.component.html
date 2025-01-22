@@ -1,0 +1,41 @@
+<div class="dashboard-borrow-container">
+  <div class="dashboard-borrow-over-time">
+    <div class="chart-title">Total Borrows Over Time</div>
+    <tui-axes class="axes" [axisXLabels]="labelsX" [axisYLabels]="axisYLabels">
+      <tui-bar-chart [max]="10000" [value]="value" />
+    </tui-axes>
+
+    <ng-template #hintContent let-index="index" let-value>
+      <div>Vertical: {{ value[0] }}</div>
+      <div>Horizontal: {{ value[1] }}</div>
+      <div>index: {{ index }}</div>
+    </ng-template>
+  </div>
+
+  <div>
+    <div class="chart-title">Overview</div>
+
+    <div class="metric-cards">
+      <div class="metric-card">
+        <div class="counter">{{ totalBorrows }}</div>
+        <div class="label">Total Borrows</div>
+      </div>
+      <div class="metric-card">
+        <div class="counter">{{ totalReservations }}</div>
+        <div class="label">Total Reservations</div>
+      </div>
+      <div class="metric-card">
+        <div class="counter">{{ itemsOnLoan }}</div>
+        <div class="label">Items currently on loan</div>
+      </div>
+      <div class="metric-card">
+        <div class="counter">{{ avgLoanDuration }}</div>
+        <div class="label">Avg loan duration</div>
+      </div>
+      <div class="metric-card">
+        <div class="counter">{{ returnTimeliness }}</div>
+        <div class="label">Return Timeliness</div>
+      </div>
+    </div>
+  </div>
+</div>

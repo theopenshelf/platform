@@ -7,7 +7,7 @@ import { LibrariesService } from '../libraries.service';
   providedIn: 'root',
 })
 export class MockLibrariesService implements LibrariesService {
-  private libraries: UILibrary[] = [
+  public libraries: UILibrary[] = [
     {
       id: '1',
       name: 'Common space',

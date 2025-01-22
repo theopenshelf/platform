@@ -1,0 +1,51 @@
+.dashboard-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    height: 200px;
+    border-left: 15px solid #001d45;
+
+
+    display: grid;
+    grid-template-columns: 1fr 1fr; // Adjust the ratio as needed
+    align-items: center;
+
+
+    .counter-icon {
+        justify-self: center; // Center the icon in its grid cell
+
+        tui-icon {
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    .counter-container {
+
+        align-items: left;
+        border-left: 2px solid #cccccc;
+        padding-left: 50px;
+
+    }
+
+    .counter {
+        color: var(--tos-text-accent);
+        font-size: 48px;
+        font-weight: bold;
+        margin: 15px 0;
+
+    }
+
+    .label {
+        font-size: 24px;
+        color: var(--tos-text-action);
+    }
+}

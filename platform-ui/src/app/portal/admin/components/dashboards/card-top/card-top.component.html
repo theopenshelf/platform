@@ -1,0 +1,35 @@
+<div class="dashboard-top">
+    <div class="chart-title">{{ title() }}</div>
+    <table>
+      <thead>
+        <tr>
+          <th>
+            {{ columnName() }}
+          </th>
+          <th>{{ columnValue() }}</th>
+          @if (columnSecondaryValue()) {
+            <th>{{ columnSecondaryValue() }}</th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of data(); track item) {
+          <tr>
+            <td>
+                @if (item.icon) {
+                    <tui-icon [icon]="item.icon"></tui-icon>
+                  }
+                  @if (item.avatar) {
+                    <tui-avatar [src]="item.name | tuiInitials" [style.background]="item.name | tuiAutoColor" size="s"></tui-avatar>
+                  }
+                  {{ item.name }}
+            </td>
+            <td>{{ item.value }}</td>
+            @if (item.secondaryValue) {
+              <td>{{ item.secondaryValue }}</td>
+            }
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>

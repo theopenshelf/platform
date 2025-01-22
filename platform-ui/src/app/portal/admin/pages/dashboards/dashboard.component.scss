@@ -1,0 +1,33 @@
+@use 'theme' as *;
+
+.dashboard-models-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; // Adjust the gap between cards as needed
+    margin-bottom: 15px;
+}
+
+
+.dashboard-borrow-container {
+    display: grid;
+    grid-template-columns: repeat(1fr);
+    gap: 16px; // Adjust the gap between cards as needed
+    margin-bottom: 15px;
+}
+
+.dashboard-top-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px; // Adjust the gap between cards as needed
+    margin-bottom: 15px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-models-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .dashboard-top-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
