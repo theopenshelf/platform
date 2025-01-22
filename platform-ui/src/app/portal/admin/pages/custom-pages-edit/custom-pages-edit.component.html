@@ -16,16 +16,21 @@
       />
     </tui-textfield>
   
-    <tui-textfield>
-        <label tuiLabel>Position</label>
-        <input
-          id="position"
+
+      <tui-select
+          tuiTextfieldSize="s"
           formControlName="position"
-          type="text"
-          placeholder="Enter page position"
-          tuiTextfield
-        />
-      </tui-textfield>
+      >
+          Position
+          <input
+              placeholder="Choose your hero"
+              tuiTextfieldLegacy
+          />
+          <tui-data-list-wrapper
+              *tuiDataList
+              [items]="items"
+          ></tui-data-list-wrapper>
+      </tui-select>
 
     <tui-textfield>
         <label tuiLabel>Title</label>
@@ -38,7 +43,6 @@
         />
       </tui-textfield>
 
-    <label for="content">Content</label>
     <quill-editor
       formControlName="content"
       [modules]="editorConfig"
@@ -46,6 +50,7 @@
     ></quill-editor>
   
     <button
+      class="save-button"
       type="submit"
       appearance="accent"
       size="m"

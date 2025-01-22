@@ -12,6 +12,7 @@ import { TuiTooltip } from '@taiga-ui/kit';
 import {
   TUI_DEFAULT_INPUT_COLORS,
   TuiInputColorModule,
+  TuiSelectModule,
 } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
 import { UICustomPage } from '../../../community/models/UICustomPage';
@@ -30,6 +31,7 @@ import { CustomPagesService } from '../../services/custom-pages.service';
     TuiIcon,
     TuiButton,
     TuiTooltip,
+    TuiSelectModule,
   ],
   templateUrl: './custom-pages-edit.component.html',
   styleUrl: './custom-pages-edit.component.scss'
@@ -51,6 +53,12 @@ export class CustomPagesEditComponent {
     ],
   };
   page: UICustomPage = {} as UICustomPage;
+
+  protected items = [
+    'footer-links',
+    'copyright',
+    'footer-help',
+  ];
 
   constructor(
     private route: ActivatedRoute,
