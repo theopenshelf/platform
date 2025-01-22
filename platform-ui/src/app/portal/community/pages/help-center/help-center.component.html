@@ -45,7 +45,9 @@
                     <tui-accordion-item>
                         {{ article.title }}
                         <ng-template tuiAccordionItemContent>
-                            {{ article.content }}
+                            <div class="article-content-container">
+                                <div class="article-content" [innerHTML]="article.content"></div>
+                              </div>
                         </ng-template>
                     </tui-accordion-item>
                     }   

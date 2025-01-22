@@ -1,0 +1,112 @@
+<div class="content-container">
+  <aside>
+    <div class="categories-container">
+      <ul>
+        @for (category of categories; track category.id) {
+        <li [class.active]="selectedCategoryId === category.id" (click)="selectCategory(category.id)">
+          <tui-icon class="category-icon" [icon]="category.icon"></tui-icon>
+          {{ category.name }}
+
+          <div class="category-actions">
+            <button class="order-up" appearance="outline" iconStart="@tui.arrow-up" size="s" tuiIconButton type="button"
+              (click)="orderUp(category)" [disabled]="categories.indexOf(category) === 0">
+            </button>
+            <button class="order-down" appearance="outline" iconStart="@tui.arrow-down" size="s" tuiIconButton
+              type="button" (click)="orderDown(category)" [disabled]="categories.indexOf(category) === categories.length - 1">
+            </button>
+            <button class="edit-button" appearance="primary" iconStart="@tui.pencil" size="s" tuiIconButton
+              type="button" (click)="editCategory(category)">
+            </button>
+          </div>
+        </li>
+        }
+      </ul>
+    </div>
+    <button class="add-category-button" tuiButton (click)="addCategory()">Add new category</button>
+
+  </aside>
+
+  <main>
+    <h2>
+      {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'Search Results' }}
+    </h2>
+    @if (articles.length === 0) {
+    <div class="no-items">
+      <p><tui-icon icon="@tui.search-x" /> No article found</p>
+    </div>
+    }
+    <div class="container-faq">
+      <tui-accordion>
+        @for (article of articles; track article.id) {
+        <tui-accordion-item>
+          <div class="article-actions">
+            <button class="edit-button" appearance="primary" iconStart="@tui.pencil" size="s" tuiIconButton
+              type="button" (click)="editArticle(article)">
+            </button>
+            <button class="order-up" appearance="outline" iconStart="@tui.arrow-up" size="s" tuiIconButton type="button"
+              (click)="orderUpArticle(article)" [disabled]="articles.indexOf(article) === 0">
+            </button>
+            <button class="order-down" appearance="outline" iconStart="@tui.arrow-down" size="s" tuiIconButton
+              type="button" (click)="orderDownArticle(article)" [disabled]="articles.indexOf(article) === articles.length - 1">
+            </button>
+          </div>
+          {{ article.title }}
+
+          <ng-template tuiAccordionItemContent>
+            <div class="article-content-container">
+              <div class="article-content" [innerHTML]="article.content"></div>
+            </div>
+          </ng-template>
+        </tui-accordion-item>
+        }
+      </tui-accordion>
+    </div>
+    <div class="add-article-button-container">
+      <button class="add-article-button" tuiButton (click)="addArticle()">Add new article</button>
+    </div>
+
+  </main>
+</div>
+
+<ng-template let-observer [tuiDialogOptions]="{
+    label: 'Edit category ' + currentCategory?.name,
+    size: isMobile ? 'fullscreen' : 's',
+  }" [(tuiDialog)]="openCategoryDialog">
+  <form class="category-form" [formGroup]="categoryForm" (ngSubmit)="setCategory()">
+    <tui-textfield>
+      <label tuiLabel>Category Name</label>
+      <input id="name" formControlName="name" type="text" placeholder="Enter category name" tuiTextfield />
+    </tui-textfield>
+
+    <tui-textfield [iconStart]="categoryForm.get('icon')?.value">
+      <label tuiLabel>Category Icon</label>
+      <input id="icon" formControlName="icon" type="text" placeholder="Enter category icon" tuiTextfield />
+      <tui-icon tuiTooltip="Supported icons from https://taiga-ui.dev/components/icon" />
+
+    </tui-textfield>
+
+
+    <p>
+      <button class="category-form-button" tuiButton type="submit">Save</button>
+    </p>
+  </form>
+</ng-template>
+
+<ng-template class="article-dialog" let-observer [tuiDialogOptions]="{
+    label: 'Edit article',
+    size: 'fullscreen',
+  }" [(tuiDialog)]="openArticleDialog">
+  <form class="article-form" [formGroup]="articleForm" (ngSubmit)="setArticle()">
+
+    <tui-textfield>
+      <label tuiLabel>Title</label>
+      <input id="title" formControlName="title" type="text" placeholder="Enter article title" tuiTextfield />
+    </tui-textfield>
+
+    <quill-editor formControlName="content" [modules]="editorConfig"></quill-editor>
+
+    <p>
+      <button class="article-form-button" tuiButton type="submit">Save</button>
+    </p>
+  </form>
+</ng-template>

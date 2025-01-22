@@ -110,6 +110,34 @@
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.037), 0 1px 2px -1px rgba(0, 0, 0, 0.037) !important;
             width: 100%;
 
+            .article-content-container {
+                display: flex;
+                /* Ensures it behaves responsively in the grid */
+                max-width: 70vw;
+                ; // Set to full screen width
+                /* Prevents overflow */
+            }
+
+            .article-content {
+                width: 100%;
+                /* Ensures it takes full width of the container */
+                max-width: 100%;
+                /* Prevents unintended overflows */
+                overflow-wrap: break-word;
+                /* Prevents long words from breaking the layout */
+            }
+
         }
     }
+}
+
+@media (max-width: 800px) {
+    .content-container {
+        grid-template-columns: 1fr !important;
+
+        aside {
+            width: 100% !important;
+        }
+    }
+
 }

@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import {
   FormControl,
@@ -25,13 +26,13 @@ import {
   TuiConfirmData
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
+import { map } from 'rxjs';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,
   TosTableComponent,
 } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
-import { map } from 'rxjs';
 
 export type User1 = {
   id: string;
@@ -127,13 +128,21 @@ export class UsersComponent {
   });
 
   protected openPasswordDialog = false;
+  isMobile: boolean = false;
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
   ) {
     this.usersService.getUsers().subscribe((users) => (this.users = users));
+
+    this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .subscribe((result) => {
+        this.isMobile = result.matches;
+      });
   }
 
   deleteUser(user: UIUser): void {

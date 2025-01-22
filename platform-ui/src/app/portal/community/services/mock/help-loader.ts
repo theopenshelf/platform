@@ -6,6 +6,7 @@ const mapHelpCategory = (category: any): UIHelpCategory => {
         id: category.id,
         name: category.name,
         icon: category.icon,
+        order: category.order,
     };
 };
 
@@ -17,7 +18,8 @@ export const loadHelpData = (): { categories: UIHelpCategory[], articles: UIHelp
         id: article.id,
         title: article.title,
         content: article.content,
-        category: categoriesMap.get(article.category_id)!
+        category: categoriesMap.get(article.category_id)!,
+        order: article.order,
     }));
 
     return { categories, articles };

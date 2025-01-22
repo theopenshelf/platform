@@ -121,7 +121,7 @@
   let-observer
   [tuiDialogOptions]="{
     label: 'Set user ' + currentUser?.username + ' password',
-    size: 's',
+    size: isMobile ? 'fullscreen' : 's',
   }"
   [(tuiDialog)]="openPasswordDialog"
 >

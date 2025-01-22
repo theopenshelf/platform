@@ -28,7 +28,7 @@ export class HelpCenterComponent {
 
   constructor(@Inject(HELP_SERVICE_TOKEN) private helpService: HelpService) {
     this.helpService.getCategories().subscribe(categories => {
-      this.categories = categories;
+      this.categories = categories.sort((a, b) => a.order - b.order);
       this.categoriesPerId = categories.reduce((acc, category) => {
         acc[category.id] = category;
         return acc;
@@ -59,7 +59,7 @@ export class HelpCenterComponent {
     this.categories.forEach(category => {
       if (!this.articlesByCategory[category.id]) {
         this.helpService.getArticles(category.id).subscribe(articles => {
-          this.articlesByCategory[category.id] = articles;
+          this.articlesByCategory[category.id] = articles.sort((a, b) => a.order - b.order) ;
         });
       }
     });

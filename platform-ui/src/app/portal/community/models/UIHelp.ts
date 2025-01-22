@@ -2,6 +2,7 @@ export interface UIHelpCategory {
     id: string;
     name: string;
     icon: string;
+    order: number;
 }
 
 export interface UIHelpArticle {
@@ -9,4 +10,5 @@ export interface UIHelpArticle {
     title: string;
     content: string;
     category: UIHelpCategory;
+    order: number;
 }

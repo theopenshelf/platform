@@ -5,12 +5,12 @@
     padding: 2rem 0;
     display: grid;
     flex-direction: column;
-    grid-template-columns: 12rem 1fr;
+    grid-template-columns: 3fr 9fr;
     gap: 2rem;
 
     aside {
 
-        width: 200px;
+        width: 100%;
 
         .categories-container {
             background-color: var(--tos-background-base);
@@ -31,7 +31,6 @@
                 padding: 1rem;
                 width: 100%;
                 border-bottom: 1px solid var(--tos-border-base);
-                padding-left: 15px;
                 display: flex;
 
                 .category-icon {
@@ -40,12 +39,21 @@
                 }
 
 
-                .edit-button {
+                .category-actions {
                     margin-left: auto;
-                    margin-right: 20px;
+                    margin-right: 30px;
+
+                    button {
+                        margin-left: 5px;
+                    }
+
+                }
+
+                .edit-button {
                     border-radius: 100%;
                     padding: 5px;
                 }
+
 
                 .arrow-right {
                     color: var(--tos-text-tertiary);
@@ -91,9 +99,34 @@
         width: 100%;
 
         .edit-button {
-            margin-right: 15px;
             border-radius: 100%;
             padding: 5px;
+        }
+
+        .article-actions {
+            margin-right: 15px;
+            display: inline-block;
+
+            button {
+                margin-left: 5px;
+            }
+        }
+
+        .article-content-container {
+            display: flex;
+            /* Ensures it behaves responsively in the grid */
+            max-width: 70vw;
+            ; // Set to full screen width
+            /* Prevents overflow */
+        }
+
+        .article-content {
+            width: 100%;
+            /* Ensures it takes full width of the container */
+            max-width: 100%;
+            /* Prevents unintended overflows */
+            overflow-wrap: break-word;
+            /* Prevents long words from breaking the layout */
         }
 
     }
@@ -104,6 +137,38 @@
         .add-article-button {
             width: 100%;
         }
+    }
+}
+
+.category-form {
+    box-shadow: none !important;
+    margin-top: 40px !important;
+    margin-bottom: 0 !important;
+    padding: 0;
+
+    button {
+        width: 100%;
+    }
+}
+
+.article-form {
+    box-shadow: none !important;
+    margin-top: 40px !important;
+    margin-bottom: 0 !important;
+    padding: 0;
+
+    quill-editor {
+        height: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 800px) {
+    .content-container {
+        display: block;
     }
 
 }

@@ -74,10 +74,10 @@ export class CustomPagesComponent implements OnInit {
     return this.customPagesService.getCustomPageRefs().pipe(
       map((pages: UICustomPage[]) => {
         pages.push({
-          id: 'faq',
-          ref: 'faq',
+          id: 'help-center',
+          ref: 'help-center',
           position: 'footer-links',
-          title: 'FAQ',
+          title: 'Help Center',
           content: 'Test'
         });
         return {

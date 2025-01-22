@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FaqEditComponent } from './faq-edit.component';
+import { FaqEditComponent } from './help-center-edit.component';
 
 describe('FaqEditComponent', () => {
   let component: FaqEditComponent;
@@ -10,7 +10,7 @@ describe('FaqEditComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FaqEditComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FaqEditComponent);
     component = fixture.componentInstance;

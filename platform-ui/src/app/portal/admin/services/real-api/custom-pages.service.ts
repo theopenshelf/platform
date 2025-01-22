@@ -59,7 +59,7 @@ export class APICustomPagesService implements CustomPagesService {
     }
 
     getCategories(): Observable<UIHelpCategory[]> {
-        return this.helpService.getHelpCategories().pipe(
+        return this.helpService.getAdminHelpCategories().pipe(
             map((categories: HelpCategory[]) => categories.map((category) => category as UIHelpCategory)),
         );
     }
@@ -80,7 +80,7 @@ export class APICustomPagesService implements CustomPagesService {
     }
 
     getArticles(categoryId: string): Observable<UIHelpArticle[]> {
-        return this.helpService.getHelpArticles(categoryId).pipe(
+        return this.helpService.getAdminHelpArticles(categoryId).pipe(
             map((articles: HelpArticle[]) => articles.map((article) => article as UIHelpArticle)),
         );
     }

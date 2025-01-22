@@ -8,7 +8,7 @@ import { CustomPagesEditComponent } from './pages/custom-pages-edit/custom-pages
 import { CustomPagesComponent } from './pages/custom-pages/custom-pages.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
-import { FaqEditComponent } from './pages/faq-edit/faq-edit.component';
+import { HelpCenterEditComponent } from './pages/help-center/help-center-edit.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { SecurityComponent } from './pages/security/security.component';
 import { UsersComponent } from './pages/users/users.component';
@@ -31,7 +31,7 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'dashboard', component: DashboardComponent },
       { path: 'pages', component: CustomPagesComponent },
       { path: 'pages/add', component: CustomPagesEditComponent },
-      { path: 'pages/faq/edit', component: FaqEditComponent },
+      { path: 'pages/help-center/edit', component: HelpCenterEditComponent },
       { path: 'pages/:id/edit', component: CustomPagesEditComponent },
     ],
   },

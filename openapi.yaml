@@ -1125,7 +1125,6 @@ paths:
         "200":
           description: Help article updated successfully
 
-
   /community/help/categories:
     get:
       operationId: getHelpCategories
@@ -1141,7 +1140,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/HelpCategory"
-    
+
   /community/help/articles:
     get:
       operationId: getHelpArticles
@@ -1164,7 +1163,7 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/HelpArticle"
-   
+
   /community/custom-pages/:
     get:
       operationId: getCustomPageRefs
@@ -1750,6 +1749,9 @@ components:
           type: string
         icon:
           type: string
+        order:
+          type: integer
+          description: The order of the help category
 
     HelpArticle:
       type: object
@@ -1762,6 +1764,9 @@ components:
           type: string
         category:
           $ref: "#/components/schemas/HelpCategory"
+        order:
+          type: integer
+          description: The order of the help article
 
     CustomPage:
       type: object
