@@ -1,0 +1,126 @@
+<div class="item-activity">
+    <h1>Item Activity</h1>
+    <div class="item-details">
+
+        <div class="item-details-left">
+
+
+            <h2>{{ item.name }}</h2>
+            <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
+
+            <div class="attributes">
+                <span class="category">
+                    <tui-icon [icon]="item.category.icon" />
+                    <span class="category-value">{{ item.category.name }}</span>
+                </span>
+                <span class="location">
+                    <tui-icon icon="@tui.map-pin" />
+                    <span class="location-value">{{ item.located }}</span>
+                </span>
+                <span class="owner">
+                    <tui-icon icon="@tui.user-round" />
+                    <span class="owner-value">{{ item.owner }}</span>
+                </span>
+            </div>
+            <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
+
+        </div>
+
+        <div class="item-details-right">
+            <h2>Borrows History</h2>
+            <div class="calendar-wrapper">
+                @if (!isMobile) {   
+                <tui-calendar [markerHandler]="markerHandler" [maxViewedMonth]="firstMonth" [month]="firstMonth"
+                    [showAdjacent]="false" [value]="value" [(hoveredItem)]="hoveredItem" (dayClick)="onDayClick($event)"
+                    (monthChange)="onMonthChangeFirst($event)" />
+                <tui-calendar [markerHandler]="markerHandler" [minViewedMonth]="lastMonth" [month]="lastMonth"
+                    [showAdjacent]="false" [value]="value" [(hoveredItem)]="hoveredItem" (dayClick)="onDayClick($event)"
+                    (monthChange)="onMonthChangeLast($event)" />
+                } @else {
+                    <tui-calendar [markerHandler]="markerHandler"  [month]="firstMonth"
+                        [showAdjacent]="false" [value]="value" [(hoveredItem)]="hoveredItem" (dayClick)="onDayClick($event)"
+                        (monthChange)="onMonthChangeFirst($event)" />
+                }
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <div class="item-stats">
+        <card-counter [icon]="'@tui.heart'" [label]="'Favorites'" [counter]="favoritesCount"></card-counter>
+
+        <card-counter [icon]="'@tui.calendar'" [label]="'Avg borrow duraction'" [counter]="avgBorrowDuration"></card-counter>
+
+        <card-counter [icon]="'@tui.calendar-x-2'" [label]="'Late returns'" [counter]="lateCount"></card-counter>
+
+        <card-counter [icon]="'@tui.archive'" [label]="'returns'" [counter]="returnsCount"></card-counter>
+
+        <card-counter [icon]="'@tui.clock'" [label]="'Current status'" [counter]="currentStatus"></card-counter>
+
+        <card-counter [icon]="'@tui.calendar-clock'" [label]="'Reservations'" [counter]="reservationsCount"></card-counter>
+
+    </div>
+
+    <div class="item-borrows-records">
+        <h2>Borrows Records</h2>
+        <tui-tabs [(activeItemIndex)]="activeStatusIndex">
+            @for (status of statuses; track status) {
+            <button [iconStart]="status.icon" tuiTab type="button" (click)="selectStatus(status.status)">
+                {{ status.name }}
+            </button>
+            }
+        </tui-tabs>
+
+        <div class="borrow-records-list">
+            @for (record of borrowRecordsByStatus[selectedStatus]; track record) {
+            <div class="borrow-record">
+
+                @if (record.effectiveReturnDate) {
+                    <div class="borrow-record-status" class="on-time-status" [class]="'status-' + getReturnedOnTimeStatus(record).status">
+                        <span class="borrow-record-status-value">{{ getReturnedOnTimeStatus(record).label }}</span>
+                        <tui-icon icon="@tui.clock"></tui-icon>
+                    </div>
+                }
+                <div class="borrow-record-borrow-by">
+
+                    <h2>
+                        <tui-avatar [src]="getUser(record.borrowedBy).username | tuiInitials"
+                            [style.background]="getUser(record.borrowedBy).username | tuiAutoColor"
+                            size="s"></tui-avatar>
+                        {{ getUser(record.borrowedBy).username }}
+                    </h2>
+                </div>
+                <div class="borrow-record-start-date">
+                    <label>Start Date</label>
+                    <span class="borrow-record-start-date-value">{{ record.startDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="borrow-record-end-date">
+                    <label>End Date</label>
+                    <span class="borrow-record-end-date-value">{{ record.endDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+                <div class="borrow-record-duration">
+                    <label>Duration</label>
+                    <span class="borrow-record-duration-value">{{ duration(record.startDate, record.endDate) }}</span>
+                </div>
+                <div class="borrow-record-reservation-date">
+                    <label>Reservation Date</label>
+                    <span class="borrow-record-reservation-date-value">{{ record.reservationDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+                @if (record.effectiveReturnDate) {
+                <div class="borrow-record-effective-return-date">
+                    <label>Effective Return Date</label>
+                    <span class="borrow-record-effective-return-date-value">{{ record.effectiveReturnDate | date:'dd/MM/yyyy' }}</span>
+                </div>
+                }
+            </div>
+            }
+            @if (!borrowRecordsByStatus[selectedStatus] || borrowRecordsByStatus[selectedStatus].length === 0) {
+            <p>No borrow records found</p>
+            }
+        </div>
+
+    </div>
+
+</div>

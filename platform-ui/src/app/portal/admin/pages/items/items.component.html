@@ -67,13 +67,18 @@
   <ng-template #itemActionsTemplate let-item="item">
     <div class="items-actions">
       <div class="action">
+        <button [routerLink]="['/admin/items/', item.id, 'activity']" appearance="outline" iconStart="@tui.activity" size="s" tuiIconButton type="button"
+          [style.border-radius.%]="100">
+          Activity
+        </button>
+      </div>
+      <div class="action">
         <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen" size="s"
           tuiIconButton type="button" [style.border-radius.%]="100">
           Edit
         </button>
       </div>
       <div class="action">
-
         <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
           [style.border-radius.%]="100">
           Archive

@@ -1,0 +1,151 @@
+@use 'theme' as *;
+
+/* Availability Styling */
+::ng-deep .not-available {
+    background-color: var(--tos-background-neutral-2-pressed) !important;
+    /* Use theme's danger color */
+}
+
+
+.item-activity {
+
+    .item-details {
+        display: grid;
+        grid-template-columns: 6fr 6fr;
+        gap: 20px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 16px;
+        overflow: hidden;
+        text-align: left;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border: 0px solid rgb(226, 232, 240);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+        .calendar-wrapper {
+            display: flex;
+        }
+
+        /* Item Image Styling */
+        .item-image {
+            border: 1px solid #ccc;
+            /* Use theme border color */
+            max-width: 80%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+
+
+        .attributes {
+            border-top: 1px solid rgb(226, 232, 240);
+            border-bottom: 1px solid rgb(226, 232, 240);
+            margin: 10px 0;
+            padding: 10px 0;
+        }
+
+        .location tui-icon,
+        .owner tui-icon,
+        .category tui-icon {
+            width: 16px;
+            height: 16px;
+            position: relative;
+            top: -3px;
+        }
+
+        .location,
+        .owner,
+        .category {
+            color: rgb(100, 116, 139);
+            padding-right: 15px;
+            line-height: 16px;
+            vertical-align: middle;
+            /* Adjust alignment within the line */
+        }
+    }
+
+    .item-stats {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 30px;
+    }
+}
+
+.item-borrows-records {
+    margin-top: 20px;
+    padding: 20px;
+    overflow: hidden;
+    text-align: left;
+
+
+    .borrow-records-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 30px;
+        padding-top: 20px;
+
+        .borrow-record {
+            border-radius: 16px;
+            padding: 20px;
+            background-color: #fff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 0px solid rgb(226, 232, 240);
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+            h2 {
+                margin-top: 0;
+            }
+
+            label {
+                font-size: 12px;
+                color: rgb(100, 116, 139);
+                margin-right: 10px;
+                width: 100px;
+            }
+
+            .on-time-status {
+                float: right;
+
+                tui-icon {
+                    margin-left: 10px;
+                }
+            }
+
+            .status-on-time {
+                color: var(--tos-status-positive);
+            }
+
+            .status-before-end-date {
+                color: var(--tos-status-positive);
+            }
+
+            .status-late {
+                color: var(--tos-status-negative);
+            }
+
+            .status-not-returned {
+                color: var(--tos-status-neutral);
+            }
+
+
+        }
+    }
+
+}
+
+@media (max-width: 680px) {
+
+    .borrow-records-list {
+        grid-template-columns: 1fr !important;
+    }
+
+    .item-details {
+        grid-template-columns: 1fr !important;
+    }
+
+    .item-stats {
+        grid-template-columns: 1fr !important;
+    }
+}

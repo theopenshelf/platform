@@ -13,5 +13,5 @@ export class CardCounterComponent {
 
   public icon = input.required<string>();
   public label = input.required<string>();
-  public counter = input.required<number>();
+  public counter = input<string | number>();
 }

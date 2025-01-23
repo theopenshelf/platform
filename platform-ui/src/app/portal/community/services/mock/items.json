@@ -1,2213 +1,2667 @@
 [
-  {
-    "id": "1",
-    "name": "The Four Agreements",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/1.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1518337204671-d648c3e13cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Otis Chips is the latest in a series of similar products from Schimmel - Renner",
-    "shortDescription": "Ventito tibi cresco depraedor turba summisse agnosco damno tam.",
-    "category": "books",
-    "favorite": true,
-    "borrowCount": 2,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z",
-    "borrowRecords": [
-      {
+    {
         "id": "1",
-        "borrowedBy": "john@test.com",
-        "startDate": "2025-08-21",
-        "endDate": "2025-08-28"
-      },
-      {
+        "name": "The Four Agreements",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/1.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1518337204671-d648c3e13cf6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Otis Chips is the latest in a series of similar products from Schimmel - Renner",
+        "shortDescription": "Ventito tibi cresco depraedor turba summisse agnosco damno tam.",
+        "category": "books",
+        "favorite": true,
+        "borrowCount": 2,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.186Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-08-21",
+                "endDate": "2025-08-28",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-29",
+                "endDate": "2024-02-04",
+                "reservationDate": "2024-01-05",
+                "effectiveReturnDate": "2024-02-04"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-10-27",
+                "endDate": "2024-11-02",
+                "reservationDate": "2024-10-03",
+                "effectiveReturnDate": "2024-11-03"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-28",
+                "endDate": "2024-12-01",
+                "reservationDate": "2024-11-24",
+                "effectiveReturnDate": "2024-11-30"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-05-02",
+                "endDate": "2025-05-07",
+                "reservationDate": "2025-01-16",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-10-31",
+                "endDate": "2024-11-02",
+                "reservationDate": "2024-10-23",
+                "effectiveReturnDate": "2024-11-01"
+            }
+        ]
+    },
+    {
         "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-29",
-        "endDate": "2024-02-04"
-      },
-      {
+        "name": "Licensed Metal Cheese",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/2.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1663784294206-9b508132baf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "New turquoise Shoes with ergonomic design for cheerful comfort",
+        "shortDescription": "Absum bonus accendo nesciunt dignissimos spiritus sustineo modi.",
+        "category": "safety",
+        "favorite": false,
+        "borrowCount": 9,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.203Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2024-08-09",
+                "endDate": "2024-08-14",
+                "reservationDate": "2024-07-12",
+                "effectiveReturnDate": "2024-08-14"
+            }
+        ]
+    },
+    {
         "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-10-27",
-        "endDate": "2024-11-02"
-      },
-      {
+        "name": "Ergonomic Metal Pants",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/3.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1514896856000-91cb6de818e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Stylish Chicken designed to make you stand out with crushing looks",
+        "shortDescription": "Tertius in umquam.",
+        "category": "travel",
+        "favorite": false,
+        "borrowCount": 2,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.265Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2024-07-10",
+                "endDate": "2024-07-17",
+                "reservationDate": "2024-06-19",
+                "effectiveReturnDate": "2024-07-17"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-09-20",
+                "endDate": "2025-09-27",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2025-06-20",
+                "endDate": "2025-06-23",
+                "reservationDate": "2025-01-12",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-10-21",
+                "endDate": "2025-10-28",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-19",
+                "endDate": "2024-07-22",
+                "reservationDate": "2024-07-11",
+                "effectiveReturnDate": "2024-07-21"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-06-26",
+                "endDate": "2025-06-28",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
         "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-28",
-        "endDate": "2024-12-01"
-      },
-      {
+        "name": "Luxurious Granite Pants",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/4.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1501839814414-3d83e4f5f48d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Unbranded Hat designed with Plastic for noted performance",
+        "shortDescription": "Ut itaque curto cum claustrum solutio voluptatibus usque curto consequatur.",
+        "category": "kids",
+        "favorite": false,
+        "borrowCount": 15,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.161Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-10-29",
+                "endDate": "2024-11-04",
+                "reservationDate": "2024-10-05",
+                "effectiveReturnDate": "2024-11-04"
+            }
+        ]
+    },
+    {
         "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-05-02",
-        "endDate": "2025-05-07"
-      },
-      {
+        "name": "Handcrafted Plastic Ball",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/5.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Ergonomic Computer made with Fresh for all-day lustrous support",
+        "shortDescription": "Ciminatio artificiose terror sollicito.",
+        "category": "home",
+        "favorite": true,
+        "borrowCount": 2,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.145Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-12-27",
+                "endDate": "2026-01-03",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-05-13",
+                "endDate": "2025-05-19",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2025-07-15",
+                "endDate": "2025-07-19",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
         "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-10-31",
-        "endDate": "2024-11-02"
-      }
-    ]
-  },
-  {
-    "id": "2",
-    "name": "Licensed Metal Cheese",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/2.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1663784294206-9b508132baf9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "New turquoise Shoes with ergonomic design for cheerful comfort",
-    "shortDescription": "Absum bonus accendo nesciunt dignissimos spiritus sustineo modi.",
-    "category": "safety",
-    "favorite": false,
-    "borrowCount": 9,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2024-08-09",
-        "endDate": "2024-08-14"
-      }
-    ]
-  },
-  {
-    "id": "3",
-    "name": "Ergonomic Metal Pants",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/3.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1514896856000-91cb6de818e0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Stylish Chicken designed to make you stand out with crushing looks",
-    "shortDescription": "Tertius in umquam.",
-    "category": "travel",
-    "favorite": false,
-    "borrowCount": 2,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.265Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2024-07-10",
-        "endDate": "2024-07-17"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-09-20",
-        "endDate": "2025-09-27"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2025-06-20",
-        "endDate": "2025-06-23"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-10-21",
-        "endDate": "2025-10-28"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-19",
-        "endDate": "2024-07-22"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "john@example.com",
-        "startDate": "2025-06-26",
-        "endDate": "2025-06-28"
-      }
-    ]
-  },
-  {
-    "id": "4",
-    "name": "Luxurious Granite Pants",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/4.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1501839814414-3d83e4f5f48d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Unbranded Hat designed with Plastic for noted performance",
-    "shortDescription": "Ut itaque curto cum claustrum solutio voluptatibus usque curto consequatur.",
-    "category": "kids",
-    "favorite": false,
-    "borrowCount": 15,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.161Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "john@example.com",
-        "startDate": "2024-10-29",
-        "endDate": "2024-11-04"
-      }
-    ]
-  },
-  {
-    "id": "5",
-    "name": "Handcrafted Plastic Ball",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/5.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1467043153537-a4fba2cd39ef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Ergonomic Computer made with Fresh for all-day lustrous support",
-    "shortDescription": "Ciminatio artificiose terror sollicito.",
-    "category": "home",
-    "favorite": true,
-    "borrowCount": 2,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.145Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-12-27",
-        "endDate": "2026-01-03"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "john@test.com",
-        "startDate": "2025-05-13",
-        "endDate": "2025-05-19"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2025-07-15",
-        "endDate": "2025-07-19"
-      }
-    ]
-  },
-  {
-    "id": "6",
-    "name": "Fantastic Soft Sausages",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/6.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1451481454041-104482d8e284?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Introducing the Comoros-inspired Tuna, blending powerless style with local craftsmanship",
-    "shortDescription": "Laboriosam ceno demonstro abscido.",
-    "category": "kids",
-    "favorite": false,
-    "borrowCount": 12,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-15",
-        "endDate": "2025-01-21"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-08",
-        "endDate": "2025-12-13"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-02-08",
-        "endDate": "2024-02-10"
-      }
-    ]
-  },
-  {
-    "id": "7",
-    "name": "Gorgeous Bronze Sausages",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/7.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1595804850773-4a3fe3444a71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "New lime Chips with ergonomic design for feline comfort",
-    "shortDescription": "Cornu supplanto certus.",
-    "category": "safety",
-    "favorite": true,
-    "borrowCount": 20,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.151Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-09-15",
-        "endDate": "2025-09-17"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-03-08",
-        "endDate": "2024-03-09"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-09",
-        "endDate": "2024-07-15"
-      }
-    ]
-  },
-  {
-    "id": "8",
-    "name": "Ulysses",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/8.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Stylish Tuna designed to make you stand out with magnificent looks",
-    "shortDescription": "Vos amet animadverto cursim sapiente dedico adfectus.",
-    "category": "books",
-    "favorite": false,
-    "borrowCount": 15,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.222Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-01",
-        "endDate": "2025-12-30"
-      }
-    ]
-  },
-  {
-    "id": "9",
-    "name": "Gorgeous Rubber Keyboard",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/9.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Featuring Technetium-enhanced technology, our Car offers unparalleled big performance",
-    "shortDescription": "Vestigium degusto decimus provident ullus bis.",
-    "category": "home",
-    "favorite": true,
-    "borrowCount": 16,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.251Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-16",
-        "endDate": "2025-07-20"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-04-03",
-        "endDate": "2025-04-10"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-05",
-        "endDate": "2024-07-08"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-08-19",
-        "endDate": "2024-08-24"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2025-04-09",
-        "endDate": "2025-04-13"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2024-01-28",
-        "endDate": "2024-01-29"
-      }
-    ]
-  },
-  {
-    "id": "10",
-    "name": "Bespoke Cotton Chicken",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/10.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1654764746519-e4cd61715b78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Belle Shirt is the latest in a series of frivolous products from Gleichner - Kerluke",
-    "shortDescription": "Vacuus vox conqueror currus abbas beatae.",
-    "category": "beauty health",
-    "favorite": false,
-    "borrowCount": 7,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.152Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-29",
-        "endDate": "2024-02-04"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "john@example.com",
-        "startDate": "2025-11-21",
-        "endDate": "2025-11-22"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2024-11-02",
-        "endDate": "2024-11-08"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-04-10",
-        "endDate": "2024-04-11"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2025-07-17",
-        "endDate": "2025-07-22"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2024-08-30",
-        "endDate": "2024-09-06"
-      },
-      {
+        "name": "Fantastic Soft Sausages",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/6.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1451481454041-104482d8e284?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Introducing the Comoros-inspired Tuna, blending powerless style with local craftsmanship",
+        "shortDescription": "Laboriosam ceno demonstro abscido.",
+        "category": "kids",
+        "favorite": false,
+        "borrowCount": 12,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.187Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-15",
+                "endDate": "2025-01-21",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": "2025-01-22"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-08",
+                "endDate": "2025-12-13",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-02-08",
+                "endDate": "2024-02-10",
+                "reservationDate": "2024-01-25",
+                "effectiveReturnDate": "2024-02-10"
+            }
+        ]
+    },
+    {
         "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-05-20",
-        "endDate": "2024-05-22"
-      },
-      {
+        "name": "Gorgeous Bronze Sausages",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/7.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1595804850773-4a3fe3444a71?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "New lime Chips with ergonomic design for feline comfort",
+        "shortDescription": "Cornu supplanto certus.",
+        "category": "safety",
+        "favorite": true,
+        "borrowCount": 20,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.151Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-09-15",
+                "endDate": "2025-09-17",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-03-08",
+                "endDate": "2024-03-09",
+                "reservationDate": "2024-03-01",
+                "effectiveReturnDate": "2024-03-08"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-09",
+                "endDate": "2024-07-15",
+                "reservationDate": "2024-07-07",
+                "effectiveReturnDate": "2024-07-15"
+            }
+        ]
+    },
+    {
         "id": "8",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-05-07",
-        "endDate": "2025-05-14"
-      },
-      {
+        "name": "Ulysses",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/8.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Stylish Tuna designed to make you stand out with magnificent looks",
+        "shortDescription": "Vos amet animadverto cursim sapiente dedico adfectus.",
+        "category": "books",
+        "favorite": false,
+        "borrowCount": 15,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.222Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-01",
+                "endDate": "2025-12-30",
+                "reservationDate": "2024-12-27",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
         "id": "9",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-11-29",
-        "endDate": "2024-12-01"
-      }
-    ]
-  },
-  {
-    "id": "11",
-    "name": "Fantastic Concrete Hat",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/11.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1631378297854-185cff6b0986?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The sleek and sardonic Mouse comes with lavender LED lighting for smart functionality",
-    "shortDescription": "Damno aut verus crapula bellicus toties.",
-    "category": "diy",
-    "favorite": true,
-    "borrowCount": 14,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-05",
-        "endDate": "2025-01-09"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-13",
-        "endDate": "2025-02-16"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-10",
-        "endDate": "2025-01-11"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-20",
-        "endDate": "2025-10-26"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-28",
-        "endDate": "2025-07-30"
-      }
-    ]
-  },
-  {
-    "id": "12",
-    "name": "Cordless Vacuum Cleaner",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/12.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1640622308238-70e5f22fe0be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Featuring Strontium-enhanced technology, our Bacon offers unparalleled faraway performance",
-    "shortDescription": "Arcesso ex cupio thema.",
-    "category": "electronics",
-    "favorite": true,
-    "borrowCount": 8,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.151Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-14",
-        "endDate": "2025-01-19"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2025-10-31",
-        "endDate": "2025-11-06"
-      }
-    ]
-  },
-  {
-    "id": "13",
-    "name": "Refined Soft Salad",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/13.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Our sweet-inspired Bacon brings a taste of luxury to your super lifestyle",
-    "shortDescription": "Cupio quas ter vilicus depulso trans sui asporto.",
-    "category": "diy",
-    "favorite": true,
-    "borrowCount": 14,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.312Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-07-11",
-        "endDate": "2025-07-14"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-03-24",
-        "endDate": "2025-03-29"
-      }
-    ]
-  },
-  {
-    "id": "14",
-    "name": "Refined Plastic Shirt",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/14.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1631981782640-9eec0cca25f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Innovative Bike featuring disloyal technology and Rubber construction",
-    "shortDescription": "Ubi illum ratione.",
-    "category": "gardening",
-    "favorite": false,
-    "borrowCount": 1,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.162Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "john@example.com",
-        "startDate": "2025-01-23",
-        "endDate": "2025-01-25"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-27",
-        "endDate": "2025-02-01"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-08-31",
-        "endDate": "2025-09-05"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2025-08-11",
-        "endDate": "2025-08-17"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-26",
-        "endDate": "2025-12-29"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-06-08",
-        "endDate": "2025-06-14"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-05-22",
-        "endDate": "2025-05-28"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-04-26",
-        "endDate": "2024-04-30"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-12-30",
-        "endDate": "2025-01-04"
-      },
-      {
+        "name": "Gorgeous Rubber Keyboard",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/9.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Featuring Technetium-enhanced technology, our Car offers unparalleled big performance",
+        "shortDescription": "Vestigium degusto decimus provident ullus bis.",
+        "category": "home",
+        "favorite": true,
+        "borrowCount": 16,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.251Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-16",
+                "endDate": "2025-07-20",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-04-03",
+                "endDate": "2025-04-10",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-05",
+                "endDate": "2024-07-08",
+                "reservationDate": "2024-06-26",
+                "effectiveReturnDate": "2024-07-07"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-08-19",
+                "endDate": "2024-08-24",
+                "reservationDate": "2024-08-10",
+                "effectiveReturnDate": "2024-08-23"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2025-04-09",
+                "endDate": "2025-04-13",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2024-01-28",
+                "endDate": "2024-01-29",
+                "reservationDate": "2024-01-10",
+                "effectiveReturnDate": "2024-01-29"
+            }
+        ]
+    },
+    {
         "id": "10",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2025-07-17",
-        "endDate": "2025-07-24"
-      }
-    ]
-  },
-  {
-    "id": "15",
-    "name": "Bespoke Plastic Table",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/15.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1602449204748-331279a2ed37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Savor the salty essence in our Soap, designed for aware culinary adventures",
-    "shortDescription": "Tolero vae utilis.",
-    "category": "safety",
-    "favorite": false,
-    "borrowCount": 19,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-26",
-        "endDate": "2024-01-27"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-12-29",
-        "endDate": "2026-01-04"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-05-24",
-        "endDate": "2024-05-31"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-08-02",
-        "endDate": "2024-08-03"
-      }
-    ]
-  },
-  {
-    "id": "16",
-    "name": "Rustic Steel Car",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/16.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Ergonomic Pizza made with Plastic for all-day deafening support",
-    "shortDescription": "Sollicito abbas demonstro sponte sollers collum solutio in aetas cultura.",
-    "category": "vehicle",
-    "favorite": true,
-    "borrowCount": 7,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.544Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-03-31",
-        "endDate": "2025-04-05"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2025-09-20",
-        "endDate": "2025-09-22"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2024-12-21",
-        "endDate": "2024-12-22"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2024-06-22",
-        "endDate": "2024-06-27"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-31",
-        "endDate": "2025-08-03"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-08-13",
-        "endDate": "2025-08-15"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-04-04",
-        "endDate": "2024-04-11"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-08",
-        "endDate": "2025-07-10"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-19",
-        "endDate": "2025-10-24"
-      }
-    ]
-  },
-  {
-    "id": "17",
-    "name": "Generic Plastic Table",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/17.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1593414220166-085caeae0382?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Lehner, Witting and Dicki's most advanced Shirt technology increases shabby capabilities",
-    "shortDescription": "Vobis depono animadverto.",
-    "category": "events",
-    "favorite": false,
-    "borrowCount": 18,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.203Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2024-05-12",
-        "endDate": "2024-05-14"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-03-29",
-        "endDate": "2025-03-31"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-27",
-        "endDate": "2024-02-01"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-02-08",
-        "endDate": "2025-02-11"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2025-04-25",
-        "endDate": "2025-04-30"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-09",
-        "endDate": "2024-11-10"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-14",
-        "endDate": "2024-01-16"
-      }
-    ]
-  },
-  {
-    "id": "18",
-    "name": "Awesome Fresh Pizza",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/18.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1555703484-89d93b41e658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Stylish Mouse designed to make you stand out with fantastic looks",
-    "shortDescription": "Vulariter amor damnatio calco.",
-    "category": "camping",
-    "favorite": true,
-    "borrowCount": 5,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2024-07-05",
-        "endDate": "2024-07-12"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-06-29",
-        "endDate": "2024-07-02"
-      }
-    ]
-  },
-  {
-    "id": "19",
-    "name": "Small Cotton Computer",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/19.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1483247416020-58799b6de4c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Verna Gloves is the latest in a series of brave products from Hauck - Kessler",
-    "shortDescription": "Crapula venia ulciscor spiritus pecus triumphus synagoga.",
-    "category": "travel",
-    "favorite": true,
-    "borrowCount": 6,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2024-01-02",
-        "endDate": "2024-01-03"
-      }
-    ]
-  },
-  {
-    "id": "20",
-    "name": "Fantastic Metal Hat",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/20.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Discover the sea lion-like agility of our Shirt, perfect for which users",
-    "shortDescription": "Ventito arto tonsor administratio suppellex sustineo laudantium adsum quo.",
-    "category": "diy",
-    "favorite": false,
-    "borrowCount": 8,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.302Z",
-    "borrowRecords": []
-  },
-  {
-    "id": "21",
-    "name": "Modern Bronze Pizza",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/21.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Our frog-friendly Pants ensures right comfort for your pets",
-    "shortDescription": "Quod cohaero verto.",
-    "category": "diy",
-    "favorite": false,
-    "borrowCount": 13,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.305Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-07-17",
-        "endDate": "2025-07-18"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-29",
-        "endDate": "2026-01-02"
-      }
-    ]
-  },
-  {
-    "id": "22",
-    "name": "Fantastic Granite Chips",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/22.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1521782462922-9318be1cfd04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "New indigo Soap with ergonomic design for interesting comfort",
-    "shortDescription": "Tolero suffragium triumphus debitis.",
-    "category": "home",
-    "favorite": false,
-    "borrowCount": 3,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.260Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-11-14",
-        "endDate": "2025-11-20"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2025-05-25",
-        "endDate": "2025-05-30"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-17",
-        "endDate": "2025-02-24"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-21",
-        "endDate": "2025-12-28"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2025-06-28",
-        "endDate": "2025-07-05"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-31",
-        "endDate": "2024-08-05"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-14",
-        "endDate": "2024-11-18"
-      }
-    ]
-  },
-  {
-    "id": "23",
-    "name": "Unbranded Cotton Gloves",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/23.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Savor the juicy essence in our Hat, designed for proper culinary adventures",
-    "shortDescription": "Sum termes subseco cohors coepi ventosus damnatio tego arx.",
-    "category": "kids",
-    "favorite": false,
-    "borrowCount": 11,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.173Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2024-09-16",
-        "endDate": "2024-09-21"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2024-11-11",
-        "endDate": "2024-11-14"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-22",
-        "endDate": "2025-02-24"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "john@example.com",
-        "startDate": "2025-04-21",
-        "endDate": "2025-04-24"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-13",
-        "endDate": "2024-07-14"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-05-28",
-        "endDate": "2024-06-04"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-17",
-        "endDate": "2024-01-24"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-12-06",
-        "endDate": "2024-12-13"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-09-20",
-        "endDate": "2024-09-24"
-      }
-    ]
-  },
-  {
-    "id": "24",
-    "name": "Handcrafted Metal Gloves",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/24.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Hirthe, Hilpert and Kreiger's most advanced Bacon technology increases emotional capabilities",
-    "shortDescription": "Turbo patruus suscipio caecus conculco.",
-    "category": "diy",
-    "favorite": true,
-    "borrowCount": 16,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.308Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-03",
-        "endDate": "2024-11-04"
-      }
-    ]
-  },
-  {
-    "id": "25",
-    "name": "Practical Concrete Towels",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/25.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Our fresh-inspired Bike brings a taste of luxury to your qualified lifestyle",
-    "shortDescription": "Celer crustulum quis veritatis accedo nisi cometes.",
-    "category": "travel",
-    "favorite": true,
-    "borrowCount": 0,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2024-01-24",
-        "endDate": "2024-01-31"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2025-06-10",
-        "endDate": "2025-06-16"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-09-17",
-        "endDate": "2024-09-19"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-08-18",
-        "endDate": "2025-08-22"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-03-25",
-        "endDate": "2025-03-30"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "nolan@example.com",
-        "startDate": "2025-11-09",
-        "endDate": "2025-11-11"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-28",
-        "endDate": "2025-02-01"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-04-18",
-        "endDate": "2024-04-20"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-02-27",
-        "endDate": "2025-03-02"
-      }
-    ]
-  },
-  {
-    "id": "26",
-    "name": "Bikini",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/26.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "New Bacon model with 88 GB RAM, 775 GB storage, and animated features",
-    "shortDescription": "Collum suscipit vilis.",
-    "category": "clothing",
-    "favorite": false,
-    "borrowCount": 1,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.186Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-04-23",
-        "endDate": "2024-04-28"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-11-23",
-        "endDate": "2025-11-25"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-12-10",
-        "endDate": "2024-12-14"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2025-06-19",
-        "endDate": "2025-06-26"
-      }
-    ]
-  },
-  {
-    "id": "27",
-    "name": "Handmade Steel Chicken",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/27.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1543422018-8e0700ca5eec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Our giraffe-friendly Mouse ensures physical comfort for your pets",
-    "shortDescription": "Deporto compello adopto in trucido advenio tergiversatio.",
-    "category": "beauty health",
-    "favorite": false,
-    "borrowCount": 7,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-11-15",
-        "endDate": "2025-11-19"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-08-21",
-        "endDate": "2025-08-26"
-      }
-    ]
-  },
-  {
-    "id": "28",
-    "name": "Recycled Plastic Soap",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/28.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1519752235002-1f7189299e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Discover the bee-like agility of our Mouse, perfect for normal users",
-    "shortDescription": "Voluptatibus animus somnus curriculum cultellus voluptate ago tricesimus.",
-    "category": "vehicle",
-    "favorite": false,
-    "borrowCount": 19,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.447Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-05-02",
-        "endDate": "2024-05-05"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-04-27",
-        "endDate": "2025-04-28"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-27",
-        "endDate": "2026-01-01"
-      }
-    ]
-  },
-  {
-    "id": "29",
-    "name": "Intelligent Bronze Keyboard",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/29.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1696441303859-80b1ac0d25b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Marguerite Pizza is the latest in a series of earnest products from Howe - Hermann",
-    "shortDescription": "Decor cibo tabella creator demo.",
-    "category": "sports outdoors",
-    "favorite": true,
-    "borrowCount": 6,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.631Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-17",
-        "endDate": "2025-02-20"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-06-12",
-        "endDate": "2025-06-17"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-27",
-        "endDate": "2025-11-01"
-      }
-    ]
-  },
-  {
-    "id": "30",
-    "name": "Elegant Wooden Keyboard",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/30.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Innovative Soap featuring handsome technology and Steel construction",
-    "shortDescription": "A voco cruentus timidus ceno delibero comburo acquiro confero terga.",
-    "category": "safety",
-    "favorite": true,
-    "borrowCount": 1,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.274Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2024-01-09",
-        "endDate": "2024-01-11"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2025-01-06",
-        "endDate": "2025-01-13"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-05-18",
-        "endDate": "2025-05-25"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "john@test.com",
-        "startDate": "2024-12-13",
-        "endDate": "2024-12-15"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2024-06-22",
-        "endDate": "2024-06-24"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-12",
-        "endDate": "2025-02-14"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-09-11",
-        "endDate": "2024-09-16"
-      }
-    ]
-  },
-  {
-    "id": "31",
-    "name": "Oriental Plastic Hat",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/31.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1527018165407-85e7b1ddf0d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Our fresh-inspired Gloves brings a taste of luxury to your sour lifestyle",
-    "shortDescription": "Tametsi thymum adipiscor creator aspicio ter stipes impedit.",
-    "category": "home",
-    "favorite": false,
-    "borrowCount": 11,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.259Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-03-23",
-        "endDate": "2024-03-24"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-18",
-        "endDate": "2025-07-24"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-03-12",
-        "endDate": "2025-03-13"
-      }
-    ]
-  },
-  {
-    "id": "32",
-    "name": "Handmade Wooden Keyboard",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/32.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Discover the gloomy new Chair with an exciting mix of Plastic ingredients",
-    "shortDescription": "Subvenio undique pecus vapulus eius.",
-    "category": "beauty health",
-    "favorite": true,
-    "borrowCount": 12,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.189Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-12-03",
-        "endDate": "2024-12-10"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-11-23",
-        "endDate": "2024-11-29"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-06-15",
-        "endDate": "2024-06-16"
-      }
-    ]
-  },
-  {
-    "id": "33",
-    "name": "Swimsuit",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/33.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Discover the giraffe-like agility of our Mouse, perfect for minty users",
-    "shortDescription": "Caelestis delectus vulticulus timidus aeger natus causa deduco pel strenuus.",
-    "category": "clothing",
-    "favorite": false,
-    "borrowCount": 1,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.283Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-03-23",
-        "endDate": "2025-03-27"
-      }
-    ]
-  },
-  {
-    "id": "34",
-    "name": "Incredible Plastic Sausages",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/34.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Our moist-inspired Towels brings a taste of luxury to your self-reliant lifestyle",
-    "shortDescription": "Vigor culpo supra.",
-    "category": "travel",
-    "favorite": true,
-    "borrowCount": 13,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.222Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-29",
-        "endDate": "2025-02-02"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-05-23",
-        "endDate": "2025-05-25"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-12-22",
-        "endDate": "2024-12-29"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "john@example.com",
-        "startDate": "2024-02-12",
-        "endDate": "2024-02-15"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-09-27",
-        "endDate": "2025-09-29"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2025-07-30",
-        "endDate": "2025-08-06"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "john@example.com",
-        "startDate": "2024-12-03",
-        "endDate": "2024-12-05"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-03-06",
-        "endDate": "2025-03-08"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-02-16",
-        "endDate": "2025-02-22"
-      }
-    ]
-  },
-  {
-    "id": "35",
-    "name": "Licensed Concrete Sausages",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/35.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1730584474338-aa8d9d186bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "New turquoise Towels with ergonomic design for male comfort",
-    "shortDescription": "Tendo decumbo adduco adulescens vomito volo.",
-    "category": "safety",
-    "favorite": true,
-    "borrowCount": 10,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.308Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "john@test.com",
-        "startDate": "2024-03-11",
-        "endDate": "2024-03-18"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-06-13",
-        "endDate": "2025-06-15"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-01-12",
-        "endDate": "2025-01-15"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-08",
-        "endDate": "2024-11-12"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-04-30",
-        "endDate": "2025-05-06"
-      }
-    ]
-  },
-  {
-    "id": "36",
-    "name": "Tasty Granite Towels",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/36.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Featuring Potassium-enhanced technology, our Gloves offers unparalleled ripe performance",
-    "shortDescription": "Adsum aequus titulus adstringo aestas tripudio statim succurro.",
-    "category": "diy",
-    "favorite": true,
-    "borrowCount": 14,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.300Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-22",
-        "endDate": "2024-11-27"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-12-09",
-        "endDate": "2025-12-14"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-01-01",
-        "endDate": "2025-01-08"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "john@test.com",
-        "startDate": "2025-02-21",
-        "endDate": "2025-02-22"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-06-26",
-        "endDate": "2025-06-30"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2024-09-01",
-        "endDate": "2024-09-04"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-06-29",
-        "endDate": "2024-07-05"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-05-11",
-        "endDate": "2024-05-14"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-06-29",
-        "endDate": "2025-07-06"
-      }
-    ]
-  },
-  {
-    "id": "37",
-    "name": "Electronic Rubber Shoes",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/37.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1690166444493-b3f5fbcd4762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Discover the bird-like agility of our Cheese, perfect for dazzling users",
-    "shortDescription": "Vilitas coepi deprimo nostrum conitor.",
-    "category": "safety",
-    "favorite": false,
-    "borrowCount": 0,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.188Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-08-19",
-        "endDate": "2025-08-22"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-04-09",
-        "endDate": "2025-04-10"
-      }
-    ]
-  },
-  {
-    "id": "38",
-    "name": "Generic Bronze Shirt",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/38.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Discover the cow-like agility of our Cheese, perfect for weary users",
-    "shortDescription": "Spargo reprehenderit pecco rem caecus comitatus vorago ademptio occaecati esse.",
-    "category": "beauty health",
-    "favorite": false,
-    "borrowCount": 15,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.168Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-01-05",
-        "endDate": "2025-01-09"
-      }
-    ]
-  },
-  {
-    "id": "39",
-    "name": "Incredible Fresh Chair",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/39.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1512774320837-4e666ee94f16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Integrated content-based forecast Chicken offers reliable performance and private design",
-    "shortDescription": "Alo eligendi ceno ab accusator curto vulpes tenuis decimus.",
-    "category": "multimedia",
-    "favorite": false,
-    "borrowCount": 5,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-05-08",
-        "endDate": "2024-05-14"
-      }
-    ]
-  },
-  {
-    "id": "40",
-    "name": "Licensed Frozen Gloves",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/40.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1603140841869-b1f3527c55ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "The Beulah Hat is the latest in a series of secondary products from Runolfsson, Runolfsson and Okuneva",
-    "shortDescription": "Demo quaerat capio adduco aliqua colo ancilla bibo dapifer.",
-    "category": "safety",
-    "favorite": true,
-    "borrowCount": 1,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.216Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2025-09-11",
-        "endDate": "2025-09-14"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2025-03-19",
-        "endDate": "2025-03-23"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-02-01",
-        "endDate": "2024-02-04"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-23",
-        "endDate": "2025-10-28"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-07-22",
-        "endDate": "2024-07-27"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-07-05",
-        "endDate": "2024-07-12"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-09",
-        "endDate": "2025-12-15"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2024-06-01",
-        "endDate": "2024-06-07"
-      }
-    ]
-  },
-  {
-    "id": "41",
-    "name": "Oriental Concrete Chair",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/41.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1680264524729-503ae538cf33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Experience the mint green brilliance of our Soap, perfect for shameful environments",
-    "shortDescription": "Unde vaco atque labore solutio quas arcesso depereo.",
-    "category": "gardening",
-    "favorite": true,
-    "borrowCount": 16,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.214Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-11-30",
-        "endDate": "2025-12-06"
-      }
-    ]
-  },
-  {
-    "id": "42",
-    "name": "The Art of War",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/42.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Hackett Group's most advanced Shoes technology increases gigantic capabilities",
-    "shortDescription": "Utique vulgivagus verbum demo deorsum acer caelum.",
-    "category": "books",
-    "favorite": true,
-    "borrowCount": 7,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.212Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-08-31",
-        "endDate": "2025-09-07"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-04-01",
-        "endDate": "2024-04-02"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2025-01-27",
-        "endDate": "2025-01-29"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-08-09",
-        "endDate": "2024-08-10"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "john@test.com",
-        "startDate": "2024-09-23",
-        "endDate": "2024-09-30"
-      }
-    ]
-  },
-  {
-    "id": "43",
-    "name": "Awesome Rubber Bike",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/43.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1589923188900-85dae523342b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Licensed Ball designed with Frozen for granular performance",
-    "shortDescription": "Caste thesaurus tres.",
-    "category": "gardening",
-    "favorite": true,
-    "borrowCount": 6,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.196Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2024-09-18",
-        "endDate": "2024-09-22"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2024-04-02",
-        "endDate": "2024-04-05"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2025-03-26",
-        "endDate": "2025-03-30"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-11-01",
-        "endDate": "2024-11-04"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "nolan@example.com",
-        "startDate": "2024-07-16",
-        "endDate": "2024-07-22"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-08",
-        "endDate": "2025-02-10"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-16",
-        "endDate": "2025-02-17"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "nolan@example.com",
-        "startDate": "2024-12-05",
-        "endDate": "2024-12-07"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2024-10-03",
-        "endDate": "2024-10-08"
-      },
-      {
-        "id": "10",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-08-03",
-        "endDate": "2024-08-07"
-      }
-    ]
-  },
-  {
-    "id": "44",
-    "name": "Sleek Plastic Tuna",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/44.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1687977686478-13b75f82225e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Discover the deer-like agility of our Salad, perfect for square users",
-    "shortDescription": "Demum tempore thesis teres celo.",
-    "category": "multimedia",
-    "favorite": false,
-    "borrowCount": 10,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.284Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "quentin@example.com",
-        "startDate": "2025-02-20",
-        "endDate": "2025-02-24"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2024-03-14",
-        "endDate": "2024-03-16"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-12-10",
-        "endDate": "2024-12-14"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-03-31",
-        "endDate": "2024-04-02"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2024-11-14",
-        "endDate": "2024-11-19"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2024-03-29",
-        "endDate": "2024-03-31"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2024-08-01",
-        "endDate": "2024-08-05"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-04",
-        "endDate": "2025-10-11"
-      },
-      {
-        "id": "9",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-02-10",
-        "endDate": "2025-02-12"
-      }
-    ]
-  },
-  {
-    "id": "45",
-    "name": "Rustic Cotton Soap",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/45.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Discover the kangaroo-like agility of our Shoes, perfect for tired users",
-    "shortDescription": "Defessus avarus cumque deinde.",
-    "category": "vehicle",
-    "favorite": true,
-    "borrowCount": 5,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.548Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-12-01",
-        "endDate": "2025-12-08"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-06-24",
-        "endDate": "2024-06-30"
-      }
-    ]
-  },
-  {
-    "id": "46",
-    "name": "Oriental Concrete Mouse",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/46.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Ergonomic Shoes made with Metal for all-day honorable support",
-    "shortDescription": "Est celo aranea denuo appositus blanditiis templum comis quae.",
-    "category": "kids",
-    "favorite": true,
-    "borrowCount": 20,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.238Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2025-02-05",
-        "endDate": "2025-02-08"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-05-02",
-        "endDate": "2024-05-04"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-09",
-        "endDate": "2025-10-16"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "alice@example.com",
-        "startDate": "2024-11-01",
-        "endDate": "2024-11-08"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-16",
-        "endDate": "2024-01-17"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-03",
-        "endDate": "2024-07-05"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-10-22",
-        "endDate": "2025-10-24"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-03-19",
-        "endDate": "2025-03-21"
-      }
-    ]
-  },
-  {
-    "id": "47",
-    "name": "Fantastic Wooden Soap",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/47.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "Introducing the Mali-inspired Bike, blending worthy style with local craftsmanship",
-    "shortDescription": "Vilitas amicitia crepusculum aveho ars paens volubilis beneficium creta torqueo.",
-    "category": "home",
-    "favorite": false,
-    "borrowCount": 6,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.259Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "bob@example.com",
-        "startDate": "2024-06-10",
-        "endDate": "2024-06-15"
-      }
-    ]
-  },
-  {
-    "id": "48",
-    "name": "Electronic Rubber Car",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/48.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1492709560992-3fa75e9e887b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Innovative Soap featuring frivolous technology and Concrete construction",
-    "shortDescription": "Earum cunabula vinum hic adopto.",
-    "category": "travel",
-    "favorite": false,
-    "borrowCount": 11,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.205Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-11-10",
-        "endDate": "2024-11-14"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "jane@example.com",
-        "startDate": "2025-01-01",
-        "endDate": "2025-01-07"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2025-04-01",
-        "endDate": "2025-04-06"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "allan@example.com",
-        "startDate": "2025-08-10",
-        "endDate": "2025-08-12"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-02-27",
-        "endDate": "2024-03-05"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "louwen@example.com",
-        "startDate": "2024-11-07",
-        "endDate": "2024-11-13"
-      }
-    ]
-  },
-  {
-    "id": "49",
-    "name": "Bespoke Plastic Mouse",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/49.jpg",
-    "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
-    "description": "Luxurious Pizza designed with Granite for polite performance",
-    "shortDescription": "Callide celer volutabrum summa speciosus adinventitias.",
-    "category": "kids",
-    "favorite": false,
-    "borrowCount": 0,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.187Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "nolan@example.com",
-        "startDate": "2025-09-17",
-        "endDate": "2025-09-24"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "paul@example.com",
-        "startDate": "2024-08-16",
-        "endDate": "2024-08-21"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-08-04",
-        "endDate": "2024-08-06"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "arthur@example.com",
-        "startDate": "2025-01-28",
-        "endDate": "2025-01-29"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2025-06-09",
-        "endDate": "2025-06-13"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-07-03",
-        "endDate": "2024-07-09"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "marie@example.com",
-        "startDate": "2024-01-25",
-        "endDate": "2024-01-29"
-      }
-    ]
-  },
-  {
-    "id": "50",
-    "name": "Licensed Frozen Table",
-    "located": "ShareSpace",
-    "owner": "TheOpenShelf",
-    "imageUrl": "/items/50.jpg",
-    "pexelsUrl": "https://via.placeholder.com/500",
-    "description": "The pink Table combines Northern Mariana Islands aesthetics with Tantalum-based durability",
-    "shortDescription": "Coniuratio ultio curia chirographum.",
-    "category": "home",
-    "favorite": false,
-    "borrowCount": 11,
-    "libraryId": "1",
-    "createdAt": "2024-12-29T20:51:37.256Z",
-    "borrowRecords": [
-      {
-        "id": "1",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-01-28",
-        "endDate": "2024-01-29"
-      },
-      {
-        "id": "2",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-05-29",
-        "endDate": "2025-06-04"
-      },
-      {
-        "id": "3",
-        "borrowedBy": "me@example.com",
-        "startDate": "2024-04-05",
-        "endDate": "2024-04-11"
-      },
-      {
-        "id": "4",
-        "borrowedBy": "tiago@example.com",
-        "startDate": "2024-10-07",
-        "endDate": "2024-10-13"
-      },
-      {
-        "id": "5",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-05-31",
-        "endDate": "2025-06-03"
-      },
-      {
-        "id": "6",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-03-30",
-        "endDate": "2025-04-03"
-      },
-      {
-        "id": "7",
-        "borrowedBy": "me@example.com",
-        "startDate": "2025-07-27",
-        "endDate": "2025-07-29"
-      },
-      {
-        "id": "8",
-        "borrowedBy": "john@test.com",
-        "startDate": "2025-09-13",
-        "endDate": "2025-09-15"
-      }
-    ]
-  }
+        "name": "Bespoke Cotton Chicken",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/10.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1654764746519-e4cd61715b78?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Belle Shirt is the latest in a series of frivolous products from Gleichner - Kerluke",
+        "shortDescription": "Vacuus vox conqueror currus abbas beatae.",
+        "category": "beauty health",
+        "favorite": false,
+        "borrowCount": 7,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.152Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-29",
+                "endDate": "2024-02-04",
+                "reservationDate": "2024-01-18",
+                "effectiveReturnDate": "2024-02-04"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-11-21",
+                "endDate": "2025-11-22",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2024-11-02",
+                "endDate": "2024-11-08",
+                "reservationDate": "2024-10-26",
+                "effectiveReturnDate": "2024-11-07"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-04-10",
+                "endDate": "2024-04-11",
+                "reservationDate": "2024-03-27",
+                "effectiveReturnDate": "2024-04-10"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2025-07-17",
+                "endDate": "2025-07-22",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2024-08-30",
+                "endDate": "2024-09-06",
+                "reservationDate": "2024-08-03",
+                "effectiveReturnDate": "2024-09-06"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-05-20",
+                "endDate": "2024-05-22",
+                "reservationDate": "2024-04-28",
+                "effectiveReturnDate": "2024-05-23"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-05-07",
+                "endDate": "2025-05-14",
+                "reservationDate": "2025-01-12",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "9",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-11-29",
+                "endDate": "2024-12-01",
+                "reservationDate": "2024-11-11",
+                "effectiveReturnDate": "2024-12-01"
+            }
+        ]
+    },
+    {
+        "id": "11",
+        "name": "Fantastic Concrete Hat",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/11.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1631378297854-185cff6b0986?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The sleek and sardonic Mouse comes with lavender LED lighting for smart functionality",
+        "shortDescription": "Damno aut verus crapula bellicus toties.",
+        "category": "diy",
+        "favorite": true,
+        "borrowCount": 14,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.203Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-05",
+                "endDate": "2025-01-09",
+                "reservationDate": "2024-12-22",
+                "effectiveReturnDate": "2025-01-10"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-13",
+                "endDate": "2025-02-16",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-10",
+                "endDate": "2025-01-11",
+                "reservationDate": "2024-12-14",
+                "effectiveReturnDate": "2025-01-10"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-20",
+                "endDate": "2025-10-26",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-28",
+                "endDate": "2025-07-30",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "12",
+        "name": "Cordless Vacuum Cleaner",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/12.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1640622308238-70e5f22fe0be?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Featuring Strontium-enhanced technology, our Bacon offers unparalleled faraway performance",
+        "shortDescription": "Arcesso ex cupio thema.",
+        "category": "electronics",
+        "favorite": true,
+        "borrowCount": 8,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.151Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-14",
+                "endDate": "2025-01-19",
+                "reservationDate": "2024-12-20",
+                "effectiveReturnDate": "2025-01-19"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2025-10-31",
+                "endDate": "2025-11-06",
+                "reservationDate": "2025-01-17",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "13",
+        "name": "Refined Soft Salad",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/13.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Our sweet-inspired Bacon brings a taste of luxury to your super lifestyle",
+        "shortDescription": "Cupio quas ter vilicus depulso trans sui asporto.",
+        "category": "diy",
+        "favorite": true,
+        "borrowCount": 14,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.312Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-07-11",
+                "endDate": "2025-07-14",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-03-24",
+                "endDate": "2025-03-29",
+                "reservationDate": "2025-01-17",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "14",
+        "name": "Refined Plastic Shirt",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/14.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1631981782640-9eec0cca25f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Innovative Bike featuring disloyal technology and Rubber construction",
+        "shortDescription": "Ubi illum ratione.",
+        "category": "gardening",
+        "favorite": false,
+        "borrowCount": 1,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.162Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-01-23",
+                "endDate": "2025-01-25",
+                "reservationDate": "2025-01-10",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-27",
+                "endDate": "2025-02-01",
+                "reservationDate": "2025-01-06",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-08-31",
+                "endDate": "2025-09-05",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2025-08-11",
+                "endDate": "2025-08-17",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-26",
+                "endDate": "2025-12-29",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-06-08",
+                "endDate": "2025-06-14",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-05-22",
+                "endDate": "2025-05-28",
+                "reservationDate": "2025-01-19",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-04-26",
+                "endDate": "2024-04-30",
+                "reservationDate": "2024-04-07",
+                "effectiveReturnDate": "2024-04-29"
+            },
+            {
+                "id": "9",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-12-30",
+                "endDate": "2025-01-04",
+                "reservationDate": "2024-12-11",
+                "effectiveReturnDate": "2025-01-04"
+            },
+            {
+                "id": "10",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2025-07-17",
+                "endDate": "2025-07-24",
+                "reservationDate": "2025-01-10",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "15",
+        "name": "Bespoke Plastic Table",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/15.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1602449204748-331279a2ed37?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Savor the salty essence in our Soap, designed for aware culinary adventures",
+        "shortDescription": "Tolero vae utilis.",
+        "category": "safety",
+        "favorite": false,
+        "borrowCount": 19,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.189Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-26",
+                "endDate": "2024-01-27",
+                "reservationDate": "2024-01-20",
+                "effectiveReturnDate": "2024-01-27"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-12-29",
+                "endDate": "2026-01-04",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-05-24",
+                "endDate": "2024-05-31",
+                "reservationDate": "2024-04-28",
+                "effectiveReturnDate": "2024-05-31"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-08-02",
+                "endDate": "2024-08-03",
+                "reservationDate": "2024-07-23",
+                "effectiveReturnDate": "2024-08-03"
+            }
+        ]
+    },
+    {
+        "id": "16",
+        "name": "Rustic Steel Car",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/16.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Ergonomic Pizza made with Plastic for all-day deafening support",
+        "shortDescription": "Sollicito abbas demonstro sponte sollers collum solutio in aetas cultura.",
+        "category": "vehicle",
+        "favorite": true,
+        "borrowCount": 7,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.544Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-03-31",
+                "endDate": "2025-04-05",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2025-09-20",
+                "endDate": "2025-09-22",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2024-12-21",
+                "endDate": "2024-12-22",
+                "reservationDate": "2024-12-18",
+                "effectiveReturnDate": "2024-12-21"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2024-06-22",
+                "endDate": "2024-06-27",
+                "reservationDate": "2024-06-10",
+                "effectiveReturnDate": "2024-06-28"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-31",
+                "endDate": "2025-08-03",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-08-13",
+                "endDate": "2025-08-15",
+                "reservationDate": "2025-01-12",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-04-04",
+                "endDate": "2024-04-11",
+                "reservationDate": "2024-03-16",
+                "effectiveReturnDate": "2024-04-10"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-08",
+                "endDate": "2025-07-10",
+                "reservationDate": "2025-01-12",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "9",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-19",
+                "endDate": "2025-10-24",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "17",
+        "name": "Generic Plastic Table",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/17.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1593414220166-085caeae0382?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Lehner, Witting and Dicki's most advanced Shirt technology increases shabby capabilities",
+        "shortDescription": "Vobis depono animadverto.",
+        "category": "events",
+        "favorite": false,
+        "borrowCount": 18,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.203Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2024-05-12",
+                "endDate": "2024-05-14",
+                "reservationDate": "2024-04-13",
+                "effectiveReturnDate": "2024-05-15"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-03-29",
+                "endDate": "2025-03-31",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-27",
+                "endDate": "2024-02-01",
+                "reservationDate": "2024-01-15",
+                "effectiveReturnDate": "2024-02-01"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-02-08",
+                "endDate": "2025-02-11",
+                "reservationDate": "2025-02-01",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2025-04-25",
+                "endDate": "2025-04-30",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-09",
+                "endDate": "2024-11-10",
+                "reservationDate": "2024-10-31",
+                "effectiveReturnDate": "2024-11-09"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-14",
+                "endDate": "2024-01-16",
+                "reservationDate": "2023-12-22",
+                "effectiveReturnDate": "2024-01-15"
+            }
+        ]
+    },
+    {
+        "id": "18",
+        "name": "Awesome Fresh Pizza",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/18.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1555703484-89d93b41e658?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Stylish Mouse designed to make you stand out with fantastic looks",
+        "shortDescription": "Vulariter amor damnatio calco.",
+        "category": "camping",
+        "favorite": true,
+        "borrowCount": 5,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.186Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2024-07-05",
+                "endDate": "2024-07-12",
+                "reservationDate": "2024-06-13",
+                "effectiveReturnDate": "2024-07-13"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-06-29",
+                "endDate": "2024-07-02",
+                "reservationDate": "2024-06-10",
+                "effectiveReturnDate": "2024-07-02"
+            }
+        ]
+    },
+    {
+        "id": "19",
+        "name": "Small Cotton Computer",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/19.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1483247416020-58799b6de4c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Verna Gloves is the latest in a series of brave products from Hauck - Kessler",
+        "shortDescription": "Crapula venia ulciscor spiritus pecus triumphus synagoga.",
+        "category": "travel",
+        "favorite": true,
+        "borrowCount": 6,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.187Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2024-01-02",
+                "endDate": "2024-01-03",
+                "reservationDate": "2023-12-12",
+                "effectiveReturnDate": "2024-01-02"
+            }
+        ]
+    },
+    {
+        "id": "20",
+        "name": "Fantastic Metal Hat",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/20.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Discover the sea lion-like agility of our Shirt, perfect for which users",
+        "shortDescription": "Ventito arto tonsor administratio suppellex sustineo laudantium adsum quo.",
+        "category": "diy",
+        "favorite": false,
+        "borrowCount": 8,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.302Z",
+        "borrowRecords": []
+    },
+    {
+        "id": "21",
+        "name": "Modern Bronze Pizza",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/21.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Our frog-friendly Pants ensures right comfort for your pets",
+        "shortDescription": "Quod cohaero verto.",
+        "category": "diy",
+        "favorite": false,
+        "borrowCount": 13,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.305Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-07-17",
+                "endDate": "2025-07-18",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-29",
+                "endDate": "2026-01-02",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "22",
+        "name": "Fantastic Granite Chips",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/22.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1521782462922-9318be1cfd04?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "New indigo Soap with ergonomic design for interesting comfort",
+        "shortDescription": "Tolero suffragium triumphus debitis.",
+        "category": "home",
+        "favorite": false,
+        "borrowCount": 3,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.260Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-11-14",
+                "endDate": "2025-11-20",
+                "reservationDate": "2025-01-12",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2025-05-25",
+                "endDate": "2025-05-30",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-17",
+                "endDate": "2025-02-24",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-21",
+                "endDate": "2025-12-28",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2025-06-28",
+                "endDate": "2025-07-05",
+                "reservationDate": "2025-01-10",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-31",
+                "endDate": "2024-08-05",
+                "reservationDate": "2024-07-28",
+                "effectiveReturnDate": "2024-08-06"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-14",
+                "endDate": "2024-11-18",
+                "reservationDate": "2024-10-16",
+                "effectiveReturnDate": "2024-11-17"
+            }
+        ]
+    },
+    {
+        "id": "23",
+        "name": "Unbranded Cotton Gloves",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/23.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Savor the juicy essence in our Hat, designed for proper culinary adventures",
+        "shortDescription": "Sum termes subseco cohors coepi ventosus damnatio tego arx.",
+        "category": "kids",
+        "favorite": false,
+        "borrowCount": 11,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.173Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2024-09-16",
+                "endDate": "2024-09-21",
+                "reservationDate": "2024-08-17",
+                "effectiveReturnDate": "2024-09-20"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2024-11-11",
+                "endDate": "2024-11-14",
+                "reservationDate": "2024-11-08",
+                "effectiveReturnDate": "2024-11-14"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-22",
+                "endDate": "2025-02-24",
+                "reservationDate": "2025-02-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-04-21",
+                "endDate": "2025-04-24",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-13",
+                "endDate": "2024-07-14",
+                "reservationDate": "2024-07-07",
+                "effectiveReturnDate": "2024-07-14"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-05-28",
+                "endDate": "2024-06-04",
+                "reservationDate": "2024-05-17",
+                "effectiveReturnDate": "2024-06-05"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-17",
+                "endDate": "2024-01-24",
+                "reservationDate": "2024-01-15",
+                "effectiveReturnDate": "2024-01-24"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-12-06",
+                "endDate": "2024-12-13",
+                "reservationDate": "2024-12-03",
+                "effectiveReturnDate": "2024-12-12"
+            },
+            {
+                "id": "9",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-09-20",
+                "endDate": "2024-09-24",
+                "reservationDate": "2024-08-26",
+                "effectiveReturnDate": "2024-09-25"
+            }
+        ]
+    },
+    {
+        "id": "24",
+        "name": "Handcrafted Metal Gloves",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/24.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Hirthe, Hilpert and Kreiger's most advanced Bacon technology increases emotional capabilities",
+        "shortDescription": "Turbo patruus suscipio caecus conculco.",
+        "category": "diy",
+        "favorite": true,
+        "borrowCount": 16,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.308Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-03",
+                "endDate": "2024-11-04",
+                "reservationDate": "2024-10-08",
+                "effectiveReturnDate": "2024-11-05"
+            }
+        ]
+    },
+    {
+        "id": "25",
+        "name": "Practical Concrete Towels",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/25.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1553342385-111fd6bc6ab3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Our fresh-inspired Bike brings a taste of luxury to your qualified lifestyle",
+        "shortDescription": "Celer crustulum quis veritatis accedo nisi cometes.",
+        "category": "travel",
+        "favorite": true,
+        "borrowCount": 0,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.189Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2024-01-24",
+                "endDate": "2024-01-31",
+                "reservationDate": "2024-01-06",
+                "effectiveReturnDate": "2024-01-31"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2025-06-10",
+                "endDate": "2025-06-16",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-09-17",
+                "endDate": "2024-09-19",
+                "reservationDate": "2024-08-23",
+                "effectiveReturnDate": "2024-09-19"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-08-18",
+                "endDate": "2025-08-22",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-03-25",
+                "endDate": "2025-03-30",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "nolan@example.com",
+                "startDate": "2025-11-09",
+                "endDate": "2025-11-11",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-28",
+                "endDate": "2025-02-01",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-04-18",
+                "endDate": "2024-04-20",
+                "reservationDate": "2024-03-30",
+                "effectiveReturnDate": "2024-04-21"
+            },
+            {
+                "id": "9",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-02-27",
+                "endDate": "2025-03-02",
+                "reservationDate": "2025-01-23",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "26",
+        "name": "Bikini",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/26.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "New Bacon model with 88 GB RAM, 775 GB storage, and animated features",
+        "shortDescription": "Collum suscipit vilis.",
+        "category": "clothing",
+        "favorite": false,
+        "borrowCount": 1,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.186Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-04-23",
+                "endDate": "2024-04-28",
+                "reservationDate": "2024-04-17",
+                "effectiveReturnDate": "2024-04-29"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-11-23",
+                "endDate": "2025-11-25",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-12-10",
+                "endDate": "2024-12-14",
+                "reservationDate": "2024-11-14",
+                "effectiveReturnDate": "2024-12-14"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2025-06-19",
+                "endDate": "2025-06-26",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "27",
+        "name": "Handmade Steel Chicken",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/27.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1543422018-8e0700ca5eec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Our giraffe-friendly Mouse ensures physical comfort for your pets",
+        "shortDescription": "Deporto compello adopto in trucido advenio tergiversatio.",
+        "category": "beauty health",
+        "favorite": false,
+        "borrowCount": 7,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.214Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-11-15",
+                "endDate": "2025-11-19",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-08-21",
+                "endDate": "2025-08-26",
+                "reservationDate": "2025-01-17",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "28",
+        "name": "Recycled Plastic Soap",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/28.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1519752235002-1f7189299e90?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Discover the bee-like agility of our Mouse, perfect for normal users",
+        "shortDescription": "Voluptatibus animus somnus curriculum cultellus voluptate ago tricesimus.",
+        "category": "vehicle",
+        "favorite": false,
+        "borrowCount": 19,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.447Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-05-02",
+                "endDate": "2024-05-05",
+                "reservationDate": "2024-04-13",
+                "effectiveReturnDate": "2024-05-04"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-04-27",
+                "endDate": "2025-04-28",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-27",
+                "endDate": "2026-01-01",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "29",
+        "name": "Intelligent Bronze Keyboard",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/29.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1696441303859-80b1ac0d25b6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Marguerite Pizza is the latest in a series of earnest products from Howe - Hermann",
+        "shortDescription": "Decor cibo tabella creator demo.",
+        "category": "sports outdoors",
+        "favorite": true,
+        "borrowCount": 6,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.631Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-17",
+                "endDate": "2025-02-20",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-06-12",
+                "endDate": "2025-06-17",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-27",
+                "endDate": "2025-11-01",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "30",
+        "name": "Elegant Wooden Keyboard",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/30.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Innovative Soap featuring handsome technology and Steel construction",
+        "shortDescription": "A voco cruentus timidus ceno delibero comburo acquiro confero terga.",
+        "category": "safety",
+        "favorite": true,
+        "borrowCount": 1,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.274Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2024-01-09",
+                "endDate": "2024-01-11",
+                "reservationDate": "2023-12-25",
+                "effectiveReturnDate": "2024-01-11"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2025-01-06",
+                "endDate": "2025-01-13",
+                "reservationDate": "2024-12-25",
+                "effectiveReturnDate": "2025-01-14"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-05-18",
+                "endDate": "2025-05-25",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-12-13",
+                "endDate": "2024-12-15",
+                "reservationDate": "2024-12-08",
+                "effectiveReturnDate": "2024-12-16"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2024-06-22",
+                "endDate": "2024-06-24",
+                "reservationDate": "2024-06-03",
+                "effectiveReturnDate": "2024-06-25"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-12",
+                "endDate": "2025-02-14",
+                "reservationDate": "2025-01-23",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-09-11",
+                "endDate": "2024-09-16",
+                "reservationDate": "2024-08-20",
+                "effectiveReturnDate": "2024-09-16"
+            }
+        ]
+    },
+    {
+        "id": "31",
+        "name": "Oriental Plastic Hat",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/31.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1527018165407-85e7b1ddf0d3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Our fresh-inspired Gloves brings a taste of luxury to your sour lifestyle",
+        "shortDescription": "Tametsi thymum adipiscor creator aspicio ter stipes impedit.",
+        "category": "home",
+        "favorite": false,
+        "borrowCount": 11,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.259Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-03-23",
+                "endDate": "2024-03-24",
+                "reservationDate": "2024-03-17",
+                "effectiveReturnDate": "2024-03-24"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-18",
+                "endDate": "2025-07-24",
+                "reservationDate": "2025-01-23",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-03-12",
+                "endDate": "2025-03-13",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "32",
+        "name": "Handmade Wooden Keyboard",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/32.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Discover the gloomy new Chair with an exciting mix of Plastic ingredients",
+        "shortDescription": "Subvenio undique pecus vapulus eius.",
+        "category": "beauty health",
+        "favorite": true,
+        "borrowCount": 12,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.189Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-12-03",
+                "endDate": "2024-12-10",
+                "reservationDate": "2024-11-20",
+                "effectiveReturnDate": "2024-12-10"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-11-23",
+                "endDate": "2024-11-29",
+                "reservationDate": "2024-11-13",
+                "effectiveReturnDate": "2024-11-29"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-06-15",
+                "endDate": "2024-06-16",
+                "reservationDate": "2024-06-10",
+                "effectiveReturnDate": "2024-06-16"
+            }
+        ]
+    },
+    {
+        "id": "33",
+        "name": "Swimsuit",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/33.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Discover the giraffe-like agility of our Mouse, perfect for minty users",
+        "shortDescription": "Caelestis delectus vulticulus timidus aeger natus causa deduco pel strenuus.",
+        "category": "clothing",
+        "favorite": false,
+        "borrowCount": 1,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.283Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-03-23",
+                "endDate": "2025-03-27",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "34",
+        "name": "Incredible Plastic Sausages",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/34.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1503220317375-aaad61436b1b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Our moist-inspired Towels brings a taste of luxury to your self-reliant lifestyle",
+        "shortDescription": "Vigor culpo supra.",
+        "category": "travel",
+        "favorite": true,
+        "borrowCount": 13,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.222Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-29",
+                "endDate": "2025-02-02",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-05-23",
+                "endDate": "2025-05-25",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-12-22",
+                "endDate": "2024-12-29",
+                "reservationDate": "2024-11-25",
+                "effectiveReturnDate": "2024-12-29"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-02-12",
+                "endDate": "2024-02-15",
+                "reservationDate": "2024-02-01",
+                "effectiveReturnDate": "2024-02-14"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-09-27",
+                "endDate": "2025-09-29",
+                "reservationDate": "2025-01-23",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2025-07-30",
+                "endDate": "2025-08-06",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-12-03",
+                "endDate": "2024-12-05",
+                "reservationDate": "2024-12-01",
+                "effectiveReturnDate": "2024-12-04"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-03-06",
+                "endDate": "2025-03-08",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "9",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-02-16",
+                "endDate": "2025-02-22",
+                "reservationDate": "2025-01-31",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "35",
+        "name": "Licensed Concrete Sausages",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/35.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1730584474338-aa8d9d186bf7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "New turquoise Towels with ergonomic design for male comfort",
+        "shortDescription": "Tendo decumbo adduco adulescens vomito volo.",
+        "category": "safety",
+        "favorite": true,
+        "borrowCount": 10,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.308Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-03-11",
+                "endDate": "2024-03-18",
+                "reservationDate": "2024-03-08",
+                "effectiveReturnDate": "2024-03-17"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-06-13",
+                "endDate": "2025-06-15",
+                "reservationDate": "2025-01-20",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-01-12",
+                "endDate": "2025-01-15",
+                "reservationDate": "2025-01-01",
+                "effectiveReturnDate": "2025-01-15"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-08",
+                "endDate": "2024-11-12",
+                "reservationDate": "2024-10-13",
+                "effectiveReturnDate": "2024-11-12"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-04-30",
+                "endDate": "2025-05-06",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "36",
+        "name": "Tasty Granite Towels",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/36.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Featuring Potassium-enhanced technology, our Gloves offers unparalleled ripe performance",
+        "shortDescription": "Adsum aequus titulus adstringo aestas tripudio statim succurro.",
+        "category": "diy",
+        "favorite": true,
+        "borrowCount": 14,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.300Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-22",
+                "endDate": "2024-11-27",
+                "reservationDate": "2024-11-05",
+                "effectiveReturnDate": "2024-11-27"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-12-09",
+                "endDate": "2025-12-14",
+                "reservationDate": "2025-01-17",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-01-01",
+                "endDate": "2025-01-08",
+                "reservationDate": "2024-12-11",
+                "effectiveReturnDate": "2025-01-07"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-02-21",
+                "endDate": "2025-02-22",
+                "reservationDate": "2025-01-26",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-06-26",
+                "endDate": "2025-06-30",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2024-09-01",
+                "endDate": "2024-09-04",
+                "reservationDate": "2024-08-23",
+                "effectiveReturnDate": "2024-09-05"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-06-29",
+                "endDate": "2024-07-05",
+                "reservationDate": "2024-06-06",
+                "effectiveReturnDate": "2024-07-04"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-05-11",
+                "endDate": "2024-05-14",
+                "reservationDate": "2024-04-24",
+                "effectiveReturnDate": "2024-05-14"
+            },
+            {
+                "id": "9",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-06-29",
+                "endDate": "2025-07-06",
+                "reservationDate": "2025-01-19",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "37",
+        "name": "Electronic Rubber Shoes",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/37.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1690166444493-b3f5fbcd4762?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Discover the bird-like agility of our Cheese, perfect for dazzling users",
+        "shortDescription": "Vilitas coepi deprimo nostrum conitor.",
+        "category": "safety",
+        "favorite": false,
+        "borrowCount": 0,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.188Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-08-19",
+                "endDate": "2025-08-22",
+                "reservationDate": "2025-01-15",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-04-09",
+                "endDate": "2025-04-10",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "38",
+        "name": "Generic Bronze Shirt",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/38.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1524499982521-1ffd58dd89ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Discover the cow-like agility of our Cheese, perfect for weary users",
+        "shortDescription": "Spargo reprehenderit pecco rem caecus comitatus vorago ademptio occaecati esse.",
+        "category": "beauty health",
+        "favorite": false,
+        "borrowCount": 15,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.168Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-01-05",
+                "endDate": "2025-01-09",
+                "reservationDate": "2024-12-21",
+                "effectiveReturnDate": "2025-01-09"
+            }
+        ]
+    },
+    {
+        "id": "39",
+        "name": "Incredible Fresh Chair",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/39.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1512774320837-4e666ee94f16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Integrated content-based forecast Chicken offers reliable performance and private design",
+        "shortDescription": "Alo eligendi ceno ab accusator curto vulpes tenuis decimus.",
+        "category": "multimedia",
+        "favorite": false,
+        "borrowCount": 5,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.214Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-05-08",
+                "endDate": "2024-05-14",
+                "reservationDate": "2024-04-19",
+                "effectiveReturnDate": "2024-05-15"
+            }
+        ]
+    },
+    {
+        "id": "40",
+        "name": "Licensed Frozen Gloves",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/40.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1603140841869-b1f3527c55ab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "The Beulah Hat is the latest in a series of secondary products from Runolfsson, Runolfsson and Okuneva",
+        "shortDescription": "Demo quaerat capio adduco aliqua colo ancilla bibo dapifer.",
+        "category": "safety",
+        "favorite": true,
+        "borrowCount": 1,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.216Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2025-09-11",
+                "endDate": "2025-09-14",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2025-03-19",
+                "endDate": "2025-03-23",
+                "reservationDate": "2025-01-23",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-02-01",
+                "endDate": "2024-02-04",
+                "reservationDate": "2024-01-10",
+                "effectiveReturnDate": "2024-02-05"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-23",
+                "endDate": "2025-10-28",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-07-22",
+                "endDate": "2024-07-27",
+                "reservationDate": "2024-07-03",
+                "effectiveReturnDate": "2024-07-27"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-07-05",
+                "endDate": "2024-07-12",
+                "reservationDate": "2024-06-23",
+                "effectiveReturnDate": "2024-07-13"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-09",
+                "endDate": "2025-12-15",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2024-06-01",
+                "endDate": "2024-06-07",
+                "reservationDate": "2024-05-07",
+                "effectiveReturnDate": "2024-06-06"
+            }
+        ]
+    },
+    {
+        "id": "41",
+        "name": "Oriental Concrete Chair",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/41.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1680264524729-503ae538cf33?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Experience the mint green brilliance of our Soap, perfect for shameful environments",
+        "shortDescription": "Unde vaco atque labore solutio quas arcesso depereo.",
+        "category": "gardening",
+        "favorite": true,
+        "borrowCount": 16,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.214Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-11-30",
+                "endDate": "2025-12-06",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "42",
+        "name": "The Art of War",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/42.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1513035097-b6ddae614caa?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Hackett Group's most advanced Shoes technology increases gigantic capabilities",
+        "shortDescription": "Utique vulgivagus verbum demo deorsum acer caelum.",
+        "category": "books",
+        "favorite": true,
+        "borrowCount": 7,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.212Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-08-31",
+                "endDate": "2025-09-07",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-04-01",
+                "endDate": "2024-04-02",
+                "reservationDate": "2024-03-10",
+                "effectiveReturnDate": "2024-04-01"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2025-01-27",
+                "endDate": "2025-01-29",
+                "reservationDate": "2024-12-28",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-08-09",
+                "endDate": "2024-08-10",
+                "reservationDate": "2024-07-26",
+                "effectiveReturnDate": "2024-08-10"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "john@example.com",
+                "startDate": "2024-09-23",
+                "endDate": "2024-09-30",
+                "reservationDate": "2024-09-17",
+                "effectiveReturnDate": "2024-10-01"
+            }
+        ]
+    },
+    {
+        "id": "43",
+        "name": "Awesome Rubber Bike",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/43.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1589923188900-85dae523342b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Licensed Ball designed with Frozen for granular performance",
+        "shortDescription": "Caste thesaurus tres.",
+        "category": "gardening",
+        "favorite": true,
+        "borrowCount": 6,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.196Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2024-09-18",
+                "endDate": "2024-09-22",
+                "reservationDate": "2024-09-13",
+                "effectiveReturnDate": "2024-09-21"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2024-04-02",
+                "endDate": "2024-04-05",
+                "reservationDate": "2024-03-16",
+                "effectiveReturnDate": "2024-04-06"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2025-03-26",
+                "endDate": "2025-03-30",
+                "reservationDate": "2025-01-09",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-11-01",
+                "endDate": "2024-11-04",
+                "reservationDate": "2024-10-24",
+                "effectiveReturnDate": "2024-11-03"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "nolan@example.com",
+                "startDate": "2024-07-16",
+                "endDate": "2024-07-22",
+                "reservationDate": "2024-06-29",
+                "effectiveReturnDate": "2024-07-23"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-08",
+                "endDate": "2025-02-10",
+                "reservationDate": "2025-02-06",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-16",
+                "endDate": "2025-02-17",
+                "reservationDate": "2025-02-10",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "nolan@example.com",
+                "startDate": "2024-12-05",
+                "endDate": "2024-12-07",
+                "reservationDate": "2024-11-14",
+                "effectiveReturnDate": "2024-12-07"
+            },
+            {
+                "id": "9",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2024-10-03",
+                "endDate": "2024-10-08",
+                "reservationDate": "2024-09-11",
+                "effectiveReturnDate": "2024-10-08"
+            },
+            {
+                "id": "10",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-08-03",
+                "endDate": "2024-08-07",
+                "reservationDate": "2024-07-25",
+                "effectiveReturnDate": "2024-08-07"
+            }
+        ]
+    },
+    {
+        "id": "44",
+        "name": "Sleek Plastic Tuna",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/44.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1687977686478-13b75f82225e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Discover the deer-like agility of our Salad, perfect for square users",
+        "shortDescription": "Demum tempore thesis teres celo.",
+        "category": "multimedia",
+        "favorite": false,
+        "borrowCount": 10,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.284Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "quentin@example.com",
+                "startDate": "2025-02-20",
+                "endDate": "2025-02-24",
+                "reservationDate": "2025-02-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2024-03-14",
+                "endDate": "2024-03-16",
+                "reservationDate": "2024-02-29",
+                "effectiveReturnDate": "2024-03-16"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-12-10",
+                "endDate": "2024-12-14",
+                "reservationDate": "2024-12-06",
+                "effectiveReturnDate": "2024-12-14"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-03-31",
+                "endDate": "2024-04-02",
+                "reservationDate": "2024-03-29",
+                "effectiveReturnDate": "2024-04-01"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2024-11-14",
+                "endDate": "2024-11-19",
+                "reservationDate": "2024-10-21",
+                "effectiveReturnDate": "2024-11-18"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2024-03-29",
+                "endDate": "2024-03-31",
+                "reservationDate": "2024-03-10",
+                "effectiveReturnDate": "2024-03-30"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2024-08-01",
+                "endDate": "2024-08-05",
+                "reservationDate": "2024-07-19",
+                "effectiveReturnDate": "2024-08-06"
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-04",
+                "endDate": "2025-10-11",
+                "reservationDate": "2025-01-17",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "9",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-02-10",
+                "endDate": "2025-02-12",
+                "reservationDate": "2025-01-13",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "45",
+        "name": "Rustic Cotton Soap",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/45.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Discover the kangaroo-like agility of our Shoes, perfect for tired users",
+        "shortDescription": "Defessus avarus cumque deinde.",
+        "category": "vehicle",
+        "favorite": true,
+        "borrowCount": 5,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.548Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-12-01",
+                "endDate": "2025-12-08",
+                "reservationDate": "2025-01-14",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-06-24",
+                "endDate": "2024-06-30",
+                "reservationDate": "2024-05-26",
+                "effectiveReturnDate": "2024-06-30"
+            }
+        ]
+    },
+    {
+        "id": "46",
+        "name": "Oriental Concrete Mouse",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/46.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Ergonomic Shoes made with Metal for all-day honorable support",
+        "shortDescription": "Est celo aranea denuo appositus blanditiis templum comis quae.",
+        "category": "kids",
+        "favorite": true,
+        "borrowCount": 20,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.238Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2025-02-05",
+                "endDate": "2025-02-08",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-05-02",
+                "endDate": "2024-05-04",
+                "reservationDate": "2024-04-27",
+                "effectiveReturnDate": "2024-05-03"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-09",
+                "endDate": "2025-10-16",
+                "reservationDate": "2025-01-19",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "alice@example.com",
+                "startDate": "2024-11-01",
+                "endDate": "2024-11-08",
+                "reservationDate": "2024-10-27",
+                "effectiveReturnDate": "2024-11-07"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-16",
+                "endDate": "2024-01-17",
+                "reservationDate": "2023-12-29",
+                "effectiveReturnDate": "2024-01-17"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-03",
+                "endDate": "2024-07-05",
+                "reservationDate": "2024-06-15",
+                "effectiveReturnDate": "2024-07-05"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-10-22",
+                "endDate": "2025-10-24",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-03-19",
+                "endDate": "2025-03-21",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            }
+        ]
+    },
+    {
+        "id": "47",
+        "name": "Fantastic Wooden Soap",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/47.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "Introducing the Mali-inspired Bike, blending worthy style with local craftsmanship",
+        "shortDescription": "Vilitas amicitia crepusculum aveho ars paens volubilis beneficium creta torqueo.",
+        "category": "home",
+        "favorite": false,
+        "borrowCount": 6,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.259Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "bob@example.com",
+                "startDate": "2024-06-10",
+                "endDate": "2024-06-15",
+                "reservationDate": "2024-05-19",
+                "effectiveReturnDate": "2024-06-16"
+            }
+        ]
+    },
+    {
+        "id": "48",
+        "name": "Electronic Rubber Car",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/48.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1492709560992-3fa75e9e887b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Innovative Soap featuring frivolous technology and Concrete construction",
+        "shortDescription": "Earum cunabula vinum hic adopto.",
+        "category": "travel",
+        "favorite": false,
+        "borrowCount": 11,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.205Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-11-10",
+                "endDate": "2024-11-14",
+                "reservationDate": "2024-10-13",
+                "effectiveReturnDate": "2024-11-14"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "jane@example.com",
+                "startDate": "2025-01-01",
+                "endDate": "2025-01-07",
+                "reservationDate": "2024-12-22",
+                "effectiveReturnDate": "2025-01-07"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2025-04-01",
+                "endDate": "2025-04-06",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "4",
+                "borrowedBy": "allan@example.com",
+                "startDate": "2025-08-10",
+                "endDate": "2025-08-12",
+                "reservationDate": "2025-01-16",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-02-27",
+                "endDate": "2024-03-05",
+                "reservationDate": "2024-02-10",
+                "effectiveReturnDate": "2024-03-06"
+            },
+            {
+                "id": "6",
+                "borrowedBy": "louwen@example.com",
+                "startDate": "2024-11-07",
+                "endDate": "2024-11-13",
+                "reservationDate": "2024-10-24",
+                "effectiveReturnDate": "2024-11-12"
+            }
+        ]
+    },
+    {
+        "id": "49",
+        "name": "Bespoke Plastic Mouse",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/49.jpg",
+        "pexelsUrl": "https://images.unsplash.com/photo-1580377968154-e234b38fcf9d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2OTEzNTZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MzU1MDU0OTd8&ixlib=rb-4.0.3&q=80&w=1080",
+        "description": "Luxurious Pizza designed with Granite for polite performance",
+        "shortDescription": "Callide celer volutabrum summa speciosus adinventitias.",
+        "category": "kids",
+        "favorite": false,
+        "borrowCount": 0,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.187Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "nolan@example.com",
+                "startDate": "2025-09-17",
+                "endDate": "2025-09-24",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "2",
+                "borrowedBy": "paul@example.com",
+                "startDate": "2024-08-16",
+                "endDate": "2024-08-21",
+                "reservationDate": "2024-08-11",
+                "effectiveReturnDate": "2024-08-21"
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-08-04",
+                "endDate": "2024-08-06",
+                "reservationDate": "2024-07-31",
+                "effectiveReturnDate": "2024-08-06"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "arthur@example.com",
+                "startDate": "2025-01-28",
+                "endDate": "2025-01-29",
+                "reservationDate": "2025-01-05",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "5",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2025-06-09",
+                "endDate": "2025-06-13",
+                "reservationDate": "2025-01-08",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-07-03",
+                "endDate": "2024-07-09",
+                "reservationDate": "2024-06-23",
+                "effectiveReturnDate": "2024-07-10"
+            },
+            {
+                "id": "7",
+                "borrowedBy": "marie@example.com",
+                "startDate": "2024-01-25",
+                "endDate": "2024-01-29",
+                "reservationDate": "2024-01-14",
+                "effectiveReturnDate": "2024-01-29"
+            }
+        ]
+    },
+    {
+        "id": "50",
+        "name": "Licensed Frozen Table",
+        "located": "ShareSpace",
+        "owner": "TheOpenShelf",
+        "imageUrl": "/items/50.jpg",
+        "pexelsUrl": "https://via.placeholder.com/500",
+        "description": "The pink Table combines Northern Mariana Islands aesthetics with Tantalum-based durability",
+        "shortDescription": "Coniuratio ultio curia chirographum.",
+        "category": "home",
+        "favorite": false,
+        "borrowCount": 11,
+        "libraryId": "1",
+        "createdAt": "2024-12-29T20:51:37.256Z",
+        "borrowRecords": [
+            {
+                "id": "1",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-01-28",
+                "endDate": "2024-01-29",
+                "reservationDate": "2024-01-04",
+                "effectiveReturnDate": "2024-01-28"
+            },
+            {
+                "id": "2",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-05-29",
+                "endDate": "2025-06-04",
+                "reservationDate": "2025-01-21",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "3",
+                "borrowedBy": "me@example.com",
+                "startDate": "2024-04-05",
+                "endDate": "2024-04-11",
+                "reservationDate": "2024-03-27",
+                "effectiveReturnDate": "2024-04-10"
+            },
+            {
+                "id": "4",
+                "borrowedBy": "tiago@example.com",
+                "startDate": "2024-10-07",
+                "endDate": "2024-10-13",
+                "reservationDate": "2024-10-03",
+                "effectiveReturnDate": "2024-10-12"
+            },
+            {
+                "id": "5",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-05-31",
+                "endDate": "2025-06-03",
+                "reservationDate": "2025-01-22",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "6",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-03-30",
+                "endDate": "2025-04-03",
+                "reservationDate": "2025-01-11",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "7",
+                "borrowedBy": "me@example.com",
+                "startDate": "2025-07-27",
+                "endDate": "2025-07-29",
+                "reservationDate": "2025-01-18",
+                "effectiveReturnDate": null
+            },
+            {
+                "id": "8",
+                "borrowedBy": "john@example.com",
+                "startDate": "2025-09-13",
+                "endDate": "2025-09-15",
+                "reservationDate": "2025-01-16",
+                "effectiveReturnDate": null
+            }
+        ]
+    }
 ]

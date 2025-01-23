@@ -141,6 +141,8 @@ export class MockItemsService implements ItemsService {
       id: this.index++ + '',
       startDate: new Date(startDate),
       endDate: new Date(endDate),
+      reservationDate: new Date(),
+      effectiveReturnDate: undefined,
       borrowedBy: 'me@example.com',
     };
 

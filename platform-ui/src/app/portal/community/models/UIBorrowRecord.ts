@@ -3,4 +3,6 @@ export interface UIBorrowRecord {
   borrowedBy: string;
   startDate: Date;
   endDate: Date;
+  reservationDate: Date;
+  effectiveReturnDate?: Date;
 }

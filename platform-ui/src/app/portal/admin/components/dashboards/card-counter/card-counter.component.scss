@@ -15,7 +15,7 @@
 
 
     display: grid;
-    grid-template-columns: 1fr 1fr; // Adjust the ratio as needed
+    grid-template-columns: 5fr 7fr; // Adjust the ratio as needed
     align-items: center;
 
 
@@ -32,7 +32,7 @@
 
         align-items: left;
         border-left: 2px solid #cccccc;
-        padding-left: 50px;
+        padding-left: 30px;
 
     }
 
@@ -41,6 +41,7 @@
         font-size: 48px;
         font-weight: bold;
         margin: 15px 0;
+        line-height: 1;
 
     }
 

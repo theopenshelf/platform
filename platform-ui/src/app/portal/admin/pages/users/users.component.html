@@ -56,6 +56,12 @@
 
   <ng-template #itemActionsTemplate let-item="item">
     <div class="user-actions">
+      <div class="action">
+        <button [routerLink]="['/admin/users/', item.id, 'activity']" appearance="outline" iconStart="@tui.activity" size="s" tuiIconButton type="button"
+          [style.border-radius.%]="100">
+          Activity
+        </button>
+      </div>
     <button
       (click)="setPassword(item)"
       appearance="outline"

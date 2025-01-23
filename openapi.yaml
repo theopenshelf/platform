@@ -1427,6 +1427,7 @@ components:
         - borrowedBy
         - startDate
         - endDate
+        - reservationDate
       properties:
         id:
           type: string
@@ -1439,6 +1440,14 @@ components:
           format: date
           example: "2023-11-15"
         endDate:
+          type: string
+          format: date
+          example: "2023-11-22"
+        reservationDate:
+          type: string
+          format: date
+          example: "2023-11-15"
+        effectiveReturnDate:
           type: string
           format: date
           example: "2023-11-22"

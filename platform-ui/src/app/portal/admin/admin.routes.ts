@@ -9,8 +9,10 @@ import { CustomPagesComponent } from './pages/custom-pages/custom-pages.componen
 import { DashboardComponent } from './pages/dashboards/dashboard.component';
 import { EditUserComponent } from './pages/edit-user/edit-user.component';
 import { HelpCenterEditComponent } from './pages/help-center/help-center-edit.component';
+import { ItemActivityComponent } from './pages/item-activity/item-activity.component';
 import { ItemsComponent } from './pages/items/items.component';
 import { SecurityComponent } from './pages/security/security.component';
+import { UserActivityComponent } from './pages/user-activity/user-activity.component';
 import { UsersComponent } from './pages/users/users.component';
 
 export const ADMIN_ROUTES: Routes = [
@@ -23,7 +25,9 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'users', component: UsersComponent },
       { path: 'users/add', component: EditUserComponent },
       { path: 'users/:id/edit', component: EditUserComponent },
+      { path: 'users/:id/activity', component: UserActivityComponent },
       { path: 'items', component: ItemsComponent },
+      { path: 'items/:id/activity', component: ItemActivityComponent },
       { path: 'security', component: SecurityComponent },
       { path: 'categories', component: CategoriesComponent },
       { path: 'categories/add', component: EditCategoryComponent },

@@ -14,6 +14,7 @@ export class MockItemsService implements ItemsService {
     createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
     lateReturnPercentage: Math.floor(Math.random() * 21),
     averageDuration: Math.floor(Math.random() * 7) + 1,
+    borrowCount: item.borrowRecords.length,
   }));
 
 

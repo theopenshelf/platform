@@ -121,6 +121,9 @@ export class APIItemsService implements ItemsService {
               ? record.startDate.toISOString()
               : undefined,
             endDate: record.endDate ? record.endDate.toISOString() : undefined,
+            reservationDate: record.reservationDate
+              ? record.reservationDate.toISOString()
+              : undefined,
             borrowedBy: record.borrowedBy,
           }) as BorrowRecord,
       ),
@@ -139,6 +142,9 @@ export class APIItemsService implements ItemsService {
                 ? new Date(record.startDate)
                 : undefined,
               endDate: record.endDate ? new Date(record.endDate) : undefined,
+              reservationDate: record.reservationDate
+                ? new Date(record.reservationDate)
+                : undefined,
               borrowedBy: record.borrowedBy,
             }) as UIBorrowRecord,
         ),
@@ -166,6 +172,7 @@ export class APIItemsService implements ItemsService {
                   : undefined,
                 endDate: record.endDate ? new Date(record.endDate) : undefined,
                 borrowedBy: record.borrowedBy,
+                reservationDate: new Date()
               }) as UIBorrowRecord,
           ),
         })),
