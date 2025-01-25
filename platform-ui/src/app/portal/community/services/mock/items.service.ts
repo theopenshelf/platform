@@ -33,6 +33,8 @@ export class MockItemsService implements ItemsService {
       favorite,
     } = params;
 
+    let borrowedBy = params.borrowedBy;
+
     let filteredItems = this.items;
     // Filtering logic
     if (currentUser) {
@@ -41,14 +43,17 @@ export class MockItemsService implements ItemsService {
       );
     }
     if (borrowedByCurrentUser) {
+      borrowedBy = 'me@example.com';
+    }
+    if (borrowedBy) {
       filteredItems = filteredItems.filter((item) =>
         item.borrowRecords.some(
-          (record) => record.borrowedBy === 'me@example.com',
+          (record) => record.borrowedBy === borrowedBy,
         ),
       );
       if (status) {
         filteredItems = filteredItems.filter((item) =>
-          this.matchesStatus(status, item, borrowedByCurrentUser),
+          this.matchesStatus(status, item, borrowedBy),
         );
       }
     }
@@ -168,9 +173,9 @@ export class MockItemsService implements ItemsService {
     return of(undefined);
   }
 
-  matchesStatus(status: UIBorrowStatus, item: UIItem, borrowedByCurrentUser: boolean): boolean {
+  matchesStatus(status: UIBorrowStatus, item: UIItem, borrowedBy: string): boolean {
     const now = new Date();
-    const records = item.borrowRecords.filter((record) => borrowedByCurrentUser ? record.borrowedBy === 'me@example.com' : true);
+    const records = item.borrowRecords.filter((record) => borrowedBy ? record.borrowedBy === borrowedBy : true);
     switch (status) {
       case UIBorrowStatus.Returned:
         return (

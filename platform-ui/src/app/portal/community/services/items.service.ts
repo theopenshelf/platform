@@ -7,12 +7,13 @@ import { UIItemsPagination } from '../models/UIItemsPagination';
 export interface GetItemsParams {
   currentUser?: boolean;
   borrowedByCurrentUser?: boolean;
+  borrowedBy?: string;
   status?: UIBorrowStatus;
   libraryIds?: string[];
   categories?: string[];
   searchText?: string;
   currentlyAvailable?: boolean;
-  sortBy?:  'favorite' | 'createdAt' | 'borrowCount' | undefined;
+  sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | undefined;
   sortOrder?: 'asc' | 'desc' | undefined;
   page?: number;
   pageSize?: number;

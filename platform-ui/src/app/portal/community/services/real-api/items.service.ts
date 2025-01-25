@@ -21,6 +21,7 @@ export class APIItemsService implements ItemsService {
     const {
       currentUser,
       borrowedByCurrentUser,
+      borrowedBy,
       status,
       libraryIds,
       categories,
@@ -51,6 +52,7 @@ export class APIItemsService implements ItemsService {
       .getItems(
         currentUser,
         borrowedByCurrentUser,
+        borrowedBy,
         libraryIds,
         categories,
         searchText,

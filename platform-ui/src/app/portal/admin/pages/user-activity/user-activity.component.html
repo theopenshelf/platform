@@ -1,1 +1,51 @@
-<p>user-activity works!</p>
+<div class="user-details">
+    <div class="user-info">
+        <ul>
+            <li class="username">
+                <h2>
+                    <tui-avatar [src]="user.username | tuiInitials" [style.background]="user.username | tuiAutoColor"
+                        size="s"></tui-avatar>
+                    {{ user.username }}
+                </h2>
+            </li>
+            <li class="email">
+                <tui-icon icon="@tui.mail" size="m"/>
+                {{ user.email }}
+            </li>
+            <li class="address">
+                <tui-icon icon="@tui.home" size="m"/>
+                {{ user.flatNumber }} - {{ user.address }}
+            </li>
+        </ul>
+    </div>
+
+    <div>
+    </div>
+
+</div>
+
+<div class="user-stats">
+    <card-counter [icon]="'/gift.png'" [label]="'Total borrowed items'" [counter]="user.borrowedItems"></card-counter>
+
+    <card-counter [icon]="'@tui.check'" [label]="'Success rate'" [counter]="user.successRate"></card-counter>
+
+    <card-counter [icon]="'@tui.clock'" [label]="'Late returns'" [counter]="user.returnedLate"></card-counter>
+
+</div>
+
+<div class="user-borrows-records">
+    <filtered-and-paginated-items
+    [getItemsParams]="getItemsParams"
+    [enableStatusFiltering]="true"
+>
+    <ng-template
+        #itemTemplate
+        let-item="item"
+    >
+        <borrow-item-card
+            [item]="item"
+        ></borrow-item-card>
+    </ng-template>
+</filtered-and-paginated-items>
+
+</div>

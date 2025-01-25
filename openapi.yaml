@@ -183,6 +183,12 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: borrowedBy
+          in: query
+          description: Filter items by borrowed by
+          required: false
+          schema:
+            type: string
         - name: libraryIds
           in: query
           description: Filter items by library IDs
