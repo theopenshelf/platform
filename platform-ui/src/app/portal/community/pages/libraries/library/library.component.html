@@ -1,68 +1,70 @@
-@if (!library) {
-<div>Not found</div>
-}
-@if (library) {
+<div class="library-container">
+  @if (!library) {
+  <div>Not found</div>
+  }
+  @if (library) {
 
-<filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
-  <ng-template #sidebarTemplate>
-    <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
-      tuiButton type="button">
-      <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
-      Add item
-    </button>
+  <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
+    <ng-template #sidebarTemplate>
+      <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
+        tuiButton type="button">
+        <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
+        Add item
+      </button>
 
-    <div class="library-section">
-      <div class="library-actions">
-        <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
-          routerLink="/community/libraries/{{ library.id }}/edit"></button>
-        <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
-          (click)="deleteLibrary(library)"></button>
+      <div class="library-section">
+        <div class="library-actions">
+          <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+            routerLink="/community/libraries/{{ library.id }}/edit"></button>
+          <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+            (click)="deleteLibrary(library)"></button>
+        </div>
+        <h1>
+          <tui-icon icon="@tui.library" />
+          {{ library.name }}
+        </h1>
+
+        <p>{{ library.location.name }}</p>
+        <p><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</p>
       </div>
-      <h1>
-        <tui-icon icon="@tui.library" />
-        {{ library.name }}
-      </h1>
 
-      <p>{{ library.location.name }}</p>
-      <p><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</p>
-    </div>
-
-    <div class="library-section">
-      <h3>Instructions</h3>
-      <div class="rich-description" [innerHTML]="library.instructions"></div>
-    </div>
-
-    <div class="library-section">
-      <h3>Accessibility</h3>
-      <div class="toggle-container">
-        <label>Community </label>
-        <input tuiSwitch type="checkbox" disabled="true" [(ngModel)]="library.isCommunityAccessible" [showIcons]="true"
-          name="registrationToggle" />
+      <div class="library-section">
+        <h3>Instructions</h3>
+        <div class="rich-description" [innerHTML]="library.instructions"></div>
       </div>
-      @if (!library.isCommunityAccessible) {
-      <div class="members">
-        <h4>Members</h4>
-        <tui-accordion class="container">
-          @for (member of library.members; track member) {
-          <tui-accordion-item>
-            <tui-avatar [src]="member.username | tuiInitials" [style.background]="member.username | tuiAutoColor"
-              size="s">
-            </tui-avatar>
-            {{ member.username }}
-            <ng-template tuiAccordionItemContent>
-              <div class="toggle-container">
-                <label>Admin </label>
-                <input tuiSwitch type="checkbox" disabled="true" [ngModel]="member.isAdmin" [showIcons]="true"
-                  name="registrationToggle" />
-              </div>
-            </ng-template>
-          </tui-accordion-item>
-          }
-        </tui-accordion>
-      </div>
-      }
-    </div>
-  </ng-template>
 
-</filtered-and-paginated-items>
-}
+      <div class="library-section">
+        <h3>Accessibility</h3>
+        <div class="toggle-container">
+          <label>Community </label>
+          <input tuiSwitch type="checkbox" disabled="true" [(ngModel)]="library.isCommunityAccessible"
+            [showIcons]="true" name="registrationToggle" />
+        </div>
+        @if (!library.isCommunityAccessible) {
+        <div class="members">
+          <h4>Members</h4>
+          <tui-accordion class="container">
+            @for (member of library.members; track member) {
+            <tui-accordion-item>
+              <tui-avatar [src]="member.username | tuiInitials" [style.background]="member.username | tuiAutoColor"
+                size="s">
+              </tui-avatar>
+              {{ member.username }}
+              <ng-template tuiAccordionItemContent>
+                <div class="toggle-container">
+                  <label>Admin </label>
+                  <input tuiSwitch type="checkbox" disabled="true" [ngModel]="member.isAdmin" [showIcons]="true"
+                    name="registrationToggle" />
+                </div>
+              </ng-template>
+            </tui-accordion-item>
+            }
+          </tui-accordion>
+        </div>
+        }
+      </div>
+    </ng-template>
+
+  </filtered-and-paginated-items>
+  }
+</div>

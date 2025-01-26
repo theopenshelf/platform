@@ -12,6 +12,7 @@
 
 .sidebar {
     width: 350px;
+    min-width: 200px;
     /* Light gray background from theme */
     padding-top: 0;
 
@@ -204,7 +205,7 @@
         }
     }
 
-    @media (max-width: 800px) {
+    @media (max-width: 1150px) {
         .items-container {
             grid-template-columns: 1fr;
         }

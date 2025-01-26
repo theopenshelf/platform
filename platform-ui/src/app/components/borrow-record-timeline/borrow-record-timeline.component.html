@@ -1,0 +1,11 @@
+<timeline [timelineItems]="timelineItems()">
+
+
+    <ng-template #itemTemplate let-item="item"
+    >
+      <div class="timeline-item">
+        <span>{{ item.label }}</span>
+        <tui-icon class="timeline-icon" [icon]="item.icon" />
+      </div>
+    </ng-template>
+</timeline>

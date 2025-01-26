@@ -19,3 +19,19 @@
     <p>Loading...</p>
   </div>
 }
+
+
+@defer (on viewport) {
+  <div class="user-borrows-records">
+    <filtered-and-paginated-items
+    [getItemsParams]="getItemsParams"
+    [enableStatusFiltering]="true"
+  >
+  </filtered-and-paginated-items>
+  
+  </div>
+} @placeholder {
+  <div class="dashboard-top-container">
+    <p>Loading...</p>
+  </div>
+}

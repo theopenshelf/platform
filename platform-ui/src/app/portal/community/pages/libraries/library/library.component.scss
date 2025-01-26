@@ -1,5 +1,9 @@
 @use 'theme' as *;
 
+.library-container {
+    padding: 0 20px;
+}
+
 .add-item {
     margin-bottom: 1rem;
     margin-top: 1rem;

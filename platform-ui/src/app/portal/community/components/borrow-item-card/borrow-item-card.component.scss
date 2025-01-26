@@ -8,6 +8,8 @@
     background-color: #fff;
     border-radius: 16px;
     overflow: hidden;
+    height: 240px;
+    min-width: 450px;
     text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     border: 0px solid rgb(226, 232, 240);
@@ -33,7 +35,8 @@
     .item-subtitle {
         margin-top: 10px;
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-columns: 1fr 2fr;
+
 
         tui-icon {
             margin-right: 2px;
@@ -69,14 +72,14 @@
 
 /* Card container for image + content */
 .card-content {
-    display: flex;
-    width: 100%;
+    display: grid;
+    grid-template-columns: 4fr 8fr;
 }
 
 /* Image Section */
 .image-container {
-    width: 33%;
-    height: 200px;
+
+    position: relative;
     border-right: 1px solid #ccc;
 
     .item-image {
@@ -84,18 +87,32 @@
         height: 100%;
         object-fit: cover;
     }
+
+    .details-button {
+        position: absolute;
+        top: 180px;
+        left: 50%;
+        width: 85%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        background-color: #fff;
+    }
+
+    .details-button:hover {
+        background-color: #c8c8c8 !important;
+    }
 }
 
 .item-content {
     padding-top: 10px;
     padding-left: 3%;
     padding-right: 2%;
-    width: 62%;
 }
 
 /* Item Details Section */
 .item-details {
-    height: 65%;
+
+    height: 70%;
 
     .item-details-top-right {
         float: right;
@@ -159,33 +176,23 @@
     background-color: #95a5a6;
 }
 
-.reservation-dates-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr) 1fr repeat(5, 1fr);
-    gap: 1px;
-    align-items: center;
-    margin-bottom: 10px;
-
-    .reservation-start,
-    .reservation-end {
-        grid-column: span 5;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .reservation-arrow {
-        grid-column: span 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .reservation-button {
-        justify-self: end;
-    }
-}
-
 .details-button {
     margin-left: auto;
+}
+
+.timeline-container {
+    padding-left: 140px;
+    margin-top: 10px;
+}
+
+.item-title-container {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.item-details-container {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
 }
 
 @media (max-width: 768px) {

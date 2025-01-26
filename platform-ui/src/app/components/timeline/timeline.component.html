@@ -1,0 +1,17 @@
+<div class="timeline">
+
+    @for (timelineItem of timelineItems(); track $index) {
+        <div class="timeline-item line-{{ timelineItem.lineColor }} {{ timelineItem.position }}">
+            <div class="timeline-label">{{ timelineItem.label }}</div>
+            <div class="timeline-content-group">
+                <div class="dot dot-{{ timelineItem.dotColor }}"></div>
+                @for (item of timelineItem.items; track $index) {
+                    <div class="timeline-content">
+                        <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }"></ng-container>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>

@@ -51,11 +51,12 @@ export class MockItemsService implements ItemsService {
           (record) => record.borrowedBy === borrowedBy,
         ),
       );
-      if (status) {
-        filteredItems = filteredItems.filter((item) =>
-          this.matchesStatus(status, item, borrowedBy),
-        );
-      }
+    }
+
+    if (status) {
+      filteredItems = filteredItems.filter((item) =>
+        this.matchesStatus(status, item, borrowedBy),
+      );
     }
 
     if (favorite) {
@@ -173,7 +174,7 @@ export class MockItemsService implements ItemsService {
     return of(undefined);
   }
 
-  matchesStatus(status: UIBorrowStatus, item: UIItem, borrowedBy: string): boolean {
+  matchesStatus(status: UIBorrowStatus, item: UIItem, borrowedBy: string | undefined): boolean {
     const now = new Date();
     const records = item.borrowRecords.filter((record) => borrowedBy ? record.borrowedBy === borrowedBy : true);
     switch (status) {

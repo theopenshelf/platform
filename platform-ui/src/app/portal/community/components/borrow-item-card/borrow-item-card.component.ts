@@ -15,6 +15,7 @@ import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
+import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
 
 @Component({
   selector: 'borrow-item-card',
@@ -29,7 +30,8 @@ import { ItemsService } from '../../services/items.service';
     TuiTitle,
     FormsModule,
     TuiTextfield,
-  ],
+    BorrowRecordTimelineComponent
+],
   templateUrl: './borrow-item-card.component.html',
   styleUrl: './borrow-item-card.component.scss',
 })
