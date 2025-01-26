@@ -84,19 +84,19 @@
 }
 
 .line-secondary::before {
-    background: var(--tos-background-secondary-1);
+    background: var(--tos-background-accent-1-pressed);
 }
 
 .line-success::before {
-    background: var(--tos-background-success-1);
+    background: var(--tos-status-positive);
 }
 
 .line-warning::before {
-    background: var(--tos-background-warning-1);
+    background: var(--tos-status-warning);
 }
 
 .line-danger::before {
-    background: var(--tos-background-danger-1);
+    background: var(--tos-status-negative);
 }
 
 
@@ -124,19 +124,19 @@
 }
 
 .dot-secondary {
-    background: var(--tos-background-secondary-1);
+    background: var(--tos-background-accent-1-pressed);
 }
 
 .dot-success {
-    background: var(--tos-background-success-1);
+    background: var(--tos-status-positive);
 }
 
 .dot-warning {
-    background: var(--tos-background-warning-1);
+    background: var(--tos-status-warning);
 }
 
 .dot-danger {
-    background: var(--tos-background-danger-1);
+    background: var(--tos-status-negative);
 }
 
 /* Box styling for each timeline entry */

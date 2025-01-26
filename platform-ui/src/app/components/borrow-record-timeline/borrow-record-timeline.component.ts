@@ -47,35 +47,78 @@ export class BorrowRecordTimelineComponent {
       }
     ]
     const effectiveReturnDate = this.borrowRecord().effectiveReturnDate;
-    if (effectiveReturnDate) {
-      items.push({
-        label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-        position: 'right',
-        dotColor: 'primary',
-        lineColor: 'accent',
-        items: [
-          {
-            icon: '@tui.calendar-check',
-            label: 'End',
-          }
-        ]
-      });
+    const endDate = this.borrowRecord().endDate;
 
-      items.push({
-        label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-        position: 'right',
-        dotColor: 'accent',
-        lineColor: 'primary',
-        items: [
-          {
-            icon: '/gift.png',
-            label: 'Return',
-          }
-        ]
-      })
+    if (effectiveReturnDate) {
+      if (effectiveReturnDate < endDate) {
+        items.push({
+          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          position: 'right',
+          dotColor: 'accent',
+          lineColor: 'success',
+          items: [
+            {
+              icon: '/gift.png',
+              label: 'Return',
+            }
+          ]
+        });
+
+        items.push({
+          label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          position: 'right',
+          dotColor: 'success',
+          lineColor: 'primary',
+          items: [
+            {
+              icon: '@tui.calendar-check',
+              label: 'End',
+            }
+          ]
+        });
+      } else if (effectiveReturnDate > endDate) {
+        items.push({
+          label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          position: 'right',
+          dotColor: 'danger',
+          lineColor: 'danger',
+          items: [
+            {
+              icon: '@tui.calendar-check',
+              label: 'End',
+            }
+          ]
+        });
+
+        items.push({
+          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          position: 'right',
+          dotColor: 'danger',
+          lineColor: 'primary',
+          items: [
+            {
+              icon: '/gift.png',
+              label: 'Return',
+            }
+          ]
+        });
+      } else {
+        items.push({
+          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+          position: 'right',
+          dotColor: 'accent',
+          lineColor: 'primary',
+          items: [
+            {
+              icon: '/gift.png',
+              label: 'Return',
+            }
+          ]
+        });
+      }
     } else {
       items.push({
-        label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+        label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
         position: 'right',
         dotColor: 'primary',
         lineColor: 'primary',
