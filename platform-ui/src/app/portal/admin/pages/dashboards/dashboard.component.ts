@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { communityProviders } from '../../../community/community.provider';
-import { FilteredAndPaginatedItemsComponent } from '../../../community/components/filtered-and-paginated-items/filtered-and-paginated-items.component';
+import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../community/components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { GetItemsParams } from '../../../community/services/items.service';
 import { BorrowsStatComponent } from '../../components/dashboards/borrows-stat/borrows-stat.component';
 import { ItemsCountComponent } from '../../components/dashboards/items-count/items-count.component';
@@ -19,7 +19,7 @@ import { UsersCountComponent } from '../../components/dashboards/users-count/use
     TopCategoriesComponent,
     TopBorrowersComponent,
     BorrowsStatComponent,
-    FilteredAndPaginatedItemsComponent
+    FilteredAndPaginatedBorrowRecordsComponent
   ],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

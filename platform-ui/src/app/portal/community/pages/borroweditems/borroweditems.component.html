@@ -1,5 +1,5 @@
 <div class="borrowed-items-container">
-    <filtered-and-paginated-items
+    <filtered-and-paginated-borrow-records
         [getItemsParams]="getItemsParams"
         [enableStatusFiltering]="true"
     >
@@ -12,5 +12,5 @@
             [library]="getLibrary(item.libraryId)"
         ></borrow-item-card>
     </ng-template>
-</filtered-and-paginated-items>
+</filtered-and-paginated-borrow-records>
 </div>

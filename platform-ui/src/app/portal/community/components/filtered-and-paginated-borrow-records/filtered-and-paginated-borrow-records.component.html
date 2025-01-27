@@ -11,11 +11,9 @@
         #itemTemplate
         let-item="item"
     >
-        <item-card
+        <borrow-item-card
             [item]="item"
-            [borrowRecords]="getBorrowRecords(item)"
             [library]="getLibrary(item.libraryId)"
-        >
-        </item-card>
+        ></borrow-item-card>
     </ng-template>
 </filtered-and-paginated>

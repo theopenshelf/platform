@@ -12,20 +12,20 @@ import { UIPagination } from '../../models/UIPagination';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
+import { BorrowItemCardComponent } from '../borrow-item-card/borrow-item-card.component';
 import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtered-and-paginated.component';
-import { ItemCardComponent } from '../item-card/item-card.component';
 
 @Component({
   standalone: true,
-  selector: 'filtered-and-paginated-items',
+  selector: 'filtered-and-paginated-borrow-records',
   imports: [
-    ItemCardComponent,
+    BorrowItemCardComponent,
     FilteredAndPaginatedComponent,
   ],
-  templateUrl: './filtered-and-paginated-items.component.html',
-  styleUrl: './filtered-and-paginated-items.component.scss'
+  templateUrl: './filtered-and-paginated-borrow-records.component.html',
+  styleUrl: './filtered-and-paginated-borrow-records.component.scss'
 })
-export class FilteredAndPaginatedItemsComponent {
+export class FilteredAndPaginatedBorrowRecordsComponent {
   currentUser: UserInfo;
   libraries: UILibrary[] = [];
 

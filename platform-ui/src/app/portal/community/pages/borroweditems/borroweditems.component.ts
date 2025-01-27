@@ -12,7 +12,7 @@ import {
   LIBRARIES_SERVICE_TOKEN
 } from '../../community.provider';
 import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
-import { FilteredAndPaginatedItemsComponent } from '../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
+import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { UILibrary } from '../../models/UILibrary';
 import { GetItemsParams } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
@@ -32,7 +32,7 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiAccordion,
     BorrowItemCardComponent,
     TuiTabs,
-    FilteredAndPaginatedItemsComponent
+    FilteredAndPaginatedBorrowRecordsComponent
   ],
   templateUrl: './borroweditems.component.html',
   styleUrls: ['./borroweditems.component.scss'],

@@ -1,10 +1,6 @@
 import { UIItem } from './UIItem';
+import { UIPagination } from './UIPagination';
 
-export interface UIItemsPagination {
-  totalPages: number;
-  totalItems: number;
-  currentPage: number;
-  itemsPerPage: number;
-  items: UIItem[];
+export interface UIItemsPagination extends UIPagination<UIItem> {
 }
 
