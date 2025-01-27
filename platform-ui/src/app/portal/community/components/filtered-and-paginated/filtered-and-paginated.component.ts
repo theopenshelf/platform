@@ -326,7 +326,22 @@ export class FilteredAndPaginatedComponent implements OnInit {
   }
 
   protected fetchItems(): void {
-    this.getItems()!(this.getItemsParams()).subscribe((itemsPagination) => {
+    this.getItems()!(
+      {
+        ...this.getItemsParams(),
+        status: this.selectedStatus,
+        libraryIds: Object.keys(this.selectedLibraries),
+        categories: Array.from(this.selectedCategories),
+        searchText: this.searchText,
+        currentlyAvailable: this.currentlyAvailable,
+        sortBy: this.getSortBy(),
+        sortOrder: this.getSortOrder(),
+        page: this.currentPage,
+        pageSize: this.itemsPerPage,
+        startDate: this.selectedDate?.from.toLocalNativeDate(),
+        endDate: this.selectedDate?.to.toLocalNativeDate(),
+      }
+    ).subscribe((itemsPagination) => {
       this.updatePagination(itemsPagination);
     });
   }

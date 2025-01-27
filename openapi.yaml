@@ -405,6 +405,88 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
+  /community/borrow-records:
+    get:
+      operationId: getBorrowRecords
+      summary: Retrieve all borrow records (filter by current user borrow records)
+      tags:
+        - borrow-records-community-api
+      parameters:
+        - name: currentUser
+          in: query
+          description: Filter items by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedByCurrentUser
+          in: query
+          description: Filter items borrowed by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedBy
+          in: query
+          description: Filter items by borrowed by
+          required: false
+          schema:
+            type: string
+        - name: libraryIds
+          in: query
+          description: Filter items by library IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: categories
+          in: query
+          description: Filter items by categories
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: searchText
+          in: query
+          description: Filter items by search text in name or description
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: status
+          in: query
+          description: Filter items by status
+          required: false
+          schema:
+            type: string
+            enum: [returned, borrowed, reserved]
+        - name: favorite
+          in: query
+          description: Filter items by favorite status
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: A paginated list of borrow records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedBorrowRecordsResponse"
+
   /community/notifications:
     get:
       operationId: getNotifications
@@ -1457,6 +1539,43 @@ components:
           type: string
           format: date
           example: "2023-11-22"
+
+    BorrowRecordStandalone:
+      type: object
+      required:
+        - id
+        - borrowedBy
+        - startDate
+        - endDate
+        - reservationDate
+        - effectiveReturnDate
+        - item
+      properties:
+        id:
+          type: string
+          format: uuid
+        borrowedBy:
+          type: string
+          example: "someone_else@example.com"
+        startDate:
+          type: string
+          format: date
+          example: "2023-11-15"
+        endDate:
+          type: string
+          format: date
+          example: "2023-11-22"
+        reservationDate:
+          type: string
+          format: date
+          example: "2023-11-15"
+        effectiveReturnDate:
+          type: string
+          format: date
+          example: "2023-11-22"
+        item:
+          $ref: "#/components/schemas/Item"
+
     Category:
       type: object
       required:
@@ -1731,6 +1850,32 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Item"
+
+    PaginatedBorrowRecordsResponse:
+      type: object
+      required:
+        - totalPages
+        - totalItems
+        - currentPage
+        - recordsPerPage
+        - records
+      properties:
+        totalPages:
+          type: integer
+          example: 10
+        totalItems:
+          type: integer
+          example: 100
+        currentPage:
+          type: integer
+          example: 1
+        recordsPerPage:
+          type: integer
+          example: 10
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/BorrowRecordStandalone"
 
     PaginatedItemsStatsResponse:
       type: object

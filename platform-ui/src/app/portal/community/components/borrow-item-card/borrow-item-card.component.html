@@ -2,10 +2,10 @@
   <!-- Flexbox container for the image and details -->
   <div class="card-content">
     <!-- Image Section -->
-    <div class="image-container" routerLink="/community/items/{{ item().id }}">
-      <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
+    <div class="image-container" routerLink="/community/items/{{ borrowRecord().item.id }}">
+      <img [src]="borrowRecord().item.imageUrl" [alt]="borrowRecord().item.name" class="item-image" />
       <button appearance="outline" class="accent details-button" size="m"
-        routerLink="/community/items/{{ item().id }}" tuiButton type="button">
+        routerLink="/community/items/{{ borrowRecord().item.id }}" tuiButton type="button">
         <span class="details-button-text">See details</span>
         <tui-icon icon="@tui.arrow-right" />
       </button>
@@ -17,13 +17,13 @@
       <div class="item-title-container">
         <div class="item-title">
           <h2 tuiTitle>
-            {{ item().name }}
+            {{ borrowRecord().item.name }}
           </h2>
         </div>
         <div class="item-subtitle">
           <div class="item-categories">
-            <tui-icon [icon]="item().category.icon" />
-            <span class="category-name">{{ item().category.name }}</span>
+            <tui-icon [icon]="borrowRecord().item.category.icon" />
+            <span class="category-name">{{ borrowRecord().item.category.name }}</span>
           </div>
           @if (library()) {
           <span class="library">
@@ -35,9 +35,8 @@
         </div>
       </div>
       <div class="timeline-container">
-        @if (nextBorrowRecord()) {
-        <borrow-record-timeline [item]="item()" [borrowRecord]="nextBorrowRecord()"></borrow-record-timeline>
-        }
+        <borrow-record-timeline [item]="borrowRecord().item" [borrowRecord]="borrowRecord()"></borrow-record-timeline>
+        
       </div>
     </div>
   </div>

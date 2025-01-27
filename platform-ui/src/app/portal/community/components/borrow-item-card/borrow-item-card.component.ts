@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, Inject, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiDay } from '@taiga-ui/cdk';
 import {
   TuiAppearance,
   TuiButton,
@@ -11,11 +10,9 @@ import {
   TuiTextfield,
   TuiTitle,
 } from '@taiga-ui/core';
-import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
-import { UIItem } from '../../models/UIItem';
-import { UILibrary } from '../../models/UILibrary';
-import { ItemsService } from '../../services/items.service';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
+import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
+import { UILibrary } from '../../models/UILibrary';
 
 @Component({
   selector: 'borrow-item-card',
@@ -31,25 +28,12 @@ import { BorrowRecordTimelineComponent } from "../../../../components/borrow-rec
     FormsModule,
     TuiTextfield,
     BorrowRecordTimelineComponent
-],
+  ],
   templateUrl: './borrow-item-card.component.html',
   styleUrl: './borrow-item-card.component.scss',
 })
 export class BorrowItemCardComponent {
-  public item = input.required<UIItem>();
+  public borrowRecord = input.required<UIBorrowRecordStandalone>();
   public library = input<UILibrary>();
 
-  public nextBorrowRecord = computed(() => {
-    const now = TuiDay.fromLocalNativeDate(new Date());
-
-    const record = this.item().borrowRecords.sort((a, b) => {
-      return new Date(a.endDate).getTime() - new Date(b.endDate).getTime();
-    })[0];
-
-    return record;
-  });
-
-  constructor(
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-  ) {}
 }

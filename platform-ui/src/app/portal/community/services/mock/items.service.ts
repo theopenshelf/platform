@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
@@ -127,6 +128,63 @@ export class MockItemsService implements ItemsService {
     });
   }
 
+  getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination> {
+    const {
+      status,
+      borrowedByCurrentUser,
+      borrowedBy,
+      startDate,
+      endDate,
+      page = 0,
+      pageSize = 10,
+    } = params;
+
+    let filteredRecords: UIBorrowRecordStandalone[] = [];
+
+    // Filter records based on the borrowedBy parameter
+    this.items.forEach(item => {
+      item.borrowRecords.forEach(record => {
+        if (borrowedByCurrentUser && record.borrowedBy === 'me@example.com') {
+          filteredRecords.push({ ...record, item });
+        } else if (borrowedBy && record.borrowedBy === borrowedBy) {
+          filteredRecords.push({ ...record, item });
+        } else {
+          filteredRecords.push({ ...record, item });
+        }
+      });
+    });
+
+    // Filter records based on the date range
+    if (startDate && endDate) {
+      filteredRecords = filteredRecords.filter(record =>
+        record.startDate <= endDate && record.endDate >= startDate
+      );
+    }
+
+    if (status) {
+      filteredRecords = filteredRecords.filter(record =>
+        this.matchesStatusBorrowRecord(status, record)
+      );
+    }
+
+    // Pagination logic
+    const totalItems = filteredRecords.length;
+    const totalPages = Math.ceil(totalItems / pageSize);
+    const startIndex = page * pageSize;
+    const paginatedRecords = filteredRecords.slice(
+      startIndex,
+      startIndex + pageSize
+    );
+
+    return of({
+      totalPages,
+      totalItems,
+      currentPage: page,
+      itemsPerPage: pageSize,
+      items: paginatedRecords,
+    });
+  }
+
   getItem(id: string): Observable<UIItem> {
     return of(this.items.find((i) => i.id === id) as UIItem);
   }
@@ -195,4 +253,23 @@ export class MockItemsService implements ItemsService {
         );
     }
   }
+
+  matchesStatusBorrowRecord(status: UIBorrowStatus, borrowRecord: UIBorrowRecordStandalone): boolean {
+    const now = new Date();
+    switch (status) {
+      case UIBorrowStatus.Returned:
+        return (
+          borrowRecord.endDate < now
+        );
+      case UIBorrowStatus.CurrentlyBorrowed:
+        return (
+          borrowRecord.startDate <= now && now <= borrowRecord.endDate
+        );
+      case UIBorrowStatus.Reserved:
+        return (
+          borrowRecord.startDate > now
+        );
+    }
+  }
+
 }

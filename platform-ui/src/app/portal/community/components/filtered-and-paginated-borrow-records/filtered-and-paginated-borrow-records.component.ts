@@ -5,8 +5,7 @@ import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIItem } from '../../models/UIItem';
+import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
 import { CategoriesService } from '../../services/categories.service';
@@ -60,18 +59,8 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
     return this.libraries.find((library) => library.id === libraryId);
   }
 
-  getBorrowRecords(item: UIItem): UIBorrowRecord[] {
-    return (
-      item
-        ?.borrowRecords.filter(
-          (record) =>
-            record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser.email,
-        ) || []
-    );
-  }
 
-  public fetchItems = (getItemsParams: GetItemsParams): Observable<UIPagination<UIItem>> => {
-    return this.itemsService.getItems(getItemsParams);
+  public fetchItems = (getItemsParams: GetItemsParams): Observable<UIPagination<UIBorrowRecordStandalone>> => {
+    return this.itemsService.getBorrowRecords(getItemsParams);
   }
 }

@@ -12,8 +12,8 @@
         let-item="item"
     >
         <borrow-item-card
-            [item]="item"
-            [library]="getLibrary(item.libraryId)"
+            [borrowRecord]="item"
+            [library]="getLibrary(item.item.libraryId)"
         ></borrow-item-card>
     </ng-template>
 </filtered-and-paginated>

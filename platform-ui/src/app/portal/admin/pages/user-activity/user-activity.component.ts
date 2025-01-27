@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { communityProviders } from '../../../community/community.provider';
-import { BorrowItemCardComponent } from '../../../community/components/borrow-item-card/borrow-item-card.component';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../community/components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { GetItemsParams } from '../../../community/services/items.service';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
@@ -18,7 +17,6 @@ import { UIUser, UsersService } from '../../services/users.service';
     TuiAutoColorPipe,
     TuiIcon,
     CardCounterComponent,
-    BorrowItemCardComponent,
     FilteredAndPaginatedBorrowRecordsComponent
   ],
   templateUrl: './user-activity.component.html',

@@ -11,7 +11,6 @@ import {
 import {
   LIBRARIES_SERVICE_TOKEN
 } from '../../community.provider';
-import { BorrowItemCardComponent } from '../../components/borrow-item-card/borrow-item-card.component';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { UILibrary } from '../../models/UILibrary';
 import { GetItemsParams } from '../../services/items.service';
@@ -30,7 +29,6 @@ import { LibrariesService } from '../../services/libraries.service';
     FormsModule,
     ReactiveFormsModule,
     TuiAccordion,
-    BorrowItemCardComponent,
     TuiTabs,
     FilteredAndPaginatedBorrowRecordsComponent
   ],

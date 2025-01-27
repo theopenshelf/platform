@@ -3,6 +3,7 @@ import { UIBorrowRecord } from '../models/UIBorrowRecord';
 import { UIBorrowStatus } from '../models/UIBorrowStatus';
 import { UIItem } from '../models/UIItem';
 import { UIItemsPagination } from '../models/UIItemsPagination';
+import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
 
 export interface GetItemsParams {
   currentUser?: boolean;
@@ -25,6 +26,7 @@ export interface GetItemsParams {
 
 export interface ItemsService {
   getItems(params: GetItemsParams): Observable<UIItemsPagination>;
+  getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination>;
   getItem(id: string): Observable<UIItem>;
   addItem(item: UIItem): Observable<UIItem>;
   borrowItem(
@@ -38,4 +40,5 @@ export interface ItemsService {
     borrowRecord: UIBorrowRecord,
   ): Observable<UIItem>;
   markAsFavorite(item: UIItem): Observable<void>;
+
 }

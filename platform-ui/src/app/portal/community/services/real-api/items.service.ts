@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
   BorrowRecord,
+  BorrowRecordsCommunityApiService,
+  BorrowRecordStandalone,
   Item,
   ItemsCommunityApiService,
 } from '../../../../api-client';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
@@ -15,7 +18,7 @@ import { GetItemsParams, ItemsService } from '../items.service';
   providedIn: 'root',
 })
 export class APIItemsService implements ItemsService {
-  constructor(private itemsApiService: ItemsCommunityApiService) { }
+  constructor(private itemsApiService: ItemsCommunityApiService, private borrowRecordsApiService: BorrowRecordsCommunityApiService) { }
 
   getItems(params: GetItemsParams): Observable<UIItemsPagination> {
     const {
@@ -92,6 +95,91 @@ export class APIItemsService implements ItemsService {
         })),
       );
   }
+
+  getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination> {
+    const {
+      currentUser,
+      borrowedByCurrentUser,
+      borrowedBy,
+      status,
+      libraryIds,
+      categories,
+      searchText,
+      currentlyAvailable,
+      sortBy,
+      sortOrder,
+      page = 1,
+      pageSize = 10,
+      startDate,
+      endDate,
+      favorite,
+    } = params;
+
+    const statusMapping: Record<
+      UIBorrowStatus,
+      'returned' | 'borrowed' | 'reserved'
+    > = {
+      [UIBorrowStatus.Returned]: 'returned',
+      [UIBorrowStatus.CurrentlyBorrowed]: 'borrowed',
+      [UIBorrowStatus.Reserved]: 'reserved',
+    };
+
+    const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status
+      ? statusMapping[status]
+      : undefined;
+    return this.borrowRecordsApiService
+      .getBorrowRecords(
+        currentUser,
+        borrowedByCurrentUser,
+        borrowedBy,
+        libraryIds,
+        categories,
+        searchText,
+        page,
+        pageSize,
+        statusValue,
+        favorite,
+      )
+      .pipe(
+        map((response) => ({
+          totalPages: response.totalPages,
+          totalItems: response.totalItems,
+          currentPage: response.currentPage,
+          itemsPerPage: response.recordsPerPage,
+          items: response.records.map(
+            (record: BorrowRecordStandalone) =>
+              ({
+                ...record,
+                startDate: record.startDate
+                  ? new Date(record.startDate)
+                  : undefined,
+                endDate: record.endDate ? new Date(record.endDate) : undefined,
+                reservationDate: record.reservationDate
+                  ? new Date(record.reservationDate)
+                  : undefined,
+                effectiveReturnDate: record.effectiveReturnDate
+                  ? new Date(record.effectiveReturnDate)
+                  : undefined,
+                item: ({
+                  id: record.item.id,
+                  name: record.item.name,
+                  located: record.item.located,
+                  owner: record.item.owner,
+                  imageUrl: record.item.imageUrl,
+                  description: record.item.description,
+                  shortDescription: record.item.shortDescription,
+                  category: record.item.category,
+                  libraryId: record.item.libraryId,
+                  createdAt: record.item.createdAt
+                    ? new Date(record.item.createdAt)
+                    : undefined,
+                }) as UIItem,
+              }) as UIBorrowRecordStandalone,
+          ),
+        })),
+      );
+  }
+
 
   getItem(id: string): Observable<UIItem> {
     return this.itemsApiService.getItem(id).pipe(
