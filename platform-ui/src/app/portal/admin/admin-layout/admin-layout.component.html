@@ -10,34 +10,15 @@
 
     <app-notifications-popup></app-notifications-popup>
 
-    <button
-      iconStart="@tui.ellipsis"
-      tuiIconButton
-      type="button"
-      tuiChevron
-      tuiDropdownOpen
-      [tuiDropdown]="settings"
-    >
+    <button iconStart="@tui.ellipsis" tuiIconButton type="button" tuiChevron tuiDropdownOpen [tuiDropdown]="settings">
       <ng-template #settings>
         <tui-data-list size="s">
-          <button
-            routerLink="/community"
-            class="dropdown"
-            iconStart="@tui.users"
-            tuiButton
-            type="button"
-          >
+          <button routerLink="/community" class="dropdown" iconStart="@tui.users" tuiButton type="button">
             Community portal
           </button>
         </tui-data-list>
         <tui-data-list size="s">
-          <button
-            routerLink="/auth/sign-out"
-            class="dropdown"
-            iconStart="@tui.log-out"
-            tuiButton
-            type="button"
-          >
+          <button routerLink="/auth/sign-out" class="dropdown" iconStart="@tui.log-out" tuiButton type="button">
             Log out
           </button>
         </tui-data-list>
@@ -46,78 +27,81 @@
   </header>
 
   <nav id="menu" class="horizontal-menu">
-    <a
-      routerLink="/admin/dashboard/"
-      routerLinkActive="active"
-      appearance="secondary-grayscale"
-      iconStart="@tui.users"
-      type="button"
-      i18n="@@borrowItemButton"
-    >
+    <a routerLink="/admin/dashboard/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
+      type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.layout-dashboard" />
       Dashboard
     </a>
 
-    <a
-      routerLink="/admin/users/"
-      routerLinkActive="active"
-      appearance="secondary-grayscale"
-      iconStart="@tui.users"
-      type="button"
-      i18n="@@borrowItemButton"
-    >
+    <a routerLink="/admin/users/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
+      type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.users" />
       Users
     </a>
 
-    <a
-      routerLink="/admin/items/"
-      routerLinkActive="active"
-      appearance="secondary-grayscale"
-      iconStart="@tui.package"
-      type="button"
-      i18n="@@borrowItemButton"
-    >
+    <a routerLink="/admin/items/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.package"
+      type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.package" />
       Items
     </a>
 
-    <a
-      routerLink="/admin/categories/"
-      routerLinkActive="active"
-      appearance="secondary-grayscale"
-      iconStart="@tui.chart-column-stacked"
-      type="button"
-      i18n="@@borrowItemButton"
-    >
-      <tui-icon icon="@tui.chart-column-stacked" />
-      Categories
-    </a>
-
-    <a
-      routerLink="/admin/security/"
-      routerLinkActive="active"
-      appearance="secondary-grayscale"
-      iconStart="@tui.shield"
-      type="button"
-      i18n="@@borrowItemButton"
-    >
-      <tui-icon icon="@tui.shield" />
-      Security
-    </a>
-
-    <a
-    routerLink="/admin/pages/"
-    routerLinkActive="active"
-    appearance="secondary-grayscale"
-    iconStart="@tui.book-open-text"
+    @if (mobile) {
+    <button
+    tuiButton
+    tuiChevron
     type="button"
-    i18n="@@borrowItemButton"
-  >
+    appearance="flat"
+    class="more-button"
+    [tuiDropdown]="dropdownContent"
+    [tuiDropdownManual]="openMore"
+    (click)="onClickMore()"
+    (tuiActiveZoneChange)="onActiveZone($event)"
+    (tuiObscured)="onObscured($event)"
+>
+    More
+    <ng-template #dropdownContent>
+        <div class="dropdown">
+          <a (click)="closeMore()" routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
+          iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
+          <tui-icon icon="@tui.chart-column-stacked" />
+          Categories
+        </a>
+    
+        <a (click)="closeMore()" routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.shield"
+          type="button" i18n="@@borrowItemButton">
+          <tui-icon icon="@tui.shield" />
+          Security
+        </a>
+    
+        <a (click)="closeMore()" routerLink="/admin/pages/" routerLinkActive="active" appearance="secondary-grayscale"
+          iconStart="@tui.book-open-text" type="button" i18n="@@borrowItemButton">
+          <tui-icon icon="@tui.book-open-text" />
+          pages
+        </a>
+        </div>
+    </ng-template>
+</button>
+} @else {
+    <a routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
+    iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
+    <tui-icon icon="@tui.chart-column-stacked" />
+    Categories
+  </a>
+
+  <a routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.shield"
+    type="button" i18n="@@borrowItemButton">
+    <tui-icon icon="@tui.shield" />
+    Security
+  </a>
+
+  <a routerLink="/admin/pages/" routerLinkActive="active" appearance="secondary-grayscale"
+    iconStart="@tui.book-open-text" type="button" i18n="@@borrowItemButton">
     <tui-icon icon="@tui.book-open-text" />
     pages
   </a>
+}
   </nav>
+
 
   <div [style.display]="'flex'">
     <main tuiNavigationMain>

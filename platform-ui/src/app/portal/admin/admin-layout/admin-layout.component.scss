@@ -55,6 +55,11 @@ button.dropdown {
     margin-bottom: 10px;
 }
 
+.t-more {
+    color: #fff;
+}
+
+
 .horizontal-menu a {
     text-align: center;
     position: relative;
@@ -101,6 +106,23 @@ button.dropdown {
     /* Underline color (match active link color) */
     border-radius: 0;
     /* No border radius for the line */
+}
+
+.more-button {
+    color: #fff;
+}
+
+.dropdown a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 10px;
+    color: var(--tos-text-primary);
+    text-decoration: none;
+
+    tui-icon {
+        margin-right: 10px;
+    }
 }
 
 /* Responsive styling for horizontal menu */
