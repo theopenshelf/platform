@@ -24,7 +24,7 @@ export function getBorrowRecordStatus(borrowRecord: UIBorrowRecord): UIBorrowRec
   var status: UIBorrowRecordStatus = UIBorrowRecordStatus.Impossible;
 
   if (now < borrowRecord.reservationDate) {
-    status = UIBorrowRecordStatus.Impossible;
+    status = UIBorrowRecordStatus.Reserved;
   } else if (now < borrowRecord.startDate) {
     status = UIBorrowRecordStatus.Reserved;
   } else if (now < borrowRecord.endDate) {
@@ -56,4 +56,29 @@ export function getBorrowRecordStatus(borrowRecord: UIBorrowRecord): UIBorrowRec
     status = UIBorrowRecordStatus.Impossible;
   }
   return status;
+}
+
+export function getBorrowDurationInDays(borrowRecord: UIBorrowRecord): number {
+  const endDate = borrowRecord.effectiveReturnDate || borrowRecord.endDate;
+  const durationInMilliseconds = Math.max(0, endDate.getTime() - borrowRecord.startDate.getTime());
+  return Math.floor(durationInMilliseconds / (1000 * 60 * 60 * 24));
+}
+
+export function getLateDurationInDays(borrowRecord: UIBorrowRecord): number {
+  const now = new Date();
+
+  if (!borrowRecord.effectiveReturnDate) {
+    if (borrowRecord.endDate < now) {
+      const lateDurationInMilliseconds = now.getTime() - borrowRecord.endDate.getTime();
+      return Math.floor(lateDurationInMilliseconds / (1000 * 60 * 60 * 24));
+    }
+    return 0;
+  }
+
+  if (borrowRecord.effectiveReturnDate <= borrowRecord.endDate) {
+    return 0;
+  }
+
+  const lateDurationInMilliseconds = borrowRecord.effectiveReturnDate.getTime() - borrowRecord.endDate.getTime();
+  return Math.floor(lateDurationInMilliseconds / (1000 * 60 * 60 * 24));
 }

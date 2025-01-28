@@ -31,7 +31,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'primary',
             lastItem: false,
@@ -44,7 +44,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
             lastItem: false,
@@ -57,7 +57,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
             lastItem: false,
@@ -74,7 +74,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -87,7 +87,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -100,7 +100,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
             lastItem: false,
@@ -118,7 +118,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -131,7 +131,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -144,7 +144,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'success',
             lastItem: false,
@@ -157,7 +157,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'success',
             lineColor: 'success',
             lastItem: true,
@@ -174,7 +174,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -187,7 +187,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -200,7 +200,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'success',
             lastItem: true,
@@ -218,7 +218,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -231,7 +231,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -244,7 +244,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'warning',
             lineColor: 'warning',
             lastItem: false,
@@ -262,7 +262,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -275,7 +275,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -288,7 +288,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
             lastItem: false,
@@ -306,7 +306,7 @@ export class BorrowRecordTimelineComponent {
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
             lastItem: false,
@@ -319,7 +319,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
             lastItem: false,
@@ -332,7 +332,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
             lastItem: false,
@@ -345,7 +345,7 @@ export class BorrowRecordTimelineComponent {
           },
           {
             label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'right',
+            position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
             lastItem: true,

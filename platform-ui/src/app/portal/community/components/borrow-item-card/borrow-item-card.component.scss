@@ -8,7 +8,7 @@
     background-color: #fff;
     border-radius: 16px;
     overflow: hidden;
-    height: 260px;
+    height: 270px;
     min-width: 450px;
     text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -28,9 +28,19 @@
 
     .item-status {
         float: right;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        align-items: center;
+        gap: 5px;
 
         tui-icon {
             margin-left: 2px;
+        }
+
+        .item-status-text-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
     }
 
@@ -63,8 +73,12 @@
     .item-subtitle {
         margin-top: 10px;
         display: grid;
-        grid-template-columns: 1fr 2fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
 
+        &>*:not(:last-child) {
+            border-right: 1px solid rgba(128, 128, 128, 0.324);
+        }
 
         tui-icon {
             margin-right: 2px;
@@ -75,6 +89,10 @@
 
         color: #525252;
 
+        .borrow-duration-value {
+            font-weight: 600;
+            color: var(--tos-text-primary);
+        }
     }
 
     .reservation-start,
@@ -118,7 +136,7 @@
 
     .details-button {
         position: absolute;
-        top: 200px;
+        top: 210px;
         left: 50%;
         width: 85%;
         transform: translateX(-50%);
@@ -209,7 +227,7 @@
 }
 
 .timeline-container {
-    padding-left: 140px;
+    padding-left: 107px;
     margin-top: 10px;
 }
 
@@ -225,9 +243,18 @@
 
 @media (max-width: 768px) {
 
+    .card-content {
+        display: grid;
+        grid-template-columns: 2fr 10fr;
+    }
+
     .details-button {
         .details-button-text {
             display: none;
         }
+    }
+
+    .borrow-item-card {
+        min-width: 300px;
     }
 }

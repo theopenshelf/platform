@@ -157,7 +157,7 @@
 }
 
 .timeline-item.left .timeline-label {
-    left: -50px;
+    left: -95px;
     margin-right: 10px;
     /* Adjust spacing as needed */
 }
@@ -169,6 +169,8 @@
 }
 
 .timeline-item:last-child::before {
-    height: calc(100%);
+    height: calc(100% + 20px);
     /* Adjust height for the last item */
+    background: linear-gradient(to bottom, #ccc 30px, transparent);
+    /* Create a gradient effect starting after 20px */
 }

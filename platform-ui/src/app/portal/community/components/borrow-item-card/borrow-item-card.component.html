@@ -16,8 +16,13 @@
     <div class="item-content-container">
       <div class="item-title-container">
         <div class="item-status item-status-{{ status() }}">
-          <span class="item-status-text">{{ statusText() }}</span>
-          <tui-icon [icon]="statusIcon()" />
+          <div class="item-status-text-container">
+            <span class="item-status-text">{{ statusText() }}</span>
+            @if (lateDuration() > 0) {
+            <span class="item-status-late">{{ lateDuration() }} day(s)</span>
+            }
+          </div>
+          <tui-icon size="l" [icon]="statusIcon()" />
         </div>
         <div class="item-title">
           <h2 tuiTitle>
@@ -35,6 +40,10 @@
             <span class="library-value">{{ library()?.name }}</span>
           </span>
           }
+          <span class="borrow-duration">
+            <tui-icon icon="@tui.clock" />
+            <span class="borrow-duration-value">{{ borrowDuration() }}</span> days
+          </span>
 
         </div>
       </div>

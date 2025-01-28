@@ -11,7 +11,7 @@ import {
   TuiTitle,
 } from '@taiga-ui/core';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
-import { getBorrowRecordStatus, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
+import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UILibrary } from '../../models/UILibrary';
 
@@ -82,5 +82,11 @@ export class BorrowItemCardComponent {
       default:
         return 'Unknown';
     }
+  });
+  protected readonly borrowDuration = computed(() => {
+    return getBorrowDurationInDays(this.borrowRecord());
+  });
+  protected readonly lateDuration = computed(() => {
+    return getLateDurationInDays(this.borrowRecord());
   });
 }
