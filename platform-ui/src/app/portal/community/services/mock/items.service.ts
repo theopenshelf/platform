@@ -132,6 +132,8 @@ export class MockItemsService implements ItemsService {
     const {
       status,
       borrowedByCurrentUser,
+      sortBy,
+      sortOrder,
       borrowedBy,
       startDate,
       endDate,
@@ -154,6 +156,10 @@ export class MockItemsService implements ItemsService {
       });
     });
 
+    filteredRecords = filteredRecords.sort((a, b) => {
+      return b.startDate.getTime() - a.startDate.getTime();
+    });
+
     // Filter records based on the date range
     if (startDate && endDate) {
       filteredRecords = filteredRecords.filter(record =>
@@ -165,6 +171,47 @@ export class MockItemsService implements ItemsService {
       filteredRecords = filteredRecords.filter(record =>
         this.matchesStatusBorrowRecord(status, record)
       );
+    }
+
+    if (sortBy) {
+      switch (sortBy) {
+        case 'reservationDate':
+          filteredRecords = filteredRecords.sort((a, b) => {
+            const aValue = a.reservationDate ?? '';
+            const bValue = b.reservationDate ?? '';
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+          });
+          break;
+        case 'startDate':
+          filteredRecords = filteredRecords.sort((a, b) => {
+            const aValue = a.startDate ?? '';
+            const bValue = b.startDate ?? '';
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+          });
+          break;
+        case 'endDate':
+          filteredRecords = filteredRecords.sort((a, b) => {
+            const aValue = a.endDate ?? '';
+            const bValue = b.endDate ?? '';
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+          });
+          break;
+        case 'returnDate':
+          filteredRecords = filteredRecords.sort((a, b) => {
+            const aValue = a.effectiveReturnDate ?? '';
+            const bValue = b.effectiveReturnDate ?? '';
+            if (aValue < bValue) return sortOrder === 'asc' ? -1 : 1;
+            if (aValue > bValue) return sortOrder === 'asc' ? 1 : -1;
+            return 0;
+          });
+          break;
+      }
     }
 
     // Pagination logic
@@ -259,11 +306,11 @@ export class MockItemsService implements ItemsService {
     switch (status) {
       case UIBorrowStatus.Returned:
         return (
-          borrowRecord.endDate < now
+          borrowRecord.effectiveReturnDate !== undefined && borrowRecord.effectiveReturnDate !== null
         );
       case UIBorrowStatus.CurrentlyBorrowed:
         return (
-          borrowRecord.startDate <= now && now <= borrowRecord.endDate
+          borrowRecord.startDate <= now && (borrowRecord.effectiveReturnDate === undefined || borrowRecord.effectiveReturnDate === null)
         );
       case UIBorrowStatus.Reserved:
         return (

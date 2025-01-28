@@ -15,6 +15,10 @@
 
     <div class="item-content-container">
       <div class="item-title-container">
+        <div class="item-status item-status-{{ status() }}">
+          <span class="item-status-text">{{ statusText() }}</span>
+          <tui-icon [icon]="statusIcon()" />
+        </div>
         <div class="item-title">
           <h2 tuiTitle>
             {{ borrowRecord().item.name }}

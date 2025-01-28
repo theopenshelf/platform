@@ -66,6 +66,10 @@
     z-index: 0;
 }
 
+.last-item::before {
+    height: 0 !important;
+}
+
 /* Fix for first item (ensure the line is visible) */
 .timeline-item:first-child::before {
     top: 0;
@@ -76,27 +80,27 @@
 
 /* Custom line colors using classes */
 .line-accent::before {
-    background: var(--tos-background-accent-2);
+    background: var(--tos-timeline-line-accent);
 }
 
 .line-primary::before {
-    background: var(--tos-background-accent-1);
+    background: var(--tos-timeline-line-primary);
 }
 
 .line-secondary::before {
-    background: var(--tos-background-accent-1-pressed);
+    background: var(--tos-timeline-line-secondary);
 }
 
 .line-success::before {
-    background: var(--tos-status-positive);
+    background: var(--tos-timeline-line-success);
 }
 
 .line-warning::before {
-    background: var(--tos-status-warning);
+    background: var(--tos-timeline-line-warning);
 }
 
 .line-danger::before {
-    background: var(--tos-status-negative);
+    background: var(--tos-timeline-line-danger);
 }
 
 
@@ -116,27 +120,27 @@
 
 /* Custom line colors using classes */
 .dot-accent {
-    background: var(--tos-background-accent-2);
+    background: var(--tos-timeline-dot-accent);
 }
 
 .dot-primary {
-    background: var(--tos-background-accent-1);
+    background: var(--tos-timeline-dot-primary);
 }
 
 .dot-secondary {
-    background: var(--tos-background-accent-1-pressed);
+    background: var(--tos-timeline-dot-secondary);
 }
 
 .dot-success {
-    background: var(--tos-status-positive);
+    background: var(--tos-timeline-dot-success);
 }
 
 .dot-warning {
-    background: var(--tos-status-warning);
+    background: var(--tos-timeline-dot-warning);
 }
 
 .dot-danger {
-    background: var(--tos-status-negative);
+    background: var(--tos-timeline-dot-danger);
 }
 
 /* Box styling for each timeline entry */
@@ -149,7 +153,7 @@
     top: 0;
     font-size: 14px;
     color: #666;
-    width: 85px;
+    width: 95px;
 }
 
 .timeline-item.left .timeline-label {

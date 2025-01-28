@@ -8,7 +8,7 @@
     background-color: #fff;
     border-radius: 16px;
     overflow: hidden;
-    height: 240px;
+    height: 260px;
     min-width: 450px;
     text-align: left;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -24,6 +24,34 @@
     h2 {
         font-size: 1.1rem;
         font-weight: 600;
+    }
+
+    .item-status {
+        float: right;
+
+        tui-icon {
+            margin-left: 2px;
+        }
+    }
+
+    .item-status-reserved,
+    .item-status-impossible,
+    .item-status-currently-borrowed {
+        display: none;
+    }
+
+    .item-status-returned-early,
+    .item-status-returned {
+        color: var(--tos-timeline-dot-success);
+    }
+
+    .item-status-returned-late,
+    .item-status-late {
+        color: var(--tos-timeline-dot-danger);
+    }
+
+    .item-status-due-today {
+        color: var(--tos-timeline-dot-warning);
     }
 
     .shortDescription {
@@ -90,7 +118,7 @@
 
     .details-button {
         position: absolute;
-        top: 180px;
+        top: 200px;
         left: 50%;
         width: 85%;
         transform: translateX(-50%);

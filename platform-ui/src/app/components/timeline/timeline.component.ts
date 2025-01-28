@@ -8,6 +8,7 @@ export interface TimelineItem {
   position: 'left' | 'right';
   dotColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   lineColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
+  lastItem: boolean;
   items: any[];
 }
 

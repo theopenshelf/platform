@@ -51,6 +51,24 @@ export class APIItemsService implements ItemsService {
     const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status
       ? statusMapping[status]
       : undefined;
+
+    let sortByValue: 'createdAt' | 'borrowCount' | 'favorite' | undefined;
+    switch (sortBy) {
+      case 'createdAt':
+        sortByValue = 'createdAt';
+        break;
+      case 'borrowCount':
+        sortByValue = 'borrowCount';
+        break;
+      case 'favorite':
+        sortByValue = 'favorite';
+        break;
+      default:
+        sortByValue = undefined;
+        break;
+    }
+
+
     return this.itemsApiService
       .getItems(
         currentUser,
@@ -60,7 +78,7 @@ export class APIItemsService implements ItemsService {
         categories,
         searchText,
         currentlyAvailable,
-        sortBy,
+        sortByValue,
         sortOrder,
         page,
         pageSize,
@@ -124,6 +142,25 @@ export class APIItemsService implements ItemsService {
       [UIBorrowStatus.Reserved]: 'reserved',
     };
 
+    let sortByValue: 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+    switch (sortBy) {
+      case 'reservationDate':
+        sortByValue = 'reservationDate';
+        break;
+      case 'startDate':
+        sortByValue = 'startDate';
+        break;
+      case 'endDate':
+        sortByValue = 'endDate';
+        break;
+      case 'returnDate':
+        sortByValue = 'returnDate';
+        break;
+      default:
+        sortByValue = undefined;
+        break;
+    }
+
     const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status
       ? statusMapping[status]
       : undefined;
@@ -132,6 +169,8 @@ export class APIItemsService implements ItemsService {
         currentUser,
         borrowedByCurrentUser,
         borrowedBy,
+        sortByValue,
+        sortOrder,
         libraryIds,
         categories,
         searchText,

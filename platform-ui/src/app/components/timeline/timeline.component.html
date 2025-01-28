@@ -1,7 +1,7 @@
 <div class="timeline">
 
     @for (timelineItem of timelineItems(); track $index) {
-        <div class="timeline-item line-{{ timelineItem.lineColor }} {{ timelineItem.position }}">
+        <div class="timeline-item line-{{ timelineItem.lineColor }} {{ timelineItem.position }} {{ timelineItem.lastItem ? 'last-item' : '' }}">
             <div class="timeline-label">{{ timelineItem.label }}</div>
             <div class="timeline-content-group">
                 <div class="dot dot-{{ timelineItem.dotColor }}"></div>

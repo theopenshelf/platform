@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TuiIcon } from '@taiga-ui/core';
-import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
+import { getBorrowRecordStatus, UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { UIItem } from '../../portal/community/models/UIItem';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 
@@ -19,116 +19,345 @@ export class BorrowRecordTimelineComponent {
   public item = input.required<UIItem>();
   public borrowRecord = input.required<UIBorrowRecord>();
 
+  protected readonly status = computed(() => {
+    return getBorrowRecordStatus(this.borrowRecord());
+  });
+
   protected readonly timelineItems = computed(() => {
-    const items: TimelineItem[] = [
-      {
-        label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-        position: 'right',
-        dotColor: 'primary',
-        lineColor: 'primary',
-        items: [
+    let items: TimelineItem[] = [];
+    switch (this.status()) {
+
+      case 'reserved':
+        items = [
           {
-            icon: '@tui.clock',
-            label: 'Reservation',
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'secondary',
+            lineColor: 'secondary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'secondary',
+            lineColor: 'secondary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
           }
         ]
-      },
-      {
-        label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-        position: 'right',
-        dotColor: 'accent',
-        lineColor: 'accent',
-        items: [
+        break;
+      case 'currently-borrowed':
+        items = [
           {
-            icon: '@tui.calendar-clock',
-            label: 'Start',
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'secondary',
+            lineColor: 'secondary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
           }
         ]
-      }
-    ]
-    const effectiveReturnDate = this.borrowRecord().effectiveReturnDate;
-    const endDate = this.borrowRecord().endDate;
+        break;
 
-    if (effectiveReturnDate) {
-      if (effectiveReturnDate < endDate) {
-        items.push({
-          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-          position: 'right',
-          dotColor: 'accent',
-          lineColor: 'success',
-          items: [
-            {
-              icon: '/gift.png',
-              label: 'Return',
-            }
-          ]
-        });
-
-        items.push({
-          label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-          position: 'right',
-          dotColor: 'success',
-          lineColor: 'primary',
-          items: [
-            {
-              icon: '@tui.calendar-check',
-              label: 'End',
-            }
-          ]
-        });
-      } else if (effectiveReturnDate > endDate) {
-        items.push({
-          label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-          position: 'right',
-          dotColor: 'danger',
-          lineColor: 'danger',
-          items: [
-            {
-              icon: '@tui.calendar-check',
-              label: 'End',
-            }
-          ]
-        });
-
-        items.push({
-          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-          position: 'right',
-          dotColor: 'danger',
-          lineColor: 'primary',
-          items: [
-            {
-              icon: '/gift.png',
-              label: 'Return',
-            }
-          ]
-        });
-      } else {
-        items.push({
-          label: effectiveReturnDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-          position: 'right',
-          dotColor: 'accent',
-          lineColor: 'primary',
-          items: [
-            {
-              icon: '/gift.png',
-              label: 'Return',
-            }
-          ]
-        });
-      }
-    } else {
-      items.push({
-        label: endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
-        position: 'right',
-        dotColor: 'primary',
-        lineColor: 'primary',
-        items: [
+      case 'returned-early':
+        items = [
           {
-            icon: '@tui.calendar-check',
-            label: 'End',
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'success',
+            lastItem: false,
+            items: [
+              {
+                icon: '/gift.png',
+                label: 'Return',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'success',
+            lineColor: 'success',
+            lastItem: true,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
           }
         ]
-      });
+        break;
+      case 'returned':
+        items = [
+          {
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'success',
+            lastItem: true,
+            items: [
+              {
+                icon: '/gift.png',
+                label: 'Return',
+              }
+            ]
+          }
+        ]
+        break;
+
+      case 'due-today':
+        items = [
+          {
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'warning',
+            lineColor: 'warning',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
+          }
+        ]
+        break;
+
+      case 'late':
+        items = [
+          {
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'danger',
+            lineColor: 'danger',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
+          }
+        ]
+        break;
+
+      case 'returned-late':
+        items = [
+          {
+            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'primary',
+            lineColor: 'primary',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.clock',
+                label: 'Reservation',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'accent',
+            lineColor: 'accent',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-clock',
+                label: 'Start',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'danger',
+            lineColor: 'danger',
+            lastItem: false,
+            items: [
+              {
+                icon: '@tui.calendar-check',
+                label: 'End',
+              }
+            ]
+          },
+          {
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            position: 'right',
+            dotColor: 'danger',
+            lineColor: 'danger',
+            lastItem: true,
+            items: [
+              {
+                icon: '/gift.png',
+                label: 'Return',
+              }
+            ]
+          }
+        ]
+        break;
     }
     return items;
   });

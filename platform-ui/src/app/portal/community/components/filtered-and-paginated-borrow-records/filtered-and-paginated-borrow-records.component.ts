@@ -25,6 +25,16 @@ import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtere
   styleUrl: './filtered-and-paginated-borrow-records.component.scss'
 })
 export class FilteredAndPaginatedBorrowRecordsComponent {
+  // Sorting properties
+
+  static readonly defaultSortingOptions = [
+    FilteredAndPaginatedComponent.SORT_RESERVATION_DATE,
+    FilteredAndPaginatedComponent.SORT_START_DATE,
+    FilteredAndPaginatedComponent.SORT_END_DATE,
+    FilteredAndPaginatedComponent.SORT_RETURN_DATE,
+  ];
+
+
   currentUser: UserInfo;
   libraries: UILibrary[] = [];
 
@@ -33,7 +43,8 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
   public enableCategoriesFiltering = input<boolean>(true);
   public categoriesFilteringOpened = input<boolean>(true);
   public enableSearchBar = input<boolean>(false);
-  public sortingOptions = input<string[]>(FilteredAndPaginatedComponent.defaultSortingOptions);
+  public sortingOptions = input<string[]>(FilteredAndPaginatedBorrowRecordsComponent.defaultSortingOptions);
+
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,

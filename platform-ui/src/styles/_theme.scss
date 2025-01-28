@@ -96,7 +96,22 @@ $lightened-accent-color: color.adjust(#FB8C02, $lightness: 20%);
   --tos-chart-categorical-20: #aadc42;
   --tos-chart-categorical-21: #3682db;
   --tos-chart-categorical-22: #34b41f;
+  // timeline
+  --tos-timeline-dot-accent: #FB8C02;
+  --tos-timeline-dot-primary: #1b1f3b;
+  --tos-timeline-dot-secondary: #79818c;
+  --tos-timeline-dot-success: #43b38a;
+  --tos-timeline-dot-warning: #ffc700;
+  --tos-timeline-dot-danger: #cc1910;
+  --tos-timeline-dot-impossible: #ccc;
 
+  --tos-timeline-line-accent: #FB8C02;
+  --tos-timeline-line-primary: #1b1f3b;
+  --tos-timeline-line-secondary: #79818c;
+  --tos-timeline-line-success: #4ac99b;
+  --tos-timeline-line-warning: #ffc700;
+  --tos-timeline-line-danger: #cc1910;
+  --tos-timeline-line-impossible: #ccc;
 
   // Mapping to tui-theme
   --tui-background-base: var(--tos-background-base);

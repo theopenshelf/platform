@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { UIBorrowRecord } from '../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../models/UIBorrowStatus';
 import { UIItem } from '../models/UIItem';
 import { UIItemsPagination } from '../models/UIItemsPagination';
-import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
 
 export interface GetItemsParams {
   currentUser?: boolean;
@@ -14,7 +14,7 @@ export interface GetItemsParams {
   categories?: string[];
   searchText?: string;
   currentlyAvailable?: boolean;
-  sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | undefined;
+  sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
   sortOrder?: 'asc' | 'desc' | undefined;
   page?: number;
   pageSize?: number;

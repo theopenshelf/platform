@@ -73,6 +73,10 @@ export class FilteredAndPaginatedComponent implements OnInit {
   static readonly SORT_RECENTLY_ADDED = 'Recently added';
   static readonly SORT_MOST_BORROWED = 'Most borrowed';
   static readonly SORT_FAVORITES = 'Favorites';
+  static readonly SORT_RESERVATION_DATE = 'Reservation date';
+  static readonly SORT_START_DATE = 'Start date';
+  static readonly SORT_END_DATE = 'End date';
+  static readonly SORT_RETURN_DATE = 'Return date';
 
   static readonly defaultSortingOptions = [
     FilteredAndPaginatedComponent.SORT_RECENTLY_ADDED,
@@ -297,12 +301,23 @@ export class FilteredAndPaginatedComponent implements OnInit {
     return this.sortingSelected.value === sortingOption;
   }
 
-  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | undefined {
+
+  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined {
     switch (this.sortingSelected.value) {
       case FilteredAndPaginatedComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
       case FilteredAndPaginatedComponent.SORT_MOST_BORROWED:
         return 'borrowCount';
+      case FilteredAndPaginatedComponent.SORT_FAVORITES:
+        return 'favorite';
+      case FilteredAndPaginatedComponent.SORT_RESERVATION_DATE:
+        return 'reservationDate';
+      case FilteredAndPaginatedComponent.SORT_START_DATE:
+        return 'startDate';
+      case FilteredAndPaginatedComponent.SORT_END_DATE:
+        return 'endDate';
+      case FilteredAndPaginatedComponent.SORT_RETURN_DATE:
+        return 'returnDate';
       default:
         return undefined;
     }
