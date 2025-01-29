@@ -75,46 +75,10 @@
 
         <div class="borrow-records-list">
             @for (record of borrowRecordsByStatus[selectedStatus]; track record) {
-            <div class="borrow-record">
-
-                @if (record.effectiveReturnDate) {
-                    <div class="borrow-record-status" class="on-time-status" [class]="'status-' + getReturnedOnTimeStatus(record).status">
-                        <span class="borrow-record-status-value">{{ getReturnedOnTimeStatus(record).label }}</span>
-                        <tui-icon icon="@tui.clock"></tui-icon>
-                    </div>
-                }
-                <div class="borrow-record-borrow-by">
-
-                    <h2>
-                        <tui-avatar [src]="getUser(record.borrowedBy).username | tuiInitials"
-                            [style.background]="getUser(record.borrowedBy).username | tuiAutoColor"
-                            size="s"></tui-avatar>
-                        {{ getUser(record.borrowedBy).username }}
-                    </h2>
-                </div>
-                <div class="borrow-record-start-date">
-                    <label>Start Date</label>
-                    <span class="borrow-record-start-date-value">{{ record.startDate | date:'dd/MM/yyyy' }}</span>
-                </div>
-                <div class="borrow-record-end-date">
-                    <label>End Date</label>
-                    <span class="borrow-record-end-date-value">{{ record.endDate | date:'dd/MM/yyyy' }}</span>
-                </div>
-                <div class="borrow-record-duration">
-                    <label>Duration</label>
-                    <span class="borrow-record-duration-value">{{ duration(record.startDate, record.endDate) }}</span>
-                </div>
-                <div class="borrow-record-reservation-date">
-                    <label>Reservation Date</label>
-                    <span class="borrow-record-reservation-date-value">{{ record.reservationDate | date:'dd/MM/yyyy' }}</span>
-                </div>
-                @if (record.effectiveReturnDate) {
-                <div class="borrow-record-effective-return-date">
-                    <label>Effective Return Date</label>
-                    <span class="borrow-record-effective-return-date-value">{{ record.effectiveReturnDate | date:'dd/MM/yyyy' }}</span>
-                </div>
-                }
-            </div>
+                <borrow-record-card
+                [user]="usersByEmail[record.borrowedBy]"
+                [borrowRecord]="record"
+            ></borrow-record-card>
             }
             @if (!borrowRecordsByStatus[selectedStatus] || borrowRecordsByStatus[selectedStatus].length === 0) {
             <p>No borrow records found</p>

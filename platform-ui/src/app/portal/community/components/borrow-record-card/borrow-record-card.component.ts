@@ -2,40 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import {
-  TuiAppearance,
-  TuiButton,
-  TuiHint,
-  TuiIcon,
-  TuiTextfield,
-  TuiTitle,
-} from '@taiga-ui/core';
+import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+
+import { TuiHint } from '@taiga-ui/core';
+import { TuiAvatar } from '@taiga-ui/kit';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
-import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
-import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
+import { UIUser } from '../../../admin/services/users.service';
+import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 
 @Component({
-  selector: 'borrow-item-card',
-  standalone: true,
+  selector: 'borrow-record-card',
   imports: [
     TuiHint,
-    RouterLink,
     TuiIcon,
+    RouterLink,
     CommonModule,
-    TuiAppearance,
-    TuiButton,
-    TuiTitle,
     FormsModule,
     TuiTextfield,
-    BorrowRecordTimelineComponent
+    TuiAvatar,
+    BorrowRecordTimelineComponent,
+    TuiInitialsPipe,
+    TuiAutoColorPipe
   ],
-  templateUrl: './borrow-item-card.component.html',
-  styleUrl: './borrow-item-card.component.scss',
+  templateUrl: './borrow-record-card.component.html',
+  styleUrl: './borrow-record-card.component.scss'
 })
-export class BorrowItemCardComponent {
-  public borrowRecord = input.required<UIBorrowRecordStandalone>();
+export class BorrowRecordCardComponent {
+  public borrowRecord = input.required<UIBorrowRecord>();
+  public user = input<UIUser>();
   public library = input<UILibrary>();
+  public item = input<UIItem>();
+
   protected readonly status = computed(() => {
     return getBorrowRecordStatus(this.borrowRecord());
   });

@@ -38,7 +38,6 @@ import {
 } from '@taiga-ui/kit';
 import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
-import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -46,6 +45,7 @@ import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { BorrowRecordCardComponent } from '../../components/borrow-record-card/borrow-record-card.component';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { ItemsService } from '../../services/items.service';
@@ -69,7 +69,8 @@ const plusTen = today.append({ day: 10 });
     TuiInputDateRangeModule,
     TuiNotification,
     AsyncPipe,
-    DatePipe
+    DatePipe,
+    BorrowRecordCardComponent
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -181,30 +182,35 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
-      this.item = item;
-      this.borrowItemRecordsForCurrentUser = item.borrowRecords
-        .filter((record) => record.borrowedBy === this.currentUser.email)
-        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
-      this.isReserved =
-        this.borrowItemRecordsForCurrentUser.filter(
-          (record) => record.startDate > new Date(),
-        ).length > 0;
-      this.nextReservation = this.borrowItemRecordsForCurrentUser
-        .filter((record) => record.startDate > new Date())
-        .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
-      this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
-        (record) => record.endDate < new Date(),
-      );
-      this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(
-        (record) => record.endDate > new Date(),
-      );
-      this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(
-        (record) =>
-          record.startDate <= new Date() && new Date() <= record.endDate,
-      );
+      this.setItem(item);
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  setItem(item: UIItem) {
+    this.item = item;
+    this.borrowItemRecordsForCurrentUser = item.borrowRecords
+      .filter((record) => record.borrowedBy === this.currentUser.email)
+      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+    this.isReserved =
+      this.borrowItemRecordsForCurrentUser.filter(
+        (record) => record.startDate > new Date(),
+      ).length > 0;
+    this.nextReservation = this.borrowItemRecordsForCurrentUser
+      .filter((record) => record.startDate > new Date())
+      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
+    this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
+      (record) => record.endDate < new Date(),
+    );
+    this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(
+      (record) => record.endDate > new Date(),
+    );
+    this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(
+      (record) =>
+        record.startDate <= new Date() && new Date() <= record.endDate,
+    );
+  }
+
 
   get sanitizedDescription(): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(this.item?.description ?? '');
@@ -262,7 +268,7 @@ export class ItemComponent implements OnInit {
     }
   }
 
-  borrowItem(header: PolymorpheusContent) {
+  borrowItem() {
     const data: TuiConfirmData = {
       content: 'Are you sure you want to disable this user?', // Simple content
       yes: 'Yes, Disable',
@@ -273,7 +279,6 @@ export class ItemComponent implements OnInit {
       .open<boolean>(TUI_CONFIRM, {
         label: `Borrow ${this.item?.name}`,
         size: 'm',
-        header: header,
         data: {
           content: `Are you sure you want to borrow this item from ${this.selectedDate?.from.toLocalNativeDate().toLocaleDateString()} to ${this.selectedDate?.to.toLocalNativeDate().toLocaleDateString()}?`,
           yes: 'Yes, Borrow',
@@ -300,11 +305,11 @@ export class ItemComponent implements OnInit {
                   this.item = item;
                   this.alerts
                     .open(
-                      `Successfully borrowed ${this.item?.name} from ${this.selectedDate?.from.toLocalNativeDate()} to ${this.selectedDate?.to.toLocalNativeDate()}`,
+                      `Successfully borrowed ${this.item?.name} from ${this.datePipe.transform(this.selectedDate?.from.toLocalNativeDate(), 'd MMM yyyy')} to ${this.datePipe.transform(this.selectedDate?.to.toLocalNativeDate(), 'd MMM yyyy')}`,
                       { appearance: 'positive' },
                     )
                     .subscribe();
-                  this.router.navigate(['/community/borrowed-items']);
+                  this.router.navigate(['/community/borrowed-items'], { queryParams: { selectedStatus: 'reserved' } });
                 }),
               );
             return EMPTY;
@@ -342,11 +347,11 @@ export class ItemComponent implements OnInit {
               this.itemsService
                 .cancelReservation(this.item!, borrowRecord)
                 .subscribe((item) => {
-                  this.item = item;
+                  this.setItem(item);
                   this.updateCellAvailability();
                   this.alerts.open('Reservation cancelled successfully', {
                     appearance: 'success',
-                  });
+                  }).subscribe();
                 });
               return EMPTY;
             }
@@ -381,11 +386,11 @@ export class ItemComponent implements OnInit {
             this.itemsService
               .cancelReservation(this.item!, borrowRecord)
               .subscribe((item) => {
-                this.item = item;
+                this.setItem(item);
                 this.updateCellAvailability();
                 this.alerts.open('Item returned successfully', {
                   appearance: 'success',
-                });
+                }).subscribe();
               });
             return EMPTY;
           }

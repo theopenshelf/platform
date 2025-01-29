@@ -1,0 +1,283 @@
+@use 'theme' as *;
+
+/* Card styling */
+.borrow-record-card {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 280px;
+    text-align: left;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+
+    .card-content {
+        width: 100%;
+        display: grid;
+
+        .image-container {
+            position: relative;
+            border-right: 1px solid #ccc;
+
+            .record-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .details-button {
+                position: absolute;
+                top: 210px;
+                left: 50%;
+                width: 85%;
+                transform: translateX(-50%);
+                background-color: #fff;
+
+                &:hover {
+                    background-color: #c8c8c8 !important;
+                }
+            }
+        }
+
+        .record-content-container {
+            padding-top: 10px;
+            padding-left: 3%;
+            padding-right: 2%;
+
+            .record-title-container {
+                padding: 10px;
+                padding-bottom: 0;
+
+                .record-status {
+                    float: right;
+                    display: grid;
+                    grid-template-columns: 2fr 1fr;
+                    align-items: center;
+                    gap: 5px;
+
+                    .record-status-text-container {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: flex-end;
+                    }
+
+                    &.record-status-late {
+                        color: var(--tos-timeline-dot-danger);
+                    }
+                }
+
+                .record-status-reserved,
+                .record-status-impossible,
+                .record-status-currently-borrowed {
+                    display: none;
+                }
+
+                .record-status-returned-early,
+                .record-status-returned {
+                    color: var(--tos-timeline-dot-success);
+                }
+
+                .record-status-returned-late,
+                .record-status-late {
+                    color: var(--tos-timeline-dot-danger);
+                }
+
+                .record-status-due-today {
+                    color: var(--tos-timeline-dot-warning);
+                }
+
+                .record-title {
+                    h2 {
+                        margin-top: 0;
+                        margin-bottom: 20px;
+                        font-size: 1.1rem;
+                        font-weight: 600;
+                    }
+                }
+
+                .record-subtitle {
+                    margin-top: 10px;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 10px;
+                    color: #525252;
+
+                    &>*:not(:last-child) {
+                        border-right: 1px solid rgba(128, 128, 128, 0.324);
+                    }
+
+                    .borrow-duration-value {
+                        font-weight: 600;
+                        color: var(--tos-text-primary);
+                    }
+
+                    tui-icon {
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .timeline-container {
+                padding-left: 115px;
+                margin-top: 10px;
+            }
+        }
+    }
+}
+
+/* Card container for image + content */
+.card-content {
+    width: 100%;
+}
+
+.card-content-with-image {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+
+    .record-subtitle {
+        grid-template-columns: 1fr 1fr 1fr !important;
+    }
+}
+
+/* Image Section */
+.image-container {
+    position: relative;
+    border-right: 1px solid #ccc;
+
+    .record-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .details-button {
+        position: absolute;
+        top: 210px;
+        left: 50%;
+        width: 85%;
+        transform: translateX(-50%);
+        margin-left: 0;
+        background-color: #fff;
+    }
+
+    .details-button:hover {
+        background-color: #c8c8c8 !important;
+    }
+}
+
+.record-content {
+    padding-top: 10px;
+    padding-left: 3%;
+    padding-right: 2%;
+}
+
+/* Record Details Section */
+.record-details {
+    height: 70%;
+
+    .record-details-top-right {
+        float: right;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+/* Record Actions Section */
+.record-actions {
+    padding: 2% 0;
+    height: 29%;
+    border-top: 1px solid rgb(226, 232, 240);
+    display: flex;
+
+    button {
+        border-radius: 30px;
+        font-size: small;
+        font-weight: 600;
+    }
+
+    .borrow-counts {
+        color: var(--tos-background-accent-1);
+        margin-left: auto;
+    }
+}
+
+.favorite,
+.reservation-state {
+    border-radius: 30px;
+    padding: 20px;
+    margin: 2px;
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+}
+
+/* Badge styles */
+.badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 25px;
+    border: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    color: var(--tos-text-primary-on-accent-1);
+    text-align: center;
+    height: 20px;
+}
+
+/* Status badges */
+.badge-reserved {
+    background-color: #3498db;
+}
+
+.badge-borrowed {
+    background-color: #2ecc71;
+}
+
+.badge-returned {
+    background-color: #95a5a6;
+}
+
+.details-button {
+    margin-left: auto;
+}
+
+.timeline-container {
+    padding-left: 115px;
+    margin-top: 10px;
+}
+
+.record-title-container {
+    padding: 10px;
+    padding-bottom: 0;
+}
+
+.record-details-container {
+    display: grid;
+    grid-template-columns: 6fr 6fr;
+}
+
+@media (max-width: 768px) {
+    .card-content {
+        display: grid;
+        grid-template-columns: 2fr 10fr;
+    }
+
+    .details-button {
+        .details-button-text {
+            display: none;
+        }
+    }
+
+    .borrow-record-card {
+        min-width: 300px;
+    }
+}

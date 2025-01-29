@@ -11,14 +11,14 @@ import { UIPagination } from '../../models/UIPagination';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
-import { BorrowItemCardComponent } from '../borrow-item-card/borrow-item-card.component';
+import { BorrowRecordCardComponent } from '../borrow-record-card/borrow-record-card.component';
 import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtered-and-paginated.component';
 
 @Component({
   standalone: true,
   selector: 'filtered-and-paginated-borrow-records',
   imports: [
-    BorrowItemCardComponent,
+    BorrowRecordCardComponent,
     FilteredAndPaginatedComponent,
   ],
   templateUrl: './filtered-and-paginated-borrow-records.component.html',

@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TuiIcon } from '@taiga-ui/core';
 import { getBorrowRecordStatus, UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
-import { UIItem } from '../../portal/community/models/UIItem';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 
 @Component({
@@ -16,7 +15,6 @@ import { TimelineComponent, TimelineItem } from '../timeline/timeline.component'
   styleUrl: './borrow-record-timeline.component.scss'
 })
 export class BorrowRecordTimelineComponent {
-  public item = input.required<UIItem>();
   public borrowRecord = input.required<UIBorrowRecord>();
 
   protected readonly status = computed(() => {

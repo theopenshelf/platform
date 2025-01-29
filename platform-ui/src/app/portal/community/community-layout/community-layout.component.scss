@@ -130,6 +130,10 @@ button.dropdown {
         justify-content: space-around;
     }
 
+    .horizontal-menu {
+        top: 60px !important;
+    }
+
     .horizontal-menu a {
         display: flex;
         flex-direction: column;
@@ -139,6 +143,15 @@ button.dropdown {
     .horizontal-menu a tui-icon {
         margin: 0 0 5px 0;
         /* Adjust margin to center the icon above the label */
+    }
+
+    header[tuiNavigationHeader] {
+        block-size: 60px !important;
+
+    }
+
+    .borrowed-items-text {
+        display: none;
     }
 }
 

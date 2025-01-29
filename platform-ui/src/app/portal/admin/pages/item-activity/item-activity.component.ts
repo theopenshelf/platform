@@ -6,7 +6,9 @@ import { ActivatedRoute } from '@angular/router';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAutoColorPipe, TuiButton, TuiCalendar, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
+import { BorrowRecordCardComponent } from '../../../community/components/borrow-record-card/borrow-record-card.component';
 import { UIBorrowRecord } from '../../../community/models/UIBorrowRecord';
+import { UIBorrowRecordStandalone } from '../../../community/models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../../../community/models/UIBorrowStatus';
 import { ITEMS_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
@@ -29,7 +31,7 @@ const AVAILABLE: string = '';
     TuiInitialsPipe,
     TuiAutoColorPipe,
     JsonPipe,
-
+    BorrowRecordCardComponent,
   ],
   templateUrl: './item-activity.component.html',
   styleUrl: './item-activity.component.scss',
@@ -46,7 +48,7 @@ export class ItemActivityComponent {
 
   protected lastMonth = TuiMonth.currentLocal().append({ month: 1 });
 
-  protected borrowRecordsByStatus: { [key: string]: UIBorrowRecord[] } = {};
+  protected borrowRecordsByStatus: { [key: string]: UIBorrowRecordStandalone[] } = {};
 
   protected hoveredItem: TuiDay | null = null;
   protected selectedStatus: UIBorrowStatus = UIBorrowStatus.Reserved;
@@ -189,9 +191,9 @@ export class ItemActivityComponent {
       if (!acc[status]) {
         acc[status] = [];
       }
-      acc[status].push(record);
+      acc[status].push({ ...record, item: this.item });
       return acc;
-    }, {} as { [key: string]: UIBorrowRecord[] });
+    }, {} as { [key: string]: UIBorrowRecordStandalone[] });
 
     // Sort each status's records by start date
     this.borrowRecordsByStatus[UIBorrowStatus.Reserved].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());
