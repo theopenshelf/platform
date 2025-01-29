@@ -6,7 +6,7 @@
       <div class="image-container" routerLink="/community/items/{{ item()!.id }}">
         <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
         <button appearance="outline" class="accent details-button" size="m"
-          routerLink="/community/borrow-records/{{ item()!.id }}" tuiButton type="button">
+          routerLink="/community/items/{{ item()!.id }}" tuiButton type="button">
           <span class="details-button-text">See details</span>
           <tui-icon icon="@tui.arrow-right" />
         </button>

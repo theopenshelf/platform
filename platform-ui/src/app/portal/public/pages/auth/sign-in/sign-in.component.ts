@@ -9,6 +9,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
+import { environment } from '../../../../../../environments/environment';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
   AUTH_SERVICE_TOKEN,
@@ -52,6 +53,12 @@ export class SignInComponent {
       password: ['', Validators.required],
     });
     this.config = this.configService.getSettings();
+    if (environment.demoMode) {
+      this.signInForm.patchValue({
+        username: 'demo',
+        password: 'demo',
+      });
+    }
   }
 
   onSubmit() {
@@ -61,9 +68,7 @@ export class SignInComponent {
         .signIn(username, password)
         .subscribe((isAuthenticated: boolean) => {
           if (isAuthenticated) {
-            if (this.authService.hasRole('admin')) {
-              this.router.navigate(['/admin']);
-            } else if (this.authService.hasRole('community')) {
+            if (this.authService.hasRole('community')) {
               this.router.navigate(['/community']);
             } else {
               this.router.navigate(['/']);
