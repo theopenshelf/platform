@@ -405,6 +405,36 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
+  /community/items/{item-id}/actions/return-item:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: returnItem
+      summary: Return a borrowed item
+      tags:
+        - items-community-api
+      requestBody:
+        description: Return item details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                borrowRecordId:
+                  type: string
+                  format: uuid
+                  example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+              required:
+                - borrowRecordId
+      responses:
+        "200":
+          description: Item returned successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
   /community/borrow-records:
     get:
       operationId: getBorrowRecords

@@ -274,6 +274,14 @@ export class MockItemsService implements ItemsService {
     return of(item);
   }
 
+  returnItem(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    borrowRecord.effectiveReturnDate = new Date();
+    return of(item);
+  }
+
   markAsFavorite(item: UIItem): Observable<void> {
     item.favorite = !item.favorite;
     return of(undefined);

@@ -314,7 +314,47 @@ export class APIItemsService implements ItemsService {
   ): Observable<UIItem> {
     return this.itemsApiService
       .deleteBorrowRecord(item.id, borrowRecord.id)
-      .pipe(map(() => item));
+      .pipe(
+        map((item: Item) => ({
+          ...item,
+          createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+          borrowRecords: item.borrowRecords.map(
+            (record: BorrowRecord) =>
+              ({
+                id: record.id,
+                startDate: record.startDate
+                  ? new Date(record.startDate)
+                  : undefined,
+                endDate: record.endDate ? new Date(record.endDate) : undefined,
+                borrowedBy: record.borrowedBy,
+                reservationDate: new Date()
+              }) as UIBorrowRecord,
+          ),
+        })));
+  }
+
+  returnItem(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    return this.itemsApiService
+      .returnItem(item.id, { borrowRecordId: borrowRecord.id })
+      .pipe(map((item: Item) => ({
+        ...item,
+        createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              id: record.id,
+              startDate: record.startDate
+                ? new Date(record.startDate)
+                : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              borrowedBy: record.borrowedBy,
+              reservationDate: new Date()
+            }) as UIBorrowRecord,
+        ),
+      })));
   }
 
   markAsFavorite(item: UIItem): Observable<void> {

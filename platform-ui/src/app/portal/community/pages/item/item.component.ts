@@ -46,7 +46,7 @@ import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowRecordCardComponent } from '../../components/borrow-record-card/borrow-record-card.component';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { getBorrowRecordStatus, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { ItemsService } from '../../services/items.service';
 
@@ -189,25 +189,53 @@ export class ItemComponent implements OnInit {
 
   setItem(item: UIItem) {
     this.item = item;
+
     this.borrowItemRecordsForCurrentUser = item.borrowRecords
       .filter((record) => record.borrowedBy === this.currentUser.email)
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
-    this.isReserved =
-      this.borrowItemRecordsForCurrentUser.filter(
-        (record) => record.startDate > new Date(),
-      ).length > 0;
-    this.nextReservation = this.borrowItemRecordsForCurrentUser
-      .filter((record) => record.startDate > new Date())
-      .sort((a, b) => a.startDate.getTime() - b.startDate.getTime())[0];
-    this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
-      (record) => record.endDate < new Date(),
-    );
+
+
     this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(
-      (record) => record.endDate > new Date(),
-    );
+      (record) => {
+        const status = getBorrowRecordStatus(record);
+        switch (status) {
+          case UIBorrowRecordStatus.Reserved:
+            return true;
+          default:
+            return false;
+        }
+      }
+    ).sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+
+    this.isReserved = this.itemsReserved.length > 0;
+    this.nextReservation = this.itemsReserved[0];
+
+    this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
+      (record) => {
+        const status = getBorrowRecordStatus(record);
+        switch (status) {
+          case UIBorrowRecordStatus.Returned:
+          case UIBorrowRecordStatus.ReturnedEarly:
+          case UIBorrowRecordStatus.ReturnedLate:
+            return true;
+          default:
+            return false;
+        }
+      }
+    ).sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
+
     this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(
-      (record) =>
-        record.startDate <= new Date() && new Date() <= record.endDate,
+      (record) => {
+        const status = getBorrowRecordStatus(record);
+        switch (status) {
+          case UIBorrowRecordStatus.CurrentlyBorrowed:
+          case UIBorrowRecordStatus.Late:
+          case UIBorrowRecordStatus.DueToday:
+            return true;
+          default:
+            return false;
+        }
+      }
     );
   }
 
@@ -382,9 +410,8 @@ export class ItemComponent implements OnInit {
       .pipe(
         switchMap((response) => {
           if (response) {
-            //TODO call dedicated endpoint to return item
             this.itemsService
-              .cancelReservation(this.item!, borrowRecord)
+              .returnItem(this.item!, borrowRecord)
               .subscribe((item) => {
                 this.setItem(item);
                 this.updateCellAvailability();
