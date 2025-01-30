@@ -36,7 +36,7 @@ export class MockAuthService implements AuthService {
       }
       else if (username === 'demo' && password === 'demo') {
         this.isAuthenticated$.next(true);
-        this.userRoles = ['demo', 'community'];
+        this.userRoles = ['admin', 'community'];
         observer.next(true);
         observer.complete();
       } else if (username === 'alice' && password === 'password') {
