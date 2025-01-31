@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { communityProviders } from '../../../community/community.provider';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../community/components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { GetItemsParams } from '../../../community/services/items.service';
@@ -19,7 +20,8 @@ import { UsersCountComponent } from '../../components/dashboards/users-count/use
     TopCategoriesComponent,
     TopBorrowersComponent,
     BorrowsStatComponent,
-    FilteredAndPaginatedBorrowRecordsComponent
+    FilteredAndPaginatedBorrowRecordsComponent,
+    TranslateModule
   ],
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',

@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, ContentChild, input, TemplateRef } from '@angular/core';
-import { TuiIcon } from '@taiga-ui/core';
 
 
 export interface TimelineItem {
@@ -16,7 +15,6 @@ export interface TimelineItem {
   selector: 'timeline',
   imports: [
     CommonModule,
-    TuiIcon,
   ],
   templateUrl: './timeline.component.html',
   styleUrl: './timeline.component.scss'

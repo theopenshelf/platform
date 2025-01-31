@@ -7,6 +7,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAutoFocus } from '@taiga-ui/cdk';
@@ -33,7 +34,6 @@ import {
   TosTableComponent,
 } from '../../components/tos-table/tos-table.component';
 import { UIUser, UsersService } from '../../services/users.service';
-
 export type User1 = {
   id: string;
   username: string;
@@ -64,7 +64,8 @@ export type User1 = {
     TuiDropdown,
     TuiTable,
     TuiIcon,
-    TosTableComponent
+    TosTableComponent,
+    TranslateModule
   ],
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -77,52 +78,7 @@ export class UsersComponent {
   currentUser: UIUser | undefined;
 
   // Available Columns for Display
-  columns: Column[] = [
-    {
-      key: 'username',
-      label: 'Username',
-      custom: true,
-      visible: true,
-      sortable: true,
-      size: 'm',
-    },
-    { key: 'email', label: 'Email', visible: true, sortable: true, size: 'm' },
-    {
-      key: 'flatNumber',
-      label: 'Flat Number',
-      visible: true,
-      sortable: true,
-      size: 'm',
-    },
-    {
-      key: 'address',
-      label: 'Address',
-      visible: false,
-      sortable: false,
-      size: 'l',
-    },
-    {
-      key: 'borrowedItems',
-      label: 'Borrowed Items',
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-    {
-      key: 'returnedLate',
-      label: 'Returned Late',
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-    {
-      key: 'successRate',
-      label: '% of Late',
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-  ];
+  columns: Column[] = [];
   passwordForm = new FormGroup({
     userPasswordControl: new FormControl(''),
   });
@@ -135,7 +91,60 @@ export class UsersComponent {
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
+    private translate: TranslateService
   ) {
+    this.columns = [
+      {
+        key: 'username',
+        label: this.translate.instant('users.columns.username'),
+        custom: true,
+        visible: true,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'email',
+        label: this.translate.instant('users.columns.email'),
+        visible: true,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'flatNumber',
+        label: this.translate.instant('users.columns.flatNumber'),
+        visible: true,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'address',
+        label: this.translate.instant('users.columns.address'),
+        visible: false,
+        sortable: false,
+        size: 'l',
+      },
+      {
+        key: 'borrowedItems',
+        label: this.translate.instant('users.columns.borrowedItems'),
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+      {
+        key: 'returnedLate',
+        label: this.translate.instant('users.columns.returnedLate'),
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+      {
+        key: 'successRate',
+        label: this.translate.instant('users.columns.successRate'),
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+    ];
     this.usersService.getUsers().subscribe((users) => (this.users = users));
 
     this.breakpointObserver
@@ -147,21 +156,21 @@ export class UsersComponent {
 
   deleteUser(user: UIUser): void {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to delete this user?', // Simple content
-      yes: 'Yes, Delete',
-      no: 'Cancel',
+      content: this.translate.instant('users.confirmDeleteContent'),
+      yes: this.translate.instant('users.confirmDeleteYes'),
+      no: this.translate.instant('users.confirmDeleteNo'),
     };
 
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
-        label: "Delete user '" + user.username + "'",
+        label: this.translate.instant('users.confirmDeleteLabel', { username: user.username }),
         size: 'm',
         data,
       })
       .subscribe(response => {
         if (response) {
           this.alerts.open(
-            'User <strong>' + user.username + '</strong> deleted successfully',
+            this.translate.instant('users.deleteSuccess', { username: user.username }),
             { appearance: 'positive' },
           ).subscribe();
         }
@@ -170,21 +179,21 @@ export class UsersComponent {
 
   disableUser(user: UIUser): void {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to disable this user?', // Simple content
-      yes: 'Yes, Disable',
-      no: 'Cancel',
+      content: this.translate.instant('users.confirmDisableContent'),
+      yes: this.translate.instant('users.confirmDisableYes'),
+      no: this.translate.instant('users.confirmDisableNo'),
     };
 
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
-        label: "Disable user '" + user.username + "'",
+        label: this.translate.instant('users.confirmDisableLabel', { username: user.username }),
         size: 'm',
         data,
       })
       .subscribe((response) => {
         if (response) {
           this.alerts.open(
-            'User <strong>' + user.username + '</strong> Disable successfully',
+            this.translate.instant('users.disableSuccess', { username: user.username }),
             { appearance: 'positive' },
           ).subscribe();
         }
@@ -226,9 +235,7 @@ export class UsersComponent {
             this.openPasswordDialog = false;
             this.alerts
               .open(
-                'User <strong>' +
-                this.currentUser?.username +
-                '</strong> password set successfully',
+                this.translate.instant('users.passwordSetSuccess', { username: this.currentUser?.username }),
                 { appearance: 'positive' },
               )
               .subscribe();

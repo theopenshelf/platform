@@ -3,4 +3,5 @@ export const environment = {
   API_BASE_PATH: 'http://localhost:8486',
   useMockApi: true,
   demoMode: true,
+  defaultLocale: 'fr',
 };

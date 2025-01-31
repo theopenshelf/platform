@@ -1,56 +1,56 @@
 <div id="login-container">
   <div id="login-form-section">
-    <img class="logo" src="/logo-bright.png" alt="The Open Shelf" />
-    <h2>Sign up</h2>
+    <img class="logo" src="/logo-bright.png" alt="L'Étagère Ouverte" />
+    <h2>{{ 'signUp.title' | translate }}</h2>
     <p>
-      Already registered?
-      <a routerLink="/login">Sign in</a>
+      {{ 'signUp.alreadyRegistered' | translate }}
+      <a routerLink="/login">{{ 'signUp.signIn' | translate }}</a>
     </p>
 
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
       <tui-textfield>
-        <label tuiLabel>Username</label>
+        <label tuiLabel>{{ 'signUp.username' | translate }}</label>
         <input formControlName="username" type="text" tuiTextfield />
       </tui-textfield>
 
       <tui-textfield>
-        <label tuiLabel>Email</label>
+        <label tuiLabel>{{ 'signUp.email' | translate }}</label>
         <input formControlName="email" type="email" tuiTextfield />
       </tui-textfield>
 
       <tui-textfield>
-        <label tuiLabel>Password</label>
+        <label tuiLabel>{{ 'signUp.password' | translate }}</label>
         <input formControlName="password" type="password" tuiTextfield />
         <tui-icon tuiPassword />
       </tui-textfield>
 
       <tui-textfield>
-        <label tuiLabel>Street Address</label>
+        <label tuiLabel>{{ 'signUp.streetAddress' | translate }}</label>
         <input formControlName="streetAddress" type="text" tuiTextfield />
       </tui-textfield>
 
       <div class="row">
         <div class="column">
           <tui-textfield>
-            <label tuiLabel>City</label>
+            <label tuiLabel>{{ 'signUp.city' | translate }}</label>
             <input formControlName="city" type="text" tuiTextfield />
           </tui-textfield>
         </div>
         <div class="column">
           <tui-textfield>
-            <label tuiLabel>Postal Code</label>
+            <label tuiLabel>{{ 'signUp.postalCode' | translate }}</label>
             <input formControlName="postalCode" type="text" tuiTextfield />
           </tui-textfield>
         </div>
       </div>
 
       <tui-textfield>
-        <label tuiLabel>Country</label>
+        <label tuiLabel>{{ 'signUp.country' | translate }}</label>
         <input formControlName="country" type="text" tuiTextfield />
       </tui-textfield>
 
       <button appearance="accent" tuiButton size="l" type="submit">
-        Sign up
+        {{ 'signUp.signUp' | translate }}
       </button>
     </form>
   </div>

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
 
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
@@ -11,7 +12,6 @@ import { UIUser } from '../../../admin/services/users.service';
 import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
-
 @Component({
   selector: 'borrow-record-card',
   imports: [
@@ -24,7 +24,8 @@ import { UILibrary } from '../../models/UILibrary';
     TuiAvatar,
     BorrowRecordTimelineComponent,
     TuiInitialsPipe,
-    TuiAutoColorPipe
+    TuiAutoColorPipe,
+    TranslateModule
   ],
   templateUrl: './borrow-record-card.component.html',
   styleUrl: './borrow-record-card.component.scss'
@@ -34,6 +35,8 @@ export class BorrowRecordCardComponent {
   public user = input<UIUser>();
   public library = input<UILibrary>();
   public item = input<UIItem>();
+
+  constructor(private translate: TranslateService) { }
 
   protected readonly status = computed(() => {
     return getBorrowRecordStatus(this.borrowRecord());
@@ -61,26 +64,8 @@ export class BorrowRecordCardComponent {
     }
   });
   protected readonly statusText = computed(() => {
-    switch (this.status()) {
-      case UIBorrowRecordStatus.Impossible:
-        return 'Impossible';
-      case UIBorrowRecordStatus.Reserved:
-        return 'Reserved';
-      case UIBorrowRecordStatus.CurrentlyBorrowed:
-        return 'Currently Borrowed';
-      case UIBorrowRecordStatus.ReturnedEarly:
-        return 'Early';
-      case UIBorrowRecordStatus.Returned:
-        return 'On-time';
-      case UIBorrowRecordStatus.DueToday:
-        return 'Due Today';
-      case UIBorrowRecordStatus.Late:
-        return 'Late';
-      case UIBorrowRecordStatus.ReturnedLate:
-        return 'Late';
-      default:
-        return 'Unknown';
-    }
+    const status = this.status();
+    return this.translate.instant(`borrowRecordCard.status.${status.toLowerCase()}`);
   });
   protected readonly borrowDuration = computed(() => {
     return getBorrowDurationInDays(this.borrowRecord());

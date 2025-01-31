@@ -4,7 +4,7 @@
   <header tuiNavigationHeader>
     <span tuiNavigationLogo>
       <img id="logo" src="/logo-simple.png" />
-      <span tuiFade>The Open Shelf</span>
+      <span tuiFade>{{ 'adminLayout.logoText' | translate }}</span>
     </span>
     <hr />
 
@@ -14,12 +14,12 @@
       <ng-template #settings>
         <tui-data-list size="s">
           <button routerLink="/community" class="dropdown" iconStart="@tui.users" tuiButton type="button">
-            Community portal
+            {{ 'adminLayout.communityPortal' | translate }}
           </button>
         </tui-data-list>
         <tui-data-list size="s">
           <button routerLink="/auth/sign-out" class="dropdown" iconStart="@tui.log-out" tuiButton type="button">
-            Log out
+            {{ 'adminLayout.logOut' | translate }}
           </button>
         </tui-data-list>
       </ng-template>
@@ -30,19 +30,19 @@
     <a routerLink="/admin/dashboard/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
       type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.layout-dashboard" />
-      Dashboard
+      {{ 'adminLayout.dashboard' | translate }}
     </a>
 
     <a routerLink="/admin/users/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.users"
       type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.users" />
-      Users
+      {{ 'adminLayout.users' | translate }}
     </a>
 
     <a routerLink="/admin/items/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.package"
       type="button" i18n="@@borrowItemButton">
       <tui-icon icon="@tui.package" />
-      Items
+      {{ 'adminLayout.items' | translate }}
     </a>
 
     @if (mobile) {
@@ -58,25 +58,25 @@
     (tuiActiveZoneChange)="onActiveZone($event)"
     (tuiObscured)="onObscured($event)"
 >
-    More
+    {{ 'adminLayout.more' | translate }}
     <ng-template #dropdownContent>
         <div class="dropdown">
           <a (click)="closeMore()" routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
           iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
           <tui-icon icon="@tui.chart-column-stacked" />
-          Categories
+          {{ 'adminLayout.categories' | translate }}
         </a>
     
         <a (click)="closeMore()" routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.shield"
           type="button" i18n="@@borrowItemButton">
           <tui-icon icon="@tui.shield" />
-          Security
+          {{ 'adminLayout.security' | translate }}
         </a>
     
         <a (click)="closeMore()" routerLink="/admin/pages/" routerLinkActive="active" appearance="secondary-grayscale"
           iconStart="@tui.book-open-text" type="button" i18n="@@borrowItemButton">
           <tui-icon icon="@tui.book-open-text" />
-          pages
+          {{ 'adminLayout.pages' | translate }}
         </a>
         </div>
     </ng-template>
@@ -85,19 +85,19 @@
     <a routerLink="/admin/categories/" routerLinkActive="active" appearance="secondary-grayscale"
     iconStart="@tui.chart-column-stacked" type="button" i18n="@@borrowItemButton">
     <tui-icon icon="@tui.chart-column-stacked" />
-    Categories
+    {{ 'adminLayout.categories' | translate }}
   </a>
 
   <a routerLink="/admin/security/" routerLinkActive="active" appearance="secondary-grayscale" iconStart="@tui.shield"
     type="button" i18n="@@borrowItemButton">
     <tui-icon icon="@tui.shield" />
-    Security
+    {{ 'adminLayout.security' | translate }}
   </a>
 
   <a routerLink="/admin/pages/" routerLinkActive="active" appearance="secondary-grayscale"
     iconStart="@tui.book-open-text" type="button" i18n="@@borrowItemButton">
     <tui-icon icon="@tui.book-open-text" />
-    pages
+    {{ 'adminLayout.pages' | translate }}
   </a>
 }
   </nav>

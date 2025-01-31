@@ -11,7 +11,6 @@
       </h2>
 
       <div class="bottom-actions">
-
         <button
           appearance="outline"
           disabled
@@ -21,7 +20,7 @@
           tuiButton
           type="button"
         >
-          8 item(s)
+          {{ 'libraries.itemsCount' | translate: { count: 8 } }}
         </button>
 
         <button
@@ -32,7 +31,7 @@
           tuiButton
           type="button"
         >
-          See items
+          {{ 'libraries.seeItems' | translate }}
           <tui-icon icon="@tui.arrow-right" />
         </button>
       </div>

@@ -9,6 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
 import {
@@ -25,7 +26,7 @@ import { SharedModule } from '../shared-module/shared-module.component';
 @Component({
   standalone: true,
   selector: 'app-notifications-popup',
-  imports: [TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
+  imports: [TranslateModule, TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
   providers: [...globalProviders],
   templateUrl: './notifications-popup.component.html',
   styleUrls: ['./notifications-popup.component.scss'],
@@ -43,7 +44,7 @@ export class NotificationsPopupComponent implements OnInit {
     private router: Router,
     @Inject(NOTIFICATIONS_SERVICE_TOKEN)
     private notificationsService: NotificationsService,
-  ) {}
+  ) { }
   ngOnInit() {
     this.notificationsService
       .getNotifications()

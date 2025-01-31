@@ -3,6 +3,7 @@ import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAutoColorPipe, TuiButton, TuiCalendar, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
@@ -14,7 +15,6 @@ import { ITEMS_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../admin.providers'
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
 import { ItemsService, UIItemWithStats } from '../../services/items.service';
 import { UIUser, UsersService } from '../../services/users.service';
-
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
 const AVAILABLE: string = '';
 
@@ -32,6 +32,7 @@ const AVAILABLE: string = '';
     TuiAutoColorPipe,
     JsonPipe,
     BorrowRecordCardComponent,
+    TranslateModule
   ],
   templateUrl: './item-activity.component.html',
   styleUrl: './item-activity.component.scss',

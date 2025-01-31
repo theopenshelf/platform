@@ -1,1 +1,6 @@
-<card-top [title]="'Top Items'" [columnName]="'Item'" [columnValue]="'Total Borrows'" [data]="topItems"></card-top>
+<card-top
+    [title]="'topItems.title' | translate"
+    [columnName]="'topItems.columnName' | translate"
+    [columnValue]="'topItems.columnValue' | translate"
+    [data]="topItems"
+></card-top>

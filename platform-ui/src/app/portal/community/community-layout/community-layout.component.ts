@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
 import {
   TuiAppearance,
@@ -49,6 +50,7 @@ const ICON =
     TuiNavigation,
     TuiTabs,
     TuiBadgeNotification,
+    TranslateModule,
   ],
   templateUrl: './community-layout.component.html',
   styleUrl: './community-layout.component.scss',

@@ -3,7 +3,7 @@
   <div class="search-bar">
     <div class="search-input">
       <tui-icon icon="@tui.search" />
-      <input [(ngModel)]="searchText" placeholder="What object are you looking for?" (input)="onTextFilterChange()" />
+      <input [(ngModel)]="searchText" [placeholder]="'search.placeholder' | translate" (input)="onTextFilterChange()" />
     </div>
 
     <div class="categories-filtering">
@@ -11,7 +11,7 @@
         [tuiAppearanceState]="openDropdownCategories ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdowncategories" [(tuiDropdownOpen)]="openDropdownCategories">
         <tui-icon icon="@tui.chart-bar-stacked" />
-        which categories?
+        {{ 'categories.filter' | translate }}
       </button>
 
       <ng-template #dropdowncategories let-close>
@@ -32,7 +32,7 @@
         [tuiAppearanceState]="openDropdownWhen ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhen" [(tuiDropdownOpen)]="openDropdownWhen">
         <tui-icon icon="@tui.calendar-clock" />
-        When do you need it?
+        {{ 'dateRange.filter' | translate }}
       </button>
 
       <ng-template #dropdownwhen let-close>
@@ -48,7 +48,7 @@
         [tuiAppearanceState]="openDropdownWhere ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhere" [(tuiDropdownOpen)]="openDropdownWhere">
         <tui-icon icon="@tui.library" />
-        Which library?
+        {{ 'libraries.filter' | translate }}
       </button>
 
       <ng-template #dropdownwhere let-close>
@@ -69,7 +69,7 @@
         [tuiAppearanceState]="openDropdownSort ? 'active' : null" [tuiDropdown]="dropdownsort"
         [(tuiDropdownOpen)]="openDropdownSort">
         <tui-icon icon="@tui.arrow-down-up" />
-        Sort by
+        {{ 'sortBy.filter' | translate }}
       </button>
 
       <ng-template #dropdownsort let-close>

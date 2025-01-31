@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAlertService, TuiButton, TuiIcon } from '@taiga-ui/core';
@@ -16,7 +17,6 @@ import {
   CategoriesService,
   UICategory,
 } from '../../services/categories.service';
-
 @Component({
   standalone: true,
   imports: [
@@ -28,6 +28,7 @@ import {
     TosTableComponent,
     TuiIcon,
     TosTableComponent,
+    TranslateModule
   ],
   selector: 'app-categories',
   templateUrl: './categories.component.html',

@@ -28,9 +28,9 @@ import {
 } from '@taiga-ui/core';
 import { TuiCheckbox, TuiPagination } from '@taiga-ui/kit';
 
+import { TranslateModule } from '@ngx-translate/core';
 import type { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { Observable } from 'rxjs';
-
 export type Column = {
   key: string;
   label: string;
@@ -63,7 +63,8 @@ export interface ItemPagination {
     TuiTable,
     TuiTitle,
     TuiIcon,
-    TuiPagination
+    TuiPagination,
+    TranslateModule
   ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',

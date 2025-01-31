@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
@@ -28,6 +29,7 @@ import { AuthService } from '../../../../../services/auth.service';
     RouterLink,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',

@@ -1,0 +1,369 @@
+{
+  "signIn": {
+    "welcomeBack": "Bienvenue.",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié?",
+    "logIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "dontHaveAccount": "Vous n'avez pas de compte?"
+  },
+  "welcome": {
+    "borrowAnything": "Empruntez tout ce dont vous avez besoin de notre bibliothèque. Tout ce que vous pouvez imaginer.",
+    "libraryOfThings": "Notre bibliothèque est une bibliothèque de choses. Nous avons tout ce dont vous avez besoin."
+  },
+  "timeline": {
+    "reservation": "Réservation",
+    "start": "Début",
+    "end": "Fin",
+    "return": "Retour"
+  },
+  "footer": {
+    "brandingAlt": "The Open Shelf",
+    "usefulLinks": "Liens utiles",
+    "needHelp": "Besoin d'aide ?",
+    "helpCenter": "Centre d'aide",
+    "copyright": "2025 The Open Shelf",
+    "poweredBy": "Propulsé par"
+  },
+  "notifications": {
+    "button": "Notifications",
+    "title": "Notifications",
+    "closeButton": "Fermer",
+    "moreButton": "Plus"
+  },
+  "forgotPassword": {
+    "title": "Mot de passe oublié",
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "signUp": "S'inscrire",
+    "email": "Email",
+    "send": "Envoyer",
+    "returnToSignIn": "Retour à la connexion"
+  },
+  "signUp": {
+    "title": "S'inscrire",
+    "alreadyRegistered": "Déjà enregistré?",
+    "signIn": "Se connecter",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "password": "Mot de passe",
+    "streetAddress": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "signUp": "S'inscrire"
+  },
+  "communityLayout": {
+    "settings": "Paramètres",
+    "adminPanel": "Panneau d'administration",
+    "logOut": "Se déconnecter",
+    "items": "Articles",
+    "borrowedItems": "Articles empruntés",
+    "libraries": "Bibliothèques"
+  },
+  "borrowRecordCard": {
+    "seeDetails": "Voir les détails",
+    "days": "jour(s)",
+    "status": {
+      "impossible": "Impossible",
+      "reserved": "Réservé",
+      "currentlyBorrowed": "Actuellement emprunté",
+      "currently-borrowed": "Actuellement emprunté",
+      "returnedEarly": "Retourné tôt",
+      "returned-early": "Retourné tôt",
+      "returned": "À l'heure",
+      "dueToday": "À rendre aujourd'hui",
+      "late": "En retard",
+      "returnedLate": "Retourné en retard",
+      "returned-late": "Retourné en retard",
+      "unknown": "Inconnu"
+    }
+  },
+  "search": {
+    "placeholder": "Quel objet cherchez-vous?"
+  },
+  "categories": {
+    "filter": "Quelles catégories?",
+    "addCategory": "Ajouter une catégorie",
+    "edit": "Modifier",
+    "delete": "Supprimer"
+  },
+  "dateRange": {
+    "filter": "Quand en avez-vous besoin?"
+  },
+  "libraries": {
+    "filter": "Quelle bibliothèque?",
+    "itemsCount": "{{count}} article(s)",
+    "seeItems": "Voir les articles"
+  },
+  "sortBy": {
+    "filter": "Trier par"
+  },
+  "itemCard": {
+    "reservationState": {
+      "nextReservation": "Votre prochaine réservation: ",
+      "noUpcomingReservations": "Vous n'avez pas de réservations à venir"
+    },
+    "borrowCounts": "emprunt(s)",
+    "more": "Plus"
+  },
+  "addItem": {
+    "title": "Ajouter un nouvel article",
+    "itemName": "Nom de l'article",
+    "itemNamePlaceholder": "Entrez le nom de l'article",
+    "uploadImage": "Télécharger une image",
+    "dragAndDropImage": "Faites glisser et déposez une image ici, ou cliquez pour sélectionner",
+    "fileSelected": "Fichier sélectionné",
+    "shortDescription": "Description courte",
+    "shortDescriptionPlaceholder": "Entrez une description courte (max 150 caractères)",
+    "description": "Description",
+    "addItemButton": "Ajouter un article"
+  },
+  "customPage": {
+    "pageNotFound": "Page non trouvée"
+  },
+  "helpCenter": {
+    "searchPlaceholder": "Quel objet cherchez-vous?",
+    "searchResults": "Résultats de la recherche",
+    "noArticlesFound": "Aucun article trouvé"
+  },
+  "item": {
+    "notFound": "Non trouvé",
+    "currentlyBorrowed": "Vous avez actuellement cet article emprunté",
+    "returnItem": "Rendre l'article",
+    "borrowThisItem": "Emprunter cet article",
+    "nextReservation": "Votre prochaine réservation: ",
+    "noUpcomingReservations": "Vous n'avez pas de réservations à venir",
+    "chooseDate": "Choisir une date",
+    "selectDateToBorrow": "Sélectionnez une date pour emprunter",
+    "borrow": "Emprunter",
+    "nextReservations": "Vos prochaines réservations",
+    "borrowCounts": "emprunt(s)",
+    "previousReservations": "Vos réservations précédentes",
+    "chooseDateRange": "Choisir une plage de dates",
+    "borrowLabel": "Emprunter {{itemName}}",
+    "confirmBorrowContent": "Êtes-vous sûr de vouloir emprunter cet article du {{startDate}} au {{endDate}}?",
+    "yesBorrow": "Oui, Emprunter",
+    "cancel": "Annuler",
+    "borrowSuccess": "Emprunté avec succès {{itemName}} du {{startDate}} au {{endDate}}",
+    "cancelReservationLabel": "Annuler la réservation pour {{itemName}}",
+    "cancelReservationContent": "Êtes-vous sûr de vouloir annuler votre réservation pour {{itemName}} du {{startDate}} au {{endDate}}?",
+    "yesCancel": "Oui, Annuler",
+    "keepReservation": "Garder la réservation",
+    "reservationCancelled": "Réservation annulée avec succès",
+    "returnLabel": "Rendre {{itemName}}",
+    "returnContent": "Confirmez-vous avoir rendu {{itemName}} du {{startDate}} au {{endDate}}?",
+    "yesReturn": "Oui, il est rendu",
+    "noReturn": "Non, je ne l'ai pas encore rendu",
+    "returnSuccess": "Article rendu avec succès",
+    "columns": {
+      "image": "Image",
+      "name": "Nom",
+      "located": "Localisé",
+      "owner": "Propriétaire",
+      "imageUrl": "URL de l'image",
+      "description": "Description",
+      "shortDescription": "Description courte",
+      "category": "Catégorie",
+      "favorite": "Favori",
+      "borrowCount": "Nombre d'emprunts",
+      "lateReturnPercentage": "% de retours tardifs",
+      "averageDuration": "Durée moyenne"
+    }
+  },
+  "profile": {
+    "editTitle": "Modifier votre profil",
+    "email": "Email",
+    "emailPlaceholder": "Entrez votre email",
+    "password": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "streetAddress": "Adresse",
+    "streetAddressPlaceholder": "Entrez votre adresse",
+    "city": "Ville",
+    "cityPlaceholder": "Entrez votre ville",
+    "postalCode": "Code postal",
+    "postalCodePlaceholder": "Entrez votre code postal",
+    "country": "Pays",
+    "countryPlaceholder": "Entrez votre pays",
+    "saveButton": "Enregistrer"
+  },
+  "adminLayout": {
+    "logoText": "The Open Shelf",
+    "communityPortal": "Portail communautaire",
+    "logOut": "Se déconnecter",
+    "dashboard": "Tableau de bord",
+    "users": "Utilisateurs",
+    "items": "Articles",
+    "more": "Plus",
+    "categories": "Catégories",
+    "security": "Sécurité",
+    "pages": "Pages"
+  },
+  "borrowsStat": {
+    "totalBorrowsOverTime": "Emprunts totaux au fil du temps",
+    "vertical": "Vertical",
+    "horizontal": "Horizontal",
+    "index": "Indice",
+    "overview": "Aperçu",
+    "totalBorrows": "Emprunts totaux",
+    "totalReservations": "Réservations totales",
+    "itemsOnLoan": "Articles actuellement en prêt",
+    "avgLoanDuration": "Durée moyenne du prêt",
+    "returnTimeliness": "Ponctualité des retours"
+  },
+  "topCategories": {
+    "title": "Catégories Principales",
+    "columnName": "Catégorie",
+    "columnValue": "Emprunts Totaux",
+    "columnSecondaryValue": "Articles Totaux"
+  },
+  "topItems": {
+    "title": "Articles Principaux",
+    "columnName": "Article",
+    "columnValue": "Emprunts Totaux"
+  },
+  "topBorrowers": {
+    "title": "Meilleurs Emprunteurs",
+    "columnName": "Emprunteur",
+    "columnValue": "Emprunts Totaux"
+  },
+  "usersCount": {
+    "label": "Utilisateurs"
+  },
+  "itemsCount": {
+    "label": "Articles"
+  },
+  "librariesCount": {
+    "label": "Bibliothèques"
+  },
+  "tosTable": {
+    "filterPlaceholder": "Filtrer",
+    "columnsVisibility": "Visibilité des colonnes"
+  },
+  "editLibrary": {
+    "editTitle": "Modifier la bibliothèque",
+    "addTitle": "Ajouter une bibliothèque",
+    "libraryName": "Nom de la bibliothèque",
+    "locationName": "Nom de l'emplacement",
+    "address": "Adresse",
+    "communityAccessible": "Accessible à la communauté",
+    "instructions": "Instructions",
+    "save": "Enregistrer"
+  },
+  "customPagesEdit": {
+    "editTitle": "Modifier la page",
+    "addTitle": "Ajouter une page",
+    "reference": "Référence",
+    "referencePlaceholder": "Entrez la référence de la page",
+    "position": "Position",
+    "positionPlaceholder": "Choisissez votre héros",
+    "title": "Titre",
+    "titlePlaceholder": "Entrez le titre de la page",
+    "save": "Enregistrer"
+  },
+  "dashboard": {
+    "loading": "Chargement..."
+  },
+  "editUser": {
+    "editTitle": "Modifier l'utilisateur",
+    "username": "Nom d'utilisateur",
+    "email": "Email",
+    "password": "Mot de passe",
+    "flatNumber": "Numéro d'appartement",
+    "streetAddress": "Adresse",
+    "saveChanges": "Enregistrer les modifications",
+    "cancel": "Annuler"
+  },
+  "helpCenterEdit": {
+    "addCategory": "Ajouter une nouvelle catégorie",
+    "searchResults": "Résultats de recherche",
+    "noArticleFound": "Aucun article trouvé",
+    "addArticle": "Ajouter un nouvel article",
+    "editCategory": "Modifier la catégorie",
+    "categoryName": "Nom de la catégorie",
+    "categoryNamePlaceholder": "Entrez le nom de la catégorie",
+    "categoryIcon": "Icône de la catégorie",
+    "categoryIconPlaceholder": "Entrez l'icône de la catégorie",
+    "save": "Enregistrer",
+    "editArticle": "Modifier l'article",
+    "articleTitle": "Titre",
+    "articleTitlePlaceholder": "Entrez le titre de l'article"
+  },
+  "itemActivity": {
+    "title": "Activité de l'article",
+    "borrowsHistory": "Historique des emprunts",
+    "favorites": "Favoris",
+    "avgBorrowDuration": "Durée moyenne d'emprunt",
+    "lateReturns": "Retours en retard",
+    "returns": "Retours",
+    "currentStatus": "Statut actuel",
+    "reservations": "Réservations",
+    "borrowsRecords": "Enregistrements d'emprunts",
+    "noBorrowRecords": "Aucun enregistrement d'emprunt trouvé"
+  },
+  "items": {
+    "columns": {
+      "image": "Image",
+      "name": "Nom",
+      "located": "Localisé",
+      "owner": "Propriétaire",
+      "imageUrl": "URL de l'image",
+      "description": "Description",
+      "shortDescription": "Description courte",
+      "category": "Catégorie",
+      "favorite": "Favori",
+      "borrowCount": "Nombre d'emprunts",
+      "lateReturnPercentage": "% de retours tardifs",
+      "averageDuration": "Durée moyenne"
+    },
+    "addItem": "Ajouter un article",
+    "activity": "Activité",
+    "edit": "Modifier",
+    "archive": "Archiver",
+    "confirmDeleteContent": "Êtes-vous sûr de vouloir supprimer cet article ?",
+    "confirmDeleteYes": "Oui, Supprimer",
+    "confirmDeleteNo": "Annuler",
+    "confirmDeleteLabel": "Supprimer l'article '{{name}}'",
+    "deleteSuccess": "Article <strong>{{name}}</strong> supprimé avec succès"
+  },
+  "security": {
+    "registrationSettings": "Paramètres d'inscription",
+    "enableUserRegistration": "Activer l'inscription des utilisateurs",
+    "save": "Enregistrer"
+  },
+  "userActivity": {
+    "totalBorrowedItems": "Articles empruntés au total",
+    "successRate": "Taux de réussite",
+    "lateReturns": "Retours en retard",
+    "borrowRecords": "Enregistrements d'emprunt"
+  },
+  "users": {
+    "addUser": "Ajouter un utilisateur",
+    "activity": "Activité",
+    "password": "Mot de passe",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "disable": "Désactiver",
+    "changePassword": "Changer le mot de passe",
+    "confirmDeleteContent": "Êtes-vous sûr de vouloir supprimer cet utilisateur ?",
+    "confirmDeleteYes": "Oui, Supprimer",
+    "confirmDeleteNo": "Annuler",
+    "confirmDeleteLabel": "Supprimer l'utilisateur '{{username}}'",
+    "deleteSuccess": "Utilisateur <strong>{{username}}</strong> supprimé avec succès",
+    "confirmDisableContent": "Êtes-vous sûr de vouloir désactiver cet utilisateur ?",
+    "confirmDisableYes": "Oui, Désactiver",
+    "confirmDisableNo": "Annuler",
+    "confirmDisableLabel": "Désactiver l'utilisateur '{{username}}'",
+    "disableSuccess": "Utilisateur <strong>{{username}}</strong> désactivé avec succès",
+    "passwordSetSuccess": "Mot de passe de l'utilisateur <strong>{{username}}</strong> défini avec succès",
+    "columns": {
+      "username": "Nom d'utilisateur",
+      "email": "Email",
+      "flatNumber": "Numéro d'appartement",
+      "address": "Adresse",
+      "borrowedItems": "Articles empruntés",
+      "returnedLate": "Retourné en retard",
+      "successRate": "% de succès"
+    }
+  }
+}

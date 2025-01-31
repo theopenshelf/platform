@@ -1,23 +1,23 @@
 <div class="profile-container">
   <form [formGroup]="profileForm" (ngSubmit)="onSave()">
-    <h1>Edit your profile</h1>
+    <h1>{{ 'profile.editTitle' | translate }}</h1>
 
     <tui-textfield>
-      <label tuiLabel>Email</label>
+      <label tuiLabel>{{ 'profile.email' | translate }}</label>
       <input
         formControlName="email"
         type="email"
-        placeholder="Enter your email"
+        placeholder="{{ 'profile.emailPlaceholder' | translate }}"
         tuiTextfield
       />
     </tui-textfield>
 
     <tui-textfield>
-      <label tuiLabel>Password</label>
+      <label tuiLabel>{{ 'profile.password' | translate }}</label>
       <input
         formControlName="password"
         type="password"
-        placeholder="Enter your password"
+        placeholder="{{ 'profile.passwordPlaceholder' | translate }}"
         tuiTextfield
       />
       <tui-icon tuiPassword />
@@ -25,11 +25,11 @@
 
     <!-- Address Fields -->
     <tui-textfield>
-      <label tuiLabel>Street Address</label>
+      <label tuiLabel>{{ 'profile.streetAddress' | translate }}</label>
       <input
         formControlName="streetAddress"
         type="text"
-        placeholder="Enter your street address"
+        placeholder="{{ 'profile.streetAddressPlaceholder' | translate }}"
         tuiTextfield
       />
     </tui-textfield>
@@ -37,22 +37,22 @@
     <div class="row">
       <div class="column">
         <tui-textfield>
-          <label tuiLabel>City</label>
+          <label tuiLabel>{{ 'profile.city' | translate }}</label>
           <input
             formControlName="city"
             type="text"
-            placeholder="Enter your city"
+            placeholder="{{ 'profile.cityPlaceholder' | translate }}"
             tuiTextfield
           />
         </tui-textfield>
       </div>
       <div class="column">
         <tui-textfield>
-          <label tuiLabel>Postal Code</label>
+          <label tuiLabel>{{ 'profile.postalCode' | translate }}</label>
           <input
             formControlName="postalCode"
             type="text"
-            placeholder="Enter your postal code"
+            placeholder="{{ 'profile.postalCodePlaceholder' | translate }}"
             tuiTextfield
           />
         </tui-textfield>
@@ -60,15 +60,17 @@
     </div>
 
     <tui-textfield>
-      <label tuiLabel>Country</label>
+      <label tuiLabel>{{ 'profile.country' | translate }}</label>
       <input
         formControlName="country"
         type="text"
-        placeholder="Enter your country"
+        placeholder="{{ 'profile.countryPlaceholder' | translate }}"
         tuiTextfield
       />
     </tui-textfield>
 
-    <button appearance="accent" tuiButton size="l" type="submit">Save</button>
+    <button appearance="accent" tuiButton size="l" type="submit">
+      {{ 'profile.saveButton' | translate }}
+    </button>
   </form>
 </div>

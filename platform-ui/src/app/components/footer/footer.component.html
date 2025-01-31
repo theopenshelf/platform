@@ -4,10 +4,10 @@
   </button>
   <div class="footer-container">
     <div class="footer-branding">
-      <img alt="The Open Shelf" src="/logo-bright.png" />
+      <img alt="{{ 'footer.brandingAlt' | translate }}" src="/logo-bright.png" />
     </div>
     <div class="footer-links">
-      <h3 class="footer-help-title">Useful links</h3>
+      <h3 class="footer-help-title">{{ 'footer.usefulLinks' | translate }}</h3>
       <ul>
         @for (page of customPages.get('footer-links') || []; track page.ref) {
           <li><a [routerLink]="['/community/page', page.ref]">{{ page.title }}</a></li>
@@ -15,9 +15,9 @@
       </ul>
     </div>
     <div class="footer-help">
-      <h3 class="footer-help-title">Need help?</h3>
+      <h3 class="footer-help-title">{{ 'footer.needHelp' | translate }}</h3>
       <ul>
-        <li><a routerLink="/community/help-center">Help center</a></li>
+        <li><a routerLink="/community/help-center">{{ 'footer.helpCenter' | translate }}</a></li>
         @for (page of customPages.get('footer-help') || []; track page.ref) {
           <li><a [routerLink]="['/community/page', page.ref]">{{ page.title }}</a></li>
         }
@@ -28,9 +28,9 @@
   <div class="footer-copyright">
     <div class="footer-copyright-left">
       <span class="copyright"
-        ><tui-icon icon="@tui.copyright" /> 2025 TheOpenShelf</span
+        ><tui-icon icon="@tui.copyright" /> {{ 'footer.copyright' | translate }}</span
       >
-      @for (page of customPages.get('copyright') || []; track page.ref) { 
+      @for (page of customPages.get('copyright') || []; track page.ref) {
         <a [routerLink]="['/community/page', page.ref]">{{ page.title }}</a>
       }
     </div>
@@ -43,7 +43,7 @@
         <tui-icon icon="@tui.github" />
       </a>
       <span class="powered-by"
-        >Powered by <tui-icon icon="@tui.heart" /> TheOpenShelf</span
+        >{{ 'footer.poweredBy' | translate }} <tui-icon icon="@tui.heart" /> L'Étagère Ouverte</span
       >
     </div>
   </div>

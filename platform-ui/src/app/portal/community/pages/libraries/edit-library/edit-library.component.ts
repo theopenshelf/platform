@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   TuiButton,
   TuiTextfield
@@ -15,7 +16,6 @@ import { QuillModule } from 'ngx-quill';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { UILibrary } from '../../../models/UILibrary';
 import { LibrariesService } from '../../../services/libraries.service';
-
 @Component({
   selector: 'app-edit-library',
   templateUrl: './edit-library.component.html',
@@ -25,7 +25,8 @@ import { LibrariesService } from '../../../services/libraries.service';
     ReactiveFormsModule,
     TuiSwitch,
     TuiButton,
-    TuiTextfield
+    TuiTextfield,
+    TranslateModule
   ],
 })
 export class EditLibraryComponent implements OnInit {

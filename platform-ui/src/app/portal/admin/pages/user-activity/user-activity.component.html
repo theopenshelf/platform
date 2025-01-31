@@ -25,15 +25,16 @@
 </div>
 
 <div class="user-stats">
-    <card-counter [icon]="'/gift.png'" [label]="'Total borrowed items'" [counter]="user.borrowedItems"></card-counter>
+    <card-counter [icon]="'/gift.png'" [label]="'userActivity.totalBorrowedItems' | translate" [counter]="user.borrowedItems"></card-counter>
 
-    <card-counter [icon]="'@tui.check'" [label]="'Success rate'" [counter]="user.successRate"></card-counter>
+    <card-counter [icon]="'@tui.check'" [label]="'userActivity.successRate' | translate" [counter]="user.successRate"></card-counter>
 
-    <card-counter [icon]="'@tui.clock'" [label]="'Late returns'" [counter]="user.returnedLate"></card-counter>
+    <card-counter [icon]="'@tui.clock'" [label]="'userActivity.lateReturns' | translate" [counter]="user.returnedLate"></card-counter>
 
 </div>
 
 <div class="user-borrows-records">
+    <h2>{{ 'userActivity.borrowRecords' | translate }}</h2>
     <filtered-and-paginated-borrow-records
     [getItemsParams]="getItemsParams"
     [enableStatusFiltering]="true"

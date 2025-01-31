@@ -5,7 +5,7 @@
 >
   <div add-action-content>
     <tui-icon icon="@tui.user" [style.height.rem]="1" />
-    Add user
+    {{ 'users.addUser' | translate }}
   </div>
 
 
@@ -59,7 +59,7 @@
       <div class="action">
         <button [routerLink]="['/admin/users/', item.id, 'activity']" appearance="outline" iconStart="@tui.activity" size="s" tuiIconButton type="button"
           [style.border-radius.%]="100">
-          Activity
+          {{ 'users.activity' | translate }}
         </button>
       </div>
     <button
@@ -71,7 +71,7 @@
       type="button"
       [style.border-radius.%]="100"
     >
-      password
+      {{ 'users.password' | translate }}
     </button>
     <button
       [routerLink]="['/admin/users', item.id, 'edit']"
@@ -82,7 +82,7 @@
       type="button"
       [style.border-radius.%]="100"
     >
-      Edit
+      {{ 'users.edit' | translate }}
     </button>
     <button
       (click)="deleteUser(item)"
@@ -93,7 +93,7 @@
       type="button"
       [style.border-radius.%]="100"
     >
-      Delete
+      {{ 'users.delete' | translate }}
     </button>
     <button
       (click)="disableUser(item)"
@@ -104,7 +104,7 @@
       type="button"
       [style.border-radius.%]="100"
       >
-        Disable
+        {{ 'users.disable' | translate }}
       </button>
     </div>
   </ng-template>
@@ -134,7 +134,7 @@
   <form class="password-form" [formGroup]="passwordForm" (ngSubmit)="setUserPassword()">
     <tui-input formControlName="userPasswordControl" tuiAutoFocus> </tui-input>
     <p>
-      <button class="password-form-button" tuiButton type="submit">Change password</button>
+      <button class="password-form-button" tuiButton type="submit">{{ 'users.changePassword' | translate }}</button>
     </p>
   </form>
 </ng-template>

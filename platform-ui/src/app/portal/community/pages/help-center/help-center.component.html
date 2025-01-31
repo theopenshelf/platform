@@ -5,7 +5,7 @@
             <tui-icon icon="@tui.search" />
             <input
             [(ngModel)]="searchText"
-            placeholder="What object are you looking for?"
+            [placeholder]="'helpCenter.searchPlaceholder' | translate"
             (input)="onTextFilterChange()"
                         />
           </div>
@@ -32,11 +32,11 @@
 
         <main>
             <h2>
-                {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'Search Results' }}
+                {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'helpCenter.searchResults' | translate }}
             </h2>
             @if (articles.length === 0) {
                 <div class="no-items">
-                    <p><tui-icon icon="@tui.search-x" /> No article found</p>
+                    <p><tui-icon icon="@tui.search-x" /> {{ 'helpCenter.noArticlesFound' | translate }}</p>
                 </div>
             }
             <div class="container-faq">

@@ -1,32 +1,32 @@
 <div id="edit-user-container">
-  <h2>Edit User</h2>
+  <h2>{{ 'editUser.editTitle' | translate }}</h2>
 
   <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
     <tui-textfield>
-      <label tuiLabel>Username</label>
+      <label tuiLabel>{{ 'editUser.username' | translate }}</label>
       <input formControlName="username" type="text" tuiTextfield />
     </tui-textfield>
 
     <tui-textfield>
-      <label tuiLabel>Email</label>
+      <label tuiLabel>{{ 'editUser.email' | translate }}</label>
       <input formControlName="email" type="email" tuiTextfield />
     </tui-textfield>
 
     @if (!userId) {
       <tui-textfield>
-        <label tuiLabel>Password</label>
+        <label tuiLabel>{{ 'editUser.password' | translate }}</label>
         <input formControlName="password" type="password" tuiTextfield />
         <tui-icon tuiPassword />
       </tui-textfield>
     }
     <!-- Address Fields -->
     <tui-textfield>
-      <label tuiLabel>Flat number</label>
+      <label tuiLabel>{{ 'editUser.flatNumber' | translate }}</label>
       <input formControlName="flatNumber" type="text" tuiTextfield />
     </tui-textfield>
 
     <tui-textfield>
-      <label tuiLabel>Street Address</label>
+      <label tuiLabel>{{ 'editUser.streetAddress' | translate }}</label>
       <input formControlName="address" type="text" tuiTextfield />
     </tui-textfield>
 
@@ -37,7 +37,7 @@
       size="m"
       tuiButton
     >
-      Save Changes
+      {{ 'editUser.saveChanges' | translate }}
     </button>
     <button
       class="add-user"
@@ -46,7 +46,7 @@
       size="m"
       tuiButton
     >
-      Cancel
+      {{ 'editUser.cancel' | translate }}
     </button>
   </form>
 </div>

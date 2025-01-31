@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { DASHBOARD_SERVICE_TOKEN } from '../../../admin.providers';
 import { DashboardService, UIBorrowerMetrics } from '../../../services/dashboard.service';
 import { CardTopComponent, TopData } from '../card-top/card-top.component';
@@ -6,7 +7,8 @@ import { CardTopComponent, TopData } from '../card-top/card-top.component';
 @Component({
   selector: 'top-borrowers',
   imports: [
-    CardTopComponent
+    CardTopComponent,
+    TranslateModule
   ],
   templateUrl: './top-borrowers.component.html',
   styleUrl: './top-borrowers.component.scss'

@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   TuiAlertService,
   TuiButton,
@@ -29,6 +30,7 @@ import { UIUser, UsersService } from '../../services/users.service';
     TuiTextfield,
     TuiIcon,
     TuiPassword,
+    TranslateModule
   ],
   templateUrl: './edit-user.component.html',
   styleUrl: './edit-user.component.scss',

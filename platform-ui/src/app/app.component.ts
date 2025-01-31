@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
 import { TuiDataList, TuiDropdown, TuiDropdownService } from '@taiga-ui/core';
 import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
+import { environment } from '../environments/environment';
 import { globalProviders } from './global.provider';
 
 const ICON =
@@ -20,6 +22,7 @@ const ICON =
     TuiDropdown,
     TuiNavigation,
     TuiTabs,
+    TranslateModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html',
@@ -30,4 +33,11 @@ const ICON =
     tuiAsPortal(TuiDropdownService),
   ],
 })
-export class AppComponent extends TuiPortals {}
+export class AppComponent extends TuiPortals {
+  constructor(private translate: TranslateService) {
+    super();
+    this.translate.addLangs(['fr', 'en']);
+    this.translate.setDefaultLang(environment.defaultLocale);
+    this.translate.use(environment.defaultLocale);
+  }
+}

@@ -2,6 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, computed, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   TuiAppearance,
   TuiButton,
@@ -28,6 +29,7 @@ import { ItemsService } from '../../services/items.service';
     TuiTitle,
     FormsModule,
     TuiTextfield,
+    TranslateModule
   ],
   templateUrl: './item-card.component.html',
   styleUrl: './item-card.component.scss',
@@ -52,7 +54,7 @@ export class ItemCardComponent {
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private datePipe: DatePipe,
-  ) {}
+  ) { }
 
   markAsFavorite: (item: UIItem) => void = (item) => {
     this.itemsService.markAsFavorite(item).subscribe({

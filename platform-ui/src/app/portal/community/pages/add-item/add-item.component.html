@@ -1,35 +1,35 @@
 <div class="container">
-  <h2>Add a New Item</h2>
+  <h2>{{ 'addItem.title' | translate }}</h2>
   <form [formGroup]="addItemForm" (ngSubmit)="onSubmit()">
     <tui-textfield>
-      <label tuiLabel>Item Name</label>
-      <input id="name" formControlName="name" type="text" placeholder="Enter item name" tuiTextfield />
+      <label tuiLabel>{{ 'addItem.itemName' | translate }}</label>
+      <input id="name" formControlName="name" type="text" [placeholder]="'addItem.itemNamePlaceholder' | translate" tuiTextfield />
     </tui-textfield>
 
     <tui-combo-box formControlName="category" [stringify]="stringify" [tuiTextfieldLabelOutside]="true">
       <tui-data-list-wrapper *tuiDataList [items]="categories" [itemContent]="stringify | tuiStringifyContent" />
     </tui-combo-box>
 
-    <label for="image">Upload Image</label>
+    <label for="image">{{ 'addItem.uploadImage' | translate }}</label>
     <div class="drag-drop-zone" (dragover)="allowDrag($event)" (drop)="onImageDrop($event)">
       @if (!imageFile) {
-      <p>Drag and drop an image here, or click to select</p>
+      <p>{{ 'addItem.dragAndDropImage' | translate }}</p>
       }
       @if (imageFile) {
-      <p>File selected: {{ imageFile.name }}</p>
+      <p>{{ 'addItem.fileSelected' | translate }}: {{ imageFile.name }}</p>
       }
     </div>
 
     <tui-textarea formControlName="shortDescription" class="tui-space_top-4"
-      placeholder="Enter a short description (max 150 characters)" maxlength="150">
-      Short Description
+    placeholder="Enter a short description (max 150 characters)" maxlength="150">
+      {{ 'addItem.shortDescription' | translate }}
     </tui-textarea>
 
-    <label for="description">Description</label>
+    <label for="description">{{ 'addItem.description' | translate }}</label>
     <quill-editor formControlName="description" [modules]="editorConfig" style="height: 200px"></quill-editor>
 
     <button type="submit" tuiButton size="m" appearance="accent" [disabled]="addItemForm.invalid">
-      Add Item
+      {{ 'addItem.addItemButton' | translate }}
     </button>
   </form>
 </div>

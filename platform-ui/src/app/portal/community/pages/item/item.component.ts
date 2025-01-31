@@ -11,6 +11,7 @@ import {
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   TuiMobileCalendarDropdown,
   TuiResponsiveDialogService
@@ -70,7 +71,8 @@ const plusTen = today.append({ day: 10 });
     TuiNotification,
     AsyncPipe,
     DatePipe,
-    BorrowRecordCardComponent
+    BorrowRecordCardComponent,
+    TranslateModule
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -126,6 +128,7 @@ export class ItemComponent implements OnInit {
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
+    private translate: TranslateService,
   ) {
     this.currentUser = this.authService.getCurrentUserInfo();
     this.control = new FormControl<TuiDayRange | null | undefined>(
@@ -144,7 +147,7 @@ export class ItemComponent implements OnInit {
     ]).pipe(
       map(([value, months]) => {
         if (!value) {
-          return 'Choose a date range';
+          return this.translate.instant('item.chooseDateRange');
         }
 
         return value.isSingleDay
@@ -298,20 +301,20 @@ export class ItemComponent implements OnInit {
 
   borrowItem() {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to disable this user?', // Simple content
-      yes: 'Yes, Disable',
-      no: 'Cancel',
+      content: this.translate.instant('item.confirmBorrowContent', {
+        itemName: this.item?.name,
+        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(),
+        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(),
+      }),
+      yes: this.translate.instant('item.yesBorrow'),
+      no: this.translate.instant('item.cancel'),
     };
 
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
-        label: `Borrow ${this.item?.name}`,
+        label: this.translate.instant('item.borrowLabel', { itemName: this.item?.name }),
         size: 'm',
-        data: {
-          content: `Are you sure you want to borrow this item from ${this.selectedDate?.from.toLocalNativeDate().toLocaleDateString()} to ${this.selectedDate?.to.toLocalNativeDate().toLocaleDateString()}?`,
-          yes: 'Yes, Borrow',
-          no: 'Cancel',
-        },
+        data,
       })
       .pipe(
         switchMap((response) => {
@@ -333,7 +336,11 @@ export class ItemComponent implements OnInit {
                   this.item = item;
                   this.alerts
                     .open(
-                      `Successfully borrowed ${this.item?.name} from ${this.datePipe.transform(this.selectedDate?.from.toLocalNativeDate(), 'd MMM yyyy')} to ${this.datePipe.transform(this.selectedDate?.to.toLocalNativeDate(), 'd MMM yyyy')}`,
+                      this.translate.instant('item.borrowSuccess', {
+                        itemName: this.item?.name,
+                        startDate: this.datePipe.transform(this.selectedDate?.from.toLocalNativeDate(), 'd MMM yyyy'),
+                        endDate: this.datePipe.transform(this.selectedDate?.to.toLocalNativeDate(), 'd MMM yyyy'),
+                      }),
                       { appearance: 'positive' },
                     )
                     .subscribe();
@@ -361,12 +368,12 @@ export class ItemComponent implements OnInit {
 
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
-          label: `Cancel Reservation for ${this.item?.name}`,
+          label: this.translate.instant('item.cancelReservationLabel', { itemName: this.item?.name }),
           size: 'm',
           data: {
-            content: `Are you sure you want to cancel your reservation for ${this.item?.name} from ${startDate} to ${endDate}?`,
-            yes: 'Yes, Cancel',
-            no: 'Keep Reservation',
+            content: this.translate.instant('item.cancelReservationContent', { itemName: this.item?.name, startDate, endDate }),
+            yes: this.translate.instant('item.yesCancel'),
+            no: this.translate.instant('item.keepReservation'),
           },
         })
         .pipe(
@@ -377,7 +384,7 @@ export class ItemComponent implements OnInit {
                 .subscribe((item) => {
                   this.setItem(item);
                   this.updateCellAvailability();
-                  this.alerts.open('Reservation cancelled successfully', {
+                  this.alerts.open(this.translate.instant('item.reservationCancelled'), {
                     appearance: 'success',
                   }).subscribe();
                 });
@@ -399,12 +406,12 @@ export class ItemComponent implements OnInit {
 
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
-        label: `Return ${this.item?.name}`,
+        label: this.translate.instant('item.returnLabel', { itemName: this.item?.name }),
         size: 'm',
         data: {
-          content: `Confirm you have returned ${this.item?.name} from ${startDate} to ${endDate}?`,
-          yes: 'Yes, It is returned',
-          no: 'No, I have not returned it yet',
+          content: this.translate.instant('item.returnContent', { itemName: this.item?.name, startDate, endDate }),
+          yes: this.translate.instant('item.yesReturn'),
+          no: this.translate.instant('item.noReturn'),
         },
       })
       .pipe(
@@ -415,7 +422,7 @@ export class ItemComponent implements OnInit {
               .subscribe((item) => {
                 this.setItem(item);
                 this.updateCellAvailability();
-                this.alerts.open('Item returned successfully', {
+                this.alerts.open(this.translate.instant('item.returnSuccess'), {
                   appearance: 'success',
                 }).subscribe();
               });

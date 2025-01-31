@@ -7,7 +7,7 @@
         <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
         <button appearance="outline" class="accent details-button" size="m"
           routerLink="/community/items/{{ item()!.id }}" tuiButton type="button">
-          <span class="details-button-text">See details</span>
+          <span class="details-button-text">{{ 'borrowRecordCard.seeDetails' | translate }}</span>
           <tui-icon icon="@tui.arrow-right" />
         </button>
       </div>
@@ -21,7 +21,7 @@
           <div class="record-status-text-container">
             <span class="record-status-text">{{ statusText() }}</span>
             @if (lateDuration() > 0) {
-            <span class="record-status-late">{{ lateDuration() }} day(s)</span>
+            <span class="record-status-late">{{ lateDuration() }} {{ 'borrowRecordCard.days' | translate }}</span>
             }
           </div>
           <tui-icon size="l" [icon]="statusIcon()" />
@@ -46,7 +46,7 @@
         <div class="record-subtitle">
           <span class="borrow-duration">
             <tui-icon icon="@tui.clock" />
-            <span class="borrow-duration-value">{{ borrowDuration() }}</span> day(s)
+            <span class="borrow-duration-value">{{ borrowDuration() }}</span> {{ 'borrowRecordCard.days' | translate }}
           </span>
 
           @if (item()) {

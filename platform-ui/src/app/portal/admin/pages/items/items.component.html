@@ -1,8 +1,7 @@
 <tos-table [addActionRoute]="'/admin/items/add'" [getDataFunction]="getDataFunction" [columns]="columns">
   <div add-action-content>
     <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
-
-    Add item
+    {{ 'items.addItem' | translate }}
   </div>
 
   <ng-template #cardTemplate let-item="item">
@@ -69,19 +68,19 @@
       <div class="action">
         <button [routerLink]="['/admin/items/', item.id, 'activity']" appearance="outline" iconStart="@tui.activity" size="s" tuiIconButton type="button"
           [style.border-radius.%]="100">
-          Activity
+          {{ 'items.activity' | translate }}
         </button>
       </div>
       <div class="action">
         <button [routerLink]="['/admin/items/', item.id, 'edit']" appearance="outline" iconStart="@tui.pen" size="s"
           tuiIconButton type="button" [style.border-radius.%]="100">
-          Edit
+          {{ 'items.edit' | translate }}
         </button>
       </div>
       <div class="action">
         <button appearance="outline" iconStart="@tui.archive" size="s" tuiIconButton type="button"
           [style.border-radius.%]="100">
-          Archive
+          {{ 'items.archive' | translate }}
         </button>
       </div>
     </div>

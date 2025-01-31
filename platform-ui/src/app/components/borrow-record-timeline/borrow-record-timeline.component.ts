@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
 import { getBorrowRecordStatus, UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
@@ -17,18 +18,21 @@ import { TimelineComponent, TimelineItem } from '../timeline/timeline.component'
 export class BorrowRecordTimelineComponent {
   public borrowRecord = input.required<UIBorrowRecord>();
 
+  constructor(private translate: TranslateService) { }
+
   protected readonly status = computed(() => {
     return getBorrowRecordStatus(this.borrowRecord());
   });
 
   protected readonly timelineItems = computed(() => {
+    const locale = this.getLocale();
     let items: TimelineItem[] = [];
     switch (this.status()) {
 
       case 'reserved':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'primary',
@@ -36,12 +40,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
@@ -49,12 +53,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
@@ -62,7 +66,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           }
@@ -71,7 +75,7 @@ export class BorrowRecordTimelineComponent {
       case 'currently-borrowed':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -79,12 +83,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -92,12 +96,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'secondary',
             lineColor: 'secondary',
@@ -105,7 +109,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           }
@@ -115,7 +119,7 @@ export class BorrowRecordTimelineComponent {
       case 'returned-early':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -123,12 +127,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -136,12 +140,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'success',
@@ -149,12 +153,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '/gift.png',
-                label: 'Return',
+                label: this.translate.instant('timeline.return'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'success',
             lineColor: 'success',
@@ -162,7 +166,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           }
@@ -171,7 +175,7 @@ export class BorrowRecordTimelineComponent {
       case 'returned':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -179,12 +183,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -192,12 +196,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'success',
@@ -205,7 +209,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '/gift.png',
-                label: 'Return',
+                label: this.translate.instant('timeline.return'),
               }
             ]
           }
@@ -215,7 +219,7 @@ export class BorrowRecordTimelineComponent {
       case 'due-today':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -223,12 +227,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -236,12 +240,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'warning',
             lineColor: 'warning',
@@ -249,7 +253,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           }
@@ -259,7 +263,7 @@ export class BorrowRecordTimelineComponent {
       case 'late':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -267,12 +271,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -280,12 +284,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
@@ -293,7 +297,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           }
@@ -303,7 +307,7 @@ export class BorrowRecordTimelineComponent {
       case 'returned-late':
         items = [
           {
-            label: this.borrowRecord().reservationDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'primary',
             lineColor: 'primary',
@@ -311,12 +315,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.clock',
-                label: 'Reservation',
+                label: this.translate.instant('timeline.reservation'),
               }
             ]
           },
           {
-            label: this.borrowRecord().startDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'accent',
             lineColor: 'accent',
@@ -324,12 +328,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-clock',
-                label: 'Start',
+                label: this.translate.instant('timeline.start'),
               }
             ]
           },
           {
-            label: this.borrowRecord().endDate.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
@@ -337,12 +341,12 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '@tui.calendar-check',
-                label: 'End',
+                label: this.translate.instant('timeline.end'),
               }
             ]
           },
           {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }),
+            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
             position: 'left',
             dotColor: 'danger',
             lineColor: 'danger',
@@ -350,7 +354,7 @@ export class BorrowRecordTimelineComponent {
             items: [
               {
                 icon: '/gift.png',
-                label: 'Return',
+                label: this.translate.instant('timeline.return'),
               }
             ]
           }
@@ -359,4 +363,16 @@ export class BorrowRecordTimelineComponent {
     }
     return items;
   });
+
+  private getLocale(): string {
+    const currentLang = this.translate.currentLang;
+    switch (currentLang) {
+      case 'fr':
+        return 'fr-FR';
+      case 'en':
+        return 'en-US';
+      default:
+        return 'en-US'; // Default to 'en-US' if the language is not recognized
+    }
+  }
 }

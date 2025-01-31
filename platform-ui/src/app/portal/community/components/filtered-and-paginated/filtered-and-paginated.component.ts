@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Component, ContentChild, Inject, input, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAppearance, TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from '@taiga-ui/core';
@@ -61,7 +62,8 @@ export interface FetchItemsService {
     TuiDataList,
     TuiDropdown,
     TuiCalendarRange,
-    TuiCarousel
+    TuiCarousel,
+    TranslateModule
   ],
   templateUrl: './filtered-and-paginated.component.html',
   styleUrl: './filtered-and-paginated.component.scss'

@@ -1,14 +1,13 @@
 @if (!item) {
-<div class="item-container">Not found</div>
+<div class="item-container">{{ 'item.notFound' | translate }}</div>
 }
 @if (item) {
 <div class="item-container">
   <!-- Sidebar Section -->
   <div class="sidebar">
     @if (itemsCurrentlyBorrowed) {
-
     <div class="return-item-container">
-      <h2>You currently have this item borrowed</h2>
+      <h2>{{ 'item.currentlyBorrowed' | translate }}</h2>
       <div class="return-item-details">
         <tui-icon icon="@tui.calendar-clock" />
         {{ itemsCurrentlyBorrowed.startDate | date: "MMM d, y" }} -
@@ -16,14 +15,14 @@
       </div>
       <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="primary" size="m" tuiButton
         type="button">
-        Return item
+        {{ 'item.returnItem' | translate }}
       </button>
     </div>
-  }
+    }
     <div class="sidebar-borrow-container">
       <div class="sidebar-header">
         <div class="sidebar-title">
-          <h2>Borrow this item</h2>
+          <h2>{{ 'item.borrowThisItem' | translate }}</h2>
         </div>
         <div class="sidebar-actions">
           <button class="favorite" [class.selected]="item.favorite" iconStart="@tui.heart" tuiButton
@@ -32,15 +31,13 @@
           <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
             [appearance]="isReserved ? 'primary' : 'outline'" size="m" type="button" [tuiHint]="
               isReserved
-                ? 'Your next reservation: ' +
+                ? ('item.nextReservation' | translate) +
                   formatReservationDate(nextReservation?.startDate) +
                   ' - ' +
                   formatReservationDate(nextReservation?.endDate)
-                : 'You have no upcoming reservations'
+                : 'item.noUpcomingReservations' | translate
             "></button>
         </div>
-
-       
       </div>
 
       <form [formGroup]="bookForm">
@@ -51,7 +48,7 @@
         <div class="mobile-calendar">
           <button appearance="secondary" iconStart="@tui.calendar" tuiIconButton type="button"
             [style.border-radius.%]="100" (click)="onClick()">
-            Choose a date
+            {{ 'item.chooseDate' | translate }}
           </button>
           <span class="date" [class.date_empty]="empty">
             {{ date$ | async }}
@@ -60,18 +57,18 @@
 
         @if (!selectedDate) {
         <tui-notification size="s">
-          Select a date to borrow
+          {{ 'item.selectDateToBorrow' | translate }}
         </tui-notification>
         }
         <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="accent" size="m"
           [disabled]="!selectedDate" tuiButton type="button">
-          Borrow
+          {{ 'item.borrow' | translate }}
         </button>
       </form>
 
       <div class="reservations">
         @if (itemsReserved.length > 0) {
-        <h4>Your next reservations</h4>
+        <h4>{{ 'item.nextReservations' | translate }}</h4>
         @for (record of itemsReserved; track record) {
         <div class="reservation-record">
           <tui-icon icon="@tui.calendar-clock" />
@@ -85,46 +82,44 @@
         }
         }
       </div>
-
     </div>
   </div>
   <!-- Details Section -->
-    <div class="details">
-      <div class="top-right-details">
-        <button class="borrow-counts" appearance="outline" size="m" tuiButton type="button">
-          {{ item.borrowRecords.length }} borrow(s)
-        </button>
-        <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
-      </div>
-      <h1>{{ item.name }}</h1>
-      <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
+  <div class="details">
+    <div class="top-right-details">
+      <button class="borrow-counts" appearance="outline" size="m" tuiButton type="button">
+        {{ item.borrowRecords.length }} {{ 'item.borrowCounts' | translate }}
+      </button>
+      <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="s" type="button"></button>
+    </div>
+    <h1>{{ item.name }}</h1>
+    <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
 
-      <div class="attributes">
-        <span class="category">
-          <tui-icon [icon]="item.category.icon" />
-          <span class="category-value">{{ item.category.name }}</span>
-        </span>
-        <span class="location">
-          <tui-icon icon="@tui.map-pin" />
-          <span class="location-value">{{ item.located }}</span>
-        </span>
-        <span class="owner">
-          <tui-icon icon="@tui.user-round" />
-          <span class="owner-value">{{ item.owner }}</span>
-        </span>
-      </div>
-      <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
-      <div class="borrow-records">
-        @if (itemsReturned.length > 0) {
-        <h4>Your previous reservations</h4>
-        <div class="borrow-record-container">
-          @for (record of itemsReturned; track record) {
-            <borrow-record-card [borrowRecord]="record"></borrow-record-card>
-          }
-        </div>
+    <div class="attributes">
+      <span class="category">
+        <tui-icon [icon]="item.category.icon" />
+        <span class="category-value">{{ item.category.name }}</span>
+      </span>
+      <span class="location">
+        <tui-icon icon="@tui.map-pin" />
+        <span class="location-value">{{ item.located }}</span>
+      </span>
+      <span class="owner">
+        <tui-icon icon="@tui.user-round" />
+        <span class="owner-value">{{ item.owner }}</span>
+      </span>
+    </div>
+    <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
+    <div class="borrow-records">
+      @if (itemsReturned.length > 0) {
+      <h4>{{ 'item.previousReservations' | translate }}</h4>
+      <div class="borrow-record-container">
+        @for (record of itemsReturned; track record) {
+          <borrow-record-card [borrowRecord]="record"></borrow-record-card>
         }
       </div>
+      }
     </div>
   </div>
-
-  }
+</div>
+}

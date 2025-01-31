@@ -1,15 +1,15 @@
 <div class="library-container">
   @if (!library) {
-  <div>Not found</div>
+  <div>{{ 'library.notFound' | translate }}</div>
   }
   @if (library) {
 
   <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
     <ng-template #sidebarTemplate>
-      <button class="add-item" routerLink="/community/item/add" i18n="@@borrowButton" appearance="primary" size="m"
+      <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m"
         tuiButton type="button">
         <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
-        Add item
+        {{ 'library.addItem' | translate }}
       </button>
 
       <div class="library-section">
@@ -29,20 +29,20 @@
       </div>
 
       <div class="library-section">
-        <h3>Instructions</h3>
+        <h3>{{ 'library.instructions' | translate }}</h3>
         <div class="rich-description" [innerHTML]="library.instructions"></div>
       </div>
 
       <div class="library-section">
-        <h3>Accessibility</h3>
+        <h3>{{ 'library.accessibility' | translate }}</h3>
         <div class="toggle-container">
-          <label>Community </label>
+          <label>{{ 'library.community' | translate }} </label>
           <input tuiSwitch type="checkbox" disabled="true" [(ngModel)]="library.isCommunityAccessible"
             [showIcons]="true" name="registrationToggle" />
         </div>
         @if (!library.isCommunityAccessible) {
         <div class="members">
-          <h4>Members</h4>
+          <h4>{{ 'library.members' | translate }}</h4>
           <tui-accordion class="container">
             @for (member of library.members; track member) {
             <tui-accordion-item>
@@ -52,7 +52,7 @@
               {{ member.username }}
               <ng-template tuiAccordionItemContent>
                 <div class="toggle-container">
-                  <label>Admin </label>
+                  <label>{{ 'library.admin' | translate }} </label>
                   <input tuiSwitch type="checkbox" disabled="true" [ngModel]="member.isAdmin" [showIcons]="true"
                     name="registrationToggle" />
                 </div>

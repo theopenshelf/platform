@@ -6,8 +6,9 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
-import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
 import {
   TuiComboBoxModule,
@@ -41,8 +42,9 @@ import { ItemsService } from '../../services/items.service';
     TuiSelectModule,
     TuiTextareaModule,
     ReactiveFormsModule,
-    FormsModule
-],
+    FormsModule,
+    TranslateModule
+  ],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.scss',
 })

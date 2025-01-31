@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiAlertService, TuiButton, TuiDialog, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiAccordion } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
@@ -22,6 +23,7 @@ import { CustomPagesService } from '../../services/custom-pages.service';
     TuiDialog,
     TuiInputModule,
     TuiTextfield,
+    TranslateModule
   ],
   templateUrl: './help-center-edit.component.html',
   styleUrl: './help-center-edit.component.scss'

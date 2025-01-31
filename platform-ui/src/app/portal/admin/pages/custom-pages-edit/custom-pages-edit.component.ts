@@ -7,6 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon, TuiLabel, TuiTextfield } from '@taiga-ui/core';
 import { TuiTooltip } from '@taiga-ui/kit';
 import {
@@ -18,7 +19,6 @@ import { QuillModule } from 'ngx-quill';
 import { UICustomPage } from '../../../community/models/UICustomPage';
 import { CUSTOM_PAGES_SERVICE_TOKEN } from '../../admin.providers';
 import { CustomPagesService } from '../../services/custom-pages.service';
-
 @Component({
   selector: 'app-custom-pages-edit',
   imports: [
@@ -32,6 +32,7 @@ import { CustomPagesService } from '../../services/custom-pages.service';
     TuiButton,
     TuiTooltip,
     TuiSelectModule,
+    TranslateModule
   ],
   templateUrl: './custom-pages-edit.component.html',
   styleUrl: './custom-pages-edit.component.scss'

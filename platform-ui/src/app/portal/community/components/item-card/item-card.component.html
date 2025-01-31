@@ -19,11 +19,11 @@
             type="button"
             [tuiHint]="
               isReserved()
-                ? 'Your next reservation: ' +
+                ? ('itemCard.reservationState.nextReservation' | translate) +
                   formatReservationDate(nextReservation().startDate) +
                   ' - ' +
                   formatReservationDate(nextReservation().endDate)
-                : 'You have no upcoming reservations'
+                : 'itemCard.reservationState.noUpcomingReservations' | translate
             "
           ></button>
 
@@ -67,7 +67,7 @@
           tuiButton
           type="button"
         >
-          {{ item().borrowRecords.length }} borrow(s)
+          {{ item().borrowRecords.length }} {{ 'itemCard.borrowCounts' | translate }}
         </button>
 
         <button
@@ -78,7 +78,7 @@
           tuiButton
           type="button"
         >
-          More
+          {{ 'itemCard.more' | translate }}
           <tui-icon icon="@tui.arrow-right" />
         </button>
       </div>

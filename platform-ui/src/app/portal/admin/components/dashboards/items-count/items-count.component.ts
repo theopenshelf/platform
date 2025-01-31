@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { DASHBOARD_SERVICE_TOKEN } from '../../../admin.providers';
 import { DashboardService } from '../../../services/dashboard.service';
 import { CardCounterComponent } from '../card-counter/card-counter.component';
@@ -6,7 +7,8 @@ import { CardCounterComponent } from '../card-counter/card-counter.component';
 @Component({
   selector: 'items-count',
   imports: [
-    CardCounterComponent
+    CardCounterComponent,
+    TranslateModule
   ],
   templateUrl: './items-count.component.html',
   styleUrl: './items-count.component.scss'

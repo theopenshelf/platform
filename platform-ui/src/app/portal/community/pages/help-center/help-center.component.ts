@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
 import { TuiAccordion } from '@taiga-ui/kit';
 import { HELP_SERVICE_TOKEN } from '../../community.provider';
@@ -11,7 +12,8 @@ import { HelpService } from '../../services/help.service';
   imports: [
     TuiAccordion,
     TuiIcon,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
 
   templateUrl: './help-center.component.html',
@@ -59,7 +61,7 @@ export class HelpCenterComponent {
     this.categories.forEach(category => {
       if (!this.articlesByCategory[category.id]) {
         this.helpService.getArticles(category.id).subscribe(articles => {
-          this.articlesByCategory[category.id] = articles.sort((a, b) => a.order - b.order) ;
+          this.articlesByCategory[category.id] = articles.sort((a, b) => a.order - b.order);
         });
       }
     });

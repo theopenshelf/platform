@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import {
   TuiAppearance,
   TuiButton,
@@ -19,7 +20,8 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiCardMedium,
     TuiTitle,
     TuiButton,
-    TuiIcon
+    TuiIcon,
+    TranslateModule
   ],
   templateUrl: './libraries.component.html',
   styleUrl: './libraries.component.scss',

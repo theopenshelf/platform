@@ -21,6 +21,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 import { NotificationsPopupComponent } from '../../../components/notifications-popup/notifications-popup.component';
 
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiActiveZone } from '@taiga-ui/cdk';
 
 const ICON =
@@ -53,7 +54,8 @@ const ICON =
     TuiChevron,
     TuiDropdown,
     TuiObscured,
-    TuiActiveZone
+    TuiActiveZone,
+    TranslateModule
   ],
   templateUrl: './admin-layout.component.html',
   styleUrl: './admin-layout.component.scss',

@@ -8,11 +8,15 @@ import {
   TuiIcon
 } from '@taiga-ui/core';
 import {
+  TUI_CONFIRM,
   TuiBadge,
+  TuiConfirmData,
   TuiItemsWithMore
 } from '@taiga-ui/kit';
 
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
 import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
 import {
@@ -33,7 +37,8 @@ import { ItemsService, UIItemWithStats } from '../../services/items.service';
     TuiTable,
     TuiButton,
     TuiIcon,
-    TosTableComponent
+    TosTableComponent,
+    TranslateModule
   ],
   selector: 'app-items',
   templateUrl: './items.component.html',
@@ -42,109 +47,115 @@ import { ItemsService, UIItemWithStats } from '../../services/items.service';
 })
 export class ItemsComponent {
   items: UIItemWithStats[] = [];
-  columns: Column[] = [
-    {
-      key: 'img',
-      label: 'Image',
-      custom: true,
-      visible: true,
-      sortable: false,
-      size: 's',
-    },
-    {
-      key: 'name',
-      label: 'Name',
-      custom: false,
-      visible: true,
-      sortable: true,
-      size: 'l',
-    },
-    {
-      key: 'located',
-      label: 'Located',
-      custom: false,
-      visible: true,
-      sortable: true,
-      size: 'm',
-    },
-    {
-      key: 'owner',
-      label: 'Owner',
-      custom: false,
-      visible: false,
-      sortable: true,
-      size: 'm',
-    },
-    {
-      key: 'imageUrl',
-      label: 'Image URL',
-      custom: false,
-      visible: false,
-      sortable: false,
-      size: 'm',
-    },
-    {
-      key: 'description',
-      label: 'Description',
-      custom: false,
-      visible: false,
-      sortable: false,
-      size: 'l',
-    },
-    {
-      key: 'shortDescription',
-      label: 'Short Description',
-      custom: false,
-      visible: false,
-      sortable: false,
-      size: 'l',
-    },
-    {
-      key: 'category',
-      label: 'Category',
-      custom: true,
-      visible: true,
-      sortable: true,
-      size: 'm',
-    },
-    {
-      key: 'favorite',
-      label: 'Favorite',
-      custom: false,
-      visible: false,
-      sortable: false,
-      size: 's',
-    },
-    {
-      key: 'borrowCount',
-      label: 'Borrow Count',
-      custom: false,
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-    {
-      key: 'lateReturnPercentage',
-      label: 'Late Return %',
-      custom: false,
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-    {
-      key: 'averageDuration',
-      label: 'Avg Duration',
-      custom: false,
-      visible: true,
-      sortable: true,
-      size: 's',
-    },
-  ];
+  columns: Column[] = [];
 
   public constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private breakpointObserver: BreakpointObserver,
-  ) { }
+    private translate: TranslateService,
+    private dialogs: TuiDialogService,
+    private alerts: TuiAlertService,
+  ) {
+    this.columns = [
+      {
+        key: 'img',
+        label: this.translate.instant('items.columns.image'),
+        custom: true,
+        visible: true,
+        sortable: false,
+        size: 's',
+      },
+      {
+        key: 'name',
+        label: this.translate.instant('items.columns.name'),
+        custom: false,
+        visible: true,
+        sortable: true,
+        size: 'l',
+      },
+      {
+        key: 'located',
+        label: this.translate.instant('items.columns.located'),
+        custom: false,
+        visible: true,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'owner',
+        label: this.translate.instant('items.columns.owner'),
+        custom: false,
+        visible: false,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'imageUrl',
+        label: this.translate.instant('items.columns.imageUrl'),
+        custom: false,
+        visible: false,
+        sortable: false,
+        size: 'm',
+      },
+      {
+        key: 'description',
+        label: this.translate.instant('items.columns.description'),
+        custom: false,
+        visible: false,
+        sortable: false,
+        size: 'l',
+      },
+      {
+        key: 'shortDescription',
+        label: this.translate.instant('items.columns.shortDescription'),
+        custom: false,
+        visible: false,
+        sortable: false,
+        size: 'l',
+      },
+      {
+        key: 'category',
+        label: this.translate.instant('items.columns.category'),
+        custom: true,
+        visible: true,
+        sortable: true,
+        size: 'm',
+      },
+      {
+        key: 'favorite',
+        label: this.translate.instant('items.columns.favorite'),
+        custom: false,
+        visible: false,
+        sortable: false,
+        size: 's',
+      },
+      {
+        key: 'borrowCount',
+        label: this.translate.instant('items.columns.borrowCount'),
+        custom: false,
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+      {
+        key: 'lateReturnPercentage',
+        label: this.translate.instant('items.columns.lateReturnPercentage'),
+        custom: false,
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+      {
+        key: 'averageDuration',
+        label: this.translate.instant('items.columns.averageDuration'),
+        custom: false,
+        visible: true,
+        sortable: true,
+        size: 's',
+      },
+    ];
+
+  }
 
   ngOnInit() {
     // Fetch the items from the service
@@ -161,5 +172,28 @@ export class ItemsComponent {
     pageSize?: number
   ) => {
     return this.itemsService.getItems(undefined, undefined, undefined, undefined, searchText, undefined, sortBy, sortOrder, page, pageSize);
+  }
+
+  deleteItem(item: UIItemWithStats): void {
+    const data: TuiConfirmData = {
+      content: this.translate.instant('items.confirmDeleteContent'),
+      yes: this.translate.instant('items.confirmDeleteYes'),
+      no: this.translate.instant('items.confirmDeleteNo'),
+    };
+
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: this.translate.instant('items.confirmDeleteLabel', { name: item.name }),
+        size: 'm',
+        data,
+      })
+      .subscribe(response => {
+        if (response) {
+          this.alerts.open(
+            this.translate.instant('items.deleteSuccess', { name: item.name }),
+            { appearance: 'positive' },
+          ).subscribe();
+        }
+      });
   }
 }

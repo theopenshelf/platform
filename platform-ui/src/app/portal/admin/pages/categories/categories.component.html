@@ -5,8 +5,7 @@
 >
   <div add-action-content>
     <tui-icon icon="@tui.plus" [style.height.rem]="1" />
-
-    Add Category
+    {{ 'categories.addCategory' | translate }}
   </div>
 
   <ng-template #itemRowTemplate let-item="item" let-column="column">
@@ -36,7 +35,7 @@
       type="button"
       [style.border-radius.%]="100"
     >
-      Edit
+      {{ 'categories.edit' | translate }}
     </button>
     <button
       (click)="deleteCategory(item)"
@@ -47,8 +46,8 @@
       type="button"
       [style.border-radius.%]="100"
     >
-        Delete
-      </button>
+      {{ 'categories.delete' | translate }}
+    </button>
     </div>
   </ng-template>
 </tos-table>

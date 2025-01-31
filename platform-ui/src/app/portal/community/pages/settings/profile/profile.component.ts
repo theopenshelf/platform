@@ -5,16 +5,24 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiPassword } from '@taiga-ui/kit';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import { PROFILE_SERVICE_TOKEN } from '../../../community.provider';
 import { ProfileService } from '../../../services/profile.service';
-import { TuiPassword } from '@taiga-ui/kit';
 
 @Component({
   selector: 'app-profile',
-  imports: [ReactiveFormsModule, TuiButton, TuiPassword, TuiTextfield, TuiIcon],
+  imports: [
+    ReactiveFormsModule,
+    TuiButton,
+    TuiPassword,
+    TuiTextfield,
+    TuiIcon,
+    TranslateModule
+  ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

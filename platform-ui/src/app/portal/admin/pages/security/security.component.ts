@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton } from '@taiga-ui/core';
 import { TuiSwitch } from '@taiga-ui/kit';
 import { SECURITY_SETTINGS_SERVICE_TOKEN } from '../../admin.providers';
@@ -7,7 +8,6 @@ import {
   SecuritySettingsService,
   UISecuritySettings,
 } from '../../services/security-settings.service';
-
 @Component({
   standalone: true,
   selector: 'app-security',
@@ -16,6 +16,7 @@ import {
     ReactiveFormsModule,
     TuiButton,
     TuiSwitch,
+    TranslateModule
   ],
   templateUrl: './security.component.html',
   styleUrl: './security.component.scss',

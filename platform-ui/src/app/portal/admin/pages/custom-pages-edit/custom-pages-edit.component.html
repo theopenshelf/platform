@@ -1,17 +1,17 @@
 @if (pageId) {
-    <h2>Edit Page</h2>
+    <h2>{{ pageId ? ('customPagesEdit.editTitle' | translate) : ('customPagesEdit.addTitle' | translate) }}</h2>
   }
   @if (!pageId) {
     <h2>Add Page</h2>
   }
   <form [formGroup]="pageForm" (ngSubmit)="onSubmit()">
     <tui-textfield>
-      <label tuiLabel>Reference</label>
+      <label tuiLabel>{{ 'customPagesEdit.reference' | translate }}</label>
       <input
         id="ref"
         formControlName="ref"
         type="text"
-        placeholder="Enter page reference"
+        placeholder="{{ 'customPagesEdit.referencePlaceholder' | translate }}"
         tuiTextfield
       />
     </tui-textfield>
@@ -21,9 +21,9 @@
           tuiTextfieldSize="s"
           formControlName="position"
       >
-          Position
+          {{ 'customPagesEdit.position' | translate }}
           <input
-              placeholder="Choose your hero"
+              placeholder="{{ 'customPagesEdit.positionPlaceholder' | translate }}"
               tuiTextfieldLegacy
           />
           <tui-data-list-wrapper
@@ -33,12 +33,12 @@
       </tui-select>
 
     <tui-textfield>
-        <label tuiLabel>Title</label>
+        <label tuiLabel>{{ 'customPagesEdit.title' | translate }}</label>
         <input
           id="title"
           formControlName="title"
           type="text"
-          placeholder="Enter page title"
+          placeholder="{{ 'customPagesEdit.titlePlaceholder' | translate }}"
           tuiTextfield
         />
       </tui-textfield>
@@ -57,7 +57,7 @@
       tuiButton
       [disabled]="pageForm.invalid"
     >
-      Save
+      {{ 'customPagesEdit.save' | translate }}
     </button>
   </form>
   

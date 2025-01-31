@@ -15,6 +15,7 @@ import {
 } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import { ConfigService } from '../../../../../services/config.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { ConfigService } from '../../../../../services/config.service';
     RouterLink,
     ReactiveFormsModule,
     FormsModule,
+    TranslateModule,
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',

@@ -6,6 +6,7 @@ import {
   RouterLink,
   RouterModule,
 } from '@angular/router';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import {
   TuiAlertService,
@@ -28,7 +29,7 @@ import {
   TuiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
-import { of, switchMap } from 'rxjs';
+import { EMPTY, switchMap } from 'rxjs';
 import {
   LIBRARIES_SERVICE_TOKEN
 } from '../../../community.provider';
@@ -57,7 +58,8 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
-    FilteredAndPaginatedItemsComponent
+    FilteredAndPaginatedItemsComponent,
+    TranslateModule
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -73,6 +75,7 @@ export class LibraryComponent {
     private alerts: TuiAlertService,
     private router: Router,
     private route: ActivatedRoute,
+    private translate: TranslateService,
   ) {
   }
 
@@ -89,32 +92,31 @@ export class LibraryComponent {
 
   deleteLibrary(library: UILibrary): void {
     const data: TuiConfirmData = {
-      content: 'Are you sure you want to delete this user?', // Simple content
-      yes: 'Yes, Delete',
-      no: 'Cancel',
+      content: this.translate.instant('library.confirmDeleteContent', { libraryName: library.name }),
+      yes: this.translate.instant('library.yesDelete'),
+      no: this.translate.instant('library.cancel'),
     };
 
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
-        label: "Delete library '" + library.name + "'",
+        label: this.translate.instant('library.deleteLabel', { libraryName: library.name }),
         size: 'm',
         data,
       })
       .pipe(
-        switchMap(() => {
-          this.alerts.open(
-            'Library <strong>' +
-            library.name +
-            '</strong> deleted successfully',
-            { appearance: 'positive' },
-          );
-          this.router.navigate(['/community/libraries']);
-          return of(true);
+        switchMap((response) => {
+          if (response) {
+            this.librariesService.deleteLibrary(library.id).subscribe(() => {
+              this.alerts.open(this.translate.instant('library.deleteSuccess', { libraryName: library.name }), {
+                appearance: 'positive',
+              }).subscribe();
+              this.router.navigate(['/community/libraries']);
+            });
+          }
+          return EMPTY;
         }),
       )
       .subscribe();
-
-    this.librariesService.deleteLibrary(library.id).subscribe();
   }
 
 }

@@ -22,17 +22,19 @@
         }
       </ul>
     </div>
-    <button class="add-category-button" tuiButton (click)="addCategory()">Add new category</button>
+    <button class="add-category-button" tuiButton (click)="addCategory()">
+      {{ 'helpCenterEdit.addCategory' | translate }}
+    </button>
 
   </aside>
 
   <main>
     <h2>
-      {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : 'Search Results' }}
+      {{ selectedCategoryId ? categoriesPerId[selectedCategoryId].name : ('helpCenterEdit.searchResults' | translate) }}
     </h2>
     @if (articles.length === 0) {
     <div class="no-items">
-      <p><tui-icon icon="@tui.search-x" /> No article found</p>
+      <p><tui-icon icon="@tui.search-x" /> {{ 'helpCenterEdit.noArticleFound' | translate }}</p>
     </div>
     }
     <div class="container-faq">
@@ -62,51 +64,57 @@
       </tui-accordion>
     </div>
     <div class="add-article-button-container">
-      <button class="add-article-button" tuiButton (click)="addArticle()">Add new article</button>
+      <button class="add-article-button" tuiButton (click)="addArticle()">
+        {{ 'helpCenterEdit.addArticle' | translate }}
+      </button>
     </div>
 
   </main>
 </div>
 
 <ng-template let-observer [tuiDialogOptions]="{
-    label: 'Edit category ' + currentCategory?.name,
+    label: ('helpCenterEdit.editCategory' | translate) + ' ' + currentCategory?.name,
     size: isMobile ? 'fullscreen' : 's',
   }" [(tuiDialog)]="openCategoryDialog">
   <form class="category-form" [formGroup]="categoryForm" (ngSubmit)="setCategory()">
     <tui-textfield>
-      <label tuiLabel>Category Name</label>
-      <input id="name" formControlName="name" type="text" placeholder="Enter category name" tuiTextfield />
+      <label tuiLabel>{{ 'helpCenterEdit.categoryName' | translate }}</label>
+      <input id="name" formControlName="name" type="text" placeholder="{{ 'helpCenterEdit.categoryNamePlaceholder' | translate }}" tuiTextfield />
     </tui-textfield>
 
     <tui-textfield [iconStart]="categoryForm.get('icon')?.value">
-      <label tuiLabel>Category Icon</label>
-      <input id="icon" formControlName="icon" type="text" placeholder="Enter category icon" tuiTextfield />
+      <label tuiLabel>{{ 'helpCenterEdit.categoryIcon' | translate }}</label>
+      <input id="icon" formControlName="icon" type="text" placeholder="{{ 'helpCenterEdit.categoryIconPlaceholder' | translate }}" tuiTextfield />
       <tui-icon tuiTooltip="Supported icons from https://taiga-ui.dev/components/icon" />
 
     </tui-textfield>
 
 
     <p>
-      <button class="category-form-button" tuiButton type="submit">Save</button>
+      <button class="category-form-button" tuiButton type="submit">
+        {{ 'helpCenterEdit.save' | translate }}
+      </button>
     </p>
   </form>
 </ng-template>
 
 <ng-template class="article-dialog" let-observer [tuiDialogOptions]="{
-    label: 'Edit article',
+    label: ('helpCenterEdit.editArticle' | translate),
     size: 'fullscreen',
   }" [(tuiDialog)]="openArticleDialog">
   <form class="article-form" [formGroup]="articleForm" (ngSubmit)="setArticle()">
 
     <tui-textfield>
-      <label tuiLabel>Title</label>
-      <input id="title" formControlName="title" type="text" placeholder="Enter article title" tuiTextfield />
+      <label tuiLabel>{{ 'helpCenterEdit.articleTitle' | translate }}</label>
+      <input id="title" formControlName="title" type="text" placeholder="{{ 'helpCenterEdit.articleTitlePlaceholder' | translate }}" tuiTextfield />
     </tui-textfield>
 
     <quill-editor formControlName="content" [modules]="editorConfig"></quill-editor>
 
     <p>
-      <button class="article-form-button" tuiButton type="submit">Save</button>
+      <button class="article-form-button" tuiButton type="submit">
+        {{ 'helpCenterEdit.save' | translate }}
+      </button>
     </p>
   </form>
 </ng-template>

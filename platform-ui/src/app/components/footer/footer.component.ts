@@ -1,13 +1,13 @@
 import { Component, HostListener, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
 import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { UICustomPage } from '../../portal/community/models/UICustomPage';
 import { CustomPageService } from '../../portal/community/services/custom-page.service';
-
 @Component({
   selector: 'tos-footer',
   imports: [
@@ -17,7 +17,8 @@ import { CustomPageService } from '../../portal/community/services/custom-page.s
     TuiIcon,
     TuiNavigation,
     TuiTabs,
-    RouterLink
+    RouterLink,
+    TranslateModule
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
