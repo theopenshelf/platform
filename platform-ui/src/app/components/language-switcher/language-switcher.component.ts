@@ -40,7 +40,7 @@ export class LanguageSwitcherComponent {
 
   constructor(private translate: TranslateService) {
     this.translate.addLangs(['fr', 'en']);
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang(this.translate.defaultLang ?? 'en');
   }
 
   protected open = false;

@@ -48,7 +48,7 @@ export class BorrowRecordCardComponent {
       case UIBorrowRecordStatus.Reserved:
         return '@tui.clock';
       case UIBorrowRecordStatus.CurrentlyBorrowed:
-        return '/gift.png';
+        return '/borrow.png';
       case UIBorrowRecordStatus.ReturnedEarly:
         return '@tui.calendar-check';
       case UIBorrowRecordStatus.Returned:

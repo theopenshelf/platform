@@ -152,7 +152,7 @@ export class BorrowRecordTimelineComponent {
             lastItem: false,
             items: [
               {
-                icon: '/gift.png',
+                icon: '/borrow.png',
                 label: this.translate.instant('timeline.return'),
               }
             ]
@@ -208,7 +208,7 @@ export class BorrowRecordTimelineComponent {
             lastItem: true,
             items: [
               {
-                icon: '/gift.png',
+                icon: '/borrow.png',
                 label: this.translate.instant('timeline.return'),
               }
             ]
@@ -353,7 +353,7 @@ export class BorrowRecordTimelineComponent {
             lastItem: true,
             items: [
               {
-                icon: '/gift.png',
+                icon: '/borrow.png',
                 label: this.translate.instant('timeline.return'),
               }
             ]

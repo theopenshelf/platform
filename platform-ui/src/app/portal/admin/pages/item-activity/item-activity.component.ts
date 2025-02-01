@@ -65,7 +65,7 @@ export class ItemActivityComponent {
       status: UIBorrowStatus.CurrentlyBorrowed,
       name: 'Currently Borrowed',
       color: '#2ecc71',
-      icon: '/gift.png',
+      icon: '/borrow.png',
     }, // Green
     {
       status: UIBorrowStatus.Reserved,

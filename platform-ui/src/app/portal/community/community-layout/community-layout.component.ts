@@ -73,7 +73,7 @@ export default class CommunityLayoutComponent extends TuiPortals {
 
   ngOnInit() {
     this.itemsService
-      .getItems({
+      .getBorrowRecords({
         borrowedByCurrentUser: true,
         status: UIBorrowStatus.CurrentlyBorrowed,
         page: 1,
