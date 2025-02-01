@@ -28,7 +28,7 @@
   <div class="footer-copyright">
     <div class="footer-copyright-left">
       <span class="copyright"
-        ><tui-icon icon="@tui.copyright" /> {{ 'footer.copyright' | translate }}</span
+        ><tui-icon icon="@tui.copyright" />2025 TheOpenShelf</span
       >
       @for (page of customPages.get('copyright') || []; track page.ref) {
         <a [routerLink]="['/community/page', page.ref]">{{ page.title }}</a>
@@ -43,7 +43,7 @@
         <tui-icon icon="@tui.github" />
       </a>
       <span class="powered-by"
-        >{{ 'footer.poweredBy' | translate }} <tui-icon icon="@tui.heart" /> L'Étagère Ouverte</span
+        >{{ 'footer.poweredBy' | translate }} <tui-icon icon="@tui.heart" /> The Open Shelf</span
       >
     </div>
   </div>

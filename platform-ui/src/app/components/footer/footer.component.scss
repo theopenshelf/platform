@@ -54,8 +54,8 @@ footer {
         margin-top: 20px;
 
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        grid-template-columns: 4fr 2fr;
+        gap: 10px;
 
         a {
             color: var(--tos-text-primary-on-accent-1);
