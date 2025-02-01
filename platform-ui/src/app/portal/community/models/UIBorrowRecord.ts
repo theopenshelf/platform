@@ -61,7 +61,8 @@ export function getBorrowRecordStatus(borrowRecord: UIBorrowRecord): UIBorrowRec
 export function getBorrowDurationInDays(borrowRecord: UIBorrowRecord): number {
   const endDate = borrowRecord.effectiveReturnDate || borrowRecord.endDate;
   const durationInMilliseconds = Math.max(0, endDate.getTime() - borrowRecord.startDate.getTime());
-  return Math.floor(durationInMilliseconds / (1000 * 60 * 60 * 24));
+  const durationInDays = Math.floor(durationInMilliseconds / (1000 * 60 * 60 * 24));
+  return Math.max(1, durationInDays);
 }
 
 export function getLateDurationInDays(borrowRecord: UIBorrowRecord): number {

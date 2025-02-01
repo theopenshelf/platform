@@ -134,6 +134,7 @@ export class MockItemsService implements ItemsService {
       borrowedByCurrentUser,
       sortBy,
       sortOrder,
+      categories,
       borrowedBy,
       startDate,
       endDate,
@@ -170,6 +171,12 @@ export class MockItemsService implements ItemsService {
     if (status) {
       filteredRecords = filteredRecords.filter(record =>
         this.matchesStatusBorrowRecord(status, record)
+      );
+    }
+
+    if (categories && categories.length > 0) {
+      filteredRecords = filteredRecords.filter((record) =>
+        categories.includes(record.item.category.name),
       );
     }
 
