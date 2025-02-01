@@ -303,8 +303,8 @@ export class ItemComponent implements OnInit {
     const data: TuiConfirmData = {
       content: this.translate.instant('item.confirmBorrowContent', {
         itemName: this.item?.name,
-        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(),
-        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(),
+        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
       }),
       yes: this.translate.instant('item.yesBorrow'),
       no: this.translate.instant('item.cancel'),
@@ -338,8 +338,8 @@ export class ItemComponent implements OnInit {
                     .open(
                       this.translate.instant('item.borrowSuccess', {
                         itemName: this.item?.name,
-                        startDate: this.datePipe.transform(this.selectedDate?.from.toLocalNativeDate(), 'd MMM yyyy'),
-                        endDate: this.datePipe.transform(this.selectedDate?.to.toLocalNativeDate(), 'd MMM yyyy'),
+                        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+                        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
                       }),
                       { appearance: 'positive' },
                     )
@@ -357,14 +357,8 @@ export class ItemComponent implements OnInit {
 
   cancelReservation(borrowRecord: UIBorrowRecord) {
     if (borrowRecord) {
-      const startDate = this.datePipe.transform(
-        borrowRecord.startDate,
-        'EEE d MMM',
-      );
-      const endDate = this.datePipe.transform(
-        borrowRecord.endDate,
-        'EEE d MMM',
-      );
+      const startDate = borrowRecord.startDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+      const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
 
       this.dialogs
         .open<boolean>(TUI_CONFIRM, {
@@ -398,18 +392,13 @@ export class ItemComponent implements OnInit {
   }
 
   returnItem(borrowRecord: UIBorrowRecord) {
-    const startDate = this.datePipe.transform(
-      borrowRecord.startDate,
-      'EEE d MMM',
-    );
-    const endDate = this.datePipe.transform(borrowRecord.endDate, 'EEE d MMM');
-
+    const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
     this.dialogs
       .open<boolean>(TUI_CONFIRM, {
         label: this.translate.instant('item.returnLabel', { itemName: this.item?.name }),
         size: 'm',
         data: {
-          content: this.translate.instant('item.returnContent', { itemName: this.item?.name, startDate, endDate }),
+          content: this.translate.instant('item.returnContent', { itemName: this.item?.name, endDate }),
           yes: this.translate.instant('item.yesReturn'),
           no: this.translate.instant('item.noReturn'),
         },
@@ -464,7 +453,7 @@ export class ItemComponent implements OnInit {
     return !this.control.value;
   }
 
-  protected onClick(): void {
+  protected onChooseDate(): void {
     this.dialog$.subscribe((value) => this.control.setValue(value));
   }
 
@@ -487,7 +476,7 @@ export class ItemComponent implements OnInit {
 
   formatReservationDate(date: Date | undefined): string | null {
     if (date) {
-      return this.datePipe.transform(date, 'EEE d MMM');
+      return date.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
     }
     return null;
   }

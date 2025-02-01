@@ -152,7 +152,7 @@
     "keepReservation": "Keep Reservation",
     "reservationCancelled": "Reservation cancelled successfully",
     "returnLabel": "Return {{itemName}}",
-    "returnContent": "Confirm you have returned {{itemName}} from {{startDate}} to {{endDate}}?",
+    "returnContent": "Confirm you have returned {{itemName}} the {{endDate}}?",
     "yesReturn": "Yes, It is returned",
     "noReturn": "No, I have not returned it yet",
     "returnSuccess": "Item returned successfully",

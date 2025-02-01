@@ -62,7 +62,7 @@
     "libraries": "Bibliothèques"
   },
   "borrowRecordCard": {
-    "seeDetails": "Voir les détails",
+    "seeDetails": "Détails",
     "days": "jour(s)",
     "status": {
       "impossible": "Impossible",
@@ -152,7 +152,7 @@
     "keepReservation": "Garder la réservation",
     "reservationCancelled": "Réservation annulée avec succès",
     "returnLabel": "Rendre {{itemName}}",
-    "returnContent": "Confirmez-vous avoir rendu {{itemName}} du {{startDate}} au {{endDate}}?",
+    "returnContent": "Confirmez-vous avoir rendu {{itemName}} le {{endDate}}?",
     "yesReturn": "Oui, il est rendu",
     "noReturn": "Non, je ne l'ai pas encore rendu",
     "returnSuccess": "Article rendu avec succès",

@@ -25,7 +25,7 @@ export class BorrowRecordTimelineComponent {
   });
 
   protected readonly timelineItems = computed(() => {
-    const locale = this.getLocale();
+    const locale = this.translate.currentLang;
     let items: TimelineItem[] = [];
     switch (this.status()) {
 
@@ -364,15 +364,4 @@ export class BorrowRecordTimelineComponent {
     return items;
   });
 
-  private getLocale(): string {
-    const currentLang = this.translate.currentLang;
-    switch (currentLang) {
-      case 'fr':
-        return 'fr-FR';
-      case 'en':
-        return 'en-US';
-      default:
-        return 'en-US'; // Default to 'en-US' if the language is not recognized
-    }
-  }
 }

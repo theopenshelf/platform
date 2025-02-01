@@ -45,9 +45,9 @@
           [value]="selectedDate || null" [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
           [disabledItemHandler]="disabledItemHandler" />
 
-        <div class="mobile-calendar">
+        <div class="mobile-calendar" (click)="onChooseDate()">
           <button appearance="secondary" iconStart="@tui.calendar" tuiIconButton type="button"
-            [style.border-radius.%]="100" (click)="onClick()">
+            [style.border-radius.%]="100">
             {{ 'item.chooseDate' | translate }}
           </button>
           <span class="date" [class.date_empty]="empty">
@@ -55,11 +55,10 @@
           </span>
         </div>
 
-        @if (!selectedDate) {
-        <tui-notification size="s">
+        <tui-notification size="s" [style.visibility]="selectedDate ? 'hidden' : 'visible'">
           {{ 'item.selectDateToBorrow' | translate }}
         </tui-notification>
-        }
+        
         <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="accent" size="m"
           [disabled]="!selectedDate" tuiButton type="button">
           {{ 'item.borrow' | translate }}

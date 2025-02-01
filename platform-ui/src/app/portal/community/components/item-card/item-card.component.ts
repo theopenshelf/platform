@@ -2,7 +2,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { Component, computed, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   TuiAppearance,
   TuiButton,
@@ -53,7 +53,7 @@ export class ItemCardComponent {
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
-    private datePipe: DatePipe,
+    private translate: TranslateService,
   ) { }
 
   markAsFavorite: (item: UIItem) => void = (item) => {
@@ -64,6 +64,6 @@ export class ItemCardComponent {
   };
 
   formatReservationDate(date: Date): string | null {
-    return this.datePipe.transform(date, 'EEE d MMM');
+    return date.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
   }
 }
