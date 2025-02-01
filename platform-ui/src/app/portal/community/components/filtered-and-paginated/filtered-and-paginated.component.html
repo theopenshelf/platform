@@ -73,7 +73,7 @@
       </button>
 
       <ng-template #dropdownsort let-close>
-        <tui-data-list>
+        <tui-data-list class="sorting-options">
           <tui-opt-group>
             @for (sortingOption of sortingOptions(); track sortingOption) {
             <button class="sorting-option" tuiOption type="button" [class.active]="isSortingSelected(sortingOption)"

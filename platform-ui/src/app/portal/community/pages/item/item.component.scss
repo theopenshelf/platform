@@ -331,4 +331,10 @@ form {
   .mobile-calendar {
     display: block;
   }
+
+  .borrow-records {
+    .borrow-record-container {
+      grid-template-columns: 1fr !important;
+    }
+  }
 }

@@ -1,10 +1,10 @@
 <tos-table
   [addActionRoute]="'/admin/categories/add'"
+  [addActionIcon]="'@tui.plus'"
   [getDataFunction]="getDataFunction"
   [columns]="columns"
 >
   <div add-action-content>
-    <tui-icon icon="@tui.plus" />
     {{ 'categories.addCategory' | translate }}
   </div>
 

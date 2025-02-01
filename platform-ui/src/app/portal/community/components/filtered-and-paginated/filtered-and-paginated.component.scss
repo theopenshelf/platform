@@ -425,8 +425,13 @@
                 padding: 15px 5px;
                 border-bottom: 1px solid lightgray;
 
+                tui-icon {
+                    margin-left: 20px;
+                    margin-right: 10px;
+                }
+
                 input {
-                    width: calc(100% - 50px);
+                    width: calc(100% - 80px);
                     font-size: large;
                     border: 0;
                     height: 24px;
@@ -531,7 +536,7 @@
     width: 400px;
     height: 400px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
     padding: 30px 30px;
 
@@ -581,4 +586,8 @@
 .categories-carousel-wrapper {
     display: flex;
     align-items: center;
+}
+
+.sorting-options {
+    min-width: 300px;
 }

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
@@ -28,6 +28,8 @@ export class HelpCenterComponent {
   selectedCategoryId: string | null = null;
   searchText = '';
 
+  @ViewChild('mainElement') mainElement!: ElementRef;
+
   constructor(@Inject(HELP_SERVICE_TOKEN) private helpService: HelpService) {
     this.helpService.getCategories().subscribe(categories => {
       this.categories = categories.sort((a, b) => a.order - b.order);
@@ -53,6 +55,13 @@ export class HelpCenterComponent {
         this.articles = articles;
         this.articlesByCategory[categoryId] = articles;
       });
+    }
+    this.scrollToMain();
+  }
+
+  private scrollToMain() {
+    if (this.mainElement) {
+      this.mainElement.nativeElement.scrollIntoView({ behavior: 'smooth' });
     }
   }
 

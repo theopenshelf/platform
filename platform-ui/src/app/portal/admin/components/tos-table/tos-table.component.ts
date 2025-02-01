@@ -74,6 +74,7 @@ export interface ItemPagination {
 })
 export class TosTableComponent {
   public addActionRoute = input.required<string>();
+  public addActionIcon = input.required<string>();
   public filterInput = signal<string>('');
   public columns = input.required<Column[]>();
   public getDataFunction = input.required<(

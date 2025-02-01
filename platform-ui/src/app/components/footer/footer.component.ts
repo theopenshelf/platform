@@ -8,6 +8,7 @@ import { TuiNavigation } from '@taiga-ui/layout';
 import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { UICustomPage } from '../../portal/community/models/UICustomPage';
 import { CustomPageService } from '../../portal/community/services/custom-page.service';
+import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 @Component({
   selector: 'tos-footer',
   imports: [
@@ -18,7 +19,8 @@ import { CustomPageService } from '../../portal/community/services/custom-page.s
     TuiNavigation,
     TuiTabs,
     RouterLink,
-    TranslateModule
+    TranslateModule,
+    LanguageSwitcherComponent,
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',

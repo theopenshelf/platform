@@ -1,10 +1,10 @@
 <tos-table
   [addActionRoute]="'/admin/users/add'"
+  [addActionIcon]="'@tui.user'"
   [getDataFunction]="getDataFunction"
   [columns]="columns"
 >
   <div add-action-content>
-    <tui-icon icon="@tui.user" [style.height.rem]="1" />
     {{ 'users.addUser' | translate }}
   </div>
 

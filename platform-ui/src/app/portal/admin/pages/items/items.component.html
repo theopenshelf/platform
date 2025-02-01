@@ -1,6 +1,5 @@
-<tos-table [addActionRoute]="'/admin/items/add'" [getDataFunction]="getDataFunction" [columns]="columns">
+<tos-table [addActionRoute]="'/admin/items/add'" [addActionIcon]="'@tui.shopping-basket'" [getDataFunction]="getDataFunction" [columns]="columns">
   <div add-action-content>
-    <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
     {{ 'items.addItem' | translate }}
   </div>
 
