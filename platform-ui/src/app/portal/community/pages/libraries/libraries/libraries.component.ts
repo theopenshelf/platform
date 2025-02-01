@@ -36,4 +36,8 @@ export class LibrariesComponent {
       this.libraries = libraries;
     });
   }
+
+  ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }

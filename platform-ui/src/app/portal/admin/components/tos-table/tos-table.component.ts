@@ -24,6 +24,7 @@ import {
   TuiIcon,
   TuiSizeL,
   TuiSizeS,
+  TuiTextfield,
   TuiTitle
 } from '@taiga-ui/core';
 import { TuiCheckbox, TuiPagination } from '@taiga-ui/kit';
@@ -64,7 +65,8 @@ export interface ItemPagination {
     TuiTitle,
     TuiIcon,
     TuiPagination,
-    TranslateModule
+    TranslateModule,
+    TuiTextfield
   ],
   templateUrl: './tos-table.component.html',
   styleUrl: './tos-table.component.scss',

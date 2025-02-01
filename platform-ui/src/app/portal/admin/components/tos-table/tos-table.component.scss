@@ -128,6 +128,7 @@ tbody tr:hover {
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    margin-bottom: 15px;
 
     .add-action button,
     .column-selector button,
@@ -151,7 +152,6 @@ tbody tr:hover {
 
 .table-top-actions .add-action {
   display: flex;
-  min-width: 120px;
   margin-right: 10px;
 }
 
@@ -163,6 +163,8 @@ tbody tr:hover {
 .table-top-actions .filter-actions {
 
   input {
+    min-width: 220px;
+    max-width: 100%;
     padding: 6px;
     font-size: 1rem;
     border: 1px solid var(--tos-border-normal);

@@ -48,6 +48,7 @@ export class BorrowedItemsComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });

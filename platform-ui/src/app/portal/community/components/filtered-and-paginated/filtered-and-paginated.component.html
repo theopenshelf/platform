@@ -3,7 +3,7 @@
   <div class="search-bar">
     <div class="search-input">
       <tui-icon icon="@tui.search" />
-      <input [(ngModel)]="searchText" [placeholder]="'search.placeholder' | translate" (input)="onTextFilterChange()" />
+      <input [(ngModel)]="searchText" [placeholder]="'filteredAndPaginated.searchPlaceholder' | translate" (input)="onTextFilterChange()" />
     </div>
 
     <div class="categories-filtering">
@@ -11,7 +11,7 @@
         [tuiAppearanceState]="openDropdownCategories ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdowncategories" [(tuiDropdownOpen)]="openDropdownCategories">
         <tui-icon icon="@tui.chart-bar-stacked" />
-        {{ 'categories.filter' | translate }}
+        {{ 'filteredAndPaginated.categoriesFilter' | translate }}
       </button>
 
       <ng-template #dropdowncategories let-close>
@@ -32,7 +32,7 @@
         [tuiAppearanceState]="openDropdownWhen ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhen" [(tuiDropdownOpen)]="openDropdownWhen">
         <tui-icon icon="@tui.calendar-clock" />
-        {{ 'dateRange.filter' | translate }}
+        {{ 'filteredAndPaginated.dateRangeFilter' | translate }}
       </button>
 
       <ng-template #dropdownwhen let-close>
@@ -48,7 +48,7 @@
         [tuiAppearanceState]="openDropdownWhere ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhere" [(tuiDropdownOpen)]="openDropdownWhere">
         <tui-icon icon="@tui.library" />
-        {{ 'libraries.filter' | translate }}
+        {{ 'filteredAndPaginated.librariesFilter' | translate }}
       </button>
 
       <ng-template #dropdownwhere let-close>
@@ -69,7 +69,7 @@
         [tuiAppearanceState]="openDropdownSort ? 'active' : null" [tuiDropdown]="dropdownsort"
         [(tuiDropdownOpen)]="openDropdownSort">
         <tui-icon icon="@tui.arrow-down-up" />
-        {{ 'sortBy.filter' | translate }}
+        {{ 'filteredAndPaginated.sortByFilter' | translate }}
       </button>
 
       <ng-template #dropdownsort let-close>
@@ -98,14 +98,14 @@
     <div class="top-actions-left">
       <fieldset tuiTextfieldSize="m" class="search">
         <tui-textfield iconStart="@tui.search">
-          <input [(ngModel)]="searchText" placeholder="Search" tuiTextfield (input)="onTextFilterChange()" />
+          <input [(ngModel)]="searchText" [placeholder]="'filteredAndPaginated.searchPlaceholder' | translate" tuiTextfield (input)="onTextFilterChange()" />
         </tui-textfield>
       </fieldset>
 
       <tui-select tuiTextfieldSize="m" class="sorting-select" [formControl]="sortingSelected"
         [tuiTextfieldLabelOutside]="true" size="l">
-        Sort by
-        <input placeholder="Sort by" tuiTextfieldLegacy />
+        {{ 'filteredAndPaginated.sortByFilter' | translate }}
+        <input [placeholder]="'filteredAndPaginated.sortByFilter' | translate" tuiTextfieldLegacy />
         <tui-data-list-wrapper *tuiDataList [items]="sortingOptions()" />
       </tui-select>
     </div>
@@ -114,13 +114,14 @@
     <tui-accordion [size]="'m'" class="filters-section">
       <button [tuiAccordion]="!isMobile && categoriesFilteringOpened()">
         <tui-icon icon="@tui.sliders-horizontal" />
-        Filter</button>
+        {{ 'filteredAndPaginated.filter' | translate }}
+      </button>
 
       <tui-expand>
 
         <div class="filter-group filter-categories">
           <h3 class="filter-category-title" i18n="@@categoryFilter">
-            Categories
+            {{ 'filteredAndPaginated.categories' | translate }}
           </h3>
           <ul>
             @for (category of categories; track category) {
@@ -146,7 +147,7 @@
     <tui-tabs [(activeItemIndex)]="activeStatusIndex">
       @for (status of statuses; track status) {
       <button [iconStart]="status.icon" tuiTab type="button" (click)="selectStatus(status.status)">
-        {{ status.name }}
+        {{ getStatusText(status.status) }}
       </button>
       }
     </tui-tabs>

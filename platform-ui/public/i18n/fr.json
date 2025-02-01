@@ -64,18 +64,20 @@
   "borrowRecordCard": {
     "seeDetails": "Détails",
     "days": "jour(s)",
+    "borrowTitle": "Emprunté le {{startDate}}",
+
     "status": {
       "impossible": "Impossible",
       "reserved": "Réservé",
       "currentlyBorrowed": "Actuellement emprunté",
       "currently-borrowed": "Actuellement emprunté",
-      "returnedEarly": "Retourné tôt",
-      "returned-early": "Retourné tôt",
+      "returnedEarly": "En avance",
+      "returned-early": "En avance",
       "returned": "À l'heure",
       "dueToday": "À rendre aujourd'hui",
       "late": "En retard",
-      "returnedLate": "Retourné en retard",
-      "returned-late": "Retourné en retard",
+      "returnedLate": "Retard",
+      "returned-late": "Retard",
       "unknown": "Inconnu"
     }
   },
@@ -365,5 +367,17 @@
       "returnedLate": "Retourné en retard",
       "successRate": "% de succès"
     }
+  },
+  "filteredAndPaginated": {
+    "searchPlaceholder": "Quel objet cherchez-vous?",
+    "categoriesFilter": "Catégories",
+    "dateRangeFilter": "Quand?",
+    "librariesFilter": "Où?",
+    "sortByFilter": "Trier par",
+    "filter": "Filtrer",
+    "categories": "Catégories",
+    "borrowed": "Emprunté",
+    "reserved": "Réservé",
+    "returned": "Rendu"
   }
 }

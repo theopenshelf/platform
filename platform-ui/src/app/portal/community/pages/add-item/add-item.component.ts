@@ -112,6 +112,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     this.categoriesService
       .getCategories()
       .pipe(takeUntil(this.destroy$))

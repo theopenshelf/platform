@@ -6,7 +6,7 @@
         class="add-action"
         [routerLink]="addActionRoute()"
         appearance="accent"
-        size="s"
+        size="m"
         tuiButton
         type="button"
       >
@@ -15,17 +15,14 @@
     </div>
 
     <div class="filter-actions">
-      <input
-        type="text"
-        placeholder="{{ 'tosTable.filterPlaceholder' | translate }}"
-        [(ngModel)]="filterInput"
-        (ngModelChange)="fetchData()"
-      />
+      <tui-textfield tuiTextfieldSize="m" iconStart="@tui.search">
+        <input [(ngModel)]="filterInput" [placeholder]="'tosTable.filterPlaceholder' | translate" tuiTextfield (ngModelChange)="fetchData()" />
+      </tui-textfield>
     </div>
 
     <div class="column-selector">
       <button
-        size="s"
+        size="m"
         tuiButton
         type="button"
         appearance="outline"

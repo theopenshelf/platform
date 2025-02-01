@@ -64,9 +64,11 @@
   "borrowRecordCard": {
     "seeDetails": "See details",
     "days": "day(s)",
+    "borrowTitle": "Borrowed on {{startDate}}",
     "status": {
       "impossible": "Impossible",
       "reserved": "Reserved",
+      "borrowed": "Currently Borrowed",
       "currentlyBorrowed": "Currently Borrowed",
       "currently-borrowed": "Currently Borrowed",
       "returnedEarly": "Early",
@@ -351,5 +353,18 @@
       "returnedLate": "Returned Late",
       "successRate": "% of Late"
     }
+  },
+  "filteredAndPaginated": {
+    "searchPlaceholder": "What object are you looking for?",
+    "categoriesFilter": "Which categories?",
+    "dateRangeFilter": "When do you need it?",
+    "librariesFilter": "Which library?",
+    "sortByFilter": "Sort by",
+    "filter": "Filter",
+    "categories": "Categories",
+    "borrowed": "Borrowed",
+    "reserved": "Reserved",
+    "returned": "Returned"
+
   }
 } 

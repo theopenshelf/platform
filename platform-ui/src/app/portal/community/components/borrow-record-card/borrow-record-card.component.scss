@@ -53,21 +53,23 @@
             padding-left: 3%;
             padding-right: 2%;
 
-            .record-title-container {
-                padding: 10px;
-                padding-bottom: 0;
+            .record-header-container {
+
+                .record-title-container {
+                    display: grid;
+                    grid-template-columns: 2fr 1fr;
+                    gap: 5px;
+                }
 
                 .record-status {
                     float: right;
                     display: grid;
-                    grid-template-columns: 2fr 1fr;
-                    align-items: center;
+                    grid-template-columns: 1fr 3fr;
                     gap: 5px;
 
                     .record-status-text-container {
                         display: flex;
                         flex-direction: column;
-                        align-items: flex-end;
                     }
 
                     &.record-status-late {
@@ -106,6 +108,7 @@
 
                 .record-subtitle {
                     margin-top: 10px;
+                    margin-bottom: 10px;
                     display: grid;
                     grid-template-columns: 1fr;
                     gap: 10px;
@@ -255,7 +258,7 @@
     margin-top: 10px;
 }
 
-.record-title-container {
+.record-header-container {
     padding: 10px;
     padding-bottom: 0;
 }

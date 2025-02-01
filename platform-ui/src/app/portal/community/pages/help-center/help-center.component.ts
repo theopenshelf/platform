@@ -40,6 +40,10 @@ export class HelpCenterComponent {
     });
   }
 
+  ngOnInit() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   selectCategory(categoryId: string) {
     this.selectedCategoryId = categoryId;
     if (this.articlesByCategory[categoryId]) {
