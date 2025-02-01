@@ -1,5 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Inject, input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, ContentChild, Inject, input, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
@@ -19,6 +20,7 @@ import { ItemCardComponent } from '../item-card/item-card.component';
   standalone: true,
   selector: 'filtered-and-paginated-items',
   imports: [
+    CommonModule,
     ItemCardComponent,
     FilteredAndPaginatedComponent,
   ],
@@ -35,6 +37,8 @@ export class FilteredAndPaginatedItemsComponent {
   public categoriesFilteringOpened = input<boolean>(true);
   public enableSearchBar = input<boolean>(false);
   public sortingOptions = input<string[]>(FilteredAndPaginatedComponent.defaultSortingOptions);
+  @ContentChild('libraryTemplate', { read: TemplateRef })
+  libraryTemplate!: TemplateRef<any>;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,

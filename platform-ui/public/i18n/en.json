@@ -303,6 +303,17 @@
     "borrowsRecords": "Borrows Records",
     "noBorrowRecords": "No borrow records found"
   },
+  "library": {
+    "addItem": "Add Item",
+    "edit": "Edit",
+    "delete": "Delete",
+    "instructions": "Instructions",
+    "accessibility": "Accessibility",
+    "community": "Community",
+    "members": "Members",
+    "admin": "Admin",
+    "notFound": "Library not found"
+  },
   "items": {
     "addItem": "Add Item",
     "activity": "Activity",
@@ -365,6 +376,5 @@
     "borrowed": "Borrowed",
     "reserved": "Reserved",
     "returned": "Returned"
-
   }
 } 

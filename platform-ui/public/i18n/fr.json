@@ -379,5 +379,16 @@
     "borrowed": "Emprunté",
     "reserved": "Réservé",
     "returned": "Rendu"
+  },
+  "library": {
+    "addItem": "Ajouter un article",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "instructions": "Instructions",
+    "accessibility": "Accessibilité",
+    "community": "Communauté",
+    "members": "Membres",
+    "admin": "Administrateur",
+    "notFound": "Bibliothèque non trouvée"
   }
 }

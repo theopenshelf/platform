@@ -18,4 +18,9 @@
         >
         </item-card>
     </ng-template>
+
+    <ng-template #sidebarTemplate>
+        <ng-container *ngTemplateOutlet="libraryTemplate"></ng-container>
+
+    </ng-template>
 </filtered-and-paginated>
