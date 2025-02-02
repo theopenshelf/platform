@@ -66,6 +66,8 @@
     "seeDetails": "See details",
     "days": "day(s)",
     "borrowTitle": "Borrowed on {{startDate}}",
+    "pickUp": "Pick up",
+    "return": "Return",
     "status": {
       "impossible": "Impossible",
       "reserved": "Reserved",

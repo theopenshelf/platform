@@ -5,11 +5,29 @@
     @if (item()) {
       <div class="image-container" routerLink="/community/items/{{ item()!.id }}">
         <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
-        <button appearance="outline" class="accent details-button" size="m"
-          routerLink="/community/items/{{ item()!.id }}" tuiButton type="button">
-          <span class="details-button-text">{{ 'borrowRecordCard.seeDetails' | translate }}</span>
-          <tui-icon icon="@tui.arrow-right" />
-        </button>
+        
+        <div class="action-container">
+          @if (status() === UIBorrowRecordStatus.ReadyToPickup) {
+            <button appearance="accent" size="m" tuiButton type="button">
+              {{ 'borrowRecordCard.pickUp' | translate }}
+            </button>
+          } @else if (status() === UIBorrowRecordStatus.CurrentlyBorrowed 
+          || status() === UIBorrowRecordStatus.DueToday
+          || status() === UIBorrowRecordStatus.Late
+          ) {
+            <button appearance="accent" size="m" tuiButton type="button">
+              {{ 'borrowRecordCard.return' | translate }}
+            </button> 
+          } @else {
+            <button appearance="accent" [style.visibility]="'hidden'" size="m" tuiButton type="button">
+            </button>
+          }
+            <button appearance="outline" class="accent details-button" size="m"
+            routerLink="/community/items/{{ item()!.id }}" tuiButton type="button">
+              <span class="details-button-text">{{ 'borrowRecordCard.seeDetails' | translate }}</span>
+            <tui-icon icon="@tui.arrow-right" />
+          </button>
+        </div>
       </div>
     }
 

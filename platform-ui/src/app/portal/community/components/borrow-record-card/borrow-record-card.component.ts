@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
@@ -12,6 +12,7 @@ import { UIUser } from '../../../admin/services/users.service';
 import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
+
 @Component({
   selector: 'borrow-record-card',
   imports: [
@@ -25,7 +26,8 @@ import { UILibrary } from '../../models/UILibrary';
     BorrowRecordTimelineComponent,
     TuiInitialsPipe,
     TuiAutoColorPipe,
-    TranslateModule
+    TranslateModule,
+    TuiButton
   ],
   templateUrl: './borrow-record-card.component.html',
   styleUrl: './borrow-record-card.component.scss'
@@ -35,6 +37,8 @@ export class BorrowRecordCardComponent {
   public user = input<UIUser>();
   public library = input<UILibrary>();
   public item = input<UIItem>();
+
+  protected UIBorrowRecordStatus = UIBorrowRecordStatus;
 
   constructor(private translate: TranslateService) { }
 

@@ -34,18 +34,23 @@
                 object-fit: cover;
             }
 
-            .details-button {
-                position: absolute;
-                top: calc(100% - 70px);
-                left: 50%;
-                width: 85%;
-                transform: translateX(-50%);
-                background-color: #fff;
 
-                &:hover {
-                    background-color: #c8c8c8 !important;
+            .action-container {
+                position: absolute;
+                top: calc(100% - 100px);
+                left: 50%;
+                width: 100%;
+                transform: translateX(-50%);
+
+                button {
+                    width: 90%;
+                    margin-left: 5%;
+                    margin-right: 5%;
+                    margin-bottom: 5px;
                 }
+
             }
+
         }
 
         .record-content-container {
@@ -163,12 +168,16 @@
         object-fit: cover;
     }
 
-    .details-button {
+
+    .action-container {
         position: absolute;
         top: 210px;
         left: 50%;
         width: 85%;
         transform: translateX(-50%);
+    }
+
+    .details-button {
         margin-left: 0;
         background-color: #fff;
     }
@@ -269,14 +278,14 @@
     grid-template-columns: 6fr 6fr;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 400px) and (max-width: 768px) {
     .borrow-record-card {
         height: 100% !important;
     }
 
     .card-content {
         display: grid;
-        grid-template-columns: 2fr 10fr;
+        grid-template-columns: 3fr 9fr;
     }
 
     .details-button {
@@ -287,5 +296,27 @@
 
     .borrow-record-card {
         min-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .borrow-record-card {
+        height: 100% !important;
+    }
+
+    .details-button {
+        .details-button-text {
+            display: none;
+        }
+    }
+
+    .borrow-record-card {
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-content {
+        grid-template-columns: 4fr 8fr;
     }
 }
