@@ -8,14 +8,14 @@
         
         <div class="action-container">
           @if (status() === UIBorrowRecordStatus.ReadyToPickup) {
-            <button appearance="accent" size="m" tuiButton type="button">
+            <button appearance="accent" size="m" tuiButton type="button" routerLink="/community/items/{{ item()!.id }}" [queryParams]="{ ACTION: 'pickUp' }">
               {{ 'borrowRecordCard.pickUp' | translate }}
             </button>
           } @else if (status() === UIBorrowRecordStatus.CurrentlyBorrowed 
           || status() === UIBorrowRecordStatus.DueToday
           || status() === UIBorrowRecordStatus.Late
           ) {
-            <button appearance="accent" size="m" tuiButton type="button">
+            <button appearance="accent" size="m" tuiButton type="button" routerLink="/community/items/{{ item()!.id }}" [queryParams]="{ ACTION: 'return' }">
               {{ 'borrowRecordCard.return' | translate }}
             </button> 
           } @else {

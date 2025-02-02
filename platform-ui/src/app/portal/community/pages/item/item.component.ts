@@ -187,6 +187,24 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
       this.setItem(item);
+      this.route.queryParams.subscribe(params => {
+        const action = params['ACTION'];
+        switch (action) {
+          case 'return':
+            if (this.itemsCurrentlyBorrowed) {
+              this.returnItem(this.itemsCurrentlyBorrowed);
+            }
+            break;
+          case 'pickUp':
+            if (this.itemsReadyToPickup) {
+              this.pickUpItem(this.itemsReadyToPickup);
+            }
+            break;
+          // Add more cases if needed
+          default:
+            break;
+        }
+      });
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
