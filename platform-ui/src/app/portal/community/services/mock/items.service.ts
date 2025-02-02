@@ -260,6 +260,7 @@ export class MockItemsService implements ItemsService {
       startDate: new Date(startDate),
       endDate: new Date(endDate),
       reservationDate: new Date(),
+      pickupDate: undefined,
       effectiveReturnDate: undefined,
       borrowedBy: 'me@example.com',
     };
@@ -289,6 +290,13 @@ export class MockItemsService implements ItemsService {
     return of(item);
   }
 
+  pickupItem(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    borrowRecord.pickupDate = new Date();
+    return of(item);
+  }
   markAsFavorite(item: UIItem): Observable<void> {
     item.favorite = !item.favorite;
     return of(undefined);

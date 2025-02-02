@@ -15,6 +15,7 @@
   "timeline": {
     "reservation": "Reservation",
     "start": "Start",
+    "pickup": "Pickup",
     "end": "End",
     "return": "Return"
   },
@@ -68,6 +69,7 @@
     "status": {
       "impossible": "Impossible",
       "reserved": "Reserved",
+      "ready-to-pickup": "Ready to Pickup",
       "borrowed": "Currently Borrowed",
       "currentlyBorrowed": "Currently Borrowed",
       "currently-borrowed": "Currently Borrowed",
@@ -158,6 +160,13 @@
     "yesReturn": "Yes, It is returned",
     "noReturn": "No, I have not returned it yet",
     "returnSuccess": "Item returned successfully",
+    "pickUpLabel": "Pick up {{itemName}}",
+    "pickUpContent": "Confirm you have picked up {{itemName}} the {{endDate}}?",
+    "yesPickUp": "Yes, I have picked it up",
+    "noPickUp": "No, I have not picked it up yet",
+    "pickUpSuccess": "Item picked up successfully",
+    "itemReadyToPickup": "Item ready to pickup",
+    "pickUpItem": "Pick up item",
     "columns": {
       "image": "Image",
       "name": "Name",

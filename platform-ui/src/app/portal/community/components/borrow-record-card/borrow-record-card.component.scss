@@ -84,7 +84,8 @@
                 }
 
                 .record-status-returned-early,
-                .record-status-returned {
+                .record-status-returned,
+                .record-status-ready-to-pickup {
                     color: var(--tos-timeline-dot-success);
                 }
 

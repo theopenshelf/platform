@@ -117,6 +117,7 @@ export class ItemComponent implements OnInit {
   itemsReturned: UIBorrowRecord[] = [];
   itemsReserved: UIBorrowRecord[] = [];
   itemsCurrentlyBorrowed: UIBorrowRecord | undefined;
+  itemsReadyToPickup: UIBorrowRecord | undefined;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
@@ -238,6 +239,13 @@ export class ItemComponent implements OnInit {
           default:
             return false;
         }
+      }
+    );
+
+    this.itemsReadyToPickup = this.borrowItemRecordsForCurrentUser.find(
+      (record) => {
+        const status = getBorrowRecordStatus(record);
+        return status === UIBorrowRecordStatus.ReadyToPickup;
       }
     );
   }
@@ -412,6 +420,38 @@ export class ItemComponent implements OnInit {
                 this.setItem(item);
                 this.updateCellAvailability();
                 this.alerts.open(this.translate.instant('item.returnSuccess'), {
+                  appearance: 'success',
+                }).subscribe();
+              });
+            return EMPTY;
+          }
+          return EMPTY;
+        }),
+      )
+      .subscribe();
+  }
+
+  pickUpItem(borrowRecord: UIBorrowRecord) {
+    const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: this.translate.instant('item.pickUpLabel', { itemName: this.item?.name }),
+        size: 'm',
+        data: {
+          content: this.translate.instant('item.pickUpContent', { itemName: this.item?.name, endDate }),
+          yes: this.translate.instant('item.yesPickUp'),
+          no: this.translate.instant('item.noPickUp'),
+        },
+      })
+      .pipe(
+        switchMap((response) => {
+          if (response) {
+            this.itemsService
+              .pickupItem(this.item!, borrowRecord)
+              .subscribe((item) => {
+                this.setItem(item);
+                this.updateCellAvailability();
+                this.alerts.open(this.translate.instant('item.pickUpSuccess'), {
                   appearance: 'success',
                 }).subscribe();
               });

@@ -4,12 +4,14 @@ export interface UIBorrowRecord {
   startDate: Date;
   endDate: Date;
   reservationDate: Date;
+  pickupDate?: Date;
   effectiveReturnDate?: Date;
 }
 
 export enum UIBorrowRecordStatus {
   Impossible = 'impossible',
   Reserved = 'reserved',
+  ReadyToPickup = 'ready-to-pickup',
   CurrentlyBorrowed = 'currently-borrowed',
   ReturnedEarly = 'returned-early',
   Returned = 'returned',
@@ -21,41 +23,52 @@ export enum UIBorrowRecordStatus {
 export function getBorrowRecordStatus(borrowRecord: UIBorrowRecord): UIBorrowRecordStatus {
   const now = new Date();
 
-  var status: UIBorrowRecordStatus = UIBorrowRecordStatus.Impossible;
-
   if (now < borrowRecord.reservationDate) {
-    status = UIBorrowRecordStatus.Reserved;
-  } else if (now < borrowRecord.startDate) {
-    status = UIBorrowRecordStatus.Reserved;
-  } else if (now < borrowRecord.endDate) {
+    return UIBorrowRecordStatus.Reserved;
+  } else if (now < borrowRecord.startDate && (!borrowRecord.pickupDate || now < borrowRecord.pickupDate!)) {
+    return UIBorrowRecordStatus.Reserved;
+  }
+
+  if (!borrowRecord.pickupDate) {
+    if (borrowRecord.startDate! <= now) {
+      return UIBorrowRecordStatus.ReadyToPickup;
+    } else {
+      return UIBorrowRecordStatus.Reserved;
+    }
+  }
+
+  if (now < borrowRecord.endDate) {
 
     if (borrowRecord.effectiveReturnDate) {
-      status = UIBorrowRecordStatus.ReturnedEarly;
+      return UIBorrowRecordStatus.ReturnedEarly;
     } else {
-      status = UIBorrowRecordStatus.CurrentlyBorrowed;
+      return UIBorrowRecordStatus.CurrentlyBorrowed;
     }
-  } else if (borrowRecord.endDate === now) {
+  }
+
+  if (borrowRecord.endDate === now) {
     if (borrowRecord.effectiveReturnDate) {
-      status = UIBorrowRecordStatus.Returned;
+      return UIBorrowRecordStatus.Returned;
     } else {
-      status = UIBorrowRecordStatus.DueToday;
+      return UIBorrowRecordStatus.DueToday;
     }
-  } else if (borrowRecord.endDate < now) {
+  }
+
+  if (borrowRecord.endDate < now) {
     if (borrowRecord.effectiveReturnDate) {
       if (borrowRecord.effectiveReturnDate! < borrowRecord.endDate) {
-        status = UIBorrowRecordStatus.ReturnedEarly;
+        return UIBorrowRecordStatus.ReturnedEarly;
       } else if (borrowRecord.effectiveReturnDate! > borrowRecord.endDate) {
-        status = UIBorrowRecordStatus.ReturnedLate;
+        return UIBorrowRecordStatus.ReturnedLate;
       } else {
-        status = UIBorrowRecordStatus.Returned;
+        return UIBorrowRecordStatus.Returned;
       }
     } else {
-      status = UIBorrowRecordStatus.Late;
+      return UIBorrowRecordStatus.Late;
     }
   } else {
-    status = UIBorrowRecordStatus.Impossible;
+    return UIBorrowRecordStatus.Impossible;
   }
-  return status;
 }
 
 export function getBorrowDurationInDays(borrowRecord: UIBorrowRecord): number {

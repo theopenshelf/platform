@@ -47,6 +47,8 @@ export class BorrowRecordCardComponent {
         return '@tui.x';
       case UIBorrowRecordStatus.Reserved:
         return '@tui.clock';
+      case UIBorrowRecordStatus.ReadyToPickup:
+        return '/borrow.png';
       case UIBorrowRecordStatus.CurrentlyBorrowed:
         return '/borrow.png';
       case UIBorrowRecordStatus.ReturnedEarly:

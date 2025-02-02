@@ -13,12 +13,26 @@
         {{ itemsCurrentlyBorrowed.startDate | date: "MMM d, y" }} -
         {{ itemsCurrentlyBorrowed.endDate | date: "MMM d, y" }}
       </div>
-      <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="primary" size="m" tuiButton
+      <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="accent" size="m" tuiButton
         type="button">
         {{ 'item.returnItem' | translate }}
       </button>
     </div>
     }
+    @if (itemsReadyToPickup) {
+      <div class="return-item-container">
+        <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
+        <div class="return-item-details">
+          <tui-icon icon="@tui.calendar-clock" />
+          {{ itemsReadyToPickup.startDate | date: "MMM d, y" }} -
+          {{ itemsReadyToPickup.endDate | date: "MMM d, y" }}
+        </div>
+        <button class="return-item" (click)="pickUpItem(itemsReadyToPickup)" appearance="accent" size="m" tuiButton
+          type="button">
+          {{ 'item.pickUpItem' | translate }}
+        </button>
+      </div>
+      }
     <div class="sidebar-borrow-container">
       <div class="sidebar-header">
         <div class="sidebar-title">

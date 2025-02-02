@@ -14,7 +14,7 @@ export interface GetItemsParams {
   categories?: string[];
   searchText?: string;
   currentlyAvailable?: boolean;
-  sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+  sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
   sortOrder?: 'asc' | 'desc' | undefined;
   page?: number;
   pageSize?: number;
@@ -33,6 +33,11 @@ export interface ItemsService {
     item: UIItem,
     startDate: string,
     endDate: string,
+  ): Observable<UIItem>;
+
+  pickupItem(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
   ): Observable<UIItem>;
 
   cancelReservation(

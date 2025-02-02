@@ -142,8 +142,11 @@ export class APIItemsService implements ItemsService {
       [UIBorrowStatus.Reserved]: 'reserved',
     };
 
-    let sortByValue: 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+    let sortByValue: 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
     switch (sortBy) {
+      case 'pickupDate':
+        sortByValue = 'pickupDate';
+        break;
       case 'reservationDate':
         sortByValue = 'reservationDate';
         break;
@@ -198,6 +201,9 @@ export class APIItemsService implements ItemsService {
                   : undefined,
                 effectiveReturnDate: record.effectiveReturnDate
                   ? new Date(record.effectiveReturnDate)
+                  : undefined,
+                pickupDate: record.pickupDate
+                  ? new Date(record.pickupDate)
                   : undefined,
                 item: ({
                   id: record.item.id,
@@ -352,6 +358,32 @@ export class APIItemsService implements ItemsService {
               endDate: record.endDate ? new Date(record.endDate) : undefined,
               borrowedBy: record.borrowedBy,
               reservationDate: new Date()
+            }) as UIBorrowRecord,
+        ),
+      })));
+  }
+
+
+  pickupItem(
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    return this.itemsApiService
+      .pickupItem(item.id, { borrowRecordId: borrowRecord.id })
+      .pipe(map((item: Item) => ({
+        ...item,
+        createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              id: record.id,
+              startDate: record.startDate
+                ? new Date(record.startDate)
+                : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              borrowedBy: record.borrowedBy,
+              reservationDate: new Date(record.reservationDate),
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
             }) as UIBorrowRecord,
         ),
       })));

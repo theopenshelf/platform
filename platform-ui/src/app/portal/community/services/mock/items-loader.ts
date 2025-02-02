@@ -57,6 +57,7 @@ export const loadItems = (): UIItem[] => {
             startDate: new Date(record.startDate),
             endDate: new Date(record.endDate),
             reservationDate: new Date(record.reservationDate),
+            pickupDate: record.pickupDate ? new Date(record.pickupDate) : null,
             effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : null,
             borrowedBy: record.borrowedBy,
           }) as UIBorrowRecord,

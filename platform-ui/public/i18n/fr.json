@@ -15,6 +15,7 @@
   "timeline": {
     "reservation": "Réservation",
     "start": "Début",
+    "pickup": "Retrait",
     "end": "Fin",
     "return": "Retour"
   },
@@ -69,6 +70,7 @@
     "status": {
       "impossible": "Impossible",
       "reserved": "Réservé",
+      "ready-to-pickup": "Prêt à retirer",
       "currentlyBorrowed": "Actuellement emprunté",
       "currently-borrowed": "Actuellement emprunté",
       "returnedEarly": "En avance",
@@ -158,6 +160,14 @@
     "yesReturn": "Oui, il est rendu",
     "noReturn": "Non, je ne l'ai pas encore rendu",
     "returnSuccess": "Article rendu avec succès",
+    "pickUpLabel": "Récupérer {{itemName}}",
+    "pickUpContent": "Confirmez-vous avoir récupéré {{itemName}} le {{endDate}} ?",
+    "yesPickUp": "Oui, je l'ai récupéré",
+    "noPickUp": "Non, pas encore",
+    "pickUpSuccess": "Article récupéré avec succès",
+    "itemReadyToPickup": "Article prêt à être récupéré",
+    "pickUpItem": "Récupérer l'article",
+  
     "columns": {
       "image": "Image",
       "name": "Nom",
