@@ -169,6 +169,16 @@
     "pickUpSuccess": "Item picked up successfully",
     "itemReadyToPickup": "Item ready to pickup",
     "pickUpItem": "Pick up item",
+    "itemAvailable": "Item is available",
+    "borrowItem": "Borrow item now",
+    "pickUpItemEarly": "Pick up item early",
+    "dateRanges": {
+      "today": "Today",
+      "twoDays": "2 days",
+      "threeDays": "3 days",
+      "oneWeek": "One week",
+      "twoWeeks": "Two weeks"
+    },
     "columns": {
       "image": "Image",
       "name": "Name",

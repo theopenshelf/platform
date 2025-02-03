@@ -6,7 +6,7 @@ import {
   INJECTOR,
   Injector,
   input,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -27,6 +27,7 @@ import {
   TUI_MONTHS,
   TuiAlertService,
   TuiButton,
+  TuiDialogContext,
   TuiDialogService,
   TuiHint,
   TuiIcon,
@@ -37,9 +38,9 @@ import {
   TUI_CONFIRM,
   TuiConfirmData,
 } from '@taiga-ui/kit';
-import { TuiCalendarRange } from '@taiga-ui/kit/components/calendar-range';
+import { TuiCalendarRange, TuiDayRangePeriod } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
-import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { PolymorpheusComponent, PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
@@ -325,6 +326,38 @@ export class ItemComponent implements OnInit {
     }
   }
 
+  public borrowItemConfirmation(): void {
+    this.itemsService
+      .borrowItem(
+        this.item!,
+        this.selectedDate?.from
+          .toLocalNativeDate()
+          .toISOString()
+          .split('T')[0] ?? '',
+        this.selectedDate?.to
+          .toLocalNativeDate()
+          .toISOString()
+          .split('T')[0] ?? '',
+      )
+      .pipe(
+        tap((item) => {
+          this.item = item;
+          this.alerts
+            .open(
+              this.translate.instant('item.borrowSuccess', {
+                itemName: this.item?.name,
+                startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+                endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+              }),
+              { appearance: 'positive' },
+            )
+            .subscribe();
+          this.router.navigate(['/community/borrowed-items'], { queryParams: { selectedStatus: 'reserved' } });
+        }),
+      )
+      .subscribe();
+  }
+
   borrowItem() {
     const data: TuiConfirmData = {
       content: this.translate.instant('item.confirmBorrowContent', {
@@ -345,34 +378,7 @@ export class ItemComponent implements OnInit {
       .pipe(
         switchMap((response) => {
           if (response) {
-            return this.itemsService
-              .borrowItem(
-                this.item!,
-                this.selectedDate?.from
-                  .toLocalNativeDate()
-                  .toISOString()
-                  .split('T')[0] ?? '',
-                this.selectedDate?.to
-                  .toLocalNativeDate()
-                  .toISOString()
-                  .split('T')[0] ?? '',
-              )
-              .pipe(
-                tap((item) => {
-                  this.item = item;
-                  this.alerts
-                    .open(
-                      this.translate.instant('item.borrowSuccess', {
-                        itemName: this.item?.name,
-                        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
-                        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
-                      }),
-                      { appearance: 'positive' },
-                    )
-                    .subscribe();
-                  this.router.navigate(['/community/borrowed-items'], { queryParams: { selectedStatus: 'reserved' } });
-                }),
-              );
+            this.borrowItemConfirmation();
             return EMPTY;
           }
           return EMPTY;
@@ -484,6 +490,51 @@ export class ItemComponent implements OnInit {
   markAsFavorite() {
     this.itemsService.markAsFavorite(this.item!);
   }
+
+
+  borrowNowDialog(content: PolymorpheusContent<TuiDialogContext>): void {
+    this.selectedDate = new TuiDayRange(
+      TuiDay.fromLocalNativeDate(new Date()),
+      TuiDay.fromLocalNativeDate(new Date()),
+    );
+
+    this.suggestedDates = [
+      new TuiDayRangePeriod(
+        new TuiDayRange(today, today),
+        this.translate.instant('item.dateRanges.today'),
+        ({ $implicit }) => `${this.translate.instant('item.dateRanges.today')} (${$implicit.from})`,
+      ),
+      new TuiDayRangePeriod(
+        new TuiDayRange(today, today.append({ day: 2 })),
+        this.translate.instant('item.dateRanges.twoDays'),
+        ({ $implicit }) => `${this.translate.instant('item.dateRanges.twoDays')} (${$implicit.from})`,
+      ),
+      new TuiDayRangePeriod(
+        new TuiDayRange(today, today.append({ day: 3 })),
+        this.translate.instant('item.dateRanges.threeDays'),
+        ({ $implicit }) => `${this.translate.instant('item.dateRanges.threeDays')} (${$implicit.from})`,
+      ),
+      new TuiDayRangePeriod(
+        new TuiDayRange(today, today.append({ day: 7 })),
+        this.translate.instant('item.dateRanges.oneWeek'),
+        ({ $implicit }) => `${this.translate.instant('item.dateRanges.oneWeek')} (${$implicit.from})`,
+      ),
+      new TuiDayRangePeriod(
+        new TuiDayRange(today, today.append({ day: 14 })),
+        this.translate.instant('item.dateRanges.twoWeeks'),
+        ({ $implicit }) => `${this.translate.instant('item.dateRanges.twoWeeks')} (${$implicit.from})`,
+      ),
+    ]
+    this.control.setValue(new TuiDayRange(today, today));
+    this.dialogs
+      .open<any>(content)
+      .subscribe((observer) => {
+        this.borrowItemConfirmation();
+        observer.complete(); // Close the dialog after confirmation
+      });
+
+  }
+
   protected getCategoryBadgeClass(category: string): string {
     switch (category) {
       case 'books':
@@ -501,11 +552,13 @@ export class ItemComponent implements OnInit {
 
   private readonly injector = inject(INJECTOR);
   private readonly months$ = inject(TUI_MONTHS);
-  private readonly control;
+  public readonly control;
 
   private readonly dialog$: Observable<TuiDayRange>;
 
   protected readonly date$;
+
+  protected suggestedDates: TuiDayRangePeriod[] = [];
 
   protected get empty(): boolean {
     return !this.control.value;
@@ -537,5 +590,35 @@ export class ItemComponent implements OnInit {
       return date.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
     }
     return null;
+  }
+
+  isItemAvailable(): boolean {
+    const today = new Date();
+    return !this.item?.borrowRecords.some((record) => {
+      const pickupDate = record.pickupDate ? new Date(record.pickupDate) : new Date(record.startDate);
+      const endDate = new Date(record.endDate);
+
+      // If there's no effectiveReturnDate, the item is still borrowed
+      if (!record.effectiveReturnDate) {
+        return false;
+      }
+
+      // If effectiveReturnDate is set, check if the item was returned early
+      const effectiveReturnDate = new Date(record.effectiveReturnDate);
+      return pickupDate <= today && today < effectiveReturnDate;
+    });
+  }
+
+  isNextReservationStartingSoon(): boolean {
+    if (!this.nextReservation) {
+      return false;
+    }
+
+    const today = new Date();
+    const startDate = new Date(this.nextReservation.startDate);
+    const timeDifference = startDate.getTime() - today.getTime();
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+    return daysDifference < 2;
   }
 }

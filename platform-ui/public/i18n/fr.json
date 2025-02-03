@@ -168,7 +168,16 @@
     "pickUpSuccess": "Article récupéré avec succès",
     "itemReadyToPickup": "Article prêt à être récupéré",
     "pickUpItem": "Récupérer l'article",
-  
+    "itemAvailable": "Article disponible",
+    "borrowItem": "Emprunter l'article maintenant",
+    "pickUpItemEarly": "Récupérer l'article en avance",
+    "dateRanges": {
+      "today": "Aujourd'hui",
+      "twoDays": "2 jours",
+      "threeDays": "3 jours",
+      "oneWeek": "Une semaine",
+      "twoWeeks": "Deux semaines"
+    },
     "columns": {
       "image": "Image",
       "name": "Nom",

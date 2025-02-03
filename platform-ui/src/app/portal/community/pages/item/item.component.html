@@ -19,7 +19,7 @@
       </button>
     </div>
     }
-    @if (itemsReadyToPickup) {
+    @else if (itemsReadyToPickup) {
       <div class="return-item-container">
         <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
         <div class="return-item-details">
@@ -32,6 +32,29 @@
           {{ 'item.pickUpItem' | translate }}
         </button>
       </div>
+      } @else if (isItemAvailable()) {
+        @if (isNextReservationStartingSoon()) {
+          <div class="return-item-container">
+            <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
+            <div class="return-item-details">
+              <tui-icon icon="@tui.calendar-clock" />
+              {{ nextReservation!.startDate | date: "MMM d, y" }} -
+              {{ nextReservation!.endDate | date: "MMM d, y" }}
+            </div>
+            <button class="return-item" (click)="pickUpItem(nextReservation!)" appearance="accent" size="m" tuiButton
+              type="button">
+              {{ 'item.pickUpItemEarly' | translate }}
+            </button>
+          </div>
+        } @else {
+          <div class="return-item-container">
+            <h2>{{ 'item.itemAvailable' | translate }}</h2>
+            <button class="borrow-item-now" appearance="accent" size="m" tuiButton
+              type="button" (click)="borrowNowDialog(borrowNowDialogTemplate)">
+              {{ 'item.borrowItem' | translate }}
+            </button>
+          </div>
+        }
       }
     <div class="sidebar-borrow-container">
       <div class="sidebar-header">
@@ -73,7 +96,7 @@
           {{ 'item.selectDateToBorrow' | translate }}
         </tui-notification>
         
-        <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="accent" size="m"
+        <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary" size="m"
           [disabled]="!selectedDate" tuiButton type="button">
           {{ 'item.borrow' | translate }}
         </button>
@@ -136,3 +159,39 @@
   </div>
 </div>
 }
+
+
+<ng-template
+  #borrowNowDialogTemplate
+  let-observer
+>
+  <h2>{{ 'item.borrowLabel' | translate: { itemName: item?.name } }}</h2> 
+
+  <tui-input-date-range
+    [formControl]="control"
+    [items]="suggestedDates"
+  >
+    Choose dates
+  </tui-input-date-range>
+
+
+  <div class="button-container">
+     <button
+        size="m"
+        appearance="flat"
+        tuiButton
+        type="button"   
+        (click)="observer.complete()"
+    >
+        {{ 'item.cancel' | translate }}
+    </button>
+    <button
+        size="m"
+        tuiButton
+        type="button"
+        (click)="observer.next(observer)"
+    >
+        {{ 'item.yesBorrow' | translate }}
+    </button>
+    </div>
+</ng-template>
