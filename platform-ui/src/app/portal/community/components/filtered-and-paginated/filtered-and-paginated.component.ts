@@ -366,6 +366,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
 
   protected selectStatus(status: UIBorrowStatus): void {
     this.selectedStatus = status;
+    this.currentPage = 0;
     this.fetchItems();
     this.updateQueryParams();
   }

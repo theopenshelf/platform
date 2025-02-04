@@ -15,6 +15,7 @@
             [item]="item.item"
             [borrowRecord]="item"
             [library]="getLibrary(item.item.libraryId)"
+            [user]="usersByEmail.get(item.borrowedBy)"
         ></borrow-record-card>
     </ng-template>
 </filtered-and-paginated>

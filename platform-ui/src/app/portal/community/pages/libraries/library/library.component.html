@@ -3,30 +3,6 @@
   <div>{{ 'library.notFound' | translate }}</div>
   }
   @if (library) {
-
-    <div [style.display]="'none'" class="library-header">
-
-      <div class="library-section">
-        <div class="library-actions">
-          <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
-            routerLink="/community/libraries/{{ library.id }}/edit"></button>
-          <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
-            (click)="deleteLibrary(library)"></button>
-        </div>
-        <h1>
-          <tui-icon icon="@tui.library" />
-          {{ library.name }}
-        </h1>
-
-        <p>{{ library.location.name }}</p>
-        <p><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</p>
-      </div>
-      <div class="library-section">
-        <h3>{{ 'library.instructions' | translate }}</h3>
-        <div class="rich-description" [innerHTML]="library.instructions"></div>
-      </div>
-    </div>
-
     <div class="library-header">
       <div class="library-header-top">
         <svg
@@ -92,7 +68,7 @@
       <a class="library-section library-action" 
         routerLink="/community/libraries/{{ library.id }}/items"
         routerLinkActive="active"
-        (click)="tabOpened = 'items'"
+        (click)="onTabChange('items')"
       >
         <tui-icon icon="@tui.package" />
         {{ 'library.items' | translate }}
@@ -101,7 +77,7 @@
       <a class="library-section library-action" 
         routerLink="/community/libraries/{{ library.id }}/borrow-records"
         routerLinkActive="active"
-        (click)="tabOpened = 'borrow-records'"
+        (click)="onTabChange('borrow-records')"
       >
         <tui-icon icon="/borrow.png" />
         {{ 'library.borrow-records' | translate }}

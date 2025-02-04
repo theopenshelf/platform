@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
-import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
+import { UIUser, UsersService } from '../../../admin/services/users.service';
+import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
@@ -38,18 +39,22 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
   currentUser: UserInfo;
   libraries: UILibrary[] = [];
 
-  public getItemsParams = input<GetItemsParams>({});
+  public getItemsParams = input<GetItemsParams>({
+    borrowedByCurrentUser: true,
+  });
   public enableStatusFiltering = input<boolean>(false);
   public enableCategoriesFiltering = input<boolean>(true);
   public categoriesFilteringOpened = input<boolean>(true);
   public enableSearchBar = input<boolean>(false);
   public sortingOptions = input<string[]>(FilteredAndPaginatedBorrowRecordsComponent.defaultSortingOptions);
 
+  public usersByEmail: Map<string, UIUser> = new Map();
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) protected categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) protected librariesService: LibrariesService,
+    @Inject(USERS_SERVICE_TOKEN) protected usersService: UsersService,
     @Inject(AUTH_SERVICE_TOKEN) protected authService: AuthService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
@@ -63,6 +68,12 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
     this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });
+
+    if (!this.getItemsParams().borrowedByCurrentUser) {
+      this.usersService.getUsers().subscribe((users) => {
+        this.usersByEmail = new Map(users.map(user => [user.email, user]));
+      });
+    }
   }
 
 

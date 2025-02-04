@@ -141,14 +141,15 @@ export class MockItemsService implements ItemsService {
       page = 0,
       pageSize = 10,
     } = params;
-
     let filteredRecords: UIBorrowRecordStandalone[] = [];
 
     // Filter records based on the borrowedBy parameter
     this.items.forEach(item => {
       item.borrowRecords.forEach(record => {
-        if (borrowedByCurrentUser && record.borrowedBy === 'me@example.com') {
-          filteredRecords.push({ ...record, item });
+        if (borrowedByCurrentUser) {
+          if (record.borrowedBy === 'me@example.com') {
+            filteredRecords.push({ ...record, item });
+          }
         } else if (borrowedBy && record.borrowedBy === borrowedBy) {
           filteredRecords.push({ ...record, item });
         } else {

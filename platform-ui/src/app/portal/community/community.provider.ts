@@ -11,12 +11,15 @@ import { MockHelpService } from './services/mock/help.service';
 import { MockItemsService } from './services/mock/items.service';
 import { MockLibrariesService } from './services/mock/libraries.service';
 import { MockProfileService } from './services/mock/profile.service';
+import { MockUsersService } from './services/mock/users.service';
 import { ProfileService } from './services/profile.service';
 import { APICategoriesService } from './services/real-api/categories.service';
 import { APICustomPageService } from './services/real-api/custom-pages.service';
 import { APIHelpService } from './services/real-api/help.service';
 import { APIItemsService } from './services/real-api/items.service';
 import { ApiProfileService } from './services/real-api/profile.service';
+import { APIUsersService } from './services/real-api/users.service';
+import { UsersService } from './services/users.service';
 
 export const ITEMS_SERVICE_TOKEN = new InjectionToken<ItemsService>(
   'ItemsService',
@@ -35,6 +38,9 @@ export const HELP_SERVICE_TOKEN = new InjectionToken<HelpService>(
 );
 export const CUSTOM_PAGE_SERVICE_TOKEN = new InjectionToken<CustomPageService>(
   'CustomPageService',
+);
+export const USERS_SERVICE_TOKEN = new InjectionToken<UsersService>(
+  'UsersService',
 );
 
 export const communityProviders: Provider[] = [
@@ -71,5 +77,11 @@ export const communityProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockCustomPageService
       : APICustomPageService,
+  },
+  {
+    provide: USERS_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockUsersService
+      : APIUsersService,
   },
 ];

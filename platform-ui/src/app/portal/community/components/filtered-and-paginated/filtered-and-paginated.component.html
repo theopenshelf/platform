@@ -95,6 +95,8 @@
 
   @if (!enableSearchBar()) {
   <aside class="sidebar">
+    <ng-container *ngTemplateOutlet="sidebarTemplate"></ng-container>
+
     <div class="top-actions-left">
       <fieldset tuiTextfieldSize="m" class="search">
         <tui-textfield iconStart="@tui.search">
@@ -137,7 +139,6 @@
     </tui-accordion>
     }
 
-    <ng-container *ngTemplateOutlet="sidebarTemplate"></ng-container>
   </aside>
   }
 

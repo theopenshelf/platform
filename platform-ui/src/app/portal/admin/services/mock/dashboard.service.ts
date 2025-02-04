@@ -33,7 +33,7 @@ export class MockDashboardService implements DashboardService {
 
 
   getUserCount(): Observable<number> {
-    return of(this.usersService.users.length);
+    return of(this.usersService.allUsers.length);
   }
 
   getItemCount(): Observable<number> {
@@ -55,7 +55,7 @@ export class MockDashboardService implements DashboardService {
   }
 
   getTopBorrowers(): Observable<UIBorrowerMetrics[]> {
-    const users = this.usersService.users;
+    const users = this.usersService.allUsers;
     const items = this.itemsService.items;
 
     // Create a map to store borrow counts for each user

@@ -84,6 +84,7 @@ export class LibraryComponent {
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
+    this.getItemsParams = { libraryIds: [libraryId!] };
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
@@ -129,6 +130,26 @@ export class LibraryComponent {
         }),
       )
       .subscribe();
+  }
+
+  onTabChange(tab: 'items' | 'borrow-records'): void {
+    this.tabOpened = tab;
+    var queryParams: any = {};
+
+    let path = `/community/libraries/${this.library?.id}`;
+
+    if (tab === 'borrow-records') {
+      path += '/borrow-records';
+      queryParams['selectedStatus'] = 'borrowed';
+    } else {
+      path += '/items';
+      queryParams['selectedStatus'] = undefined;
+
+    }
+    this.router.navigate([path], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
   }
 
 }
