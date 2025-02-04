@@ -4,10 +4,140 @@
   }
   @if (library) {
 
+    <div [style.display]="'none'" class="library-header">
+
+      <div class="library-section">
+        <div class="library-actions">
+          <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+            routerLink="/community/libraries/{{ library.id }}/edit"></button>
+          <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+            (click)="deleteLibrary(library)"></button>
+        </div>
+        <h1>
+          <tui-icon icon="@tui.library" />
+          {{ library.name }}
+        </h1>
+
+        <p>{{ library.location.name }}</p>
+        <p><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</p>
+      </div>
+      <div class="library-section">
+        <h3>{{ 'library.instructions' | translate }}</h3>
+        <div class="rich-description" [innerHTML]="library.instructions"></div>
+      </div>
+    </div>
+
+    <div class="library-header">
+      <div class="library-header-top">
+        <svg
+              viewBox="0 0 960 540"
+              width="100%"
+              height="100%"
+              preserveAspectRatio="xMidYMax slice"
+              xmlns="http://www.w3.org/2000/svg"
+              class="background-motif"
+          >
+              <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="100"
+                  class="text-gray-700 opacity-25"
+              >
+                  <circle
+                      r="234"
+                      cx="196"
+                      cy="23"
+                  ></circle>
+                  <circle
+                      r="234"
+                      cx="790"
+                      cy="491"
+                  ></circle>
+              </g>
+          </svg>
+        <h2>{{ 'library.instructions' | translate }}</h2>
+        <div class="rich-description" [innerHTML]="library.instructions"></div>
+        
+        
+      </div>
+      <div class="library-header-bottom">
+
+        <div class="library-header-icon-container">
+          <div class="library-header-icon">
+            <tui-icon icon="@tui.library" />
+          </div>
+        </div>
+        <div class="library-header-title">
+          <h1>
+            {{ library.name }}
+          </h1>
+          <div class="library-header-subtitle">
+            <span>{{ library.location.name }}</span>
+            <span><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</span>
+          </div>
+        </div>
+        <div class="library-header-actions">
+          <div class="library-actions">
+            <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+              routerLink="/community/libraries/{{ library.id }}/edit"></button>
+            <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+              (click)="deleteLibrary(library)"></button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <nav id="library-menu">
+      <a class="library-section library-action" 
+        routerLink="/community/libraries/{{ library.id }}/items"
+        routerLinkActive="active"
+        (click)="tabOpened = 'items'"
+      >
+        <tui-icon icon="@tui.package" />
+        {{ 'library.items' | translate }}
+      </a>
+
+      <a class="library-section library-action" 
+        routerLink="/community/libraries/{{ library.id }}/borrow-records"
+        routerLinkActive="active"
+        (click)="tabOpened = 'borrow-records'"
+      >
+        <tui-icon icon="/borrow.png" />
+        {{ 'library.borrow-records' | translate }}
+      </a>      
+    </nav>
+
+    @if (tabOpened === 'items') {
+    <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
+      <ng-template #libraryTemplate>
+        <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m" tuiButton type="button">
+          <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
+          {{ 'library.addItem' | translate }}
+        </button>
+
+      </ng-template>
+  
+    </filtered-and-paginated-items>
+    }
+
+    @if (tabOpened === 'borrow-records') {
+      <filtered-and-paginated-borrow-records         [enableStatusFiltering]="true"      [getItemsParams]="getItemsParams">
+      </filtered-and-paginated-borrow-records>
+    }
+  }
+
+</div>
+
+<div class="library-container" [style.display]="'none'">
+  @if (!library) {
+  <div>{{ 'library.notFound' | translate }}</div>
+  }
+  @if (library) {
+
   <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
     <ng-template #libraryTemplate>
-      <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m"
-        tuiButton type="button">
+      <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m" tuiButton type="button">
         <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
         {{ 'library.addItem' | translate }}
       </button>

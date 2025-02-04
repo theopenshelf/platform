@@ -33,6 +33,7 @@ import { EMPTY, switchMap } from 'rxjs';
 import {
   LIBRARIES_SERVICE_TOKEN
 } from '../../../community.provider';
+import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { UILibrary } from '../../../models/UILibrary';
 import { GetItemsParams } from '../../../services/items.service';
@@ -59,6 +60,7 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiDataListWrapper,
     TuiSelectModule,
     FilteredAndPaginatedItemsComponent,
+    FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule
   ],
   templateUrl: './library.component.html',
@@ -68,6 +70,7 @@ export class LibraryComponent {
   public getItemsParams: GetItemsParams = { libraryIds: [] };
 
   library: UILibrary | undefined;
+  tabOpened: 'items' | 'borrow-records' = 'items';
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
@@ -82,12 +85,21 @@ export class LibraryComponent {
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
     if (libraryId) {
-
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
         this.getItemsParams = { libraryIds: [this.library.id] };
       });
     }
+
+    // Check the current route to set the tabOpened property
+    this.route.url.subscribe(urlSegments => {
+      const path = urlSegments.map(segment => segment.path).join('/');
+      if (path.includes('borrow-records')) {
+        this.tabOpened = 'borrow-records';
+      } else {
+        this.tabOpened = 'items';
+      }
+    });
   }
 
   deleteLibrary(library: UILibrary): void {

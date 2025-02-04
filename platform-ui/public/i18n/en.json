@@ -102,6 +102,7 @@
     "itemsCount": "{{count}} item(s)",
     "seeItems": "See items"
   },
+
   "sortBy": {
     "filter": "Sort by"
   },
@@ -333,7 +334,9 @@
     "community": "Community",
     "members": "Members",
     "admin": "Admin",
-    "notFound": "Library not found"
+    "notFound": "Library not found",
+    "items": "Items",
+    "borrow-records": "Borrow Records"
   },
   "items": {
     "addItem": "Add Item",

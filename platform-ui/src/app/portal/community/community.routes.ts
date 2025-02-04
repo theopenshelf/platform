@@ -28,6 +28,8 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'libraries/add-library', component: EditLibraryComponent },
       { path: 'libraries/:id', component: LibraryComponent },
       { path: 'libraries/:id/edit', component: EditLibraryComponent },
+      { path: 'libraries/:id/items', component: LibraryComponent },
+      { path: 'libraries/:id/borrow-records', component: LibraryComponent },
       { path: 'wishlist', component: WishlistComponent },
       { path: 'help-center', component: HelpCenterComponent },
       { path: 'page/:ref', component: CustomPageComponent },

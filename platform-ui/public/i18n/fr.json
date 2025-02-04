@@ -409,6 +409,8 @@
     "community": "Communauté",
     "members": "Membres",
     "admin": "Administrateur",
-    "notFound": "Bibliothèque non trouvée"
+    "notFound": "Bibliothèque non trouvée",
+    "items": "Articles",
+    "borrow-records": "Historique des emprunts"
   }
 }
