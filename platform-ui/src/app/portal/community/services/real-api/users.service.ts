@@ -12,7 +12,7 @@ export class APIUsersService implements UsersService {
     constructor(private usersApiService: UsersCommunityApiService) { }
 
     getUsers(): Observable<UIUser[]> {
-        return this.usersApiService.getUsers().pipe(
+        return this.usersApiService.getCommunityUsers().pipe(
             map((users: User[]) =>
                 users.map(
                     (user: User) =>
@@ -27,7 +27,7 @@ export class APIUsersService implements UsersService {
     }
 
     getUser(userId: string): Observable<UIUser> {
-        return this.usersApiService.getUserById(userId).pipe(
+        return this.usersApiService.getCommunityUserById(userId).pipe(
             map((user: User) => user as UIUser),
         );
     }

@@ -1465,7 +1465,7 @@ paths:
 
   /community/users:
     get:
-      operationId: getUsers
+      operationId: getCommunityUsers
       summary: Retrieve all users
       tags:
         - users-community-api
@@ -1489,7 +1489,7 @@ paths:
           type: string
           format: uuid
     get:
-      operationId: getUserById
+      operationId: getCommunityUserById
       summary: Retrieve a specific user by ID
       tags:
         - users-community-api
