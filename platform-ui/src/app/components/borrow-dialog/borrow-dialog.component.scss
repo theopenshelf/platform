@@ -1,0 +1,17 @@
+:host {
+    display: block;
+    padding: 1.5rem;
+    margin: auto;
+    border-radius: 0.75rem;
+    background: var(--tui-background-base);
+    animation:
+        tuiReveal var(--tui-duration),
+        tuiFadeIn var(--tui-duration);
+    width: 500px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin: 1.5rem 0 0;
+}

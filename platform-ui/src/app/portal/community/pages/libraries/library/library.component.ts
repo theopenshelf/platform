@@ -82,6 +82,8 @@ export class LibraryComponent {
   ) {
   }
 
+  isCssLoaded = false;
+
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
     this.getItemsParams = { libraryIds: [libraryId!] };
@@ -101,6 +103,7 @@ export class LibraryComponent {
         this.tabOpened = 'items';
       }
     });
+    this.isCssLoaded = true;
   }
 
   deleteLibrary(library: UILibrary): void {

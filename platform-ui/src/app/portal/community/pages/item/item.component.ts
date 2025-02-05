@@ -1,6 +1,7 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   Component,
+  computed,
   inject,
   Inject,
   INJECTOR,
@@ -27,11 +28,10 @@ import {
   TUI_MONTHS,
   TuiAlertService,
   TuiButton,
-  TuiDialogContext,
   TuiDialogService,
   TuiHint,
   TuiIcon,
-  TuiNotification,
+  TuiNotification
 } from '@taiga-ui/core';
 import {
   TUI_CALENDAR_DATE_STREAM,
@@ -44,10 +44,12 @@ import { PolymorpheusComponent, PolymorpheusContent } from '@taiga-ui/polymorphe
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
+import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowRecordCardComponent } from '../../components/borrow-record-card/borrow-record-card.component';
+import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { getBorrowRecordStatus, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { ItemsService } from '../../services/items.service';
@@ -73,7 +75,8 @@ const plusTen = today.append({ day: 10 });
     AsyncPipe,
     DatePipe,
     BorrowRecordCardComponent,
-    TranslateModule
+    TranslateModule,
+    FilteredAndPaginatedBorrowRecordsComponent
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -119,6 +122,10 @@ export class ItemComponent implements OnInit {
   itemsReserved: UIBorrowRecord[] = [];
   itemsCurrentlyBorrowed: UIBorrowRecord | undefined;
   itemsReadyToPickup: UIBorrowRecord | undefined;
+  public getItemsParams = computed(() => ({
+    borrowedByCurrentUser: true,
+    itemId: this.itemId(),
+  }));
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
@@ -131,6 +138,7 @@ export class ItemComponent implements OnInit {
     private alerts: TuiAlertService,
     private router: Router,
     private translate: TranslateService,
+    private borrowDialogService: BorrowDialogService
   ) {
     this.currentUser = this.authService.getCurrentUserInfo();
     this.control = new FormControl<TuiDayRange | null | undefined>(
@@ -185,6 +193,9 @@ export class ItemComponent implements OnInit {
     );
   }
 
+  isCssLoaded = false;
+
+
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
       this.setItem(item);
@@ -208,6 +219,8 @@ export class ItemComponent implements OnInit {
       });
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.isCssLoaded = true;
+
   }
 
   setItem(item: UIItem) {
@@ -341,7 +354,7 @@ export class ItemComponent implements OnInit {
       )
       .pipe(
         tap((item) => {
-          this.item = item;
+          this.setItem(item);
           this.alerts
             .open(
               this.translate.instant('item.borrowSuccess', {
@@ -388,101 +401,34 @@ export class ItemComponent implements OnInit {
   }
 
   cancelReservation(borrowRecord: UIBorrowRecord) {
-    if (borrowRecord) {
-      const startDate = borrowRecord.startDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
-      const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
-
-      this.dialogs
-        .open<boolean>(TUI_CONFIRM, {
-          label: this.translate.instant('item.cancelReservationLabel', { itemName: this.item?.name }),
-          size: 'm',
-          data: {
-            content: this.translate.instant('item.cancelReservationContent', { itemName: this.item?.name, startDate, endDate }),
-            yes: this.translate.instant('item.yesCancel'),
-            no: this.translate.instant('item.keepReservation'),
-          },
+    this.borrowDialogService.cancelReservation(borrowRecord, this.item!, this.itemsService)
+      .pipe(
+        tap((item) => {
+          this.item = item;
+          this.updateCellAvailability();
         })
-        .pipe(
-          switchMap((response) => {
-            if (response) {
-              this.itemsService
-                .cancelReservation(this.item!, borrowRecord)
-                .subscribe((item) => {
-                  this.setItem(item);
-                  this.updateCellAvailability();
-                  this.alerts.open(this.translate.instant('item.reservationCancelled'), {
-                    appearance: 'success',
-                  }).subscribe();
-                });
-              return EMPTY;
-            }
-            return EMPTY;
-          }),
-        )
-        .subscribe();
-    }
+      )
+      .subscribe();
   }
 
   returnItem(borrowRecord: UIBorrowRecord) {
-    const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
-    this.dialogs
-      .open<boolean>(TUI_CONFIRM, {
-        label: this.translate.instant('item.returnLabel', { itemName: this.item?.name }),
-        size: 'm',
-        data: {
-          content: this.translate.instant('item.returnContent', { itemName: this.item?.name, endDate }),
-          yes: this.translate.instant('item.yesReturn'),
-          no: this.translate.instant('item.noReturn'),
-        },
-      })
+    this.borrowDialogService.returnItem(borrowRecord, this.item!, this.itemsService)
       .pipe(
-        switchMap((response) => {
-          if (response) {
-            this.itemsService
-              .returnItem(this.item!, borrowRecord)
-              .subscribe((item) => {
-                this.setItem(item);
-                this.updateCellAvailability();
-                this.alerts.open(this.translate.instant('item.returnSuccess'), {
-                  appearance: 'success',
-                }).subscribe();
-              });
-            return EMPTY;
-          }
-          return EMPTY;
-        }),
+        tap((item) => {
+          this.setItem(item);
+          this.updateCellAvailability();
+        })
       )
       .subscribe();
   }
 
   pickUpItem(borrowRecord: UIBorrowRecord) {
-    const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
-    this.dialogs
-      .open<boolean>(TUI_CONFIRM, {
-        label: this.translate.instant('item.pickUpLabel', { itemName: this.item?.name }),
-        size: 'm',
-        data: {
-          content: this.translate.instant('item.pickUpContent', { itemName: this.item?.name, endDate }),
-          yes: this.translate.instant('item.yesPickUp'),
-          no: this.translate.instant('item.noPickUp'),
-        },
-      })
+    this.borrowDialogService.pickUpItem(borrowRecord, this.item!, this.itemsService)
       .pipe(
-        switchMap((response) => {
-          if (response) {
-            this.itemsService
-              .pickupItem(this.item!, borrowRecord)
-              .subscribe((item) => {
-                this.setItem(item);
-                this.updateCellAvailability();
-                this.alerts.open(this.translate.instant('item.pickUpSuccess'), {
-                  appearance: 'success',
-                }).subscribe();
-              });
-            return EMPTY;
-          }
-          return EMPTY;
-        }),
+        tap((item) => {
+          this.setItem(item);
+          this.updateCellAvailability();
+        })
       )
       .subscribe();
   }
@@ -492,47 +438,10 @@ export class ItemComponent implements OnInit {
   }
 
 
-  borrowNowDialog(content: PolymorpheusContent<TuiDialogContext>): void {
-    this.selectedDate = new TuiDayRange(
-      TuiDay.fromLocalNativeDate(new Date()),
-      TuiDay.fromLocalNativeDate(new Date()),
-    );
-
-    this.suggestedDates = [
-      new TuiDayRangePeriod(
-        new TuiDayRange(today, today),
-        this.translate.instant('item.dateRanges.today'),
-        ({ $implicit }) => `${this.translate.instant('item.dateRanges.today')} (${$implicit.from})`,
-      ),
-      new TuiDayRangePeriod(
-        new TuiDayRange(today, today.append({ day: 2 })),
-        this.translate.instant('item.dateRanges.twoDays'),
-        ({ $implicit }) => `${this.translate.instant('item.dateRanges.twoDays')} (${$implicit.from})`,
-      ),
-      new TuiDayRangePeriod(
-        new TuiDayRange(today, today.append({ day: 3 })),
-        this.translate.instant('item.dateRanges.threeDays'),
-        ({ $implicit }) => `${this.translate.instant('item.dateRanges.threeDays')} (${$implicit.from})`,
-      ),
-      new TuiDayRangePeriod(
-        new TuiDayRange(today, today.append({ day: 7 })),
-        this.translate.instant('item.dateRanges.oneWeek'),
-        ({ $implicit }) => `${this.translate.instant('item.dateRanges.oneWeek')} (${$implicit.from})`,
-      ),
-      new TuiDayRangePeriod(
-        new TuiDayRange(today, today.append({ day: 14 })),
-        this.translate.instant('item.dateRanges.twoWeeks'),
-        ({ $implicit }) => `${this.translate.instant('item.dateRanges.twoWeeks')} (${$implicit.from})`,
-      ),
-    ]
-    this.control.setValue(new TuiDayRange(today, today));
-    this.dialogs
-      .open<any>(content)
-      .subscribe((observer) => {
-        this.borrowItemConfirmation();
-        observer.complete(); // Close the dialog after confirmation
-      });
-
+  borrowNowDialog(
+    choose: PolymorpheusContent,
+  ): void {
+    this.borrowDialogService.borrowNowDialog(choose, this.item!, this.itemsService);
   }
 
   protected getCategoryBadgeClass(category: string): string {

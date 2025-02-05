@@ -6,6 +6,7 @@ import { UIItem } from '../models/UIItem';
 import { UIItemsPagination } from '../models/UIItemsPagination';
 
 export interface GetItemsParams {
+  itemId?: string;
   currentUser?: boolean;
   borrowedByCurrentUser?: boolean;
   borrowedBy?: string;

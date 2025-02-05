@@ -3,20 +3,24 @@
   <div class="card-content" [class.card-content-with-image]="item()">
     <!-- Image Section -->
     @if (item()) {
-      <div class="image-container" routerLink="/community/items/{{ item()!.id }}">
+      <div class="image-container">
         <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
         
         <div class="action-container">
           @if (status() === UIBorrowRecordStatus.ReadyToPickup) {
-            <button appearance="accent" size="m" tuiButton type="button" routerLink="/community/items/{{ item()!.id }}" [queryParams]="{ ACTION: 'pickUp' }">
+            <button appearance="accent" size="m" tuiButton type="button" (click)="pickUpItem()">
               {{ 'borrowRecordCard.pickUp' | translate }}
             </button>
           } @else if (status() === UIBorrowRecordStatus.CurrentlyBorrowed 
           || status() === UIBorrowRecordStatus.DueToday
           || status() === UIBorrowRecordStatus.Late
           ) {
-            <button appearance="accent" size="m" tuiButton type="button" routerLink="/community/items/{{ item()!.id }}" [queryParams]="{ ACTION: 'return' }">
+            <button appearance="accent" size="m" tuiButton type="button" (click)="returnItem()">
               {{ 'borrowRecordCard.return' | translate }}
+            </button> 
+          } @else if (status() === UIBorrowRecordStatus.Reserved) {
+            <button appearance="accent" size="m" tuiButton type="button" (click)="cancelReservation()">
+              {{ 'borrowRecordCard.cancelReservation' | translate }}
             </button> 
           } @else {
             <button appearance="accent" [style.visibility]="'hidden'" size="m" tuiButton type="button">

@@ -490,6 +490,12 @@ paths:
           required: false
           schema:
             type: string
+        - name: itemId
+          in: query
+          description: Filter items by item ID
+          required: false
+          schema:
+            type: string
         - name: sortBy
           in: query
           description: Sort items by a specific field

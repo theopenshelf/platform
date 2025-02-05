@@ -1,0 +1,40 @@
+<!-- Add id for accessibility purposes -->
+<h2>{{ context.heading }}</h2>
+
+<tui-input-date-range
+    [formControl]="control"
+    [items]="suggestedDates"
+>
+    Choose dates
+</tui-input-date-range>
+
+<p class="buttons">
+    <button
+        size="m"
+        appearance="flat"
+        tuiButton
+        type="button"
+        class="tui-space_right-3"
+        (click)="onClick(
+            {
+                type: 'cancel',
+            }
+        )"
+    >
+        {{ 'item.cancel' | translate }}
+    </button>
+    <button
+        size="m"
+        tuiButton
+        (click)="
+        onClick(
+            {
+                type: 'confirm',
+                value: control.value,
+            }
+        )
+        "
+    >
+        {{ 'item.yesBorrow' | translate }}
+    </button>
+</p>

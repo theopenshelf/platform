@@ -338,7 +338,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     this.items = itemsPagination.items;
   }
 
-  private resetItems() {
+  public resetItems() {
     this.currentPage = 0;
     this.fetchItems();
   }

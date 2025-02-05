@@ -135,6 +135,7 @@ export class MockItemsService implements ItemsService {
       sortBy,
       sortOrder,
       categories,
+      itemId,
       borrowedBy,
       startDate,
       endDate,
@@ -157,6 +158,10 @@ export class MockItemsService implements ItemsService {
         }
       });
     });
+
+    if (itemId) {
+      filteredRecords = filteredRecords.filter(record => record.item.id === itemId);
+    }
 
     filteredRecords = filteredRecords.sort((a, b) => {
       return b.startDate.getTime() - a.startDate.getTime();
@@ -280,6 +285,7 @@ export class MockItemsService implements ItemsService {
     item.borrowRecords = item.borrowRecords.filter(
       (record) => record.id !== borrowRecord.id,
     );
+
     return of(item);
   }
 
@@ -288,6 +294,13 @@ export class MockItemsService implements ItemsService {
     borrowRecord: UIBorrowRecord,
   ): Observable<UIItem> {
     borrowRecord.effectiveReturnDate = new Date();
+
+    // Update the borrowRecord in the item's borrowRecords array
+    const recordToUpdate = item.borrowRecords.find(record => record.id === borrowRecord.id);
+    if (recordToUpdate) {
+      recordToUpdate.effectiveReturnDate = borrowRecord.effectiveReturnDate;
+    }
+
     return of(item);
   }
 
@@ -296,6 +309,13 @@ export class MockItemsService implements ItemsService {
     borrowRecord: UIBorrowRecord,
   ): Observable<UIItem> {
     borrowRecord.pickupDate = new Date();
+
+    // Update the borrowRecord in the item's borrowRecords array
+    const recordToUpdate = item.borrowRecords.find(record => record.id === borrowRecord.id);
+    if (recordToUpdate) {
+      recordToUpdate.pickupDate = borrowRecord.pickupDate;
+    }
+
     return of(item);
   }
   markAsFavorite(item: UIItem): Observable<void> {

@@ -68,6 +68,7 @@
     "borrowTitle": "Emprunté le {{startDate}}",
     "pickUp": "Récupérer",
     "return": "Retourner",
+    "cancelReservation": "Annuler",
     "status": {
       "impossible": "Impossible",
       "reserved": "Réservé",
@@ -171,6 +172,9 @@
     "itemAvailable": "Article disponible",
     "borrowItem": "Emprunter l'article maintenant",
     "pickUpItemEarly": "Récupérer l'article en avance",
+    "description": "Description",
+    "borrowRecords": "Enregistrements d'emprunts",
+    "chooseDates": "Choisir une date",
     "dateRanges": {
       "today": "Aujourd'hui",
       "twoDays": "2 jours",

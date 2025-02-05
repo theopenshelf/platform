@@ -68,6 +68,7 @@
     "borrowTitle": "Borrowed on {{startDate}}",
     "pickUp": "Pick up",
     "return": "Return",
+    "cancelReservation": "Cancel",
     "status": {
       "impossible": "Impossible",
       "reserved": "Reserved",
@@ -173,6 +174,9 @@
     "itemAvailable": "Item is available",
     "borrowItem": "Borrow item now",
     "pickUpItemEarly": "Pick up item early",
+    "description": "Description",
+    "borrowRecords": "Borrow records",
+    "chooseDates": "Choose dates",
     "dateRanges": {
       "today": "Today",
       "twoDays": "2 days",

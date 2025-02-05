@@ -5,6 +5,7 @@
   @if (library) {
     <div class="library-header">
       <div class="library-header-top">
+        @if (isCssLoaded) {
         <svg
               viewBox="0 0 960 540"
               width="100%"
@@ -31,6 +32,7 @@
                   ></circle>
               </g>
           </svg>
+        }
         <h2>{{ 'library.instructions' | translate }}</h2>
         <div class="rich-description" [innerHTML]="library.instructions"></div>
         

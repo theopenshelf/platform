@@ -12,10 +12,13 @@
         let-item="item"
     >
         <borrow-record-card
-            [item]="item.item"
+            [item]="showItem() ? item.item : undefined"
             [borrowRecord]="item"
             [library]="getLibrary(item.item.libraryId)"
             [user]="usersByEmail.get(item.borrowedBy)"
+            [pickUpItemCallback]="pickUpItem"
+            [returnItemCallback]="returnItem"
+            [cancelReservationCallback]="cancelReservation"
         ></borrow-record-card>
     </ng-template>
 </filtered-and-paginated>
