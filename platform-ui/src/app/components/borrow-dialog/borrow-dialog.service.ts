@@ -9,6 +9,7 @@ import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { EMPTY, switchMap, tap } from 'rxjs';
 import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { UIItem } from '../../portal/community/models/UIItem';
+import { EventService, TosEventType } from '../../portal/community/services/event.service';
 import { ItemsService } from '../../portal/community/services/items.service';
 import { BorrowDialogComponent } from './borrow-dialog.component';
 import type { PromptOptions } from './prompt-options';
@@ -24,6 +25,7 @@ export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolea
         private translate: TranslateService,
         private router: Router,
         private dialogs: TuiDialogService,
+        private eventService: EventService
     ) {
         super(TUI_DIALOGS, BorrowDialogComponent, {
             heading: 'Are you sure?',
@@ -101,6 +103,7 @@ export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolea
                             .pickupItem(item, borrowRecord)
                             .pipe(
                                 tap((returnedItem) => {
+                                    this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
                                     this.alerts.open(this.translate.instant('item.pickUpSuccess'), {
                                         appearance: 'success',
                                     }).subscribe();
@@ -129,6 +132,7 @@ export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolea
                     if (response) {
                         return itemsService.returnItem(item, borrowRecord).pipe(
                             tap((returnedItem) => {
+                                this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
                                 this.alerts.open(this.translate.instant('item.returnSuccess'), {
                                     appearance: 'success',
                                 }).subscribe();
@@ -162,6 +166,7 @@ export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolea
                                 .cancelReservation(item, borrowRecord)
                                 .pipe(
                                     tap((returnedItem) => {
+                                        this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
                                         this.alerts.open(this.translate.instant('item.reservationCancelled'), {
                                             appearance: 'success',
                                         }).subscribe();

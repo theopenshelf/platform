@@ -155,14 +155,24 @@
             display: flex;
             flex-direction: row;
             gap: 5px;
+
             padding-top: 10px;
             color: var(--tos-text-secondary);
+
+            span {
+                margin-left: 8px;
+            }
         }
     }
 
 
     .library-actions {
+        width: 150px;
         float: right;
+
+        .admin-stack {
+            float: left;
+        }
 
         button {
             margin: 0 2px;

@@ -2370,7 +2370,7 @@
         "category": "multimedia",
         "favorite": false,
         "borrowCount": 10,
-        "libraryId": "1",
+        "libraryId": "2",
         "createdAt": "2024-12-29T20:51:37.284Z",
         "borrowRecords": [
             {
@@ -2468,7 +2468,7 @@
         "category": "vehicle",
         "favorite": true,
         "borrowCount": 5,
-        "libraryId": "1",
+        "libraryId": "3",
         "createdAt": "2024-12-29T20:51:37.548Z",
         "borrowRecords": [
             {
@@ -2503,7 +2503,7 @@
         "category": "kids",
         "favorite": true,
         "borrowCount": 20,
-        "libraryId": "1",
+        "libraryId": "2",
         "createdAt": "2024-12-29T20:51:37.238Z",
         "borrowRecords": [
             {
@@ -2618,7 +2618,7 @@
         "category": "travel",
         "favorite": false,
         "borrowCount": 11,
-        "libraryId": "1",
+        "libraryId": "3",
         "createdAt": "2024-12-29T20:51:37.205Z",
         "borrowRecords": [
             {
@@ -2689,7 +2689,7 @@
         "category": "kids",
         "favorite": false,
         "borrowCount": 0,
-        "libraryId": "1",
+        "libraryId": "3",
         "createdAt": "2024-12-29T20:51:37.187Z",
         "borrowRecords": [
             {
@@ -2769,7 +2769,7 @@
         "category": "home",
         "favorite": false,
         "borrowCount": 11,
-        "libraryId": "1",
+        "libraryId": "2",
         "createdAt": "2024-12-29T20:51:37.256Z",
         "borrowRecords": [
             {

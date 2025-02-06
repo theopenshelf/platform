@@ -1,0 +1,68 @@
+[
+    {
+      "id": "1",
+      "name": "Common space",
+      "isCommunityAccessible": true,
+      "requiresApproval": false,
+      "freeAccess": true,
+      "admins": [
+            {
+                "userId": "11"
+            },
+            {
+                "userId": "2"
+            }
+        ],
+      "instructions":
+        "Please follow the guidelines for community usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.",
+      "location": {
+        "name": "Bat B",
+        "address": "123 Main St, Anytown, USA"
+      }
+    },
+
+    {
+        "id": "2",
+        "name": "Garage 102",
+        "isCommunityAccessible": true,
+        "requiresApproval": true,
+        "freeAccess": false,
+        "admins": [
+            {
+                "userId": "11"
+            },
+            {
+                "userId": "12"
+            }
+        ],
+        "instructions":
+          "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
+        "location": {
+          "name": "Garage 102",
+          "address": "123 Main St, Anytown, USA"
+        }
+      }
+      ,
+
+    {
+        "id": "3",
+        "name": "Garage 212",
+        "isCommunityAccessible": true,
+        "requiresApproval": true,
+        "freeAccess": false,
+        "admins": [
+            {
+                "userId": "1"
+            },
+            {
+                "userId": "2"
+            }
+        ],
+        "instructions":
+          "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
+        "location": {
+          "name": "Garage 212",
+          "address": "123 Main St, Anytown, USA"
+        }
+      }
+  ]

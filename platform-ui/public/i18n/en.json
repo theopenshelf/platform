@@ -340,7 +340,11 @@
     "admin": "Admin",
     "notFound": "Library not found",
     "items": "Items",
-    "borrow-records": "Borrow Records"
+    "borrow-records": "Borrow Records",
+    "requiresApproval": "Requires approval",
+    "doesNotRequireApproval": "Does not require approval",
+    "freeAccess": "Free access",
+    "privateAccess": "Private access"
   },
   "items": {
     "addItem": "Add Item",

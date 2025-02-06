@@ -281,7 +281,9 @@ export class FilteredAndPaginatedComponent implements OnInit {
     this.resetItems();
   }
 
-
+  selectedLibrariesCount(): number {
+    return Object.keys(this.selectedLibraries).length;
+  }
 
   public onRangeChange(range: TuiDayRange | null): void {
     if (range) {
@@ -344,11 +346,13 @@ export class FilteredAndPaginatedComponent implements OnInit {
   }
 
   protected fetchItems(): void {
+
+
     this.getItems()!(
       {
         ...this.getItemsParams(),
         status: this.selectedStatus,
-        libraryIds: Object.keys(this.selectedLibraries),
+        libraryIds: this.getItemsParams().libraryIds ? this.getItemsParams().libraryIds : Object.keys(this.selectedLibraries),
         categories: Array.from(this.selectedCategories),
         searchText: this.searchText,
         currentlyAvailable: this.currentlyAvailable,

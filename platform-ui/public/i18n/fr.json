@@ -415,6 +415,10 @@
     "admin": "Administrateur",
     "notFound": "Bibliothèque non trouvée",
     "items": "Articles",
-    "borrow-records": "Historique des emprunts"
+    "borrow-records": "Historique des emprunts",
+    "requiresApproval": "Confirmation requise",
+    "doesNotRequireApproval": "Libre accès",
+    "freeAccess": "Public",
+    "privateAccess": "Privé"
   }
 }

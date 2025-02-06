@@ -4,14 +4,14 @@ export interface UILibrary {
   id: string;
   name: string;
   isCommunityAccessible: boolean;
-  members: UIMember[];
+  requiresApproval: boolean;
+  freeAccess: boolean;
+  admins: UIMember[];
   location: UILocation;
   instructions: string;
 }
 
 export interface UIMember {
-  id: string;
   userId: string;
-  username: string;
-  isAdmin: boolean;
 }
+

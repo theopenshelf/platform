@@ -12,6 +12,9 @@
         [tuiDropdown]="dropdowncategories" [(tuiDropdownOpen)]="openDropdownCategories">
         <tui-icon icon="@tui.chart-bar-stacked" />
         {{ 'filteredAndPaginated.categoriesFilter' | translate }}
+        @if (selectedCategories.size > 0) {
+        <span class="selected-categories-count">({{ selectedCategories.size }})</span>
+        }
       </button>
 
       <ng-template #dropdowncategories let-close>
@@ -32,7 +35,11 @@
         [tuiAppearanceState]="openDropdownWhen ? 'active' : null" [tuiDropdownAlign]="'center'"
         [tuiDropdown]="dropdownwhen" [(tuiDropdownOpen)]="openDropdownWhen">
         <tui-icon icon="@tui.calendar-clock" />
+        @if (selectedDate) {
+        <span class="selected-date-count">({{ selectedDate.from.toUtcNativeDate() | date:'dd/MM/yyyy' }} - {{ selectedDate.to.toUtcNativeDate() | date:'dd/MM/yyyy' }})</span>
+        } @else {
         {{ 'filteredAndPaginated.dateRangeFilter' | translate }}
+        }
       </button>
 
       <ng-template #dropdownwhen let-close>
@@ -49,6 +56,9 @@
         [tuiDropdown]="dropdownwhere" [(tuiDropdownOpen)]="openDropdownWhere">
         <tui-icon icon="@tui.library" />
         {{ 'filteredAndPaginated.librariesFilter' | translate }}
+        @if (selectedLibrariesCount() > 0) {
+        <span class="selected-libraries-count">({{ selectedLibrariesCount() }})</span>
+        }
       </button>
 
       <ng-template #dropdownwhere let-close>

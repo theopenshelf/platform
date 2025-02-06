@@ -2,38 +2,17 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UILibrary } from '../../models/UILibrary';
 import { LibrariesService } from '../libraries.service';
+import { loadLibrariesData } from './libraries-loader';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MockLibrariesService implements LibrariesService {
-  public libraries: UILibrary[] = [
-    {
-      id: '1',
-      name: 'Common space',
-      isCommunityAccessible: true,
-      members: [
-        {
-          id: '1',
-          userId: '1',
-          username: 'John Doe',
-          isAdmin: true,
-        },
-        {
-          id: '2',
-          userId: '2',
-          username: 'Jane Doe',
-          isAdmin: false,
-        },
-      ],
-      instructions:
-        'Please follow the guidelines for community usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.',
-      location: {
-        name: 'Bat B',
-        address: '123 Main St, Anytown, USA',
-      },
-    },
-  ];
+  public libraries: UILibrary[] = [];
+
+  constructor() {
+    this.libraries = loadLibrariesData();
+  }
 
   getLibraries(): Observable<UILibrary[]> {
     return of(this.libraries);

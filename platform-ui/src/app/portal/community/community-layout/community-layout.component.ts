@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, computed, effect, Inject, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -23,6 +23,7 @@ import { FooterComponent } from '../../../components/footer/footer.component';
 import { NotificationsPopupComponent } from '../../../components/notifications-popup/notifications-popup.component';
 import { ITEMS_SERVICE_TOKEN } from '../community.provider';
 import { UIBorrowStatus } from '../models/UIBorrowStatus';
+import { EventService, TosEventType } from '../services/event.service';
 import { ItemsService } from '../services/items.service';
 
 const ICON =
@@ -60,18 +61,34 @@ const ICON =
     tuiAsPortal(TuiDropdownService),
   ],
 })
-export default class CommunityLayoutComponent extends TuiPortals {
+export default class CommunityLayoutComponent extends TuiPortals implements OnDestroy {
   protected expanded = false;
   protected open = false;
   protected switch = false;
   protected readonly routes: any = {};
   totalItemsCurrentlyBorrowed: number = 0;
+  receivedEvent = computed(() => this.eventService.event());
 
-  constructor(@Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService) {
+  constructor(
+    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+    private eventService: EventService
+  ) {
     super();
+    effect(() => {
+      if (this.receivedEvent() === TosEventType.BorrowRecordsChanged) {
+        this.refreshBorrowRecords();
+      }
+    });
   }
 
   ngOnInit() {
+    this.refreshBorrowRecords();
+  }
+
+  ngOnDestroy() {
+  }
+
+  private refreshBorrowRecords() {
     this.itemsService
       .getBorrowRecords({
         borrowedByCurrentUser: true,

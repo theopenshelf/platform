@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -21,6 +22,7 @@ import {
   TUI_CONFIRM,
   TuiAccordion,
   TuiAvatar,
+  TuiAvatarStack,
   TuiConfirmData,
   TuiDataListWrapper,
   TuiSwitch
@@ -31,13 +33,16 @@ import {
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
 import {
-  LIBRARIES_SERVICE_TOKEN
+  LIBRARIES_SERVICE_TOKEN,
+  USERS_SERVICE_TOKEN
 } from '../../../community.provider';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { UILibrary } from '../../../models/UILibrary';
+import { UIUser } from '../../../models/UIUser';
 import { GetItemsParams } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-library',
@@ -61,19 +66,23 @@ import { LibrariesService } from '../../../services/libraries.service';
     TuiSelectModule,
     FilteredAndPaginatedItemsComponent,
     FilteredAndPaginatedBorrowRecordsComponent,
-    TranslateModule
+    TranslateModule,
+    JsonPipe,
+    TuiAvatar, TuiAvatarStack
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
 })
 export class LibraryComponent {
-  public getItemsParams: GetItemsParams = { libraryIds: [] };
+  public getItemsParams: GetItemsParams | undefined;
 
   library: UILibrary | undefined;
   tabOpened: 'items' | 'borrow-records' = 'items';
+  usersPerId: Map<string, UIUser> = new Map();
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
@@ -87,10 +96,12 @@ export class LibraryComponent {
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
     this.getItemsParams = { libraryIds: [libraryId!] };
+    this.userService.getUsers().subscribe((users) => {
+      this.usersPerId = new Map(users.map(user => [user.id, user]));
+    });
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
-        this.getItemsParams = { libraryIds: [this.library.id] };
       });
     }
 
