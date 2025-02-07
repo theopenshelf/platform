@@ -1,28 +1,52 @@
 @use 'theme' as *;
 
 /* Availability Styling */
-::ng-deep .not-available {
-  background-color: var(--tos-status-negative-pale) !important;
-  /* Use theme's danger color */
-}
+::ng-deep {
+  .not-available {
+    background-color: var(--tos-status-negative-pale) !important;
+    /* Use theme's danger color */
+  }
 
-::ng-deep .my-booking {
-  background-color: var(--tos-status-positive-pale) !important;
-  /* Light green background */
+  .my-booking {
+    background-color: var(--tos-status-positive-pale) !important;
+    /* Light green background */
+  }
 }
-
 
 /* Flexbox Container for Item */
 .item-content {
+  margin-top: 20px;
+  background-color: var(--tos-background-base);
+  border-radius: 16px;
+  padding: 20px;
+  flex: 1;
+  /* Sidebar takes 1/3 of the space */
   display: flex;
-  gap: 2rem;
-  /* Space between sidebar and details */
+  flex-direction: column;
   align-items: flex-start;
-}
+  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+  border: 1px solid rgb(226, 232, 240);
 
-.sidebar {
-  margin-right: 20px;
-  max-width: 577px;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 4rem;
+
+  .item-details {
+
+    /* Details section takes 2/3 of the space */
+
+    h2 {
+      margin-top: 0;
+      color: var(--tos-background-accent-1);
+      /* Dark color for heading */
+    }
+  }
+
+  .sidebar {
+    margin-right: 20px;
+    max-width: 577px;
+
+  }
 }
 
 .item-container {
@@ -30,27 +54,46 @@
 }
 
 /* Sidebar Styling */
-.return-item-container,
 .sidebar-borrow-container {
-  position: relative;
-  background-color: var(--tos-background-base);
-  border-radius: 16px;
-  padding: 10px;
-  flex: 1;
-  width: 100%;
-  /* Sidebar takes 1/3 of the space */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
-  border: 1px solid rgb(226, 232, 240);
+
+
+  .sidebar-header {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+
+    h2 {
+      text-align: left;
+      margin: 0;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .sidebar-actions {
+      min-width: 100px;
+      margin-left: auto;
+    }
+  }
 }
 
-.return-item-container {
-  margin-bottom: 20px;
+.item-call-to-action-container {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  color: var(--tos-text-primary);
+
+  h2,
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   h2 {
-    margin: 10px;
+    margin-top: 15px !important;
+    margin-right: 20px;
   }
 
   .details {
@@ -58,21 +101,11 @@
     float: right;
     display: inline;
     right: 0;
-
   }
 
-  .return-item-title {
-    padding: 2px 10px;
-  }
-
+  .return-item-title,
   .return-item-details {
     padding: 2px 10px;
-  }
-
-  .return-item,
-  .borrow-item-now {
-    margin-top: 10px;
-    width: 100%;
   }
 }
 
@@ -96,7 +129,6 @@
   }
 }
 
-
 /* Book and Reserve Buttons */
 .book-button,
 .reserve-button {
@@ -113,7 +145,6 @@
   transition: background-color 0.3s ease;
 }
 
-
 .reserve-button {
   background-color: var(--tos-background-accent-2-pressed);
   /* Reserve button using warning color */
@@ -127,25 +158,11 @@
   }
 }
 
-
 /* Unavailable Status */
 .unavailable {
   margin-top: 10px;
   color: var(--tos-status-negative);
   /* Red color for unavailable status */
-}
-
-/* Details Section */
-.details {
-
-  flex: 4;
-  /* Details section takes 2/3 of the space */
-}
-
-.details h2 {
-  margin-top: 0;
-  color: var(--tos-background-accent-1);
-  /* Dark color for heading */
 }
 
 /* Review Section */
@@ -154,23 +171,28 @@
   /* Use theme border color */
   padding-top: 10px;
   margin-top: 10px;
-}
 
-.review strong {
-  display: block;
-  color: var(--tos-background-accent-1);
-  /* Ensure the strong text is dark */
-}
+  strong {
+    display: block;
+    color: var(--tos-background-accent-1);
+    /* Ensure the strong text is dark */
+  }
 
-.review span {
-  font-size: 0.9em;
-  color: var(--tos-background-accent-1);
-  /* Muted text for review details */
+  span {
+    font-size: 0.9em;
+    color: var(--tos-background-accent-1);
+    /* Muted text for review details */
+  }
 }
 
 /* Form Styling */
 form {
   width: 100%;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
 }
 
 /* Borrow Button */
@@ -183,7 +205,6 @@ button#cancel {
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
-
 
 /* Category badges */
 .badge-books {
@@ -214,18 +235,15 @@ button#cancel {
   padding: 10px 0;
 }
 
-.location tui-icon,
-.owner tui-icon,
-.category tui-icon {
+.item-header-subtitle tui-icon {
   width: 16px;
   height: 16px;
   position: relative;
+  margin-right: 5px;
   top: -3px;
 }
 
-.location,
-.owner,
-.category {
+.item-header-subtitle {
   color: rgb(100, 116, 139);
   padding-right: 15px;
   line-height: 16px;
@@ -235,16 +253,11 @@ button#cancel {
 
 .top-right-details {
   float: right;
-}
 
-.top-right-details button {
-  margin: 0 5px;
-  border-radius: 30px;
-}
-
-.sidebar .details {
-  width: 100%;
-  padding-right: 10px;
+  button {
+    margin: 0 5px;
+    border-radius: 30px;
+  }
 }
 
 .top-left-details {
@@ -255,22 +268,8 @@ button#cancel {
 .favorite,
 .reservation-state {
   border-radius: 30px;
-  padding: 20px;
-  margin: 5px;
-  width: 30px;
-  height: 30px;
-}
 
-button.favorite[tuiButton][data-appearance="outline"] {
-  color: var(--tos-text-accent);
-}
-
-form {
-  border: none !important;
-  box-shadow: none !important;
-  border-radius: 0px;
-  margin-bottom: 0px;
-  padding: 0px;
+  color: var(--tos-text-primary);
 }
 
 .mobile-calendar {
@@ -280,31 +279,10 @@ form {
 .reservations {
   width: calc(100% - 30px);
   padding: 20px;
-}
 
-.cancel-button {
-  margin-left: 10px;
-  border-radius: 30px;
-}
-
-
-.sidebar-header {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 10px;
-  margin-bottom: 10px;
-  width: 100%;
-
-  h2 {
-    text-align: left;
-    margin: 0;
-    margin-top: 10px;
+  .cancel-button {
     margin-left: 10px;
-  }
-
-  .sidebar-actions {
-    min-width: 100px;
-    margin-left: auto;
+    border-radius: 30px;
   }
 }
 
@@ -315,72 +293,38 @@ form {
   margin-top: 20px;
 }
 
-
-.library-action {
-  text-decoration: none;
-  position: relative;
-  margin-right: 1rem;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  color: var(--tos-text-primary);
-
-  tui-icon {
-    margin-right: 5px;
-  }
-
-}
-
-.library-action.active {
-  background-color: var(--tos-background-accent-1);
-  color: var(--tos-text-primary-on-accent-1);
-  border: 0px solid rgb(226, 232, 240);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
-  border-radius: 10px;
-  border: 0px solid rgb(226, 232, 240);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
-    0 1px 2px -1px rgb(0 0 0 / .1) !important;
-}
-
-.library-action.active:hover {
-  background-color: var(--tos-background-accent-1) !important;
-  color: var(--tos-text-primary-on-accent-1) !important;
-}
-
-.library-action:hover {
-  background-color: var(--tos-background-accent-1-hover);
-  color: var(--tos-text-primary-on-accent-1);
-  border: 0px solid rgb(226, 232, 240);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
-  border-radius: 10px;
-  border: 0px solid rgb(226, 232, 240);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
-    0 1px 2px -1px rgb(0 0 0 / .1) !important;
-}
-
 .item-header {
-
-  h2 {
-    margin-top: 0;
-  }
-
   display: flex;
   flex-direction: column;
-  height: 250px; // Ensure this matches the total height you want
   margin-top: 20px;
+  background-color: var(--tos-background-accent-1);
+  color: var(--tos-text-primary-on-accent-1);
+  border-radius: 10px;
+  border: 0px solid rgb(226, 232, 240);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+    0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+  h1,
+  h3 {
+    margin: 0;
+  }
 
   .item-header-top {
-    height: 75%;
+    min-height: 120px;
     background-color: var(--tos-background-accent-1); // Assuming you want the same background as the header
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
     overflow: hidden;
-
     display: grid;
     grid-template-columns: 4fr 8fr;
 
     .rich-description {
       color: var(--tos-text-primary-on-accent-1);
+    }
+
+    .item-header-status-container {
+      color: var(--tos-text-primary);
     }
 
     .background-motif {
@@ -402,15 +346,11 @@ form {
     .item-header-description-container {
       padding: 10px;
     }
-
-
   }
 
   .item-header-bottom {
-
     display: grid;
-    grid-template-columns: 1fr 10fr 1fr;
-    height: 25%;
+    grid-template-columns: 4fr 4fr;
     padding: 10px;
     padding-top: 10px;
     background-color: white;
@@ -418,46 +358,41 @@ form {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 
-    .item-header-icon-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 30px;
+    .item-header-title {
+      display: grid;
+      grid-template-columns: 1fr 4fr;
 
-      .item-header-icon {
-        position: relative;
-        top: -30px;
-        background-color: var(--tos-background-accent-1-hover);
-        border-radius: 15px;
-        padding: 15px;
-        color: var(--tos-text-primary-on-accent-1);
-        border: 2px solid var(--tos-background-base);
+      .item-header-icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 30px;
 
-        tui-icon {
-          font-size: 2rem;
+        .item-header-icon {
+          position: relative;
+          top: -30px;
+          background-color: var(--tos-background-accent-1-hover);
+          border-radius: 15px;
+          padding: 15px;
+          color: var(--tos-text-primary-on-accent-1);
+          border: 2px solid var(--tos-background-base);
+
+          tui-icon {
+            font-size: 2rem;
+          }
         }
       }
     }
   }
 
-  margin-bottom: 1rem;
-  background-color: var(--tos-background-accent-1);
-  color: var(--tos-text-primary-on-accent-1);
-  border-radius: 10px;
-  border: 0px solid rgb(226, 232, 240);
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
-  0 1px 2px -1px rgb(0 0 0 / .1) !important;
-
-  h1,
-  h3 {
-    margin: 0;
-  }
-
-
   .item-header-title {
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    h1 {
+      line-height: 1.1em;
+    }
 
     .item-header-subtitle {
       display: flex;
@@ -468,7 +403,6 @@ form {
     }
   }
 
-
   .item-actions {
     display: flex;
 
@@ -477,6 +411,13 @@ form {
       border-radius: 30px;
     }
 
+    button.selected {
+      color: var(--tos-text-accent);
+    }
+
+    button:hover {
+      background-color: var(--tos-background-accent-1-hover);
+    }
   }
 
   .toggle-container {
@@ -488,22 +429,14 @@ form {
       margin-right: 10px;
     }
   }
-
-
 }
-
 
 @media (max-width: 1200px) {
 
   .item-content {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  .sidebar {
-    width: calc(100% - 20px);
-    max-width: 577px;
-    order: -1; // Move sidebar to the top
-  }
 
   .grid-container {
     width: 100%;
@@ -511,7 +444,6 @@ form {
 
   .top-actions-right {
     width: 100% !important;
-
   }
 
   .mobile-calendar {
@@ -520,9 +452,25 @@ form {
 }
 
 @media (max-width: 680px) {
-
   .desktop-calendar {
     display: none;
+  }
+
+  .item-header-bottom {
+    display: grid;
+    grid-template-columns: 1fr !important;
+  }
+
+  .item-call-to-action-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h2,
+    button {
+      width: 100%;
+    }
   }
 
   .mobile-calendar {

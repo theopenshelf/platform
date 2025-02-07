@@ -47,12 +47,13 @@ import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
 import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
-import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
+import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowRecordCardComponent } from '../../components/borrow-record-card/borrow-record-card.component';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { getBorrowRecordStatus, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { ItemsService } from '../../services/items.service';
+import { LibrariesService } from '../../services/libraries.service';
 
 const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
@@ -126,9 +127,11 @@ export class ItemComponent implements OnInit {
     borrowedByCurrentUser: true,
     itemId: this.itemId(),
   }));
+  library: any;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+    @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private route: ActivatedRoute,
     private sanitizer: DomSanitizer,
@@ -199,6 +202,9 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
       this.setItem(item);
+      this.librariesService.getLibrary(item.libraryId).subscribe((library) => {
+        this.library = library;
+      });
       this.route.queryParams.subscribe(params => {
         const action = params['ACTION'];
         switch (action) {
@@ -218,6 +224,7 @@ export class ItemComponent implements OnInit {
         }
       });
     });
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.isCssLoaded = true;
 
@@ -439,6 +446,12 @@ export class ItemComponent implements OnInit {
 
 
   borrowNowDialog(
+    choose: PolymorpheusContent,
+  ): void {
+    this.borrowDialogService.borrowNowDialog(choose, this.item!, this.itemsService);
+  }
+
+  reserveItemDialog(
     choose: PolymorpheusContent,
   ): void {
     this.borrowDialogService.borrowNowDialog(choose, this.item!, this.itemsService);

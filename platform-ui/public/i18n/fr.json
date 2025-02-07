@@ -175,6 +175,9 @@
     "description": "Description",
     "borrowRecords": "Enregistrements d'emprunts",
     "chooseDates": "Choisir une date",
+    "library-instructions": "Instructions",
+    "availabilities": "Disponibilités",
+    "reserve": "Réserver",
     "dateRanges": {
       "today": "Aujourd'hui",
       "twoDays": "2 jours",

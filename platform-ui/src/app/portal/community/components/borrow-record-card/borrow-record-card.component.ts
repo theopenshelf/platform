@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, Inject, input, signal } from '@angular/core';
+import { Component, computed, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
@@ -7,14 +7,11 @@ import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } f
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
-import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
 import { UIUser } from '../../../admin/services/users.service';
-import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
 import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
-import { ItemsService } from '../../services/items.service';
 
 @Component({
   selector: 'borrow-record-card',
@@ -50,9 +47,7 @@ export class BorrowRecordCardComponent {
   protected UIBorrowRecordStatus = UIBorrowRecordStatus;
 
   constructor(
-    private translate: TranslateService,
-    private borrowDialogService: BorrowDialogService,
-    @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {

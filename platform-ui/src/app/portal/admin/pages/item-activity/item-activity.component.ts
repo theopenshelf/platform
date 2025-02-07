@@ -49,7 +49,11 @@ export class ItemActivityComponent {
 
   protected lastMonth = TuiMonth.currentLocal().append({ month: 1 });
 
-  protected borrowRecordsByStatus: { [key: string]: UIBorrowRecordStandalone[] } = {};
+  protected borrowRecordsByStatus: { [key: string]: UIBorrowRecordStandalone[] } = {
+    [UIBorrowStatus.Returned]: [],
+    [UIBorrowStatus.CurrentlyBorrowed]: [],
+    [UIBorrowStatus.Reserved]: [],
+  };
 
   protected hoveredItem: TuiDay | null = null;
   protected selectedStatus: UIBorrowStatus = UIBorrowStatus.Reserved;
@@ -195,6 +199,13 @@ export class ItemActivityComponent {
       acc[status].push({ ...record, item: this.item });
       return acc;
     }, {} as { [key: string]: UIBorrowRecordStandalone[] });
+
+    // Ensure each status is initialized with at least an empty array
+    this.borrowRecordsByStatus = {
+      [UIBorrowStatus.Returned]: this.borrowRecordsByStatus[UIBorrowStatus.Returned] || [],
+      [UIBorrowStatus.CurrentlyBorrowed]: this.borrowRecordsByStatus[UIBorrowStatus.CurrentlyBorrowed] || [],
+      [UIBorrowStatus.Reserved]: this.borrowRecordsByStatus[UIBorrowStatus.Reserved] || [],
+    };
 
     // Sort each status's records by start date
     this.borrowRecordsByStatus[UIBorrowStatus.Reserved].sort((a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime());

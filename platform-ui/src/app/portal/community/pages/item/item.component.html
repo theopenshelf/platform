@@ -7,7 +7,8 @@
   <div class="item-header">
     <div class="item-header-top">
 
-      <div class="item-header-image-container">
+      <div class="item-header-status-container">
+
       </div>
       <div class="item-header-description-container">
         @if (isCssLoaded) {
@@ -21,114 +22,127 @@
         }
 
         <div class="item-actions">
+
           <button class="borrow-counts" appearance="outline" size="m" tuiButton type="button">
             {{ item.borrowRecords.length }} {{ 'item.borrowCounts' | translate }}
           </button>
           <button class="edit" iconStart="@tui.pen" tuiButton appearance="outline" size="m" type="button"></button>
+
+          <button class="favorite" [class.selected]="item.favorite" iconStart="@tui.heart" tuiButton
+            [appearance]="item.favorite ? 'primary' : 'outline'" size="m" type="button"
+            (click)="markAsFavorite()"></button>
+          <button class="reservation-state" iconStart="@tui.calendar-clock" [class.selected]="isReserved" tuiButton
+            [appearance]="isReserved ? 'primary' : 'outline'" size="m" type="button" [tuiHint]="
+          isReserved
+            ? ('item.nextReservation' | translate) +
+              formatReservationDate(nextReservation?.startDate) +
+              ' - ' +
+              formatReservationDate(nextReservation?.endDate)
+            : 'item.noUpcomingReservations' | translate
+        "></button>
         </div>
       </div>
     </div>
     <div class="item-header-bottom">
 
-      <div class="item-header-icon-container">
-        <div class="item-header-icon">
-          <tui-icon icon="@tui.package" />
-        </div>
-      </div>
+
       <div class="item-header-title">
-        <h1>
-          {{ item.name }}
-        </h1>
-        <div class="item-header-subtitle">
-          <span class="category">
-            <tui-icon [icon]="item.category.icon" />
-            <span class="category-value">{{ item.category.name }}</span>
-          </span>
-          <span class="location">
-            <tui-icon icon="@tui.map-pin" />
-            <span class="location-value">{{ item.located }}</span>
-          </span>
+        <div class="item-header-icon-container">
+          <div class="item-header-icon">
+            <tui-icon icon="@tui.package" />
+          </div>
+        </div>
+        <div class="item-header-title-container">
+
+          <h1>
+            {{ item.name }}
+          </h1>
+
+          <div class="item-header-subtitle">
+            <span class="category">
+              <tui-icon [icon]="item.category.icon" />
+              <span class="category-value">{{ item.category.name }}</span>
+            </span>
+            <span class="location">
+              <tui-icon icon="@tui.map-pin" />
+              <span class="location-value">{{ item.located }}</span>
+            </span>
+            <span class="library">
+              <tui-icon icon="@tui.library" />
+              <span class="library-value">{{ library.name }}</span>
+            </span>
+
+          </div>
 
         </div>
       </div>
       <div class="item-header-actions">
+
+        <div class="item-call-to-action-container">
+
+          @if (itemsCurrentlyBorrowed) {
+          <h2>{{ 'item.currentlyBorrowed' | translate }}</h2>
+          <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="accent" size="m"
+            tuiButton type="button">
+            {{ 'item.returnItem' | translate }}
+          </button>
+          }
+          @else if (itemsReadyToPickup) {
+          <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
+          <button class="return-item" (click)="pickUpItem(itemsReadyToPickup)" appearance="accent" size="m" tuiButton
+            type="button">
+            {{ 'item.pickUpItem' | translate }}
+          </button>
+          } @else if (isItemAvailable()) {
+          @if (isNextReservationStartingSoon()) {
+          <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
+          <button class="return-item" (click)="pickUpItem(nextReservation!)" appearance="accent" size="m" tuiButton
+            type="button">
+            {{ 'item.pickUpItemEarly' | translate }}
+          </button>
+          } @else {
+          <h2>{{ 'item.itemAvailable' | translate }}</h2>
+          <button class="borrow-item-now" appearance="accent" size="m" tuiButton type="button"
+            (click)="borrowNowDialog(choose)">
+            {{ 'item.borrowItem' | translate }}
+          </button>
+          }
+          } @else {
+          <h2>{{ 'item.itemAvailable' | translate }}</h2>
+          <button class="borrow-item-now" appearance="accent" size="m" tuiButton type="button"
+            (click)="reserveItemDialog(choose)">
+            {{ 'item.reserveItem' | translate }}
+          </button>
+          }
+        </div>
       </div>
 
     </div>
   </div>
 
   <div class="item-content">
+
+    <!-- Details Section -->
+    <div class="item-details">
+      <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
+
+
+      <h3>{{ 'item.description' | translate }}</h3>
+      <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
+
+      <h3>{{ 'item.library-instructions' | translate }}</h3>
+      <div class="rich-description" [innerHTML]="library.instructions"></div>
+    </div>
+
     <!-- Sidebar Section -->
     <div class="sidebar">
-      @if (itemsCurrentlyBorrowed) {
-      <div class="return-item-container">
-        <h2>{{ 'item.currentlyBorrowed' | translate }}</h2>
-        <div class="return-item-details">
-          <tui-icon icon="@tui.calendar-clock" />
-          {{ itemsCurrentlyBorrowed.startDate | date: "MMM d, y" }} -
-          {{ itemsCurrentlyBorrowed.endDate | date: "MMM d, y" }}
-        </div>
-        <button class="return-item" (click)="returnItem(itemsCurrentlyBorrowed)" appearance="accent" size="m" tuiButton
-          type="button">
-          {{ 'item.returnItem' | translate }}
-        </button>
-      </div>
-      }
-      @else if (itemsReadyToPickup) {
-      <div class="return-item-container">
-        <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
-        <div class="return-item-details">
-          <tui-icon icon="@tui.calendar-clock" />
-          {{ itemsReadyToPickup.startDate | date: "MMM d, y" }} -
-          {{ itemsReadyToPickup.endDate | date: "MMM d, y" }}
-        </div>
-        <button class="return-item" (click)="pickUpItem(itemsReadyToPickup)" appearance="accent" size="m" tuiButton
-          type="button">
-          {{ 'item.pickUpItem' | translate }}
-        </button>
-      </div>
-      } @else if (isItemAvailable()) {
-      @if (isNextReservationStartingSoon()) {
-      <div class="return-item-container">
-        <h2>{{ 'item.itemReadyToPickup' | translate }}</h2>
-        <div class="return-item-details">
-          <tui-icon icon="@tui.calendar-clock" />
-          {{ nextReservation!.startDate | date: "MMM d, y" }} -
-          {{ nextReservation!.endDate | date: "MMM d, y" }}
-        </div>
-        <button class="return-item" (click)="pickUpItem(nextReservation!)" appearance="accent" size="m" tuiButton
-          type="button">
-          {{ 'item.pickUpItemEarly' | translate }}
-        </button>
-      </div>
-      } @else {
-      <div class="return-item-container">
-        <h2>{{ 'item.itemAvailable' | translate }}</h2>
-        <button class="borrow-item-now" appearance="accent" size="m" tuiButton type="button"
-          (click)="borrowNowDialog(choose)">
-          {{ 'item.borrowItem' | translate }}
-        </button>
-      </div>
-      }
-      }
       <div class="sidebar-borrow-container">
         <div class="sidebar-header">
           <div class="sidebar-title">
-            <h2>{{ 'item.borrowThisItem' | translate }}</h2>
+            <h2>{{ 'item.availabilities' | translate }}</h2>
           </div>
           <div class="sidebar-actions">
-            <button class="favorite" [class.selected]="item.favorite" iconStart="@tui.heart" tuiButton
-              [appearance]="item.favorite ? 'primary' : 'outline'" size="s" type="button"
-              (click)="markAsFavorite()"></button>
-            <button class="reservation-state" iconStart="@tui.calendar-clock" tuiButton
-              [appearance]="isReserved ? 'primary' : 'outline'" size="m" type="button" [tuiHint]="
-              isReserved
-                ? ('item.nextReservation' | translate) +
-                  formatReservationDate(nextReservation?.startDate) +
-                  ' - ' +
-                  formatReservationDate(nextReservation?.endDate)
-                : 'item.noUpcomingReservations' | translate
-            "></button>
+
           </div>
         </div>
 
@@ -153,36 +167,10 @@
 
           <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary" size="m"
             [disabled]="!selectedDate" tuiButton type="button">
-            {{ 'item.borrow' | translate }}
+            {{ 'item.reserve' | translate }}
           </button>
         </form>
-
-        <div class="reservations">
-          @if (itemsReserved.length > 0) {
-          <h4>{{ 'item.nextReservations' | translate }}</h4>
-          @for (record of itemsReserved; track record) {
-          <div class="reservation-record">
-            <tui-icon icon="@tui.calendar-clock" />
-            {{ record.startDate | date: "MMM d, y" }} -
-            {{ record.endDate | date: "MMM d, y" }}
-            <button class="cancel-button" (click)="cancelReservation(record)" appearance="outline" size="s" tuiButton
-              type="button">
-              <tui-icon icon="@tui.x" />
-            </button>
-          </div>
-          }
-          }
-        </div>
       </div>
-    </div>
-    <!-- Details Section -->
-    <div class="details">
-      <img [src]="item.imageUrl" alt="{{ item.name }}" class="item-image" />
-
-
-      <h3>{{ 'item.description' | translate }}</h3>
-      <div class="rich-description" [innerHTML]="sanitizedDescription"></div>
-      
     </div>
   </div>
 </div>
@@ -193,18 +181,13 @@
     {{ 'item.borrowRecords' | translate }}
   </h2>
 
-<filtered-and-paginated-borrow-records
-    [getItemsParams]="getItemsParams()"
-    [enableStatusFiltering]="true"
-    [enableCategoriesFiltering]="false"
-    [enableSearchBar]="false"
-    [showItem]="false"
-  >
+  <filtered-and-paginated-borrow-records [getItemsParams]="getItemsParams()" [enableStatusFiltering]="true"
+    [enableCategoriesFiltering]="false" [enableSearchBar]="false" [showItem]="false">
   </filtered-and-paginated-borrow-records>
 </div>
 
 <ng-template #choose>
   <div class="wrapper">
-      «Choose wisely»
+    «Choose wisely»
   </div>
 </ng-template>
