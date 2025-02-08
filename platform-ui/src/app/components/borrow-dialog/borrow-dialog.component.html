@@ -8,7 +8,7 @@
 </p>
 
 @if (context.type !== CallToActionType.Cancel) {
-<timeline [timelineItems]="timelineItems()">
+<timeline [timelineItems]="timelineItems()" [itemSize]="220">
     <ng-template #itemTemplate let-item="item"
     >
       <div class="timeline-item">

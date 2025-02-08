@@ -6,7 +6,7 @@
             <div class="timeline-content-group">
                 <div class="dot dot-{{ timelineItem.dotColor }} {{ timelineItem.active ? 'active' : '' }}"></div>
                 @for (item of timelineItem.items; track $index) {
-                    <div class="timeline-content">
+                    <div class="timeline-content" [style.width]="itemSize + 'px'">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }"></ng-container>
                     </div>
                 }

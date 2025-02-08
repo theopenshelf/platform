@@ -24,4 +24,5 @@ export class TimelineComponent {
   @ContentChild('itemTemplate', { read: TemplateRef })
   itemTemplate!: TemplateRef<any>;
   public timelineItems = input.required<TimelineItem[]>();
+  public itemSize = input<number>(120);
 }
