@@ -1,9 +1,11 @@
+import { NgForOf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiDay, TuiDayRange, type TuiPopover } from '@taiga-ui/cdk';
-import { TuiButton, TuiDialogCloseService } from '@taiga-ui/core';
+import { TuiButton, TuiDialogCloseService, TuiIcon } from '@taiga-ui/core';
+import { TuiConnected, TuiStepper } from '@taiga-ui/kit';
 import { TuiDayRangePeriod } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
 import {
@@ -11,7 +13,8 @@ import {
   PolymorpheusOutlet,
   PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
-import { PromptOptions } from './prompt-options';
+import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
+import { CallToActionType, PromptOptions, PromptResponse } from './prompt-options';
 
 @Component({
   imports: [
@@ -20,19 +23,26 @@ import { PromptOptions } from './prompt-options';
     TuiButton,
     TuiInputDateRangeModule,
     TranslateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgForOf,
+    TuiConnected,
+    TuiStepper,
+    TimelineComponent,
+    TuiIcon,
   ],
+
   selector: 'borrow-dialog',
   templateUrl: './borrow-dialog.component.html',
   styleUrls: ['./borrow-dialog.component.scss'],
   providers: [TuiDialogCloseService],
 })
 export class BorrowDialogComponent {
-  protected readonly context = injectContext<TuiPopover<PromptOptions, boolean>>();
+  protected readonly context = injectContext<TuiPopover<PromptOptions, PromptResponse>>();
 
   protected suggestedDates: TuiDayRangePeriod[] = [];
   private readonly today = TuiDay.currentLocal();
   public readonly control = new FormControl();
+
 
   // Here you get options + content + id + observer
   constructor(private translate: TranslateService) {
@@ -40,6 +50,7 @@ export class BorrowDialogComponent {
     inject(TuiDialogCloseService)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.context.$implicit.complete());
+
 
     this.suggestedDates = [
       new TuiDayRangePeriod(
@@ -71,7 +82,131 @@ export class BorrowDialogComponent {
     this.control.setValue(new TuiDayRange(this.today, this.today));
   }
 
-  protected onClick(response: any): void {
-    this.context.completeWith(response);
+  protected timelineItems(): TimelineItem[] {
+    let timelineItems: TimelineItem[] = [];
+
+    let lineColorActive = true;
+    timelineItems.push(
+      {
+        label: "",
+        position: 'left',
+        dotColor: this.context.type === CallToActionType.Reserve ? 'accent' : 'primary',
+        lineColor: lineColorActive ? 'accent' : 'primary',
+        lastItem: false,
+        items: [
+          {
+            icon: '@tui.calendar',
+            title: this.translate.instant('borrowDialog.title.reserve'),
+          }
+        ]
+      },
+    );
+    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Reserve;
+
+    if (this.context.confirmationEnabled) {
+      timelineItems.push(
+        {
+          label: "",
+          position: 'left',
+          dotColor: this.context.type === CallToActionType.ReserveConfirm ? 'accent' : 'primary',
+          lineColor: lineColorActive ? 'accent' : 'primary',
+          lastItem: false,
+          items: [
+            {
+              icon: '@tui.stamp',
+              title: this.translate.instant('borrowDialog.title.reserveConfirm'),
+            }
+          ]
+        },
+      );
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Reserve;
+    }
+
+    timelineItems.push(
+      {
+        label: "",
+        position: 'left',
+        dotColor: this.context.type === CallToActionType.Pickup ? 'accent' : 'primary',
+        lineColor: lineColorActive ? 'accent' : 'primary',
+        lastItem: false,
+        items: [
+          {
+            icon: '/borrow.png',
+            title: this.translate.instant('borrowDialog.title.pickup'),
+          }
+        ]
+      },
+    );
+    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Pickup;
+
+    if (this.context.confirmationEnabled) {
+      timelineItems.push(
+        {
+          label: "",
+          position: 'left',
+          dotColor: this.context.type === CallToActionType.PickupConfirm ? 'accent' : 'primary',
+          lineColor: lineColorActive ? 'accent' : 'primary',
+          lastItem: false,
+          items: [
+            {
+              icon: '/borrow.png',
+              title: this.translate.instant('borrowDialog.title.pickup'),
+            }
+          ]
+        },
+      );
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Pickup;
+    }
+
+    timelineItems.push(
+      {
+        label: "",
+        position: 'left',
+        dotColor: this.context.type === CallToActionType.Return ? 'accent' : 'primary',
+        lineColor: lineColorActive ? 'accent' : 'primary',
+        lastItem: !this.context.confirmationEnabled,
+        items: [
+          {
+            icon: '/returnItem.png',
+            title: this.translate.instant('borrowDialog.title.return'),
+          }
+        ]
+      },
+    );
+    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Return;
+
+    if (this.context.confirmationEnabled) {
+      timelineItems.push(
+        {
+          label: "",
+          position: 'left',
+          dotColor: this.context.type === CallToActionType.ReturnConfirm ? 'accent' : 'primary',
+          lineColor: lineColorActive ? 'accent' : 'primary',
+          lastItem: true,
+          items: [
+            {
+              icon: '/returnItem.png',
+              title: this.translate.instant('borrowDialog.title.return'),
+            }
+          ]
+        },
+      );
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Return;
+    }
+    return timelineItems;
+  };
+
+  protected confirm(): void {
+    this.context.completeWith({
+      action: 'confirm',
+      selectedDate: this.control.value,
+    });
+  }
+
+  protected cancel(): void {
+    this.context.completeWith({
+      action: 'cancel',
+      selectedDate: new TuiDayRange(this.today, this.today),
+    });
   }
 }

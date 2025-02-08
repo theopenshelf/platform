@@ -423,5 +423,26 @@
     "doesNotRequireApproval": "Libre accès",
     "freeAccess": "Public",
     "privateAccess": "Privé"
+  },
+  "borrowDialog": {
+    "title": {
+      "reserve": "Réserver",
+      "reserveConfirm": "Réserver",
+      "pickup": "Récupérer",
+      "pickupConfirm": "Récupérer",
+      "return": "Retourner",
+      "returnConfirm": "Retourner"
+    },
+    "chooseDates": "Choisir une date",
+    "heading": {
+      "reserve": "Réserver l'article",
+      "reserveConfirm": "Confirmer la réservation",
+      "pickup": "Récupérer l'article",
+      "pickupConfirm": "Confirmer la récupération",
+      "return": "Retourner l'article",
+      "returnConfirm": "Confirmer le retour"
+    },
+    "confirm": "Confirmer",
+    "cancel": "Annuler"
   }
 }

@@ -448,13 +448,13 @@ export class ItemComponent implements OnInit {
   borrowNowDialog(
     choose: PolymorpheusContent,
   ): void {
-    this.borrowDialogService.borrowNowDialog(choose, this.item!, this.itemsService);
+    this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
   }
 
   reserveItemDialog(
     choose: PolymorpheusContent,
   ): void {
-    this.borrowDialogService.borrowNowDialog(choose, this.item!, this.itemsService);
+    this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
   }
 
   protected getCategoryBadgeClass(category: string): string {

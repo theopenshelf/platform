@@ -5,20 +5,19 @@ import { TUI_DIALOGS, TuiAlertService, TuiDialogService } from '@taiga-ui/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TUI_CONFIRM } from '@taiga-ui/kit';
-import { PolymorpheusContent } from '@taiga-ui/polymorpheus';
 import { EMPTY, switchMap, tap } from 'rxjs';
 import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { UIItem } from '../../portal/community/models/UIItem';
 import { EventService, TosEventType } from '../../portal/community/services/event.service';
 import { ItemsService } from '../../portal/community/services/items.service';
 import { BorrowDialogComponent } from './borrow-dialog.component';
-import type { PromptOptions } from './prompt-options';
+import { CallToActionType, PromptResponse, type PromptOptions } from './prompt-options';
 
 
 @Injectable({
     providedIn: 'root'
 })
-export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolean> {
+export class BorrowDialogService extends TuiPopoverService<PromptOptions, PromptResponse> {
 
     constructor(
         private alerts: TuiAlertService,
@@ -28,25 +27,23 @@ export class BorrowDialogService extends TuiPopoverService<PromptOptions, boolea
         private eventService: EventService
     ) {
         super(TUI_DIALOGS, BorrowDialogComponent, {
-            heading: 'Are you sure?',
-            buttons: ['Yes', 'No'],
+            type: CallToActionType.Reserve,
         });
     }
 
     borrowNowDialog(
-        choose: PolymorpheusContent,
         item: UIItem,
         itemsService: ItemsService
     ): void {
         this
-            .open<any>(choose, {
-                heading: this.translate.instant('item.borrowLabel', { itemName: item?.name }),
-                buttons: ['Absolutely!', 'No way!'],
+            .open<any>({
+                type: CallToActionType.Reserve,
+                borrowNow: true,
+                item: item,
             })
-
-            .subscribe((response: any) => {
-                if (response.type === 'confirm') {
-                    this.borrowItemConfirmation(item, response.value, itemsService);
+            .subscribe((response: PromptResponse) => {
+                if (response.action === 'confirm') {
+                    this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
                 }
             });
     }

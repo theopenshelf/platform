@@ -411,5 +411,26 @@
     "borrowed": "Borrowed",
     "reserved": "Reserved",
     "returned": "Returned"
-  }
+  },
+  "borrowDialog": {
+    "title": {
+      "reserve": "Reserve",
+      "reserveConfirm": "Reserve Confirm",
+      "pickup": "Pickup",
+      "pickupConfirm": "Pickup Confirm",
+      "return": "Return",
+      "returnConfirm": "Return Confirm"
+    },
+    "chooseDates": "Choose dates",
+    "heading": {
+      "reserve": "Reserve the item",
+      "reserveConfirm": "Confirm the reservation",
+      "pickup": "Pickup the item",
+      "pickupConfirm": "Confirm the pickup",
+      "return": "Return the item",
+      "returnConfirm": "Confirm the return"
+    },
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  } 
 } 

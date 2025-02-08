@@ -1,11 +1,23 @@
 <!-- Add id for accessibility purposes -->
-<h2>{{ context.heading }}</h2>
+<h2>
+    {{ 'borrowDialog.heading.' + context.type | translate }}
+</h2>
+
+<timeline [timelineItems]="timelineItems()">
+    <ng-template #itemTemplate let-item="item"
+    >
+      <div class="timeline-item">
+        <tui-icon class="timeline-icon" [icon]="item.icon" />
+        <span class="timeline-title">{{ item.title }}</span>
+      </div>
+    </ng-template>
+</timeline>
 
 <tui-input-date-range
     [formControl]="control"
     [items]="suggestedDates"
 >
-    Choose dates
+    {{ 'borrowDialog.chooseDates' | translate }}
 </tui-input-date-range>
 
 <p class="buttons">
@@ -15,26 +27,16 @@
         tuiButton
         type="button"
         class="tui-space_right-3"
-        (click)="onClick(
-            {
-                type: 'cancel',
-            }
-        )"
+        (click)="cancel()"
     >
-        {{ 'item.cancel' | translate }}
+        {{ 'borrowDialog.cancel' | translate }}
     </button>
     <button
         size="m"
         tuiButton
-        (click)="
-        onClick(
-            {
-                type: 'confirm',
-                value: control.value,
-            }
-        )
+        (click)="confirm()
         "
     >
-        {{ 'item.yesBorrow' | translate }}
+        {{ 'borrowDialog.confirm' | translate }}
     </button>
 </p>
