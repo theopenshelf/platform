@@ -440,9 +440,31 @@
       "pickup": "Récupérer l'article",
       "pickupConfirm": "Confirmer la récupération",
       "return": "Retourner l'article",
-      "returnConfirm": "Confirmer le retour"
+      "returnConfirm": "Confirmer le retour",
+      "cancel": "Annuler la réservation"
     },
-    "confirm": "Confirmer",
-    "cancel": "Annuler"
+    "description": {
+      "reserve": "Réservez l'article pour vous assurer qu'il est disponible pour vous.",
+      "reserveConfirm": "Confirmez votre réservation pour finaliser la réservation.",
+      "pickup": "Récupérez l'article à l'emplacement désigné.",
+      "pickupConfirm": "Confirmez que vous avez récupéré l'article.",
+      "return": "Retournez l'article à la bibliothèque ou au point de retour désigné.",
+      "returnConfirm": "Confirmez que vous avez retourné l'article.",
+      "cancel": "Annuler la réservation"
+    },
+    "cancelButtonLabel": "Annuler",
+    "confirmButtonLabel": "Confirmer",
+    "cancel": {
+      "reserve": "Annuler",
+      "pickup": "Annuler la récupération",
+      "return": "Annuler le retour",
+      "cancel": "Garder la réservation"
+    },
+    "confirm": {
+      "reserve": "Oui, réserver",
+      "pickup": "Oui, récupérer",
+      "return": "Oui, retourner",
+      "cancel": "Oui, annuler la réservation"
+    }
   }
 }

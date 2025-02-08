@@ -118,6 +118,23 @@
     z-index: 1;
 }
 
+.dot.active {
+    background: var(--tos-timeline-dot-accent);
+    animation: beep 1s infinite alternate;
+}
+
+@keyframes beep {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+
+    100% {
+        transform: scale(1.2);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
 /* Custom line colors using classes */
 .dot-accent {
     background: var(--tos-timeline-dot-accent);

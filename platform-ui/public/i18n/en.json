@@ -421,6 +421,14 @@
       "return": "Return",
       "returnConfirm": "Return Confirm"
     },
+    "description": {
+      "reserve": "Reserve the item to ensure it's available for you.",
+      "reserveConfirm": "Confirm your reservation to finalize the booking.",
+      "pickup": "Pick up the item from the designated location.",
+      "pickupConfirm": "Confirm that you have picked up the item.",
+      "return": "Return the item to the library or designated drop-off point.",
+      "returnConfirm": "Confirm that you have returned the item."
+    },
     "chooseDates": "Choose dates",
     "heading": {
       "reserve": "Reserve the item",
@@ -428,9 +436,22 @@
       "pickup": "Pickup the item",
       "pickupConfirm": "Confirm the pickup",
       "return": "Return the item",
-      "returnConfirm": "Confirm the return"
+      "returnConfirm": "Confirm the return",
+      "cancel": "Cancel the reservation"
     },
-    "confirm": "Confirm",
-    "cancel": "Cancel"
-  } 
-} 
+    "cancelButtonLabel": "Cancel",
+    "confirmButtonLabel": "Confirm",
+    "cancel": {
+      "reserve": "Cancel the reservation",
+      "pickup": "Cancel the pickup",
+      "return": "Cancel the return",
+      "cancel": "Keep the reservation"
+    },
+    "confirm": {
+      "reserve": "Confirm the reservation",
+      "pickup": "Confirm the pickup",
+      "return": "Confirm the return",
+      "cancel": "Yes, cancel the reservation"
+    }
+  }
+}

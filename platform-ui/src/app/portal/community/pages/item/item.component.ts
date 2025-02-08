@@ -34,16 +34,14 @@ import {
   TuiNotification
 } from '@taiga-ui/core';
 import {
-  TUI_CALENDAR_DATE_STREAM,
-  TUI_CONFIRM,
-  TuiConfirmData,
+  TUI_CALENDAR_DATE_STREAM
 } from '@taiga-ui/kit';
 import { TuiCalendarRange, TuiDayRangePeriod } from '@taiga-ui/kit/components/calendar-range';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
-import { PolymorpheusComponent, PolymorpheusContent } from '@taiga-ui/polymorpheus';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { combineLatest, EMPTY, map, Observable, switchMap, tap } from 'rxjs';
+import { combineLatest, map, Observable, tap } from 'rxjs';
 import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
@@ -378,33 +376,9 @@ export class ItemComponent implements OnInit {
       .subscribe();
   }
 
-  borrowItem() {
-    const data: TuiConfirmData = {
-      content: this.translate.instant('item.confirmBorrowContent', {
-        itemName: this.item?.name,
-        startDate: this.selectedDate?.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
-        endDate: this.selectedDate?.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
-      }),
-      yes: this.translate.instant('item.yesBorrow'),
-      no: this.translate.instant('item.cancel'),
-    };
+  reserveItem() {
+    this.borrowDialogService.reserveItem(this.selectedDate!, this.item!, this.itemsService);
 
-    this.dialogs
-      .open<boolean>(TUI_CONFIRM, {
-        label: this.translate.instant('item.borrowLabel', { itemName: this.item?.name }),
-        size: 'm',
-        data,
-      })
-      .pipe(
-        switchMap((response) => {
-          if (response) {
-            this.borrowItemConfirmation();
-            return EMPTY;
-          }
-          return EMPTY;
-        }),
-      )
-      .subscribe();
   }
 
   cancelReservation(borrowRecord: UIBorrowRecord) {
@@ -445,15 +419,11 @@ export class ItemComponent implements OnInit {
   }
 
 
-  borrowNowDialog(
-    choose: PolymorpheusContent,
-  ): void {
+  borrowNowDialog(): void {
     this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
   }
 
-  reserveItemDialog(
-    choose: PolymorpheusContent,
-  ): void {
+  reserveItemDialog(): void {
     this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
   }
 

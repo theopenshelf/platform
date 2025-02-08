@@ -26,6 +26,9 @@ export interface PromptOptions {
     readonly confirmationEnabled?: boolean;
     readonly item?: UIItem;
     readonly borrowRecord?: UIBorrowRecord;
+    readonly description: string;
+    readonly cancelButtonLabel: string;
+    readonly confirmButtonLabel: string;
 }
 
 export interface PromptResponse {

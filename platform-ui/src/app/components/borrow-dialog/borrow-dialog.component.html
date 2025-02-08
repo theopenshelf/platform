@@ -3,6 +3,11 @@
     {{ 'borrowDialog.heading.' + context.type | translate }}
 </h2>
 
+<p>
+    {{ context.description }}
+</p>
+
+@if (context.type !== CallToActionType.Cancel) {
 <timeline [timelineItems]="timelineItems()">
     <ng-template #itemTemplate let-item="item"
     >
@@ -12,13 +17,16 @@
       </div>
     </ng-template>
 </timeline>
+}
 
-<tui-input-date-range
-    [formControl]="control"
-    [items]="suggestedDates"
->
-    {{ 'borrowDialog.chooseDates' | translate }}
-</tui-input-date-range>
+@if (context.type === CallToActionType.Reserve && context.borrowNow) {
+    <tui-input-date-range
+        [formControl]="control"
+        [items]="suggestedDates"
+    >
+        {{ 'borrowDialog.chooseDates' | translate }}
+    </tui-input-date-range>
+}
 
 <p class="buttons">
     <button
@@ -29,7 +37,7 @@
         class="tui-space_right-3"
         (click)="cancel()"
     >
-        {{ 'borrowDialog.cancel' | translate }}
+        {{ context.cancelButtonLabel | translate }}
     </button>
     <button
         size="m"
@@ -37,6 +45,6 @@
         (click)="confirm()
         "
     >
-        {{ 'borrowDialog.confirm' | translate }}
+        {{ context.confirmButtonLabel | translate }}
     </button>
 </p>

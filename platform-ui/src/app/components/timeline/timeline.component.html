@@ -4,7 +4,7 @@
         <div class="timeline-item line-{{ timelineItem.lineColor }} {{ timelineItem.position }} {{ timelineItem.lastItem ? 'last-item' : '' }}">
             <div class="timeline-label">{{ timelineItem.label }}</div>
             <div class="timeline-content-group">
-                <div class="dot dot-{{ timelineItem.dotColor }}"></div>
+                <div class="dot dot-{{ timelineItem.dotColor }} {{ timelineItem.active ? 'active' : '' }}"></div>
                 @for (item of timelineItem.items; track $index) {
                     <div class="timeline-content">
                         <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item }"></ng-container>

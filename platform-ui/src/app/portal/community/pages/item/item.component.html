@@ -103,14 +103,14 @@
           } @else {
           <h2>{{ 'item.itemAvailable' | translate }}</h2>
           <button class="borrow-item-now" appearance="accent" size="m" tuiButton type="button"
-            (click)="borrowNowDialog(choose)">
+            (click)="borrowNowDialog()">
             {{ 'item.borrowItem' | translate }}
           </button>
           }
           } @else {
           <h2>{{ 'item.itemAvailable' | translate }}</h2>
           <button class="borrow-item-now" appearance="accent" size="m" tuiButton type="button"
-            (click)="reserveItemDialog(choose)">
+            (click)="reserveItemDialog()">
             {{ 'item.reserveItem' | translate }}
           </button>
           }
@@ -165,7 +165,7 @@
             {{ 'item.selectDateToBorrow' | translate }}
           </tui-notification>
 
-          <button id="borrow" i18n="@@borrowButton" (click)="borrowItem()" appearance="primary" size="m"
+          <button id="borrow" i18n="@@borrowButton" (click)="reserveItem()" appearance="primary" size="m"
             [disabled]="!selectedDate" tuiButton type="button">
             {{ 'item.reserve' | translate }}
           </button>
@@ -185,9 +185,3 @@
     [enableCategoriesFiltering]="false" [enableSearchBar]="false" [showItem]="false">
   </filtered-and-paginated-borrow-records>
 </div>
-
-<ng-template #choose>
-  <div class="wrapper">
-    «Choose wisely»
-  </div>
-</ng-template>

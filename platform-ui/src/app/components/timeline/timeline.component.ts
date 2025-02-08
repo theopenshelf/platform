@@ -4,6 +4,7 @@ import { Component, ContentChild, input, TemplateRef } from '@angular/core';
 
 export interface TimelineItem {
   label: string;
+  active?: boolean;
   position: 'left' | 'right';
   dotColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';
   lineColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger';

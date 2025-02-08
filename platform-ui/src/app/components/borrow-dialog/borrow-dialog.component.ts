@@ -1,4 +1,4 @@
-import { NgForOf } from '@angular/common';
+import { JsonPipe, NgForOf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -29,6 +29,7 @@ import { CallToActionType, PromptOptions, PromptResponse } from './prompt-option
     TuiStepper,
     TimelineComponent,
     TuiIcon,
+    JsonPipe,
   ],
 
   selector: 'borrow-dialog',
@@ -43,14 +44,13 @@ export class BorrowDialogComponent {
   private readonly today = TuiDay.currentLocal();
   public readonly control = new FormControl();
 
-
+  protected readonly CallToActionType = CallToActionType;
   // Here you get options + content + id + observer
   constructor(private translate: TranslateService) {
     // Close on click outside/Escape button
     inject(TuiDialogCloseService)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.context.$implicit.complete());
-
 
     this.suggestedDates = [
       new TuiDayRangePeriod(
@@ -85,13 +85,15 @@ export class BorrowDialogComponent {
   protected timelineItems(): TimelineItem[] {
     let timelineItems: TimelineItem[] = [];
 
-    let lineColorActive = true;
+    let dotActive = true;
+    let lineColorActive = this.context.type !== CallToActionType.Reserve;
     timelineItems.push(
       {
         label: "",
         position: 'left',
-        dotColor: this.context.type === CallToActionType.Reserve ? 'accent' : 'primary',
+        dotColor: dotActive ? 'accent' : 'primary',
         lineColor: lineColorActive ? 'accent' : 'primary',
+        active: this.context.type === CallToActionType.Reserve,
         lastItem: false,
         items: [
           {
@@ -101,15 +103,18 @@ export class BorrowDialogComponent {
         ]
       },
     );
-    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Reserve;
+
+    dotActive = dotActive && this.context.type !== CallToActionType.Reserve;
 
     if (this.context.confirmationEnabled) {
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.ReserveConfirm;
       timelineItems.push(
         {
           label: "",
           position: 'left',
-          dotColor: this.context.type === CallToActionType.ReserveConfirm ? 'accent' : 'primary',
+          dotColor: dotActive ? 'accent' : 'primary',
           lineColor: lineColorActive ? 'accent' : 'primary',
+          active: this.context.type === CallToActionType.ReserveConfirm,
           lastItem: false,
           items: [
             {
@@ -119,15 +124,17 @@ export class BorrowDialogComponent {
           ]
         },
       );
-      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Reserve;
+      dotActive = dotActive && this.context.type !== CallToActionType.ReserveConfirm;
     }
 
+    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Pickup;
     timelineItems.push(
       {
         label: "",
         position: 'left',
-        dotColor: this.context.type === CallToActionType.Pickup ? 'accent' : 'primary',
+        dotColor: dotActive ? 'accent' : 'primary',
         lineColor: lineColorActive ? 'accent' : 'primary',
+        active: this.context.type === CallToActionType.Pickup,
         lastItem: false,
         items: [
           {
@@ -137,33 +144,37 @@ export class BorrowDialogComponent {
         ]
       },
     );
-    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Pickup;
+    dotActive = dotActive && this.context.type !== CallToActionType.Pickup;
 
     if (this.context.confirmationEnabled) {
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.PickupConfirm;
       timelineItems.push(
         {
           label: "",
           position: 'left',
-          dotColor: this.context.type === CallToActionType.PickupConfirm ? 'accent' : 'primary',
+          dotColor: dotActive ? 'accent' : 'primary',
           lineColor: lineColorActive ? 'accent' : 'primary',
+          active: this.context.type === CallToActionType.PickupConfirm,
           lastItem: false,
           items: [
             {
-              icon: '/borrow.png',
-              title: this.translate.instant('borrowDialog.title.pickup'),
+              icon: '@tui.stamp',
+              title: this.translate.instant('borrowDialog.title.pickupConfirm'),
             }
           ]
         },
       );
-      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Pickup;
+      dotActive = dotActive && this.context.type !== CallToActionType.PickupConfirm;
     }
 
+    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Return;
     timelineItems.push(
       {
         label: "",
         position: 'left',
-        dotColor: this.context.type === CallToActionType.Return ? 'accent' : 'primary',
+        dotColor: dotActive ? 'accent' : 'primary',
         lineColor: lineColorActive ? 'accent' : 'primary',
+        active: this.context.type === CallToActionType.Return,
         lastItem: !this.context.confirmationEnabled,
         items: [
           {
@@ -173,15 +184,17 @@ export class BorrowDialogComponent {
         ]
       },
     );
-    lineColorActive = lineColorActive && this.context.type !== CallToActionType.Return;
+    dotActive = dotActive && this.context.type !== CallToActionType.Return;
 
     if (this.context.confirmationEnabled) {
+      lineColorActive = lineColorActive && this.context.type !== CallToActionType.ReturnConfirm;
       timelineItems.push(
         {
           label: "",
           position: 'left',
-          dotColor: this.context.type === CallToActionType.ReturnConfirm ? 'accent' : 'primary',
+          dotColor: dotActive ? 'accent' : 'primary',
           lineColor: lineColorActive ? 'accent' : 'primary',
+          active: this.context.type === CallToActionType.ReturnConfirm,
           lastItem: true,
           items: [
             {
@@ -191,7 +204,7 @@ export class BorrowDialogComponent {
           ]
         },
       );
-      lineColorActive = lineColorActive && this.context.type !== CallToActionType.Return;
+      dotActive = dotActive && this.context.type !== CallToActionType.ReturnConfirm;
     }
     return timelineItems;
   };
