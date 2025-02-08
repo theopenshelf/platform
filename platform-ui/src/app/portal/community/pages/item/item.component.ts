@@ -377,7 +377,7 @@ export class ItemComponent implements OnInit {
   }
 
   reserveItem() {
-    this.borrowDialogService.reserveItem(this.selectedDate!, this.item!, this.itemsService);
+    this.borrowDialogService.reserveItem(this.selectedDate!, this.item!, this.itemsService, this.library);
 
   }
 
@@ -393,7 +393,7 @@ export class ItemComponent implements OnInit {
   }
 
   returnItem(borrowRecord: UIBorrowRecord) {
-    this.borrowDialogService.returnItem(borrowRecord, this.item!, this.itemsService)
+    this.borrowDialogService.returnItem(borrowRecord, this.item!, this.itemsService, this.library)
       .pipe(
         tap((item) => {
           this.setItem(item);
@@ -404,7 +404,7 @@ export class ItemComponent implements OnInit {
   }
 
   pickUpItem(borrowRecord: UIBorrowRecord) {
-    this.borrowDialogService.pickUpItem(borrowRecord, this.item!, this.itemsService)
+    this.borrowDialogService.pickUpItem(borrowRecord, this.item!, this.itemsService, this.library)
       .pipe(
         tap((item) => {
           this.setItem(item);
@@ -420,11 +420,11 @@ export class ItemComponent implements OnInit {
 
 
   borrowNowDialog(): void {
-    this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
+    this.borrowDialogService.borrowNowDialog(this.item!, this.library, this.itemsService);
   }
 
   reserveItemDialog(): void {
-    this.borrowDialogService.borrowNowDialog(this.item!, this.itemsService);
+    this.borrowDialogService.borrowNowDialog(this.item!, this.library, this.itemsService);
   }
 
   protected getCategoryBadgeClass(category: string): string {

@@ -198,8 +198,8 @@ export class BorrowDialogComponent {
           lastItem: true,
           items: [
             {
-              icon: '/returnItem.png',
-              title: this.translate.instant('borrowDialog.title.return'),
+              icon: '@tui.stamp',
+              title: this.translate.instant('borrowDialog.title.returnConfirm'),
             }
           ]
         },

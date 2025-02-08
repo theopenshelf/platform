@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EMPTY, switchMap, tap } from 'rxjs';
 import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { UIItem } from '../../portal/community/models/UIItem';
+import { UILibrary } from '../../portal/community/models/UILibrary';
 import { EventService, TosEventType } from '../../portal/community/services/event.service';
 import { ItemsService } from '../../portal/community/services/items.service';
 import { BorrowDialogPopoverService } from './borrow-dialog-popover.service';
@@ -31,6 +32,7 @@ export class BorrowDialogService {
 
     borrowNowDialog(
         item: UIItem,
+        library: UILibrary,
         itemsService: ItemsService
     ): void {
         this.popoverService
@@ -38,6 +40,7 @@ export class BorrowDialogService {
                 type: CallToActionType.Reserve,
                 borrowNow: true,
                 item: item,
+                confirmationEnabled: library.requiresApproval,
                 description: this.translate.instant('borrowDialog.description.reserve'),
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',
                 confirmButtonLabel: 'borrowDialog.confirm.reserve',
@@ -49,7 +52,11 @@ export class BorrowDialogService {
             });
     }
 
-    public borrowItemConfirmation(item: UIItem, selectedDate: TuiDayRange, itemsService: ItemsService): void {
+    public borrowItemConfirmation(
+        item: UIItem,
+        selectedDate: TuiDayRange,
+        itemsService: ItemsService,
+    ): void {
         itemsService
             .borrowItem(
                 item,
@@ -80,12 +87,18 @@ export class BorrowDialogService {
             .subscribe();
     }
 
-    public reserveItem(selectedDate: TuiDayRange, item: UIItem, itemsService: ItemsService) {
+    public reserveItem(
+        selectedDate: TuiDayRange,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
 
         return this.popoverService
             .open<any>(null, {
                 type: CallToActionType.Reserve,
                 borrowNow: false,
+                confirmationEnabled: library.requiresApproval,
                 item: item,
                 description: this.translate.instant('item.confirmBorrowContent', {
                     itemName: item.name,
@@ -102,12 +115,18 @@ export class BorrowDialogService {
             });
     }
 
-    public pickUpItem(borrowRecord: UIBorrowRecord, item: UIItem, itemsService: ItemsService) {
+    public pickUpItem(
+        borrowRecord: UIBorrowRecord,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
         const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
         return this.popoverService
             .open<any>(null, {
                 type: CallToActionType.Pickup,
                 item: item,
+                confirmationEnabled: library.requiresApproval,
                 description: this.translate.instant('item.pickUpContent', { itemName: item.name, endDate }),
                 cancelButtonLabel: 'borrowDialog.cancel.pickup',
                 confirmButtonLabel: 'borrowDialog.confirm.pickup',
@@ -131,12 +150,18 @@ export class BorrowDialogService {
             );
     }
 
-    public returnItem(borrowRecord: UIBorrowRecord, item: UIItem, itemsService: ItemsService) {
+    public returnItem(
+        borrowRecord: UIBorrowRecord,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
         const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
         return this.popoverService
             .open<any>(null, {
                 type: CallToActionType.Return,
                 item: item,
+                confirmationEnabled: library.requiresApproval,
                 description: this.translate.instant('item.returnContent', { itemName: item.name, endDate }),
                 cancelButtonLabel: 'borrowDialog.cancel.return',
                 confirmButtonLabel: 'borrowDialog.confirm.return',

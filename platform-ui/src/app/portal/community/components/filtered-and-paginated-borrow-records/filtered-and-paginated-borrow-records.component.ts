@@ -95,13 +95,13 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
 
 
   public pickUpItem = (item: UIItem, borrowRecord: UIBorrowRecord) => {
-    this.borrowDialogService.pickUpItem(borrowRecord, item, this.itemsService).subscribe(i => {
+    this.borrowDialogService.pickUpItem(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
     });
   }
 
   public returnItem = (item: UIItem, borrowRecord: UIBorrowRecord) => {
-    this.borrowDialogService.returnItem(borrowRecord, item, this.itemsService).subscribe(i => {
+    this.borrowDialogService.returnItem(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
     });
   }

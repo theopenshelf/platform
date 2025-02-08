@@ -427,11 +427,12 @@
   "borrowDialog": {
     "title": {
       "reserve": "Réserver",
-      "reserveConfirm": "Réserver",
+      "reserveConfirm": "Confirmer de la réservation",
       "pickup": "Récupérer",
-      "pickupConfirm": "Récupérer",
+      "pickupConfirm": "Confirmer de la récupération",
       "return": "Retourner",
-      "returnConfirm": "Retourner"
+      "returnConfirm": "Confirmer du retour",
+      "cancel": "Annuler la réservation"
     },
     "chooseDates": "Choisir une date",
     "heading": {

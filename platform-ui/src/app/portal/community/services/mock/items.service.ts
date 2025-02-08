@@ -133,6 +133,7 @@ export class MockItemsService implements ItemsService {
       status,
       borrowedByCurrentUser,
       sortBy,
+      libraryIds,
       sortOrder,
       categories,
       itemId,
@@ -171,6 +172,12 @@ export class MockItemsService implements ItemsService {
     if (startDate && endDate) {
       filteredRecords = filteredRecords.filter(record =>
         record.startDate <= endDate && record.endDate >= startDate
+      );
+    }
+
+    if (libraryIds && libraryIds.length > 0) {
+      filteredRecords = filteredRecords.filter(record =>
+        libraryIds.includes(record.item.libraryId),
       );
     }
 
