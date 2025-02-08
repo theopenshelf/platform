@@ -24,10 +24,31 @@
           <tui-icon icon="@tui.library" />
         </div>
       </div>
-      <div class="library-header-title">
-        <h1>
-          {{ library.name }}
-        </h1>
+      <div class="library-header-title-container">
+        <div class="library-header-title-top-part">
+          <div class="library-header-title">
+            <h1>
+              {{ library.name }}
+            </h1>
+          </div>
+          <div class="library-header-actions">
+            <div class="library-actions">
+              <tui-avatar-stack class="admin-stack" [direction]="'left'">
+                @for (member of library.admins; track member) {
+                <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
+                  [style.background]="usersPerId.get(member.userId)!.username | tuiAutoColor" />
+                }
+                <tui-avatar [round]="true" [size]="'s'">
+                  {{ library.admins.length }}+
+                </tui-avatar>
+              </tui-avatar-stack>
+              <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+                routerLink="/community/libraries/{{ library.id }}/edit"></button>
+              <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+                (click)="deleteLibrary(library)"></button>
+            </div>
+          </div>
+        </div>
         <div class="library-header-subtitle">
           <span>{{ library.location.name }}</span>
           <span><tui-icon icon="@tui.map-pin" /> {{ library.location.address }}</span>
@@ -44,25 +65,9 @@
           }
 
         </div>
-      </div>
-      <div class="library-header-actions">
-        <div class="library-actions">
-          <tui-avatar-stack class="admin-stack" [direction]="'left'">
-            @for (member of library.admins; track member) {
-            <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
-              [style.background]="usersPerId.get(member.userId)!.username | tuiAutoColor" />
-            }
-            <tui-avatar [round]="true" [size]="'s'">
-              {{ library.admins.length }}+
-            </tui-avatar>
-          </tui-avatar-stack>
-          <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
-            routerLink="/community/libraries/{{ library.id }}/edit"></button>
-          <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
-            (click)="deleteLibrary(library)"></button>
-        </div>
-      </div>
 
+
+      </div>
     </div>
   </div>
 
