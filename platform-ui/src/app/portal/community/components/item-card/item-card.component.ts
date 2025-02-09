@@ -39,6 +39,8 @@ export class ItemCardComponent {
   public item = input.required<UIItem>();
   public library = input<UILibrary>();
   public borrowRecords = input.required<UIBorrowRecord[]>();
+  public borrowNowCallback = input<(item: UIItem) => void>();
+  public reserveItemCallback = input<(item: UIItem) => void>();
 
   public isReserved = computed(
     () =>
@@ -65,5 +67,17 @@ export class ItemCardComponent {
 
   formatReservationDate(date: Date): string | null {
     return date.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  public borrowNow() {
+    if (this.borrowNowCallback()) {
+      this.borrowNowCallback()!(this.item()!);
+    }
+  }
+
+  public reserveItem() {
+    if (this.reserveItemCallback()) {
+      this.reserveItemCallback()!(this.item()!);
+    }
   }
 }

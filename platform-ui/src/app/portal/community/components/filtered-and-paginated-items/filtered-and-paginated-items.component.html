@@ -12,6 +12,8 @@
         let-item="item"
     >
         <item-card
+            [borrowNowCallback]="borrowNow"
+            [reserveItemCallback]="reserveItem"
             [item]="item"
             [borrowRecords]="getBorrowRecords(item)"
             [library]="getLibrary(item.libraryId)"

@@ -147,19 +147,7 @@
         </div>
 
         <form [formGroup]="bookForm">
-          <tui-calendar-range class="desktop-calendar" [defaultViewedMonth]="defaultViewedMonth" [min]="min" [max]="max"
-            [value]="selectedDate || null" [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
-            [disabledItemHandler]="disabledItemHandler" />
-
-          <div class="mobile-calendar" (click)="onChooseDate()">
-            <button appearance="secondary" iconStart="@tui.calendar" tuiIconButton type="button"
-              [style.border-radius.%]="100">
-              {{ 'item.chooseDate' | translate }}
-            </button>
-            <span class="date" [class.date_empty]="empty">
-              {{ date$ | async }}
-            </span>
-          </div>
+          <borrow-item-calendar [item]="item" [currentUser]="currentUser" (selectedDate)="selectedDate = $event" />
 
           <tui-notification size="s" [style.visibility]="selectedDate ? 'hidden' : 'visible'">
             {{ 'item.selectDateToBorrow' | translate }}

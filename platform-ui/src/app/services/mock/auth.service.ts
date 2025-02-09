@@ -29,7 +29,9 @@ export class MockAuthService implements AuthService {
     private router: Router,
     private authApiService: AuthApiService,
     private usersService: MockUsersService,
-  ) { }
+  ) {
+    this.userInfo.user = this.usersService.getUserByUsername('me');
+  }
 
   getCurrentUserInfo(): UserInfo {
     return this.userInfo;
@@ -58,7 +60,7 @@ export class MockAuthService implements AuthService {
           lastName: 'demo',
           username: 'demo',
           email: 'me@example.com',
-          user: this.usersService.getUserByUsername(username),
+          user: this.usersService.getUserByUsername('me'),
         }
         observer.next(true);
         observer.complete();

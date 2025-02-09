@@ -1,8 +1,9 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { Component, ContentChild, Inject, input, TemplateRef } from '@angular/core';
+import { Component, ContentChild, Inject, input, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
@@ -40,12 +41,14 @@ export class FilteredAndPaginatedItemsComponent {
   public sortingOptions = input<string[]>(FilteredAndPaginatedComponent.defaultSortingOptions);
   @ContentChild('libraryTemplate', { read: TemplateRef })
   libraryTemplate!: TemplateRef<any>;
+  @ViewChild(FilteredAndPaginatedComponent) filteredAndPaginatedComponent!: FilteredAndPaginatedComponent;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,
     @Inject(CATEGORIES_SERVICE_TOKEN) protected categoriesService: CategoriesService,
     @Inject(LIBRARIES_SERVICE_TOKEN) protected librariesService: LibrariesService,
     @Inject(AUTH_SERVICE_TOKEN) protected authService: AuthService,
+    private borrowDialogService: BorrowDialogService,
     private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
@@ -78,5 +81,17 @@ export class FilteredAndPaginatedItemsComponent {
 
   public fetchItems = (getItemsParams: GetItemsParams): Observable<UIPagination<UIItem>> => {
     return this.itemsService.getItems(getItemsParams);
+  }
+
+  public borrowNow = (item: UIItem) => {
+    this.borrowDialogService.borrowNowDialog(item, this.getLibrary(item.libraryId)!, this.itemsService).subscribe(i => {
+      this.filteredAndPaginatedComponent.resetItems();
+    });
+  }
+
+  public reserveItem = (item: UIItem) => {
+    this.borrowDialogService.reserveItem(item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
+      this.filteredAndPaginatedComponent.resetItems();
+    });
   }
 }

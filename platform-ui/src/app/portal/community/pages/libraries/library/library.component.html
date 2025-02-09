@@ -33,6 +33,7 @@
           </div>
           <div class="library-header-actions">
             <div class="library-actions">
+              @if (isAdmin) {
               <tui-avatar-stack class="admin-stack" [direction]="'left'">
                 @for (member of library.admins; track member) {
                 <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
@@ -46,6 +47,7 @@
                 routerLink="/community/libraries/{{ library.id }}/edit"></button>
               <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
                 (click)="deleteLibrary(library)"></button>
+              }
             </div>
           </div>
         </div>
@@ -87,24 +89,24 @@
 
 
   @if (getItemsParams) {
-  @if (tabOpened === 'items') {
-  <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
-    <ng-template #libraryTemplate>
-      <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m" tuiButton type="button">
-        <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
-        {{ 'library.addItem' | translate }}
-      </button>
+    @if (tabOpened === 'items') {
+    <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
+      <ng-template #libraryTemplate>
+        <button class="add-item" routerLink="/community/item/add" appearance="primary" size="m" tuiButton type="button">
+          <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
+          {{ 'library.addItem' | translate }}
+        </button>
 
-    </ng-template>
+      </ng-template>
 
-  </filtered-and-paginated-items>
-  }
+    </filtered-and-paginated-items>
+    }
 
-  @if (tabOpened === 'borrow-records') {
+    @if (tabOpened === 'borrow-records') {
 
-  <filtered-and-paginated-borrow-records [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
-  </filtered-and-paginated-borrow-records>
-  }
+    <filtered-and-paginated-borrow-records [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
+    </filtered-and-paginated-borrow-records>
+    }
   }
   }
 

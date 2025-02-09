@@ -1,6 +1,7 @@
 import { TuiDayRange } from "@taiga-ui/cdk";
 import { UIBorrowRecord } from "../../portal/community/models/UIBorrowRecord";
 import { UIItem } from "../../portal/community/models/UIItem";
+import { UserInfo } from "../../services/auth.service";
 
 
 export enum CallToActionType {
@@ -23,8 +24,10 @@ export interface ActionStep {
 export interface PromptOptions {
     readonly type: CallToActionType;
     readonly borrowNow?: boolean;
+    readonly alreadySelectedDate?: boolean;
     readonly confirmationEnabled?: boolean;
     readonly item?: UIItem;
+    readonly currentUser?: UserInfo;
     readonly borrowRecord?: UIBorrowRecord;
     readonly description: string;
     readonly cancelButtonLabel: string;

@@ -19,6 +19,33 @@
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     }
 
+    .image-container {
+        position: relative;
+
+        .action-container {
+            position: absolute;
+            top: calc(100% - 100px);
+            left: 50%;
+            width: 100%;
+            transform: translateX(-50%);
+
+            button {
+                width: 90%;
+                margin-left: 5%;
+                margin-right: 5%;
+                margin-bottom: 5px;
+            }
+
+            .reserve-button {
+                background-color: var(--tos-background-base);
+            }
+
+            .reserve-button:hover {
+                background-color: var(--tos-background-base-alt-2);
+            }
+        }
+    }
+
     .item-categories {
         display: flex;
         align-items: center;

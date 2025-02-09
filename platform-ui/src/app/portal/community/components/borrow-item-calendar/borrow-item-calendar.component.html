@@ -1,0 +1,12 @@
+<tui-calendar-range class="desktop-calendar" [defaultViewedMonth]="defaultViewedMonth" [min]="min" [max]="max"
+ [markerHandler]="markerHandler" (valueChange)="onRangeChange($event)"
+    [disabledItemHandler]="disabledItemHandler" />
+
+<div class="mobile-calendar" (click)="onChooseDate()">
+    <button appearance="secondary" iconStart="@tui.calendar" tuiIconButton type="button" [style.border-radius.%]="100">
+        {{ 'item.chooseDate' | translate }}
+    </button>
+    <span class="date" [class.date_empty]="empty">
+        {{ date$ | async }}
+    </span>
+</div>

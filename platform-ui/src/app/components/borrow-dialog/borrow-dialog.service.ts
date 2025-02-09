@@ -11,7 +11,7 @@ import { UILibrary } from '../../portal/community/models/UILibrary';
 import { EventService, TosEventType } from '../../portal/community/services/event.service';
 import { ItemsService } from '../../portal/community/services/items.service';
 import { BorrowDialogPopoverService } from './borrow-dialog-popover.service';
-import { CallToActionType, PromptResponse } from './prompt-options';
+import { CallToActionType } from './prompt-options';
 
 
 @Injectable({
@@ -26,16 +26,14 @@ export class BorrowDialogService {
         private dialogs: TuiDialogService,
         private eventService: EventService,
         private popoverService: BorrowDialogPopoverService
-    ) {
-
-    }
+    ) { }
 
     borrowNowDialog(
         item: UIItem,
         library: UILibrary,
         itemsService: ItemsService
-    ): void {
-        this.popoverService
+    ) {
+        return this.popoverService
             .open<any>(null, {
                 type: CallToActionType.Reserve,
                 borrowNow: true,
@@ -45,19 +43,22 @@ export class BorrowDialogService {
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',
                 confirmButtonLabel: 'borrowDialog.confirm.reserve',
             })
-            .subscribe((response: PromptResponse) => {
-                if (response.action === 'confirm') {
-                    this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
-                }
-            });
+            .pipe(
+                switchMap((response) => {
+                    if (response.action === 'confirm') {
+                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                    }
+                    return EMPTY;
+                })
+            );
     }
 
     public borrowItemConfirmation(
         item: UIItem,
         selectedDate: TuiDayRange,
         itemsService: ItemsService,
-    ): void {
-        itemsService
+    ) {
+        return itemsService
             .borrowItem(
                 item,
                 selectedDate.from
@@ -81,14 +82,43 @@ export class BorrowDialogService {
                             { appearance: 'positive' },
                         )
                         .subscribe();
-                    this.router.navigate(['/community/borrowed-items'], { queryParams: { selectedStatus: 'reserved' } });
                 }),
             )
-            .subscribe();
     }
 
-    public reserveItem(
+    public reserveItemWithPreselectedDate(
         selectedDate: TuiDayRange,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
+
+        return this.popoverService
+            .open<any>(null, {
+                type: CallToActionType.Reserve,
+                borrowNow: false,
+                alreadySelectedDate: true,
+                confirmationEnabled: library.requiresApproval,
+                item: item,
+                description: this.translate.instant('item.confirmBorrowContent', {
+                    itemName: item.name,
+                    startDate: selectedDate.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+                    endDate: selectedDate.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
+                }),
+                cancelButtonLabel: 'borrowDialog.cancel.reserve',
+                confirmButtonLabel: 'borrowDialog.confirm.reserve',
+            })
+            .pipe(
+                switchMap((response) => {
+                    if (response.action === 'confirm') {
+                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                    }
+                    return EMPTY;
+                }));
+    }
+
+
+    public reserveItem(
         item: UIItem,
         itemsService: ItemsService,
         library: UILibrary
@@ -102,18 +132,19 @@ export class BorrowDialogService {
                 item: item,
                 description: this.translate.instant('item.confirmBorrowContent', {
                     itemName: item.name,
-                    startDate: selectedDate.from.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
-                    endDate: selectedDate.to.toLocalNativeDate().toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' }),
                 }),
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',
                 confirmButtonLabel: 'borrowDialog.confirm.reserve',
             })
-            .subscribe((response: PromptResponse) => {
-                if (response.action === 'confirm') {
-                    this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
-                }
-            });
+            .pipe(
+                switchMap((response) => {
+                    if (response.action === 'confirm') {
+                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                    }
+                    return EMPTY;
+                }));
     }
+
 
     public pickUpItem(
         borrowRecord: UIBorrowRecord,

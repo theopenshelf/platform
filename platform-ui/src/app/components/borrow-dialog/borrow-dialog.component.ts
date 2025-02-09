@@ -13,6 +13,7 @@ import {
   PolymorpheusOutlet,
   PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
+import { BorrowItemCalendarComponent } from '../../portal/community/components/borrow-item-calendar/borrow-item-calendar.component';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 import { CallToActionType, PromptOptions, PromptResponse } from './prompt-options';
 
@@ -30,6 +31,7 @@ import { CallToActionType, PromptOptions, PromptResponse } from './prompt-option
     TimelineComponent,
     TuiIcon,
     JsonPipe,
+    BorrowItemCalendarComponent,
   ],
 
   selector: 'borrow-dialog',
@@ -45,6 +47,8 @@ export class BorrowDialogComponent {
   public readonly control = new FormControl();
 
   protected readonly CallToActionType = CallToActionType;
+  protected selectedDate: TuiDayRange | null | undefined;
+
   // Here you get options + content + id + observer
   constructor(private translate: TranslateService) {
     // Close on click outside/Escape button
@@ -212,7 +216,7 @@ export class BorrowDialogComponent {
   protected confirm(): void {
     this.context.completeWith({
       action: 'confirm',
-      selectedDate: this.control.value,
+      selectedDate: this.selectedDate ?? this.control.value,
     });
   }
 

@@ -4,6 +4,14 @@
     <!-- Image Section -->
     <div class="image-container">
       <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
+      <div class="action-container">
+        <button appearance="accent" size="m" tuiButton type="button" (click)="borrowNow()">
+          {{ 'itemCard.borrowNow' | translate }}
+        </button>
+        <button class="reserve-button" appearance="outline-grayscale" size="m" tuiButton type="button" (click)="reserveItem()">
+          {{ 'itemCard.reserveItem' | translate }}
+        </button>
+      </div>
     </div>
 
     <!-- Item Details -->

@@ -1,0 +1,24 @@
+.mobile-calendar {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .mobile-calendar {
+        display: none;
+    }
+
+    .desktop-calendar {
+        display: block;
+    }
+}
+
+@media (max-width: 680px) {
+    .desktop-calendar {
+        display: none;
+    }
+
+    .mobile-calendar {
+        display: block;
+    }
+
+}

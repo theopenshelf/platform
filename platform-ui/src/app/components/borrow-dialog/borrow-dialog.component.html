@@ -19,14 +19,20 @@
 </timeline>
 }
 
-@if (context.type === CallToActionType.Reserve && context.borrowNow) {
-    <tui-input-date-range
-        [formControl]="control"
-        [items]="suggestedDates"
-    >
-        {{ 'borrowDialog.chooseDates' | translate }}
-    </tui-input-date-range>
+@if (!context.alreadySelectedDate && context.type === CallToActionType.Reserve) {
+    @if (context.borrowNow) {
+        <tui-input-date-range
+            [formControl]="control"
+            [items]="suggestedDates"
+        >
+            {{ 'borrowDialog.chooseDates' | translate }}
+        </tui-input-date-range>
+    } @else {
+        <borrow-item-calendar [item]="context.item!" [currentUser]="context.currentUser!" (selectedDate)="selectedDate = $event" />
+
+    }
 }
+
 
 <p class="buttons">
     <button

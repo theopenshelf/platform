@@ -32,13 +32,15 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
+import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
+import { AuthService, UserInfo } from '../../../../../services/auth.service';
 import {
   LIBRARIES_SERVICE_TOKEN,
   USERS_SERVICE_TOKEN
 } from '../../../community.provider';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
-import { UILibrary } from '../../../models/UILibrary';
+import { isLibraryAdmin, UILibrary } from '../../../models/UILibrary';
 import { UIUser } from '../../../models/UIUser';
 import { GetItemsParams } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
@@ -79,10 +81,12 @@ export class LibraryComponent {
   library: UILibrary | undefined;
   tabOpened: 'items' | 'borrow-records' = 'items';
   usersPerId: Map<string, UIUser> = new Map();
-
+  userInfo: UserInfo | undefined;
+  isAdmin: boolean = false;
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private router: Router,
@@ -95,13 +99,18 @@ export class LibraryComponent {
 
   ngOnInit() {
     const libraryId = this.route.snapshot.paramMap.get('id');
-    this.getItemsParams = { libraryIds: [libraryId!] };
     this.userService.getUsers().subscribe((users) => {
       this.usersPerId = new Map(users.map(user => [user.id, user]));
     });
+    this.userInfo = this.authService.getCurrentUserInfo();
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
+        this.isAdmin = isLibraryAdmin(this.userInfo?.user!, this.library);
+        this.getItemsParams = {
+          libraryIds: [libraryId!],
+          borrowedByCurrentUser: !this.isAdmin
+        };
       });
     }
 
