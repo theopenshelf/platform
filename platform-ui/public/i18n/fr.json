@@ -106,8 +106,8 @@
     "filter": "Trier par"
   },
   "itemCard": {
-    "borrowNow": "Emprunter ",
-    "reserveItem": "Réserver l'article",
+    "borrowNow": "Emprunter",
+    "reserveItem": "Réserver",
     "reservationState": {
       "nextReservation": "Votre prochaine réservation: ",
       "noUpcomingReservations": "Vous n'avez pas de réservations à venir"

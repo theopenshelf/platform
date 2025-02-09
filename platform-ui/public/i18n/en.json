@@ -109,7 +109,7 @@
   },
   "itemCard": {
     "borrowNow": "Borrow now",
-    "reserveItem": "Reserve item",
+    "reserveItem": "Reserve",
     "reservationState": {
       "nextReservation": "Your next reservation: ",
       "noUpcomingReservations": "You have no upcoming reservations"
