@@ -58,7 +58,7 @@ export class SignInComponent {
     if (environment.demoMode) {
       this.signInForm.patchValue({
         username: 'demo',
-        password: 'demo',
+        password: 'password',
       });
     }
   }

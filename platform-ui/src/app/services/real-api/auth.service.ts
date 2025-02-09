@@ -17,6 +17,11 @@ export class APIAuthService implements AuthService {
     lastName: 'unknown',
     username: 'unknown',
     email: 'unknown',
+    user: {
+      id: 'unknown',
+      username: 'unknown',
+      email: 'unknown',
+    },
   };
 
   constructor(
@@ -44,6 +49,11 @@ export class APIAuthService implements AuthService {
             this.userInfo.lastName = user.lastName;
             this.userInfo.username = user.username;
             this.userInfo.email = user.email ?? 'unknown';
+            this.userInfo.user = {
+              id: user.id,
+              username: user.username,
+              email: user.email ?? 'unknown',
+            };
             observer.next(true);
             observer.complete();
           },

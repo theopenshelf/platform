@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
+import { UIUser } from '../portal/community/models/UIUser';
 
 export interface UserInfo {
   firstName: string;
   lastName: string;
   username: string;
   email: string;
+  user: UIUser;
 }
 
 // Define the interface for AuthService

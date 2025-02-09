@@ -36,15 +36,32 @@
     ></button>
     <app-notifications-popup></app-notifications-popup>
 
-    <button
-      iconStart="@tui.ellipsis"
-      tuiIconButton
-      type="button"
+
+    <tui-avatar 
+      class="user-avatar"      
       tuiChevron
       tuiDropdownOpen
-      [tuiDropdown]="settings"
-    >
+      [tuiDropdown]="settings" 
+      [src]="user.username | tuiInitials"
+      [style.background]="
+        user.username | tuiAutoColor
+      "
+      size="s">
+    </tui-avatar>
+
+
       <ng-template #settings>
+        <tui-data-list size="s">
+          <button
+            routerLink="/community/settings/profile"
+            class="dropdown"
+            iconStart="@tui.user"
+            tuiButton
+            type="button"
+          >
+            Sign in as {{ user.username }}
+          </button>
+        </tui-data-list>
         <tui-data-list size="s">
           <button
             routerLink="/community/settings"
@@ -79,7 +96,6 @@
           </button>
         </tui-data-list>
       </ng-template>
-    </button>
   </header>
 
   <!-- Horizontal Menu -->

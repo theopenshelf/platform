@@ -41,6 +41,14 @@ header[tuiNavigationHeader][tuiNavigationHeader] [tuiButton] {
     max-inline-size: 12rem;
 }
 
+.user-avatar {
+    cursor: pointer;
+}
+
+.user-avatar:hover {
+    box-shadow: 0 0 5px 3px var(--tos-background-accent-1-hover);
+}
+
 /* Dropdown button */
 button.dropdown {
     min-width: 200px;

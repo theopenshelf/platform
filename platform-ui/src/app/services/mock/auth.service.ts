@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthApiService } from '../../api-client';
+import { MockUsersService } from '../../portal/community/services/mock/users.service';
 import { AuthService, UserInfo } from '../auth.service';
 
 @Injectable({
@@ -12,18 +13,26 @@ export class MockAuthService implements AuthService {
   private userRoles: string[] = ['admin', 'community']; // Store multiple roles
   message: string = '';
 
+  private userInfo: UserInfo = {
+    firstName: 'demo',
+    lastName: 'demo',
+    username: 'demo',
+    email: 'me@example.com',
+    user: {
+      id: '1',
+      username: 'demo',
+      email: 'me@example.com',
+    },
+  };
+
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
+    private usersService: MockUsersService,
   ) { }
 
   getCurrentUserInfo(): UserInfo {
-    return {
-      firstName: 'Quentin',
-      lastName: 'Castel',
-      username: 'qcastel',
-      email: 'me@example.com',
-    };
+    return this.userInfo;
   }
 
   signIn(username: string, password: string): Observable<boolean> {
@@ -31,20 +40,55 @@ export class MockAuthService implements AuthService {
       if (username === 'admin' && password === 'password') {
         this.isAuthenticated$.next(true);
         this.userRoles = ['admin', 'community'];
+        this.userInfo = {
+          firstName: 'admin',
+          lastName: 'admin',
+          username: 'admin',
+          email: 'admin@example.com',
+          user: this.usersService.getUserByUsername(username),
+        }
         observer.next(true);
         observer.complete();
       }
-      else if (username === 'demo' && password === 'demo') {
+      else if (username === 'demo' && password === 'password') {
         this.isAuthenticated$.next(true);
         this.userRoles = ['admin', 'community'];
+        this.userInfo = {
+          firstName: 'demo',
+          lastName: 'demo',
+          username: 'demo',
+          email: 'me@example.com',
+          user: this.usersService.getUserByUsername(username),
+        }
         observer.next(true);
         observer.complete();
       } else if (username === 'alice' && password === 'password') {
         this.isAuthenticated$.next(true);
         this.userRoles = ['community'];
+        this.userInfo = {
+          firstName: 'alice',
+          lastName: 'dupont',
+          username: 'alice',
+          email: 'alice@example.com',
+          user: this.usersService.getUserByUsername(username),
+        }
         observer.next(true);
         observer.complete();
-      } else {
+      } else if (username === 'bob' && password === 'password') {
+        this.isAuthenticated$.next(true);
+        this.userRoles = ['community'];
+        this.userInfo = {
+          firstName: 'bob',
+          lastName: 'durand',
+          username: 'bob',
+          email: 'bob@example.com',
+          user: this.usersService.getUserByUsername(username),
+        }
+        observer.next(true);
+        observer.complete();
+      }
+
+      else {
         observer.next(false);
         observer.complete();
       }

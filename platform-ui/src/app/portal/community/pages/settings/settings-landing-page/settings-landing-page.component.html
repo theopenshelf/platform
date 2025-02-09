@@ -1,9 +1,9 @@
 <div class="settings-container">
   <div class="settings-header">
     <tui-avatar
-      [src]="userInfo.firstName + ' ' + userInfo.lastName | tuiInitials"
+      [src]="userInfo.user.username | tuiInitials"
       [style.background]="
-        userInfo.firstName + ' ' + userInfo.lastName | tuiAutoColor
+        userInfo.user.username | tuiAutoColor
       "
       size="l"
     ></tui-avatar>
