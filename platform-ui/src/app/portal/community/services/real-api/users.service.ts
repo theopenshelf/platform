@@ -31,4 +31,10 @@ export class APIUsersService implements UsersService {
             map((user: User) => user as UIUser),
         );
     }
+
+    findUser(query: string, limit?: number): Observable<UIUser[]> {
+        return this.usersApiService.getCommunityUsers(query, limit).pipe(
+            map((users: User[]) => users.map((user: User) => user as UIUser)),
+        );
+    }
 }

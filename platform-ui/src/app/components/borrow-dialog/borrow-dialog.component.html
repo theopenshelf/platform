@@ -7,6 +7,7 @@
     {{ context.description }}
 </p>
 
+
 @if (context.type !== CallToActionType.Cancel) {
 <timeline [timelineItems]="timelineItems()" [itemSize]="220">
     <ng-template #itemTemplate let-item="item"
@@ -19,10 +20,66 @@
 </timeline>
 }
 
+@if (context.isItemAdmin) {
+    <div class="select-user">
+        <label>
+            {{ 'borrowDialog.label.borrowBy' | translate }}
+        </label>
+        <tui-combo-box
+            *tuiLet="searchUsers() | async as filtered"
+            [formControl]="userSearchControl"
+            [tuiTextfieldLabelOutside]="true"
+            [valueContent]="value"
+            [(search)]="search"
+        >
+        {{ 'borrowDialog.searchUser' | translate }}
+            <input
+                placeholder="Type a name"
+                tuiTextfieldLegacy
+            />
+            <ng-template
+                #value
+                let-user
+            >
+                <tui-avatar
+                    size="xs"
+                    class="avatar"
+                    [src]="user | tuiInitials"
+                    [style.background]="user | tuiAutoColor"                
+                    >
+                </tui-avatar>
+                <span class="name">{{ user }}</span>
+            </ng-template>
+            <ng-template tuiDataList>
+                <tui-data-list *ngIf="filtered; else loading">
+                    <button
+                        *ngFor="let user of filtered"
+                        tuiOption
+                        type="button"
+                        [value]="user.username"
+                    >
+                        <tui-avatar
+                            size="xs"
+                            class="avatar"
+                            [src]="user.username | tuiInitials"
+                            [style.background]="user.username | tuiAutoColor"
+                        >
+                        </tui-avatar>
+                        <span class="name">{{ user.username }}</span>
+                    </button>
+                </tui-data-list>
+                <ng-template #loading>
+                    <tui-loader class="tui-space_vertical-4" />
+                </ng-template>
+            </ng-template>
+        </tui-combo-box>    
+    </div>
+}
+
 @if (!context.alreadySelectedDate && context.type === CallToActionType.Reserve) {
     @if (context.borrowNow) {
         <tui-input-date-range
-            [formControl]="control"
+            [formControl]="dateControl"
             [items]="suggestedDates"
         >
             {{ 'borrowDialog.chooseDates' | translate }}

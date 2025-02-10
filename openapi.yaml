@@ -375,6 +375,9 @@ paths:
             schema:
               type: object
               properties:
+                borrowBy:
+                  type: string
+                  format: uuid
                 startDate:
                   type: string
                   format: date
@@ -1475,6 +1478,20 @@ paths:
       summary: Retrieve all users
       tags:
         - users-community-api
+      parameters:
+        - name: query
+          in: query
+          description: The query to search for
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: The maximum number of users to return
+          required: false
+          schema:
+            type: integer
+            default: 10
       responses:
         "200":
           description: A list of users

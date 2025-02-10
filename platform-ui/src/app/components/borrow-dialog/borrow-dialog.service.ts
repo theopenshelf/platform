@@ -8,8 +8,10 @@ import { EMPTY, switchMap, tap } from 'rxjs';
 import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
 import { UIItem } from '../../portal/community/models/UIItem';
 import { UILibrary } from '../../portal/community/models/UILibrary';
+import { UIUser } from '../../portal/community/models/UIUser';
 import { EventService, TosEventType } from '../../portal/community/services/event.service';
 import { ItemsService } from '../../portal/community/services/items.service';
+import { UserInfo } from '../../services/auth.service';
 import { BorrowDialogPopoverService } from './borrow-dialog-popover.service';
 import { CallToActionType } from './prompt-options';
 
@@ -29,6 +31,8 @@ export class BorrowDialogService {
     ) { }
 
     borrowNowDialog(
+        user: UserInfo,
+        isItemAdmin: boolean,
         item: UIItem,
         library: UILibrary,
         itemsService: ItemsService
@@ -38,15 +42,17 @@ export class BorrowDialogService {
                 type: CallToActionType.Reserve,
                 borrowNow: true,
                 item: item,
+                currentUser: user,
                 confirmationEnabled: library.requiresApproval,
                 description: this.translate.instant('borrowDialog.description.reserve'),
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',
                 confirmButtonLabel: 'borrowDialog.confirm.reserve',
+                isItemAdmin: isItemAdmin,
             })
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
                     }
                     return EMPTY;
                 })
@@ -56,6 +62,7 @@ export class BorrowDialogService {
     public borrowItemConfirmation(
         item: UIItem,
         selectedDate: TuiDayRange,
+        selectedUser: UIUser | undefined,
         itemsService: ItemsService,
     ) {
         return itemsService
@@ -69,6 +76,7 @@ export class BorrowDialogService {
                     .toLocalNativeDate()
                     .toISOString()
                     .split('T')[0] ?? '',
+                selectedUser
             )
             .pipe(
                 tap((item) => {
@@ -87,6 +95,7 @@ export class BorrowDialogService {
     }
 
     public reserveItemWithPreselectedDate(
+        user: UserInfo,
         selectedDate: TuiDayRange,
         item: UIItem,
         itemsService: ItemsService,
@@ -97,6 +106,7 @@ export class BorrowDialogService {
             .open<any>(null, {
                 type: CallToActionType.Reserve,
                 borrowNow: false,
+                currentUser: user,
                 alreadySelectedDate: true,
                 confirmationEnabled: library.requiresApproval,
                 item: item,
@@ -111,7 +121,7 @@ export class BorrowDialogService {
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
                     }
                     return EMPTY;
                 }));
@@ -119,6 +129,9 @@ export class BorrowDialogService {
 
 
     public reserveItem(
+        user: UserInfo,
+
+        isItemAdmin: boolean,
         item: UIItem,
         itemsService: ItemsService,
         library: UILibrary
@@ -128,6 +141,7 @@ export class BorrowDialogService {
             .open<any>(null, {
                 type: CallToActionType.Reserve,
                 borrowNow: false,
+                currentUser: user,
                 confirmationEnabled: library.requiresApproval,
                 item: item,
                 description: this.translate.instant('item.confirmBorrowContent', {
@@ -135,11 +149,12 @@ export class BorrowDialogService {
                 }),
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',
                 confirmButtonLabel: 'borrowDialog.confirm.reserve',
+                isItemAdmin: isItemAdmin,
             })
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
                     }
                     return EMPTY;
                 }));

@@ -4,6 +4,7 @@ import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../models/UIBorrowStatus';
 import { UIItem } from '../models/UIItem';
 import { UIItemsPagination } from '../models/UIItemsPagination';
+import { UIUser } from '../models/UIUser';
 
 export interface GetItemsParams {
   itemId?: string;
@@ -34,6 +35,7 @@ export interface ItemsService {
     item: UIItem,
     startDate: string,
     endDate: string,
+    borrowBy?: UIUser,
   ): Observable<UIItem>;
 
   pickupItem(

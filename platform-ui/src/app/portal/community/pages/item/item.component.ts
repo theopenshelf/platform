@@ -32,6 +32,7 @@ import { BorrowItemCalendarComponent } from '../../components/borrow-item-calend
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { getBorrowRecordStatus, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
+import { isLibraryAdmin } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 
@@ -196,7 +197,7 @@ export class ItemComponent implements OnInit {
   }
 
   reserveItem() {
-    this.borrowDialogService.reserveItemWithPreselectedDate(this.selectedDate!, this.item!, this.itemsService, this.library).pipe(
+    this.borrowDialogService.reserveItemWithPreselectedDate(this.currentUser, this.selectedDate!, this.item!, this.itemsService, this.library).pipe(
       tap((item) => {
         this.item = item;
       })
@@ -242,7 +243,7 @@ export class ItemComponent implements OnInit {
   }
 
   borrowNowDialog(): void {
-    this.borrowDialogService.borrowNowDialog(this.item!, this.library, this.itemsService).pipe(
+    this.borrowDialogService.borrowNowDialog(this.currentUser, isLibraryAdmin(this.currentUser.user, this.library), this.item!, this.library, this.itemsService).pipe(
       tap((item) => {
         this.setItem(item);
       })
@@ -253,7 +254,7 @@ export class ItemComponent implements OnInit {
   }
 
   reserveItemDialog(): void {
-    this.borrowDialogService.borrowNowDialog(this.item!, this.library, this.itemsService).pipe(
+    this.borrowDialogService.borrowNowDialog(this.currentUser, isLibraryAdmin(this.currentUser.user, this.library), this.item!, this.library, this.itemsService).pipe(
       tap((item) => {
         this.setItem(item);
       })

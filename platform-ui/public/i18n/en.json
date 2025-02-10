@@ -415,6 +415,10 @@
     "returned": "Returned"
   },
   "borrowDialog": {
+    "label": {
+      "borrowBy": "Borrow this item on behalf of"
+    },
+    "searchUser": "Search for a user",
     "title": {
       "reserve": "Reserve",
       "reserveConfirm": "Reserve Confirm",

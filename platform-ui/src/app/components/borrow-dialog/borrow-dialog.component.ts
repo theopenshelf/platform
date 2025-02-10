@@ -1,21 +1,27 @@
-import { JsonPipe, NgForOf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { Component, Inject, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TuiDay, TuiDayRange, type TuiPopover } from '@taiga-ui/cdk';
-import { TuiButton, TuiDialogCloseService, TuiIcon } from '@taiga-ui/core';
-import { TuiConnected, TuiStepper } from '@taiga-ui/kit';
+import { TuiDay, TuiDayRange, TuiLet, type TuiPopover } from '@taiga-ui/cdk';
+import { TuiAutoColorPipe, TuiButton, TuiDataList, TuiDialogCloseService, TuiIcon, TuiInitialsPipe, TuiLoader } from '@taiga-ui/core';
+import { TuiAvatar, TuiConnected, TuiStepper } from '@taiga-ui/kit';
 import { TuiDayRangePeriod } from '@taiga-ui/kit/components/calendar-range';
-import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
+import { TuiComboBoxModule, TuiInputDateRangeModule, TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import {
   injectContext,
   PolymorpheusOutlet,
   PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
+import { map, Observable } from 'rxjs';
+import { communityProviders, USERS_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { BorrowItemCalendarComponent } from '../../portal/community/components/borrow-item-calendar/borrow-item-calendar.component';
+import { UIUser } from '../../portal/community/models/UIUser';
+import { UsersService } from '../../portal/community/services/users.service';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 import { CallToActionType, PromptOptions, PromptResponse } from './prompt-options';
+
+
 
 @Component({
   imports: [
@@ -27,30 +33,52 @@ import { CallToActionType, PromptOptions, PromptResponse } from './prompt-option
     ReactiveFormsModule,
     NgForOf,
     TuiConnected,
+    TuiInputModule,
     TuiStepper,
     TimelineComponent,
     TuiIcon,
     JsonPipe,
     BorrowItemCalendarComponent,
+    TuiAvatar,
+    TuiInitialsPipe,
+    TuiAutoColorPipe,
+    AsyncPipe,
+    NgForOf,
+    NgIf,
+    ReactiveFormsModule,
+    TuiAvatar,
+    TuiComboBoxModule,
+    TuiDataList,
+    TuiInitialsPipe,
+    TuiLet,
+    TuiLoader,
+    TuiTextfieldControllerModule,
   ],
 
   selector: 'borrow-dialog',
   templateUrl: './borrow-dialog.component.html',
   styleUrls: ['./borrow-dialog.component.scss'],
-  providers: [TuiDialogCloseService],
+  providers: [...communityProviders, TuiDialogCloseService],
 })
 export class BorrowDialogComponent {
   protected readonly context = injectContext<TuiPopover<PromptOptions, PromptResponse>>();
 
   protected suggestedDates: TuiDayRangePeriod[] = [];
   private readonly today = TuiDay.currentLocal();
-  public readonly control = new FormControl();
-
+  public readonly dateControl = new FormControl();
+  public readonly userSearchControl = new FormControl();
   protected readonly CallToActionType = CallToActionType;
   protected selectedDate: TuiDayRange | null | undefined;
+  protected search: string | null = '';
+
+  users: UIUser[] = [];
+
+  private userMap: Map<string, UIUser> = new Map();
 
   // Here you get options + content + id + observer
-  constructor(private translate: TranslateService) {
+  constructor(private translate: TranslateService,
+    @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
+  ) {
     // Close on click outside/Escape button
     inject(TuiDialogCloseService)
       .pipe(takeUntilDestroyed())
@@ -83,7 +111,7 @@ export class BorrowDialogComponent {
         ({ $implicit }) => `${this.translate.instant('item.dateRanges.twoWeeks')} (${$implicit.from})`,
       ),
     ]
-    this.control.setValue(new TuiDayRange(this.today, this.today));
+    this.dateControl.setValue(new TuiDayRange(this.today, this.today));
   }
 
   protected timelineItems(): TimelineItem[] {
@@ -213,11 +241,29 @@ export class BorrowDialogComponent {
     return timelineItems;
   };
 
+  public searchUsers(): Observable<UIUser[]> {
+    return this.usersService.findUser(this.search ?? '').pipe(
+      map(users => {
+        this.userMap.clear(); // Clear the map before updating
+        users.forEach(user => this.userMap.set(user.username, user));
+        return users; // Return the list of users
+      })
+    );
+  }
+
   protected confirm(): void {
-    this.context.completeWith({
-      action: 'confirm',
-      selectedDate: this.selectedDate ?? this.control.value,
-    });
+    if (this.userSearchControl.value) {
+      this.context.completeWith({
+        action: 'confirm',
+        selectedDate: this.selectedDate ?? this.dateControl.value,
+        selectedUser: this.userMap.get(this.userSearchControl.value),
+      });
+    } else {
+      this.context.completeWith({
+        action: 'confirm',
+        selectedDate: this.selectedDate ?? this.dateControl.value,
+      });
+    }
   }
 
   protected cancel(): void {

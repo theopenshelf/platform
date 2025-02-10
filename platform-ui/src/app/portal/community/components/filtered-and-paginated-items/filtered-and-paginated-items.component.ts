@@ -9,7 +9,7 @@ import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
-import { UILibrary } from '../../models/UILibrary';
+import { isLibraryAdmin, UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
@@ -84,13 +84,13 @@ export class FilteredAndPaginatedItemsComponent {
   }
 
   public borrowNow = (item: UIItem) => {
-    this.borrowDialogService.borrowNowDialog(item, this.getLibrary(item.libraryId)!, this.itemsService).subscribe(i => {
+    this.borrowDialogService.borrowNowDialog(this.currentUser, isLibraryAdmin(this.currentUser.user, this.getLibrary(item.libraryId)!), item, this.getLibrary(item.libraryId)!, this.itemsService).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
     });
   }
 
   public reserveItem = (item: UIItem) => {
-    this.borrowDialogService.reserveItem(item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
+    this.borrowDialogService.reserveItem(this.currentUser, isLibraryAdmin(this.currentUser.user, this.getLibrary(item.libraryId)!), item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
     });
   }

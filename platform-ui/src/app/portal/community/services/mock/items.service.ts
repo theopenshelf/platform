@@ -5,6 +5,7 @@ import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../model
 import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
+import { UIUser } from '../../models/UIUser';
 import { GetItemsParams, ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
 
@@ -267,6 +268,7 @@ export class MockItemsService implements ItemsService {
     item: UIItem,
     startDate: string,
     endDate: string,
+    borrowBy?: UIUser,
   ): Observable<UIItem> {
     const borrowRecord: UIBorrowRecord = {
       id: this.index++ + '',
@@ -275,7 +277,7 @@ export class MockItemsService implements ItemsService {
       reservationDate: new Date(),
       pickupDate: undefined,
       effectiveReturnDate: undefined,
-      borrowedBy: 'me@example.com',
+      borrowedBy: borrowBy?.email ?? 'me@example.com',
     };
 
     // Optionally, you can add the record to the item itself if needed

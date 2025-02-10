@@ -13,7 +13,7 @@ import { UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { GetItemsParams, ItemsService } from '../items.service';
-
+import { UIUser } from '../../models/UIUser';
 @Injectable({
   providedIn: 'root',
 })
@@ -293,9 +293,10 @@ export class APIItemsService implements ItemsService {
     item: UIItem,
     startDate: string,
     endDate: string,
+    borrowBy: UIUser,
   ): Observable<UIItem> {
     return this.itemsApiService
-      .borrowItem(item.id, { startDate, endDate })
+      .borrowItem(item.id, { borrowBy: borrowBy.email, startDate, endDate })
       .pipe(
         map((item: Item) => ({
           ...item,

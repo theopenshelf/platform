@@ -427,6 +427,10 @@
     "privateAccess": "Privé"
   },
   "borrowDialog": {
+    "label": {
+      "borrowBy": "Emprunter cet article pour un autre utilisateur"
+    },  
+    "searchUser": "Rechercher un utilisateur",
     "title": {
       "reserve": "Réserver",
       "reserveConfirm": "Confirmer de la réservation",
