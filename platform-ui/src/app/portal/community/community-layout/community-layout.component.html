@@ -15,7 +15,7 @@
         <button
           tuiButton
           routerLink="/community/borrowed-items"
-          [queryParams]="{ selectedStatus: 'borrowed' }"
+          [queryParams]="{ selectedStatus: 'borrowed-active' }"
           size="m"
           type="button"
         >
@@ -113,7 +113,7 @@
 
     <a
       routerLink="/community/borrowed-items"
-      [queryParams]="{ selectedStatus: 'borrowed' }"
+      [queryParams]="{ selectedStatus: 'borrowed-active' }"
       routerLinkActive="active"
       appearance="secondary-grayscale"
       tuiChevron

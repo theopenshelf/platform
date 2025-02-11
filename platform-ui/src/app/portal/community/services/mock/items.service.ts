@@ -142,7 +142,6 @@ export class MockItemsService implements ItemsService {
     // Filter records based on the borrowedBy parameter
     this.items.forEach(item => {
       item.borrowRecords.forEach(record => {
-        debugger;
         if (borrowedByCurrentUser) {
           if (record.borrowedBy === 'me@example.com') {
             filteredRecords.push({ ...record, item });
@@ -176,7 +175,6 @@ export class MockItemsService implements ItemsService {
       );
     }
 
-    debugger;
     if (statuses) {
       filteredRecords = filteredRecords.filter(record =>
         this.matchesStatuses(statuses, record)

@@ -163,7 +163,7 @@ export class LibraryComponent {
 
     if (tab === 'borrow-records') {
       path += '/borrow-records';
-      queryParams['selectedStatus'] = 'borrowed';
+      queryParams['selectedStatus'] = 'borrowed-active';
     } else {
       path += '/items';
       queryParams['selectedStatus'] = undefined;

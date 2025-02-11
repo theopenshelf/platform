@@ -409,7 +409,10 @@
     "categories": "Categories",
     "borrowed": "Borrowed",
     "reserved": "Reserved",
-    "returned": "Returned"
+    "returned": "Returned",
+    "pickup": "Ready to Pickup",
+    "borrowed-active": "Borrowed",
+    "due-to-return": "Due to Return"
   },
   "borrowDialog": {
     "label": {

@@ -22,7 +22,7 @@ import {
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
 } from '../../community.provider';
-import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../models/UIBorrowStatus';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UICategory } from '../../models/UICategory';
 import { UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
@@ -31,6 +31,13 @@ import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 import { ItemCardComponent } from '../item-card/item-card.component';
 
+export enum StatusTab {
+  Reserved = 'reserved',
+  Reserved_ReadyToPickup = 'pickup',
+  Borrowed_Active = 'borrowed-active',
+  Borrowed_DueToReturn = 'due-to-return',
+  Returned = 'returned'
+}
 
 export interface FetchItemsService {
   getItems(params: GetItemsParams): Observable<UIPagination<any>>;
@@ -134,27 +141,39 @@ export class FilteredAndPaginatedComponent implements OnInit {
   selectedLibraries: { [key: string]: boolean } = {};
   selectedDate: TuiDayRange | null | undefined;
 
-  protected selectedStatus: UIBorrowStatus | undefined = this.enableStatusFiltering() ? UIBorrowStatus.Returned : undefined;
+  protected selectedStatus: StatusTab | undefined = this.enableStatusFiltering() ? StatusTab.Returned : undefined;
 
   protected statuses = [
     {
-      status: UIBorrowStatus.Returned,
-      name: 'Returned',
-      color: '#95a5a6',
-      icon: '@tui.archive',
-    }, // Gray
-    {
-      status: UIBorrowStatus.CurrentlyBorrowed,
-      name: 'Currently Borrowed',
-      color: '#2ecc71',
-      icon: '/borrow.png',
-    }, // Green
-    {
-      status: UIBorrowStatus.Reserved,
+      status: StatusTab.Reserved,
       name: 'Reserved',
       color: '#3498db',
       icon: '@tui.calendar-clock',
-    }, // Light Blue
+    },
+    {
+      status: StatusTab.Reserved_ReadyToPickup,
+      name: 'Ready to pickup',
+      color: '#3498db',
+      icon: '/borrow.png',
+    },
+    {
+      status: StatusTab.Borrowed_Active,
+      name: 'Borrowed',
+      color: '#95a5a6',
+      icon: '@tui.home',
+    }, // Gray
+    {
+      status: StatusTab.Borrowed_DueToReturn,
+      name: 'Due to return',
+      color: '#2ecc71',
+      icon: '/returnItem.png',
+    },
+    {
+      status: StatusTab.Returned,
+      name: 'Returned',
+      color: '#2ecc71',
+      icon: '@tui.archive',
+    } // Green
   ];
 
   protected activeStatusIndex = 0;
@@ -192,10 +211,10 @@ export class FilteredAndPaginatedComponent implements OnInit {
       );
       this.selectedStatus = params['selectedStatus']
         ? params['selectedStatus']
-        : UIBorrowStatus.Returned;
+        : StatusTab.Returned;
       this.currentPage = +params['page'] - 1 || 0;
       this.activeStatusIndex = this.statuses.findIndex(
-        (status) => status.status === this.selectedStatus,
+        (status) => status!.status === this.selectedStatus,
       );
       if (params['sortingOption']) {
         this.sortingSelected.setValue(params['sortingOption']);
@@ -349,14 +368,20 @@ export class FilteredAndPaginatedComponent implements OnInit {
 
     let statuses: UIBorrowDetailedStatus[] = [];
     switch (this.selectedStatus) {
-      case UIBorrowStatus.Returned:
-        statuses = [UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
+      case StatusTab.Returned:
+        statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed, UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
         break;
-      case UIBorrowStatus.CurrentlyBorrowed:
-        statuses = [UIBorrowDetailedStatus.Borrowed_Active, UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
+      case StatusTab.Borrowed_Active:
+        statuses = [UIBorrowDetailedStatus.Borrowed_Active];
         break;
-      case UIBorrowStatus.Reserved:
-        statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
+      case StatusTab.Borrowed_DueToReturn:
+        statuses = [UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
+        break;
+      case StatusTab.Reserved_ReadyToPickup:
+        statuses = [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
+        break;
+      case StatusTab.Reserved:
+        statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_Unconfirmed];
         break;
       default:
         statuses = []
@@ -383,7 +408,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     });
   }
 
-  protected selectStatus(status: UIBorrowStatus): void {
+  protected selectStatus(status: StatusTab): void {
     this.selectedStatus = status;
     this.currentPage = 0;
     this.fetchItems();
@@ -456,7 +481,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-  public getStatusText(status: UIBorrowStatus): string {
+  public getStatusText(status: StatusTab): string {
     return this.translate.instant(`filteredAndPaginated.${status.toLowerCase()}`);
   };
 

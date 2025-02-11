@@ -406,7 +406,10 @@
     "categories": "Catégories",
     "borrowed": "Emprunté",
     "reserved": "Réservé",
-    "returned": "Rendu"
+    "returned": "Rendu",
+    "pickup": "À Récupérer",
+    "borrowed-active": "Emprunté",
+    "due-to-return": "À Rendre"
   },
   "library": {
     "addItem": "Ajouter un article",
@@ -419,7 +422,7 @@
     "admin": "Administrateur",
     "notFound": "Bibliothèque non trouvée",
     "items": "Articles",
-    "borrow-records": "Historique des emprunts",
+    "borrow-records": "Emprunts",
     "requiresApproval": "Confirmation requise",
     "doesNotRequireApproval": "Libre accès",
     "freeAccess": "Public",
