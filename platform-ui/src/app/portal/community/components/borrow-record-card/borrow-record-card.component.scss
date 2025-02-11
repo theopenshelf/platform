@@ -168,13 +168,17 @@
         object-fit: cover;
     }
 
-
     .action-container {
         position: absolute;
         top: 210px;
         left: 50%;
         width: 85%;
         transform: translateX(-50%);
+    }
+
+    .pick-up-button {
+        color: var(--tos-text-accent);
+        background-color: var(--tos-background-base);
     }
 
     .details-button {

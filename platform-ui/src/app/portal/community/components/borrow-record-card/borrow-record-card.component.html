@@ -8,25 +8,25 @@
         
         <div class="action-container">
           @if (status() === UIBorrowRecordStatus.ReadyToPickup) {
-            <button appearance="accent" size="m" tuiButton type="button" (click)="pickUpItem()">
+            <button class="pick-up-button" appearance="outline-destructive" size="m" tuiButton type="button" (click)="pickUpItem()">
               {{ 'borrowRecordCard.pickUp' | translate }}
             </button>
           } @else if (status() === UIBorrowRecordStatus.CurrentlyBorrowed 
           || status() === UIBorrowRecordStatus.DueToday
           || status() === UIBorrowRecordStatus.Late
           ) {
-            <button appearance="accent" size="m" tuiButton type="button" (click)="returnItem()">
+            <button class="return-button" appearance="primary" size="m" tuiButton type="button" (click)="returnItem()">
               {{ 'borrowRecordCard.return' | translate }}
             </button> 
           } @else if (status() === UIBorrowRecordStatus.Reserved) {
-            <button appearance="accent" size="m" tuiButton type="button" (click)="cancelReservation()">
+            <button class="cancel-reservation-button" appearance="primary" size="m" tuiButton type="button" (click)="cancelReservation()">
               {{ 'borrowRecordCard.cancelReservation' | translate }}
             </button> 
           } @else {
-            <button appearance="accent" [style.visibility]="'hidden'" size="m" tuiButton type="button">
+            <button appearance="primary" [style.visibility]="'hidden'" size="m" tuiButton type="button">
             </button>
           }
-            <button appearance="outline" class="accent details-button" size="m"
+            <button appearance="outline" class="primary details-button" size="m"
             routerLink="/community/items/{{ item()!.id }}" tuiButton type="button">
               <span class="details-button-text">{{ 'borrowRecordCard.seeDetails' | translate }}</span>
             <tui-icon icon="@tui.arrow-right" />

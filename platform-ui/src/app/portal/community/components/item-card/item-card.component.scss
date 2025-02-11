@@ -36,11 +36,12 @@
                 margin-bottom: 5px;
             }
 
-            .reserve-button {
+            .borrow-now-button {
+                color: var(--tos-text-accent);
                 background-color: var(--tos-background-base);
             }
 
-            .reserve-button:hover {
+            .borrow-now-button:hover {
                 background-color: var(--tos-background-base-alt-2);
             }
         }
