@@ -259,13 +259,6 @@ paths:
           schema:
             type: string
             format: date
-        - name: status
-          in: query
-          description: Filter items by status
-          required: false
-          schema:
-            type: string
-            enum: [returned, borrowed, reserved]
         - name: favorite
           in: query
           description: Filter items by favorite status
@@ -554,8 +547,21 @@ paths:
           description: Filter items by status
           required: false
           schema:
-            type: string
-            enum: [returned, borrowed, reserved]
+            type: array
+            items:
+              type: string
+              enum:
+                - reserved-unconfirmed
+                - reserved-confirmed
+                - reserved-ready-to-pickup
+                - reserved-pickup-unconfirmed
+                - borrowed-active
+                - borrowed-due-today
+                - borrowed-late
+                - borrowed-return-unconfirmed
+                - returned-early
+                - returned-on-time
+                - returned-late
         - name: favorite
           in: query
           description: Filter items by favorite status
@@ -1645,6 +1651,21 @@ components:
           items:
             $ref: "#/components/schemas/BorrowRecord"
 
+    BorrowStatus:
+      type: string
+      enum:
+        - reserved-unconfirmed
+        - reserved-confirmed
+        - reserved-ready-to-pickup
+        - reserved-pickup-unconfirmed
+        - borrowed-active
+        - borrowed-due-today
+        - borrowed-late
+        - borrowed-return-unconfirmed
+        - returned-early
+        - returned-on-time
+        - returned-late
+
     BorrowRecord:
       type: object
       required:
@@ -1653,6 +1674,7 @@ components:
         - startDate
         - endDate
         - reservationDate
+        - status
       properties:
         id:
           type: string
@@ -1680,6 +1702,8 @@ components:
           type: string
           format: date
           example: "2023-11-22"
+        status:
+          $ref: "#/components/schemas/BorrowStatus"
 
     BorrowRecordStandalone:
       type: object

@@ -30,7 +30,8 @@ import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowItemCalendarComponent } from '../../components/borrow-item-calendar/borrow-item-calendar.component';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
-import { getBorrowRecordStatus, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { isLibraryAdmin } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
@@ -143,9 +144,9 @@ export class ItemComponent implements OnInit {
 
     this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(
       (record) => {
-        const status = getBorrowRecordStatus(record);
+        const status = record.status;
         switch (status) {
-          case UIBorrowRecordStatus.Reserved:
+          case UIBorrowDetailedStatus.Reserved_Confirmed:
             return true;
           default:
             return false;
@@ -158,11 +159,11 @@ export class ItemComponent implements OnInit {
 
     this.itemsReturned = this.borrowItemRecordsForCurrentUser.filter(
       (record) => {
-        const status = getBorrowRecordStatus(record);
+        const status = record.status;
         switch (status) {
-          case UIBorrowRecordStatus.Returned:
-          case UIBorrowRecordStatus.ReturnedEarly:
-          case UIBorrowRecordStatus.ReturnedLate:
+          case UIBorrowDetailedStatus.Returned_OnTime:
+          case UIBorrowDetailedStatus.Returned_Early:
+          case UIBorrowDetailedStatus.Returned_Late:
             return true;
           default:
             return false;
@@ -172,11 +173,11 @@ export class ItemComponent implements OnInit {
 
     this.itemsCurrentlyBorrowed = this.borrowItemRecordsForCurrentUser.find(
       (record) => {
-        const status = getBorrowRecordStatus(record);
+        const status = record.status;
         switch (status) {
-          case UIBorrowRecordStatus.CurrentlyBorrowed:
-          case UIBorrowRecordStatus.Late:
-          case UIBorrowRecordStatus.DueToday:
+          case UIBorrowDetailedStatus.Borrowed_Active:
+          case UIBorrowDetailedStatus.Borrowed_Late:
+          case UIBorrowDetailedStatus.Borrowed_DueToday:
             return true;
           default:
             return false;
@@ -186,8 +187,8 @@ export class ItemComponent implements OnInit {
 
     this.itemsReadyToPickup = this.borrowItemRecordsForCurrentUser.find(
       (record) => {
-        const status = getBorrowRecordStatus(record);
-        return status === UIBorrowRecordStatus.ReadyToPickup;
+        const status = record.status;
+        return status === UIBorrowDetailedStatus.Reserved_ReadyToPickup;
       }
     );
   }

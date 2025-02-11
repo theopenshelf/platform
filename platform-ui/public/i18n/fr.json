@@ -70,19 +70,18 @@
     "return": "Retourner",
     "cancelReservation": "Annuler",
     "status": {
-      "impossible": "Impossible",
-      "reserved": "Réservé",
-      "ready-to-pickup": "Prêt à retirer",
-      "currentlyBorrowed": "Actuellement emprunté",
-      "currently-borrowed": "Actuellement emprunté",
-      "returnedEarly": "En avance",
-      "returned-early": "En avance",
-      "returned": "À l'heure",
-      "dueToday": "À rendre aujourd'hui",
-      "late": "En retard",
-      "returnedLate": "Retard",
-      "returned-late": "Retard",
-      "unknown": "Inconnu"
+      "reserved-impossible": "Réservé Impossible",
+      "reserved-unconfirmed": "Réservé Non Confirmé",
+      "reserved-confirmed": "Réservé Confirmé",
+      "reserved-ready-to-pickup": "Réservé Prêt à Récupérer",
+      "reserved-pickup-unconfirmed": "Réservé Récupération Non Confirmée",
+      "borrowed-active": "Emprunté Actif",
+      "borrowed-due-today": "Emprunté À Rendre Aujourd'hui",
+      "borrowed-late": "Emprunté En Retard",
+      "borrowed-return-unconfirmed": "Emprunté Retour Non Confirmé",
+      "returned-early": "Retourné En Avance",
+      "returned": "Retourné",
+      "returned-late": "Retourné En Retard"
     }
   },
   "search": {

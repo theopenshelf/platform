@@ -7,18 +7,18 @@
         <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
         
         <div class="action-container">
-          @if (status() === UIBorrowRecordStatus.ReadyToPickup) {
+          @if (status() === UIBorrowDetailedStatus.Reserved_ReadyToPickup) {
             <button class="pick-up-button" appearance="outline-destructive" size="m" tuiButton type="button" (click)="pickUpItem()">
               {{ 'borrowRecordCard.pickUp' | translate }}
             </button>
-          } @else if (status() === UIBorrowRecordStatus.CurrentlyBorrowed 
-          || status() === UIBorrowRecordStatus.DueToday
-          || status() === UIBorrowRecordStatus.Late
+          } @else if (status() === UIBorrowDetailedStatus.Borrowed_Active 
+          || status() === UIBorrowDetailedStatus.Borrowed_DueToday
+          || status() === UIBorrowDetailedStatus.Borrowed_Late
           ) {
             <button class="return-button" appearance="primary" size="m" tuiButton type="button" (click)="returnItem()">
               {{ 'borrowRecordCard.return' | translate }}
             </button> 
-          } @else if (status() === UIBorrowRecordStatus.Reserved) {
+          } @else if (status() === UIBorrowDetailedStatus.Reserved_Confirmed) {
             <button class="cancel-reservation-button" appearance="primary" size="m" tuiButton type="button" (click)="cancelReservation()">
               {{ 'borrowRecordCard.cancelReservation' | translate }}
             </button> 

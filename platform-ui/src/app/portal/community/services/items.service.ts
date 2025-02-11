@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { UIBorrowRecord } from '../models/UIBorrowRecord';
 import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
-import { UIBorrowStatus } from '../models/UIBorrowStatus';
+import { UIBorrowDetailedStatus } from '../models/UIBorrowStatus';
 import { UIItem } from '../models/UIItem';
 import { UIItemsPagination } from '../models/UIItemsPagination';
 import { UIUser } from '../models/UIUser';
@@ -11,7 +11,7 @@ export interface GetItemsParams {
   currentUser?: boolean;
   borrowedByCurrentUser?: boolean;
   borrowedBy?: string;
-  status?: UIBorrowStatus;
+  statuses?: UIBorrowDetailedStatus[];
   libraryIds?: string[];
   categories?: string[];
   searchText?: string;

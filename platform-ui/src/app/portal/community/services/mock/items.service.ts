@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
-import { UIBorrowStatus } from '../../models/UIBorrowStatus';
+import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
 import { UIUser } from '../../models/UIUser';
 import { GetItemsParams, ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +20,7 @@ export class MockItemsService implements ItemsService {
     const {
       currentUser,
       borrowedByCurrentUser,
-      status,
+      statuses,
       libraryIds,
       categories,
       searchText,
@@ -52,12 +51,6 @@ export class MockItemsService implements ItemsService {
         item.borrowRecords.some(
           (record) => record.borrowedBy === borrowedBy,
         ),
-      );
-    }
-
-    if (status) {
-      filteredItems = filteredItems.filter((item) =>
-        this.matchesStatus(status, item, borrowedBy),
       );
     }
 
@@ -131,7 +124,7 @@ export class MockItemsService implements ItemsService {
 
   getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination> {
     const {
-      status,
+      statuses,
       borrowedByCurrentUser,
       sortBy,
       libraryIds,
@@ -149,6 +142,7 @@ export class MockItemsService implements ItemsService {
     // Filter records based on the borrowedBy parameter
     this.items.forEach(item => {
       item.borrowRecords.forEach(record => {
+        debugger;
         if (borrowedByCurrentUser) {
           if (record.borrowedBy === 'me@example.com') {
             filteredRecords.push({ ...record, item });
@@ -182,9 +176,10 @@ export class MockItemsService implements ItemsService {
       );
     }
 
-    if (status) {
+    debugger;
+    if (statuses) {
       filteredRecords = filteredRecords.filter(record =>
-        this.matchesStatusBorrowRecord(status, record)
+        this.matchesStatuses(statuses, record)
       );
     }
 
@@ -278,6 +273,9 @@ export class MockItemsService implements ItemsService {
       pickupDate: undefined,
       effectiveReturnDate: undefined,
       borrowedBy: borrowBy?.email ?? 'me@example.com',
+      status: new Date(startDate).toDateString() === new Date().toDateString()
+        ? UIBorrowDetailedStatus.Borrowed_Active
+        : UIBorrowDetailedStatus.Reserved_Confirmed,
     };
 
     // Optionally, you can add the record to the item itself if needed
@@ -354,22 +352,9 @@ export class MockItemsService implements ItemsService {
     }
   }
 
-  matchesStatusBorrowRecord(status: UIBorrowStatus, borrowRecord: UIBorrowRecordStandalone): boolean {
-    const now = new Date();
-    switch (status) {
-      case UIBorrowStatus.Returned:
-        return (
-          borrowRecord.effectiveReturnDate !== undefined && borrowRecord.effectiveReturnDate !== null
-        );
-      case UIBorrowStatus.CurrentlyBorrowed:
-        return (
-          borrowRecord.startDate <= now && (borrowRecord.effectiveReturnDate === undefined || borrowRecord.effectiveReturnDate === null)
-        );
-      case UIBorrowStatus.Reserved:
-        return (
-          borrowRecord.startDate > now
-        );
-    }
+  matchesStatuses(statuses: UIBorrowDetailedStatus[], borrowRecord: UIBorrowRecordStandalone): boolean {
+    return statuses.includes(borrowRecord.status);
   }
+
 
 }

@@ -22,7 +22,7 @@ import {
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
 } from '../../community.provider';
-import { UIBorrowStatus } from '../../models/UIBorrowStatus';
+import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../models/UIBorrowStatus';
 import { UICategory } from '../../models/UICategory';
 import { UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
@@ -347,11 +347,26 @@ export class FilteredAndPaginatedComponent implements OnInit {
 
   protected fetchItems(): void {
 
+    let statuses: UIBorrowDetailedStatus[] = [];
+    switch (this.selectedStatus) {
+      case UIBorrowStatus.Returned:
+        statuses = [UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
+        break;
+      case UIBorrowStatus.CurrentlyBorrowed:
+        statuses = [UIBorrowDetailedStatus.Borrowed_Active, UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
+        break;
+      case UIBorrowStatus.Reserved:
+        statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
+        break;
+      default:
+        statuses = []
+        break;
+    }
 
     this.getItems()!(
       {
         ...this.getItemsParams(),
-        status: this.selectedStatus,
+        statuses: statuses,
         libraryIds: this.getItemsParams().libraryIds ? this.getItemsParams().libraryIds : Object.keys(this.selectedLibraries),
         categories: Array.from(this.selectedCategories),
         searchText: this.searchText,

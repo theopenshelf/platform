@@ -9,11 +9,11 @@ import {
 } from '../../../../api-client';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
-import { UIBorrowStatus } from '../../models/UIBorrowStatus';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UIItemsPagination } from '../../models/UIItemsPagination';
-import { GetItemsParams, ItemsService } from '../items.service';
 import { UIUser } from '../../models/UIUser';
+import { GetItemsParams, ItemsService } from '../items.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -25,7 +25,6 @@ export class APIItemsService implements ItemsService {
       currentUser,
       borrowedByCurrentUser,
       borrowedBy,
-      status,
       libraryIds,
       categories,
       searchText,
@@ -38,19 +37,6 @@ export class APIItemsService implements ItemsService {
       endDate,
       favorite,
     } = params;
-
-    const statusMapping: Record<
-      UIBorrowStatus,
-      'returned' | 'borrowed' | 'reserved'
-    > = {
-      [UIBorrowStatus.Returned]: 'returned',
-      [UIBorrowStatus.CurrentlyBorrowed]: 'borrowed',
-      [UIBorrowStatus.Reserved]: 'reserved',
-    };
-
-    const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status
-      ? statusMapping[status]
-      : undefined;
 
     let sortByValue: 'createdAt' | 'borrowCount' | 'favorite' | undefined;
     switch (sortBy) {
@@ -84,7 +70,6 @@ export class APIItemsService implements ItemsService {
         pageSize,
         startDate?.toISOString(),
         endDate?.toISOString(),
-        statusValue,
         favorite,
       )
       .pipe(
@@ -119,7 +104,7 @@ export class APIItemsService implements ItemsService {
       currentUser,
       borrowedByCurrentUser,
       borrowedBy,
-      status,
+      statuses,
       libraryIds,
       categories,
       searchText,
@@ -135,13 +120,26 @@ export class APIItemsService implements ItemsService {
     } = params;
 
     const statusMapping: Record<
-      UIBorrowStatus,
-      'returned' | 'borrowed' | 'reserved'
+      UIBorrowDetailedStatus,
+      'reserved-impossible' | 'reserved-unconfirmed' | 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'reserved-pickup-unconfirmed' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'borrowed-return-unconfirmed' | 'returned-early' | 'returned-on-time' | 'returned-late' | undefined
     > = {
-      [UIBorrowStatus.Returned]: 'returned',
-      [UIBorrowStatus.CurrentlyBorrowed]: 'borrowed',
-      [UIBorrowStatus.Reserved]: 'reserved',
+      [UIBorrowDetailedStatus.Returned_OnTime]: 'returned-on-time',
+      [UIBorrowDetailedStatus.Borrowed_Active]: 'borrowed-active',
+      [UIBorrowDetailedStatus.Borrowed_DueToday]: 'borrowed-due-today',
+      [UIBorrowDetailedStatus.Borrowed_Late]: 'borrowed-late',
+      [UIBorrowDetailedStatus.Returned_Early]: 'returned-early',
+      [UIBorrowDetailedStatus.Returned_Late]: 'returned-late',
+      [UIBorrowDetailedStatus.Reserved_Impossible]: undefined,
+      [UIBorrowDetailedStatus.Reserved_Unconfirmed]: 'reserved-unconfirmed',
+      [UIBorrowDetailedStatus.Reserved_Confirmed]: 'reserved-confirmed',
+      [UIBorrowDetailedStatus.Reserved_ReadyToPickup]: 'reserved-ready-to-pickup',
+      [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed]: 'reserved-pickup-unconfirmed',
+      [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed]: 'borrowed-return-unconfirmed',
     };
+
+
+    let statusesValue: ('reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late')[] = [];
+    statusesValue = statuses ? statuses.map(status => statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
 
     let sortByValue: 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
     switch (sortBy) {
@@ -165,9 +163,6 @@ export class APIItemsService implements ItemsService {
         break;
     }
 
-    const statusValue: 'returned' | 'borrowed' | 'reserved' | undefined = status
-      ? statusMapping[status]
-      : undefined;
     return this.borrowRecordsApiService
       .getBorrowRecords(
         currentUser,
@@ -181,7 +176,7 @@ export class APIItemsService implements ItemsService {
         searchText,
         page,
         pageSize,
-        statusValue,
+        statusesValue,
         favorite,
       )
       .pipe(

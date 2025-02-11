@@ -1,4 +1,5 @@
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UICategory } from '../../models/UICategory';
 import { UIItem } from '../../models/UIItem';
 import { MockCategoriesService } from './categories.service'; // Import the mock categories service
@@ -60,6 +61,7 @@ export const loadItems = (): UIItem[] => {
             pickupDate: record.pickupDate ? new Date(record.pickupDate) : null,
             effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : null,
             borrowedBy: record.borrowedBy,
+            status: getBorrowRecordStatus(new Date(record.reservationDate), new Date(record.startDate), record.pickupDate ? new Date(record.pickupDate) : null, new Date(record.endDate), record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : null),
           }) as UIBorrowRecord,
       ),
       createdAt: new Date(item.createdAt), // Convert string to Date
@@ -107,3 +109,56 @@ function generateRandomRecords(numRecords: number) {
   }
   return records;
 }
+
+
+export function getBorrowRecordStatus(reservationDate: Date, startDate: Date, pickupDate: Date | null, endDate: Date, effectiveReturnDate: Date | null): UIBorrowDetailedStatus {
+  const now = new Date();
+
+  if (now < reservationDate) {
+    return UIBorrowDetailedStatus.Reserved_Impossible;
+  } else if (now < startDate && (!pickupDate || now < pickupDate!)) {
+    return UIBorrowDetailedStatus.Reserved_Confirmed;
+  }
+
+  if (!pickupDate) {
+    if (startDate! <= now) {
+      return UIBorrowDetailedStatus.Reserved_ReadyToPickup;
+    } else {
+      return UIBorrowDetailedStatus.Reserved_Confirmed;
+    }
+  }
+
+  if (now < endDate) {
+
+    if (effectiveReturnDate) {
+      return UIBorrowDetailedStatus.Returned_Early;
+    } else {
+      return UIBorrowDetailedStatus.Borrowed_Active;
+    }
+  }
+
+  if (endDate === now) {
+    if (effectiveReturnDate) {
+      return UIBorrowDetailedStatus.Returned_OnTime;
+    } else {
+      return UIBorrowDetailedStatus.Borrowed_DueToday;
+    }
+  }
+
+  if (endDate < now) {
+    if (effectiveReturnDate) {
+      if (effectiveReturnDate! < endDate) {
+        return UIBorrowDetailedStatus.Returned_Early;
+      } else if (effectiveReturnDate! > endDate) {
+        return UIBorrowDetailedStatus.Returned_Late;
+      } else {
+        return UIBorrowDetailedStatus.Returned_OnTime;
+      }
+    } else {
+      return UIBorrowDetailedStatus.Borrowed_Late;
+    }
+  } else {
+    return UIBorrowDetailedStatus.Reserved_Impossible;
+  }
+}
+

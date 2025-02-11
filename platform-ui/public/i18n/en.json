@@ -70,21 +70,18 @@
     "return": "Return",
     "cancelReservation": "Cancel",
     "status": {
-      "impossible": "Impossible",
-      "reserved": "Reserved",
-      "ready-to-pickup": "Ready to Pickup",
-      "borrowed": "Currently Borrowed",
-      "currentlyBorrowed": "Currently Borrowed",
-      "currently-borrowed": "Currently Borrowed",
-      "returnedEarly": "Early",
-      "returned-early": "Early",
-      "returned": "On-time",
-      "dueToday": "Due Today",
-      "late": "Late",
-      "returnedLate": "Late",
-      "returned-late": "Late",
-      "unknown": "Unknown"
-    }
+      "reserved-impossible": "Reserved Impossible",
+      "reserved-unconfirmed": "Reserved Unconfirmed",
+      "reserved-confirmed": "Reserved Confirmed",
+      "reserved-ready-to-pickup": "Reserved Ready to Pickup",
+      "reserved-pickup-unconfirmed": "Reserved Pickup Unconfirmed",
+      "borrowed-active": "Borrowed Active",
+      "borrowed-due-today": "Borrowed Due Today",
+      "borrowed-late": "Borrowed Late",
+      "borrowed-return-unconfirmed": "Borrowed Return Unconfirmed",
+      "returned-early": "Returned Early",
+      "returned": "Returned",
+      "returned-late": "Returned Late"
   },
   "search": {
     "placeholder": "What object are you looking for?"

@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
-import { getBorrowRecordStatus, UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
+import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../portal/community/models/UIBorrowStatus';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
-
 @Component({
   selector: 'borrow-record-timeline',
   imports: [
@@ -21,7 +21,7 @@ export class BorrowRecordTimelineComponent {
   constructor(private translate: TranslateService) { }
 
   protected readonly status = computed(() => {
-    return getBorrowRecordStatus(this.borrowRecord());
+    return this.borrowRecord().status;
   });
 
   protected readonly timelineItems = computed(() => {
@@ -113,7 +113,7 @@ export class BorrowRecordTimelineComponent {
 
     switch (this.status()) {
 
-      case 'reserved':
+      case UIBorrowDetailedStatus.Reserved_Confirmed:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -157,7 +157,7 @@ export class BorrowRecordTimelineComponent {
         ]
         break;
 
-      case 'ready-to-pickup':
+      case UIBorrowDetailedStatus.Reserved_ReadyToPickup:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -200,7 +200,7 @@ export class BorrowRecordTimelineComponent {
           }
         ]
         break;
-      case 'currently-borrowed':
+      case UIBorrowDetailedStatus.Borrowed_Active:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -232,7 +232,7 @@ export class BorrowRecordTimelineComponent {
         ]
         break;
 
-      case 'returned-early':
+      case UIBorrowDetailedStatus.Returned_Early:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -277,7 +277,7 @@ export class BorrowRecordTimelineComponent {
           }
         ]
         break;
-      case 'returned':
+      case UIBorrowDetailedStatus.Returned_OnTime:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -310,7 +310,7 @@ export class BorrowRecordTimelineComponent {
         ]
         break;
 
-      case 'due-today':
+      case UIBorrowDetailedStatus.Borrowed_DueToday:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
@@ -343,7 +343,7 @@ export class BorrowRecordTimelineComponent {
         ]
         break;
 
-      case 'late':
+      case UIBorrowDetailedStatus.Borrowed_Late:
         items = [
           {
             label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),

@@ -82,9 +82,10 @@
                     }
                 }
 
-                .record-status-reserved,
-                .record-status-impossible,
-                .record-status-currently-borrowed {
+                .record-status-reserved-impossible,
+                .record-status-reserved-confirmed,
+                .record-status-reserved-ready-to-pickup,
+                .record-status-borrowed-active {
                     display: none;
                 }
 
@@ -95,11 +96,14 @@
                 }
 
                 .record-status-returned-late,
-                .record-status-late {
+                .record-status-borrowed-late {
                     color: var(--tos-timeline-dot-danger);
                 }
 
-                .record-status-due-today {
+                .record-status-borrowed-due-today,
+                .record-status-borrowed-return-unconfirmed,
+                .record-status-reserved-pickup-unconfirmed,
+                .record-status-reserved-unconfirmed {
                     color: var(--tos-timeline-dot-warning);
                 }
 

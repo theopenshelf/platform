@@ -9,7 +9,8 @@ import { TuiHint } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
 import { UIUser } from '../../../admin/services/users.service';
-import { getBorrowDurationInDays, getBorrowRecordStatus, getLateDurationInDays, UIBorrowRecord, UIBorrowRecordStatus } from '../../models/UIBorrowRecord';
+import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { getStatusIcon, UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 
@@ -44,7 +45,7 @@ export class BorrowRecordCardComponent {
   public returnItemCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
   public cancelReservationCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
 
-  protected UIBorrowRecordStatus = UIBorrowRecordStatus;
+  protected UIBorrowDetailedStatus = UIBorrowDetailedStatus;
 
   constructor(
     private translate: TranslateService
@@ -56,31 +57,10 @@ export class BorrowRecordCardComponent {
   }
 
   protected readonly status = computed(() => {
-    return getBorrowRecordStatus(this.currentBorrowRecord()!);
+    return this.currentBorrowRecord()!.status;
   });
   protected readonly statusIcon = computed(() => {
-    switch (this.status()) {
-      case UIBorrowRecordStatus.Impossible:
-        return '@tui.x';
-      case UIBorrowRecordStatus.Reserved:
-        return '@tui.clock';
-      case UIBorrowRecordStatus.ReadyToPickup:
-        return '/borrow.png';
-      case UIBorrowRecordStatus.CurrentlyBorrowed:
-        return '/borrow.png';
-      case UIBorrowRecordStatus.ReturnedEarly:
-        return '@tui.calendar-check';
-      case UIBorrowRecordStatus.Returned:
-        return '@tui.calendar-check';
-      case UIBorrowRecordStatus.DueToday:
-        return '@tui.calendar-clock';
-      case UIBorrowRecordStatus.Late:
-        return '@tui.calendar-clock';
-      case UIBorrowRecordStatus.ReturnedLate:
-        return '@tui.calendar-x';
-      default:
-        return '@tui.x';
-    }
+    return getStatusIcon(this.status());
   });
   protected readonly statusText = computed(() => {
     const status = this.status();
