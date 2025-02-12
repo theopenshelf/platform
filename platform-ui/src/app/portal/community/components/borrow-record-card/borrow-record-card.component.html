@@ -8,7 +8,7 @@
         
         <div class="action-container">
           @if (status() === UIBorrowDetailedStatus.Reserved_ReadyToPickup) {
-            <button class="pick-up-button" appearance="outline-destructive" size="m" tuiButton type="button" (click)="pickUpItem()">
+            <button class="pick-up-button" appearance="primary" size="m" tuiButton type="button" (click)="pickUpItem()">
               {{ 'borrowRecordCard.pickUp' | translate }}
             </button>
           } @else if (status() === UIBorrowDetailedStatus.Borrowed_Active 
@@ -49,7 +49,6 @@
               </h2>
               <h3>
                 <user-avatar [user]="user()!"></user-avatar>
-ee
                 {{ user()!.username }}
               </h3>
             </div>

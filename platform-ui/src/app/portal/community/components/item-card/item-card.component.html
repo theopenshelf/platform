@@ -5,12 +5,13 @@
     <div class="image-container">
       <img [src]="item().imageUrl" [alt]="item().name" class="item-image" />
       <div class="action-container">
-        <button class="borrow-now-button" appearance="primary" size="m" tuiButton type="button" (click)="borrowNow()">
-          {{ 'itemCard.borrowNow' | translate }}
-        </button>
         <button class="reserve-button" appearance="primary" size="m" tuiButton type="button" (click)="reserveItem()">
           {{ 'itemCard.reserveItem' | translate }}
         </button>
+         <button class="borrow-now-button" appearance="primary" size="m" tuiButton type="button" (click)="borrowNow()">
+          {{ 'itemCard.borrowNow' | translate }}
+        </button>
+ 
       </div>
     </div>
 
