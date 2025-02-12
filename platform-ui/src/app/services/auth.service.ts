@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { UIUser } from '../portal/community/models/UIUser';
+import { UIUser } from '../models/UIUser';
 
 export interface UserInfo {
   firstName: string;

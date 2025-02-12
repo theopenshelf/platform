@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { UIBorrowRecord } from '../models/UIBorrowRecord';
-import { UIBorrowRecordsPagination } from '../models/UIBorrowRecordsPagination';
-import { UIBorrowDetailedStatus } from '../models/UIBorrowStatus';
-import { UIItem } from '../models/UIItem';
-import { UIItemsPagination } from '../models/UIItemsPagination';
-import { UIUser } from '../models/UIUser';
+import { UIBorrowRecord } from '../../../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination } from '../../../models/UIBorrowRecordsPagination';
+import { UIBorrowDetailedStatus } from '../../../models/UIBorrowStatus';
+import { UIItem } from '../../../models/UIItem';
+import { UIItemsPagination } from '../../../models/UIItemsPagination';
+import { UIUser } from '../../../models/UIUser';
 
 export interface GetItemsParams {
   itemId?: string;

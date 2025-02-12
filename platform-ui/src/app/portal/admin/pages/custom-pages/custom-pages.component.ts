@@ -6,7 +6,7 @@ import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAlertService, TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { map } from 'rxjs';
-import { UICustomPage } from '../../../community/models/UICustomPage';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { CUSTOM_PAGES_SERVICE_TOKEN } from '../../admin.providers';
 import { Column, TosTableComponent } from '../../components/tos-table/tos-table.component';
 import { CustomPagesService } from '../../services/custom-pages.service';

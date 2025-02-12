@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { UIUser } from '../../community/models/UIUser';
+import { UIUser } from '../../../models/UIUser';
 
 
 

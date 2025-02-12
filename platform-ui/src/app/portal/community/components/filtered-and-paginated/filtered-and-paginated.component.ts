@@ -16,16 +16,16 @@ import {
 } from '@taiga-ui/legacy';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
+import { UICategory } from '../../../../models/UICategory';
+import { UILibrary } from '../../../../models/UILibrary';
+import { UIPagination } from '../../../../models/UIPagination';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
 } from '../../community.provider';
-import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
-import { UICategory } from '../../models/UICategory';
-import { UILibrary } from '../../models/UILibrary';
-import { UIPagination } from '../../models/UIPagination';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';

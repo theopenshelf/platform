@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { HelpApiService, HelpArticle, HelpCategory } from "../../../../api-client";
-import { UIHelpArticle, UIHelpCategory } from "../../models/UIHelp";
+import { UIHelpArticle, UIHelpCategory } from "../../../../models/UIHelp";
 import { HelpService } from "../help.service";
 
 @Injectable({

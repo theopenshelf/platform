@@ -1,7 +1,7 @@
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
-import { UICategory } from '../../models/UICategory';
-import { UIItem } from '../../models/UIItem';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
+import { UICategory } from '../../../../models/UICategory';
+import { UIItem } from '../../../../models/UIItem';
 import { MockCategoriesService } from './categories.service'; // Import the mock categories service
 import items from './items.json'; // Adjust the path as necessary
 

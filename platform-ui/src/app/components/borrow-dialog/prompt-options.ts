@@ -1,8 +1,8 @@
 import { TuiDayRange } from "@taiga-ui/cdk";
-import { UIBorrowRecord } from "../../portal/community/models/UIBorrowRecord";
-import { UIItem } from "../../portal/community/models/UIItem";
+import { UIBorrowRecord } from "../../models/UIBorrowRecord";
+import { UIItem } from "../../models/UIItem";
+import { UIUser } from "../../models/UIUser";
 import { UserInfo } from "../../services/auth.service";
-import { UIUser } from "../../portal/community/models/UIUser";
 
 
 export enum CallToActionType {

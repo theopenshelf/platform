@@ -6,7 +6,7 @@ import { TuiAlertService, TuiButton, TuiDialog, TuiIcon, TuiTextfield } from '@t
 import { TuiAccordion } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
-import { UIHelpArticle, UIHelpCategory } from '../../../community/models/UIHelp';
+import { UIHelpArticle, UIHelpCategory } from '../../../../models/UIHelp';
 import { CUSTOM_PAGES_SERVICE_TOKEN } from '../../admin.providers';
 import { CustomPagesService } from '../../services/custom-pages.service';
 

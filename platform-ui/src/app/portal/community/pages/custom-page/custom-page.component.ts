@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../community.provider';
-import { UICustomPage } from '../../models/UICustomPage';
 import { CustomPageService } from '../../services/custom-page.service';
 
 @Component({

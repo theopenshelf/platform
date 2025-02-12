@@ -33,6 +33,8 @@ import {
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
+import { isLibraryAdmin, UILibrary } from '../../../../../models/UILibrary';
+import { UIUser } from '../../../../../models/UIUser';
 import { AuthService, UserInfo } from '../../../../../services/auth.service';
 import {
   LIBRARIES_SERVICE_TOKEN,
@@ -40,8 +42,6 @@ import {
 } from '../../../community.provider';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
-import { isLibraryAdmin, UILibrary } from '../../../models/UILibrary';
-import { UIUser } from '../../../models/UIUser';
 import { GetItemsParams } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
 import { UsersService } from '../../../services/users.service';

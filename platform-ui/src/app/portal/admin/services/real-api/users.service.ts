@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UsersAdminApiService } from '../../../../api-client/api/usersAdminApi.service';
 import { UserWithStats } from '../../../../api-client/model/userWithStats';
-import { UIUser } from '../../../community/models/UIUser';
+import { UIUser } from '../../../../models/UIUser';
 import { UsersService } from '../users.service';
 
 @Injectable({

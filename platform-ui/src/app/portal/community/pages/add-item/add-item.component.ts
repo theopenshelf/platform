@@ -19,11 +19,11 @@ import {
 import { QuillModule } from 'ngx-quill';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { UICategory } from '../../../../models/UICategory';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
 } from '../../community.provider';
-import { UICategory } from '../../models/UICategory';
 import { CategoriesService } from '../../services/categories.service';
 import { ItemsService } from '../../services/items.service';
 

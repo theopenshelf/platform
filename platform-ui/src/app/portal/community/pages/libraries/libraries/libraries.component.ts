@@ -8,8 +8,8 @@ import {
   TuiTitle
 } from '@taiga-ui/core';
 import { TuiCardMedium } from '@taiga-ui/layout';
+import { UILibrary } from '../../../../../models/UILibrary';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
-import { UILibrary } from '../../../models/UILibrary';
 import { LibrariesService } from '../../../services/libraries.service';
 
 @Component({

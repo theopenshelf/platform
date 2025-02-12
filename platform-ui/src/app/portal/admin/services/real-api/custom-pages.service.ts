@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { CustomPage, CustomPagesAdminApiService, GetCustomPageRefs200ResponseInner, HelpAdminApiService, HelpArticle, HelpCategory } from "../../../../api-client";
-import { UICustomPage } from "../../../community/models/UICustomPage";
-import { UIHelpArticle, UIHelpCategory } from "../../../community/models/UIHelp";
+import { UICustomPage } from "../../../../models/UICustomPage";
+import { UIHelpArticle, UIHelpCategory } from "../../../../models/UIHelp";
 import { CustomPagesService } from "../custom-pages.service";
 
 @Injectable({

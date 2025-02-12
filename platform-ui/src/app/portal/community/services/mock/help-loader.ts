@@ -1,4 +1,4 @@
-import { UIHelpArticle, UIHelpCategory } from '../../models/UIHelp';
+import { UIHelpArticle, UIHelpCategory } from '../../../../models/UIHelp';
 import helpData from './help.json';
 
 const mapHelpCategory = (category: any): UIHelpCategory => {

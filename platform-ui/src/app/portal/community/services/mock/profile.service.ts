@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { UIProfile } from '../../models/UIProfile';
+import { UIProfile } from '../../../../models/UIProfile';
 import { ProfileService } from '../profile.service';
 
 @Injectable({

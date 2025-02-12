@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ProfileCommunityApiService } from '../../../../api-client';
-import { UIProfile } from '../../models/UIProfile';
+import { UIProfile } from '../../../../models/UIProfile';
 import { ProfileService } from '../profile.service';
 @Injectable({
   providedIn: 'root',
 })
 export class ApiProfileService implements ProfileService {
-  constructor(private profileApiService: ProfileCommunityApiService) {}
+  constructor(private profileApiService: ProfileCommunityApiService) { }
 
   updateProfile(profile: UIProfile): Observable<UIProfile> {
     return this.profileApiService.updateProfile(profile).pipe(

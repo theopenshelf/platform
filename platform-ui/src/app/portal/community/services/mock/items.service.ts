@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
-import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../models/UIBorrowStatus';
-import { UIItem } from '../../models/UIItem';
-import { UIItemsPagination } from '../../models/UIItemsPagination';
-import { UIUser } from '../../models/UIUser';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../../../models/UIBorrowRecordsPagination';
+import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../../../models/UIBorrowStatus';
+import { UIItem } from '../../../../models/UIItem';
+import { UIItemsPagination } from '../../../../models/UIItemsPagination';
+import { UIUser } from '../../../../models/UIUser';
 import { GetItemsParams, ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
 @Injectable({

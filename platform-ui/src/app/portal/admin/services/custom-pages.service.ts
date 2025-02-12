@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { UICustomPage } from '../../community/models/UICustomPage';
-import { UIHelpArticle, UIHelpCategory } from '../../community/models/UIHelp';
+import { UICustomPage } from '../../../models/UICustomPage';
+import { UIHelpArticle, UIHelpCategory } from '../../../models/UIHelp';
 
 
 export interface CustomPagesService {

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { User, UsersCommunityApiService } from "../../../../api-client";
-import { UIUser } from "../../models/UIUser";
+import { UIUser } from "../../../../models/UIUser";
 import { UsersService } from "../users.service";
 
 @Injectable({

@@ -1,6 +1,6 @@
 
 import { Observable } from 'rxjs';
-import { UIHelpArticle, UIHelpCategory } from '../models/UIHelp';
+import { UIHelpArticle, UIHelpCategory } from '../../../models/UIHelp';
 
 export interface HelpService {
     getCategories(): Observable<UIHelpCategory[]>;

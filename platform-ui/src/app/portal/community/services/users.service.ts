@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { UIUser } from '../models/UIUser';
+import { UIUser } from '../../../models/UIUser';
 
 export interface UsersService {
     getUsers(): Observable<UIUser[]>;

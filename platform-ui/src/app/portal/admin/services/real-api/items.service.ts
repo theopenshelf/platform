@@ -6,7 +6,7 @@ import {
   ItemStat,
   PaginatedItemsStatsResponse,
 } from '../../../../api-client';
-import { UIBorrowRecord } from '../../../community/models/UIBorrowRecord';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
 import { ItemsService, UIItemWithStats, UIItemWithStatsPagination } from '../items.service';
 
 @Injectable({

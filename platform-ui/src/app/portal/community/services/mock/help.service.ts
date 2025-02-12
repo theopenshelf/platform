@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { UIHelpArticle, UIHelpCategory } from "../../models/UIHelp";
+import { UIHelpArticle, UIHelpCategory } from "../../../../models/UIHelp";
 import { HelpService } from "../help.service";
 import { loadHelpData } from "./help-loader";
 

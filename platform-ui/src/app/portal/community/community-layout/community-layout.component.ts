@@ -25,9 +25,9 @@ import { tuiLayoutIconsProvider, TuiNavigation } from '@taiga-ui/layout';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { NotificationsPopupComponent } from '../../../components/notifications-popup/notifications-popup.component';
 import { AUTH_SERVICE_TOKEN } from '../../../global.provider';
+import { UIBorrowDetailedStatus } from '../../../models/UIBorrowStatus';
 import { AuthService, UserInfo } from '../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN } from '../community.provider';
-import { UIBorrowDetailedStatus } from '../models/UIBorrowStatus';
 import { EventService, TosEventType } from '../services/event.service';
 import { ItemsService } from '../services/items.service';
 

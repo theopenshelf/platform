@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { UIItem } from '../../community/models/UIItem';
+import { UIItem } from '../../../models/UIItem';
 
 export interface UIItemWithStats extends UIItem {
 

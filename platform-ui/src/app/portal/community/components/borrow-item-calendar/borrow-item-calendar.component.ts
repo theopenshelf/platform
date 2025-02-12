@@ -9,8 +9,8 @@ import { TUI_CALENDAR_DATE_STREAM, TuiCalendarRange } from '@taiga-ui/kit';
 import { TuiInputDateRangeModule } from '@taiga-ui/legacy';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { combineLatest, map, Observable } from 'rxjs';
+import { UIItem } from '../../../../models/UIItem';
 import { UserInfo } from '../../../../services/auth.service';
-import { UIItem } from '../../models/UIItem';
 
 const BEFORE_TODAY: string = 'rgba(0, 0, 1, 0)';
 const BOOKED: string = 'rgba(0, 0, 2, 0)';

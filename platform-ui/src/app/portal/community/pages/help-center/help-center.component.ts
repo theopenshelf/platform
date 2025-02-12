@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
 import { TuiAccordion } from '@taiga-ui/kit';
+import { UIHelpArticle, UIHelpCategory } from '../../../../models/UIHelp';
 import { HELP_SERVICE_TOKEN } from '../../community.provider';
-import { UIHelpArticle, UIHelpCategory } from '../../models/UIHelp';
 import { HelpService } from '../../services/help.service';
 
 @Component({

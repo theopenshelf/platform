@@ -13,8 +13,8 @@ import {
 } from '@taiga-ui/core';
 import { TuiSwitch } from '@taiga-ui/kit';
 import { QuillModule } from 'ngx-quill';
+import { UILibrary } from '../../../../../models/UILibrary';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
-import { UILibrary } from '../../../models/UILibrary';
 import { LibrariesService } from '../../../services/libraries.service';
 @Component({
   selector: 'app-edit-library',

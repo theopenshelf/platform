@@ -28,7 +28,7 @@ import {
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { map } from 'rxjs';
-import { UIUser } from '../../../community/models/UIUser';
+import { UIUser } from '../../../../models/UIUser';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,

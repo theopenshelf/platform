@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
 import { CustomPage, CustomPagesCommunityApiService, GetCustomPageRefs200ResponseInner } from "../../../../api-client";
-import { UICustomPage } from "../../models/UICustomPage";
+import { UICustomPage } from "../../../../models/UICustomPage";
 import { CustomPageService } from "../custom-page.service";
 
 @Injectable({

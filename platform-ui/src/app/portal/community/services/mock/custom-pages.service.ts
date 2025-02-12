@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { UICustomPage } from "../../models/UICustomPage";
+import { UICustomPage } from "../../../../models/UICustomPage";
 import { CustomPageService } from "../custom-page.service";
 import { loadCustomPagesData } from "./custom-page-loader";
 

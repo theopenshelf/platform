@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
+import { UICustomPage } from '../../models/UICustomPage';
 import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../portal/community/community.provider';
-import { UICustomPage } from '../../portal/community/models/UICustomPage';
 import { CustomPageService } from '../../portal/community/services/custom-page.service';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
 @Component({

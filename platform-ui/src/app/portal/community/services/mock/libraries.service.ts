@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { UILibrary } from '../../models/UILibrary';
+import { UILibrary } from '../../../../models/UILibrary';
 import { LibrariesService } from '../libraries.service';
 import { loadLibrariesData } from './libraries-loader';
 

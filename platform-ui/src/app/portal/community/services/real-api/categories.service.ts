@@ -4,14 +4,14 @@ import {
   CategoriesCommunityApiService,
   Category,
 } from '../../../../api-client';
-import { UICategory } from '../../models/UICategory';
+import { UICategory } from '../../../../models/UICategory';
 import { CategoriesService } from '../categories.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class APICategoriesService implements CategoriesService {
-  constructor(private categoriesApiService: CategoriesCommunityApiService) {}
+  constructor(private categoriesApiService: CategoriesCommunityApiService) { }
 
   getCategories(): Observable<UICategory[]> {
     return this.categoriesApiService.getCategories().pipe(

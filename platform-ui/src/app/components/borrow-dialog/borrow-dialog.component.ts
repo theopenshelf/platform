@@ -14,9 +14,9 @@ import {
   PolymorpheusTemplate,
 } from '@taiga-ui/polymorpheus';
 import { map, Observable } from 'rxjs';
+import { UIUser } from '../../models/UIUser';
 import { communityProviders, USERS_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { BorrowItemCalendarComponent } from '../../portal/community/components/borrow-item-calendar/borrow-item-calendar.component';
-import { UIUser } from '../../portal/community/models/UIUser';
 import { UsersService } from '../../portal/community/services/users.service';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 import { CallToActionType, PromptOptions, PromptResponse } from './prompt-options';

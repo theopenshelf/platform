@@ -26,14 +26,14 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { tap } from 'rxjs';
 import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
+import { UIItem } from '../../../../models/UIItem';
+import { isLibraryAdmin } from '../../../../models/UILibrary';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.provider';
 import { BorrowItemCalendarComponent } from '../../components/borrow-item-calendar/borrow-item-calendar.component';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
-import { UIItem } from '../../models/UIItem';
-import { isLibraryAdmin } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { TuiIcon } from '@taiga-ui/core';
-import { UIBorrowRecord } from '../../portal/community/models/UIBorrowRecord';
-import { UIBorrowDetailedStatus } from '../../portal/community/models/UIBorrowStatus';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 @Component({
   selector: 'borrow-record-timeline',

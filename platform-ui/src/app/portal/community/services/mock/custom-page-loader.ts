@@ -1,4 +1,4 @@
-import { UICustomPage } from '../../models/UICustomPage';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import customPagesData from './custom-pages.json';
 
 export const loadCustomPagesData = (): UICustomPage[] => {

@@ -7,12 +7,12 @@ import {
   Item,
   ItemsCommunityApiService,
 } from '../../../../api-client';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
-import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
-import { UIItem } from '../../models/UIItem';
-import { UIItemsPagination } from '../../models/UIItemsPagination';
-import { UIUser } from '../../models/UIUser';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../../../models/UIBorrowRecordsPagination';
+import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
+import { UIItem } from '../../../../models/UIItem';
+import { UIItemsPagination } from '../../../../models/UIItemsPagination';
+import { UIUser } from '../../../../models/UIUser';
 import { GetItemsParams, ItemsService } from '../items.service';
 @Injectable({
   providedIn: 'root',

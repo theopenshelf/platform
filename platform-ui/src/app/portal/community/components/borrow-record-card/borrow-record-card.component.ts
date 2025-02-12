@@ -8,11 +8,11 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
-import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { getStatusIcon, UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
-import { UIItem } from '../../models/UIItem';
-import { UILibrary } from '../../models/UILibrary';
-import { UIUser } from '../../models/UIUser';
+import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { getStatusIcon, UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
+import { UIItem } from '../../../../models/UIItem';
+import { UILibrary } from '../../../../models/UILibrary';
+import { UIUser } from '../../../../models/UIUser';
 
 @Component({
   selector: 'borrow-record-card',

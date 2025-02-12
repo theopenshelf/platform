@@ -11,10 +11,10 @@ import {
   TuiTextfield,
   TuiTitle,
 } from '@taiga-ui/core';
+import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
+import { UIItem } from '../../../../models/UIItem';
+import { UILibrary } from '../../../../models/UILibrary';
 import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
-import { UIBorrowRecord } from '../../models/UIBorrowRecord';
-import { UIItem } from '../../models/UIItem';
-import { UILibrary } from '../../models/UILibrary';
 import { ItemsService } from '../../services/items.service';
 
 @Component({

@@ -15,7 +15,7 @@ import {
   TuiTextfield,
 } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
-import { UIUser } from '../../../community/models/UIUser';
+import { UIUser } from '../../../../models/UIUser';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { UsersService } from '../../services/users.service';
 @Component({

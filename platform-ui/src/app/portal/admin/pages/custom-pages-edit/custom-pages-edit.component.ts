@@ -16,7 +16,7 @@ import {
   TuiSelectModule,
 } from '@taiga-ui/legacy';
 import { QuillModule } from 'ngx-quill';
-import { UICustomPage } from '../../../community/models/UICustomPage';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { CUSTOM_PAGES_SERVICE_TOKEN } from '../../admin.providers';
 import { CustomPagesService } from '../../services/custom-pages.service';
 @Component({
