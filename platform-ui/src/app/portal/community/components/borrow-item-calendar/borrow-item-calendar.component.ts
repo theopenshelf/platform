@@ -162,7 +162,7 @@ export class BorrowItemCalendarComponent {
       if (day.daySameOrAfter(startDate) && day.daySameOrBefore(endDate)) {
         if (
           this.item().borrowRecords.find(
-            (record) => record.borrowedBy === this.currentUser().email,
+            (record) => record.borrowedBy === this.currentUser().user.id,
           )
         ) {
           return [BOOKED_BY_ME]; // Marked day

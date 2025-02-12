@@ -76,7 +76,7 @@
         <div class="borrow-records-list">
             @for (record of borrowRecordsByStatus[selectedStatus]; track record) {
                 <borrow-record-card
-                [user]="usersByEmail[record.borrowedBy]"
+                [user]="usersById[record.borrowedBy]"
                 [borrowRecord]="record"
             ></borrow-record-card>
             }

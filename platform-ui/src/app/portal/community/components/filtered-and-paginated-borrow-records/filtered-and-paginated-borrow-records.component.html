@@ -15,7 +15,7 @@
             [item]="showItem() ? item.item : undefined"
             [borrowRecord]="item"
             [library]="getLibrary(item.item.libraryId)"
-            [user]="usersByEmail.get(item.borrowedBy)"
+            [user]="usersById.get(item.borrowedBy)"
             [pickUpItemCallback]="pickUpItem"
             [returnItemCallback]="returnItem"
             [cancelReservationCallback]="cancelReservation"

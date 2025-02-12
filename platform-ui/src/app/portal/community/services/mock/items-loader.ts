@@ -89,7 +89,7 @@ function getRandomDate(start: Date, end: Date) {
 function generateRandomRecords(numRecords: number) {
   const records = [];
   for (let i = 0; i < numRecords; i++) {
-    const email = Math.random() > 0.5 ? 'me@example.com' : getRandomEmail();
+    const id = Math.random() > 0.5 ? '11' : (Math.random() % 14) + 1;
     const startDate = getRandomDate(
       new Date('2024-01-01'),
       new Date('2025-12-31'),
@@ -102,7 +102,7 @@ function generateRandomRecords(numRecords: number) {
       .split('T')[0];
     records.push({
       id: (i + 1).toString(),
-      borrowedBy: email,
+      borrowedBy: id,
       startDate: startDate,
       endDate: endDate,
     });

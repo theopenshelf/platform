@@ -54,7 +54,7 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
 
   @ViewChild(FilteredAndPaginatedComponent) filteredAndPaginatedComponent!: FilteredAndPaginatedComponent;
 
-  public usersByEmail: Map<string, UIUser> = new Map();
+  public usersById: Map<string, UIUser> = new Map();
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,
@@ -78,7 +78,7 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
 
     if (!this.getItemsParams().borrowedByCurrentUser) {
       this.usersService.getUsers().subscribe((users) => {
-        this.usersByEmail = new Map(users.map(user => [user.email, user]));
+        this.usersById = new Map(users.map(user => [user.id, user]));
       });
     }
   }

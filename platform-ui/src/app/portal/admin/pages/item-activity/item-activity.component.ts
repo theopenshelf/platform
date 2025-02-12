@@ -81,7 +81,7 @@ export class ItemActivityComponent {
     }, // Light Blue
   ];
   users: UIUser[] = [];
-  usersByEmail: { [email: string]: UIUser } = {};
+  usersById: { [email: string]: UIUser } = {};
 
   favoritesCount: number = 3;
   avgBorrowDuration: string = '3 days';
@@ -115,7 +115,7 @@ export class ItemActivityComponent {
     }
     this.usersService.getUsers().subscribe((users) => {
       this.users = users;
-      this.usersByEmail = this.createUsersByEmailMap(users);
+      this.usersById = this.createUsersByIdMap(users);
     });
   }
 
@@ -153,10 +153,6 @@ export class ItemActivityComponent {
         }
       });
     });
-  }
-
-  getUser(email: string): UIUser {
-    return this.usersByEmail[email];
   }
 
   protected onDayClick(day: TuiDay): void {
@@ -225,9 +221,9 @@ export class ItemActivityComponent {
     this.currentStatus = this.borrowRecordsByStatus[UIBorrowStatus.CurrentlyBorrowed].length > 0 ? 'Currently Borrowed' : 'Available';
   }
 
-  private createUsersByEmailMap(users: UIUser[]): { [email: string]: UIUser } {
+  private createUsersByIdMap(users: UIUser[]): { [email: string]: UIUser } {
     return users.reduce((map, user) => {
-      map[user.email] = user;
+      map[user.id] = user;
       return map;
     }, {} as { [email: string]: UIUser });
   }

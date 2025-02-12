@@ -139,7 +139,7 @@ export class ItemComponent implements OnInit {
     this.item = item;
 
     this.borrowItemRecordsForCurrentUser = item.borrowRecords
-      .filter((record) => record.borrowedBy === this.currentUser.email)
+      .filter((record) => record.borrowedBy === this.currentUser.user.id)
       .sort((a, b) => a.startDate.getTime() - b.startDate.getTime());
 
     this.itemsReserved = this.borrowItemRecordsForCurrentUser.filter(

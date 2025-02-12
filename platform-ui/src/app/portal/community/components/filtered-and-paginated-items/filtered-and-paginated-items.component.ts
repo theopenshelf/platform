@@ -74,7 +74,7 @@ export class FilteredAndPaginatedItemsComponent {
         ?.borrowRecords.filter(
           (record) =>
             record.endDate >= new Date() &&
-            record.borrowedBy === this.currentUser.email,
+            record.borrowedBy === this.currentUser.user.id,
         ) || []
     );
   }

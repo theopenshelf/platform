@@ -44,7 +44,7 @@ export class MockItemsService implements ItemsService {
       );
     }
     if (borrowedByCurrentUser) {
-      borrowedBy = 'me@example.com';
+      borrowedBy = '11';
     }
     if (borrowedBy) {
       filteredItems = filteredItems.filter((item) =>
@@ -143,7 +143,7 @@ export class MockItemsService implements ItemsService {
     this.items.forEach(item => {
       item.borrowRecords.forEach(record => {
         if (borrowedByCurrentUser) {
-          if (record.borrowedBy === 'me@example.com') {
+          if (record.borrowedBy === '11') {
             filteredRecords.push({ ...record, item });
           }
         } else if (borrowedBy && record.borrowedBy === borrowedBy) {
@@ -270,7 +270,7 @@ export class MockItemsService implements ItemsService {
       reservationDate: new Date(),
       pickupDate: undefined,
       effectiveReturnDate: undefined,
-      borrowedBy: borrowBy?.email ?? 'me@example.com',
+      borrowedBy: borrowBy?.id ?? '11',
       status: new Date(startDate).toDateString() === new Date().toDateString()
         ? UIBorrowDetailedStatus.Borrowed_Active
         : UIBorrowDetailedStatus.Reserved_Confirmed,

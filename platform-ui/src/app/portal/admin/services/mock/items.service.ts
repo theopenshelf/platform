@@ -41,7 +41,7 @@ export class MockItemsService implements ItemsService {
     if (borrowedByCurrentUser) {
       filteredItems = filteredItems.filter((item) =>
         item.borrowRecords.some(
-          (record) => record.borrowedBy === 'me@example.com',
+          (record) => record.borrowedBy === '11',
         ),
       );
     }

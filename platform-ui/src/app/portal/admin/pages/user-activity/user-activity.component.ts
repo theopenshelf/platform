@@ -45,7 +45,7 @@ export class UserActivityComponent {
       this.usersService.getUser(this.userId).subscribe((user) => {
         this.user = user;
         this.getItemsParams = {
-          borrowedBy: this.user.email,
+          borrowedBy: this.user.id,
         }
       });
     }
