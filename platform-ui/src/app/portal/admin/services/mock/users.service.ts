@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import users from '../../../community/services/mock/users.json';
-import { UIUser, UsersService } from '../users.service';
+import { UsersService } from '../users.service';
+import { UIUser } from '../../../community/models/UIUser';
 
 @Injectable({
   providedIn: 'root',
@@ -23,11 +24,11 @@ export class MockUsersService implements UsersService {
     const existingUserIndex = users.findIndex((u) => u.id === user.id);
     if (existingUserIndex >= 0) {
       // Update existing user
-      users[existingUserIndex] = user;
+      users[existingUserIndex] = user as any;
     } else {
       // Add new user with incremented ID
       user.id = this.index++ + '';
-      users.push(user);
+      users.push(user as any);
     }
     return of(user);
   }

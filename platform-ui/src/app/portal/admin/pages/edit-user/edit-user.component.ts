@@ -15,9 +15,9 @@ import {
   TuiTextfield,
 } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
+import { UIUser } from '../../../community/models/UIUser';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
-import { UIUser, UsersService } from '../../services/users.service';
-
+import { UsersService } from '../../services/users.service';
 @Component({
   standalone: true,
   selector: 'app-edit-user',
@@ -79,8 +79,6 @@ export class EditUserComponent implements OnInit {
       updatedUser.id = this.user.id;
       this.user.username = updatedUser.username;
       this.user.email = updatedUser.email;
-      this.user.flatNumber = updatedUser.flatNumber;
-      this.user.address = updatedUser.address;
       this.usersService.saveUser(this.user);
       this.alerts
         .open(`Successfully saved ${this.user.username}`, {

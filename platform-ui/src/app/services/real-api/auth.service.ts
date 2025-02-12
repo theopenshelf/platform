@@ -21,6 +21,14 @@ export class APIAuthService implements AuthService {
       id: 'unknown',
       username: 'unknown',
       email: 'unknown',
+      avatarUrl: 'unknown',
+      disabled: false,
+      isEmailVerified: false,
+      firstName: 'unknown',
+      lastName: 'unknown',
+      borrowedItems: 0,
+      returnedLate: 0,
+      successRate: 0,
     },
   };
 
@@ -53,6 +61,14 @@ export class APIAuthService implements AuthService {
               id: user.id,
               username: user.username,
               email: user.email ?? 'unknown',
+              avatarUrl: user.avatarUrl ?? 'unknown',
+              disabled: user.disabled ?? false,
+              isEmailVerified: user.isEmailVerified ?? false,
+              firstName: user.firstName ?? 'unknown',
+              lastName: user.lastName ?? 'unknown',
+              borrowedItems: 0,
+              returnedLate: 0,
+              successRate: 0,
             };
             observer.next(true);
             observer.complete();

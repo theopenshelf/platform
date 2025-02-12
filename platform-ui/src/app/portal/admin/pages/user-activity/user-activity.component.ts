@@ -5,10 +5,12 @@ import { TuiAutoColorPipe, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { communityProviders } from '../../../community/community.provider';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../community/components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { UIUser } from '../../../community/models/UIUser';
 import { GetItemsParams } from '../../../community/services/items.service';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
-import { UIUser, UsersService } from '../../services/users.service';
+import { UsersService } from '../../services/users.service';
+
 @Component({
   selector: 'user-activity',
   imports: [

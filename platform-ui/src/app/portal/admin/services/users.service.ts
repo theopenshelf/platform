@@ -1,16 +1,7 @@
 import { Observable } from 'rxjs';
+import { UIUser } from '../../community/models/UIUser';
 
-export interface UIUser {
-  id: string;
-  username: string;
-  email: string;
-  flatNumber: string;
-  address: string;
-  borrowedItems: number;
-  returnedLate: number;
-  successRate: number;
-  disabled: boolean;
-}
+
 
 export interface UsersService {
   getUsers(): Observable<UIUser[]>;

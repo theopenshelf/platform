@@ -11,10 +11,12 @@ import { BorrowRecordCardComponent } from '../../../community/components/borrow-
 import { UIBorrowRecord } from '../../../community/models/UIBorrowRecord';
 import { UIBorrowRecordStandalone } from '../../../community/models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../../../community/models/UIBorrowStatus';
+import { UIUser } from '../../../community/models/UIUser';
 import { ITEMS_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
 import { ItemsService, UIItemWithStats } from '../../services/items.service';
-import { UIUser, UsersService } from '../../services/users.service';
+import { UsersService } from '../../services/users.service';
+
 const BOOKED: string = 'rgba(0, 0, 2, 0)';
 const AVAILABLE: string = '';
 

@@ -28,13 +28,23 @@ export class APIUsersService implements UsersService {
 
     getUser(userId: string): Observable<UIUser> {
         return this.usersApiService.getCommunityUserById(userId).pipe(
-            map((user: User) => user as UIUser),
+            map((user: User) => ({
+                ...user,
+                borrowedItems: 0,
+                returnedLate: 0,
+                successRate: 0,
+            }) as UIUser),
         );
     }
 
     findUser(query: string, limit?: number): Observable<UIUser[]> {
         return this.usersApiService.getCommunityUsers(query, limit).pipe(
-            map((users: User[]) => users.map((user: User) => user as UIUser)),
+            map((users: User[]) => users.map((user: User) => ({
+                ...user,
+                borrowedItems: 0,
+                returnedLate: 0,
+                successRate: 0,
+            }) as UIUser)),
         );
     }
 }

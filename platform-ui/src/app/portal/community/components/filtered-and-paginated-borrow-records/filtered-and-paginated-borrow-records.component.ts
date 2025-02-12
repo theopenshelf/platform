@@ -5,19 +5,19 @@ import { Observable } from 'rxjs';
 import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
-import { UIUser, UsersService } from '../../../admin/services/users.service';
+import { UsersService } from '../../../admin/services/users.service';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../community.provider';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIBorrowRecordStandalone } from '../../models/UIBorrowRecordsPagination';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
+import { UIUser } from '../../models/UIUser';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 import { BorrowRecordCardComponent } from '../borrow-record-card/borrow-record-card.component';
 import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtered-and-paginated.component';
-
 @Component({
   standalone: true,
   selector: 'filtered-and-paginated-borrow-records',

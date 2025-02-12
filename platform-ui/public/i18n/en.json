@@ -150,6 +150,7 @@
     "chooseDateRange": "Choose a date range",
     "borrowLabel": "Borrow {{itemName}}",
     "confirmBorrowContent": "Are you sure you want to borrow this item from {{startDate}} to {{endDate}}?",
+    "reserveItemContent": "Reserve {{itemName}}",
     "yesBorrow": "Yes, Borrow",
     "cancel": "Cancel",
     "borrowSuccess": "Successfully borrowed {{itemName}} from {{startDate}} to {{endDate}}",

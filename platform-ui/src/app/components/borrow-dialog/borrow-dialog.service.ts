@@ -144,7 +144,7 @@ export class BorrowDialogService {
                 currentUser: user,
                 confirmationEnabled: library.requiresApproval,
                 item: item,
-                description: this.translate.instant('item.confirmBorrowContent', {
+                description: this.translate.instant('item.reserveItemContent', {
                     itemName: item.name,
                 }),
                 cancelButtonLabel: 'borrowDialog.cancel.reserve',

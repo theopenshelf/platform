@@ -1574,7 +1574,13 @@ components:
         id:
           type: string
           format: uuid
+        disabled:
+          type: boolean
+        isEmailVerified:
+          type: boolean
         username:
+          type: string
+        avatarUrl:
           type: string
         firstName:
           type: string
@@ -1856,6 +1862,8 @@ components:
       required:
         - id
         - username
+        - firstName
+        - lastName
         - email
         - flatNumber
         - address
@@ -1863,10 +1871,15 @@ components:
         - returnedLate
         - successRate
         - disabled
+        - isEmailVerified
       properties:
         id:
           type: string
         username:
+          type: string
+        firstName:
+          type: string
+        lastName:
           type: string
         email:
           type: string
@@ -1881,6 +1894,8 @@ components:
         successRate:
           type: number
         disabled:
+          type: boolean
+        isEmailVerified:
           type: boolean
 
     Location:

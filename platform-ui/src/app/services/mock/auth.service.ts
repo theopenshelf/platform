@@ -22,6 +22,14 @@ export class MockAuthService implements AuthService {
       id: '1',
       username: 'demo',
       email: 'me@example.com',
+      firstName: 'demo',
+      lastName: 'demo',
+      avatarUrl: 'https://mdbcdn.b-cdn.net/img/new/avatars/2.webp',
+      disabled: false,
+      isEmailVerified: true,
+      borrowedItems: 0,
+      returnedLate: 0,
+      successRate: 0,
     },
   };
 

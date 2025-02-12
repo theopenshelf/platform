@@ -28,12 +28,14 @@ import {
 } from '@taiga-ui/kit';
 import { TuiInputModule } from '@taiga-ui/legacy';
 import { map } from 'rxjs';
+import { UIUser } from '../../../community/models/UIUser';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,
   TosTableComponent,
 } from '../../components/tos-table/tos-table.component';
-import { UIUser, UsersService } from '../../services/users.service';
+import { UsersService } from '../../services/users.service';
+
 export type User1 = {
   id: string;
   username: string;

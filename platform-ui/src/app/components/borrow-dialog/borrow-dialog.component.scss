@@ -8,6 +8,11 @@
         tuiReveal var(--tui-duration),
         tuiFadeIn var(--tui-duration);
     width: 600px;
+    text-align: left;
+}
+
+.borrow-dialog {
+    text-align: center;
 }
 
 .buttons {
@@ -20,10 +25,15 @@
     }
 }
 
+.timeline {
+    width: 80%;
+    display: block;
+    padding-left: 40%;
+}
+
 .select-user {
     margin-bottom: 1rem;
 }
-
 
 .timeline-item {
     text-align: left;
@@ -31,4 +41,8 @@
 
 .timeline-icon {
     margin-right: 5px;
+}
+
+.avatar {
+    margin-right: 10px;
 }

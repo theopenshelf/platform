@@ -150,6 +150,7 @@
     "chooseDateRange": "Choisir une plage de dates",
     "borrowLabel": "Emprunter {{itemName}}",
     "confirmBorrowContent": "Êtes-vous sûr de vouloir emprunter cet article du {{startDate}} au {{endDate}}?",
+    "reserveItemContent": "Réserver {{itemName}}",
     "yesBorrow": "Oui, Emprunter",
     "cancel": "Annuler",
     "borrowSuccess": "Emprunté avec succès {{itemName}} du {{startDate}} au {{endDate}}",

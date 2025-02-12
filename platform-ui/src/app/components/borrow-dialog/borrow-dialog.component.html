@@ -1,7 +1,8 @@
 <!-- Add id for accessibility purposes -->
-<h2>
-    {{ 'borrowDialog.heading.' + context.type | translate }}
-</h2>
+ <div class="borrow-dialog">
+    <h2>
+        {{ 'borrowDialog.heading.' + context.type | translate }}
+    </h2>
 
 <p>
     {{ context.description }}
@@ -9,7 +10,7 @@
 
 
 @if (context.type !== CallToActionType.Cancel) {
-<timeline [timelineItems]="timelineItems()" [itemSize]="220">
+<timeline class="timeline" [timelineItems]="timelineItems()" [itemSize]="220">
     <ng-template #itemTemplate let-item="item"
     >
       <div class="timeline-item">
@@ -22,9 +23,7 @@
 
 @if (context.isItemAdmin) {
     <div class="select-user">
-        <label>
-            {{ 'borrowDialog.label.borrowBy' | translate }}
-        </label>
+
         <tui-combo-box
             *tuiLet="searchUsers() | async as filtered"
             [formControl]="userSearchControl"
@@ -32,7 +31,7 @@
             [valueContent]="value"
             [(search)]="search"
         >
-        {{ 'borrowDialog.searchUser' | translate }}
+        {{ 'borrowDialog.label.borrowBy' | translate }}
             <input
                 placeholder="Type a name"
                 tuiTextfieldLegacy
@@ -111,3 +110,4 @@
         {{ context.confirmButtonLabel | translate }}
     </button>
 </p>
+</div>
