@@ -36,9 +36,9 @@
               @if (isAdmin) {
               <tui-avatar-stack class="admin-stack" [direction]="'left'">
                 @for (member of library.admins; track member) {
-                <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
-                  [style.background]="usersPerId.get(member.userId)!.username | tuiAutoColor" />
-                }
+                  <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
+                    [style.background]="usersPerId.get(member.userId)!.username | tuiAutoColor" />
+                  }
                 <tui-avatar [round]="true" [size]="'s'">
                   {{ library.admins.length }}+
                 </tui-avatar>

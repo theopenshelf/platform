@@ -32,6 +32,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
+import { UserAvatarComponent } from '../../../../../components/user-avatar/user-avatar.component';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { isLibraryAdmin, UILibrary } from '../../../../../models/UILibrary';
 import { UIUser } from '../../../../../models/UIUser';
@@ -70,7 +71,9 @@ import { UsersService } from '../../../services/users.service';
     FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule,
     JsonPipe,
-    TuiAvatar, TuiAvatarStack
+    TuiAvatar,
+    TuiAvatarStack,
+    UserAvatarComponent,
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',

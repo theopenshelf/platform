@@ -1,12 +1,7 @@
 <div class="settings-container">
   <div class="settings-header">
-    <tui-avatar
-      [src]="userInfo.user.username | tuiInitials"
-      [style.background]="
-        userInfo.user.username | tuiAutoColor
-      "
-      size="l"
-    ></tui-avatar>
+
+    <user-avatar [size]="'l'" [user]="userInfo.user"></user-avatar>
 
     <div class="user-info">
       <span class="name">{{ userInfo.firstName }} {{ userInfo.lastName }}</span>

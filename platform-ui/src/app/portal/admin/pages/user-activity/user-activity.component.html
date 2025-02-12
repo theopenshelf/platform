@@ -3,8 +3,7 @@
         <ul>
             <li class="username">
                 <h2>
-                    <tui-avatar [src]="user.username | tuiInitials" [style.background]="user.username | tuiAutoColor"
-                        size="s"></tui-avatar>
+                    <user-avatar [user]="user"></user-avatar>
                     {{ user.username }}
                 </h2>
             </li>

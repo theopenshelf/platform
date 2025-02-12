@@ -48,8 +48,8 @@
                 {{ item()!.name }}
               </h2>
               <h3>
-                <tui-avatar [src]="user()!.username | tuiInitials" [style.background]="user()!.username | tuiAutoColor"
-                  size="s"></tui-avatar>
+                <user-avatar [user]="user()!"></user-avatar>
+ee
                 {{ user()!.username }}
               </h3>
             </div>
@@ -57,8 +57,7 @@
           @else if (user()) {
           <div class="record-title">
             <h2>
-              <tui-avatar [src]="user()!.username | tuiInitials" [style.background]="user()!.username | tuiAutoColor"
-                size="s"></tui-avatar>
+              <user-avatar [user]="user()!"></user-avatar>
               {{ user()!.username }}
             </h2>
           </div>

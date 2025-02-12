@@ -11,6 +11,7 @@ import {
 } from '@taiga-ui/core';
 import { TuiAvatar } from '@taiga-ui/kit';
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
+import { UserAvatarComponent } from '../../../../../components/user-avatar/user-avatar.component';
 import {
   AUTH_SERVICE_TOKEN,
   globalProviders,
@@ -30,6 +31,7 @@ import { AuthService, UserInfo } from '../../../../../services/auth.service';
     RouterLink,
     TuiDataList,
     TuiDropdown,
+    UserAvatarComponent,
   ],
   providers: [
     ...globalProviders,

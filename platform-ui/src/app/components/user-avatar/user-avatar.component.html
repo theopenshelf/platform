@@ -1,0 +1,13 @@
+@if (user().avatarUrl) {
+<tui-avatar  [round]="true" class="tui-space_horizontal-4" [size]="size()">
+    <picture>
+        <source media="(min-width: 600px)" [srcset]="user().avatarUrl" />
+        <img alt="Alex Inkin" [src]="user().avatarUrl" />
+    </picture>
+</tui-avatar>
+} @else {
+<tui-avatar  [round]="true" class="user-avatar"  [src]="user().username | tuiInitials" [style.background]="
+        user().username | tuiAutoColor
+      " [size]="size()">
+</tui-avatar>
+}

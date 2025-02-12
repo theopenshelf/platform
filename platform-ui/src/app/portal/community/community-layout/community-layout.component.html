@@ -37,21 +37,39 @@
     <app-notifications-popup></app-notifications-popup>
 
 
-    <tui-avatar 
-      class="user-avatar"      
-      tuiChevron
-      tuiDropdownOpen
-      [tuiDropdown]="settings" 
-      [src]="user.username | tuiInitials"
-      [style.background]="
-        user.username | tuiAutoColor
-      "
-      size="s">
+    @if (user.user.avatarUrl) {
+      <tui-avatar
+        tuiChevron
+        tuiDropdownOpen
+        [tuiDropdown]="settings" 
+         class="tui-space_horizontal-4">
+        <picture>
+            <source
+                media="(min-width: 600px)"
+                [srcset]="user.user.avatarUrl"
+            />
+            <img
+                alt="Alex Inkin"
+                [src]="user.user.avatarUrl"
+            />
+        </picture>
     </tui-avatar>
+    } @else {
+    <tui-avatar 
+        class="user-avatar"      
+        tuiChevron
+        tuiDropdownOpen
+        [tuiDropdown]="settings" 
+        [src]="user.username | tuiInitials"
+        [style.background]="
+          user.username | tuiAutoColor
+        "
+        size="s">
+      </tui-avatar>
+    }
 
-
-      <ng-template #settings>
-        <tui-data-list size="s">
+    <ng-template #settings>
+      <tui-data-list size="s">
           <button
             routerLink="/community/settings/profile"
             class="dropdown"
