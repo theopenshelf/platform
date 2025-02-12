@@ -85,6 +85,13 @@
       <tui-icon icon="/borrow.png" />
       {{ 'library.borrow-records' | translate }}
     </a>
+
+    @if (library.requiresApproval) {
+    <a class="library-section library-action" routerLink="/community/libraries/{{ library.id }}/approval"
+      routerLinkActive="active" (click)="onTabChange('approval')">
+      {{ 'library.approval' | translate }}
+    </a>
+    }
   </nav>
 
 
@@ -105,8 +112,14 @@
 
     @if (tabOpened === 'borrow-records') {
 
-    <filtered-and-paginated-borrow-records [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
+    <filtered-and-paginated-borrow-records [library]="library"  [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
     </filtered-and-paginated-borrow-records>
+    }
+
+    @if (tabOpened === 'approval') {
+
+      <filtered-and-paginated-borrow-records [approvalTab]="true" [library]="library"  [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
+      </filtered-and-paginated-borrow-records>
     }
   }
   }

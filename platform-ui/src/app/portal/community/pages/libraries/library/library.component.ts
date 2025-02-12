@@ -82,7 +82,7 @@ export class LibraryComponent {
   public getItemsParams: GetItemsParams | undefined;
 
   library: UILibrary | undefined;
-  tabOpened: 'items' | 'borrow-records' = 'items';
+  tabOpened: 'items' | 'borrow-records' | 'approval' = 'items';
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
   isAdmin: boolean = false;
@@ -122,6 +122,8 @@ export class LibraryComponent {
       const path = urlSegments.map(segment => segment.path).join('/');
       if (path.includes('borrow-records')) {
         this.tabOpened = 'borrow-records';
+      } else if (path.includes('approval')) {
+        this.tabOpened = 'approval';
       } else {
         this.tabOpened = 'items';
       }
@@ -158,7 +160,7 @@ export class LibraryComponent {
       .subscribe();
   }
 
-  onTabChange(tab: 'items' | 'borrow-records'): void {
+  onTabChange(tab: 'items' | 'borrow-records' | 'approval'): void {
     this.tabOpened = tab;
     var queryParams: any = {};
 
@@ -167,11 +169,14 @@ export class LibraryComponent {
     if (tab === 'borrow-records') {
       path += '/borrow-records';
       queryParams['selectedStatus'] = 'borrowed-active';
+    } else if (tab === 'approval') {
+      path += '/approval';
+      queryParams['selectedStatus'] = 'reserved-unconfirmed';
     } else {
       path += '/items';
       queryParams['selectedStatus'] = undefined;
-
     }
+
     this.router.navigate([path], {
       queryParams: queryParams,
       queryParamsHandling: 'merge'

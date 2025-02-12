@@ -51,7 +51,9 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
   public categoriesFilteringOpened = input<boolean>(true);
   public enableSearchBar = input<boolean>(false);
   public sortingOptions = input<string[]>(FilteredAndPaginatedBorrowRecordsComponent.defaultSortingOptions);
-
+  public library = input<UILibrary>();
+  public approvalTab = input<boolean>(false);
+  
   @ViewChild(FilteredAndPaginatedComponent) filteredAndPaginatedComponent!: FilteredAndPaginatedComponent;
 
   public usersById: Map<string, UIUser> = new Map();

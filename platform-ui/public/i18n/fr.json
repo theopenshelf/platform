@@ -406,11 +406,16 @@
     "filter": "Filtrer",
     "categories": "Catégories",
     "borrowed": "Emprunté",
-    "reserved": "Réservé",
+    "reserved": "Reservations",
     "returned": "Rendu",
     "pickup": "À Récupérer",
     "borrowed-active": "Emprunté",
-    "due-to-return": "À Rendre"
+    "due-to-return": "À Rendre",
+    "reserved-unconfirmed": "Réservations à confirmer",
+    "borrowed-return-unconfirmed": "Rendu à confirmer",
+    "reserved-pickup-unconfirmed": "Récupération à confirmer",
+    "reserved-ready-to-pickup": "À Récupérer",
+    "approval": "Confirmations requises"
   },
   "library": {
     "addItem": "Ajouter un article",
@@ -427,7 +432,8 @@
     "requiresApproval": "Confirmation requise",
     "doesNotRequireApproval": "Libre accès",
     "freeAccess": "Public",
-    "privateAccess": "Privé"
+    "privateAccess": "Privé",
+    "approval": "Confirmations requises"
   },
   "borrowDialog": {
     "label": {

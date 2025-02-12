@@ -36,6 +36,11 @@ export enum StatusTab {
   Reserved_ReadyToPickup = 'pickup',
   Borrowed_Active = 'borrowed-active',
   Borrowed_DueToReturn = 'due-to-return',
+
+  Reserved_Unconfirmed = 'reserved-unconfirmed',
+  Borrowed_Return_Unconfirmed = 'borrowed-return-unconfirmed',
+  Reserved_Pickup_Unconfirmed = 'reserved-pickup-unconfirmed',
+
   Returned = 'returned'
 }
 
@@ -101,6 +106,8 @@ export class FilteredAndPaginatedComponent implements OnInit {
   public enableSearchBar = input<boolean>(false);
   public sortingOptions = input<string[]>(FilteredAndPaginatedComponent.defaultSortingOptions);
   public getItems = input.required<(getItemsParams: GetItemsParams) => Observable<UIPagination<any>>>();
+  public library = input<UILibrary>();
+  public approvalTab = input<boolean>(false);
 
   @ContentChild('sidebarTemplate', { read: TemplateRef })
   sidebarTemplate!: TemplateRef<any>;
@@ -182,6 +189,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
   // UI properties
   protected sortingSelected = new FormControl<string | null>(null);
   isMobile: boolean = false;
+  requiresApproval: boolean = false;
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,
@@ -220,6 +228,29 @@ export class FilteredAndPaginatedComponent implements OnInit {
         this.sortingSelected.setValue(params['sortingOption']);
       }
 
+
+      if (this.approvalTab()) {
+        this.statuses = [
+          {
+            status: StatusTab.Reserved_Unconfirmed,
+            name: 'Reserved (unconfirmed)',
+            color: '#3498db',
+            icon: '@tui.calendar-clock',
+          },
+          {
+            status: StatusTab.Reserved_Pickup_Unconfirmed,
+            name: 'Pickup (unconfirmed)',
+            color: '#3498db',
+            icon: '@tui.calendar-clock',
+          },
+          {
+            status: StatusTab.Borrowed_Return_Unconfirmed,
+            name: 'Returned (unconfirmed)',
+            color: '#2ecc71',
+            icon: '@tui.archive',
+          }// Green
+        ];
+      }
       this.fetchItems();
     });
 
@@ -367,25 +398,42 @@ export class FilteredAndPaginatedComponent implements OnInit {
   protected fetchItems(): void {
 
     let statuses: UIBorrowDetailedStatus[] = [];
-    switch (this.selectedStatus) {
-      case StatusTab.Returned:
-        statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed, UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
-        break;
-      case StatusTab.Borrowed_Active:
-        statuses = [UIBorrowDetailedStatus.Borrowed_Active];
-        break;
-      case StatusTab.Borrowed_DueToReturn:
-        statuses = [UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
-        break;
-      case StatusTab.Reserved_ReadyToPickup:
-        statuses = [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
-        break;
-      case StatusTab.Reserved:
-        statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_Unconfirmed];
-        break;
-      default:
-        statuses = []
-        break;
+    if (this.approvalTab()) {
+      switch (this.selectedStatus) {
+        case StatusTab.Reserved_Unconfirmed:
+          statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed];
+          break;
+        case StatusTab.Reserved_Pickup_Unconfirmed:
+          statuses = [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed];
+          break;
+        case StatusTab.Reserved_Unconfirmed:
+          statuses = [UIBorrowDetailedStatus.Reserved_Unconfirmed];
+          break;
+        default:
+          statuses = []
+          break;
+      }
+    } else {
+      switch (this.selectedStatus) {
+        case StatusTab.Returned:
+          statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed, UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
+          break;
+        case StatusTab.Borrowed_Active:
+          statuses = [UIBorrowDetailedStatus.Borrowed_Active];
+          break;
+        case StatusTab.Borrowed_DueToReturn:
+          statuses = [UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
+          break;
+        case StatusTab.Reserved_ReadyToPickup:
+          statuses = [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
+          break;
+        case StatusTab.Reserved:
+          statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_Unconfirmed];
+          break;
+        default:
+          statuses = []
+          break;
+      }
     }
 
     this.getItems()!(

@@ -82,6 +82,7 @@
       "returned-early": "Returned Early",
       "returned": "Returned",
       "returned-late": "Returned Late"
+    }
   },
   "search": {
     "placeholder": "What object are you looking for?"
@@ -347,7 +348,8 @@
     "requiresApproval": "Requires approval",
     "doesNotRequireApproval": "Does not require approval",
     "freeAccess": "Free access",
-    "privateAccess": "Private access"
+    "privateAccess": "Private access",
+    "approval": "Approvals required"
   },
   "items": {
     "addItem": "Add Item",
@@ -413,7 +415,12 @@
     "returned": "Returned",
     "pickup": "Ready to Pickup",
     "borrowed-active": "Borrowed",
-    "due-to-return": "Due to Return"
+    "due-to-return": "Due to Return",
+    "reserved-unconfirmed": "Reservations unconfirmed",
+    "borrowed-return-unconfirmed": "Return unconfirmed",
+    "reserved-pickup-unconfirmed": "Pickup unconfirmed",
+    "reserved-ready-to-pickup": "Ready to Pickup",
+    "approval": "Approvals required"
   },
   "borrowDialog": {
     "label": {
