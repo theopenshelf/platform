@@ -465,13 +465,13 @@ export class FilteredAndPaginatedComponent implements OnInit {
           statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed, UIBorrowDetailedStatus.Returned_OnTime, UIBorrowDetailedStatus.Returned_Early, UIBorrowDetailedStatus.Returned_Late];
           break;
         case StatusTab.Borrowed_Active:
-          statuses = [UIBorrowDetailedStatus.Borrowed_Active];
+          statuses = [UIBorrowDetailedStatus.Borrowed_Active, UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed];
           break;
         case StatusTab.Borrowed_DueToReturn:
           statuses = [UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late];
           break;
         case StatusTab.Reserved_ReadyToPickup:
-          statuses = [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed, UIBorrowDetailedStatus.Reserved_ReadyToPickup];
+          statuses = [UIBorrowDetailedStatus.Reserved_ReadyToPickup];
           break;
         case StatusTab.Reserved:
           statuses = [UIBorrowDetailedStatus.Reserved_Confirmed, UIBorrowDetailedStatus.Reserved_Unconfirmed];
