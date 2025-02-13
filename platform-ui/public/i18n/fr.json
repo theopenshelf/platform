@@ -76,18 +76,18 @@
     "confirmReturn": "Confirmer",
     "confirmPickup": "Confirmer",
     "status": {
-      "reserved-impossible": "Réservé Impossible",
-      "reserved-unconfirmed": "Réservé Non Confirmé",
-      "reserved-confirmed": "Réservé Confirmé",
-      "reserved-ready-to-pickup": "Réservé Prêt à Récupérer",
-      "reserved-pickup-unconfirmed": "Réservé Récupération Non Confirmée",
-      "borrowed-active": "Emprunté Actif",
-      "borrowed-due-today": "Emprunté À Rendre Aujourd'hui",
-      "borrowed-late": "Emprunté En Retard",
-      "borrowed-return-unconfirmed": "Emprunté Retour Non Confirmé",
-      "returned-early": "Retourné En Avance",
+      "reserved-impossible": "Réservé impossible",
+      "reserved-unconfirmed": "Réservé non confirmé",
+      "reserved-confirmed": "Réservé confirmé",
+      "reserved-ready-to-pickup": "Prêt à récupérer",
+      "reserved-pickup-unconfirmed": "Récupération non confirmée",
+      "borrowed-active": "Emprunté",
+      "borrowed-due-today": "À rendre aujourd'hui",
+      "borrowed-late": "En retard",
+      "borrowed-return-unconfirmed": "Retour non confirmé",
+      "returned-early": "Retourné en avance",
       "returned": "Retourné",
-      "returned-late": "Retourné En Retard"
+      "returned-late": "Retourné en retard"
     }
   },
   "search": {
