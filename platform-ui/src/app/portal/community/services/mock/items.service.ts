@@ -6,7 +6,7 @@ import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../../../models/UIBor
 import { UIItem } from '../../../../models/UIItem';
 import { UIItemsPagination } from '../../../../models/UIItemsPagination';
 import { UIUser } from '../../../../models/UIUser';
-import { GetItemsParams, ItemsService } from '../items.service';
+import { GetBorrowRecordsCountByStatusParams, GetItemsParams, ItemsService } from '../items.service';
 import { loadItems } from './items-loader';
 @Injectable({
   providedIn: 'root',
@@ -246,6 +246,17 @@ export class MockItemsService implements ItemsService {
     });
   }
 
+  getBorrowRecordsCountByStatus(params: GetBorrowRecordsCountByStatusParams): Observable<Map<UIBorrowDetailedStatus, number>> {
+
+    const countMap = new Map<UIBorrowDetailedStatus, number>();
+    for (const status of params.statuses!) {
+      this.getBorrowRecords({ ...params, statuses: [status] }).subscribe(records => {
+        countMap.set(status, records.totalItems);
+      });
+    }
+    return of(countMap);
+  }
+
   getItem(id: string): Observable<UIItem> {
     return of(this.items.find((i) => i.id === id) as UIItem);
   }
@@ -271,6 +282,7 @@ export class MockItemsService implements ItemsService {
       pickupDate: undefined,
       effectiveReturnDate: undefined,
       borrowedBy: borrowBy?.id ?? '11',
+
       status: new Date(startDate).toDateString() === new Date().toDateString()
         ? UIBorrowDetailedStatus.Borrowed_Active
         : UIBorrowDetailedStatus.Reserved_Confirmed,
@@ -305,7 +317,92 @@ export class MockItemsService implements ItemsService {
     if (recordToUpdate) {
       recordToUpdate.effectiveReturnDate = borrowRecord.effectiveReturnDate;
     }
+    if (borrowRecord.effectiveReturnDate < borrowRecord.endDate) {
+      borrowRecord.status = UIBorrowDetailedStatus.Returned_Early;
+    } else if (borrowRecord.effectiveReturnDate > borrowRecord.endDate) {
+      borrowRecord.status = UIBorrowDetailedStatus.Returned_Late;
+    } else {
+      borrowRecord.status = UIBorrowDetailedStatus.Returned_OnTime;
+    }
 
+    item.borrowRecords = item.borrowRecords.map(record => {
+      if (record.id === borrowRecord.id) {
+        return borrowRecord;
+      }
+      return record;
+    });
+
+    return of(item);
+  }
+
+
+  approvalReservation(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+
+    if (decision === 'approve') {
+      borrowRecord.status = UIBorrowDetailedStatus.Reserved_Confirmed;
+    } else {
+      return this.cancelReservation(item, borrowRecord);
+    }
+
+    item.borrowRecords = item.borrowRecords.map(record => {
+      if (record.id === borrowRecord.id) {
+        return borrowRecord;
+      }
+      return record;
+    });
+
+    return of(item);
+  }
+
+  approvalPickup(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+
+    if (decision === 'approve') {
+      borrowRecord.status = UIBorrowDetailedStatus.Borrowed_Active;
+    } else {
+      borrowRecord.status = UIBorrowDetailedStatus.Reserved_Unconfirmed;
+    }
+
+    item.borrowRecords = item.borrowRecords.map(record => {
+      if (record.id === borrowRecord.id) {
+        return borrowRecord;
+      }
+      return record;
+    });
+    return of(item);
+  }
+
+  approvalReturn(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+
+    if (decision === 'approve') {
+      if (borrowRecord.effectiveReturnDate && borrowRecord.effectiveReturnDate < borrowRecord.endDate) {
+        borrowRecord.status = UIBorrowDetailedStatus.Returned_Early;
+      } else if (borrowRecord.effectiveReturnDate && borrowRecord.effectiveReturnDate > borrowRecord.endDate) {
+        borrowRecord.status = UIBorrowDetailedStatus.Returned_Late;
+      } else {
+        borrowRecord.status = UIBorrowDetailedStatus.Returned_OnTime;
+      }
+    } else {
+      borrowRecord.status = UIBorrowDetailedStatus.Borrowed_Late;
+    }
+
+    item.borrowRecords = item.borrowRecords.map(record => {
+      if (record.id === borrowRecord.id) {
+        return borrowRecord;
+      }
+      return record;
+    });
     return of(item);
   }
 
@@ -321,8 +418,21 @@ export class MockItemsService implements ItemsService {
       recordToUpdate.pickupDate = borrowRecord.pickupDate;
     }
 
+    if (borrowRecord.pickupDate < borrowRecord.startDate) {
+      borrowRecord.status = UIBorrowDetailedStatus.Borrowed_Late;
+    } else {
+      borrowRecord.status = UIBorrowDetailedStatus.Borrowed_Active;
+    }
+
+    item.borrowRecords = item.borrowRecords.map(record => {
+      if (record.id === borrowRecord.id) {
+        return borrowRecord;
+      }
+      return record;
+    });
     return of(item);
   }
+
   markAsFavorite(item: UIItem): Observable<void> {
     item.favorite = !item.favorite;
     return of(undefined);

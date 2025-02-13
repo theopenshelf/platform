@@ -263,5 +263,96 @@ export class BorrowDialogService {
         return EMPTY;
     }
 
+    public approveReservation(
+        borrowRecord: UIBorrowRecord,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
+        const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+        return this.popoverService
+            .open<any>(null, {
+                type: CallToActionType.ReserveConfirm,
+                item: item,
+                confirmationEnabled: library.requiresApproval,
+                description: this.translate.instant('item.reserveContentApproval', { itemName: item.name, endDate }),
+                cancelButtonLabel: 'borrowDialog.deny.reserve',
+                confirmButtonLabel: 'borrowDialog.approve.reserve',
+            })
+            .pipe(
+                switchMap((response) => {
+                    const decision = response.action === 'confirm' ? 'approve' : 'reject';
+                    return itemsService.approvalReservation(decision, item, borrowRecord).pipe(
+                        tap((returnedItem) => {
+                            this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
+                            this.alerts.open(this.translate.instant('item.reserveApprovalSuccess'), {
+                                appearance: 'success',
+                            }).subscribe();
+                        })
+                    );
+                }),
+            );
+    }
 
+    public approvePickup(
+        borrowRecord: UIBorrowRecord,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
+        const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+        return this.popoverService
+            .open<any>(null, {
+                type: CallToActionType.PickupConfirm,
+                item: item,
+                confirmationEnabled: library.requiresApproval,
+                description: this.translate.instant('item.pickupContentApproval', { itemName: item.name, endDate }),
+                cancelButtonLabel: 'borrowDialog.deny.pickup',
+                confirmButtonLabel: 'borrowDialog.approve.pickup',
+            })
+            .pipe(
+                switchMap((response) => {
+                    const decision = response.action === 'confirm' ? 'approve' : 'reject';
+                    return itemsService.approvalPickup(decision, item, borrowRecord).pipe(
+                        tap((returnedItem) => {
+                            this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
+                            this.alerts.open(this.translate.instant('item.pickupApprovalSuccess'), {
+                                appearance: 'success',
+                            }).subscribe();
+                        })
+                    );
+                }),
+            );
+    }
+
+    public approveReturn(
+        borrowRecord: UIBorrowRecord,
+        item: UIItem,
+        itemsService: ItemsService,
+        library: UILibrary
+    ) {
+        const endDate = borrowRecord.endDate.toLocaleDateString(this.translate.currentLang, { day: 'numeric', month: 'short', year: 'numeric' });
+        return this.popoverService
+            .open<any>(null, {
+                type: CallToActionType.ReturnConfirm,
+                item: item,
+                confirmationEnabled: library.requiresApproval,
+                description: this.translate.instant('item.returnContentApproval', { itemName: item.name, endDate }),
+                cancelButtonLabel: 'borrowDialog.deny.return',
+                confirmButtonLabel: 'borrowDialog.approve.return',
+            })
+            .pipe(
+                switchMap((response) => {
+                    const decision = response.action === 'confirm' ? 'approve' : 'reject';
+                    return itemsService.approvalReturn(decision, item, borrowRecord).pipe(
+                        tap((returnedItem) => {
+                            this.eventService.publishEvent(TosEventType.BorrowRecordsChanged);
+                            this.alerts.open(this.translate.instant('item.returnApprovalSuccess'), {
+                                appearance: 'success',
+                            }).subscribe();
+                        })
+                    );
+                }),
+            );
+    }
 }

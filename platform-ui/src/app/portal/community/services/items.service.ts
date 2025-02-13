@@ -25,10 +25,20 @@ export interface GetItemsParams {
   favorite?: boolean;
 }
 
+export interface GetBorrowRecordsCountByStatusParams {
+  itemId?: string;
+  currentUser?: boolean;
+  borrowedByCurrentUser?: boolean;
+  borrowedBy?: string;
+  statuses?: UIBorrowDetailedStatus[];
+  libraryIds?: string[];
+}
+
 
 export interface ItemsService {
   getItems(params: GetItemsParams): Observable<UIItemsPagination>;
   getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination>;
+  getBorrowRecordsCountByStatus(params: GetBorrowRecordsCountByStatusParams): Observable<Map<UIBorrowDetailedStatus, number>>;
   getItem(id: string): Observable<UIItem>;
   addItem(item: UIItem): Observable<UIItem>;
   borrowItem(
@@ -42,6 +52,24 @@ export interface ItemsService {
     item: UIItem,
     borrowRecord: UIBorrowRecord,
   ): Observable<UIItem>;
+
+
+  approvalReservation(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem>;
+  approvalPickup(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem>;
+  approvalReturn(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem>;
+
 
   cancelReservation(
     item: UIItem,

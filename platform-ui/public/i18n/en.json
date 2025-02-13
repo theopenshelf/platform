@@ -14,10 +14,13 @@
   },
   "timeline": {
     "reservation": "Reservation",
+    "reservation-unconfirmed": "Waiting reservation confirmation",
     "start": "Start",
     "pickup": "Pickup",
+    "pickup-unconfirmed": "Waiting pickup confirmation",
     "end": "End",
-    "return": "Return"
+    "return": "Return",
+    "return-unconfirmed": "Waiting return confirmation"
   },
   "footer": {
     "brandingAlt": "The Open Shelf",
@@ -69,6 +72,9 @@
     "pickUp": "Pick up",
     "return": "Return",
     "cancelReservation": "Cancel",
+    "confirmReservation": "Confirm",
+    "confirmReturn": "Confirm",
+    "confirmPickup": "Confirm",
     "status": {
       "reserved-impossible": "Reserved Impossible",
       "reserved-unconfirmed": "Reserved Unconfirmed",
@@ -201,7 +207,13 @@
       "borrowCount": "Borrow Count",
       "lateReturnPercentage": "Late Return %",
       "averageDuration": "Avg Duration"
-    }
+    },
+    "reserveContentApproval": "Approve reservation for {{itemName}} until {{endDate}}?",
+    "pickupContentApproval": "Approve pickup for {{itemName}} until {{endDate}}?",
+    "returnContentApproval": "Approve return for {{itemName}} until {{endDate}}?",
+    "reserveApprovalSuccess": "Reservation approved successfully",
+    "pickupApprovalSuccess": "Pickup approved successfully",
+    "returnApprovalSuccess": "Return approved successfully"
   },
   "profile": {
     "editTitle": "Edit your profile",
@@ -466,6 +478,16 @@
       "pickup": "Confirm the pickup",
       "return": "Confirm the return",
       "cancel": "Yes, cancel the reservation"
+    },
+    "deny": {
+      "reserve": "Deny Reservation",
+      "pickup": "Deny Pickup",
+      "return": "Deny Return"
+    },
+    "approve": {
+      "reserve": "Approve Reservation",
+      "pickup": "Approve Pickup",
+      "return": "Approve Return"
     }
   }
 }

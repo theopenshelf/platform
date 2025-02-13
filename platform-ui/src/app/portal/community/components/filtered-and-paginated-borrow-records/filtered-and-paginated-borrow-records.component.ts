@@ -6,6 +6,7 @@ import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
 import { UIBorrowRecordStandalone } from '../../../../models/UIBorrowRecordsPagination';
+import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
 import { UIItem } from '../../../../models/UIItem';
 import { UILibrary } from '../../../../models/UILibrary';
 import { UIPagination } from '../../../../models/UIPagination';
@@ -53,7 +54,7 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
   public sortingOptions = input<string[]>(FilteredAndPaginatedBorrowRecordsComponent.defaultSortingOptions);
   public library = input<UILibrary>();
   public approvalTab = input<boolean>(false);
-  
+
   @ViewChild(FilteredAndPaginatedComponent) filteredAndPaginatedComponent!: FilteredAndPaginatedComponent;
 
   public usersById: Map<string, UIUser> = new Map();
@@ -95,6 +96,37 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
     return this.itemsService.getBorrowRecords(getItemsParams);
   }
 
+  public fetchItemsCountByStatus = (getItemsParams: GetItemsParams): Observable<Map<UIBorrowDetailedStatus, number>> => {
+
+    if (this.approvalTab()) {
+      return this.itemsService.getBorrowRecordsCountByStatus({
+        ...getItemsParams,
+        statuses: [
+          UIBorrowDetailedStatus.Reserved_Unconfirmed,
+          UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed,
+          UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed,
+        ],
+      });
+    } else {
+      return this.itemsService.getBorrowRecordsCountByStatus({
+        ...getItemsParams,
+        statuses: [
+          UIBorrowDetailedStatus.Reserved_Confirmed,
+          UIBorrowDetailedStatus.Reserved_Unconfirmed,
+          UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed,
+          UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed,
+          UIBorrowDetailedStatus.Reserved_ReadyToPickup,
+          UIBorrowDetailedStatus.Borrowed_Active,
+          UIBorrowDetailedStatus.Borrowed_DueToday,
+          UIBorrowDetailedStatus.Returned_OnTime,
+          UIBorrowDetailedStatus.Returned_Early,
+          UIBorrowDetailedStatus.Returned_Late,
+          UIBorrowDetailedStatus.Borrowed_Late,
+        ],
+      });
+    }
+  }
+
 
   public pickUpItem = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.pickUpItem(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
@@ -110,6 +142,24 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
 
   public cancelReservation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.cancelReservation(borrowRecord, item, this.itemsService).subscribe(i => {
+      this.filteredAndPaginatedComponent.resetItems();
+    });
+  }
+
+  public reserveConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
+    this.borrowDialogService.approveReservation(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
+      this.filteredAndPaginatedComponent.resetItems();
+    });
+  }
+
+  public pickupConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
+    this.borrowDialogService.approvePickup(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
+      this.filteredAndPaginatedComponent.resetItems();
+    });
+  }
+
+  public returnConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
+    this.borrowDialogService.approveReturn(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
     });
   }

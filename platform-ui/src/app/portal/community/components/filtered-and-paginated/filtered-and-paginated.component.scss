@@ -168,6 +168,10 @@
 .grid-container {
     width: 100%;
 
+    .status-count {
+        margin-left: 10px;
+    }
+
     .items-container {
         flex: 1;
         display: grid;

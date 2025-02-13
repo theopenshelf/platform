@@ -6,6 +6,7 @@
     [categoriesFilteringOpened]="categoriesFilteringOpened()"
     [sortingOptions]="sortingOptions()"
     [getItems]="fetchItems"
+    [getItemsCountByStatus]="fetchItemsCountByStatus"
     [library]="library()"
     [approvalTab]="approvalTab()"
 >
@@ -21,6 +22,9 @@
             [pickUpItemCallback]="pickUpItem"
             [returnItemCallback]="returnItem"
             [cancelReservationCallback]="cancelReservation"
+            [reserveConfirmationCallback]="reserveConfirmation"
+            [pickupConfirmationCallback]="pickupConfirmation"
+            [returnConfirmationCallback]="returnConfirmation"
         ></borrow-record-card>
     </ng-template>
 </filtered-and-paginated>

@@ -46,7 +46,9 @@ export class BorrowRecordCardComponent {
   public pickUpItemCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
   public returnItemCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
   public cancelReservationCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
-
+  public reserveConfirmationCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
+  public pickupConfirmationCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
+  public returnConfirmationCallback = input<(item: UIItem, borrowRecord: UIBorrowRecord) => void>();
   protected UIBorrowDetailedStatus = UIBorrowDetailedStatus;
 
   constructor(
@@ -84,6 +86,24 @@ export class BorrowRecordCardComponent {
   public returnItem() {
     if (this.returnItemCallback()) {
       this.returnItemCallback()!(this.currentItem()!, this.currentBorrowRecord()!);
+    }
+  }
+
+  public reserveConfirmation() {
+    if (this.reserveConfirmationCallback()) {
+      this.reserveConfirmationCallback()!(this.currentItem()!, this.currentBorrowRecord()!);
+    }
+  }
+
+  public pickupConfirmation() {
+    if (this.pickupConfirmationCallback()) {
+      this.pickupConfirmationCallback()!(this.currentItem()!, this.currentBorrowRecord()!);
+    }
+  }
+
+  public returnConfirmation() {
+    if (this.returnConfirmationCallback()) {
+      this.returnConfirmationCallback()!(this.currentItem()!, this.currentBorrowRecord()!);
     }
   }
 

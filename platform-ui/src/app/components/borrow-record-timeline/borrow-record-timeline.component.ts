@@ -34,394 +34,148 @@ export class BorrowRecordTimelineComponent {
       if (this.borrowRecord().pickupDate! < this.borrowRecord().startDate!) {
         pickupMoment = 'early';
         timelineStartAndPickup = [
-          {
-            label: this.borrowRecord().pickupDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'accent',
-            lastItem: false,
-            items: [
-              {
-                icon: '/borrow.png',
-                label: this.translate.instant('timeline.pickup'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'accent',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-clock',
-                label: this.translate.instant('timeline.start'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().pickupDate!, 'left', 'accent', 'accent', false, '/borrow.png', 'timeline.pickup'),
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'accent', 'accent', false, '@tui.calendar-clock', 'timeline.start')
+        ];
       } else if (this.borrowRecord().pickupDate! > this.borrowRecord().startDate) {
         pickupMoment = 'late';
         timelineStartAndPickup = [
-          {
-            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-clock',
-                label: this.translate.instant('timeline.start'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().pickupDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'accent',
-            lastItem: false,
-            items: [
-              {
-                icon: '/borrow.png',
-                label: this.translate.instant('timeline.pickup'),
-              }
-            ]
-          },
-        ]
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'primary', 'primary', false, '@tui.calendar-clock', 'timeline.start'),
+          this.createTimelineItem(this.borrowRecord().pickupDate!, 'left', 'accent', 'accent', false, '/borrow.png', 'timeline.pickup')
+        ];
       } else {
         pickupMoment = 'on-time';
         timelineStartAndPickup = [
-          {
-            label: this.borrowRecord().pickupDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'accent',
-            lastItem: false,
-            items: [
-              {
-                icon: '/borrow.png',
-                label: this.translate.instant('timeline.pickup'),
-              }
-            ]
-          },
-        ]
+          this.createTimelineItem(this.borrowRecord().pickupDate!, 'left', 'accent', 'accent', false, '/borrow.png', 'timeline.pickup')
+        ];
       }
     }
 
     switch (this.status()) {
+      case UIBorrowDetailedStatus.Reserved_Unconfirmed:
+        items = [
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'accent', 'primary', false, '@tui.clock', 'timeline.reservation-unconfirmed'),
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-clock', 'timeline.start'),
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-check', 'timeline.end')
+        ];
+        break;
 
       case UIBorrowDetailedStatus.Reserved_Confirmed:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'secondary',
-            lineColor: 'secondary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-clock',
-                label: this.translate.instant('timeline.start'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'secondary',
-            lineColor: 'secondary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'accent', 'primary', false, '@tui.clock', 'timeline.reservation'),
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-clock', 'timeline.start'),
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
 
       case UIBorrowDetailedStatus.Reserved_ReadyToPickup:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().startDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'accent',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-clock',
-                label: this.translate.instant('timeline.start'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'secondary',
-            lineColor: 'secondary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'accent', 'accent', false, '@tui.calendar-clock', 'timeline.start'),
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
+
+      case UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed:
+        items = [
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
+          this.createTimelineItem(this.borrowRecord().pickupDate!, 'left', 'accent', 'accent', false, '/borrow.png', 'timeline.pickup-unconfirmed'),
+          this.createTimelineItem(this.borrowRecord().startDate, 'left', 'accent', 'accent', false, '@tui.calendar-clock', 'timeline.start'),
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-check', 'timeline.end')
+        ];
+        break;
+
       case UIBorrowDetailedStatus.Borrowed_Active:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'secondary',
-            lineColor: 'secondary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'secondary', 'secondary', false, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
 
+      case UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed:
+        if (this.borrowRecord().effectiveReturnDate! < this.borrowRecord().endDate!) {
+          items = [
+            this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
+            ...timelineStartAndPickup,
+            this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'accent', 'success', false, '/returnItem.png', 'timeline.return-unconfirmed'),
+            this.createTimelineItem(this.borrowRecord().endDate, 'left', 'success', 'success', true, '@tui.calendar-check', 'timeline.end')
+          ];
+        } else if (this.borrowRecord().effectiveReturnDate! == this.borrowRecord().endDate!) {
+          items = [
+            this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
+            ...timelineStartAndPickup,
+            this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'accent', 'success', true, '/returnItem.png', 'timeline.return-unconfirmed')
+          ];
+        } else {
+          items = [
+            this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
+            ...timelineStartAndPickup,
+            this.createTimelineItem(this.borrowRecord().endDate, 'left', 'danger', 'danger', false, '@tui.calendar-check', 'timeline.end'),
+            this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'danger', 'danger', true, '/returnItem.png', 'timeline.return-unconfirmed')
+          ];
+        }
+        break;
       case UIBorrowDetailedStatus.Returned_Early:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-
-          {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'success',
-            lastItem: false,
-            items: [
-              {
-                icon: '/returnItem.png',
-                label: this.translate.instant('timeline.return'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'success',
-            lineColor: 'success',
-            lastItem: true,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'accent', 'success', false, '/returnItem.png', 'timeline.return'),
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'success', 'success', true, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
+
       case UIBorrowDetailedStatus.Returned_OnTime:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-
-          {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'accent',
-            lineColor: 'success',
-            lastItem: true,
-            items: [
-              {
-                icon: '/returnItem.png',
-                label: this.translate.instant('timeline.return'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'accent', 'success', true, '/returnItem.png', 'timeline.return')
+        ];
         break;
 
       case UIBorrowDetailedStatus.Borrowed_DueToday:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'warning',
-            lineColor: 'warning',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'warning', 'warning', false, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
 
       case UIBorrowDetailedStatus.Borrowed_Late:
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'danger',
-            lineColor: 'danger',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'danger', 'danger', false, '@tui.calendar-check', 'timeline.end')
+        ];
         break;
 
       case 'returned-late':
         items = [
-          {
-            label: this.borrowRecord().reservationDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'primary',
-            lineColor: 'primary',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.clock',
-                label: this.translate.instant('timeline.reservation'),
-              }
-            ]
-          },
+          this.createTimelineItem(this.borrowRecord().reservationDate, 'left', 'primary', 'primary', false, '@tui.clock', 'timeline.reservation'),
           ...timelineStartAndPickup,
-          {
-            label: this.borrowRecord().endDate.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'danger',
-            lineColor: 'danger',
-            lastItem: false,
-            items: [
-              {
-                icon: '@tui.calendar-check',
-                label: this.translate.instant('timeline.end'),
-              }
-            ]
-          },
-          {
-            label: this.borrowRecord().effectiveReturnDate!.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
-            position: 'left',
-            dotColor: 'danger',
-            lineColor: 'danger',
-            lastItem: true,
-            items: [
-              {
-                icon: '/returnItem.png',
-                label: this.translate.instant('timeline.return'),
-              }
-            ]
-          }
-        ]
+          this.createTimelineItem(this.borrowRecord().endDate, 'left', 'danger', 'danger', false, '@tui.calendar-check', 'timeline.end'),
+          this.createTimelineItem(this.borrowRecord().effectiveReturnDate!, 'left', 'danger', 'danger', true, '/returnItem.png', 'timeline.return')
+        ];
         break;
     }
     return items;
   });
 
+
+  private createTimelineItem(date: Date, position: 'left' | 'right', dotColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger', lineColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger', lastItem: boolean, icon: string, labelKey: string): TimelineItem {
+    const locale = this.translate.currentLang;
+    return {
+      label: date.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
+      position,
+      dotColor,
+      lineColor,
+      lastItem,
+      items: [
+        {
+          icon,
+          label: this.translate.instant(labelKey),
+        }
+      ]
+    };
+  }
 }

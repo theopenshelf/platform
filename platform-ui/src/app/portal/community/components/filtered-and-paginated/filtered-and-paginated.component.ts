@@ -8,7 +8,7 @@ import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
 import { TuiAppearance, TuiButton, TuiDataList, TuiDropdown, TuiHint, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiAccordion } from '@taiga-ui/experimental';
-import { TuiCalendarRange, TuiCarousel, TuiDataListWrapper, TuiPagination, TuiTabs } from '@taiga-ui/kit';
+import { TuiBadge, TuiCalendarRange, TuiCarousel, TuiDataListWrapper, TuiPagination, TuiTabs } from '@taiga-ui/kit';
 import {
   TuiInputDateRangeModule,
   TuiSelectModule,
@@ -75,7 +75,8 @@ export interface FetchItemsService {
     TuiDropdown,
     TuiCalendarRange,
     TuiCarousel,
-    TranslateModule
+    TranslateModule,
+    TuiBadge
   ],
   templateUrl: './filtered-and-paginated.component.html',
   styleUrl: './filtered-and-paginated.component.scss'
@@ -106,6 +107,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
   public enableSearchBar = input<boolean>(false);
   public sortingOptions = input<string[]>(FilteredAndPaginatedComponent.defaultSortingOptions);
   public getItems = input.required<(getItemsParams: GetItemsParams) => Observable<UIPagination<any>>>();
+  public getItemsCountByStatus = input<(getItemsParams: GetItemsParams) => Observable<Map<UIBorrowDetailedStatus, number>>>();
   public library = input<UILibrary>();
   public approvalTab = input<boolean>(false);
 
@@ -190,6 +192,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
   protected sortingSelected = new FormControl<string | null>(null);
   isMobile: boolean = false;
   requiresApproval: boolean = false;
+  statusCounts: Map<UIBorrowDetailedStatus, number> = new Map();
 
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) protected itemsService: ItemsService,
@@ -221,13 +224,9 @@ export class FilteredAndPaginatedComponent implements OnInit {
         ? params['selectedStatus']
         : StatusTab.Returned;
       this.currentPage = +params['page'] - 1 || 0;
-      this.activeStatusIndex = this.statuses.findIndex(
-        (status) => status!.status === this.selectedStatus,
-      );
       if (params['sortingOption']) {
         this.sortingSelected.setValue(params['sortingOption']);
       }
-
 
       if (this.approvalTab()) {
         this.statuses = [
@@ -250,6 +249,17 @@ export class FilteredAndPaginatedComponent implements OnInit {
             icon: '@tui.archive',
           }// Green
         ];
+      }
+      this.activeStatusIndex = this.statuses.findIndex(
+        (status) => status!.status === this.selectedStatus,
+      );
+
+      if (this.getItemsCountByStatus()) {
+        this.getItemsCountByStatus()!(
+          this.getItemsParams()
+        ).subscribe((countMap) => {
+          this.statusCounts = countMap;
+        });
       }
       this.fetchItems();
     });
@@ -300,6 +310,42 @@ export class FilteredAndPaginatedComponent implements OnInit {
         this.isMobile = result.matches;
       });
   }
+
+  getStatusCount(status: StatusTab): number {
+    switch (status) {
+      case StatusTab.Reserved:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_Unconfirmed)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_Confirmed)
+          ;
+
+      case StatusTab.Reserved_ReadyToPickup:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_ReadyToPickup);
+      case StatusTab.Borrowed_Active:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Borrowed_Active)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed)
+          ;
+      case StatusTab.Borrowed_DueToReturn:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Borrowed_DueToday)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Borrowed_Late);
+      case StatusTab.Returned:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Returned_OnTime)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Returned_Early)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Returned_Late)
+          + this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed);
+
+      case StatusTab.Reserved_Unconfirmed:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_Unconfirmed);
+      case StatusTab.Borrowed_Return_Unconfirmed:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed);
+      case StatusTab.Reserved_Pickup_Unconfirmed:
+        return this.getBorrowRecordStatusCount(UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed);
+    }
+  }
+
+  private getBorrowRecordStatusCount(status: UIBorrowDetailedStatus): number {
+    return this.statusCounts.get(status) ?? 0;
+  }
+
 
   // Public methods
   goToPage(page: number) {
@@ -400,7 +446,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     let statuses: UIBorrowDetailedStatus[] = [];
     if (this.approvalTab()) {
       switch (this.selectedStatus) {
-        case StatusTab.Reserved_Unconfirmed:
+        case StatusTab.Borrowed_Return_Unconfirmed:
           statuses = [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed];
           break;
         case StatusTab.Reserved_Pickup_Unconfirmed:

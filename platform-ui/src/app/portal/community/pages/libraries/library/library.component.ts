@@ -162,6 +162,7 @@ export class LibraryComponent {
 
   onTabChange(tab: 'items' | 'borrow-records' | 'approval'): void {
     this.tabOpened = tab;
+
     var queryParams: any = {};
 
     let path = `/community/libraries/${this.library?.id}`;
@@ -176,6 +177,7 @@ export class LibraryComponent {
       path += '/items';
       queryParams['selectedStatus'] = undefined;
     }
+
 
     this.router.navigate([path], {
       queryParams: queryParams,

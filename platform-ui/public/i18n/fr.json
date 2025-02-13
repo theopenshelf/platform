@@ -14,10 +14,13 @@
   },
   "timeline": {
     "reservation": "Réservation",
+    "reservation-unconfirmed": "En attente de confirmation de la réservation",
     "start": "Début",
     "pickup": "Retrait",
+    "pickup-unconfirmed": "En attente de confirmation de la récupération",
     "end": "Fin",
-    "return": "Retour"
+    "return": "Retour",
+    "return-unconfirmed": "En attente de confirmation du retour"
   },
   "footer": {
     "brandingAlt": "The Open Shelf",
@@ -69,6 +72,9 @@
     "pickUp": "Récupérer",
     "return": "Retourner",
     "cancelReservation": "Annuler",
+    "confirmReservation": "Confirmer",
+    "confirmReturn": "Confirmer",
+    "confirmPickup": "Confirmer",
     "status": {
       "reserved-impossible": "Réservé Impossible",
       "reserved-unconfirmed": "Réservé Non Confirmé",
@@ -200,7 +206,13 @@
       "borrowCount": "Nombre d'emprunts",
       "lateReturnPercentage": "% de retours tardifs",
       "averageDuration": "Durée moyenne"
-    }
+    },
+    "reserveContentApproval": "Approuver la réservation de {{itemName}} jusqu'au {{endDate}}?",
+    "pickupContentApproval": "Approuver la récupération de {{itemName}} jusqu'au {{endDate}}?",
+    "returnContentApproval": "Approuver le retour de {{itemName}} jusqu'au {{endDate}}?",
+    "reserveApprovalSuccess": "Réservation approuvée avec succès",
+    "pickupApprovalSuccess": "Récupération approuvée avec succès",
+    "returnApprovalSuccess": "Retour approuvé avec succès"
   },
   "profile": {
     "editTitle": "Modifier votre profil",
@@ -481,6 +493,16 @@
       "pickup": "Oui, récupérer",
       "return": "Oui, retourner",
       "cancel": "Oui, annuler la réservation"
+    },
+    "deny": {
+      "reserve": "Refuser la réservation",
+      "pickup": "Refuser la récupération",
+      "return": "Refuser le retour"
+    },
+    "approve": {
+      "reserve": "Approuver la réservation",
+      "pickup": "Approuver la récupération",
+      "return": "Approuver le retour"
     }
   }
 }

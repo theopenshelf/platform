@@ -461,6 +461,175 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
+  /community/items/{item-id}/actions/approval-reservation:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: approvalReservation
+      summary: Approve or reject a reservation
+      tags:
+        - items-community-api
+      requestBody:
+        description: Approval details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decision:
+                  type: string
+                  enum: [approve, reject]
+                borrowRecordId:
+                  type: string
+                  format: uuid
+                  example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+              required:
+                - decision
+                - borrowRecordId
+      responses:
+        "200":
+          description: Reservation approval status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}/actions/approval-pickup:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: approvalPickup
+      summary: Approve or reject a pickup
+      tags:
+        - items-community-api
+      requestBody:
+        description: Approval details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decision:
+                  type: string
+                  enum: [approve, reject]
+                borrowRecordId:
+                  type: string
+                  format: uuid
+                  example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+              required:
+                - decision
+                - borrowRecordId
+      responses:
+        "200":
+          description: Pickup approval status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/items/{item-id}/actions/approval-return:
+    parameters:
+      - $ref: "#/components/parameters/itemId"
+    post:
+      operationId: approvalReturn
+      summary: Approve or reject a return
+      tags:
+        - items-community-api
+      requestBody:
+        description: Approval details
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                decision:
+                  type: string
+                  enum: [approve, reject]
+                borrowRecordId:
+                  type: string
+                  format: uuid
+                  example: "f47ac10b-58cc-4372-a567-0e02b2c3d479"
+              required:
+                - decision
+                - borrowRecordId
+      responses:
+        "200":
+          description: Return approval status updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Item"
+
+  /community/borrow-records-count-by-status:
+    get:
+      operationId: getBorrowRecordsCountByStatus
+      summary: Retrieve all borrow records count by status
+      tags:
+        - borrow-records-community-api
+      parameters:
+        - name: currentUser
+          in: query
+          description: Filter items by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedByCurrentUser
+          in: query
+          description: Filter items borrowed by current user
+          required: false
+          schema:
+            type: boolean
+        - name: borrowedBy
+          in: query
+          description: Filter items by borrowed by
+          required: false
+          schema:
+            type: string
+        - name: itemId
+          in: query
+          description: Filter items by item ID
+          required: false
+          schema:
+            type: string
+        - name: libraryIds
+          in: query
+          description: Filter items by library IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: status
+          in: query
+          description: Filter items by status
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - reserved-unconfirmed
+                - reserved-confirmed
+                - reserved-ready-to-pickup
+                - reserved-pickup-unconfirmed
+                - borrowed-active
+                - borrowed-due-today
+                - borrowed-late
+                - borrowed-return-unconfirmed
+                - returned-early
+                - returned-on-time
+                - returned-late
+      responses:
+        "200":
+          description: A paginated list of borrow records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BorrowRecordsCountByStatus"
+
   /community/borrow-records:
     get:
       operationId: getBorrowRecords
@@ -2134,6 +2303,43 @@ components:
           type: string
         content:
           type: string
+
+    BorrowRecordsCountByStatus:
+      type: object
+      properties:
+        reserved-unconfirmed:
+          type: integer
+          example: 5
+        reserved-confirmed:
+          type: integer
+          example: 3
+        reserved-ready-to-pickup:
+          type: integer
+          example: 2
+        reserved-pickup-unconfirmed:
+          type: integer
+          example: 1
+        borrowed-active:
+          type: integer
+          example: 4
+        borrowed-due-today:
+          type: integer
+          example: 1
+        borrowed-late:
+          type: integer
+          example: 0
+        borrowed-return-unconfirmed:
+          type: integer
+          example: 1
+        returned-early:
+          type: integer
+          example: 2
+        returned-on-time:
+          type: integer
+          example: 3
+        returned-late:
+          type: integer
+          example: 1
 
   responses:
     OK_200_GET_HELLO_WORLD:

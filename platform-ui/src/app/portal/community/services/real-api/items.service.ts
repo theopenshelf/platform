@@ -13,7 +13,7 @@ import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
 import { UIItem } from '../../../../models/UIItem';
 import { UIItemsPagination } from '../../../../models/UIItemsPagination';
 import { UIUser } from '../../../../models/UIUser';
-import { GetItemsParams, ItemsService } from '../items.service';
+import { GetBorrowRecordsCountByStatusParams, GetItemsParams, ItemsService } from '../items.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -99,6 +99,24 @@ export class APIItemsService implements ItemsService {
       );
   }
 
+  statusMapping: Record<
+    UIBorrowDetailedStatus,
+    'reserved-impossible' | 'reserved-unconfirmed' | 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'reserved-pickup-unconfirmed' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'borrowed-return-unconfirmed' | 'returned-early' | 'returned-on-time' | 'returned-late' | undefined
+  > = {
+      [UIBorrowDetailedStatus.Returned_OnTime]: 'returned-on-time',
+      [UIBorrowDetailedStatus.Borrowed_Active]: 'borrowed-active',
+      [UIBorrowDetailedStatus.Borrowed_DueToday]: 'borrowed-due-today',
+      [UIBorrowDetailedStatus.Borrowed_Late]: 'borrowed-late',
+      [UIBorrowDetailedStatus.Returned_Early]: 'returned-early',
+      [UIBorrowDetailedStatus.Returned_Late]: 'returned-late',
+      [UIBorrowDetailedStatus.Reserved_Impossible]: undefined,
+      [UIBorrowDetailedStatus.Reserved_Unconfirmed]: 'reserved-unconfirmed',
+      [UIBorrowDetailedStatus.Reserved_Confirmed]: 'reserved-confirmed',
+      [UIBorrowDetailedStatus.Reserved_ReadyToPickup]: 'reserved-ready-to-pickup',
+      [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed]: 'reserved-pickup-unconfirmed',
+      [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed]: 'borrowed-return-unconfirmed',
+    };
+
   getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination> {
     const {
       currentUser,
@@ -119,27 +137,10 @@ export class APIItemsService implements ItemsService {
       favorite,
     } = params;
 
-    const statusMapping: Record<
-      UIBorrowDetailedStatus,
-      'reserved-impossible' | 'reserved-unconfirmed' | 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'reserved-pickup-unconfirmed' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'borrowed-return-unconfirmed' | 'returned-early' | 'returned-on-time' | 'returned-late' | undefined
-    > = {
-      [UIBorrowDetailedStatus.Returned_OnTime]: 'returned-on-time',
-      [UIBorrowDetailedStatus.Borrowed_Active]: 'borrowed-active',
-      [UIBorrowDetailedStatus.Borrowed_DueToday]: 'borrowed-due-today',
-      [UIBorrowDetailedStatus.Borrowed_Late]: 'borrowed-late',
-      [UIBorrowDetailedStatus.Returned_Early]: 'returned-early',
-      [UIBorrowDetailedStatus.Returned_Late]: 'returned-late',
-      [UIBorrowDetailedStatus.Reserved_Impossible]: undefined,
-      [UIBorrowDetailedStatus.Reserved_Unconfirmed]: 'reserved-unconfirmed',
-      [UIBorrowDetailedStatus.Reserved_Confirmed]: 'reserved-confirmed',
-      [UIBorrowDetailedStatus.Reserved_ReadyToPickup]: 'reserved-ready-to-pickup',
-      [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed]: 'reserved-pickup-unconfirmed',
-      [UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed]: 'borrowed-return-unconfirmed',
-    };
 
 
     let statusesValue: ('reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late')[] = [];
-    statusesValue = statuses ? statuses.map(status => statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
+    statusesValue = statuses ? statuses.map(status => this.statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
 
     let sortByValue: 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
     switch (sortBy) {
@@ -387,9 +388,110 @@ export class APIItemsService implements ItemsService {
       })));
   }
 
+  getBorrowRecordsCountByStatus(params: GetBorrowRecordsCountByStatusParams): Observable<Map<UIBorrowDetailedStatus, number>> {
+    const {
+      currentUser,
+      borrowedByCurrentUser,
+      borrowedBy,
+      itemId,
+      libraryIds,
+      statuses,
+    } = params;
+
+    let statusesValue: ('reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late')[] = [];
+    statusesValue = statuses ? statuses.map(status => this.statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
+
+    return this.borrowRecordsApiService.getBorrowRecordsCountByStatus(
+      currentUser,
+      borrowedByCurrentUser,
+      borrowedBy,
+      itemId,
+      libraryIds,
+      statusesValue,
+    ).pipe(
+      map((response) => new Map(Object.entries(response).map(([status, count]) => [status as UIBorrowDetailedStatus, count as number]))),
+    );
+  }
+
   markAsFavorite(item: UIItem): Observable<void> {
     return this.itemsApiService
       .markAsFavorite(item.id)
       .pipe(map(() => undefined));
+  }
+
+  approvalReservation(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    return this.itemsApiService
+      .approvalReservation(item.id, { borrowRecordId: borrowRecord.id, decision })
+      .pipe(map((item: Item) => ({
+        ...item,
+        createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              id: record.id,
+              startDate: record.startDate
+                ? new Date(record.startDate)
+                : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              borrowedBy: record.borrowedBy,
+              reservationDate: new Date(record.reservationDate),
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+            }) as UIBorrowRecord,
+        ),
+      })));
+  }
+
+  approvalPickup(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    return this.itemsApiService.approvalPickup(item.id, { borrowRecordId: borrowRecord.id, decision })
+      .pipe(map((item: Item) => ({
+        ...item,
+        createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              id: record.id,
+              startDate: record.startDate
+                ? new Date(record.startDate)
+                : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              borrowedBy: record.borrowedBy,
+              reservationDate: new Date(record.reservationDate),
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+            }) as UIBorrowRecord,
+        ),
+      })));
+  }
+
+  approvalReturn(
+    decision: 'approve' | 'reject',
+    item: UIItem,
+    borrowRecord: UIBorrowRecord,
+  ): Observable<UIItem> {
+    return this.itemsApiService.approvalReturn(item.id, { borrowRecordId: borrowRecord.id, decision })
+      .pipe(map((item: Item) => ({
+        ...item,
+        createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              ...record,
+              startDate: record.startDate
+                ? new Date(record.startDate)
+                : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              borrowedBy: record.borrowedBy,
+              reservationDate: new Date(record.reservationDate),
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+            }) as UIBorrowRecord,
+        ),
+      })));
   }
 }

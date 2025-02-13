@@ -45,9 +45,7 @@ const mapCategory = (category: string): UICategory => {
 };
 
 export const loadItems = (): UIItem[] => {
-  const today = new Date().toISOString().split('T')[0];
   var itemsLoaded = items.map((item) => {
-    var borrowRecords = generateRandomRecords(Math.floor(Math.random() * 11));
     return {
       ...item,
       category: mapCategory(item.category),
@@ -61,7 +59,7 @@ export const loadItems = (): UIItem[] => {
             pickupDate: record.pickupDate ? new Date(record.pickupDate) : null,
             effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : null,
             borrowedBy: record.borrowedBy,
-            status: getBorrowRecordStatus(new Date(record.reservationDate), new Date(record.startDate), record.pickupDate ? new Date(record.pickupDate) : null, new Date(record.endDate), record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : null),
+            status: record.status
           }) as UIBorrowRecord,
       ),
       createdAt: new Date(item.createdAt), // Convert string to Date
