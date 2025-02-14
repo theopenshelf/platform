@@ -18,6 +18,9 @@ import { ApiSecuritySettingsService } from './services/real-api/security-setting
 import { ApiUsersService } from './services/real-api/users.service';
 import { SecuritySettingsService } from './services/security-settings.service';
 import { UsersService } from './services/users.service';
+import { LibrariesService } from './services/libraries.service';
+import { MockLibrariesService } from './services/mock/libraries.service';
+import { ApiLibrariesService } from './services/real-api/libraries.service';
 
 export const CATEGORIES_SERVICE_TOKEN = new InjectionToken<CategoriesService>(
   'CategoriesService',
@@ -35,6 +38,9 @@ export const DASHBOARD_SERVICE_TOKEN = new InjectionToken<DashboardService>(
 );
 export const CUSTOM_PAGES_SERVICE_TOKEN = new InjectionToken<CustomPagesService>(
   'CustomPagesService',
+);
+export const LIBRARIES_SERVICE_TOKEN = new InjectionToken<LibrariesService>(
+  'LibrariesService',
 );
 
 export const adminProviders: Provider[] = [
@@ -69,5 +75,11 @@ export const adminProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockCustomPagesService
       : APICustomPagesService,
+  },
+  {
+    provide: LIBRARIES_SERVICE_TOKEN,
+    useExisting: environment.useMockApi
+      ? MockLibrariesService
+      : ApiLibrariesService,
   },
 ];

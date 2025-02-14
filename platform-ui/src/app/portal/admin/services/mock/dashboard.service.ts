@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { MockLibrariesService } from '../../../community/services/mock/libraries.service';
 import {
   DashboardService,
   UIBorrowerMetrics,
@@ -11,6 +10,7 @@ import {
 } from '../dashboard.service';
 import { MockCategoriesService } from './categories.service';
 import { MockItemsService } from './items.service';
+import { MockLibrariesService } from './libraries.service';
 import { MockUsersService } from './users.service';
 
 @Injectable({

@@ -6,7 +6,6 @@ import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../componen
 import { UserAvatarComponent } from '../../../../components/user-avatar/user-avatar.component';
 import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UIUser } from '../../../../models/UIUser';
-import { communityProviders } from '../../../community/community.provider';
 import { USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
 import { UsersService } from '../../services/users.service';
@@ -22,9 +21,6 @@ import { UsersService } from '../../services/users.service';
   ],
   templateUrl: './user-activity.component.html',
   styleUrl: './user-activity.component.scss',
-  providers: [
-    ...communityProviders,
-  ],
 })
 export class UserActivityComponent {
   userId: string | null = null;

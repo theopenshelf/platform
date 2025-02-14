@@ -1777,6 +1777,82 @@ paths:
         "204":
           description: Library deleted successfully
 
+  /admin/libraries:
+    get:
+      operationId: getAdminLibraries
+      summary: Retrieve all admin libraries
+      tags:
+        - libraries-admin-api
+      responses:
+        "200":
+          description: A list of admin libraries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Library"
+    post:
+      operationId: addAdminLibrary
+      summary: Add a new admin library
+      tags:
+        - libraries-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Library"
+      responses:
+        "201":
+          description: Library created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+
+  /admin/libraries/{library-id}:
+    parameters:
+      - $ref: "#/components/parameters/libraryId"
+    get:
+      operationId: getAdminLibrary
+      summary: Retrieve a specific admin library by ID
+      tags:
+        - libraries-admin-api
+      responses:
+        "200":
+          description: A single admin library
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+    put:
+      operationId: updateAdminLibrary
+      summary: Update an existing admin library
+      tags:
+        - libraries-admin-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Library"
+      responses:
+        "200":
+          description: Library updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+    delete:
+      operationId: deleteAdminLibrary
+      summary: Delete an admin library
+      tags:
+        - libraries-admin-api
+      responses:
+        "204":
+          description: Library deleted successfully
+
 components:
   #####################################################
   # Predefined Components
