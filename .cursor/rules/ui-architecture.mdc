@@ -1,9 +1,231 @@
 ---
-description:
-globs:
+description: 
+globs: 
 ---
+# OpenShelf Project Mono Repo Guidelines
 
-# Your rule content
+@context {
+    "type": "documentation",
+    "purpose": "cursor_rules",
+    "format_version": "1.0.0",
+    "supported_content_types": [
+        "guidelines",
+        "api_docs",
+        "examples",
+        "implementations"
+    ]
+}
 
-- You can @ files here
-- You can use markdown but dont have to
+@structure {
+    "required_sections": [
+        "frontmatter",
+        "title",
+        "context",
+        "content_sections"
+    ],
+    "optional_sections": [
+        "version",
+        "last_updated",
+        "examples",
+        "implementations",
+        "related_files"
+    ],
+    "recommended_sections": [
+        "practical_examples",
+        "common_patterns",
+        "type_definitions"
+    ]
+}
+
+## Project Overview
+
+This is a mono repository for the OpenShelf project. It consists of:
+- **Frontend**: `platform-ui`
+- **Backend**: `platform-api`
+- **Database**: PostgreSQL
+
+## CI/CD
+
+We follow continuous development practices using GitHub Actions. Not every commit is a release; only commits prefixed with `[release]` trigger a deployment.
+
+### Deployment
+
+- **Kubernetes**: The CI pipeline produces Docker images that are deployed on Kubernetes.
+- **Docker**: We use a Dockerfile for Angular and Maven with plugins to generate Docker images for the backend.
+
+## Interface Backend/Frontend
+
+We use OpenAPI and follow the API-first approach. The `openapi.yaml` file is used to generate both the client (frontend) and server (backend) code. Any changes to the interface between the frontend and backend must be reflected in the `openapi.yaml` file.
+
+## Frontend
+
+### Technology Stack
+
+- **Framework**: Angular 19
+- **UI Library**: Taiga UI
+
+### Architecture
+
+The UI is architected using the concept of portals:
+- `src/app/portal/admin`: Admin portal
+- `src/app/portal/community`: Community portal
+- `src/app/portal/public`: Public portal (authentication, signup, forgot password, etc.)
+
+#### Shared Components
+
+- `src/app/components`: Shared components across portals
+- `src/app/models`: Shared models across portals
+
+### Routing
+
+Main outing is defined in [app.routes.ts](mdc:platform-ui/src/app/app.routes.ts) then dispatched to sub routes
+
+```typescript
+export const routes: Routes = [
+  {
+    path: 'community',
+    loadChildren: () =>
+      import('./portal/community/community.routes').then(
+        (m) => m.COMMUNITY_ROUTES,
+      ),
+    canActivate: [CommunityGuard], // Protect with CommunityGuard
+  },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./portal/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+    canActivate: [AdminGuard], // Protect with AdminGuard
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./portal/public/public.routes').then((m) => m.PUBLIC_ROUTES),
+  },
+
+  // Catch-all route for unknown paths
+  { path: '**', redirectTo: '' },
+];
+```
+
+### Pages
+
+Pages are organized within their respective portals:
+- `src/app/portal/admin/pages`
+- `src/app/portal/community/pages`
+- `src/app/portal/public/pages`
+
+### Layout
+
+Each portal has its own layout:
+- `src/app/portal/admin/admin-layout`
+- `src/app/portal/community/community-layout`
+- `src/app/portal/public/public-layout`
+
+### Code Style
+
+- **Standalone Modules**: We do not use an app module; all modules are standalone.
+- **Conditionals**: Prefer `@if` over `ngIf`.
+- **Inputs**: Use signals instead of `@Input`.
+
+### API Calls
+
+To facilitate parallel development between the frontend and backend, and because we use OpenAPI, API calls are abstracted via services.
+
+#### Example
+
+**Service Interface**:
+```typescript
+// platform-ui/src/app/portal/community/services/users.service.ts
+export interface UsersService {
+    getUsers(): Observable<UIUser[]>;
+    getUser(userId: string): Observable<UIUser>;
+    findUser(query: string, limit?: number): Observable<UIUser[]>;
+}
+```
+
+**Real API Service**:
+
+```typescript
+
+// platform-ui/src/app/portal/community/services/real-api/users.service.ts
+@Injectable({
+    providedIn: 'root',
+})
+export class APIUsersService implements UsersService {
+    constructor(private usersApiService: UsersCommunityApiService) { }
+
+    getUsers(): Observable<UIUser[]> {
+        return this.usersApiService.getCommunityUsers().pipe(
+            map((users: User[]) =>
+                users.map(
+                    (user: User) =>
+                        ({
+                            id: user.id,
+                            username: user.username,
+                            email: user.email
+                        }) as UIUser,
+                ),
+            ),
+        );
+    }
+
+    getUser(userId: string): Observable<UIUser> {
+        return this.usersApiService.getCommunityUserById(userId).pipe(
+            map((user: User) => ({
+                ...user,
+                borrowedItems: 0,
+                returnedLate: 0,
+                successRate: 0,
+            }) as UIUser),
+        );
+    }
+
+    findUser(query: string, limit?: number): Observable<UIUser[]> {
+        return this.usersApiService.getCommunityUsers(query, limit).pipe(
+            map((users: User[]) => users.map((user: User) => ({
+                ...user,
+                borrowedItems: 0,
+                returnedLate: 0,
+                successRate: 0,
+            }) as UIUser)),
+        );
+    }
+}
+```
+
+**Mock API Service**:
+
+
+```typescript
+// platform-ui/src/app/portal/community/services/mock/users.service.ts
+@Injectable({
+  providedIn: 'root',
+})
+export class MockUsersService implements UsersService {
+  getUsers(): Observable<UIUser[]> {
+    return of(users);
+  }
+
+  getUser(userId: string): Observable<UIUser> {
+    return of(users.find((user) => user.id === userId) || ({} as UIUser));
+  }
+
+  getUserByUsername(username: string): UIUser {
+    return users.find((user) => user.username === username) || ({} as UIUser);
+  }
+
+  findUser(query: string, limit?: number): Observable<UIUser[]> {
+    return of(users.filter((user) => user.username.includes(query) || user.email.includes(query)).slice(0, limit));
+  }
+}
+
+```
+
+**Dependency Injection**:
+
+```typescript
+// platform-ui/src/app/portal/community/community.provider.ts
+export const communityProviders = [
+  { provide: UsersService, useClass: environment.production ? APIUsersService : MockUsersService }
+];
+```

@@ -25,3 +25,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## License
+
+The Open Shelf software is licensed under the [Apache 2.0 License](LICENSE).
+
+⚠️ **Trademark Notice**: The name "The Open Shelf" and its logos are **trademarks** of The Open Shelf Association and are **not covered by the Apache 2.0 license**. See [TRADEMARK.md](TRADEMARK.md) for details.
+
+For commercial licensing and services, visit [openshelflabs.dev](https://openshelflabs.dev).

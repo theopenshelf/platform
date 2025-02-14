@@ -1,16 +1,9 @@
-# Contribution Guidelines
+## Contributing to The Open Shelf
 
-Thank you for considering contributing!
+By contributing, you agree that your code will be licensed under the **Apache 2.0 License**.
 
-## Code of Conduct
-All contributors must follow our CODE_OF_CONDUCT.md
+### Contributor License Agreement (CLA)
 
-## Licensing
-By contributing, you agree that your code falls under the same SSPL licensing terms.
+For significant contributions, we may ask you to sign a CLA. This ensures that The Open Shelf remains open-source and legally protected.
 
-## How to Contribute
-1. Fork the repository
-2. Create a feature branch
-3. Submit a pull request
-
-For detailed guidelines, see [docs/contributing.md](docs/contributing.md)
+More details: [CLA Agreement](https://cla.theopenshelf.dev)
