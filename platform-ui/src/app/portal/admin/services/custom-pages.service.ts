@@ -6,6 +6,9 @@ import { UIHelpArticle, UIHelpCategory } from '../../../models/UIHelp';
 export interface CustomPagesService {
   getCustomPage(pageRef: string): Observable<UICustomPage>;
   getCustomPageRefs(): Observable<UICustomPage[]>;
+
+  getCustomPage(pageRef: string): Observable<UICustomPage>;
+  getCustomPageRefs(): Observable<UICustomPage[]>;
   createCustomPage(page: UICustomPage): Observable<UICustomPage>;
   updateCustomPage(page: UICustomPage): Observable<UICustomPage>;
   deleteCustomPage(pageRef: string): Observable<void>;

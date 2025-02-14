@@ -12,11 +12,11 @@ import { UILibrary } from '../../../../models/UILibrary';
 import { UIPagination } from '../../../../models/UIPagination';
 import { UIUser } from '../../../../models/UIUser';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
-import { UsersService } from '../../../admin/services/users.service';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../community.provider';
 import { CategoriesService } from '../../services/categories.service';
 import { GetItemsParams, ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
+import { UsersService } from '../../services/users.service';
 import { BorrowRecordCardComponent } from '../borrow-record-card/borrow-record-card.component';
 import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtered-and-paginated.component';
 @Component({

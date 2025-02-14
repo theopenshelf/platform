@@ -2,11 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe, TuiTextfield } from '@taiga-ui/core';
+import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
-import { TuiAvatar } from '@taiga-ui/kit';
 import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
 import { UserAvatarComponent } from '../../../../components/user-avatar/user-avatar.component';
 import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../../../models/UIBorrowRecord';
@@ -24,10 +23,7 @@ import { UIUser } from '../../../../models/UIUser';
     CommonModule,
     FormsModule,
     TuiTextfield,
-    TuiAvatar,
     BorrowRecordTimelineComponent,
-    TuiInitialsPipe,
-    TuiAutoColorPipe,
     TranslateModule,
     TuiButton,
     UserAvatarComponent,

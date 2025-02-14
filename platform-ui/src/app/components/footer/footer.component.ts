@@ -6,9 +6,10 @@ import { TuiDataList, TuiDropdown, TuiIcon } from '@taiga-ui/core';
 import { TuiTabs } from '@taiga-ui/kit';
 import { TuiNavigation } from '@taiga-ui/layout';
 import { UICustomPage } from '../../models/UICustomPage';
-import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../portal/community/community.provider';
+import { communityProviders, CUSTOM_PAGE_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { CustomPageService } from '../../portal/community/services/custom-page.service';
 import { LanguageSwitcherComponent } from '../language-switcher/language-switcher.component';
+
 @Component({
   selector: 'tos-footer',
   imports: [
@@ -24,6 +25,7 @@ import { LanguageSwitcherComponent } from '../language-switcher/language-switche
   ],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
+  providers: [...communityProviders]
 })
 export class FooterComponent {
 

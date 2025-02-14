@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { CommonModule, JsonPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, ContentChild, Inject, input, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -24,7 +24,6 @@ import { ItemCardComponent } from '../item-card/item-card.component';
     CommonModule,
     ItemCardComponent,
     FilteredAndPaginatedComponent,
-    JsonPipe
   ],
   templateUrl: './filtered-and-paginated-items.component.html',
   styleUrl: './filtered-and-paginated-items.component.scss'
