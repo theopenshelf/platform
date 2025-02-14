@@ -2227,27 +2227,6 @@ components:
         isEmailVerified:
           type: boolean
 
-    Location:
-      type: object
-      required:
-        - id
-        - name
-        - address
-      properties:
-        id:
-          type: string
-          format: uuid
-          example: "123e4567-e89b-12d3-a456-426614174000"
-        name:
-          type: string
-          example: "Main Library"
-        instructions:
-          type: string
-          example: "Use side entrance, code is 1234"
-        address:
-          type: string
-          example: "123 Main Street, City, Country"
-
     DashboardBorrowesOverTimeData:
       type: object
       required:
