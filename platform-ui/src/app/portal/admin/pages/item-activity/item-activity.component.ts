@@ -1,17 +1,16 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { DatePipe, JsonPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiDay, TuiDayRange, TuiMonth } from '@taiga-ui/cdk';
-import { TuiAutoColorPipe, TuiButton, TuiCalendar, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
-import { TuiAvatar, TuiTabs } from '@taiga-ui/kit';
+import { TuiCalendar, TuiIcon } from '@taiga-ui/core';
+import { TuiTabs } from '@taiga-ui/kit';
+import { BorrowRecordCardComponent } from '../../../../components/borrow-record-card/borrow-record-card.component';
 import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
 import { UIBorrowRecordStandalone } from '../../../../models/UIBorrowRecordsPagination';
 import { UIBorrowStatus } from '../../../../models/UIBorrowStatus';
 import { UIUser } from '../../../../models/UIUser';
-import { BorrowRecordCardComponent } from '../../../community/components/borrow-record-card/borrow-record-card.component';
 import { ITEMS_SERVICE_TOKEN, USERS_SERVICE_TOKEN } from '../../admin.providers';
 import { CardCounterComponent } from '../../components/dashboards/card-counter/card-counter.component';
 import { ItemsService, UIItemWithStats } from '../../services/items.service';
@@ -24,15 +23,9 @@ const AVAILABLE: string = '';
   selector: 'app-item-activity',
   imports: [
     TuiIcon,
-    TuiButton,
     TuiCalendar,
     CardCounterComponent,
     TuiTabs,
-    DatePipe,
-    TuiAvatar,
-    TuiInitialsPipe,
-    TuiAutoColorPipe,
-    JsonPipe,
     BorrowRecordCardComponent,
     TranslateModule
   ],

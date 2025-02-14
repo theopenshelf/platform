@@ -1,17 +1,15 @@
-import { AsyncPipe, JsonPipe, NgForOf, NgIf } from '@angular/common';
+import { AsyncPipe, NgForOf, NgIf } from '@angular/common';
 import { Component, Inject, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiDay, TuiDayRange, TuiLet, type TuiPopover } from '@taiga-ui/cdk';
 import { TuiAutoColorPipe, TuiButton, TuiDataList, TuiDialogCloseService, TuiIcon, TuiInitialsPipe, TuiLoader } from '@taiga-ui/core';
-import { TuiAvatar, TuiConnected, TuiStepper } from '@taiga-ui/kit';
+import { TuiAvatar, TuiStepper } from '@taiga-ui/kit';
 import { TuiDayRangePeriod } from '@taiga-ui/kit/components/calendar-range';
 import { TuiComboBoxModule, TuiInputDateRangeModule, TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import {
-  injectContext,
-  PolymorpheusOutlet,
-  PolymorpheusTemplate,
+  injectContext
 } from '@taiga-ui/polymorpheus';
 import { map, Observable } from 'rxjs';
 import { UIUser } from '../../models/UIUser';
@@ -25,19 +23,15 @@ import { CallToActionType, PromptOptions, PromptResponse } from './prompt-option
 
 @Component({
   imports: [
-    PolymorpheusOutlet,
-    PolymorpheusTemplate,
     TuiButton,
     TuiInputDateRangeModule,
     TranslateModule,
     ReactiveFormsModule,
     NgForOf,
-    TuiConnected,
     TuiInputModule,
     TuiStepper,
     TimelineComponent,
     TuiIcon,
-    JsonPipe,
     BorrowItemCalendarComponent,
     TuiAvatar,
     TuiInitialsPipe,

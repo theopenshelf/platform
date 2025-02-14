@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -24,15 +23,15 @@ import {
   TuiAvatar,
   TuiAvatarStack,
   TuiConfirmData,
-  TuiDataListWrapper,
-  TuiSwitch
+  TuiDataListWrapper
 } from '@taiga-ui/kit';
 import {
   TuiSelectModule,
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
-import { UserAvatarComponent } from '../../../../../components/user-avatar/user-avatar.component';
+import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { FilteredAndPaginatedItemsComponent } from '../../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { isLibraryAdmin, UILibrary } from '../../../../../models/UILibrary';
 import { UIUser } from '../../../../../models/UIUser';
@@ -41,8 +40,6 @@ import {
   LIBRARIES_SERVICE_TOKEN,
   USERS_SERVICE_TOKEN
 } from '../../../community.provider';
-import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
-import { FilteredAndPaginatedItemsComponent } from '../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { GetItemsParams } from '../../../services/items.service';
 import { LibrariesService } from '../../../services/libraries.service';
 import { UsersService } from '../../../services/users.service';
@@ -55,7 +52,6 @@ import { UsersService } from '../../../services/users.service';
     FormsModule,
     TuiIcon,
     TuiAccordion,
-    TuiSwitch,
     TuiAvatar,
     TuiButton,
     TuiIcon,
@@ -70,10 +66,8 @@ import { UsersService } from '../../../services/users.service';
     FilteredAndPaginatedItemsComponent,
     FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule,
-    JsonPipe,
     TuiAvatar,
     TuiAvatarStack,
-    UserAvatarComponent,
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',

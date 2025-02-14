@@ -9,7 +9,6 @@ import {
 } from '@taiga-ui/core';
 import {
   TUI_CONFIRM,
-  TuiBadge,
   TuiConfirmData,
   TuiItemsWithMore
 } from '@taiga-ui/kit';
@@ -17,7 +16,6 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiAlertService, TuiDialogService } from '@taiga-ui/core';
-import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { ITEMS_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,
@@ -28,10 +26,8 @@ import { ItemsService, UIItemWithStats } from '../../services/items.service';
 @Component({
   standalone: true,
   imports: [
-    CategoryBadgeComponent,
     RouterModule,
     FormsModule,
-    TuiBadge,
     TuiDropdown,
     TuiItemsWithMore,
     TuiTable,

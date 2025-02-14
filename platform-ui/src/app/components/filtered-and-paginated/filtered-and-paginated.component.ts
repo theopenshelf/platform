@@ -15,21 +15,20 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { Observable } from 'rxjs';
-import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
-import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
-import { UICategory } from '../../../../models/UICategory';
-import { UILibrary } from '../../../../models/UILibrary';
-import { UIPagination } from '../../../../models/UIPagination';
-import { AuthService, UserInfo } from '../../../../services/auth.service';
+import { AUTH_SERVICE_TOKEN } from '../../global.provider';
+import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
+import { UICategory } from '../../models/UICategory';
+import { UILibrary } from '../../models/UILibrary';
+import { UIPagination } from '../../models/UIPagination';
 import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
-} from '../../community.provider';
-import { CategoriesService } from '../../services/categories.service';
-import { GetItemsParams, ItemsService } from '../../services/items.service';
-import { LibrariesService } from '../../services/libraries.service';
-import { ItemCardComponent } from '../item-card/item-card.component';
+} from '../../portal/community/community.provider';
+import { CategoriesService } from '../../portal/community/services/categories.service';
+import { GetItemsParams, ItemsService } from '../../portal/community/services/items.service';
+import { LibrariesService } from '../../portal/community/services/libraries.service';
+import { AuthService, UserInfo } from '../../services/auth.service';
 
 export enum StatusTab {
   Reserved = 'reserved',
@@ -52,7 +51,6 @@ export interface FetchItemsService {
   standalone: true,
   selector: 'filtered-and-paginated',
   imports: [
-    ItemCardComponent,
     CommonModule,
     TuiTextfieldControllerModule,
     FormsModule,

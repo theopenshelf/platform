@@ -7,7 +7,6 @@ import { TuiTable } from '@taiga-ui/addon-table';
 import { TuiAlertService, TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { map } from 'rxjs';
-import { CategoryBadgeComponent } from '../../../../components/category-badge/category-badge.component';
 import { CATEGORIES_SERVICE_TOKEN } from '../../admin.providers';
 import {
   Column,
@@ -20,7 +19,6 @@ import {
 @Component({
   standalone: true,
   imports: [
-    CategoryBadgeComponent,
     RouterModule,
     FormsModule,
     TuiTable,

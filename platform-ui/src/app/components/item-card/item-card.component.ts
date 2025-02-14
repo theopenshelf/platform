@@ -11,11 +11,11 @@ import {
   TuiTextfield,
   TuiTitle,
 } from '@taiga-ui/core';
-import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
-import { UIItem } from '../../../../models/UIItem';
-import { UILibrary } from '../../../../models/UILibrary';
-import { ITEMS_SERVICE_TOKEN } from '../../community.provider';
-import { ItemsService } from '../../services/items.service';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
+import { UILibrary } from '../../models/UILibrary';
+import { ITEMS_SERVICE_TOKEN } from '../../portal/community/community.provider';
+import { ItemsService } from '../../portal/community/services/items.service';
 
 @Component({
   selector: 'item-card',

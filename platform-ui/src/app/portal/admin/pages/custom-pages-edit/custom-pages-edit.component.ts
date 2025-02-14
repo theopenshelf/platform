@@ -8,8 +8,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiButton, TuiIcon, TuiLabel, TuiTextfield } from '@taiga-ui/core';
-import { TuiTooltip } from '@taiga-ui/kit';
+import { TuiButton, TuiLabel, TuiTextfield } from '@taiga-ui/core';
 import {
   TUI_DEFAULT_INPUT_COLORS,
   TuiInputColorModule,
@@ -28,9 +27,7 @@ import { CustomPagesService } from '../../services/custom-pages.service';
     TuiLabel,
     FormsModule,
     ReactiveFormsModule,
-    TuiIcon,
     TuiButton,
-    TuiTooltip,
     TuiSelectModule,
     TranslateModule
   ],

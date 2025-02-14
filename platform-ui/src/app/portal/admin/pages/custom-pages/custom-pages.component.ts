@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterModule } from '@angular/router';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import { TuiTable } from '@taiga-ui/addon-table';
-import { TuiAlertService, TuiButton, TuiIcon } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton } from '@taiga-ui/core';
 import { TUI_CONFIRM, TuiConfirmData } from '@taiga-ui/kit';
 import { map } from 'rxjs';
 import { UICustomPage } from '../../../../models/UICustomPage';
@@ -14,16 +14,11 @@ import { CustomPagesService } from '../../services/custom-pages.service';
 @Component({
   selector: 'app-custom-pages',
   imports: [
-    TosTableComponent,
-    TuiIcon,
-    TuiButton,
     RouterLink,
     RouterModule,
     FormsModule,
     TuiTable,
     TuiButton,
-    TosTableComponent,
-    TuiIcon,
     TosTableComponent,
   ],
   templateUrl: './custom-pages.component.html',

@@ -6,13 +6,13 @@ import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiHint } from '@taiga-ui/core';
-import { BorrowRecordTimelineComponent } from "../../../../components/borrow-record-timeline/borrow-record-timeline.component";
-import { UserAvatarComponent } from '../../../../components/user-avatar/user-avatar.component';
-import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../../../models/UIBorrowRecord';
-import { getStatusIcon, UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
-import { UIItem } from '../../../../models/UIItem';
-import { UILibrary } from '../../../../models/UILibrary';
-import { UIUser } from '../../../../models/UIUser';
+import { getBorrowDurationInDays, getLateDurationInDays, UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { getStatusIcon, UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
+import { UIItem } from '../../models/UIItem';
+import { UILibrary } from '../../models/UILibrary';
+import { UIUser } from '../../models/UIUser';
+import { BorrowRecordTimelineComponent } from "../borrow-record-timeline/borrow-record-timeline.component";
+import { UserAvatarComponent } from '../user-avatar/user-avatar.component';
 
 @Component({
   selector: 'borrow-record-card',

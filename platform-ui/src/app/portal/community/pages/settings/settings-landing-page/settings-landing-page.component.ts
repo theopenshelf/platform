@@ -2,14 +2,11 @@ import { Component, Inject } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TuiPortals } from '@taiga-ui/cdk';
 import {
-  TuiAutoColorPipe,
   TuiButton,
   TuiDataList,
   TuiDropdown,
-  TuiIcon,
-  TuiInitialsPipe,
+  TuiIcon
 } from '@taiga-ui/core';
-import { TuiAvatar } from '@taiga-ui/kit';
 import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { UserAvatarComponent } from '../../../../../components/user-avatar/user-avatar.component';
 import {
@@ -21,9 +18,6 @@ import { AuthService, UserInfo } from '../../../../../services/auth.service';
 @Component({
   selector: 'app-settings-landing-page',
   imports: [
-    TuiAutoColorPipe,
-    TuiInitialsPipe,
-    TuiAvatar,
     TuiIcon,
     TuiButton,
     RouterLinkActive,

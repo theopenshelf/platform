@@ -67,14 +67,14 @@ We use OpenAPI and follow the API-first approach. The `openapi.yaml` file is use
 ### Architecture
 
 The UI is architected using the concept of portals:
-- `src/app/portal/admin`: Admin portal
-- `src/app/portal/community`: Community portal
-- `src/app/portal/public`: Public portal (authentication, signup, forgot password, etc.)
+- `platform-ui/src/app/portal/admin`: Admin portal
+- `platform-ui/src/app/portal/community`: Community portal
+- `platform-ui/src/app/portal/public`: Public portal (authentication, signup, forgot password, etc.)
 
 #### Shared Components
 
-- `src/app/components`: Shared components across portals
-- `src/app/models`: Shared models across portals
+- `platform-ui/src/app/components`: Shared components across portals
+- `platform-ui/src/app/models`: Shared models across portals
 
 ### Routing
 
@@ -110,16 +110,16 @@ export const routes: Routes = [
 ### Pages
 
 Pages are organized within their respective portals:
-- `src/app/portal/admin/pages`
-- `src/app/portal/community/pages`
-- `src/app/portal/public/pages`
+- `platform-ui/src/app/portal/admin/pages`
+- `platform-ui/src/app/portal/community/pages`
+- `platform-ui/src/app/portal/public/pages`
 
 ### Layout
 
 Each portal has its own layout:
-- `src/app/portal/admin/admin-layout`
-- `src/app/portal/community/community-layout`
-- `src/app/portal/public/public-layout`
+- `platform-ui/src/app/portal/admin/admin-layout`
+- `platform-ui/src/app/portal/community/community-layout`
+- `platform-ui/src/app/portal/public/public-layout`
 
 ### Code Style
 
@@ -135,7 +135,7 @@ To facilitate parallel development between the frontend and backend, and because
 
 **Service Interface**:
 ```typescript
-// platform-ui/src/app/portal/community/services/users.service.ts
+// platform-ui/platform-ui/src/app/portal/community/services/users.service.ts
 export interface UsersService {
     getUsers(): Observable<UIUser[]>;
     getUser(userId: string): Observable<UIUser>;
@@ -147,7 +147,7 @@ export interface UsersService {
 
 ```typescript
 
-// platform-ui/src/app/portal/community/services/real-api/users.service.ts
+// platform-ui/platform-ui/src/app/portal/community/services/real-api/users.service.ts
 @Injectable({
     providedIn: 'root',
 })
@@ -197,7 +197,7 @@ export class APIUsersService implements UsersService {
 
 
 ```typescript
-// platform-ui/src/app/portal/community/services/mock/users.service.ts
+// platform-ui/platform-ui/src/app/portal/community/services/mock/users.service.ts
 @Injectable({
   providedIn: 'root',
 })
@@ -224,7 +224,7 @@ export class MockUsersService implements UsersService {
 **Dependency Injection**:
 
 ```typescript
-// platform-ui/src/app/portal/community/community.provider.ts
+// platform-ui/platform-ui/src/app/portal/community/community.provider.ts
 export const communityProviders = [
   { provide: UsersService, useClass: environment.production ? APIUsersService : MockUsersService }
 ];

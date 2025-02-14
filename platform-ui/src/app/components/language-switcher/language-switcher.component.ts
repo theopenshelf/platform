@@ -1,4 +1,4 @@
-import { NgForOf, NgIf, TitleCasePipe } from '@angular/common';
+import { NgForOf, TitleCasePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,6 @@ import { TuiButtonSelect } from '@taiga-ui/kit/directives/button-select';
   selector: 'language-switcher',
   imports: [
     NgForOf,
-    NgIf,
     ReactiveFormsModule,
     TitleCasePipe,
     TuiBadge,

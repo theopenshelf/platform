@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiAxes, TuiBarChart, TuiLineChartHint } from '@taiga-ui/addon-charts';
+import { TuiAxes, TuiBarChart } from '@taiga-ui/addon-charts';
 import { TuiHint } from '@taiga-ui/core';
 import { DASHBOARD_SERVICE_TOKEN } from '../../../admin.providers';
 import { DashboardService, UIDashboardBorrowesMetrics, UIDashboardBorrowesOverTimeData } from '../../../services/dashboard.service';
@@ -11,7 +11,6 @@ import { DashboardService, UIDashboardBorrowesMetrics, UIDashboardBorrowesOverTi
     TuiAxes,
     TuiBarChart,
     TuiHint,
-    TuiLineChartHint,
     TranslateModule
   ],
   templateUrl: './borrows-stat.component.html',
