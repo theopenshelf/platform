@@ -1701,6 +1701,82 @@ paths:
         "404":
           description: User not found
 
+  /community/libraries:
+    get:
+      operationId: getCommunityLibraries
+      summary: Retrieve all community libraries
+      tags:
+        - libraries-community-api
+      responses:
+        "200":
+          description: A list of community libraries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Library"
+    post:
+      operationId: addCommunityLibrary
+      summary: Add a new community library
+      tags:
+        - libraries-community-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Library"
+      responses:
+        "201":
+          description: Library created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+
+  /community/libraries/{library-id}:
+    parameters:
+      - $ref: "#/components/parameters/libraryId"
+    get:
+      operationId: getCommunityLibrary
+      summary: Retrieve a specific community library by ID
+      tags:
+        - libraries-community-api
+      responses:
+        "200":
+          description: A single community library
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+    put:
+      operationId: updateCommunityLibrary
+      summary: Update an existing community library
+      tags:
+        - libraries-community-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Library"
+      responses:
+        "200":
+          description: Library updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Library"
+    delete:
+      operationId: deleteCommunityLibrary
+      summary: Delete a community library
+      tags:
+        - libraries-community-api
+      responses:
+        "204":
+          description: Library deleted successfully
+
 components:
   #####################################################
   # Predefined Components
@@ -1725,6 +1801,14 @@ components:
       name: user-id
       in: path
       description: User ID
+      required: true
+      schema:
+        type: string
+        format: uuid
+    libraryId:
+      name: library-id
+      in: path
+      description: Library ID
       required: true
       schema:
         type: string
@@ -2340,6 +2424,49 @@ components:
         returned-late:
           type: integer
           example: 1
+
+    Library:
+      type: object
+      required:
+        - id
+        - name
+        - isCommunityAccessible
+        - requiresApproval
+        - freeAccess
+        - admins
+        - location
+        - instructions
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        isCommunityAccessible:
+          type: boolean
+        requiresApproval:
+          type: boolean
+        freeAccess:
+          type: boolean
+        admins:
+          type: array
+          items:
+            type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        instructions:
+          type: string
+
+    Location:
+      type: object
+      required:
+        - name
+        - address
+      properties:
+        name:
+          type: string
+        address:
+          type: string
 
   responses:
     OK_200_GET_HELLO_WORLD:
