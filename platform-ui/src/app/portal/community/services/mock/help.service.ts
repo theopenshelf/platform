@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { loadHelpData } from "../../../../mock/help-loader";
 import { UIHelpArticle, UIHelpCategory } from "../../../../models/UIHelp";
 import { HelpService } from "../help.service";
-import { loadHelpData } from "./help-loader";
 
 @Injectable({
     providedIn: 'root',

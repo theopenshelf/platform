@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { loadCustomPagesData } from "../../../../mock/custom-page-loader";
+import { loadHelpData } from "../../../../mock/help-loader";
 import { UICustomPage } from "../../../../models/UICustomPage";
 import { UIHelpArticle, UIHelpCategory } from "../../../../models/UIHelp";
-import { loadCustomPagesData } from "../../../community/services/mock/custom-page-loader";
-import { loadHelpData } from "../../../community/services/mock/help-loader";
 import { CustomPagesService } from "../custom-pages.service";
 
 

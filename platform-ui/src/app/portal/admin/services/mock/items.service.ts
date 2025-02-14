@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { loadItems } from '../../../community/services/mock/items-loader';
+import { loadItems } from '../../../../mock/items-loader';
 import { ItemsService, UIItemWithStats, UIItemWithStatsPagination } from '../items.service';
 
 @Injectable({

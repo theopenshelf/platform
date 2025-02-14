@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { loadCustomPagesData } from "../../../../mock/custom-page-loader";
 import { UICustomPage } from "../../../../models/UICustomPage";
 import { CustomPageService } from "../custom-page.service";
-import { loadCustomPagesData } from "./custom-page-loader";
 
 @Injectable({
     providedIn: 'root',

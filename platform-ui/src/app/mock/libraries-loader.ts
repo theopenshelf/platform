@@ -1,4 +1,4 @@
-import { UILibrary } from '../../../../models/UILibrary';
+import { UILibrary } from '../models/UILibrary';
 import librariesData from './libraries.json';
 
 

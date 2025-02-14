@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { loadLibrariesData } from '../../../../mock/libraries-loader';
 import { UILibrary } from '../../../../models/UILibrary';
 import { LibrariesService } from '../libraries.service';
-import { loadLibrariesData } from './libraries-loader';
 
 @Injectable({
   providedIn: 'root',

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { loadItems } from '../../../../mock/items-loader';
 import { GetBorrowRecordsCountByStatusParams } from '../../../../models/GetBorrowRecordsCountByStatusParams';
 import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
@@ -9,7 +10,6 @@ import { UIItem } from '../../../../models/UIItem';
 import { UIItemsPagination } from '../../../../models/UIItemsPagination';
 import { UIUser } from '../../../../models/UIUser';
 import { ItemsService } from '../items.service';
-import { loadItems } from './items-loader';
 @Injectable({
   providedIn: 'root',
 })

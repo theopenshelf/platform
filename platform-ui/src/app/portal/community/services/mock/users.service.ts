@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import users from '../../../../mock/users.json';
 import { UIUser } from '../../../../models/UIUser';
 import { UsersService } from '../users.service';
-import users from './users.json';
 
 @Injectable({
   providedIn: 'root',
