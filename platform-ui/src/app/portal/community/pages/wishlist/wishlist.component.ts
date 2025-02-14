@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FilteredAndPaginatedItemsComponent } from '../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { FilteredAndPaginatedComponent } from '../../../../components/filtered-and-paginated/filtered-and-paginated.component';
-import { GetItemsParams } from '../../services/items.service';
+import { GetItemsParams } from '../../../../models/GetItemsParams';
 
 @Component({
   standalone: true,

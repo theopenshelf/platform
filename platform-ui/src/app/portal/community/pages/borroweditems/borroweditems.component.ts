@@ -9,11 +9,11 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UILibrary } from '../../../../models/UILibrary';
 import {
   LIBRARIES_SERVICE_TOKEN
 } from '../../community.provider';
-import { GetItemsParams } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
 
 @Component({

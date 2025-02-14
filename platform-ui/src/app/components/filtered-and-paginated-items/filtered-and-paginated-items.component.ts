@@ -4,13 +4,14 @@ import { Component, ContentChild, Inject, input, TemplateRef, ViewChild } from '
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../global.provider';
+import { GetItemsParams } from '../../models/GetItemsParams';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { isLibraryAdmin, UILibrary } from '../../models/UILibrary';
 import { UIPagination } from '../../models/UIPagination';
 import { CATEGORIES_SERVICE_TOKEN, ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../portal/community/community.provider';
 import { CategoriesService } from '../../portal/community/services/categories.service';
-import { GetItemsParams, ItemsService } from '../../portal/community/services/items.service';
+import { ItemsService } from '../../portal/community/services/items.service';
 import { LibrariesService } from '../../portal/community/services/libraries.service';
 import { AuthService, UserInfo } from '../../services/auth.service';
 import { BorrowDialogService } from '../borrow-dialog/borrow-dialog.service';

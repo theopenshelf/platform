@@ -16,6 +16,7 @@ import {
 } from '@taiga-ui/legacy';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../global.provider';
+import { GetItemsParams } from '../../models/GetItemsParams';
 import { UIBorrowDetailedStatus } from '../../models/UIBorrowStatus';
 import { UICategory } from '../../models/UICategory';
 import { UILibrary } from '../../models/UILibrary';
@@ -26,7 +27,7 @@ import {
   LIBRARIES_SERVICE_TOKEN,
 } from '../../portal/community/community.provider';
 import { CategoriesService } from '../../portal/community/services/categories.service';
-import { GetItemsParams, ItemsService } from '../../portal/community/services/items.service';
+import { ItemsService } from '../../portal/community/services/items.service';
 import { LibrariesService } from '../../portal/community/services/libraries.service';
 import { AuthService, UserInfo } from '../../services/auth.service';
 

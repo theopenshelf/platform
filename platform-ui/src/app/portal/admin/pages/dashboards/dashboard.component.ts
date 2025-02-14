@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { communityProviders } from '../../../community/community.provider';
-import { GetItemsParams } from '../../../community/services/items.service';
 import { BorrowsStatComponent } from '../../components/dashboards/borrows-stat/borrows-stat.component';
 import { ItemsCountComponent } from '../../components/dashboards/items-count/items-count.component';
 import { LibrariesCountComponent } from '../../components/dashboards/libraries-count/libraries-count.component';
