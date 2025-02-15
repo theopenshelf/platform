@@ -3,7 +3,6 @@ package dev.theopenshelf.platform.entities;
 import java.time.Instant;
 import java.util.UUID;
 
-
 import dev.theopenshelf.platform.model.Item;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -32,8 +31,6 @@ public class ItemEntity {
         return Item.builder()
                 .id(id)
                 .name(name)
-                .description(description)
-                .located(located)
-                ;
+                .description(description);
     }
 }
