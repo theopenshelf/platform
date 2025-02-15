@@ -437,6 +437,13 @@ export class FilteredAndPaginatedComponent implements OnInit {
 
   public resetItems() {
     this.currentPage = 0;
+    if (this.getItemsCountByStatus()) {
+      this.getItemsCountByStatus()!(
+        this.getItemsParams()
+      ).subscribe((countMap) => {
+        this.statusCounts = countMap;
+      });
+    }
     this.fetchItems();
   }
 
