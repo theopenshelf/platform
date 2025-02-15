@@ -59,7 +59,6 @@ export class APIItemsService implements ItemsService {
 
     return this.itemsApiService
       .getItems(
-        currentUser,
         borrowedByCurrentUser,
         borrowedBy,
         libraryIds,
@@ -389,7 +388,6 @@ export class APIItemsService implements ItemsService {
 
   getBorrowRecordsCountByStatus(params: GetBorrowRecordsCountByStatusParams): Observable<Map<UIBorrowDetailedStatus, number>> {
     const {
-      currentUser,
       borrowedByCurrentUser,
       borrowedBy,
       itemId,
@@ -401,7 +399,6 @@ export class APIItemsService implements ItemsService {
     statusesValue = statuses ? statuses.map(status => this.statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
 
     return this.borrowRecordsApiService.getBorrowRecordsCountByStatus(
-      currentUser,
       borrowedByCurrentUser,
       borrowedBy,
       itemId,

@@ -3,15 +3,15 @@ import { UIBorrowDetailedStatus } from "./UIBorrowStatus";
 export interface UIBorrowRecord {
   id: string;
   borrowedBy: string;
+
+  status: UIBorrowDetailedStatus;
+
   startDate: Date;
   endDate: Date;
   reservationDate: Date;
   pickupDate?: Date;
   effectiveReturnDate?: Date;
-  status: UIBorrowDetailedStatus;
 }
-
-
 
 export function getBorrowDurationInDays(borrowRecord: UIBorrowRecord): number {
   const endDate = borrowRecord.effectiveReturnDate || borrowRecord.endDate;

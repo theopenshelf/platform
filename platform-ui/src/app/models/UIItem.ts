@@ -3,15 +3,20 @@ import { UICategory } from './UICategory';
 
 export interface UIItem {
   id: string;
+
   name: string;
-  owner: string;
   imageUrl: string;
   description: string;
   shortDescription: string;
   category: UICategory;
   favorite: boolean;
-  borrowCount: number;
+  owner: string;
   libraryId: string;
+
   borrowRecords: UIBorrowRecord[];
+
   createdAt: Date | undefined;
+
+  //statistics
+  borrowCount: number;
 }
