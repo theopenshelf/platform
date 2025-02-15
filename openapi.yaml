@@ -625,12 +625,6 @@ paths:
       tags:
         - borrow-records-community-api
       parameters:
-        - name: currentUser
-          in: query
-          description: Filter items by current user
-          required: false
-          schema:
-            type: boolean
         - name: borrowedByCurrentUser
           in: query
           description: Filter items borrowed by current user
@@ -865,12 +859,6 @@ paths:
       tags:
         - items-admin-api
       parameters:
-        - name: currentUser
-          in: query
-          description: Filter items by current user
-          required: false
-          schema:
-            type: boolean
         - name: borrowedByCurrentUser
           in: query
           description: Filter items borrowed by current user

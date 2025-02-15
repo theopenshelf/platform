@@ -24,7 +24,6 @@ export class APIItemsService implements ItemsService {
 
   getItems(params: GetItemsParams): Observable<UIItemsPagination> {
     const {
-      currentUser,
       borrowedByCurrentUser,
       borrowedBy,
       libraryIds,
@@ -119,7 +118,6 @@ export class APIItemsService implements ItemsService {
 
   getBorrowRecords(params: GetItemsParams): Observable<UIBorrowRecordsPagination> {
     const {
-      currentUser,
       borrowedByCurrentUser,
       borrowedBy,
       statuses,
@@ -166,7 +164,6 @@ export class APIItemsService implements ItemsService {
 
     return this.borrowRecordsApiService
       .getBorrowRecords(
-        currentUser,
         borrowedByCurrentUser,
         borrowedBy,
         itemId,

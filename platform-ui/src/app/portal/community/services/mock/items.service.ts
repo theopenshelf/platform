@@ -20,7 +20,6 @@ export class MockItemsService implements ItemsService {
 
   getItems(params: GetItemsParams): Observable<UIItemsPagination> {
     const {
-      currentUser,
       borrowedByCurrentUser,
       statuses,
       libraryIds,
@@ -39,12 +38,7 @@ export class MockItemsService implements ItemsService {
     let borrowedBy = params.borrowedBy;
 
     let filteredItems = this.items;
-    // Filtering logic
-    if (currentUser) {
-      filteredItems = filteredItems.filter(
-        (item) => item.owner === 'me@example.com',
-      );
-    }
+
     if (borrowedByCurrentUser) {
       borrowedBy = '11';
     }

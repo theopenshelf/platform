@@ -3,7 +3,6 @@ import { UIBorrowDetailedStatus } from './UIBorrowStatus';
 
 export interface GetItemsParams {
     itemId?: string;
-    currentUser?: boolean;
 
     borrowedByCurrentUser?: boolean;
     borrowedBy?: string;
