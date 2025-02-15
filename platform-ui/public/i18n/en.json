@@ -466,11 +466,11 @@
     "chooseDates": "Choose dates",
     "heading": {
       "reserve": "Reserve the item",
-      "reserveConfirm": "Confirm the reservation",
+      "reserve-confirm": "Confirm the reservation",
       "pickup": "Pickup the item",
-      "pickupConfirm": "Confirm the pickup",
+      "pickup-confirm": "Confirm the pickup",
       "return": "Return the item",
-      "returnConfirm": "Confirm the return",
+      "return-confirm": "Confirm the return",
       "cancel": "Cancel the reservation"
     },
     "cancelButtonLabel": "Cancel",
@@ -497,5 +497,5 @@
       "pickup": "Approve Pickup",
       "return": "Approve Return"
     }
-  },
+  }
 }

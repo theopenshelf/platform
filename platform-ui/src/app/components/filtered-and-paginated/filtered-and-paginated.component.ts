@@ -257,23 +257,29 @@ export class FilteredAndPaginatedComponent implements OnInit {
           this.getItemsParams()
         ).subscribe((countMap) => {
           this.statusCounts = countMap;
-          let i = 0;
-          for (const status of this.statuses) {
-            if (this.getStatusCount(status.status) > 0) {
-              this.activeStatusIndex = i;
-              break;
-            }
-            i++;
-          }
           if (this.activeStatusIndex === -1) {
-            this.activeStatusIndex = 0;
+            let i = 0;
+            for (const status of this.statuses) {
+              if (this.getStatusCount(status.status) > 0) {
+                this.activeStatusIndex = i;
+                break;
+              }
+              i++;
+            }
+            if (this.activeStatusIndex === -1) {
+              this.activeStatusIndex = 0;
+            }
+            this.selectedStatus = this.statuses[this.activeStatusIndex].status;
           }
+
 
         });
       } else {
-        this.activeStatusIndex = 0;
+        if (this.activeStatusIndex === -1) {
+          this.activeStatusIndex = 0;
+          this.selectedStatus = this.statuses[this.activeStatusIndex].status;
+        }
       }
-      this.selectedStatus = this.statuses[this.activeStatusIndex].status;
 
       this.fetchItems();
     });
@@ -306,7 +312,6 @@ export class FilteredAndPaginatedComponent implements OnInit {
           new TuiDay(start[2], start[1] - 1, start[0]),
           new TuiDay(end[2], end[1] - 1, end[0]),
         );
-        this.fetchItems();
       }
     });
 
@@ -365,7 +370,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
   goToPage(page: number) {
     this.currentPage = page;
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.fetchItems();
+    this.updateQueryParams();
   }
 
   onTextFilterChange() {
@@ -380,6 +385,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
       this.selectedCategories.add(category.name);
     }
     this.resetItems();
+    this.updateQueryParams();
   }
 
   toggleLibrarySelection(library: UILibrary) {
@@ -389,6 +395,8 @@ export class FilteredAndPaginatedComponent implements OnInit {
       this.selectedLibraries[library.id] = true;
     }
     this.resetItems();
+    this.updateQueryParams();
+
   }
 
   selectedLibrariesCount(): number {
@@ -459,11 +467,9 @@ export class FilteredAndPaginatedComponent implements OnInit {
         this.statusCounts = countMap;
       });
     }
-    this.fetchItems();
   }
 
   protected fetchItems(): void {
-
     let statuses: UIBorrowDetailedStatus[] = [];
     if (this.approvalTab()) {
       switch (this.selectedStatus) {
@@ -526,7 +532,6 @@ export class FilteredAndPaginatedComponent implements OnInit {
   protected selectStatus(status: StatusTab): void {
     this.selectedStatus = status;
     this.currentPage = 0;
-    this.fetchItems();
     this.updateQueryParams();
   }
 
@@ -594,7 +599,9 @@ export class FilteredAndPaginatedComponent implements OnInit {
       relativeTo: this.route,
       queryParams: queryParams,
       queryParamsHandling: 'merge',
+      replaceUrl: true // Avoid adding to history stack
     });
+
   }
   public getStatusText(status: StatusTab): string {
     return this.translate.instant(`filteredAndPaginated.${status.toLowerCase()}`);

@@ -1,6 +1,6 @@
 import { Component, computed, effect, Inject, OnDestroy, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
 import {
@@ -83,7 +83,9 @@ export default class CommunityLayoutComponent extends TuiPortals implements OnDe
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
-    private eventService: EventService
+    private eventService: EventService,
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     super();
     this.user = this.authService.getCurrentUserInfo();
