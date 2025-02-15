@@ -10,26 +10,20 @@ import { MockCustomPageService } from './services/mock/custom-pages.service';
 import { MockHelpService } from './services/mock/help.service';
 import { MockItemsService } from './services/mock/items.service';
 import { MockLibrariesService } from './services/mock/libraries.service';
-import { MockProfileService } from './services/mock/profile.service';
 import { MockUsersService } from './services/mock/users.service';
-import { ProfileService } from './services/profile.service';
 import { APICategoriesService } from './services/real-api/categories.service';
 import { APICustomPageService } from './services/real-api/custom-pages.service';
 import { APIHelpService } from './services/real-api/help.service';
 import { APIItemsService } from './services/real-api/items.service';
-import { ApiProfileService } from './services/real-api/profile.service';
+import { ApiLibrariesService } from './services/real-api/libraries.service';
 import { APIUsersService } from './services/real-api/users.service';
 import { UsersService } from './services/users.service';
-import { ApiLibrariesService } from './services/real-api/libraries.service';
 
 export const ITEMS_SERVICE_TOKEN = new InjectionToken<ItemsService>(
   'ItemsService',
 );
 export const CATEGORIES_SERVICE_TOKEN = new InjectionToken<CategoriesService>(
   'CategoriesService',
-);
-export const PROFILE_SERVICE_TOKEN = new InjectionToken<ProfileService>(
-  'ProfileService',
 );
 export const LIBRARIES_SERVICE_TOKEN = new InjectionToken<LibrariesService>(
   'LibrariesService',
@@ -54,12 +48,6 @@ export const communityProviders: Provider[] = [
     useExisting: environment.useMockApi
       ? MockCategoriesService
       : APICategoriesService,
-  },
-  {
-    provide: PROFILE_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
-      ? MockProfileService
-      : ApiProfileService,
   },
   {
     provide: LIBRARIES_SERVICE_TOKEN,

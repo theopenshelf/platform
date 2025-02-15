@@ -23,4 +23,8 @@ export class MockUsersService implements UsersService {
   findUser(query: string, limit?: number): Observable<UIUser[]> {
     return of(users.filter((user) => user.username.includes(query) || user.email.includes(query)).slice(0, limit));
   }
+
+  updateUser(user: UIUser): Observable<UIUser> {
+    return of(user);
+  }
 }

@@ -10,8 +10,8 @@ import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
-import { PROFILE_SERVICE_TOKEN } from '../../../community.provider';
-import { ProfileService } from '../../../services/profile.service';
+import { USERS_SERVICE_TOKEN } from '../../../community.provider';
+import { UsersService } from '../../../services/users.service';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +31,7 @@ export class ProfileComponent {
 
   constructor(
     private fb: FormBuilder,
-    @Inject(PROFILE_SERVICE_TOKEN) private profileService: ProfileService,
+    @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
   ) {
     this.profileForm = this.fb.group({
@@ -55,10 +55,10 @@ export class ProfileComponent {
 
   onSave(): void {
     if (this.profileForm.valid) {
-      this.profileService
-        .updateProfile(this.profileForm.value)
-        .subscribe((profile) => {
-          console.log('Profile data saved:', profile);
+      this.usersService
+        .updateUser(this.profileForm.value)
+        .subscribe((user) => {
+          console.log('Profile data saved:', user);
         });
     } else {
       console.error('Form is invalid');

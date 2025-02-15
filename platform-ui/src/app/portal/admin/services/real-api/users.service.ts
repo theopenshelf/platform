@@ -29,4 +29,49 @@ export class ApiUsersService implements UsersService {
       newPassword: newPassword,
     });
   }
+
+  private mapToApiUser(uiUser: UIUser): UserWithStats {
+    return {
+      id: uiUser.id,
+      email: uiUser.email,
+      flatNumber: uiUser.flatNumber,
+      streetAddress: uiUser.streetAddress,
+      city: uiUser.city,
+      postalCode: uiUser.postalCode,
+      country: uiUser.country,
+      username: uiUser.username,
+      firstName: uiUser.firstName,
+      lastName: uiUser.lastName,
+      isEmailVerified: uiUser.isEmailVerified,
+      disabled: uiUser.disabled,
+      avatarUrl: uiUser.avatarUrl,
+      preferredLanguage: uiUser.preferredLanguage,
+      roles: [],
+      borrowedItems: uiUser.borrowedItems,
+      returnedLate: uiUser.returnedLate,
+      successRate: uiUser.successRate,
+    };
+  }
+
+  private mapToUIUser(user: UserWithStats): UIUser {
+    return {
+      id: user.id,
+      email: user.email || '',
+      flatNumber: user.flatNumber || '',
+      streetAddress: user.streetAddress || '',
+      city: user.city || '',
+      postalCode: user.postalCode || '',
+      country: user.country || '',
+      username: user.username || '',
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      isEmailVerified: user.isEmailVerified || false,
+      disabled: user.disabled || false,
+      borrowedItems: user.borrowedItems,
+      returnedLate: user.returnedLate,
+      successRate: user.successRate,
+      avatarUrl: user.avatarUrl || '',
+      preferredLanguage: user.preferredLanguage || '',
+    };
+  }
 }

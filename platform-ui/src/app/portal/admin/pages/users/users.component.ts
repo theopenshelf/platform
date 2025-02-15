@@ -36,16 +36,7 @@ import {
 } from '../../components/tos-table/tos-table.component';
 import { UsersService } from '../../services/users.service';
 
-export type User1 = {
-  id: string;
-  username: string;
-  email: string;
-  flatNumber: string;
-  address: string;
-  borrowedItems: number;
-  returnedLate: number;
-  successRate: number;
-} & Record<string, any>;
+
 
 @Component({
   standalone: true,
@@ -119,7 +110,7 @@ export class UsersComponent {
         size: 'm',
       },
       {
-        key: 'address',
+        key: 'streetAddress',
         label: this.translate.instant('users.columns.address'),
         visible: false,
         sortable: false,

@@ -30,6 +30,10 @@ export class MockAuthService implements AuthService {
       borrowedItems: 0,
       returnedLate: 0,
       successRate: 0,
+      streetAddress: '123 Main St',
+      city: 'Anytown',
+      postalCode: '12345',
+      country: 'USA',
     },
   };
 

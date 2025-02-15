@@ -825,29 +825,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  example: "updateduser@example.com"
-                username:
-                  type: string
-                  example: "updateduser"
-                streetAddress:
-                  type: string
-                  example: "456 New St"
-                city:
-                  type: string
-                  example: "Newtown"
-                postalCode:
-                  type: string
-                  example: "67890"
-                country:
-                  type: string
-                  example: "Newland"
-              required:
-                - email
-                - username
+              $ref: "#/components/schemas/User"
       responses:
         "200":
           description: User profile updated successfully
@@ -1917,7 +1895,7 @@ components:
           type: string
         email:
           type: string
-        flat:
+        flatNumber:
           type: string
           example: A701
         roles:
@@ -1925,6 +1903,17 @@ components:
           items:
             type: string
             example: "admin"
+        streetAddress:
+          type: string
+        city:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        preferredLanguage:
+          type: string
+          example: "en"
 
     Item:
       type: object
@@ -2194,13 +2183,16 @@ components:
         - firstName
         - lastName
         - email
-        - flatNumber
-        - address
         - borrowedItems
         - returnedLate
         - successRate
         - disabled
         - isEmailVerified
+        - streetAddress
+        - city
+        - postalCode
+        - country
+        - roles
       properties:
         id:
           type: string
@@ -2212,10 +2204,6 @@ components:
           type: string
         email:
           type: string
-        flatNumber:
-          type: string
-        address:
-          type: string
         borrowedItems:
           type: integer
         returnedLate:
@@ -2226,6 +2214,24 @@ components:
           type: boolean
         isEmailVerified:
           type: boolean
+        flatNumber:
+          type: string
+        streetAddress:
+          type: string
+        city:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+        avatarUrl:
+          type: string
+        preferredLanguage:
+          type: string
 
     DashboardBorrowesOverTimeData:
       type: object

@@ -29,6 +29,10 @@ export class APIAuthService implements AuthService {
       borrowedItems: 0,
       returnedLate: 0,
       successRate: 0,
+      streetAddress: 'unknown',
+      city: 'unknown',
+      postalCode: 'unknown',
+      country: 'unknown',
     },
   };
 
@@ -69,6 +73,10 @@ export class APIAuthService implements AuthService {
               borrowedItems: 0,
               returnedLate: 0,
               successRate: 0,
+              streetAddress: user.streetAddress ?? 'unknown',
+              city: user.city ?? 'unknown',
+              postalCode: user.postalCode ?? 'unknown',
+              country: user.country ?? 'unknown',
             };
             observer.next(true);
             observer.complete();
