@@ -115,7 +115,10 @@ export class NotificationsPopupComponent implements OnInit {
       case UINotificationType.ITEM_DUE:
       case UINotificationType.ITEM_BORROW_RESERVATION_DATE_START:
       case UINotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
-        return notification.payload?.itemId
+      case UINotificationType.ITEM_PICKUP_APPROVED:
+      case UINotificationType.ITEM_RETURN_APPROVED:
+      case UINotificationType.ITEM_RESERVATION_APPROVED:
+        return notification.payload?.item?.id
           ? `/community/items/${notification.payload.item.id}`
           : null;
 
