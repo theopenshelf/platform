@@ -252,14 +252,29 @@ export class FilteredAndPaginatedComponent implements OnInit {
       this.activeStatusIndex = this.statuses.findIndex(
         (status) => status!.status === this.selectedStatus,
       );
-
       if (this.getItemsCountByStatus()) {
         this.getItemsCountByStatus()!(
           this.getItemsParams()
         ).subscribe((countMap) => {
           this.statusCounts = countMap;
+          let i = 0;
+          for (const status of this.statuses) {
+            if (this.getStatusCount(status.status) > 0) {
+              this.activeStatusIndex = i;
+              break;
+            }
+            i++;
+          }
+          if (this.activeStatusIndex === -1) {
+            this.activeStatusIndex = 0;
+          }
+
         });
+      } else {
+        this.activeStatusIndex = 0;
       }
+      this.selectedStatus = this.statuses[this.activeStatusIndex].status;
+
       this.fetchItems();
     });
 

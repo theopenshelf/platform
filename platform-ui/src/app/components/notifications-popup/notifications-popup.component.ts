@@ -32,6 +32,7 @@ import { SharedModule } from '../shared-module/shared-module.component';
   styleUrls: ['./notifications-popup.component.scss']
 })
 export class NotificationsPopupComponent implements OnInit {
+
   notifications: UINotification[] = [];
   protected unreadNotificationsCount: number = 0;
 
@@ -53,11 +54,7 @@ export class NotificationsPopupComponent implements OnInit {
         this.refreshNotifications();
       }
     });
-    effect(() => {
-      if (this.isPopupVisible()) {
-        this.markAllAsRead();
-      }
-    });
+
   }
 
   ngOnInit() {
@@ -83,6 +80,7 @@ export class NotificationsPopupComponent implements OnInit {
 
   markAsRead(notification: UINotification): void {
     notification.alreadyRead = true;
+    this.markAllAsRead();
   }
 
   markAllAsRead(): void {
@@ -147,7 +145,6 @@ export class NotificationsPopupComponent implements OnInit {
   }
 
   openPopup() {
-    this.markAllAsRead();
     this.refreshNotifications();
     this.isPopupVisible.set(true);
   }
@@ -163,5 +160,9 @@ export class NotificationsPopupComponent implements OnInit {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.closePopup();
     }
+  }
+
+  onNotificationHover(notification: UINotification) {
+    this.markAsRead(notification);
   }
 }

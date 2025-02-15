@@ -3,6 +3,7 @@ import { globalProviders } from '../../global.provider';
 import CommunityLayoutComponent from './community-layout/community-layout.component';
 import { communityProviders } from './community.provider';
 import { AddItemComponent } from './pages/add-item/add-item.component';
+import { ApprovalDashboardComponent } from './pages/approval-dashboard/approval-dashboard.component';
 import { BorrowedItemsComponent } from './pages/borroweditems/borroweditems.component';
 import { CustomPageComponent } from './pages/custom-page/custom-page.component';
 import { HelpCenterComponent } from './pages/help-center/help-center.component';
@@ -34,6 +35,7 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'wishlist', component: WishlistComponent },
       { path: 'help-center', component: HelpCenterComponent },
       { path: 'page/:ref', component: CustomPageComponent },
+      { path: 'approval-dashboard', component: ApprovalDashboardComponent },
       {
         path: 'settings',
         loadChildren: () =>

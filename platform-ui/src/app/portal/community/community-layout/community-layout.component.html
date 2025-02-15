@@ -14,24 +14,42 @@
       <div class="borrow-item-button">
         <button
           tuiButton
+          iconStart="/borrow-white.png"
           routerLink="/community/borrowed-items"
           [queryParams]="{ selectedStatus: 'borrowed-active' }"
           size="m"
           type="button"
         >
-          <tui-icon icon="/borrow-white.png" />
           <tui-badge-notification class="unreadNotificationsCount" size="s">
             {{ totalItemsCurrentlyBorrowed }}
           </tui-badge-notification>
         </button>
       </div>
     }
+      <div class="approval-dashboard-button">
+        <button
+        iconStart="@tui.stamp"
+        tuiIconButton
+        class="approval-dashboard-button"
+        routerLink="/community/approval-dashboard"
+        size="m"
+        type="button"
+      >
+      @if (totalApprovalRequests > 0) {
+        <tui-badge-notification class="unreadNotificationsCount approval-dashboard-badge" size="s">
+            {{ totalApprovalRequests }}
+          </tui-badge-notification>
+        }
+        </button>
+      </div>
+    
+
     <button
       iconStart="@tui.heart"
       tuiIconButton
       class="wishlist-button"
       routerLink="/community/wishlist"
-      size="s"
+      size="m"
       type="button"
     ></button>
     <notifications-popup></notifications-popup>

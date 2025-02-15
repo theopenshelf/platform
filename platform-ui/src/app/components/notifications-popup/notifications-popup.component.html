@@ -2,6 +2,7 @@
   iconStart="@tui.bell"
   (click)="toggleNotificationsPopup()"
   tuiIconButton
+  size="m"
   type="button"
   i18n="@@notificationsButton"
 >
@@ -32,6 +33,7 @@
         <div
           class="notification-item"
           [class.unread]="!notification.alreadyRead"
+          (mouseenter)="onNotificationHover(notification)"
         >
           <img
             class="notification-image"

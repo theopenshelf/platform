@@ -1,23 +1,12 @@
 [
     {
-      "id": 1,
+      "id": 4,
       "author": "Platform",
-      "date": "2024-11-19",
-      "type": "item-reserved-no-longer-available",
-      "alreadyRead": true,
+      "date": "2024-11-21",
+      "type": "item-available",
+      "alreadyRead": false,
       "payload": {
-        "itemId": "1"
-      }
-    },
-    {
-      "id": 2,
-      "author": "Platform",
-      "date": "2024-11-19",
-      "type": "item-borrow-reservation-date-start",
-      "alreadyRead": true,
-      "payload": {
-        "itemId": "18"
-
+        "itemId": "12"
       }
     },
     {
@@ -32,13 +21,24 @@
       }
     },
     {
-      "id": 4,
+      "id": 2,
       "author": "Platform",
-      "date": "2024-11-21",
-      "type": "item-available",
-      "alreadyRead": false,
+      "date": "2024-11-19",
+      "type": "item-borrow-reservation-date-start",
+      "alreadyRead": true,
       "payload": {
-        "itemId": "12"
+        "itemId": "18"
+
+      }
+    },
+    {
+      "id": 1,
+      "author": "Platform",
+      "date": "2024-11-19",
+      "type": "item-reserved-no-longer-available",
+      "alreadyRead": true,
+      "payload": {
+        "itemId": "1"
       }
     }
   ]

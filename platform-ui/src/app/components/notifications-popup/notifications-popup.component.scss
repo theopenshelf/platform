@@ -122,3 +122,13 @@
   border-radius: 100%;
   background-color: var(--tos-text-accent);
 }
+
+.unreadNotificationsCount {
+  position: relative !important;
+  top: -8px !important;
+  left: -4px !important;
+  margin: 0.2rem;
+  background: linear-gradient(#b91a1a, #f52222);
+  color: var(--tos-text-primary);
+
+}

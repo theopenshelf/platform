@@ -72,6 +72,7 @@ export default class CommunityLayoutComponent extends TuiPortals implements OnDe
   protected switch = false;
   protected readonly routes: any = {};
   totalItemsCurrentlyBorrowed: number = 0;
+  totalApprovalRequests: number = 0;
   receivedEvent = computed(() =>
     this.eventService.event()
   );
@@ -116,7 +117,21 @@ export default class CommunityLayoutComponent extends TuiPortals implements OnDe
         statuses: [UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed, UIBorrowDetailedStatus.Borrowed_Active, UIBorrowDetailedStatus.Borrowed_DueToday, UIBorrowDetailedStatus.Borrowed_Late],
       })
       .subscribe((countsByStatus) => {
-        this.totalItemsCurrentlyBorrowed = Array.from(countsByStatus.values()).reduce((sum, count) => sum + count, 0);
+        this.totalItemsCurrentlyBorrowed = 0;
+        for (const countByStatus of countsByStatus) {
+          this.totalItemsCurrentlyBorrowed += countByStatus[1];
+        }
+      });
+
+    this.itemsService
+      .getBorrowRecordsCountByStatus({
+        statuses: [UIBorrowDetailedStatus.Reserved_Unconfirmed, UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed, UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed],
+      })
+      .subscribe((countsByStatus) => {
+        this.totalApprovalRequests = 0;
+        for (const countByStatus of countsByStatus) {
+          this.totalApprovalRequests += countByStatus[1];
+        }
       });
   }
 }

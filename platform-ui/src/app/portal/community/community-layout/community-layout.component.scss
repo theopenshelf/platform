@@ -131,6 +131,7 @@ button.dropdown {
     left: -4px !important;
 }
 
+
 /* Responsive styling for horizontal menu */
 @media (max-width: 768px) {
     .horizontal-menu {
@@ -177,7 +178,14 @@ form {
 }
 
 .borrow-item-button tui-badge-notification {
-    background-color: var(--tos-text-accent);
+    background: linear-gradient(var(--tos-text-negative-hover), var(--tos-text-accent));
+
     color: var(--tos-text-primary);
     position: relative;
+}
+
+.approval-dashboard-badge {
+    color: var(--tos-text-primary);
+    margin: 0.2rem;
+    background: linear-gradient(#b91a1a, #f52222);
 }
