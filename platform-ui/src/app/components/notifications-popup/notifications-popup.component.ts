@@ -1,12 +1,12 @@
 import {
   Component,
+  effect,
   ElementRef,
-  EventEmitter,
   HostListener,
   Inject,
-  Input,
   OnInit,
-  Output,
+  output,
+  signal
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -16,48 +16,67 @@ import {
   globalProviders,
   NOTIFICATIONS_SERVICE_TOKEN,
 } from '../../global.provider';
+import { UINotification, UINotificationType } from '../../models/UINotification';
+import { communityProviders } from '../../portal/community/community.provider';
 import {
-  NotificationsService,
-  NotificationType,
-  UINotification,
+  NotificationsService
 } from '../../services/notifications.service';
 import { SharedModule } from '../shared-module/shared-module.component';
 
 @Component({
   standalone: true,
-  selector: 'app-notifications-popup',
+  selector: 'notifications-popup',
   imports: [TranslateModule, TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
-  providers: [...globalProviders],
+  providers: [...globalProviders, ...communityProviders],
   templateUrl: './notifications-popup.component.html',
-  styleUrls: ['./notifications-popup.component.scss'],
+  styleUrls: ['./notifications-popup.component.scss']
 })
 export class NotificationsPopupComponent implements OnInit {
   notifications: UINotification[] = [];
   protected unreadNotificationsCount: number = 0;
 
-  @Input() isPopupVisible: boolean = false; // Popup visibility controlled by the parent
-  @Output() isPopupVisibleChange: EventEmitter<boolean> =
-    new EventEmitter<boolean>(); // Emit changes to the parent
+  isPopupVisible = signal(false); // Popup visibility controlled by the parent
+  isPopupVisibleChange = output<boolean>(); // Emit changes to the parent
+
+  // Signal to trigger notifications refresh
+  refreshNotificationsSignal = signal(false);
 
   constructor(
     private elRef: ElementRef,
     private router: Router,
     @Inject(NOTIFICATIONS_SERVICE_TOKEN)
     private notificationsService: NotificationsService,
-  ) { }
+  ) {
+    effect(() => {
+      if (this.refreshNotificationsSignal()) {
+        this.refreshNotificationsSignal.set(false);
+        this.refreshNotifications();
+      }
+    });
+    effect(() => {
+      if (this.isPopupVisible()) {
+        this.markAllAsRead();
+      }
+    });
+  }
+
   ngOnInit() {
+    this.refreshNotifications();
+
+  }
+
+  refreshNotifications() {
     this.notificationsService
       .getNotifications()
       .subscribe((notifications: UINotification[]) => {
         this.notifications = notifications;
-        this.notificationsService.acknowledgeNotifications(this.notifications);
         this.unreadNotificationsCount =
           this.notificationsService.getUnreadNotificationsCount();
       });
   }
 
   toggleNotificationsPopup() {
-    this.isPopupVisible = !this.isPopupVisible;
+    this.isPopupVisible.set(!this.isPopupVisible());
     this.unreadNotificationsCount =
       this.notificationsService.getUnreadNotificationsCount();
   }
@@ -68,30 +87,37 @@ export class NotificationsPopupComponent implements OnInit {
 
   markAllAsRead(): void {
     this.notificationsService.acknowledgeNotifications(this.notifications);
+    this.unreadNotificationsCount = 0;
   }
 
-  getNotificationText(type: NotificationType): string {
+  getNotificationText(type: UINotificationType): string {
     switch (type) {
-      case NotificationType.ITEM_AVAILABLE:
-        return 'An item is now available!';
-      case NotificationType.ITEM_DUE:
-        return 'Your item is due soon!';
-      case NotificationType.ITEM_BORROW_RESERVATION_DATE_START:
-        return 'Your reserved item is ready to borrow.';
-      case NotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
-        return 'A reserved item is no longer available.';
+      case UINotificationType.ITEM_AVAILABLE:
+        return 'notifications.itemAvailable';
+      case UINotificationType.ITEM_DUE:
+        return 'notifications.itemDue';
+      case UINotificationType.ITEM_BORROW_RESERVATION_DATE_START:
+        return 'notifications.itemBorrowReservationDateStart';
+      case UINotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
+        return 'notifications.itemReservedNoLongerAvailable';
+      case UINotificationType.ITEM_PICKUP_APPROVED:
+        return 'notifications.itemPickupApproved';
+      case UINotificationType.ITEM_RETURN_APPROVED:
+        return 'notifications.itemReturnApproved';
+      case UINotificationType.ITEM_RESERVATION_APPROVED:
+        return 'notifications.itemReservationApproved';
       default:
-        return 'Notification';
+        return 'notifications.unknown';
     }
   }
 
   getNotificationLink(notification: UINotification): string | null {
     switch (notification.type) {
-      case NotificationType.ITEM_AVAILABLE:
-      case NotificationType.ITEM_DUE:
-      case NotificationType.ITEM_BORROW_RESERVATION_DATE_START:
-      case NotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
-        return notification.payload?.item
+      case UINotificationType.ITEM_AVAILABLE:
+      case UINotificationType.ITEM_DUE:
+      case UINotificationType.ITEM_BORROW_RESERVATION_DATE_START:
+      case UINotificationType.ITEM_RESERVED_NO_LONGER_AVAILABLE:
+        return notification.payload?.itemId
           ? `/community/items/${notification.payload.item.id}`
           : null;
 
@@ -121,12 +147,14 @@ export class NotificationsPopupComponent implements OnInit {
   }
 
   openPopup() {
-    this.isPopupVisible = true;
+    this.markAllAsRead();
+    this.refreshNotifications();
+    this.isPopupVisible.set(true);
   }
 
   // Close the popup (manually triggered or on outside click)
   closePopup() {
-    this.isPopupVisible = false;
+    this.isPopupVisible.set(false);
   }
 
   // Close the popup when clicking outside of it

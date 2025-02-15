@@ -34,7 +34,15 @@
     "button": "Notifications",
     "title": "Notifications",
     "closeButton": "Close",
-    "moreButton": "More"
+    "moreButton": "More",
+    "itemAvailable": "Item is available",
+    "itemDue": "Item is due",
+    "itemBorrowReservationDateStart": "Item borrow reservation date start",
+    "itemReservedNoLongerAvailable": "Item reserved no longer available",
+    "itemPickupApproved": "Item pickup approved",
+    "itemReturnApproved": "Item return approved",
+    "itemReservationApproved": "Item reservation approved",
+    "unknown": "Unknown"
   },
   "forgotPassword": {
     "title": "Forgot Password",
@@ -489,5 +497,5 @@
       "pickup": "Approve Pickup",
       "return": "Approve Return"
     }
-  }
+  },
 }

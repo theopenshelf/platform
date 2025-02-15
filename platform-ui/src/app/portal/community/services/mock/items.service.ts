@@ -8,7 +8,9 @@ import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../../..
 import { UIBorrowDetailedStatus, UIBorrowStatus } from '../../../../models/UIBorrowStatus';
 import { UIItem } from '../../../../models/UIItem';
 import { UIItemsPagination } from '../../../../models/UIItemsPagination';
+import { UINotificationType } from '../../../../models/UINotification';
 import { UIUser } from '../../../../models/UIUser';
+import { MockNotificationsService } from '../../../../services/mock/notifications.service';
 import { ItemsService } from '../items.service';
 @Injectable({
   providedIn: 'root',
@@ -17,6 +19,9 @@ export class MockItemsService implements ItemsService {
   private index = 1;
 
   private items: UIItem[] = loadItems();
+
+  constructor(private notificationService: MockNotificationsService) {
+  }
 
   getItems(params: GetItemsParams): Observable<UIItemsPagination> {
     const {
@@ -351,6 +356,12 @@ export class MockItemsService implements ItemsService {
       return record;
     });
 
+    this.notificationService.pushNewNotification({
+      type: UINotificationType.ITEM_RESERVATION_APPROVED,
+      payload: { item: item },
+      destinationUserId: borrowRecord.borrowedBy,
+    });
+
     return of(item);
   }
 
@@ -371,6 +382,11 @@ export class MockItemsService implements ItemsService {
         return borrowRecord;
       }
       return record;
+    });
+    this.notificationService.pushNewNotification({
+      type: UINotificationType.ITEM_PICKUP_APPROVED,
+      payload: { item: item },
+      destinationUserId: borrowRecord.borrowedBy,
     });
     return of(item);
   }
@@ -398,6 +414,11 @@ export class MockItemsService implements ItemsService {
         return borrowRecord;
       }
       return record;
+    });
+    this.notificationService.pushNewNotification({
+      type: UINotificationType.ITEM_RETURN_APPROVED,
+      payload: { item: item },
+      destinationUserId: borrowRecord.borrowedBy,
     });
     return of(item);
   }

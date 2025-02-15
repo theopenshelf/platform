@@ -4,10 +4,9 @@ import {
   Notification,
   NotificationsCommunityApiService,
 } from '../../api-client';
+import { UINotification, UINotificationType } from '../../models/UINotification';
 import {
-  NotificationsService,
-  NotificationType,
-  UINotification,
+  NotificationsService
 } from '../notifications.service';
 
 @Injectable({
@@ -16,7 +15,7 @@ import {
 export class APINotificationsService implements NotificationsService {
   notifications: Array<UINotification> | undefined;
 
-  constructor(private notificationsService: NotificationsCommunityApiService) {}
+  constructor(private notificationsService: NotificationsCommunityApiService) { }
 
   getNotifications(): Observable<Array<UINotification>> {
     return this.notificationsService.getNotifications().pipe(
@@ -25,7 +24,7 @@ export class APINotificationsService implements NotificationsService {
           (notification: Notification) => ({
             ...notification,
             alreadyRead: false,
-            type: notification.type as unknown as NotificationType,
+            type: notification.type as unknown as UINotificationType,
             payload: notification.payload ?? {},
           }),
         );

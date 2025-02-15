@@ -1,7 +1,8 @@
 import { Injectable, signal } from '@angular/core';
 
 export enum TosEventType {
-    BorrowRecordsChanged = 'borrowRecordsChanged'
+    BorrowRecordsChanged = 'borrowRecordsChanged',
+    NotificationsChanged = 'notificationsChanged'
 }
 
 @Injectable({
@@ -16,5 +17,9 @@ export class EventService {
 
     get event() {
         return this.eventSignal;
+    }
+
+    clearEvent() {
+        this.eventSignal.set(null);
     }
 }

@@ -34,7 +34,15 @@
     "button": "Notifications",
     "title": "Notifications",
     "closeButton": "Fermer",
-    "moreButton": "Plus"
+    "moreButton": "Plus",
+    "itemAvailable": "L'article est disponible",
+    "itemDue": "L'article est dû",
+    "itemBorrowReservationDateStart": "La date de réservation de l'emprunt commence",
+    "itemReservedNoLongerAvailable": "L'article réservé n'est plus disponible",
+    "unknown": "Inconnu",
+    "itemPickupApproved": "La récupération de l'article est approuvée",
+    "itemReturnApproved": "Le retour de l'article est approuvé",
+    "itemReservationApproved": "La réservation de l'article est approuvée"
   },
   "forgotPassword": {
     "title": "Mot de passe oublié",

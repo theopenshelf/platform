@@ -1,0 +1,44 @@
+[
+    {
+      "id": 1,
+      "author": "Platform",
+      "date": "2024-11-19",
+      "type": "item-reserved-no-longer-available",
+      "alreadyRead": true,
+      "payload": {
+        "itemId": "1"
+      }
+    },
+    {
+      "id": 2,
+      "author": "Platform",
+      "date": "2024-11-19",
+      "type": "item-borrow-reservation-date-start",
+      "alreadyRead": true,
+      "payload": {
+        "itemId": "18"
+
+      }
+    },
+    {
+      "id": 3,
+      "author": "Platform",
+      "date": "2024-11-20",
+      "type": "item-due",
+      "alreadyRead": false,
+      "payload": {
+        "itemId": "14"
+
+      }
+    },
+    {
+      "id": 4,
+      "author": "Platform",
+      "date": "2024-11-21",
+      "type": "item-available",
+      "alreadyRead": false,
+      "payload": {
+        "itemId": "12"
+      }
+    }
+  ]

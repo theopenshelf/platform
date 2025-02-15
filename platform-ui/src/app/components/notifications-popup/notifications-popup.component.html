@@ -13,7 +13,7 @@
   }
 </button>
 
-@if (isPopupVisible) {
+@if (isPopupVisible()) {
   <div class="notifications-popup">
     <div class="header">
       <h3>{{ 'notifications.title' | translate }}</h3>
@@ -40,7 +40,7 @@
           />
           <div class="notification-content">
             <h4 class="notification-text">
-              {{ getNotificationText(notification.type) }}
+              {{ getNotificationText(notification.type) | translate }}
             </h4>
             <button
               appearance="outline"
