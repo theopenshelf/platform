@@ -85,7 +85,6 @@ export class APIItemsService implements ItemsService {
               ({
                 id: item.id,
                 name: item.name,
-                located: item.located,
                 owner: item.owner,
                 imageUrl: item.imageUrl,
                 description: item.description,
@@ -208,7 +207,6 @@ export class APIItemsService implements ItemsService {
                 item: ({
                   id: record.item.id,
                   name: record.item.name,
-                  located: record.item.located,
                   owner: record.item.owner,
                   imageUrl: record.item.imageUrl,
                   description: record.item.description,
@@ -233,7 +231,6 @@ export class APIItemsService implements ItemsService {
           ({
             id: item.id,
             name: item.name,
-            located: item.located,
             owner: item.owner,
             imageUrl: item.imageUrl,
             description: item.description,

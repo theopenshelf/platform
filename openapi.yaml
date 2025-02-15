@@ -1920,7 +1920,6 @@ components:
       required:
         - id
         - name
-        - located
         - owner
         - imageUrl
         - description
@@ -1939,9 +1938,6 @@ components:
         name:
           type: string
           example: "Harry Potter Book"
-        located:
-          type: string
-          example: "ShareSpace"
         owner:
           type: string
           example: "TheOpenShelf"
