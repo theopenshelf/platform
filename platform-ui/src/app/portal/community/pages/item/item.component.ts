@@ -26,6 +26,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { tap } from 'rxjs';
 import { BorrowDialogService } from '../../../../components/borrow-dialog/borrow-dialog.service';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { TosBreadcrumbsComponent } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
+import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
 import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
@@ -36,7 +38,6 @@ import { ITEMS_SERVICE_TOKEN, LIBRARIES_SERVICE_TOKEN } from '../../community.pr
 import { BorrowItemCalendarComponent } from '../../components/borrow-item-calendar/borrow-item-calendar.component';
 import { ItemsService } from '../../services/items.service';
 import { LibrariesService } from '../../services/libraries.service';
-
 @Component({
   standalone: true,
   imports: [
@@ -48,7 +49,8 @@ import { LibrariesService } from '../../services/libraries.service';
     TuiNotification,
     TranslateModule,
     FilteredAndPaginatedBorrowRecordsComponent,
-    BorrowItemCalendarComponent
+    BorrowItemCalendarComponent,
+    TosBreadcrumbsComponent
   ],
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -87,6 +89,7 @@ export class ItemComponent implements OnInit {
   }));
   library: any;
   protected suggestedDates: TuiDayRangePeriod[] = [];
+  breadcrumbs: BreadcrumbItem[] = [];
 
 
   constructor(
@@ -97,7 +100,8 @@ export class ItemComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private translate: TranslateService,
-    private borrowDialogService: BorrowDialogService
+    private borrowDialogService: BorrowDialogService,
+    private breadcrumbService: BreadcrumbService
   ) {
     this.currentUser = this.authService.getCurrentUserInfo();
   }
@@ -107,6 +111,18 @@ export class ItemComponent implements OnInit {
 
   ngOnInit() {
     this.itemsService.getItem(this.itemId()).subscribe((item) => {
+      this.breadcrumbs = [
+        {
+          name: item.name,
+          routerLink: `/community/items/${item.id}`
+        }
+      ];
+      this.breadcrumbService.appendBreadcrumbs('item', this.breadcrumbs, [
+        {
+          caption: 'breadcrumb.items',
+          routerLink: '/community/items'
+        }]
+      );
       this.setItem(item);
       this.librariesService.getLibrary(item.libraryId).subscribe((library) => {
         this.library = library;

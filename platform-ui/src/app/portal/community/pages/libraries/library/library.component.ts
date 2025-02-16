@@ -32,6 +32,8 @@ import {
 import { EMPTY, switchMap } from 'rxjs';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
+import { TosBreadcrumbsComponent } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
+import { BreadcrumbItem, BreadcrumbService } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { GetItemsParams } from '../../../../../models/GetItemsParams';
 import { isLibraryAdmin, UILibrary } from '../../../../../models/UILibrary';
@@ -68,6 +70,7 @@ import { UsersService } from '../../../services/users.service';
     TranslateModule,
     TuiAvatar,
     TuiAvatarStack,
+    TosBreadcrumbsComponent
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -80,6 +83,7 @@ export class LibraryComponent {
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
   isAdmin: boolean = false;
+  breadcrumbs: BreadcrumbItem[] = [];
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
@@ -89,6 +93,7 @@ export class LibraryComponent {
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
+    private breadcrumbService: BreadcrumbService
   ) {
   }
 
@@ -103,6 +108,18 @@ export class LibraryComponent {
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
+        this.breadcrumbs = [
+          {
+            name: library.name,
+            routerLink: `/community/libraries/${library.id}`
+          }
+        ];
+        this.breadcrumbService.appendBreadcrumbs('library', this.breadcrumbs, [
+          {
+            caption: 'breadcrumb.libraries',
+            routerLink: '/community/libraries'
+          }
+        ]);
         this.isAdmin = isLibraryAdmin(this.userInfo?.user!, this.library);
         this.getItemsParams = {
           libraryIds: [libraryId!],

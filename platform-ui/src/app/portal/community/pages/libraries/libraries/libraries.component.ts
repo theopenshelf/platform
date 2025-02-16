@@ -8,6 +8,7 @@ import {
   TuiTitle
 } from '@taiga-ui/core';
 import { TuiCardMedium } from '@taiga-ui/layout';
+import { BreadcrumbService } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { UILibrary } from '../../../../../models/UILibrary';
 import { LIBRARIES_SERVICE_TOKEN } from '../../../community.provider';
 import { LibrariesService } from '../../../services/libraries.service';
@@ -31,11 +32,16 @@ export class LibrariesComponent {
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    private breadcrumbService: BreadcrumbService
   ) {
     this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });
+    this.breadcrumbService.setBreadcrumbs([
+      { caption: 'breadcrumb.libraries', routerLink: '/community/libraries' }
+    ]);
   }
+
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });

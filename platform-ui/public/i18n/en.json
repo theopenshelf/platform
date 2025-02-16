@@ -497,5 +497,14 @@
       "pickup": "Approve Pickup",
       "return": "Approve Return"
     }
+  },
+  "breadcrumb": {
+    "items": "Items",
+    "libraries": "Libraries",
+    "item": "Item",
+    "library": "Library",
+    "borrowedItems": "Borrowed Items",
+    "wishlist": "Wishlist",
+    "approval": "Approvals required"
   }
 }

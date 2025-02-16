@@ -512,5 +512,14 @@
       "pickup": "Approuver la récupération",
       "return": "Approuver le retour"
     }
+  },
+  "breadcrumb": {
+    "items": "Articles",
+    "libraries": "Bibliothèques",
+    "item": "Article",
+    "library": "Bibliothèque",
+    "borrowedItems": "Articles empruntés",
+    "wishlist": "Liste de souhaits",
+    "approval": "Confirmations requises"
   }
 }

@@ -127,6 +127,12 @@ Each portal has its own layout:
 - **Conditionals**: Prefer `@if` over `ngIf`.
 - **Inputs**: Use signals instead of `@Input`.
 
+
+```typescript
+  import { input } from '@angular/core';
+  public enableStatusFiltering = input<boolean>(false);
+```
+
 ### API Calls
 
 To facilitate parallel development between the frontend and backend, and because we use OpenAPI, API calls are abstracted via services.

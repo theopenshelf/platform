@@ -1,0 +1,18 @@
+<tui-breadcrumbs
+size="l"
+class="tui-space_top-2"
+>
+@for (item of breadcrumbs; track item.routerLink) {
+    <a
+        *tuiItem
+        tuiLink
+        [routerLink]="item.routerLink"
+    >
+        @if (item.name) {
+            {{ item.name }}
+        } @else if (item.caption) {
+            {{ item.caption | translate }}
+        }
+    </a>
+}
+</tui-breadcrumbs>

@@ -9,6 +9,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
+import { BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UILibrary } from '../../../../models/UILibrary';
 import {
@@ -44,7 +45,11 @@ export class BorrowedItemsComponent implements OnInit {
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
+    private breadcrumbService: BreadcrumbService
   ) {
+    this.breadcrumbService.setBreadcrumbs([
+      { caption: 'breadcrumb.borrowedItems', routerLink: '/community/borrowed-items' }
+    ]);
   }
 
   ngOnInit() {

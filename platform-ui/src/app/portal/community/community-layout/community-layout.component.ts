@@ -2,7 +2,7 @@ import { Component, computed, effect, Inject, OnDestroy, ViewChild } from '@angu
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
+import { tuiAsPortal, TuiItem, TuiPortals } from '@taiga-ui/cdk';
 import {
   TuiAppearance,
   TuiAutoColorPipe,
@@ -12,11 +12,13 @@ import {
   TuiDropdownService,
   TuiIcon,
   TuiInitialsPipe,
+  TuiLink,
   TuiRoot,
 } from '@taiga-ui/core';
 import {
   TuiAvatar,
   TuiBadgeNotification,
+  TuiBreadcrumbs,
   TuiChevron,
   TuiFade,
   TuiTabs,
@@ -24,6 +26,7 @@ import {
 import { tuiLayoutIconsProvider, TuiNavigation } from '@taiga-ui/layout';
 import { FooterComponent } from '../../../components/footer/footer.component';
 import { NotificationsPopupComponent } from '../../../components/notifications-popup/notifications-popup.component';
+import { BreadcrumbService } from '../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../global.provider';
 import { UIBorrowDetailedStatus } from '../../../models/UIBorrowStatus';
 import { AuthService, UserInfo } from '../../../services/auth.service';
@@ -56,7 +59,10 @@ import { ItemsService } from '../services/items.service';
     TranslateModule,
     TuiAvatar,
     TuiInitialsPipe,
-    TuiAutoColorPipe
+    TuiAutoColorPipe,
+    TuiBreadcrumbs,
+    TuiItem,
+    TuiLink
   ],
   templateUrl: './community-layout.component.html',
   styleUrl: './community-layout.component.scss',
@@ -85,9 +91,11 @@ export default class CommunityLayoutComponent extends TuiPortals implements OnDe
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private eventService: EventService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private breadcrumbService: BreadcrumbService
   ) {
     super();
+    this.breadcrumbService.resetBreadcrumbs();
     this.user = this.authService.getCurrentUserInfo();
     effect(() => {
 
