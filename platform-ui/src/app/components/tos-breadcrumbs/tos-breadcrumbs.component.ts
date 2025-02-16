@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiItem } from '@taiga-ui/cdk';
 import { TuiLink } from '@taiga-ui/core';
@@ -9,7 +9,6 @@ import { BreadcrumbItem, BreadcrumbService } from './tos-breadcrumbs.service';
 @Component({
   selector: 'tos-breadcrumbs',
   imports: [
-    RouterLink,
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,

@@ -2,7 +2,7 @@ import { Component, computed, effect, Inject, OnDestroy, ViewChild } from '@angu
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { tuiAsPortal, TuiItem, TuiPortals } from '@taiga-ui/cdk';
+import { tuiAsPortal, TuiPortals } from '@taiga-ui/cdk';
 import {
   TuiAppearance,
   TuiAutoColorPipe,
@@ -12,16 +12,14 @@ import {
   TuiDropdownService,
   TuiIcon,
   TuiInitialsPipe,
-  TuiLink,
-  TuiRoot,
+  TuiRoot
 } from '@taiga-ui/core';
 import {
   TuiAvatar,
   TuiBadgeNotification,
-  TuiBreadcrumbs,
   TuiChevron,
   TuiFade,
-  TuiTabs,
+  TuiTabs
 } from '@taiga-ui/kit';
 import { tuiLayoutIconsProvider, TuiNavigation } from '@taiga-ui/layout';
 import { FooterComponent } from '../../../components/footer/footer.component';
@@ -60,9 +58,6 @@ import { ItemsService } from '../services/items.service';
     TuiAvatar,
     TuiInitialsPipe,
     TuiAutoColorPipe,
-    TuiBreadcrumbs,
-    TuiItem,
-    TuiLink
   ],
   templateUrl: './community-layout.component.html',
   styleUrl: './community-layout.component.scss',
