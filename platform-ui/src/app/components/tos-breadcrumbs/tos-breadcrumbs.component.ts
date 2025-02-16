@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiItem } from '@taiga-ui/cdk';
 import { TuiLink } from '@taiga-ui/core';
@@ -22,11 +22,16 @@ import { BreadcrumbItem, BreadcrumbService } from './tos-breadcrumbs.service';
 })
 export class TosBreadcrumbsComponent implements OnInit {
 
-  constructor(private breadcrumbService: BreadcrumbService) { }
+  constructor(private breadcrumbService: BreadcrumbService, private router: Router) { }
 
   breadcrumbs: BreadcrumbItem[] = [];
 
   ngOnInit() {
     this.breadcrumbs = this.breadcrumbService.getBreadcrumbs();
+  }
+
+  onBreadcrumbClick(breadcrumb: BreadcrumbItem) {
+    this.breadcrumbService.onBreadcrumbsLinkClick(breadcrumb);
+    this.router.navigate([breadcrumb.routerLink]);
   }
 }
