@@ -3,7 +3,7 @@ import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiItem } from '@taiga-ui/cdk';
 import { TuiLink } from '@taiga-ui/core';
-import { TuiBreadcrumbs } from '@taiga-ui/kit';
+import { TuiBreadcrumbs, TuiFade } from '@taiga-ui/kit';
 import { BreadcrumbItem, BreadcrumbService } from './tos-breadcrumbs.service';
 
 @Component({
@@ -13,7 +13,9 @@ import { BreadcrumbItem, BreadcrumbService } from './tos-breadcrumbs.service';
     TuiBreadcrumbs,
     TuiItem,
     TuiLink,
-    TranslateModule
+    TranslateModule,
+    TuiFade,
+
   ],
   templateUrl: './tos-breadcrumbs.component.html',
   styleUrl: './tos-breadcrumbs.component.scss'

@@ -1,18 +1,29 @@
 <tui-breadcrumbs
+tuiFade
 size="l"
 class="tui-space_top-2"
+[itemsLimit]="3"
 >
 @for (item of breadcrumbs; track item.routerLink) {
-    <a
-        *tuiItem
-        tuiLink
-        [routerLink]="item.routerLink"
-    >
+   
         @if (item.name) {
+            <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+        >
             {{ item.name }}
+        </a>
         } @else if (item.caption) {
+            <a
+            *tuiItem
+            tuiLink
+            [routerLink]="item.routerLink"
+            [class.link_last]="item.routerLink"
+        >
             {{ item.caption | translate }}
+        </a>
         }
-    </a>
+    
 }
 </tui-breadcrumbs>
