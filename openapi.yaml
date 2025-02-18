@@ -150,7 +150,7 @@ paths:
         "404":
           description: User not found
 
-  /community/hello-world:
+  /hub/hello-world:
     get:
       operationId: getHelloWorld
       summary: hello world
@@ -164,12 +164,12 @@ paths:
         "200":
           $ref: "#/components/responses/OK_200_GET_HELLO_WORLD"
 
-  /community/items:
+  /hub/items:
     get:
       operationId: getItems
       summary: Retrieve all items (filter by current user items)
       tags:
-        - items-community-api
+        - items-hub-api
       parameters:
         - name: borrowedByCurrentUser
           in: query
@@ -270,7 +270,7 @@ paths:
       operationId: addItem
       summary: Add a new item
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         required: true
         content:
@@ -285,14 +285,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}:
+  /hub/items/{item-id}:
     parameters:
       - $ref: "#/components/parameters/itemId"
     get:
       operationId: getItem
       summary: Retrieve a specific item by ID
       tags:
-        - items-community-api
+        - items-hub-api
       responses:
         "200":
           description: A single item
@@ -301,7 +301,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/borrow-records:
+  /hub/items/{item-id}/borrow-records:
     parameters:
       - $ref: "#/components/parameters/itemId"
       - name: owner
@@ -320,7 +320,7 @@ paths:
       operationId: getItemBorrowRecords
       summary: Retrieve borrow records for a specific item
       tags:
-        - items-community-api
+        - items-hub-api
       responses:
         "200":
           description: Borrow records for the item
@@ -334,7 +334,7 @@ paths:
       operationId: deleteBorrowRecord
       summary: Delete a borrow record for a specific item
       tags:
-        - items-community-api
+        - items-hub-api
       parameters:
         - name: recordId
           in: query
@@ -346,14 +346,14 @@ paths:
         "204":
           description: Borrow record deleted successfully
 
-  /community/items/{item-id}/actions/borrow:
+  /hub/items/{item-id}/actions/borrow:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: borrowItem
       summary: Borrow an item
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Borrow item details
         required: true
@@ -379,14 +379,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/favorite:
+  /hub/items/{item-id}/actions/favorite:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: markAsFavorite
       summary: Toggle favorite status of an item
       tags:
-        - items-community-api
+        - items-hub-api
       responses:
         "200":
           description: Item favorite status toggled
@@ -395,14 +395,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/return-item:
+  /hub/items/{item-id}/actions/return-item:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: returnItem
       summary: Return a borrowed item
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Return item details
         required: true
@@ -425,14 +425,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/pickup-item:
+  /hub/items/{item-id}/actions/pickup-item:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: pickupItem
       summary: Pickup a borrowed item
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Pickup item details
         required: true
@@ -455,14 +455,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/approval-reservation:
+  /hub/items/{item-id}/actions/approval-reservation:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: approvalReservation
       summary: Approve or reject a reservation
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Approval details
         required: true
@@ -489,14 +489,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/approval-pickup:
+  /hub/items/{item-id}/actions/approval-pickup:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: approvalPickup
       summary: Approve or reject a pickup
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Approval details
         required: true
@@ -523,14 +523,14 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/items/{item-id}/actions/approval-return:
+  /hub/items/{item-id}/actions/approval-return:
     parameters:
       - $ref: "#/components/parameters/itemId"
     post:
       operationId: approvalReturn
       summary: Approve or reject a return
       tags:
-        - items-community-api
+        - items-hub-api
       requestBody:
         description: Approval details
         required: true
@@ -557,12 +557,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/Item"
 
-  /community/borrow-records-count-by-status:
+  /hub/borrow-records-count-by-status:
     get:
       operationId: getBorrowRecordsCountByStatus
       summary: Retrieve all borrow records count by status
       tags:
-        - borrow-records-community-api
+        - borrow-records-hub-api
       parameters:
         - name: borrowedByCurrentUser
           in: query
@@ -618,12 +618,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/BorrowRecordsCountByStatus"
 
-  /community/borrow-records:
+  /hub/borrow-records:
     get:
       operationId: getBorrowRecords
       summary: Retrieve all borrow records (filter by current user borrow records)
       tags:
-        - borrow-records-community-api
+        - borrow-records-hub-api
       parameters:
         - name: borrowedByCurrentUser
           in: query
@@ -727,12 +727,12 @@ paths:
               schema:
                 $ref: "#/components/schemas/PaginatedBorrowRecordsResponse"
 
-  /community/notifications:
+  /hub/notifications:
     get:
       operationId: getNotifications
       summary: Retrieve all notifications
       tags:
-        - notifications-community-api
+        - notifications-hub-api
       responses:
         "200":
           description: A list of notifications
@@ -743,12 +743,12 @@ paths:
                 items:
                   $ref: "#/components/schemas/Notification"
 
-  /community/notifications/unread-count:
+  /hub/notifications/unread-count:
     get:
       operationId: getUnreadNotificationsCount
       summary: Retrieve the count of unread notifications
       tags:
-        - notifications-community-api
+        - notifications-hub-api
       responses:
         "200":
           description: Count of unread notifications
@@ -761,12 +761,12 @@ paths:
                     type: integer
                     example: 5
 
-  /community/notifications/acknowledge:
+  /hub/notifications/acknowledge:
     post:
       operationId: acknowledgeNotifications
       summary: Acknowledge notifications as read
       tags:
-        - notifications-community-api
+        - notifications-hub-api
       requestBody:
         description: List of notifications to acknowledge
         required: true
@@ -780,12 +780,12 @@ paths:
         "204":
           description: Notifications acknowledged successfully
 
-  /community/categories:
+  /hub/categories:
     get:
       operationId: getCategories
       summary: Retrieve all categories
       tags:
-        - categories-community-api
+        - categories-hub-api
       responses:
         "200":
           description: A list of categories
@@ -796,12 +796,12 @@ paths:
                 items:
                   $ref: "#/components/schemas/Category"
 
-  /community/profile:
+  /hub/profile:
     put:
       operationId: updateProfile
       summary: Update the current user's profile
       tags:
-        - profile-community-api
+        - profile-hub-api
       requestBody:
         required: true
         content:
@@ -1425,7 +1425,7 @@ paths:
         "200":
           description: Help article updated successfully
 
-  /community/help/categories:
+  /hub/help/categories:
     get:
       operationId: getHelpCategories
       summary: Retrieve all help categories
@@ -1441,7 +1441,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/HelpCategory"
 
-  /community/help/articles:
+  /hub/help/articles:
     get:
       operationId: getHelpArticles
       summary: Retrieve help articles by category ID
@@ -1464,12 +1464,12 @@ paths:
                 items:
                   $ref: "#/components/schemas/HelpArticle"
 
-  /community/custom-pages/:
+  /hub/custom-pages/:
     get:
       operationId: getCustomPageRefs
       summary: Retrieve all custom page references
       tags:
-        - custom-pages-community-api
+        - custom-pages-hub-api
       responses:
         "200":
           description: A list of custom page references with position and title
@@ -1488,7 +1488,7 @@ paths:
                     title:
                       type: string
 
-  /community/custom-pages/{page-ref}:
+  /hub/custom-pages/{page-ref}:
     parameters:
       - name: page-ref
         in: path
@@ -1500,7 +1500,7 @@ paths:
       operationId: getCustomPage
       summary: Retrieve a custom page by reference
       tags:
-        - custom-pages-community-api
+        - custom-pages-hub-api
       responses:
         "200":
           description: A single custom page
@@ -1601,12 +1601,12 @@ paths:
         "404":
           description: Custom page not found
 
-  /community/users:
+  /hub/users:
     get:
-      operationId: getCommunityUsers
+      operationId: getHubUsers
       summary: Retrieve all users
       tags:
-        - users-community-api
+        - users-hub-api
       parameters:
         - name: query
           in: query
@@ -1631,7 +1631,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/User"
 
-  /community/users/{id}:
+  /hub/users/{id}:
     parameters:
       - name: id
         in: path
@@ -1641,10 +1641,10 @@ paths:
           type: string
           format: uuid
     get:
-      operationId: getCommunityUserById
+      operationId: getHubUserById
       summary: Retrieve a specific user by ID
       tags:
-        - users-community-api
+        - users-hub-api
       responses:
         "200":
           description: A single user
@@ -1655,15 +1655,15 @@ paths:
         "404":
           description: User not found
 
-  /community/libraries:
+  /hub/libraries:
     get:
-      operationId: getCommunityLibraries
-      summary: Retrieve all community libraries
+      operationId: getHubLibraries
+      summary: Retrieve all hub libraries
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       responses:
         "200":
-          description: A list of community libraries
+          description: A list of hub libraries
           content:
             application/json:
               schema:
@@ -1671,10 +1671,10 @@ paths:
                 items:
                   $ref: "#/components/schemas/Library"
     post:
-      operationId: addCommunityLibrary
-      summary: Add a new community library
+      operationId: addHubLibrary
+      summary: Add a new hub library
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       requestBody:
         required: true
         content:
@@ -1689,26 +1689,26 @@ paths:
               schema:
                 $ref: "#/components/schemas/Library"
 
-  /community/libraries/{library-id}:
+  /hub/libraries/{library-id}:
     parameters:
       - $ref: "#/components/parameters/libraryId"
     get:
-      operationId: getCommunityLibrary
-      summary: Retrieve a specific community library by ID
+      operationId: getHubLibrary
+      summary: Retrieve a specific hub library by ID
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       responses:
         "200":
-          description: A single community library
+          description: A single hub library
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Library"
     put:
-      operationId: updateCommunityLibrary
-      summary: Update an existing community library
+      operationId: updateHubLibrary
+      summary: Update an existing hub library
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       requestBody:
         required: true
         content:
@@ -1723,22 +1723,22 @@ paths:
               schema:
                 $ref: "#/components/schemas/Library"
     delete:
-      operationId: deleteCommunityLibrary
-      summary: Delete a community library
+      operationId: deleteHubLibrary
+      summary: Delete a hub library
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       responses:
         "204":
           description: Library deleted successfully
 
-  /community/libraries/{library-id}/members:
+  /hub/libraries/{library-id}/members:
     parameters:
       - $ref: "#/components/parameters/libraryId"
     get:
       operationId: getLibraryMembers
-      summary: Retrieve members of a specific community library by ID
+      summary: Retrieve members of a specific hub library by ID
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       parameters:
         - name: page
           in: query
@@ -1763,9 +1763,9 @@ paths:
                 $ref: "#/components/schemas/PaginatedMembersResponse"
     post:
       operationId: addMember
-      summary: Add a member to a specific community library by ID
+      summary: Add a member to a specific hub library by ID
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       requestBody:
         required: true
         content:
@@ -1780,23 +1780,23 @@ paths:
               schema:
                 $ref: "#/components/schemas/LibraryMember"
 
-  /community/libraries/{library-id}/members/{user-id}:
+  /hub/libraries/{library-id}/members/{user-id}:
     parameters:
       - $ref: "#/components/parameters/libraryId"
       - $ref: "#/components/parameters/userId"
     delete:
       operationId: deleteMember
-      summary: Delete a member from a specific community library by ID
+      summary: Delete a member from a specific hub library by ID
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       responses:
         "204":
           description: Member deleted successfully
     put:
       operationId: updateMember
-      summary: Update a member in a specific community library by ID
+      summary: Update a member in a specific hub library by ID
       tags:
-        - libraries-community-api
+        - libraries-hub-api
       requestBody:
         required: true
         content:
@@ -1886,6 +1886,186 @@ paths:
       responses:
         "204":
           description: Library deleted successfully
+
+  /hub/communities:
+    get:
+      operationId: getCommunities
+      summary: Retrieve all communities
+      tags:
+        - communities-hub-api
+      responses:
+        "200":
+          description: A list of communities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Community"
+    post:
+      operationId: createCommunity
+      summary: Create a new community
+      tags:
+        - communities-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Community"
+      responses:
+        "201":
+          description: Community created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Community"
+
+  /hub/communities/{community-id}:
+    parameters:
+      - name: community-id
+        in: path
+        description: Community ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getCommunity
+      summary: Retrieve a specific community by ID
+      tags:
+        - communities-hub-api
+      responses:
+        "200":
+          description: A single community
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Community"
+    put:
+      operationId: updateCommunity
+      summary: Update an existing community
+      tags:
+        - communities-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Community"
+      responses:
+        "200":
+          description: Community updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Community"
+    delete:
+      operationId: deleteCommunity
+      summary: Delete a community
+      tags:
+        - communities-hub-api
+      responses:
+        "204":
+          description: Community deleted successfully
+
+  /hub/communities/{community-id}/members:
+    parameters:
+      - name: community-id
+        in: path
+        description: Community ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getCommunityMembers
+      summary: Retrieve members of a specific community by ID
+      tags:
+        - communities-hub-api
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: pageSize
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: A paginated list of users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedMembersResponse"
+    post:
+      operationId: addCommunityMember
+      summary: Add a member to a specific community by ID
+      tags:
+        - communities-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommunityMember"
+      responses:
+        "201":
+          description: Member added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunityMember"
+
+  /hub/communities/{community-id}/members/{user-id}:
+    parameters:
+      - name: community-id
+        in: path
+        description: Community ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: user-id
+        in: path
+        description: User ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    delete:
+      operationId: deleteCommunityMember
+      summary: Delete a member from a specific community by ID
+      tags:
+        - communities-hub-api
+      responses:
+        "204":
+          description: Member deleted successfully
+    put:
+      operationId: updateCommunityMember
+      summary: Update a member in a specific community by ID
+      tags:
+        - communities-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommunityMember"
+      responses:
+        "200":
+          description: Member updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunityMember"
 
 components:
   #####################################################
@@ -2578,19 +2758,20 @@ components:
       required:
         - id
         - name
-        - isCommunityAccessible
+        - isHubAccessible
         - requiresApproval
         - freeAccess
         - location
         - instructions
         - isAdmin
+        - communityId
       properties:
         id:
           type: string
           format: uuid
         name:
           type: string
-        isCommunityAccessible:
+        isHubAccessible:
           type: boolean
         requiresApproval:
           type: boolean
@@ -2603,6 +2784,10 @@ components:
         isAdmin:
           type: boolean
           example: true
+        communityId:
+          type: string
+          format: uuid
+          description: The ID of the community to which the library belongs
 
     Location:
       type: object
@@ -2614,6 +2799,38 @@ components:
           type: string
         address:
           type: string
+
+    Community:
+      type: object
+      required:
+        - id
+        - name
+        - members
+        - location
+        - requiresApproval
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        location:
+          $ref: "#/components/schemas/Location"
+        requiresApproval:
+          type: boolean
+        picture:
+          type: string
+        description:
+          type: string
+
+    CommunityMember:
+      allOf:
+        - $ref: "#/components/schemas/User"
+        - type: object
+          properties:
+            isAdmin:
+              type: boolean
+              example: true
 
   responses:
     OK_200_GET_HELLO_WORLD:

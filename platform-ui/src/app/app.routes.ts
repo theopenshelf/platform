@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
 import { AdminGuard } from './guards/admin-guards';
-import { CommunityGuard } from './guards/community-guards';
+import { HubGuard } from './guards/hub-guards';
 
 export const routes: Routes = [
   {
-    path: 'community',
+    path: 'hub',
     loadChildren: () =>
-      import('./portal/community/community.routes').then(
+      import('./portal/hub/hub.routes').then(
         (m) => m.COMMUNITY_ROUTES,
       ),
-    canActivate: [CommunityGuard], // Protect with CommunityGuard
+    canActivate: [HubGuard], // Protect with HubGuard
   },
   {
     path: 'admin',

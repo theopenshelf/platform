@@ -65,13 +65,14 @@
     "country": "Country",
     "signUp": "Sign Up"
   },
-  "communityLayout": {
+  "hubLayout": {
     "settings": "Settings",
     "adminPanel": "Admin panel",
     "logOut": "Log out",
     "items": "Items",
     "borrowedItems": "Borrowed",
-    "libraries": "Libraries"
+    "libraries": "Libraries",
+    "communities": "Communities"
   },
   "borrowRecordCard": {
     "seeDetails": "See details",
@@ -241,7 +242,7 @@
   },
   "adminLayout": {
     "logoText": "The Open Shelf",
-    "communityPortal": "Community portal",
+    "hubPortal": "Hub portal",
     "logOut": "Log out",
     "dashboard": "Dashboard",
     "users": "Users",
@@ -298,7 +299,7 @@
     "libraryName": "Library Name",
     "locationName": "Location Name",
     "address": "Address",
-    "communityAccessible": "Community Accessible",
+    "hubAccessible": "Hub Accessible",
     "instructions": "Instructions",
     "save": "Save"
   },
@@ -359,7 +360,7 @@
     "delete": "Delete",
     "instructions": "Instructions",
     "accessibility": "Accessibility",
-    "community": "Community",
+    "hub": "Hub",
     "members": "Members",
     "admin": "Admin",
     "notFound": "Library not found",
@@ -505,6 +506,20 @@
     "library": "Library",
     "borrowedItems": "Borrowed Items",
     "wishlist": "Wishlist",
-    "approval": "Approvals required"
+    "approval": "Approvals required",
+    "communities": "Communities"
+  },
+  "communities": {
+    "seeCommunity": "See more",
+    "joinCommunity": "Join",
+    "requestToJoin": "Request to join"
+  },
+  "community": {
+    "descriptionTitle": "Description",
+    "seeCommunity": "See Community",
+    "requiresApproval": "Requires approval",
+    "doesNotRequireApproval": "Does not require approval",
+    "libraries": "Libraries",
+    "members": "Members"
   }
 }

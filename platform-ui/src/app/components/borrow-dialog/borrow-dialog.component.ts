@@ -13,9 +13,9 @@ import {
 } from '@taiga-ui/polymorpheus';
 import { map, Observable } from 'rxjs';
 import { UIUser } from '../../models/UIUser';
-import { communityProviders, USERS_SERVICE_TOKEN } from '../../portal/community/community.provider';
-import { BorrowItemCalendarComponent } from '../../portal/community/components/borrow-item-calendar/borrow-item-calendar.component';
-import { UsersService } from '../../portal/community/services/users.service';
+import { BorrowItemCalendarComponent } from '../../portal/hub/components/borrow-item-calendar/borrow-item-calendar.component';
+import { hubProviders, USERS_SERVICE_TOKEN } from '../../portal/hub/hub.provider';
+import { UsersService } from '../../portal/hub/services/users.service';
 import { TimelineComponent, TimelineItem } from '../timeline/timeline.component';
 import { CallToActionType, PromptOptions, PromptResponse } from './prompt-options';
 
@@ -52,7 +52,7 @@ import { CallToActionType, PromptOptions, PromptResponse } from './prompt-option
   selector: 'borrow-dialog',
   templateUrl: './borrow-dialog.component.html',
   styleUrls: ['./borrow-dialog.component.scss'],
-  providers: [...communityProviders, TuiDialogCloseService],
+  providers: [...hubProviders, TuiDialogCloseService],
 })
 export class BorrowDialogComponent {
   protected readonly context = injectContext<TuiPopover<PromptOptions, PromptResponse>>();

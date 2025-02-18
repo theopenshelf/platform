@@ -1,0 +1,185 @@
+<tui-root>
+  <!-- Position drawer inside the example block -->
+  <div class="custom-portal"><ng-container #viewContainer /></div>
+
+  <!-- Header -->
+  <header tuiNavigationHeader>
+    <span tuiNavigationLogo routerLink="/hub/">
+      <img id="logo" src="/logo-simple.png" />
+      <span tuiFade>The Open Shelf</span>
+    </span>
+    <hr />
+
+    @if (totalItemsCurrentlyBorrowed > 0) {
+      <div class="borrow-item-button">
+        <button
+          tuiButton
+          iconStart="/borrow-white.png"
+          routerLink="/hub/borrowed-items"
+          [queryParams]="{ selectedStatus: 'borrowed-active' }"
+          size="m"
+          type="button"
+        >
+          <tui-badge-notification class="unreadNotificationsCount" size="s">
+            {{ totalItemsCurrentlyBorrowed }}
+          </tui-badge-notification>
+        </button>
+      </div>
+    }
+      <div class="approval-dashboard-button">
+        <button
+        iconStart="@tui.stamp"
+        tuiIconButton
+        class="approval-dashboard-button"
+        routerLink="/hub/approval-dashboard"
+        size="m"
+        type="button"
+      >
+      @if (totalApprovalRequests > 0) {
+        <tui-badge-notification class="unreadNotificationsCount approval-dashboard-badge" size="s">
+            {{ totalApprovalRequests }}
+          </tui-badge-notification>
+        }
+        </button>
+      </div>
+    
+
+    <button
+      iconStart="@tui.heart"
+      tuiIconButton
+      class="wishlist-button"
+      routerLink="/hub/wishlist"
+      size="m"
+      type="button"
+    ></button>
+    <notifications-popup></notifications-popup>
+
+
+    @if (user.user.avatarUrl) {
+      <tui-avatar
+        tuiChevron
+        tuiDropdownOpen
+        [tuiDropdown]="settings" 
+         class="tui-space_horizontal-4">
+        <picture>
+            <source
+                media="(min-width: 600px)"
+                [srcset]="user.user.avatarUrl"
+            />
+            <img
+                alt="Alex Inkin"
+                [src]="user.user.avatarUrl"
+            />
+        </picture>
+    </tui-avatar>
+    } @else {
+    <tui-avatar 
+        class="user-avatar"      
+        tuiChevron
+        tuiDropdownOpen
+        [tuiDropdown]="settings" 
+        [src]="user.username | tuiInitials"
+        [style.background]="
+          user.username | tuiAutoColor
+        "
+        size="s">
+      </tui-avatar>
+    }
+
+    <ng-template #settings>
+      <tui-data-list size="s">
+          <button
+            routerLink="/hub/settings/profile"
+            class="dropdown"
+            iconStart="@tui.user"
+            tuiButton
+            type="button"
+          >
+            Sign in as {{ user.username }}
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/hub/settings"
+            class="dropdown"
+            iconStart="@tui.settings"
+            tuiButton
+            type="button"
+          >
+            {{ 'hubLayout.settings' | translate }}
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/admin/"
+            class="dropdown"
+            iconStart="@tui.lock"
+            tuiButton
+            type="button"
+          >
+            {{ 'hubLayout.adminPanel' | translate }}
+          </button>
+        </tui-data-list>
+        <tui-data-list size="s">
+          <button
+            routerLink="/auth/sign-out"
+            class="dropdown"
+            iconStart="@tui.log-out"
+            tuiButton
+            type="button"
+          >
+            {{ 'hubLayout.logOut' | translate }}
+          </button>
+        </tui-data-list>
+      </ng-template>
+  </header>
+
+  <!-- Horizontal Menu -->
+  <nav id="menu" class="horizontal-menu">
+    <!-- Buttons -->
+    <a
+      routerLink="/hub/items"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      type="button"
+    >
+      <tui-icon icon="@tui.package" />
+      {{ 'hubLayout.items' | translate }}
+    </a>
+
+    <a
+      routerLink="/hub/borrowed-items"
+      [queryParams]="{ selectedStatus: 'borrowed-active' }"
+      routerLinkActive="active"
+      appearance="secondary-grayscale"
+      tuiChevron
+      type="button"
+    >
+      <tui-icon class="borrowed-icon" icon="/borrow.png" />
+
+      <span>{{ 'hubLayout.borrowedItems' | translate }}</span>
+    </a>
+
+    <a
+    routerLink="/hub/communities"
+    routerLinkActive="active"
+    appearance="secondary-grayscale"
+    tuiChevron
+    type="button"
+  >
+    <tui-icon icon="@tui.share-2" />
+
+    <span>{{ 'hubLayout.communities' | translate }}</span>
+  </a>
+  </nav>
+
+
+  <!-- Main Content -->
+  <div [style.display]="'flex'">
+    <main tuiNavigationMain>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+  <tos-footer></tos-footer>
+</tui-root>

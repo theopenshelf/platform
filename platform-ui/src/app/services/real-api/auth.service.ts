@@ -10,7 +10,7 @@ import { AuthService, UserInfo } from '../auth.service';
 })
 export class APIAuthService implements AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private userRoles: string[] = ['admin', 'community']; // Store multiple roles
+  private userRoles: string[] = ['admin', 'hub']; // Store multiple roles
   message: string = '';
   userInfo: UserInfo = {
     firstName: 'unknown',

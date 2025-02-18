@@ -14,8 +14,8 @@ import {
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
-import { ITEMS_SERVICE_TOKEN } from '../../portal/community/community.provider';
-import { ItemsService } from '../../portal/community/services/items.service';
+import { ITEMS_SERVICE_TOKEN } from '../../portal/hub/hub.provider';
+import { ItemsService } from '../../portal/hub/services/items.service';
 
 @Component({
   selector: 'item-card',

@@ -5,7 +5,8 @@ import { UIUser } from './UIUser';
 export interface UILibrary {
   id: string;
   name: string;
-  isCommunityAccessible: boolean;
+  communityId: string;
+  isHubAccessible: boolean;
   requiresApproval: boolean;
   freeAccess: boolean;
   location: UILocation;

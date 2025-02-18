@@ -25,10 +25,10 @@ import {
   CATEGORIES_SERVICE_TOKEN,
   ITEMS_SERVICE_TOKEN,
   LIBRARIES_SERVICE_TOKEN,
-} from '../../portal/community/community.provider';
-import { CategoriesService } from '../../portal/community/services/categories.service';
-import { ItemsService } from '../../portal/community/services/items.service';
-import { LibrariesService } from '../../portal/community/services/libraries.service';
+} from '../../portal/hub/hub.provider';
+import { CategoriesService } from '../../portal/hub/services/categories.service';
+import { ItemsService } from '../../portal/hub/services/items.service';
+import { LibrariesService } from '../../portal/hub/services/libraries.service';
 import { AuthService, UserInfo } from '../../services/auth.service';
 
 export enum StatusTab {

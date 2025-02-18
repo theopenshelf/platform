@@ -1,0 +1,44 @@
+[
+    {
+        "id": "1",
+        "name": "Communauté de l'anneau",
+        "requiresApproval": false,
+        "picture": "https://e0.pxfuel.com/wallpapers/258/960/desktop-wallpaper-the-one-ring.jpg",
+        "location": {
+            "address": "123 Bagshot Row, Hobbiton, The Shire",
+            "name": "Mordor"
+        },
+        "description": "La communauté de l'anneau est une communauté de Hobbits qui veulent protéger la Terre du Milieu.",
+        "members": [
+            {
+                "userId": "11",
+                "isAdmin": true
+            },
+            {
+                "userId": "12",
+                "isAdmin": false
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Terres de Laya",
+        "requiresApproval": true,
+        "location": {
+            "address": "24 Rue de la Paix, Paris, France",
+            "name": "Location 2"
+        },
+        "description": "Terres de Laya est un écoquartier avec des ambitions écologiques fortes aux portes du Bourget du Lac",
+        "picture": "https://terresdelaya.fr/terres-de-laya-header.png",
+        "members": [
+            {
+                "userId": "11",
+                "isAdmin": true
+            },
+            {
+                "userId": "12",
+                "isAdmin": false
+            }
+        ]
+    }
+]

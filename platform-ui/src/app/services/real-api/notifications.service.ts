@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import {
   Notification,
-  NotificationsCommunityApiService,
+  NotificationsHubApiService,
 } from '../../api-client';
 import { UINotification, UINotificationType } from '../../models/UINotification';
 import {
@@ -15,7 +15,7 @@ import {
 export class APINotificationsService implements NotificationsService {
   notifications: Array<UINotification> | undefined;
 
-  constructor(private notificationsService: NotificationsCommunityApiService) { }
+  constructor(private notificationsService: NotificationsHubApiService) { }
 
   getNotifications(): Observable<Array<UINotification>> {
     return this.notificationsService.getNotifications().pipe(

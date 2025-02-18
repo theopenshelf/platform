@@ -1,0 +1,217 @@
+@use 'theme' as *;
+
+.community-container {
+    margin-top: 1rem;
+    padding: 0 10px;
+}
+
+.add-item {
+    margin-bottom: 5px;
+    margin-top: 10px;
+    width: 100%;
+}
+
+
+#community-menu {
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+
+.community-action {
+    text-decoration: none;
+    position: relative;
+    margin-right: 1rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    color: var(--tos-text-primary);
+
+    tui-icon {
+        margin-right: 5px;
+    }
+
+}
+
+.community-action.active {
+    background-color: var(--tos-background-accent-1);
+    color: var(--tos-text-primary-on-accent-1);
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    border-radius: 10px;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+        0 1px 2px -1px rgb(0 0 0 / .1) !important;
+}
+
+.community-action.active:hover {
+    background-color: var(--tos-background-accent-1) !important;
+    color: var(--tos-text-primary-on-accent-1) !important;
+}
+
+.community-action:hover {
+    background-color: var(--tos-background-accent-1-hover);
+    color: var(--tos-text-primary-on-accent-1);
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    border-radius: 10px;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+        0 1px 2px -1px rgb(0 0 0 / .1) !important;
+}
+
+.community-header {
+
+    h2 {
+        margin-top: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+    height: 250px; // Ensure this matches the total height you want
+    margin-top: 20px;
+
+    .community-header-top {
+        height: 75%;
+        background-color: var(--tos-background-accent-1); // Assuming you want the same background as the header
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+
+        .rich-description {
+            color: var(--tos-text-primary-on-accent-1);
+        }
+
+        .background-motif {
+            opacity: 0.05;
+            /* Adjusted for consistency */
+            position: absolute;
+            top: -25%;
+            left: -25%;
+            width: 160%;
+            height: 160%;
+            z-index: 0;
+            /* Places the SVG behind the content */
+            pointer-events: none;
+            /* Ensures the SVG doesn't interfere with clicks */
+            color: var(--tos-text-primary-on-accent-1);
+            /* A soft gray color, adjust as needed */
+        }
+    }
+
+    .community-header-bottom {
+
+        display: grid;
+        grid-template-columns: 1fr 10fr;
+        padding: 10px;
+        padding-top: 10px;
+        background-color: white;
+        color: var(--tos-text-primary);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+
+        .community-header-title-top-part {
+            display: grid;
+            grid-template-columns: 10fr 12fr;
+        }
+
+        .community-header-icon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 30px;
+
+            .community-header-icon {
+                background-size: cover;
+                position: relative;
+                top: -30px;
+                background-color: var(--tos-background-accent-1-hover);
+                border-radius: 15px;
+                padding: 15px;
+                color: var(--tos-text-primary-on-accent-1);
+                border: 2px solid var(--tos-background-base);
+
+                tui-icon {
+                    font-size: 2rem;
+                }
+            }
+        }
+    }
+
+    margin-bottom: 1rem;
+    background-color: var(--tos-background-accent-1);
+    color: var(--tos-text-primary-on-accent-1);
+    border-radius: 10px;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+    0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+    h1,
+    h3 {
+        margin: 0;
+    }
+
+
+    .community-header-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+
+    }
+
+    .community-header-subtitle {
+
+
+        padding-top: 10px;
+        color: var(--tos-text-secondary);
+
+        span {
+            margin-right: 8px;
+        }
+    }
+
+
+    .community-actions {
+        width: 150px;
+        float: right;
+
+        .admin-stack {
+            float: left;
+        }
+
+        button {
+            margin: 0 2px;
+            border-radius: 30px;
+        }
+
+    }
+
+    .toggle-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        label {
+            margin-right: 10px;
+        }
+    }
+
+
+}
+
+
+@media (max-width: 768px) {
+    .community-header-icon-container {
+        display: none !important;
+    }
+
+    .community-header-bottom {
+        grid-template-columns: 1fr !important;
+    }
+
+    .community-header-subtitle span {
+        white-space: nowrap;
+    }
+
+}

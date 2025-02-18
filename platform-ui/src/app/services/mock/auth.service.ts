@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AuthApiService } from '../../api-client';
-import { MockUsersService } from '../../portal/community/services/mock/users.service';
+import { MockUsersService } from '../../portal/hub/services/mock/users.service';
 import { AuthService, UserInfo } from '../auth.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { AuthService, UserInfo } from '../auth.service';
 })
 export class MockAuthService implements AuthService {
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
-  private userRoles: string[] = ['admin', 'community']; // Store multiple roles
+  private userRoles: string[] = ['admin', 'hub']; // Store multiple roles
   message: string = '';
 
   private userInfo: UserInfo = {
@@ -53,7 +53,7 @@ export class MockAuthService implements AuthService {
     return new Observable<boolean>((observer) => {
       if (username === 'admin' && password === 'password') {
         this.isAuthenticated$.next(true);
-        this.userRoles = ['admin', 'community'];
+        this.userRoles = ['admin', 'hub'];
         this.userInfo = {
           firstName: 'admin',
           lastName: 'admin',
@@ -66,7 +66,7 @@ export class MockAuthService implements AuthService {
       }
       else if (username === 'demo' && password === 'password') {
         this.isAuthenticated$.next(true);
-        this.userRoles = ['admin', 'community'];
+        this.userRoles = ['admin', 'hub'];
         this.userInfo = {
           firstName: 'demo',
           lastName: 'demo',
@@ -78,7 +78,7 @@ export class MockAuthService implements AuthService {
         observer.complete();
       } else if (username === 'alice' && password === 'password') {
         this.isAuthenticated$.next(true);
-        this.userRoles = ['community'];
+        this.userRoles = ['hub'];
         this.userInfo = {
           firstName: 'alice',
           lastName: 'dupont',
@@ -90,7 +90,7 @@ export class MockAuthService implements AuthService {
         observer.complete();
       } else if (username === 'bob' && password === 'password') {
         this.isAuthenticated$.next(true);
-        this.userRoles = ['community'];
+        this.userRoles = ['hub'];
         this.userInfo = {
           firstName: 'bob',
           lastName: 'durand',

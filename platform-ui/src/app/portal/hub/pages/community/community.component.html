@@ -1,0 +1,86 @@
+<div class="community-container">
+  <tos-breadcrumbs></tos-breadcrumbs>
+  @if (!community) {
+  <div>{{ 'community.notFound' | translate }}</div>
+  }
+  @if (community) {
+  <div class="community-header">
+    <div class="community-header-top">
+      @if (isCssLoaded) {
+      <svg viewBox="0 0 960 540" width="100%" height="100%" preserveAspectRatio="xMidYMax slice"
+        xmlns="http://www.w3.org/2000/svg" class="background-motif">
+        <g fill="none" stroke="currentColor" stroke-width="100" class="text-gray-700 opacity-25">
+          <circle r="234" cx="196" cy="23"></circle>
+          <circle r="234" cx="790" cy="491"></circle>
+        </g>
+      </svg>
+      }
+      <div class="rich-description" [innerHTML]="community.description"></div>
+    </div>
+    <div class="community-header-bottom">
+
+      <div class="community-header-icon-container">
+        <div class="community-header-icon" [style.background-image]="community.picture ? 'url(' + community.picture + ')' : 'none'">
+          <tui-icon [style.visibility]="community.picture ? 'hidden' : 'visible'" icon="@tui.share-2" />
+        </div>
+      </div>
+      <div class="community-header-title-container">
+        <div class="community-header-title-top-part">
+          <div class="community-header-title">
+            <h1>
+              {{ community.name }}
+            </h1>
+          </div>
+          <div class="community-header-actions">
+            <div class="community-actions">
+              @if (isAdmin) {
+              <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+                routerLink="/hub/communities/{{ community.id }}/edit"></button>
+              <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+                (click)="deleteCommunity(community)"></button>
+              }
+            </div>
+          </div>
+        </div>
+        <div class="community-header-subtitle">
+          <span>{{ community.location.name }}</span>
+          <span><tui-icon icon="@tui.map-pin" /> {{ community.location.address }}</span>
+          @if (community.requiresApproval) {
+          <span><tui-icon icon="@tui.stamp" /> {{ 'community.requiresApproval' | translate }}</span>
+          } @else {
+          <span><tui-icon icon="@tui.stamp" /> {{ 'community.doesNotRequireApproval' | translate }}</span>
+          }
+
+      
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <nav id="community-menu">
+    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/libraries"
+      routerLinkActive="active" (click)="onTabChange('libraries')">
+      <tui-icon icon="@tui.library" />
+      {{ 'community.libraries' | translate }}
+    </a>
+
+    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/members"
+      routerLinkActive="active" (click)="onTabChange('members')">
+      <tui-icon icon="@tui.users" />
+      {{ 'community.members' | translate }}
+    </a>
+  </nav>
+
+
+  @if (tabOpened === 'libraries') {
+    <libraries></libraries>
+  }
+  @if (tabOpened === 'members') {
+    <filtered-and-paginated-members [community]="community" ></filtered-and-paginated-members>
+
+  }
+  }
+</div>

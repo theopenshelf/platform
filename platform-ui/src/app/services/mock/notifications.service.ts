@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { loadNotificationsData } from '../../mock/notifications-loader';
 import { UINotification, UINotificationType } from '../../models/UINotification';
-import { EventService, TosEventType } from '../../portal/community/services/event.service';
+import { EventService, TosEventType } from '../../portal/hub/services/event.service';
 import {
   NotificationsService
 } from '../notifications.service';

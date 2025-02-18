@@ -70,8 +70,8 @@ export class SignInComponent {
         .signIn(username, password)
         .subscribe((isAuthenticated: boolean) => {
           if (isAuthenticated) {
-            if (this.authService.hasRole('community')) {
-              this.router.navigate(['/community']);
+            if (this.authService.hasRole('hub')) {
+              this.router.navigate(['/hub']);
             } else {
               this.router.navigate(['/']);
             }

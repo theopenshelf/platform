@@ -17,7 +17,7 @@ import {
   NOTIFICATIONS_SERVICE_TOKEN,
 } from '../../global.provider';
 import { UINotification, UINotificationType } from '../../models/UINotification';
-import { communityProviders } from '../../portal/community/community.provider';
+import { hubProviders } from '../../portal/hub/hub.provider';
 import {
   NotificationsService
 } from '../../services/notifications.service';
@@ -27,7 +27,7 @@ import { SharedModule } from '../shared-module/shared-module.component';
   standalone: true,
   selector: 'notifications-popup',
   imports: [TranslateModule, TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
-  providers: [...globalProviders, ...communityProviders],
+  providers: [...globalProviders, ...hubProviders],
   templateUrl: './notifications-popup.component.html',
   styleUrls: ['./notifications-popup.component.scss']
 })
@@ -119,7 +119,7 @@ export class NotificationsPopupComponent implements OnInit {
       case UINotificationType.ITEM_RETURN_APPROVED:
       case UINotificationType.ITEM_RESERVATION_APPROVED:
         return notification.payload?.item?.id
-          ? `/community/items/${notification.payload.item.id}`
+          ? `/hub/items/${notification.payload.item.id}`
           : null;
 
       // Add other cases if needed for different notification types

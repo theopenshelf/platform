@@ -1,0 +1,93 @@
+<div class="layout-container">
+  @for (community of communities; track community) {
+    <div class="community-card" tuiAppearance="floating" tuiCardMedium
+    routerLink="/hub/communities/{{ community.id }}/libraries" 
+
+    >
+      <div class="item-actions">
+        <tui-icon class="community-icon" [icon]="community.requiresApproval ? '@tui.lock' : '@tui.lock-open'" />
+
+        <tui-icon class="community-icon" icon="@tui.share-2" />
+      </div>
+
+
+    @if (community.picture) {
+      <tui-avatar
+        size="m"
+         class="tui-space_horizontal-4">
+        <picture>
+            <source
+                media="(min-width: 600px)"
+                [srcset]="community.picture"
+            />
+            <img
+                alt="Alex Inkin"
+                [src]="community.picture"
+            />
+        </picture>
+    </tui-avatar>
+    } @else {
+    <tui-avatar 
+        class="user-avatar"      
+        tuiChevron
+        tuiDropdownOpen
+        [src]="community.name | tuiInitials"
+        [style.background]="
+          community.name | tuiAutoColor
+        "
+        size="m">
+      </tui-avatar>
+    }
+
+      <h2 tuiTitle>
+        {{ community.name }}
+        <span tuiSubtitle>{{ community.location.address }}</span>
+      </h2>
+      <div class="bottom-actions">
+        <button
+        appearance="outline"
+        class="items-count"
+        size="m"
+        routerLink="/hub/communities/{{ community.id }}/libraries" 
+        tuiButton
+        type="button"
+      >
+        {{ 'communities.seeCommunity' | translate }}
+      </button>
+      @if (community.requiresApproval) {
+      <button
+        appearance="primary"
+        class="items-count"
+        size="m"
+        tuiButton
+        type="button"
+      >
+        {{ 'communities.requestToJoin' | translate }}
+      </button>
+      } @else {
+        <button
+        appearance="primary"
+        class="items-count"
+        size="m"
+        tuiButton
+        type="button"
+      >
+        {{ 'communities.joinCommunity' | translate }}
+      </button>
+    }
+      </div>
+    </div>
+  }
+
+  <div
+    class="community-card add-community-card"
+    routerLink="/hub/communities/add-community"
+    tuiAppearance="floating"
+    tuiCardMedium
+  >
+    <tui-icon
+      icon="@tui.plus"
+      [style.color]="'var(--tui-background-accent-1)'"
+    />
+  </div>
+</div>
