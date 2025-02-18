@@ -27,4 +27,8 @@ export class MockUsersService implements UsersService {
   updateUser(user: UIUser): Observable<UIUser> {
     return of(user);
   }
+
+  getMockUser(userId: string): UIUser {
+    return users.find((user) => user.id === userId) || ({} as UIUser);
+  }
 }

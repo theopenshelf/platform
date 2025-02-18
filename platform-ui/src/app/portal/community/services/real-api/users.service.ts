@@ -45,7 +45,7 @@ export class APIUsersService implements UsersService {
         );
     }
 
-    private mapToApiUser(uiUser: UIUser): User {
+    public mapToApiUser(uiUser: UIUser): User {
         return {
             id: uiUser.id,
             email: uiUser.email,
@@ -65,7 +65,7 @@ export class APIUsersService implements UsersService {
         };
     }
 
-    private mapToUIUser(user: User): UIUser {
+    public mapToUIUser(user: User): UIUser {
         return {
             id: user.id,
             email: user.email || '',

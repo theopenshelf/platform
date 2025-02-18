@@ -1,5 +1,6 @@
 import { Observable } from 'rxjs';
-import { UILibrary } from '../../../models/UILibrary';
+import { GetFilteredAndPaginatedParams } from '../../../models/GetFilteredAndPaginatedParams';
+import { UILibrary, UIMember, UIMembersPagination } from '../../../models/UILibrary';
 
 export interface LibrariesService {
   getLibraries(): Observable<UILibrary[]>;
@@ -12,4 +13,12 @@ export interface LibrariesService {
 
   // Delete a library
   deleteLibrary(id: string): Observable<void>;
+
+  getMembers(libraryId: string, getFilteredAndPaginatedParams: GetFilteredAndPaginatedParams): Observable<UIMembersPagination>;
+
+  addMember(libraryId: string, member: UIMember): Observable<UIMember>;
+
+  deleteMember(libraryId: string, memberId: string): Observable<void>;
+
+  updateMember(libraryId: string, memberId: string, member: UIMember): Observable<UIMember>;
 }

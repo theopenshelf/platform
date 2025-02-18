@@ -1,0 +1,16 @@
+<filtered-and-paginated
+    [enableSearchBar]="false"
+    [getItemsParams]="getItemsParams()"
+    [enableStatusFiltering]="false"
+    [enableCategoriesFiltering]="false"
+    [categoriesFilteringOpened]="false"
+    [sortingOptions]="[]"
+    [getItems]="fetchItems"
+>
+    <ng-template
+        #itemTemplate
+        let-item="item"
+    >
+        <member-card [member]="item"></member-card>
+    </ng-template>
+</filtered-and-paginated>

@@ -53,9 +53,9 @@ export class ApiLibrariesService implements LibrariesService {
                 name: library.location?.name ?? '',
                 address: library.location?.address ?? '',
             },
-            admins: library.admins?.map((admin) => ({ userId: admin })) ?? [],
             requiresApproval: library.requiresApproval ?? false,
             freeAccess: library.freeAccess ?? false,
+            isAdmin: library.isAdmin ?? false,
         };
     }
 
@@ -69,9 +69,9 @@ export class ApiLibrariesService implements LibrariesService {
                 name: library.location?.name ?? '',
                 address: library.location?.address ?? '',
             },
-            admins: library.admins?.map((admin) => admin.userId) ?? [],
             requiresApproval: library.requiresApproval ?? false,
             freeAccess: library.freeAccess ?? false,
+            isAdmin: library.isAdmin ?? false,
         };
     }
 }

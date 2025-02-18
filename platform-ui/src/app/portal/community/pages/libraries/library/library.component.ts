@@ -45,6 +45,7 @@ import {
 } from '../../../community.provider';
 import { LibrariesService } from '../../../services/libraries.service';
 import { UsersService } from '../../../services/users.service';
+import { FilteredAndPaginatedMembersComponent } from '../../../../../components/filtered-and-paginated-members/filtered-and-paginated-members.component';
 
 @Component({
   selector: 'app-library',
@@ -70,7 +71,8 @@ import { UsersService } from '../../../services/users.service';
     TranslateModule,
     TuiAvatar,
     TuiAvatarStack,
-    TosBreadcrumbsComponent
+    TosBreadcrumbsComponent,
+    FilteredAndPaginatedMembersComponent
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',
@@ -79,7 +81,7 @@ export class LibraryComponent {
   public getItemsParams: GetItemsParams | undefined;
 
   library: UILibrary | undefined;
-  tabOpened: 'items' | 'borrow-records' | 'approval' = 'items';
+  tabOpened: 'items' | 'borrow-records' | 'approval' | 'members' = 'items';
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
   isAdmin: boolean = false;
@@ -135,6 +137,8 @@ export class LibraryComponent {
         this.tabOpened = 'borrow-records';
       } else if (path.includes('approval')) {
         this.tabOpened = 'approval';
+      } else if (path.includes('members'))  {
+        this.tabOpened = 'members';
       } else {
         this.tabOpened = 'items';
       }
@@ -171,7 +175,7 @@ export class LibraryComponent {
       .subscribe();
   }
 
-  onTabChange(tab: 'items' | 'borrow-records' | 'approval'): void {
+  onTabChange(tab: 'items' | 'borrow-records' | 'approval' | 'members'): void {
     this.tabOpened = tab;
 
     var queryParams: any = {};
@@ -184,6 +188,8 @@ export class LibraryComponent {
     } else if (tab === 'approval') {
       path += '/approval';
       queryParams['selectedStatus'] = 'reserved-unconfirmed';
+    } else if (tab === 'members') {
+      path += '/members';
     } else {
       path += '/items';
       queryParams['selectedStatus'] = undefined;

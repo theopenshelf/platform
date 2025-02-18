@@ -35,15 +35,6 @@
           <div class="library-header-actions">
             <div class="library-actions">
               @if (isAdmin) {
-              <tui-avatar-stack class="admin-stack" [direction]="'left'">
-                @for (member of library.admins; track member) {
-                  <tui-avatar [round]="true" [size]="'s'" [src]="usersPerId.get(member.userId)!.username | tuiInitials"
-                    [style.background]="usersPerId.get(member.userId)!.username | tuiAutoColor" />
-                  }
-                <tui-avatar [round]="true" [size]="'s'">
-                  {{ library.admins.length }}+
-                </tui-avatar>
-              </tui-avatar-stack>
               <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
                 routerLink="/community/libraries/{{ library.id }}/edit"></button>
               <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
@@ -90,7 +81,14 @@
     @if (library.requiresApproval) {
     <a class="library-section library-action" routerLink="/community/libraries/{{ library.id }}/approval"
       routerLinkActive="active" (click)="onTabChange('approval')">
+      <tui-icon icon="@tui.stamp" />
       {{ 'library.approval' | translate }}
+    </a>
+
+    <a class="library-section library-action" routerLink="/community/libraries/{{ library.id }}/members"
+      routerLinkActive="active" (click)="onTabChange('members')">
+      <tui-icon icon="@tui.users" />
+      {{ 'library.members' | translate }}
     </a>
     }
   </nav>
@@ -121,6 +119,11 @@
 
       <filtered-and-paginated-borrow-records [approvalTab]="true" [library]="library"  [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
       </filtered-and-paginated-borrow-records>
+    }
+
+    @if (tabOpened === 'members') {
+      <filtered-and-paginated-members [library]="library" ></filtered-and-paginated-members>
+
     }
   }
   }

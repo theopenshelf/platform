@@ -32,6 +32,7 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'libraries/:id/items', component: LibraryComponent },
       { path: 'libraries/:id/borrow-records', component: LibraryComponent },
       { path: 'libraries/:id/approval', component: LibraryComponent },
+      { path: 'libraries/:id/members', component: LibraryComponent },
       { path: 'wishlist', component: WishlistComponent },
       { path: 'help-center', component: HelpCenterComponent },
       { path: 'page/:ref', component: CustomPageComponent },

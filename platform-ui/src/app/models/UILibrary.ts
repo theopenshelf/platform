@@ -1,4 +1,5 @@
 import { UILocation } from './UILocation';
+import { UIPagination } from './UIPagination';
 import { UIUser } from './UIUser';
 
 export interface UILibrary {
@@ -7,16 +8,19 @@ export interface UILibrary {
   isCommunityAccessible: boolean;
   requiresApproval: boolean;
   freeAccess: boolean;
-  admins: UIMember[];
   location: UILocation;
   instructions: string;
+  isAdmin: boolean;
 }
 
-export interface UIMember {
-  userId: string;
+export interface UIMember extends UIUser {
+  isAdmin: boolean;
 }
 
 export function isLibraryAdmin(user: UIUser, library: UILibrary): boolean {
-  return library.admins.some((admin) => admin.userId === user.id);
+  return library.isAdmin;
+}
+
+export interface UIMembersPagination extends UIPagination<UIMember> {
 }
 

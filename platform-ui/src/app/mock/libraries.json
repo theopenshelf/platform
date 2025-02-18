@@ -5,12 +5,15 @@
       "isCommunityAccessible": true,
       "requiresApproval": false,
       "freeAccess": true,
-      "admins": [
+      "isAdmin": true,
+      "members": [
             {
-                "userId": "11"
+                "userId": "11",
+                "isAdmin": true
             },
             {
-                "userId": "2"
+                "userId": "2",
+                "isAdmin": false
             }
         ],
       "instructions":
@@ -27,12 +30,15 @@
         "isCommunityAccessible": true,
         "requiresApproval": true,
         "freeAccess": false,
-        "admins": [
+        "isAdmin": true,
+        "members": [
             {
-                "userId": "11"
+                "userId": "11",
+                "isAdmin": true
             },
             {
-                "userId": "12"
+                "userId": "12",
+                "isAdmin": false
             }
         ],
         "instructions":
@@ -50,12 +56,15 @@
         "isCommunityAccessible": true,
         "requiresApproval": true,
         "freeAccess": false,
-        "admins": [
+        "isAdmin": true,
+        "members": [
             {
-                "userId": "1"
+                "userId": "1",
+                "isAdmin": true
             },
             {
-                "userId": "2"
+                "userId": "2",
+                "isAdmin": false
             }
         ],
         "instructions":

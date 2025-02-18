@@ -1,0 +1,29 @@
+<div class="member-card">
+    <div class="member-details-top-right">
+        <tui-badge [appearance]="member().isAdmin ? 'accent' : 'primary'">
+            {{ member().isAdmin ? 'Admin' : 'Member' }}
+        </tui-badge>
+    </div>
+
+    <div class="member-content">
+        <div class="member-avatar-name">
+            @if (member().avatarUrl) {
+            <tui-avatar tuiChevron tuiDropdownOpen class="tui-space_horizontal-4">
+                <picture>
+                    <source media="(min-width: 600px)" [srcset]="member().avatarUrl" />
+                    <img alt="Alex Inkin" [src]="member().avatarUrl" />
+                </picture>
+            </tui-avatar>
+            } @else {
+            <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="member().username | tuiInitials"
+                [style.background]="
+                member().username | tuiAutoColor
+              " size="s">
+            </tui-avatar>
+            }
+            <div class="member-name">
+                {{ member().firstName }} {{ member().lastName }}
+            </div>
+        </div>
+    </div>
+</div>
