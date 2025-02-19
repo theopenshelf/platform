@@ -1,7 +1,7 @@
 <div class="member-card">
     <div class="member-details-top-right">
-        <tui-badge [appearance]="member().isAdmin ? 'accent' : 'primary'">
-            {{ member().isAdmin ? 'Admin' : 'Member' }}
+        <tui-badge [appearance]="member().role === 'admin' ? 'accent' : 'primary'">
+            {{ member().role === 'admin' ? 'Admin' : 'Member' }}
         </tui-badge>
     </div>
 
