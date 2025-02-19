@@ -526,7 +526,7 @@
   },
   "communities": {
     "seeCommunity": "Plus d'informations",
-    "joinCommunity": "Rejoindre",
+    "joinCommunity": "Membre",
     "requestToJoin": "Demander à rejoindre"
   },
   "community": {
@@ -536,5 +536,25 @@
     "doesNotRequireApproval": "Libre accès",
     "libraries": "Bibliothèques",
     "members": "Membres"
+  },
+  "members": {
+    "confirmChangeTypeContent": "Êtes-vous sûr de vouloir changer le type de ce membre?",
+    "confirmChangeTypeYes": "Oui, Changer",
+    "confirmChangeTypeNo": "Annuler",
+    "confirmChangeType": "Convertir en {{type}}",
+    "confirmDeleteMemberContent": "Êtes-vous sûr de vouloir supprimer ce membre?",
+    "confirmDeleteMemberYes": "Oui, Supprimer",
+    "confirmDeleteMemberNo": "Annuler",
+    "confirmDeleteMember": "Supprimer le membre",
+    "confirmAcceptRequestContent": "Êtes-vous sûr de vouloir accepter cette demande?",
+    "confirmAcceptRequestYes": "Oui, Accepter",
+    "confirmAcceptRequestNo": "Annuler",
+    "confirmAcceptRequest": "Accepter la demande",
+    "confirmRejectRequestContent": "Êtes-vous sûr de vouloir rejeter cette demande?",
+    "confirmRejectRequestYes": "Oui, Rejeter",
+    "confirmRejectRequestNo": "Annuler",
+    "confirmRejectRequest": "Rejeter la demande",
+    "acceptRequest": "Accepter la demande",
+    "cancelRequest": "Annuler la demande"
   }
 }

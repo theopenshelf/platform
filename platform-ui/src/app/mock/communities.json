@@ -11,12 +11,52 @@
         "description": "La communauté de l'anneau est une communauté de Hobbits qui veulent protéger la Terre du Milieu.",
         "members": [
             {
+                "userId": "1",
+                "role": "requestingJoin"
+            },
+            {
+                "userId": "2",
+                "role": "requestingJoin"
+            },
+            {
+                "userId": "3",
+                "role": "admin"
+            },
+            {
+                "userId": "4",
+                "role": "member"
+            },
+            {
+                "userId": "5",
+                "role": "member"
+            },
+            {
+                "userId": "6",
+                "role": "member"
+            },
+            {
+                "userId": "7",
+                "role": "member"
+            },
+            {
+                "userId": "8",
+                "role": "member"
+            },
+            {
+                "userId": "9",
+                "role": "member"
+            },
+            {
+                "userId": "10",
+                "role": "member"
+            },
+            {
                 "userId": "11",
-                "isAdmin": true
+                "role": "member"
             },
             {
                 "userId": "12",
-                "isAdmin": false
+                "role": "member"
             }
         ]
     },
@@ -33,11 +73,11 @@
         "members": [
             {
                 "userId": "11",
-                "isAdmin": true
+                "role": "admin"
             },
             {
                 "userId": "12",
-                "isAdmin": false
+                "role": "member"
             }
         ]
     }

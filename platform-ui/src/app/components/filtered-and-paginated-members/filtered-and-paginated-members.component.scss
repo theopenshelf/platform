@@ -1,0 +1,60 @@
+.members-container {
+    margin-top: 20px;
+    background-color: var(--tos-background-base);
+    border-radius: 16px;
+    padding: 20px;
+    flex: 1;
+    /* Sidebar takes 1/3 of the space */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+    border: 1px solid rgb(226, 232, 240);
+
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0rem;
+
+    .member-details {
+        display: block;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .member-cell {
+        border-bottom: 1px solid var(--tos-border-normal);
+    }
+
+    .tui-segmented_active {
+        color: var(--tos-text-accent);
+    }
+
+    .member-switch {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0rem;
+    }
+
+    .member-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .member-actions-button {
+        margin-left: 0.5rem;
+    }
+
+    tui-pagination {
+        margin-top: 1rem;
+    }
+
+    .members-header {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+
+}

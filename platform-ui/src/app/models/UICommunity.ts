@@ -12,7 +12,7 @@ export interface UICommunity {
 }
 
 export interface UIMember extends UIUser {
-  isAdmin: boolean;
+  role: 'admin' | 'member' | 'requestingJoin';
 }
 
 export interface UIMembersPagination extends UIPagination<UIMember> {

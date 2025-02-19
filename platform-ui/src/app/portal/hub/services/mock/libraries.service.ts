@@ -21,7 +21,7 @@ export class MockLibrariesService implements LibrariesService {
         const user = this.usersService.getMockUser(member.userId);
         return {
           ...user,
-          isAdmin: member.isAdmin,
+          role: member.role as 'admin' | 'member' | 'requestingJoin',
         };
       });
       this.membersMap.set(library.id, members);

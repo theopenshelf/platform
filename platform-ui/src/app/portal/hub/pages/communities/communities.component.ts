@@ -9,13 +9,14 @@ import {
   TuiInitialsPipe,
   TuiTitle
 } from '@taiga-ui/core';
+import { TuiAvatar } from '@taiga-ui/kit';
 import { TuiCardMedium } from '@taiga-ui/layout';
 import { BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
+import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { UICommunity } from '../../../../models/UICommunity';
+import { AuthService } from '../../../../services/auth.service';
 import { COMMUNITIES_SERVICE_TOKEN } from '../../hub.provider';
-import { TuiAvatar } from '@taiga-ui/kit';
 import { CommunitiesService } from '../../services/communities.service';
-
 @Component({
   selector: 'app-libraries',
   imports: [
@@ -38,7 +39,8 @@ export class CommunitiesComponent {
 
   constructor(
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService
   ) {
     this.communitiesService.getCommunities().subscribe((communities) => {
       this.communities = communities;
@@ -51,5 +53,13 @@ export class CommunitiesComponent {
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  requestToJoin(community: UICommunity) {
+    const user = this.authService.getCurrentUserInfo();
+    this.communitiesService.addMember(community.id, {
+      ...user.user,
+      role: 'requestingJoin'
+    }).subscribe();
   }
 }

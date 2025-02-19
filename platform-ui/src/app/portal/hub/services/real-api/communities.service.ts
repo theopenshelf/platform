@@ -110,14 +110,14 @@ export class ApiCommunitiesService implements CommunitiesService {
     private mapToUIMember(member: CommunityMember): UIMember {
         return {
             ...this.usersService.mapToUIUser(member),
-            isAdmin: member.isAdmin ?? false,
+            role: member.role ?? 'member',
         };
     }
 
     private mapToApiMember(member: UIMember): CommunityMember {
         return {
             ...this.usersService.mapToApiUser(member),
-            isAdmin: member.isAdmin ?? false,
+            role: member.role ?? 'member',
         };
     }
 }

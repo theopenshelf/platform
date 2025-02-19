@@ -10,11 +10,11 @@
       "members": [
             {
                 "userId": "11",
-                "isAdmin": true
+                "role": "admin"
             },
             {
                 "userId": "2",
-                "isAdmin": false
+                "role": "member"
             }
         ],
       "instructions":
@@ -36,11 +36,11 @@
         "members": [
             {
                 "userId": "11",
-                "isAdmin": true
+                "role": "admin"
             },
             {
                 "userId": "12",
-                "isAdmin": false
+                "role": "member"
             }
         ],
         "instructions":
@@ -63,11 +63,11 @@
         "members": [
             {
                 "userId": "1",
-                "isAdmin": true
+                "role": "admin"
             },
             {
                 "userId": "2",
-                "isAdmin": false
+                "role": "member"
             }
         ],
         "instructions":

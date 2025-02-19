@@ -21,7 +21,7 @@ export class MockCommunitiesService implements CommunitiesService {
         const user = this.usersService.getMockUser(member.userId);
         return {
           ...user,
-          isAdmin: member.isAdmin,
+          role: member.role as 'admin' | 'member' | 'requestingJoin',
         };
       });
       this.membersMap.set(community.id, members);
@@ -76,7 +76,6 @@ export class MockCommunitiesService implements CommunitiesService {
     if (!members) {
       throw new Error(`Community with id ${communityId} not found`);
     }
-
 
     if (searchText) {
       members = members.filter((member) => member.username.toLowerCase().includes(searchText.toLowerCase()));

@@ -116,14 +116,14 @@ export class ApiLibrariesService implements LibrariesService {
     private mapToUIMember(member: LibraryMember): UIMember {
         return {
             ...this.usersService.mapToUIUser(member),
-            isAdmin: member.isAdmin ?? false,
+            role: member.role ?? 'member',
         };
     }
 
     private mapToApiMember(member: UIMember): LibraryMember {
         return {
             ...this.usersService.mapToApiUser(member),
-            isAdmin: member.isAdmin ?? false,
+            role: member.role ?? 'member',
         };
     }
 }

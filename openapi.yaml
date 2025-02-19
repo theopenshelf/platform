@@ -2156,9 +2156,10 @@ components:
         - $ref: "#/components/schemas/User"
         - type: object
           properties:
-            isAdmin:
-              type: boolean
-              example: true
+            role:
+              type: string
+              enum: ["admin", "member", "requestingJoin"]
+              example: "member"
 
     Item:
       type: object
@@ -2828,9 +2829,10 @@ components:
         - $ref: "#/components/schemas/User"
         - type: object
           properties:
-            isAdmin:
-              type: boolean
-              example: true
+            role:
+              type: string
+              enum: ["admin", "member", "requestingJoin"]
+              example: "member"
 
   responses:
     OK_200_GET_HELLO_WORLD:

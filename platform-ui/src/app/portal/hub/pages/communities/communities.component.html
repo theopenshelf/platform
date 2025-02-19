@@ -61,15 +61,17 @@
         size="m"
         tuiButton
         type="button"
+        (click)="requestToJoin(community)"
       >
         {{ 'communities.requestToJoin' | translate }}
       </button>
       } @else {
         <button
-        appearance="primary"
+        appearance="accent"
         class="items-count"
         size="m"
         tuiButton
+        disabled
         type="button"
       >
         {{ 'communities.joinCommunity' | translate }}

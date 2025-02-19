@@ -1,16 +1,90 @@
-<filtered-and-paginated
-    [enableSearchBar]="false"
-    [getItemsParams]="getItemsParams()"
-    [enableStatusFiltering]="false"
-    [enableCategoriesFiltering]="false"
-    [categoriesFilteringOpened]="false"
-    [sortingOptions]="[]"
-    [getItems]="fetchItems"
->
-    <ng-template
-        #itemTemplate
-        let-item="item"
-    >
-        <member-card [member]="item"></member-card>
-    </ng-template>
-</filtered-and-paginated>
+<div class="members-container">
+    @for (member of members; track member.id) {
+    <div tuiCell class="member-cell">
+        @if (member.avatarUrl) {
+            <tui-avatar tuiChevron tuiDropdownOpen class="tui-space_horizontal-4">
+                <picture>
+                    <source media="(min-width: 600px)" [srcset]="member.avatarUrl" />
+                    <img alt="Alex Inkin" [src]="member.avatarUrl" />
+                </picture>
+            </tui-avatar>
+            } @else {
+            <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="member.username | tuiInitials"
+                [style.background]="
+                member.username | tuiAutoColor
+              " size="s">
+            </tui-avatar>
+            }
+        <div
+            class="member-details"
+            tuiAccessories
+            tuiTitle
+        >
+            {{ member.firstName }} {{ member.lastName }}
+            <div tuiSubtitle>{{ member.email }}</div>
+        </div>
+        <div class="member-actions">
+            @if (member.role === 'requestingJoin') {
+                <button
+                    (click)="acceptRequest(member)"
+                    class="member-actions-button"
+                    appearance="primary"
+                    size="m"
+                    type="button"
+                    tuiButton
+                    >
+                    {{ 'members.acceptRequest' | translate }}
+                </button>
+                <button
+                    (click)="rejectRequest(member)"
+                    class="member-actions-button"
+                    appearance="secondary"
+                    size="m"
+                    type="button"
+                    tuiButton
+                    >
+                    {{ 'members.cancelRequest' | translate }}
+                </button>
+            } @else {
+            <tui-segmented>
+                <label>
+                    <input
+                        name="radio"
+                        type="radio"
+                        [value]="'admin'"
+                        (click)="switchType(member, 'admin')"
+                        [(ngModel)]="member.role"
+                    />
+                   Admin
+                </label>
+                <label>
+                    <input
+                        name="radio"
+                        type="radio"
+                        [value]="'member'"
+                        (click)="switchType(member, 'member')"
+                        [(ngModel)]="member.role"
+                    />
+                    Member
+                </label>
+            </tui-segmented>
+            <button
+                (click)="deleteMember(member)"
+                class="member-actions-button"
+                appearance="primary"
+                iconStart="@tui.x"
+                size="xs"
+                tuiIconButton
+                type="button"
+                [style.border-radius.%]="100"
+            >
+            </button>
+            }
+        </div>
+    </div>
+    }
+
+    @if (totalPages > 1) {
+        <tui-pagination [index]="currentPage" [length]="totalPages" (indexChange)="goToPage($event)" />
+        }
+</div>

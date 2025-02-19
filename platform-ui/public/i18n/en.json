@@ -521,5 +521,25 @@
     "doesNotRequireApproval": "Does not require approval",
     "libraries": "Libraries",
     "members": "Members"
+  },
+  "members": {
+    "confirmChangeTypeContent": "Are you sure you want to change the type of this member?",
+    "confirmChangeTypeYes": "Yes, Change",
+    "confirmChangeTypeNo": "Cancel",
+    "confirmChangeType": "Change type of {{type}}",
+    "confirmDeleteMemberContent": "Are you sure you want to delete this member?",
+    "confirmDeleteMemberYes": "Yes, Delete",
+    "confirmDeleteMemberNo": "Cancel",
+    "confirmDeleteMember": "Delete member",
+    "confirmAcceptRequestContent": "Are you sure you want to accept this request?",
+    "confirmAcceptRequestYes": "Yes, Accept",
+    "confirmAcceptRequestNo": "Cancel",
+    "confirmAcceptRequest": "Accept request",
+    "confirmRejectRequestContent": "Are you sure you want to reject this request?",
+    "confirmRejectRequestYes": "Yes, Reject",
+    "confirmRejectRequestNo": "Cancel",
+    "confirmRejectRequest": "Reject request",
+    "acceptRequest": "Accept request",
+    "cancelRequest": "Cancel request"
   }
 }

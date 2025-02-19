@@ -15,7 +15,7 @@ export interface UILibrary {
 }
 
 export interface UIMember extends UIUser {
-  isAdmin: boolean;
+  role: 'admin' | 'member' | 'requestingJoin';
 }
 
 export function isLibraryAdmin(user: UIUser, library: UILibrary): boolean {
