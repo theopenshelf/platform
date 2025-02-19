@@ -3,35 +3,29 @@ import { Component, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
-import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiIcon, TuiInitialsPipe } from '@taiga-ui/core';
-import { TUI_CONFIRM, TuiAvatar, TuiBadge, TuiConfirmData, TuiPagination, TuiSegmented } from '@taiga-ui/kit';
+import { TuiAlertService, TuiAutoColorPipe, TuiButton, TuiInitialsPipe } from '@taiga-ui/core';
+import { TUI_CONFIRM, TuiAvatar, TuiConfirmData, TuiPagination, TuiSegmented } from '@taiga-ui/kit';
 import { TuiCell } from '@taiga-ui/layout';
 import { GetItemsParams } from '../../models/GetItemsParams';
 import { UICommunity } from '../../models/UICommunity';
 import { UIMember } from '../../models/UILibrary';
 import { COMMUNITIES_SERVICE_TOKEN } from '../../portal/hub/hub.provider';
 import { CommunitiesService } from '../../portal/hub/services/communities.service';
-import { FilteredAndPaginatedComponent } from '../filtered-and-paginated/filtered-and-paginated.component';
-import { MemberCardComponent } from '../member-card/member-card.component';
 
 @Component({
   standalone: true,
   selector: 'filtered-and-paginated-members',
   imports: [
     CommonModule,
-    MemberCardComponent,
-    FilteredAndPaginatedComponent,
     TuiAvatar,
     TuiCell,
-    TuiBadge,
     TuiInitialsPipe,
     TuiAutoColorPipe,
     TuiPagination,
     TuiSegmented,
     TuiButton,
-    TuiIcon,
     FormsModule,
-    TranslateModule,
+    TranslateModule
   ],
   templateUrl: './filtered-and-paginated-members.component.html',
   styleUrl: './filtered-and-paginated-members.component.scss'

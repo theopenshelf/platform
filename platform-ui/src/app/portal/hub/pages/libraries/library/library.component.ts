@@ -10,18 +10,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import {
   TuiAlertService,
-  TuiAutoColorPipe,
   TuiButton,
   TuiDataList,
   TuiIcon,
-  TuiInitialsPipe,
   TuiTextfield
 } from '@taiga-ui/core';
 import {
   TUI_CONFIRM,
   TuiAccordion,
-  TuiAvatar,
-  TuiAvatarStack,
   TuiConfirmData,
   TuiDataListWrapper
 } from '@taiga-ui/kit';
@@ -32,7 +28,6 @@ import {
 import { EMPTY, switchMap } from 'rxjs';
 import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
 import { FilteredAndPaginatedItemsComponent } from '../../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
-import { FilteredAndPaginatedMembersComponent } from '../../../../../components/filtered-and-paginated-members/filtered-and-paginated-members.component';
 import { TosBreadcrumbsComponent } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
@@ -55,11 +50,8 @@ import { UsersService } from '../../../services/users.service';
     FormsModule,
     TuiIcon,
     TuiAccordion,
-    TuiAvatar,
     TuiButton,
     TuiIcon,
-    TuiInitialsPipe,
-    TuiAutoColorPipe,
     TuiTextfieldControllerModule,
     ReactiveFormsModule,
     TuiTextfield,
@@ -69,10 +61,7 @@ import { UsersService } from '../../../services/users.service';
     FilteredAndPaginatedItemsComponent,
     FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule,
-    TuiAvatar,
-    TuiAvatarStack,
-    TosBreadcrumbsComponent,
-    FilteredAndPaginatedMembersComponent
+    TosBreadcrumbsComponent
   ],
   templateUrl: './library.component.html',
   styleUrl: './library.component.scss',

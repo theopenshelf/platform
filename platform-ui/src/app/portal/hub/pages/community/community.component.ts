@@ -10,18 +10,14 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
 import {
   TuiAlertService,
-  TuiAutoColorPipe,
   TuiButton,
   TuiDataList,
   TuiIcon,
-  TuiInitialsPipe,
   TuiTextfield
 } from '@taiga-ui/core';
 import {
   TUI_CONFIRM,
   TuiAccordion,
-  TuiAvatar,
-  TuiAvatarStack,
   TuiConfirmData,
   TuiDataListWrapper
 } from '@taiga-ui/kit';
@@ -30,8 +26,6 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
-import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
-import { FilteredAndPaginatedItemsComponent } from '../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { FilteredAndPaginatedMembersComponent } from '../../../../components/filtered-and-paginated-members/filtered-and-paginated-members.component';
 import { TosBreadcrumbsComponent } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
@@ -56,22 +50,15 @@ import { LibrariesComponent } from '../libraries/libraries/libraries.component';
     FormsModule,
     TuiIcon,
     TuiAccordion,
-    TuiAvatar,
     TuiButton,
     TuiIcon,
-    TuiInitialsPipe,
-    TuiAutoColorPipe,
     TuiTextfieldControllerModule,
     ReactiveFormsModule,
     TuiTextfield,
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
-    FilteredAndPaginatedItemsComponent,
-    FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule,
-    TuiAvatar,
-    TuiAvatarStack,
     TosBreadcrumbsComponent,
     FilteredAndPaginatedMembersComponent,
     LibrariesComponent
