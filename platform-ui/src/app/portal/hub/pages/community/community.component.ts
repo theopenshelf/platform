@@ -109,18 +109,7 @@ export class CommunityComponent {
     if (communityId) {
       this.communitiesService.getCommunity(communityId).subscribe((community) => {
         this.community = community;
-        this.breadcrumbs = [
-          {
-            name: community.name,
-            routerLink: `/hub/communities/${community.id}`
-          }
-        ];
-        this.breadcrumbService.appendBreadcrumbs('library', this.breadcrumbs, [
-          {
-            caption: 'breadcrumb.communities',
-            routerLink: '/hub/communities'
-          }
-        ]);
+
         this.isAdmin = true; //TODO
         this.getItemsParams = {
           libraryIds: [communityId!],
@@ -131,25 +120,57 @@ export class CommunityComponent {
 
     // Check the current route to set the tabOpened property
     this.route.url.subscribe(urlSegments => {
+      this.breadcrumbs = [
+        {
+          caption: 'breadcrumb.communities',
+          routerLink: '/hub/communities'
+        },
+        {
+          name: this.community?.name,
+          routerLink: `/hub/communities/${this.community?.id}`
+        }
+      ];
       const path = urlSegments.map(segment => segment.path).join('/');
       if (path.includes('libraries')) {
         this.tabOpened = 'libraries';
+        this.breadcrumbs.push({
+          caption: 'breadcrumb.libraries',
+          routerLink: `/hub/communities/${this.community?.id}/libraries`
+        });
       } else if (path.includes('members')) {
         this.tabOpened = 'members';
+        this.breadcrumbs.push({
+          caption: 'breadcrumb.members',
+          routerLink: `/hub/communities/${this.community?.id}/members`
+        });
       } else if (path.includes('pages') && urlSegments.length > 3) {
         this.tabOpened = 'pages';
         const pageRef = urlSegments[3].path;
         this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
           this.pages = pages;
           this.selectPage(this.pages.find(page => page.ref === pageRef)!)
+          this.breadcrumbs.push({
+            caption: 'breadcrumb.pages',
+            routerLink: `/hub/communities/${this.community?.id}/pages/`
+          });
+
+          this.breadcrumbs.push({
+            name: this.selectedPage?.title,
+            routerLink: `/hub/communities/${this.community?.id}/pages/${pageRef}`
+          });
         });
       } else {
+        this.breadcrumbs.push({
+          caption: 'breadcrumb.pages',
+          routerLink: `/hub/communities/${this.community?.id}/pages`
+        });
         this.tabOpened = 'pages';
         this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
           this.pages = pages;
           this.selectPage(this.pages[0]);
         });
       }
+      this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
     });
 
 
@@ -247,7 +268,6 @@ export class CommunityComponent {
 
     let path = `/hub/communities/${this.community?.id}`;
     path += '/pages/' + page.ref;
-
 
     this.router.navigate([path], {
       queryParams: queryParams,

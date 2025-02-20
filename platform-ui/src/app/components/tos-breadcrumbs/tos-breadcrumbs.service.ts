@@ -10,6 +10,8 @@ export interface BreadcrumbItem {
     providedIn: 'root'
 })
 export class BreadcrumbService {
+    refresh: () => void = () => { };
+
     private breadcrumbs: BreadcrumbItem[] = [];
     private breadcrumbsHistory: BreadcrumbItem[] = [];
     private breadcrumbsHistoryKey: string = '';
@@ -24,6 +26,7 @@ export class BreadcrumbService {
         this.breadcrumbsLinkClick = false;
         this.breadcrumbsHistory = breadcrumbs;
         this.breadcrumbs = [];
+        this.refresh();
     }
 
     getBreadcrumbs(): BreadcrumbItem[] {
@@ -42,6 +45,7 @@ export class BreadcrumbService {
         }
 
         this.breadcrumbsLinkClick = false;
+        this.refresh();
     }
 
     onBreadcrumbsLinkClick(breadcrumb: BreadcrumbItem) {
@@ -51,5 +55,10 @@ export class BreadcrumbService {
         this.breadcrumbsHistory = newBreadcrumbs;
         this.breadcrumbs = [];
         this.breadcrumbsLinkClick = true;
+        this.refresh();
+    }
+
+    setRefresh(refresh: () => void) {
+        this.refresh = refresh;
     }
 } 

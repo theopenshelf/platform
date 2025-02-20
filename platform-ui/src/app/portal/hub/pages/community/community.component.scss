@@ -224,16 +224,18 @@
             display: flex;
             gap: 10px;
             flex-direction: column;
-            width: calc(100% - 40px);
+            width: calc(100% - 10px);
         }
 
         .sidebar-page {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 2fr 1fr;
             font-size: 1rem;
-            width: 100%;
-            padding: 10px;
-            padding-left: 30px;
+
+            .sidebar-page-title {
+                padding: 10px;
+                padding-left: 30px;
+            }
         }
 
         .sidebar-page:hover {
@@ -243,17 +245,22 @@
 
         .sidebar-page.active {
             border-left: 5px solid var(--tos-background-accent-1);
-            padding-left: 25px !important;
+        }
 
+        .sidebar-page.active .sidebar-page-title {
+            padding-left: 25px !important;
         }
 
         .sidebar-page-actions {
             display: flex;
             justify-content: flex-end;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
         }
 
         .sidebar-create-page {
-            width: 100%;
+            width: calc(100% - 30px);
             margin: 20px;
             justify-content: center;
             display: flex;

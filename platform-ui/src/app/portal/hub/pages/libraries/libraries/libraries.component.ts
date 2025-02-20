@@ -37,9 +37,6 @@ export class LibrariesComponent {
     this.librariesService.getLibraries().subscribe((libraries) => {
       this.libraries = libraries;
     });
-    this.breadcrumbService.setBreadcrumbs([
-      { caption: 'breadcrumb.libraries', routerLink: '/hub/libraries' }
-    ]);
   }
 
 

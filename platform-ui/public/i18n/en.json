@@ -507,7 +507,9 @@
     "borrowedItems": "Borrowed Items",
     "wishlist": "Wishlist",
     "approval": "Approvals required",
-    "communities": "Communities"
+    "communities": "Communities",
+    "pages": "Pages",
+    "members": "Members"
   },
   "communities": {
     "seeCommunity": "See more",

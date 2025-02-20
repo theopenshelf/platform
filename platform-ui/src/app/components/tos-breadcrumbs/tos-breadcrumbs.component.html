@@ -2,7 +2,7 @@
 tuiFade
 size="l"
 class="tui-space_top-2"
-[itemsLimit]="3"
+[itemsLimit]="isMobile ? 3 : 6"
 >
 @for (item of breadcrumbs; track item.routerLink) {
             <a

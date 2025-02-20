@@ -522,7 +522,9 @@
     "borrowedItems": "Articles empruntés",
     "wishlist": "Liste de souhaits",
     "approval": "Confirmations requises",
-    "communities": "Communautés"
+    "communities": "Communautés",
+    "pages": "Pages",
+    "members": "Membres"
   },
   "communities": {
     "seeCommunity": "Plus d'informations",
