@@ -1,7 +1,7 @@
 <div class="layout-container">
   @for (community of communities; track community) {
     <div class="community-card" tuiAppearance="floating" tuiCardMedium
-    routerLink="/hub/communities/{{ community.id }}/libraries" 
+    routerLink="/hub/communities/{{ community.id }}/pages" 
 
     >
       <div class="item-actions">
@@ -48,7 +48,7 @@
         appearance="outline"
         class="items-count"
         size="m"
-        routerLink="/hub/communities/{{ community.id }}/libraries" 
+        routerLink="/hub/communities/{{ community.id }}/pages" 
         tuiButton
         type="button"
       >

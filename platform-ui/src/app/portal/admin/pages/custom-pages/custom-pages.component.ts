@@ -73,7 +73,9 @@ export class CustomPagesComponent implements OnInit {
           ref: 'help-center',
           position: 'footer-links',
           title: 'Help Center',
-          content: 'Test'
+          content: 'Test',
+          communityId: '',
+          order: 0
         });
         return {
           totalPages: 1,

@@ -32,6 +32,7 @@ import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-br
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UICommunity } from '../../../../models/UICommunity';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { UIUser } from '../../../../models/UIUser';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
@@ -40,8 +41,9 @@ import {
 } from '../../hub.provider';
 import { CommunitiesService } from '../../services/communities.service';
 import { UsersService } from '../../services/users.service';
+import { CustomPageComponent } from '../custom-page/custom-page.component';
+import { CustomPagesEditComponent } from '../custom-pages-edit/custom-pages-edit.component';
 import { LibrariesComponent } from '../libraries/libraries/libraries.component';
-
 @Component({
   selector: 'app-community',
   imports: [
@@ -61,20 +63,28 @@ import { LibrariesComponent } from '../libraries/libraries/libraries.component';
     TranslateModule,
     TosBreadcrumbsComponent,
     FilteredAndPaginatedMembersComponent,
-    LibrariesComponent
+    LibrariesComponent,
+    CustomPageComponent,
+    CustomPagesEditComponent
   ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss',
 })
 export class CommunityComponent {
+
   public getItemsParams: GetItemsParams | undefined;
 
   community: UICommunity | undefined;
-  tabOpened: 'libraries' | 'members' = 'libraries';
+  tabOpened: 'libraries' | 'members' | 'pages' = 'pages';
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
   isAdmin: boolean = false;
   breadcrumbs: BreadcrumbItem[] = [];
+
+  selectedPage: UICustomPage | undefined;
+  pages: UICustomPage[] = [];
+  editMode: boolean = false;
+
   constructor(
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
@@ -126,8 +136,23 @@ export class CommunityComponent {
         this.tabOpened = 'libraries';
       } else if (path.includes('members')) {
         this.tabOpened = 'members';
+      } else if (path.includes('pages') && urlSegments.length > 3) {
+        this.tabOpened = 'pages';
+        const pageRef = urlSegments[3].path;
+        this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
+          this.pages = pages;
+          this.selectPage(this.pages.find(page => page.ref === pageRef)!)
+        });
+      } else {
+        this.tabOpened = 'pages';
+        this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
+          this.pages = pages;
+          this.selectPage(this.pages[0]);
+        });
       }
     });
+
+
     this.isCssLoaded = true;
   }
 
@@ -160,7 +185,37 @@ export class CommunityComponent {
       .subscribe();
   }
 
-  onTabChange(tab: 'libraries' | 'members'): void {
+  deletePage(page: UICustomPage): void {
+
+    const data: TuiConfirmData = {
+      content: this.translate.instant('community.confirmDeletePage', { pageTitle: page.title }),
+      yes: this.translate.instant('community.yesDelete'),
+      no: this.translate.instant('community.cancel'),
+    };
+
+    this.dialogs
+      .open<boolean>(TUI_CONFIRM, {
+        label: this.translate.instant('community.deletePageLabel', { pageTitle: page.title }),
+        size: 'm',
+        data,
+      })
+      .pipe(
+        switchMap((response) => {
+          if (response) {
+            this.communitiesService.deleteCustomPage(this.community?.id!, page.id).subscribe(() => {
+              this.alerts.open(this.translate.instant('community.deletePageSuccess', { pageTitle: page.title }), {
+                appearance: 'positive',
+              }).subscribe();
+              this.pages = this.pages.filter(p => p.id !== page.id);
+            });
+          }
+          return EMPTY;
+        }),
+      )
+      .subscribe();
+  }
+
+  onTabChange(tab: 'libraries' | 'members' | 'pages'): void {
     this.tabOpened = tab;
 
     var queryParams: any = {};
@@ -169,6 +224,8 @@ export class CommunityComponent {
 
     if (tab === 'libraries') {
       path += '/libraries';
+    } else if (tab === 'pages') {
+      path += '/pages';
     } else if (tab === 'members') {
       path += '/members';
     } else {
@@ -182,4 +239,37 @@ export class CommunityComponent {
     });
   }
 
+  selectPage(page: UICustomPage) {
+    this.selectedPage = page;
+    this.editMode = false;
+
+    var queryParams: any = {};
+
+    let path = `/hub/communities/${this.community?.id}`;
+    path += '/pages/' + page.ref;
+
+
+    this.router.navigate([path], {
+      queryParams: queryParams,
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  editPage(page: UICustomPage) {
+    this.selectedPage = page;
+    this.editMode = true;
+  }
+
+  createPage() {
+    this.selectedPage = {
+      id: '',
+      communityId: this.community?.id!,
+      ref: '',
+      order: 100,
+      title: '',
+      content: '',
+      position: 'community',
+    };
+    this.editMode = true;
+  }
 }

@@ -520,7 +520,16 @@
     "requiresApproval": "Requires approval",
     "doesNotRequireApproval": "Does not require approval",
     "libraries": "Libraries",
-    "members": "Members"
+    "members": "Members",
+    "information": "Information",
+    "noPageFound": "No page found",
+    "deletePage": "Delete Page",
+    "deletePageSuccess": "Page '{{pageTitle}}' deleted successfully",
+    "confirmDeletePage": "Are you sure you want to delete this page?",
+    "yesDelete": "Yes, Delete",
+    "cancel": "Cancel",
+    "deletePageLabel": "Delete page '{{pageTitle}}'",
+    "addPage": "Create page"
   },
   "members": {
     "confirmChangeTypeContent": "Are you sure you want to change the type of this member?",

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { UICustomPage } from '../../../../models/UICustomPage';
@@ -6,7 +6,7 @@ import { CUSTOM_PAGE_SERVICE_TOKEN } from '../../hub.provider';
 import { CustomPageService } from '../../services/custom-page.service';
 
 @Component({
-  selector: 'app-custom-page',
+  selector: 'custom-page',
   imports: [
     TranslateModule
   ],
@@ -15,7 +15,7 @@ import { CustomPageService } from '../../services/custom-page.service';
 })
 export class CustomPageComponent implements OnInit {
   pageRef: any;
-  page: UICustomPage | null = null;
+  page = input<UICustomPage>();
 
   constructor(
     private route: ActivatedRoute,
@@ -25,11 +25,13 @@ export class CustomPageComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    this.route.params.subscribe((params) => {
-      this.pageRef = params['ref'] || '';
-      this.customPageService.getCustomPage(this.pageRef).subscribe((page) => {
-        this.page = page;
+    if (!this.page()) {
+      this.route.params.subscribe((params) => {
+        this.pageRef = params['ref'] || '';
+        this.customPageService.getCustomPage(this.pageRef).subscribe((page) => {
+          this.page.apply(page);
+        });
       });
-    });
+    }
   }
 }

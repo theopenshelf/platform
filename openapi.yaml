@@ -1484,7 +1484,13 @@ paths:
                       type: string
                     position:
                       type: string
-                      enum: ["footer-links", "copyright", "footer-help"]
+                      enum:
+                        [
+                          "footer-links",
+                          "copyright",
+                          "footer-help",
+                          "community",
+                        ]
                     title:
                       type: string
 
@@ -2066,6 +2072,111 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CommunityMember"
+
+  /hub/communities/{community-id}/pages:
+    parameters:
+      - name: community-id
+        in: path
+        description: Community ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getCommunityCustomPages
+      summary: Retrieve all custom pages for a specific community
+      tags:
+        - custom-pages-hub-api
+      responses:
+        "200":
+          description: A list of custom pages for the community
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CustomPage"
+
+    post:
+      operationId: createCommunityCustomPage
+      summary: Create a new custom page for a specific community
+      tags:
+        - custom-pages-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPage"
+      responses:
+        "201":
+          description: Custom page created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+
+  /hub/communities/{community-id}/pages/{page-ref}:
+    parameters:
+      - name: community-id
+        in: path
+        description: Community ID
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: page-ref
+        in: path
+        description: Reference of the custom page
+        required: true
+        schema:
+          type: string
+    get:
+      operationId: getCommunityCustomPage
+      summary: Retrieve a specific custom page by reference for a specific community
+      tags:
+        - custom-pages-hub-api
+      responses:
+        "200":
+          description: A single custom page
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+        "404":
+          description: Custom page not found
+
+    put:
+      operationId: updateCommunityCustomPage
+      summary: Update a custom page for a specific community
+      tags:
+        - custom-pages-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomPage"
+      responses:
+        "200":
+          description: Custom page updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomPage"
+        "404":
+          description: Custom page not found
+
+    delete:
+      operationId: deleteCommunityCustomPage
+      summary: Delete a custom page for a specific community
+      tags:
+        - custom-pages-hub-api
+      responses:
+        "204":
+          description: Custom page deleted successfully
+        "404":
+          description: Custom page not found
 
 components:
   #####################################################
@@ -2707,11 +2818,16 @@ components:
       properties:
         id:
           type: string
+        communityId:
+          type: string
+          format: uuid
         ref:
           type: string
+        order:
+          type: integer
         position:
           type: string
-          enum: ["footer-links", "copyright", "footer-help"]
+          enum: ["footer-links", "copyright", "footer-help", "community"]
         title:
           type: string
         content:

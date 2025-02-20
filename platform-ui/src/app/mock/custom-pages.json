@@ -4,6 +4,8 @@
         "position": "footer-links",
         "ref": "my-neighborhood",
         "title": "My neighborhood",
+        "communityId": "",
+        "order": 0,
         "content": "This is the content of the first custom page."
     },
     {
@@ -11,6 +13,8 @@
         "position": "footer-links",
         "ref": "how-borrowing-works",
         "title": "How borrowing works",
+        "communityId": "",
+        "order": 1,
         "content": "This is the content of the first custom page."
     },
     {
@@ -18,6 +22,8 @@
         "position": "footer-links",
         "ref": "share-give-an-object",
         "title": "Share/give an object",
+        "communityId": "",
+        "order": 2,
         "content": "This is the content of the first custom page."
     },
     {
@@ -25,6 +31,8 @@
         "position": "copyright",
         "ref": "privacy-policy",
         "title": "Privacy policy",
+        "communityId": "",
+        "order": 0,
         "content": "This is the content of the first custom page."
     },
     {
@@ -32,6 +40,80 @@
         "position": "copyright",
         "ref": "terms-of-use",
         "title": "Terms of use",
+        "communityId": "",
+        "order": 1,
         "content": "This is the content of the first custom page."
+    },
+    {
+        "id": "6",
+        "position": "community",
+        "communityId": "1",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "This is the home page of the communauté de l'anneau."
+    },
+    {
+        "id": "7",
+        "position": "community",
+        "communityId": "1",
+        "ref": "about",
+        "title": "About",
+        "order": 2,
+        "content": "This is the about page of the communauté de l'anneau."
+    },
+    {
+        "id": "8",
+        "position": "community",
+        "communityId": "1",
+        "ref": "contact",
+        "title": "Contact",
+        "order": 3,
+        "content": "This is the contact page of the communauté de l'anneau."
+    },
+    {
+        "id": "9",
+        "position": "community",
+        "communityId": "1",
+        "ref": "how-to-borrow",
+        "title": "How to borrow",
+        "order": 4,
+        "content": "This is the how to borrow page of the communauté de l'anneau."
+    },
+    {
+        "id": "10",
+        "position": "community",
+        "communityId": "2",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "This is the home page of the terre de laya."
+    },
+    {
+        "id": "11",
+        "position": "community",
+        "communityId": "2",
+        "ref": "about",
+        "title": "About",
+        "order": 2,
+        "content": "This is the about page of the terre de laya."
+    },
+    {
+        "id": "12",
+        "position": "community",
+        "communityId": "2",
+        "ref": "contact",
+        "title": "Contact",
+        "order": 3,
+        "content": "This is the contact page of the terre de laya."
+    },
+    {
+        "id": "13",
+        "position": "community",
+        "communityId": "2",
+        "ref": "how-to-borrow",
+        "title": "How to borrow",
+        "order": 4,
+        "content": "This is the how to borrow page of the terre de laya."
     }
 ]

@@ -1,0 +1,47 @@
+<form
+    [formGroup]="pageForm"
+    (ngSubmit)="onSubmit()"
+>
+    <tui-textfield>
+        <label tuiLabel>
+            {{ 'customPagesEdit.reference' | translate }}
+        </label>
+        <input
+            id="ref"
+            formControlName="ref"
+            type="text"
+            placeholder="{{ 'customPagesEdit.referencePlaceholder' | translate }}"
+            tuiTextfield
+        >
+    </tui-textfield>
+
+    <tui-textfield>
+        <label tuiLabel>
+            {{ 'customPagesEdit.title' | translate }}
+        </label>
+        <input
+            id="title"
+            formControlName="title"
+            type="text"
+            placeholder="{{ 'customPagesEdit.titlePlaceholder' | translate }}"
+            tuiTextfield
+        >
+    </tui-textfield>
+
+    <quill-editor
+        formControlName="content"
+        [modules]="editorConfig"
+        style="height: 200px"
+    ></quill-editor>
+
+    <button
+        class="save-button"
+        type="submit"
+        appearance="accent"
+        size="m"
+        tuiButton
+        [disabled]="pageForm.invalid"
+    >
+        {{ 'customPagesEdit.save' | translate }}
+    </button>
+</form>

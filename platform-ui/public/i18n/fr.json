@@ -535,7 +535,17 @@
     "requiresApproval": "Confirmation requise",
     "doesNotRequireApproval": "Libre accès",
     "libraries": "Bibliothèques",
-    "members": "Membres"
+    "members": "Membres",
+    "pages": "Pages",
+    "information": "Information",
+    "noPageFound": "Aucune page trouvée",
+    "deletePage": "Supprimer la page",
+    "deletePageSuccess": "Page '{{pageTitle}}' supprimée avec succès",
+    "confirmDeletePage": "Êtes-vous sûr de vouloir supprimer cette page?",
+    "yesDelete": "Oui, Supprimer",
+    "cancel": "Annuler",
+    "deletePageLabel": "Supprimer la page '{{pageTitle}}'",
+    "addPage": "Créer une page"
   },
   "members": {
     "confirmChangeTypeContent": "Êtes-vous sûr de vouloir changer le type de ce membre?",

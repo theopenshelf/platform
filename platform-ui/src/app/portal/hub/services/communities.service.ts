@@ -1,6 +1,7 @@
 import { Observable } from 'rxjs';
 import { GetFilteredAndPaginatedParams } from '../../../models/GetFilteredAndPaginatedParams';
 import { UICommunity, UIMember, UIMembersPagination } from '../../../models/UICommunity';
+import { UICustomPage } from '../../../models/UICustomPage';
 
 export interface CommunitiesService {
   getCommunities(): Observable<UICommunity[]>;
@@ -21,4 +22,13 @@ export interface CommunitiesService {
   deleteMember(communityId: string, memberId: string): Observable<void>;
 
   updateMember(communityId: string, memberId: string, member: UIMember): Observable<UIMember>;
+
+  getCustomPages(communityId: string): Observable<UICustomPage[]>;
+
+  addCustomPage(communityId: string, customPage: UICustomPage): Observable<UICustomPage>;
+
+  updateCustomPage(communityId: string, customPageId: string, customPage: UICustomPage): Observable<UICustomPage>;
+
+  deleteCustomPage(communityId: string, customPageId: string): Observable<void>;
 }
+

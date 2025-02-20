@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { loadCommunitiesData } from '../../../../mock/communities-loader';
 import communitiesData from '../../../../mock/communities.json';
+import { loadCustomPagesData } from '../../../../mock/custom-page-loader';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
 import { UICommunity, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { CommunitiesService } from '../communities.service';
 import { MockUsersService } from './users.service';
 
@@ -13,9 +15,11 @@ import { MockUsersService } from './users.service';
 export class MockCommunitiesService implements CommunitiesService {
   public communities: UICommunity[] = [];
   private membersMap: Map<string, UIMember[]> = new Map();
+  customPages: UICustomPage[];
 
   constructor(private usersService: MockUsersService) {
     this.communities = loadCommunitiesData();
+    this.customPages = loadCustomPagesData();
     communitiesData.forEach((community) => {
       const members = community.members.map((member) => {
         const user = this.usersService.getMockUser(member.userId);
@@ -127,5 +131,28 @@ export class MockCommunitiesService implements CommunitiesService {
     }
     members[index] = member;
     return of(member);
+  }
+
+  getCustomPages(communityId: string): Observable<UICustomPage[]> {
+    return of(this.customPages.filter((page) => page.communityId === communityId));
+  }
+
+  addCustomPage(communityId: string, customPage: UICustomPage): Observable<UICustomPage> {
+    this.customPages.push(customPage);
+    return of(customPage);
+  }
+
+  updateCustomPage(communityId: string, customPageId: string, customPage: UICustomPage): Observable<UICustomPage> {
+    const index = this.customPages.findIndex((page) => page.id === customPageId);
+    if (index === -1) {
+      throw new Error(`Custom page with id ${customPageId} not found`);
+    }
+    this.customPages[index] = customPage;
+    return of(customPage);
+  }
+
+  deleteCustomPage(communityId: string, customPageId: string): Observable<void> {
+    this.customPages = this.customPages.filter((page) => page.id !== customPageId);
+    return of(undefined);
   }
 }

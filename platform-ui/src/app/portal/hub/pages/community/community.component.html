@@ -61,6 +61,13 @@
 
 
   <nav id="community-menu">
+
+    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/pages"
+    routerLinkActive="active" (click)="onTabChange('pages')">
+    <tui-icon icon="@tui.book-open-text" />
+    {{ 'community.information' | translate }}
+  </a>
+
     <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/libraries"
       routerLinkActive="active" (click)="onTabChange('libraries')">
       <tui-icon icon="@tui.library" />
@@ -75,12 +82,56 @@
   </nav>
 
 
-  @if (tabOpened === 'libraries') {
+  @if (tabOpened === 'pages') {   
+    <div class="community-pages">
+      <div class="sidebar-content">
+        <div class="sidebar-pages">
+          @for (page of pages; track page.id) {
+          <div class="sidebar-page" [class.active]="selectedPage?.ref === page.ref">
+            <div class="sidebar-page-title" (click)="selectPage(page)">
+              {{ page.title }}
+            </div>
+
+            @if (isAdmin) {
+              <div class="sidebar-page-actions">
+                <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
+                  (click)="editPage(page)">
+                </button>
+                <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
+                  (click)="deletePage(page)">
+                </button>
+              </div>
+            }
+          </div>
+          }
+          <div class="sidebar-create-page">
+            <button class="add" iconStart="@tui.plus" appearance="primary" tuiButton size="m" type="button"
+              (click)="createPage()">
+              {{ 'community.addPage' | translate }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="community-pages-content">
+        @if (selectedPage) {
+          @if (editMode) {
+            <custom-pages-edit [communityId]="community.id" [page]="selectedPage"></custom-pages-edit>
+          } @else {
+            <custom-page [page]="selectedPage"></custom-page>
+          }
+        } @else {
+        <div>{{ 'community.noPageFound' | translate }}</div>
+        }
+      </div>
+    </div>
+
+
+  } @else if (tabOpened === 'libraries') {
     <libraries></libraries>
   }
   @if (tabOpened === 'members') {
     <filtered-and-paginated-members [community]="community" ></filtered-and-paginated-members>
-
   }
   }
 </div>

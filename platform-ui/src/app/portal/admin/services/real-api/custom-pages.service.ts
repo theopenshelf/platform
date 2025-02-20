@@ -36,6 +36,8 @@ export class APICustomPagesService implements CustomPagesService {
                 position: page.position,
                 title: page.title,
                 content: '',
+                communityId: '',
+                order: 0
             } as UICustomPage))),
         );
     }

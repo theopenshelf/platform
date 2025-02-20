@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommunitiesHubApiService, Community, CommunityMember, PaginatedMembersResponse } from '../../../../api-client';
+import { CommunitiesHubApiService, Community, CommunityMember, CustomPage, CustomPagesHubApiService, PaginatedMembersResponse } from '../../../../api-client';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
 import { UICommunity, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
+import { UICustomPage } from '../../../../models/UICustomPage';
 import { CommunitiesService } from '../communities.service';
 import { APIUsersService } from './users.service';
 
@@ -12,7 +13,9 @@ import { APIUsersService } from './users.service';
 })
 export class ApiCommunitiesService implements CommunitiesService {
 
-    constructor(private communitiesApiService: CommunitiesHubApiService, private usersService: APIUsersService) { }
+    constructor(private communitiesApiService: CommunitiesHubApiService,
+        private customPagesApiService: CustomPagesHubApiService,
+        private usersService: APIUsersService) { }
 
     getCommunities(): Observable<UICommunity[]> {
         return this.communitiesApiService.getCommunities().pipe(
@@ -68,7 +71,51 @@ export class ApiCommunitiesService implements CommunitiesService {
         );
     }
 
+    getCustomPages(communityId: string): Observable<UICustomPage[]> {
+        return this.customPagesApiService.getCommunityCustomPages(communityId).pipe(
+            map((customPages: CustomPage[]) => customPages.map((customPage) => this.mapToUICustomPage(customPage)))
+        );
+    }
 
+    addCustomPage(communityId: string, customPage: UICustomPage): Observable<UICustomPage> {
+        return this.customPagesApiService.createCommunityCustomPage(communityId, this.mapToApiCustomPage(customPage)).pipe(
+            map((customPage: CustomPage) => this.mapToUICustomPage(customPage))
+        );
+    }
+
+    updateCustomPage(communityId: string, customPageId: string, customPage: UICustomPage): Observable<UICustomPage> {
+        return this.customPagesApiService.updateCommunityCustomPage(communityId, customPageId, this.mapToApiCustomPage(customPage)).pipe(
+            map((customPage: CustomPage) => this.mapToUICustomPage(customPage))
+        );
+    }
+
+    deleteCustomPage(communityId: string, customPageId: string): Observable<void> {
+        return this.customPagesApiService.deleteCommunityCustomPage(communityId, customPageId);
+    }
+
+    mapToUICustomPage(customPage: CustomPage): UICustomPage {
+        return {
+            id: customPage.id,
+            title: customPage.title,
+            content: customPage.content,
+            ref: customPage.ref,
+            position: customPage.position,
+            communityId: customPage.communityId ?? '',
+            order: customPage.order ?? 0,
+        };
+    }
+
+    mapToApiCustomPage(customPage: UICustomPage): CustomPage {
+        return {
+            id: customPage.id,
+            title: customPage.title,
+            content: customPage.content,
+            ref: customPage.ref,
+            position: customPage.position,
+            communityId: customPage.communityId,
+            order: customPage.order ?? 0,
+        };
+    }
     private mapToUICommunity(community: Community): UICommunity {
         return {
             id: community.id,

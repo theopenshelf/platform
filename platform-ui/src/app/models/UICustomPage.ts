@@ -1,7 +1,9 @@
 export interface UICustomPage {
     id: string;
+    communityId: string;
     ref: string;
-    position: 'footer-links' | 'copyright' | 'footer-help';
+    order: number;
+    position: 'footer-links' | 'copyright' | 'footer-help' | 'community';
     title: string;
     content: string;
 }
