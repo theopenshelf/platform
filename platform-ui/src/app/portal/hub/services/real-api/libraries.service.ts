@@ -79,6 +79,10 @@ export class ApiLibrariesService implements LibrariesService {
             location: {
                 name: library.location?.name ?? '',
                 address: library.location?.address ?? '',
+                coordinates: {
+                    lat: library.location?.coordinates?.lat ?? 0,
+                    lng: library.location?.coordinates?.lng ?? 0,
+                },
             },
             isAdmin: library.isAdmin ?? false,
             requiresApproval: library.requiresApproval ?? false,
@@ -96,6 +100,7 @@ export class ApiLibrariesService implements LibrariesService {
             location: {
                 name: library.location?.name ?? '',
                 address: library.location?.address ?? '',
+                coordinates: library.location?.coordinates ?? { lat: 0, lng: 0 },
             },
             requiresApproval: library.requiresApproval ?? false,
             freeAccess: library.freeAccess ?? false,

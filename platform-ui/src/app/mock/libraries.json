@@ -21,7 +21,11 @@
         "Please follow the guidelines for hub usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.",
       "location": {
         "name": "Bat B",
-        "address": "123 Main St, Anytown, USA"
+        "address": "123 Main St, Anytown, USA",
+        "coordinates": {
+            "lat": 40.7128,
+            "lng": -74.0060
+        }
       }
     },
 
@@ -47,7 +51,11 @@
           "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
         "location": {
           "name": "Garage 102",
-          "address": "123 Main St, Anytown, USA"
+          "address": "123 Main St, Anytown, USA",
+          "coordinates": {
+            "lat": 40.7128,
+            "lng": -74.0060
+          }
         }
       }
       ,
@@ -74,7 +82,11 @@
           "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
         "location": {
           "name": "Garage 212",
-          "address": "123 Main St, Anytown, USA"
+          "address": "123 Main St, Anytown, USA",
+          "coordinates": {
+            "lat": 40.7128,
+            "lng": -74.0060
+          }
         }
       }
   ]

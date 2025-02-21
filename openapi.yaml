@@ -2972,11 +2972,19 @@ components:
       required:
         - name
         - address
+        - coordinates
       properties:
         name:
           type: string
         address:
           type: string
+        coordinates:
+          type: object
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
 
     Community:
       type: object

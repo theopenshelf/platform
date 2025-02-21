@@ -101,7 +101,7 @@ button {
 
     .search-bar {
         display: grid;
-        grid-template-columns: 30% 22% 23% 15% 10%;
+        grid-template-columns: 1fr;
         gap: 0rem;
         width: 80%;
         padding: 0px;
@@ -155,4 +155,33 @@ button {
             border-radius: 0;
         }
     }
+}
+
+
+.map-container {
+    width: 82%;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 800px) {
+    .map-container {
+        width: 100% !important;
+        margin-bottom: 20px;
+    }
+}
+
+
+.map-frame {
+    border-radius: 16px;
+    overflow: hidden;
+    text-align: left;
+    border: 0px solid rgb(226, 232, 240);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+        0 1px 2px -1px rgb(0 0 0 / .1) !important;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+#map {
+    height: 300px;
 }

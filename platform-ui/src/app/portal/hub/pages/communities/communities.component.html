@@ -10,6 +10,12 @@
     </div>
   </div>
 
+  <div class="map-container">
+    <div class="map-frame">
+      <div id="map"></div>
+    </div>
+  </div>
+
   <div class="communities-items-container">
 
     @for (community of communities; track community) {
@@ -69,4 +75,5 @@
   @if (totalPages > 1) {
   <tui-pagination [index]="currentPage" [length]="totalPages" (indexChange)="goToPage($event)" />
   }
+
 </div>

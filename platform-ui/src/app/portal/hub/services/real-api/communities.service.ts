@@ -129,6 +129,10 @@ export class ApiCommunitiesService implements CommunitiesService {
             location: {
                 name: community.location?.name ?? '',
                 address: community.location?.address ?? '',
+                coordinates: {
+                    lat: community.location?.coordinates?.lat ?? 0,
+                    lng: community.location?.coordinates?.lng ?? 0,
+                },
             },
             picture: community.picture,
             description: community.description,
@@ -143,6 +147,10 @@ export class ApiCommunitiesService implements CommunitiesService {
             location: {
                 name: community.location?.name ?? '',
                 address: community.location?.address ?? '',
+                coordinates: {
+                    lat: community.location?.coordinates?.lat ?? 0,
+                    lng: community.location?.coordinates?.lng ?? 0,
+                },
             },
             requiresApproval: community.requiresApproval ?? false,
             description: community.description,
