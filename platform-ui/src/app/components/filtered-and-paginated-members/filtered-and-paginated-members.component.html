@@ -1,27 +1,29 @@
 <div class="members-container">
     @for (member of members; track member.id) {
     <div tuiCell class="member-cell">
-        @if (member.avatarUrl) {
-            <tui-avatar tuiChevron tuiDropdownOpen class="tui-space_horizontal-4">
-                <picture>
-                    <source media="(min-width: 600px)" [srcset]="member.avatarUrl" />
-                    <img alt="Alex Inkin" [src]="member.avatarUrl" />
-                </picture>
-            </tui-avatar>
-            } @else {
-            <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="member.username | tuiInitials"
-                [style.background]="
-                member.username | tuiAutoColor
-              " size="s">
-            </tui-avatar>
-            }
-        <div
-            class="member-details"
-            tuiAccessories
-            tuiTitle
-        >
-            {{ member.firstName }} {{ member.lastName }}
-            <div tuiSubtitle>{{ member.email }}</div>
+        <div class="member-header">
+            @if (member.avatarUrl) {
+                <tui-avatar tuiChevron tuiDropdownOpen class="tui-space_horizontal-4">
+                    <picture>
+                        <source media="(min-width: 600px)" [srcset]="member.avatarUrl" />
+                        <img alt="Alex Inkin" [src]="member.avatarUrl" />
+                    </picture>
+                </tui-avatar>
+                } @else {
+                <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="member.username | tuiInitials"
+                    [style.background]="
+                    member.username | tuiAutoColor
+                " size="s">
+                </tui-avatar>
+                }
+            <div
+                class="member-details"
+                tuiAccessories
+                tuiTitle
+            >
+                {{ member.firstName }} {{ member.lastName }}
+                <div tuiSubtitle>{{ member.email }}</div>
+            </div>
         </div>
         <div class="member-actions">
             @if (member.role === 'requestingJoin') {

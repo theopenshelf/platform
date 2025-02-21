@@ -290,6 +290,31 @@
     }
 }
 
+
+.community-tabs {
+    box-shadow: none;
+}
+
+
+.community-tabs button {
+
+    border: 0px solid rgb(226, 232, 240);
+    border-radius: 10px;
+    border: 0px solid rgb(226, 232, 240);
+    padding: 0 15px;
+}
+
+.community-tabs button._active {
+    background-color: var(--tos-background-accent-1);
+    color: var(--tos-text-primary-on-accent-1);
+}
+
+.community-tabs button:hover {
+    background-color: var(--tos-background-accent-1-hover);
+    color: var(--tos-text-primary-on-accent-1);
+}
+
+
 @media (max-width: 768px) {
     .community-pages {
         grid-template-columns: 1fr !important;

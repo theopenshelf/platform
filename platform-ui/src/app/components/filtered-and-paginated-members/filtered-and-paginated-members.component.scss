@@ -58,3 +58,38 @@
 
 
 }
+
+.member-header {
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    gap: 0rem;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+
+}
+
+.member-cell {
+    display: grid;
+    grid-template-columns: 10fr 2fr;
+    gap: 0rem;
+}
+
+
+
+@media (max-width: 800px) {
+
+    .member-header {
+        display: grid !important;
+        grid-template-columns: 1fr 3fr !important;
+        gap: 0rem !important;
+        justify-content: flex-start !important;
+        margin-bottom: 10px !important;
+
+    }
+
+    .member-cell {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

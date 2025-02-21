@@ -561,12 +561,12 @@
     "confirmAcceptRequestContent": "Êtes-vous sûr de vouloir accepter cette demande?",
     "confirmAcceptRequestYes": "Oui, Accepter",
     "confirmAcceptRequestNo": "Annuler",
-    "confirmAcceptRequest": "Accepter la demande",
+    "confirmAcceptRequest": "Accepter",
     "confirmRejectRequestContent": "Êtes-vous sûr de vouloir rejeter cette demande?",
     "confirmRejectRequestYes": "Oui, Rejeter",
     "confirmRejectRequestNo": "Annuler",
-    "confirmRejectRequest": "Rejeter la demande",
-    "acceptRequest": "Accepter la demande",
-    "cancelRequest": "Annuler la demande"
+    "confirmRejectRequest": "Rejeter",
+    "acceptRequest": "Accepter",
+    "cancelRequest": "Rejeter"
   }
 }

@@ -19,7 +19,8 @@ import {
   TUI_CONFIRM,
   TuiAccordion,
   TuiConfirmData,
-  TuiDataListWrapper
+  TuiDataListWrapper,
+  TuiTabs
 } from '@taiga-ui/kit';
 import {
   TuiSelectModule,
@@ -65,7 +66,8 @@ import { LibrariesComponent } from '../libraries/libraries/libraries.component';
     FilteredAndPaginatedMembersComponent,
     LibrariesComponent,
     CustomPageComponent,
-    CustomPagesEditComponent
+    CustomPagesEditComponent,
+    TuiTabs
   ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss',
@@ -84,7 +86,7 @@ export class CommunityComponent {
   selectedPage: UICustomPage | undefined;
   pages: UICustomPage[] = [];
   editMode: boolean = false;
-
+  activeTabIndex: number = 0;
   constructor(
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
@@ -133,18 +135,21 @@ export class CommunityComponent {
       const path = urlSegments.map(segment => segment.path).join('/');
       if (path.includes('libraries')) {
         this.tabOpened = 'libraries';
+        this.activeTabIndex = 1;
         this.breadcrumbs.push({
           caption: 'breadcrumb.libraries',
           routerLink: `/hub/communities/${this.community?.id}/libraries`
         });
       } else if (path.includes('members')) {
         this.tabOpened = 'members';
+        this.activeTabIndex = 2;
         this.breadcrumbs.push({
           caption: 'breadcrumb.members',
           routerLink: `/hub/communities/${this.community?.id}/members`
         });
       } else if (path.includes('pages') && urlSegments.length > 3) {
         this.tabOpened = 'pages';
+        this.activeTabIndex = 0;
         const pageRef = urlSegments[3].path;
         this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
           this.pages = pages;
@@ -160,6 +165,7 @@ export class CommunityComponent {
           });
         });
       } else {
+        this.activeTabIndex = 0;
         this.breadcrumbs.push({
           caption: 'breadcrumb.pages',
           routerLink: `/hub/communities/${this.community?.id}/pages`

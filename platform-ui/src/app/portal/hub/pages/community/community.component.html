@@ -60,26 +60,42 @@
   </div>
 
 
-  <nav id="community-menu">
+  <tui-tabs-with-more
+  class="community-tabs"
+  [itemsLimit]="3"
+  [underline]="false"
 
-    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/pages"
-    routerLinkActive="active" (click)="onTabChange('pages')">
-    <tui-icon icon="@tui.book-open-text" />
-    {{ 'community.information' | translate }}
-  </a>
-
-    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/libraries"
-      routerLinkActive="active" (click)="onTabChange('libraries')">
-      <tui-icon icon="@tui.library" />
+  [activeItemIndex]="activeTabIndex"
+>
+  <button
+      *tuiItem
+      iconStart="@tui.book-open-text"
+      tuiTab
+      type="button"
+      (click)="onTabChange('pages')"
+  >
+  {{ 'community.information' | translate }}
+</button>
+  <button
+      *tuiItem
+      iconStart="@tui.library"
+      tuiTab
+      type="button"
+      (click)="onTabChange('libraries')"
+  >
       {{ 'community.libraries' | translate }}
-    </a>
-
-    <a class="community-section community-action" routerLink="/hub/communities/{{ community.id }}/members"
-      routerLinkActive="active" (click)="onTabChange('members')">
-      <tui-icon icon="@tui.users" />
-      {{ 'community.members' | translate }}
-    </a>
-  </nav>
+  </button>
+  <button
+      *tuiItem
+      iconStart="@tui.users"
+      tuiTab
+      type="button"
+      (click)="onTabChange('members')"
+  >
+  {{ 'community.members' | translate }}
+</button>
+  
+</tui-tabs-with-more>
 
 
   @if (tabOpened === 'pages') {   
