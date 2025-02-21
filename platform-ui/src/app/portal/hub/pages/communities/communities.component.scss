@@ -9,6 +9,12 @@
     justify-content: center;
 }
 
+.communities-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .community-card {
     position: relative;
     margin: 10px;
@@ -84,5 +90,69 @@ button {
 
     .items-button {
         grid-column: span 6;
+    }
+}
+
+
+.search-bar-container {
+    width: 100%;
+    margin-bottom: 40px;
+    padding-top: 40px;
+
+    .search-bar {
+        display: grid;
+        grid-template-columns: 30% 22% 23% 15% 10%;
+        gap: 0rem;
+        width: 80%;
+        padding: 0px;
+        padding-left: 30px;
+
+        margin: 0 auto;
+        margin-bottom: 20px;
+
+
+        background-color: #fff;
+        border-radius: 80px;
+        overflow: hidden;
+        text-align: left;
+        transition: transform 0.2s ease,
+            box-shadow 0.2s ease;
+        border: 0px solid rgb(226, 232, 240);
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / .1),
+            0 1px 2px -1px rgb(0 0 0 / .1) !important;
+
+        .search-input {
+            padding: 15px;
+
+            input {
+                width: calc(100% - 45px);
+                margin-left: 6px;
+                font-size: large;
+                border: 0;
+                height: 24px;
+
+                box-shadow: none;
+                outline: none;
+
+                position: relative;
+                top: 2px;
+            }
+        }
+
+        .search-date-range {
+            width: 100%;
+        }
+
+        .sort-by button {
+            border-top-right-radius: 80px;
+            border-bottom-right-radius: 80px;
+        }
+
+        button {
+            padding: 30px;
+            width: 100%;
+            border-left: 1px solid lightgray; // Adjust the color and width as needed
+            border-radius: 0;
+        }
     }
 }

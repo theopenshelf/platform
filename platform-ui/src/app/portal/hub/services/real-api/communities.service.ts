@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CommunitiesHubApiService, Community, CommunityMember, CustomPage, CustomPagesHubApiService, PaginatedMembersResponse } from '../../../../api-client';
+import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
+import { UICommunitiesPagination } from '../../../../models/UICommunitiesPagination';
 import { UICommunity, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
 import { UICustomPage } from '../../../../models/UICustomPage';
 import { CommunitiesService } from '../communities.service';
@@ -17,11 +19,15 @@ export class ApiCommunitiesService implements CommunitiesService {
         private customPagesApiService: CustomPagesHubApiService,
         private usersService: APIUsersService) { }
 
-    getCommunities(): Observable<UICommunity[]> {
-        return this.communitiesApiService.getCommunities().pipe(
-            map((communities: Community[]) =>
-                communities.map((community) => this.mapToUICommunity(community))
-            )
+    getCommunities(getCommunitiesParams: GetCommunitiesParams): Observable<UICommunitiesPagination> {
+        return this.communitiesApiService.getCommunities(getCommunitiesParams.searchText, getCommunitiesParams.location, getCommunitiesParams.distance, getCommunitiesParams.requiresApproval).pipe(
+            map((response) => ({
+                totalPages: response.totalPages,
+                totalItems: response.totalItems,
+                currentPage: response.currentPage,
+                itemsPerPage: response.itemsPerPage,
+                items: response.communities.map((community) => this.mapToUICommunity(community))
+            }))
         );
     }
 

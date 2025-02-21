@@ -1,9 +1,20 @@
 <div class="layout-container">
-  @for (community of communities; track community) {
-    <div class="community-card" tuiAppearance="floating" tuiCardMedium
-    routerLink="/hub/communities/{{ community.id }}/pages" 
 
-    >
+  <div class="search-bar-container">
+    <div class="search-bar">
+      <div class="search-input">
+        <tui-icon icon="@tui.search" />
+        <input [(ngModel)]="searchText" [placeholder]="'communities.searchPlaceholder' | translate"
+          (input)="onTextFilterChange()" />
+      </div>
+    </div>
+  </div>
+
+  <div class="communities-items-container">
+
+    @for (community of communities; track community) {
+    <div class="community-card" tuiAppearance="floating" tuiCardMedium
+      routerLink="/hub/communities/{{ community.id }}/pages">
       <div class="item-actions">
         <tui-icon class="community-icon" [icon]="community.requiresApproval ? '@tui.lock' : '@tui.lock-open'" />
 
@@ -11,85 +22,51 @@
       </div>
 
 
-    @if (community.picture) {
-      <tui-avatar
-        size="m"
-         class="tui-space_horizontal-4">
+      @if (community.picture) {
+      <tui-avatar size="m" class="tui-space_horizontal-4">
         <picture>
-            <source
-                media="(min-width: 600px)"
-                [srcset]="community.picture"
-            />
-            <img
-                alt="Alex Inkin"
-                [src]="community.picture"
-            />
+          <source media="(min-width: 600px)" [srcset]="community.picture" />
+          <img alt="Alex Inkin" [src]="community.picture" />
         </picture>
-    </tui-avatar>
-    } @else {
-    <tui-avatar 
-        class="user-avatar"      
-        tuiChevron
-        tuiDropdownOpen
-        [src]="community.name | tuiInitials"
+      </tui-avatar>
+      } @else {
+      <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="community.name | tuiInitials"
         [style.background]="
           community.name | tuiAutoColor
-        "
-        size="m">
+        " size="m">
       </tui-avatar>
-    }
+      }
 
       <h2 tuiTitle>
         {{ community.name }}
         <span tuiSubtitle>{{ community.location.address }}</span>
       </h2>
       <div class="bottom-actions">
-        <button
-        appearance="outline"
-        class="items-count"
-        size="m"
-        routerLink="/hub/communities/{{ community.id }}/pages" 
-        tuiButton
-        type="button"
-      >
-        {{ 'communities.seeCommunity' | translate }}
-      </button>
-      @if (community.requiresApproval) {
-      <button
-        appearance="primary"
-        class="items-count"
-        size="m"
-        tuiButton
-        type="button"
-        (click)="requestToJoin(community)"
-      >
-        {{ 'communities.requestToJoin' | translate }}
-      </button>
-      } @else {
-        <button
-        appearance="accent"
-        class="items-count"
-        size="m"
-        tuiButton
-        disabled
-        type="button"
-      >
-        {{ 'communities.joinCommunity' | translate }}
-      </button>
-    }
+        <button appearance="outline" class="items-count" size="m" routerLink="/hub/communities/{{ community.id }}/pages"
+          tuiButton type="button">
+          {{ 'communities.seeCommunity' | translate }}
+        </button>
+        @if (community.requiresApproval) {
+        <button appearance="primary" class="items-count" size="m" tuiButton type="button"
+          (click)="requestToJoin(community)">
+          {{ 'communities.requestToJoin' | translate }}
+        </button>
+        } @else {
+        <button appearance="accent" class="items-count" size="m" tuiButton disabled type="button">
+          {{ 'communities.joinCommunity' | translate }}
+        </button>
+        }
       </div>
     </div>
-  }
+    }
 
-  <div
-    class="community-card add-community-card"
-    routerLink="/hub/communities/add-community"
-    tuiAppearance="floating"
-    tuiCardMedium
-  >
-    <tui-icon
-      icon="@tui.plus"
-      [style.color]="'var(--tui-background-accent-1)'"
-    />
+    <div class="community-card add-community-card" routerLink="/hub/communities/add-community" tuiAppearance="floating"
+      tuiCardMedium>
+      <tui-icon icon="@tui.plus" [style.color]="'var(--tui-background-accent-1)'" />
+    </div>
   </div>
+
+  @if (totalPages > 1) {
+  <tui-pagination [index]="currentPage" [length]="totalPages" (indexChange)="goToPage($event)" />
+  }
 </div>

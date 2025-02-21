@@ -3,7 +3,9 @@ import { Observable, of } from 'rxjs';
 import { loadCommunitiesData } from '../../../../mock/communities-loader';
 import communitiesData from '../../../../mock/communities.json';
 import { loadCustomPagesData } from '../../../../mock/custom-page-loader';
+import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
+import { UICommunitiesPagination } from '../../../../models/UICommunitiesPagination';
 import { UICommunity, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
 import { UICustomPage } from '../../../../models/UICustomPage';
 import { CommunitiesService } from '../communities.service';
@@ -32,8 +34,22 @@ export class MockCommunitiesService implements CommunitiesService {
     });
   }
 
-  getCommunities(): Observable<UICommunity[]> {
-    return of(this.communities);
+  getCommunities(getCommunitiesParams: GetCommunitiesParams): Observable<UICommunitiesPagination> {
+    let filteredCommunities = this.communities;
+    if (getCommunitiesParams.searchText) {
+      filteredCommunities = filteredCommunities.filter((community) => community.name.toLowerCase().includes(getCommunitiesParams.searchText!.toLowerCase()));
+    }
+    if (getCommunitiesParams.requiresApproval) {
+      filteredCommunities = this.communities.filter((community) => community.requiresApproval === getCommunitiesParams.requiresApproval);
+    }
+
+    return of({
+      totalPages: 1,
+      totalItems: filteredCommunities.length,
+      currentPage: getCommunitiesParams.page ?? 0,
+      itemsPerPage: getCommunitiesParams.pageSize ?? 10,
+      items: filteredCommunities
+    });
   }
 
   getCommunity(id: string): Observable<UICommunity> {

@@ -529,7 +529,8 @@
   "communities": {
     "seeCommunity": "Plus d'informations",
     "joinCommunity": "Membre",
-    "requestToJoin": "Demander à rejoindre"
+    "requestToJoin": "Demander à rejoindre",
+    "searchPlaceholder": "Rechercher une communauté"
   },
   "community": {
     "descriptionTitle": "Description",

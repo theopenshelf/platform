@@ -514,7 +514,8 @@
   "communities": {
     "seeCommunity": "See more",
     "joinCommunity": "Join",
-    "requestToJoin": "Request to join"
+    "requestToJoin": "Request to join",
+    "searchPlaceholder": "Search for a community"
   },
   "community": {
     "descriptionTitle": "Description",
