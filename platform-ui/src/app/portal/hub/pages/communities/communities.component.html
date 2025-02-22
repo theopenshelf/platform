@@ -20,13 +20,13 @@
 
     @for (community of communities; track community) {
     <div class="community-card" tuiAppearance="floating" tuiCardMedium
-      routerLink="/hub/communities/{{ community.id }}/pages">
+      routerLink="/hub/communities/{{ community.id }}/pages"
+      (mouseenter)="movePinToCenter(community.id)">
       <div class="item-actions">
         <tui-icon class="community-icon" [icon]="community.requiresApproval ? '@tui.lock' : '@tui.lock-open'" />
 
         <tui-icon class="community-icon" icon="@tui.share-2" />
       </div>
-
 
       @if (community.picture) {
       <tui-avatar size="m" class="tui-space_horizontal-4">

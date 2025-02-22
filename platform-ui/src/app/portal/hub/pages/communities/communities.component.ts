@@ -105,7 +105,64 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
   refreshCommunities() {
     this.communitiesService.getCommunities(this.getCommunitiesParams).subscribe((communities) => {
       this.updatePagination(communities);
+      this.clearMarkers();
+      this.updateMarkers();
     });
+  }
+
+  private clearMarkers(): void {
+    if (this.map) {
+      this.map.eachLayer((layer) => {
+        if (layer instanceof L.Marker) {
+          this.map!.removeLayer(layer);
+        }
+      });
+    }
+  }
+
+  private updateMarkers(): void {
+    if (this.map) {
+      // Define a custom icon
+      const customIcon = L.icon({
+        iconUrl: 'media/pin_orange.png', // URL to your custom icon image
+        iconSize: [38, 38], // size of the icon
+        popupAnchor: [0, -38] // point from which the popup should open relative to the iconAnchor
+      });
+
+      // Add markers for each community with the custom icon
+      const markers = this.communities
+        .filter(community => community.location && community.location.coordinates)
+        .map(community => {
+          const marker = L.marker([community.location.coordinates.lat, community.location.coordinates.lng], { icon: customIcon })
+            .bindPopup(`
+              <div>
+                <p>${community.name}</p>
+              </div>
+            `)
+            .on('click', () => this.clickOnCommunityPin(community.id)); // Add click event listener
+          return marker;
+        });
+
+      // Create a feature group and add markers to it
+      const featureGroup = L.featureGroup(markers).addTo(this.map);
+
+      // Fit the map to the bounds of the feature group
+      this.map.fitBounds(featureGroup.getBounds());
+    }
+  }
+
+  private clickOnCommunityPin(communityId: string): void {
+    const communityTile = document.querySelector(`.community-card[data-community-id="${communityId}"]`);
+    if (communityTile) {
+      communityTile.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  public movePinToCenter(communityId: string): void {
+    const community = this.communities.find(c => c.id === communityId);
+    if (community && community.location && community.location.coordinates && this.map) {
+      this.map.setView([community.location.coordinates.lat, community.location.coordinates.lng], 13);
+    }
   }
 
   private initMap(): void {
@@ -126,7 +183,11 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     const markers = this.communities
       .filter(community => community.location && community.location.coordinates)
       .map(community => L.marker([community.location.coordinates.lat, community.location.coordinates.lng], { icon: customIcon })
-        .bindPopup(community.name));
+        .bindPopup(`
+          <div>
+            <p>${community.name}</p>
+          </div>
+        `));
 
     // Create a feature group and add markers to it
     const featureGroup = L.featureGroup(markers).addTo(this.map);
