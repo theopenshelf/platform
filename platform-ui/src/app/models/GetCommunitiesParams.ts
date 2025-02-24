@@ -7,4 +7,5 @@ export interface GetCommunitiesParams {
     distance?: number;
     page?: number;
     pageSize?: number;
+    isMember?: boolean;
 }

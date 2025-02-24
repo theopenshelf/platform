@@ -4,6 +4,8 @@ import { UILibrary, UIMember, UIMembersPagination } from '../../../models/UILibr
 
 export interface LibrariesService {
   getLibraries(): Observable<UILibrary[]>;
+  getLibrariesByCommunityId(communityId: string): Observable<UILibrary[]>;
+
   getLibrary(id: string): Observable<UILibrary>;
 
   addLibrary(location: UILibrary): Observable<UILibrary>;

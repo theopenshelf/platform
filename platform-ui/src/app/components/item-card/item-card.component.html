@@ -51,9 +51,15 @@
           {{ item().name }}
         </h2>
         @if (library()) {
-          <span class="library">
+          <span class="item-attribute library">
             <tui-icon icon="@tui.library" />
             <span class="library-value">{{ library()?.name }}</span>
+          </span>
+        }
+        @if (community()) {
+          <span class="item-attribute community">
+            <tui-icon icon="@tui.share-2" />
+            <span class="community-value">{{ community()?.name }}</span>
           </span>
         }
         <span class="shortDescription">

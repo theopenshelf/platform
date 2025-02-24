@@ -32,6 +32,10 @@ export class MockLibrariesService implements LibrariesService {
     return of(this.libraries);
   }
 
+  getLibrariesByCommunityId(communityId: string): Observable<UILibrary[]> {
+    return of(this.libraries.filter((library) => library.communityId === communityId));
+  }
+
   getLibrary(id: string): Observable<UILibrary> {
     const library = this.libraries.find((library) => library.id === id);
     if (!library) {

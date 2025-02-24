@@ -1,92 +1,218 @@
 [
-    {
-      "id": "1",
-      "name": "Common space",
-      "isHubAccessible": true,
-      "requiresApproval": false,
-      "freeAccess": true,
-      "communityId": "1",
-      "isAdmin": true,
-      "members": [
-            {
-                "userId": "11",
-                "role": "admin"
-            },
-            {
-                "userId": "2",
-                "role": "member"
-            }
-        ],
-      "instructions":
-        "Please follow the guidelines for hub usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.",
-      "location": {
-        "name": "Bat B",
-        "address": "123 Main St, Anytown, USA",
-        "coordinates": {
-            "lat": 40.7128,
-            "lng": -74.0060
-        }
+  {
+    "id": "1",
+    "name": "Common space",
+    "requiresApproval": false,
+    "freeAccess": true,
+    "communityId": "2",
+    "isAdmin": true,
+    "members": [
+      {
+        "userId": "11",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
       }
-    },
-
-    {
-        "id": "2",
-        "name": "Garage 102",
-        "isHubAccessible": true,
-        "requiresApproval": true,
-        "freeAccess": false,
-        "isAdmin": true,
-        "communityId": "1",
-        "members": [
-            {
-                "userId": "11",
-                "role": "admin"
-            },
-            {
-                "userId": "12",
-                "role": "member"
-            }
-        ],
-        "instructions":
-          "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
-        "location": {
-          "name": "Garage 102",
-          "address": "123 Main St, Anytown, USA",
-          "coordinates": {
-            "lat": 40.7128,
-            "lng": -74.0060
-          }
-        }
+    ],
+    "instructions": "Please follow the guidelines for hub usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.",
+    "location": {
+      "name": "Bat B",
+      "address": "123 Main St, Anytown, USA",
+      "coordinates": {
+        "lat": 40.7128,
+        "lng": -74.0060
       }
-      ,
-
-    {
-        "id": "3",
-        "name": "Garage 212",
-        "isHubAccessible": true,
-        "requiresApproval": true,
-        "freeAccess": false,
-        "isAdmin": true,
-        "communityId": "1",
-        "members": [
-            {
-                "userId": "1",
-                "role": "admin"
-            },
-            {
-                "userId": "2",
-                "role": "member"
-            }
-        ],
-        "instructions":
-          "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
-        "location": {
-          "name": "Garage 212",
-          "address": "123 Main St, Anytown, USA",
-          "coordinates": {
-            "lat": 40.7128,
-            "lng": -74.0060
-          }
-        }
+    }
+  },
+  {
+    "id": "2",
+    "name": "Garage 102",
+    "requiresApproval": true,
+    "freeAccess": false,
+    "isAdmin": true,
+    "communityId": "2",
+    "members": [
+      {
+        "userId": "11",
+        "role": "admin"
+      },
+      {
+        "userId": "12",
+        "role": "member"
       }
-  ]
+    ],
+    "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
+    "location": {
+      "name": "Garage 102",
+      "address": "123 Main St, Anytown, USA",
+      "coordinates": {
+        "lat": 40.7128,
+        "lng": -74.0060
+      }
+    }
+  },
+  {
+    "id": "3",
+    "name": "Garage 212",
+    "requiresApproval": true,
+    "freeAccess": false,
+    "isAdmin": true,
+    "communityId": "2",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
+    "location": {
+      "name": "Garage 212",
+      "address": "123 Main St, Anytown, USA",
+      "coordinates": {
+        "lat": 40.7128,
+        "lng": -74.0060
+      }
+    }
+  },
+  {
+    "id": "4",
+    "name": "Mordor",
+    "requiresApproval": true,
+    "freeAccess": false,
+    "isAdmin": true,
+    "communityId": "1",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
+    "location": {
+      "name": "Mordor",
+      "address": "123 Bagshot Row, Hobbiton, The Shire",
+      "coordinates": {
+        "lat": -43.455046454725355,
+        "lng": 171.30580294612173
+      }
+    }
+  },
+  {
+    "id": "5",
+    "name": "Bibliothèque de Beaulieu",
+    "requiresApproval": false,
+    "freeAccess": true,
+    "isAdmin": true,
+    "communityId": "3",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
+    "location": {
+      "name": "Bibliothèque de Beaulieu",
+      "address": "123 Rue de la Bibliothèque, Beaulieu, France",
+      "coordinates": {
+        "lat": 46.573076,
+        "lng": 0.384676
+      }
+    }
+  },
+  {
+    "id": "7",
+    "name": "Bibliothèque des 3 cités",
+    "requiresApproval": false,
+    "freeAccess": true,
+    "isAdmin": true,
+    "communityId": "4",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
+    "location": {
+      "name": "Bibliothèque des 3 cités",
+      "address": "123 Rue de la Bibliothèque, Saint-Benoît, France",
+      "coordinates": {
+        "lat": 46.564059669449655,
+        "lng": 0.3449034728364043
+      }
+    }
+  },
+  {
+    "id": "8",
+    "name": "Bibliothèque des rocs",
+    "requiresApproval": false,
+    "freeAccess": true,
+    "isAdmin": true,
+    "communityId": "5",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
+    "location": {
+      "name": "Bibliothèque des rocs",
+      "address": "123 Rue de la Bibliothèque, Poitiers, France",
+      "coordinates": {
+        "lat": 46.590152,
+        "lng": 0.333012
+      }
+    }
+  },
+  {
+    "id": "9",
+    "name": "Bibliothèque de Poitiers",
+    "requiresApproval": false,
+    "freeAccess": true,
+    "isAdmin": true,
+    "communityId": "6",
+    "members": [
+      {
+        "userId": "1",
+        "role": "admin"
+      },
+      {
+        "userId": "2",
+        "role": "member"
+      }
+    ],
+    "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
+    "location": {
+      "name": "Bibliothèque de Poitiers",
+      "address": "123 Rue de la Bibliothèque, Poitiers, France",
+      "coordinates": {
+        "lat": 46.58303704967021,
+        "lng": 0.34204776768581924
+      }
+    }
+  }
+]

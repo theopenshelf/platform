@@ -42,6 +42,12 @@ export class MockCommunitiesService implements CommunitiesService {
     if (getCommunitiesParams.requiresApproval) {
       filteredCommunities = this.communities.filter((community) => community.requiresApproval === getCommunitiesParams.requiresApproval);
     }
+    if (getCommunitiesParams.isMember) {
+      filteredCommunities = filteredCommunities.filter((community) => {
+        const members = this.membersMap.get(community.id);
+        return members !== undefined && members.length > 0;
+      });
+    }
 
     return of({
       totalPages: 1,

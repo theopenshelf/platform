@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -28,19 +28,20 @@ import { LibrariesService } from '../../../services/libraries.service';
   styleUrl: './libraries.component.scss',
 })
 export class LibrariesComponent {
+  public communityId = input.required<string>();
   libraries: UILibrary[] = [];
 
   constructor(
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     private breadcrumbService: BreadcrumbService
   ) {
-    this.librariesService.getLibraries().subscribe((libraries) => {
-      this.libraries = libraries;
-    });
   }
 
 
   ngOnInit() {
+    this.librariesService.getLibrariesByCommunityId(this.communityId()).subscribe((libraries) => {
+      this.libraries = libraries;
+    });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }

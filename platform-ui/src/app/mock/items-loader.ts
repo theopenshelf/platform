@@ -49,6 +49,7 @@ export const loadItems = (): UIItem[] => {
     return {
       ...item,
       category: mapCategory(item.category),
+      owner: item.owner || 'TheOpenShelf',
       borrowRecords: item.borrowRecords.map(
         (record) =>
           ({

@@ -20,7 +20,8 @@ export class ApiCommunitiesService implements CommunitiesService {
         private usersService: APIUsersService) { }
 
     getCommunities(getCommunitiesParams: GetCommunitiesParams): Observable<UICommunitiesPagination> {
-        return this.communitiesApiService.getCommunities(getCommunitiesParams.searchText, getCommunitiesParams.location, getCommunitiesParams.distance, getCommunitiesParams.requiresApproval).pipe(
+        return this.communitiesApiService.getCommunities(getCommunitiesParams.searchText, getCommunitiesParams.location, getCommunitiesParams.distance, 
+            getCommunitiesParams.requiresApproval, getCommunitiesParams.isMember).pipe(
             map((response) => ({
                 totalPages: response.totalPages,
                 totalItems: response.totalItems,

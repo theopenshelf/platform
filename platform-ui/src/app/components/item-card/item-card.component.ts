@@ -12,6 +12,7 @@ import {
   TuiTitle,
 } from '@taiga-ui/core';
 import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UICommunity } from '../../models/UICommunity';
 import { UIItem } from '../../models/UIItem';
 import { UILibrary } from '../../models/UILibrary';
 import { ITEMS_SERVICE_TOKEN } from '../../portal/hub/hub.provider';
@@ -38,6 +39,7 @@ import { ItemsService } from '../../portal/hub/services/items.service';
 export class ItemCardComponent {
   public item = input.required<UIItem>();
   public library = input<UILibrary>();
+  public community = input<UICommunity>();
   public borrowRecords = input.required<UIBorrowRecord[]>();
   public borrowNowCallback = input<(item: UIItem) => void>();
   public reserveItemCallback = input<(item: UIItem) => void>();

@@ -48,7 +48,6 @@ export class ApiLibrariesService implements LibrariesService {
             id: library.id,
             name: library.name,
             communityId: library.communityId,
-            isHubAccessible: library.isHubAccessible ?? false,
             instructions: library.instructions ?? '',
             location: {
                 name: library.location?.name ?? '',
@@ -69,7 +68,6 @@ export class ApiLibrariesService implements LibrariesService {
             id: library.id,
             name: library.name,
             communityId: library.communityId,
-            isHubAccessible: library.isHubAccessible,
             instructions: library.instructions,
             location: {
                 name: library.location?.name ?? '',

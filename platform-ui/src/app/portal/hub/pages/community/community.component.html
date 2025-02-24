@@ -144,7 +144,7 @@
 
 
   } @else if (tabOpened === 'libraries') {
-    <libraries></libraries>
+    <libraries [communityId]="community.id" ></libraries>
   }
   @if (tabOpened === 'members') {
     <filtered-and-paginated-members [community]="community" ></filtered-and-paginated-members>

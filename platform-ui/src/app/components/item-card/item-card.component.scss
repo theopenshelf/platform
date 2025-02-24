@@ -94,7 +94,17 @@
                     font-weight: 600;
                 }
 
-                .library {
+                .item-attribute {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .item-attribute tui-icon {
+                    margin-right: 8px;
+                    /* Adjust the margin as needed */
+                }
+
+                .item-attribute {
                     tui-icon {
                         margin-right: 2px;
                         width: 16px;

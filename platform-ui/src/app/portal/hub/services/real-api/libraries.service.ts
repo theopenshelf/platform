@@ -22,6 +22,12 @@ export class ApiLibrariesService implements LibrariesService {
         );
     }
 
+    getLibrariesByCommunityId(communityId: string): Observable<UILibrary[]> {
+        return this.librariesApiService.getHubLibraries([communityId]).pipe(
+            map((libraries: Library[]) => libraries.map((library) => this.mapToUILibrary(library)))
+        );
+    }
+
     getLibrary(id: string): Observable<UILibrary> {
         return this.librariesApiService.getHubLibrary(id).pipe(
             map((library: Library) => this.mapToUILibrary(library))
@@ -74,7 +80,6 @@ export class ApiLibrariesService implements LibrariesService {
             id: library.id,
             name: library.name,
             communityId: library.communityId,
-            isHubAccessible: library.isHubAccessible ?? false,
             instructions: library.instructions ?? '',
             location: {
                 name: library.location?.name ?? '',
@@ -95,7 +100,6 @@ export class ApiLibrariesService implements LibrariesService {
             id: library.id,
             name: library.name,
             communityId: library.communityId,
-            isHubAccessible: library.isHubAccessible,
             instructions: library.instructions,
             location: {
                 name: library.location?.name ?? '',

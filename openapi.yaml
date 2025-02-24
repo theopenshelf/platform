@@ -1667,6 +1667,16 @@ paths:
       summary: Retrieve all hub libraries
       tags:
         - libraries-hub-api
+      parameters:
+        - name: communityIds
+          in: query
+          description: Filter libraries by community IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
       responses:
         "200":
           description: A list of hub libraries
@@ -1922,6 +1932,12 @@ paths:
         - name: requiresApproval
           in: query
           description: Filter communities by requires approval
+          required: false
+          schema:
+            type: boolean
+        - name: isMember
+          in: query
+          description: Filter communities where the current user is a member
           required: false
           schema:
             type: boolean
@@ -2936,7 +2952,6 @@ components:
       required:
         - id
         - name
-        - isHubAccessible
         - requiresApproval
         - freeAccess
         - location
@@ -2949,8 +2964,6 @@ components:
           format: uuid
         name:
           type: string
-        isHubAccessible:
-          type: boolean
         requiresApproval:
           type: boolean
         freeAccess:

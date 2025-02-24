@@ -55,7 +55,7 @@ export class EditLibraryComponent implements OnInit {
   ngOnInit() {
     this.editLibraryForm = this.fb.group({
       name: ['', Validators.required],
-      isHubAccessible: [false],
+      freeAccess: [false],
       instructions: [''],
       location: this.fb.group({
         name: ['', Validators.required],

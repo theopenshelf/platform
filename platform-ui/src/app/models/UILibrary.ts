@@ -6,7 +6,6 @@ export interface UILibrary {
   id: string;
   name: string;
   communityId: string;
-  isHubAccessible: boolean;
   requiresApproval: boolean;
   freeAccess: boolean;
   location: UILocation;

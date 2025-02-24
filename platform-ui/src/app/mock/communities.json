@@ -8,8 +8,8 @@
             "address": "123 Bagshot Row, Hobbiton, The Shire",
             "name": "Mordor",
             "coordinates": {
-                "lat": 46.583205,
-                "lng": 0.337524
+                "lat": -43.455046454725355,
+                "lng": 171.30580294612173
             }
         },
         "description": "La communauté de l'anneau est une communauté de Hobbits qui veulent protéger la Terre du Milieu.",
@@ -69,15 +69,115 @@
         "name": "Terres de Laya",
         "requiresApproval": true,
         "location": {
-            "address": "24 Rue de la Paix, Paris, France",
-            "name": "Location 2",
+            "address": "All. de la Dent du Chat, 73290 La Motte-Servolex",
+            "name": "L'eco-hammeau des granges",
             "coordinates": {
-                "lat": 46.543016,
-                "lng": 0.410512
+                "lat": 45.632249361296964,
+                "lng": 5.86580778251088
             }
         },
         "description": "Terres de Laya est un écoquartier avec des ambitions écologiques fortes aux portes du Bourget du Lac",
         "picture": "https://terresdelaya.fr/terres-de-laya-header.png",
+        "members": [
+            {
+                "userId": "11",
+                "role": "admin"
+            },
+            {
+                "userId": "12",
+                "role": "member"
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "name": "Poitiers - Beaulieu",
+        "requiresApproval": false,
+        "location": {
+            "address": "Bd René Cassin, 86000 Poitiers",
+            "name": "Parc urbain de Beaulieu",
+            "coordinates": {
+                "lat": 46.573076,
+                "lng": 0.384676
+            }
+        },
+        "description": "Beaulieu est une communauté offrant un cadre de vie urbain avec des espaces verts, idéale pour les résidents cherchant un équilibre entre la ville et la nature.",
+        "picture": "/media/communities/beaulieu.png",
+        "members": [
+            {
+                "userId": "11",
+                "role": "admin"
+            },
+            {
+                "userId": "12",
+                "role": "member"
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Poitiers - Les 3 cités",
+        "requiresApproval": false,
+        "location": {
+            "address": "10 Rue Jean de la Fontaine, 86280 Saint-Benoît",
+            "name": "Parc du Triangle d'Or",
+            "coordinates": {
+                "lat": 46.564059669449655,
+                "lng": 0.3449034728364043
+            }
+        },
+        "description": "Les 3 cités est une communauté connue pour son dynamisme culturel et sa forte cohésion communautaire, offrant un mélange d'espaces résidentiels et commerciaux.",
+        "picture": "media/communities/3cites.png",
+        "members": [
+            {
+                "userId": "11",
+                "role": "admin"
+            },
+            {
+                "userId": "12",
+                "role": "member"
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Poitiers - Les rocs",
+        "requiresApproval": false,
+        "location": {
+            "address": "8-14 Av. de la Paix, 86000 Poitiers",
+            "name": "Place Chocquin de Sarzec",
+            "coordinates": {
+                "lat": 46.590152,
+                "lng": 0.333012
+            }
+        },
+        "description": "Les rocs est une communauté renommée pour son importance historique et architecturale, offrant un exemple typique de vie urbaine bien préservée avec une riche histoire et un fort sentiment de communauté.",
+        "picture": "media/communities/lesrocs.png",
+        "members": [
+            {
+                "userId": "11",
+                "role": "admin"
+            },
+            {
+                "userId": "12",
+                "role": "member"
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "name": "Poitiers - Centre-ville",
+        "requiresApproval": false,
+        "location": {
+            "address": "15 Pl. du Maréchal-Leclerc, 86000 Poitiers",
+            "name": "Place de la République",
+            "coordinates": {
+                "lat": 46.58303704967021,
+                "lng": 0.34204776768581924
+            }
+        },
+        "description": "Poitiers - Centre-ville est une communauté dynamique située au cœur de la ville, offrant une variété d'espaces commerciaux et résidentiels, ainsi qu'un accès facile aux services et aux attractions touristiques.",
+        "picture": "media/communities/poitierscentreville.png",
         "members": [
             {
                 "userId": "11",
