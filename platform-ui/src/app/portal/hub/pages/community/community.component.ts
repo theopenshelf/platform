@@ -27,6 +27,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
+import { FilteredAndPaginatedItemsComponent } from '../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { FilteredAndPaginatedMembersComponent } from '../../../../components/filtered-and-paginated-members/filtered-and-paginated-members.component';
 import { TosBreadcrumbsComponent } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
@@ -67,7 +68,8 @@ import { LibrariesComponent } from '../libraries/libraries/libraries.component';
     LibrariesComponent,
     CustomPageComponent,
     CustomPagesEditComponent,
-    TuiTabs
+    TuiTabs,
+    FilteredAndPaginatedItemsComponent
   ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss',
@@ -77,7 +79,7 @@ export class CommunityComponent {
   public getItemsParams: GetItemsParams | undefined;
 
   community: UICommunity | undefined;
-  tabOpened: 'libraries' | 'members' | 'pages' = 'pages';
+  tabOpened: 'libraries' | 'members' | 'pages' | 'items' = 'pages';
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
   isAdmin: boolean = false;
@@ -111,10 +113,9 @@ export class CommunityComponent {
     if (communityId) {
       this.communitiesService.getCommunity(communityId).subscribe((community) => {
         this.community = community;
-
         this.isAdmin = true; //TODO
         this.getItemsParams = {
-          libraryIds: [communityId!],
+          communityIds: [communityId!],
           borrowedByCurrentUser: !this.isAdmin
         };
       });
@@ -140,9 +141,16 @@ export class CommunityComponent {
           caption: 'breadcrumb.libraries',
           routerLink: `/hub/communities/${this.community?.id}/libraries`
         });
+      } else if (path.includes('items')) {
+        this.tabOpened = 'items';
+        this.activeTabIndex = 2;
+        this.breadcrumbs.push({
+          caption: 'breadcrumb.items',
+          routerLink: `/hub/communities/${this.community?.id}/items`
+        });
       } else if (path.includes('members')) {
         this.tabOpened = 'members';
-        this.activeTabIndex = 2;
+        this.activeTabIndex = 3;
         this.breadcrumbs.push({
           caption: 'breadcrumb.members',
           routerLink: `/hub/communities/${this.community?.id}/members`
@@ -242,7 +250,7 @@ export class CommunityComponent {
       .subscribe();
   }
 
-  onTabChange(tab: 'libraries' | 'members' | 'pages'): void {
+  onTabChange(tab: 'libraries' | 'members' | 'pages' | 'items'): void {
     this.tabOpened = tab;
 
     var queryParams: any = {};
@@ -255,7 +263,9 @@ export class CommunityComponent {
       path += '/pages';
     } else if (tab === 'members') {
       path += '/members';
-    } else {
+    } else if (tab === 'items') {
+      path += '/items';
+    } else if (tab === 'libraries') {
       path += '/libraries';
     }
 

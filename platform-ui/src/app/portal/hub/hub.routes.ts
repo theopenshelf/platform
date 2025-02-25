@@ -44,6 +44,7 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'communities/:id/libraries', component: CommunityComponent },
       { path: 'communities/:id/members', component: CommunityComponent },
       { path: 'communities/:id/pages', component: CommunityComponent },
+      { path: 'communities/:id/items', component: CommunityComponent },
       { path: 'communities/:id/pages/:ref', component: CommunityComponent },
       {
         path: 'settings',

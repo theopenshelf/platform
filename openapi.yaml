@@ -191,6 +191,14 @@ paths:
             type: array
             items:
               type: string
+        - name: communityIds
+          in: query
+          description: Filter items by community IDs
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
         - name: categories
           in: query
           description: Filter items by categories

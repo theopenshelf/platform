@@ -535,7 +535,8 @@
     "yesDelete": "Yes, Delete",
     "cancel": "Cancel",
     "deletePageLabel": "Delete page '{{pageTitle}}'",
-    "addPage": "Create page"
+    "addPage": "Create page",
+    "items": "Items"
   },
   "members": {
     "confirmChangeTypeContent": "Are you sure you want to change the type of this member?",

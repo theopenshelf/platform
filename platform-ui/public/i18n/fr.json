@@ -551,7 +551,8 @@
     "yesDelete": "Oui, Supprimer",
     "cancel": "Annuler",
     "deletePageLabel": "Supprimer la page '{{pageTitle}}'",
-    "addPage": "Créer une page"
+    "addPage": "Créer une page",
+    "items": "Articles"
   },
   "members": {
     "confirmChangeTypeContent": "Êtes-vous sûr de vouloir changer le type de ce membre?",

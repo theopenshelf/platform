@@ -34,7 +34,6 @@ import { ItemCardComponent } from '../item-card/item-card.component';
 export class FilteredAndPaginatedItemsComponent {
   currentUser: UserInfo;
   libraries: UILibrary[] = [];
-
   public community = input<UICommunity>();
   public getItemsParams = input<GetItemsParams>({});
   public enableStatusFiltering = input<boolean>(false);

@@ -10,6 +10,7 @@ export interface GetItemsParams {
     statuses?: UIBorrowDetailedStatus[];
 
     libraryIds?: string[];
+    communityIds?: string[];
     categories?: string[];
     searchText?: string;
 

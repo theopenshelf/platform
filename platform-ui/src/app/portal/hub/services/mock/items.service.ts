@@ -12,6 +12,7 @@ import { UINotificationType } from '../../../../models/UINotification';
 import { UIUser } from '../../../../models/UIUser';
 import { MockNotificationsService } from '../../../../services/mock/notifications.service';
 import { ItemsService } from '../items.service';
+import { MockLibrariesService } from './libraries.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +21,9 @@ export class MockItemsService implements ItemsService {
 
   private items: UIItem[] = loadItems();
 
-  constructor(private notificationService: MockNotificationsService) {
+  constructor(private notificationService: MockNotificationsService,
+    private librariesService: MockLibrariesService
+  ) {
   }
 
   getItems(params: GetItemsParams): Observable<UIItemsPagination> {
@@ -28,6 +31,7 @@ export class MockItemsService implements ItemsService {
       borrowedByCurrentUser,
       statuses,
       libraryIds,
+      communityIds,
       categories,
       searchText,
       currentlyAvailable,
@@ -58,10 +62,15 @@ export class MockItemsService implements ItemsService {
     if (favorite) {
       filteredItems = filteredItems.filter((item) => item.favorite);
     }
-
     if (libraryIds && libraryIds.length > 0) {
       filteredItems = filteredItems.filter((item) =>
         libraryIds.includes(item.libraryId),
+      );
+    }
+    if (communityIds && communityIds.length > 0) {
+      const libraries = this.librariesService.getMockLibrariesByCommunityId(communityIds[0]);
+      filteredItems = filteredItems.filter((item) =>
+        libraries.some((library) => library.id === item.libraryId),
       );
     }
     if (categories && categories.length > 0) {
