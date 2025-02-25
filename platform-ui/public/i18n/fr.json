@@ -533,7 +533,8 @@
     "searchPlaceholder": "Rechercher une communauté",
     "enterLocation": "Entrer une localisation",
     "locationPlaceholder": "Entrer une localisation",
-    "distance": "Distance"
+    "distance": "Distance",
+    "filterByLocation": "Filtrer par localisation"
   },
   "community": {
     "descriptionTitle": "Description",

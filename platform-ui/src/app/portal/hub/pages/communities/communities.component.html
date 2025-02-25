@@ -18,8 +18,11 @@
             <tui-badge appearance="primary">
               {{ distanceControl.value }} km
             </tui-badge>
-            }
+            
           {{ getLocationName() }}
+        } @else {
+          {{ 'communities.filterByLocation' | translate }}
+        }
 
         </button>
 

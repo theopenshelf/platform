@@ -518,7 +518,8 @@
     "searchPlaceholder": "Search for a community",
     "enterLocation": "Enter location",
     "locationPlaceholder": "Enter location",
-    "distance": "Distance"
+    "distance": "Distance",
+    "filterByLocation": "Filter by location"
   },
   "community": {
     "descriptionTitle": "Description",
