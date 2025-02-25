@@ -34,6 +34,23 @@ export class MockCommunitiesService implements CommunitiesService {
     });
   }
 
+  private haversineDistance(coords1: { latitude: number, longitude: number }, coords2: { latitude: number, longitude: number }): number {
+    const toRad = (value: number) => (value * Math.PI) / 180;
+    const R = 6371; // Radius of the Earth in kilometers
+
+    const dLat = toRad(coords2.latitude - coords1.latitude);
+    const dLon = toRad(coords2.longitude - coords1.longitude);
+
+    const lat1 = toRad(coords1.latitude);
+    const lat2 = toRad(coords2.latitude);
+
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distance in kilometers
+  }
+
   getCommunities(getCommunitiesParams: GetCommunitiesParams): Observable<UICommunitiesPagination> {
     let filteredCommunities = this.communities;
     if (getCommunitiesParams.searchText) {
@@ -46,6 +63,18 @@ export class MockCommunitiesService implements CommunitiesService {
       filteredCommunities = filteredCommunities.filter((community) => {
         const members = this.membersMap.get(community.id);
         return members !== undefined && members.length > 0;
+      });
+    }
+
+    // Filter by location and distance
+    if (getCommunitiesParams.location && getCommunitiesParams.distance !== undefined) {
+      const { lat, lng } = getCommunitiesParams.location.coordinates;
+      filteredCommunities = filteredCommunities.filter((community) => {
+        const distance = this.haversineDistance(
+          { latitude: lat, longitude: lng },
+          { latitude: community.location.coordinates.lat, longitude: community.location.coordinates.lng }
+        );
+        return distance <= (getCommunitiesParams.distance ?? 100);
       });
     }
 

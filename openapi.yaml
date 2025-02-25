@@ -1922,7 +1922,7 @@ paths:
           description: Filter communities by location
           required: false
           schema:
-            type: string
+            $ref: "#/components/schemas/Location"
         - name: distance
           in: query
           description: Filter communities by distance

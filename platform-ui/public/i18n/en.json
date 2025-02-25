@@ -515,7 +515,10 @@
     "seeCommunity": "See more",
     "joinCommunity": "Join",
     "requestToJoin": "Request to join",
-    "searchPlaceholder": "Search for a community"
+    "searchPlaceholder": "Search for a community",
+    "enterLocation": "Enter location",
+    "locationPlaceholder": "Enter location",
+    "distance": "Distance"
   },
   "community": {
     "descriptionTitle": "Description",

@@ -1,9 +1,9 @@
-
+import { UILocation } from "./UILocation";
 
 export interface GetCommunitiesParams {
     searchText?: string;
     requiresApproval?: boolean;
-    location?: string;
+    location?: UILocation;
     distance?: number;
     page?: number;
     pageSize?: number;

@@ -7,6 +7,64 @@
         <input [(ngModel)]="searchText" [placeholder]="'communities.searchPlaceholder' | translate"
           (input)="onTextFilterChange()" />
       </div>
+
+      <div class="categories-filtering">
+        <button appearance="flat" size="l" tuiButton topRight tuiDropdownAlign="right" type="button"
+          [tuiAppearanceState]="openDropdownLocation ? 'active' : null" [tuiDropdownAlign]="'center'"
+          [tuiDropdown]="dropdownlocation" [(tuiDropdownOpen)]="openDropdownLocation"
+          tuiFade>
+          <tui-icon icon="@tui.map" />
+          @if (selectedLocation) {
+            <tui-badge appearance="primary">
+              {{ distanceControl.value }} km
+            </tui-badge>
+            }
+          {{ getLocationName() }}
+
+        </button>
+
+        <ng-template #dropdownlocation let-close>
+          <div class="location-container">
+            <div class="location-input">
+              <tui-textfield iconStart="@tui.map" tuiTextfieldSize="m">
+                <label tuiLabel>{{ 'communities.enterLocation' | translate }}</label>
+
+                <input [placeholder]="'communities.locationPlaceholder' | translate" tuiInputNumber
+                  [formControl]="searchLocationControl" />
+              </tui-textfield>
+            </div>
+
+            <div class="location-distance">
+              <input size="m" tuiSlider type="range" [formControl]="distanceControl" [max]="100" [min]="3" [segments]="4"
+                [step]="25" />
+              <div class="ticks-labels">
+                @for (label of labels; track label) {
+                <tui-badge appearance="primary" (click)="patchValue(label)">
+                  {{ label }} km
+                </tui-badge>
+                }
+              </div>
+            </div>
+
+            <div class="location-suggestions">
+              @if (showLocationLoader) {
+              <div class="location-loader">
+                <tui-loader />
+              </div>
+              } @else {
+              @if (locationSuggestions().length > 0) {
+              <div class="suggestions-list">
+                @for (suggestion of locationSuggestions(); track suggestion) {
+                <tui-badge size="xl" (click)="selectSuggestion(suggestion)">{{ suggestion.label }}</tui-badge>
+
+                }
+              </div>
+              }
+              }
+            </div>
+          </div>
+        </ng-template>
+      </div>
     </div>
   </div>
 
@@ -20,8 +78,7 @@
 
     @for (community of communities; track community) {
     <div class="community-card" tuiAppearance="floating" tuiCardMedium
-      routerLink="/hub/communities/{{ community.id }}/pages"
-      (mouseenter)="movePinToCenter(community.id)">
+      routerLink="/hub/communities/{{ community.id }}/pages" (mouseenter)="movePinToCenter(community.id)">
       <div class="item-actions">
         <tui-icon class="community-icon" [icon]="community.requiresApproval ? '@tui.lock' : '@tui.lock-open'" />
 
@@ -36,8 +93,7 @@
         </picture>
       </tui-avatar>
       } @else {
-      <tui-avatar class="user-avatar" tuiChevron tuiDropdownOpen [src]="community.name | tuiInitials"
-        [style.background]="
+      <tui-avatar class="user-avatar" [src]="community.name | tuiInitials" [style.background]="
           community.name | tuiAutoColor
         " size="m">
       </tui-avatar>

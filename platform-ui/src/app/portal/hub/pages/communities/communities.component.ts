@@ -1,18 +1,27 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   TuiAppearance,
   TuiAutoColorPipe,
   TuiButton,
+  TuiDataList,
   TuiIcon,
   TuiInitialsPipe,
+  TuiLoader,
+  TuiTextfield,
   TuiTitle
 } from '@taiga-ui/core';
-import { TuiAvatar, TuiPagination } from '@taiga-ui/kit';
+import { TuiAvatar, TuiBadge, TuiDataListWrapper, TuiFade, TuiPagination, TuiSlider } from '@taiga-ui/kit';
 import { TuiCardMedium } from '@taiga-ui/layout';
+import { TuiComboBoxModule, TuiInputModule } from '@taiga-ui/legacy';
 import * as L from 'leaflet';
+import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider.js';
+import { SearchResult } from 'leaflet-geosearch/dist/providers/provider.js';
+import { debounceTime } from 'rxjs/operators';
 import { BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
@@ -24,6 +33,7 @@ import { CommunitiesService } from '../../services/communities.service';
 
 @Component({
   selector: 'app-libraries',
+  standalone: true,
   imports: [
     RouterModule,
     TuiAppearance,
@@ -36,14 +46,32 @@ import { CommunitiesService } from '../../services/communities.service';
     TuiInitialsPipe,
     TuiAutoColorPipe,
     FormsModule,
+    ReactiveFormsModule,
     TuiPagination,
+    TuiSlider,
+    TuiInputModule,
+    TuiDataList,
+    TuiDataListWrapper,
+    ReactiveFormsModule,
+    TuiComboBoxModule,
+    JsonPipe,
+    TuiLoader,
+    TuiBadge,
+    TuiInputModule,
+    TuiTextfield,
+    TuiFade
   ],
   templateUrl: './communities.component.html',
   styleUrl: './communities.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommunitiesComponent implements OnInit, AfterViewInit {
   communities: UICommunity[] = [];
   searchText = '';
+  searchLocationControl = new FormControl('');
+  locationSuggestions = signal<SearchResult<RawResult>[]>([]);
+  distanceControl = new FormControl<number>(3);
+  labels: number[] = [3, 25, 50, 75, 100];
   getCommunitiesParams: GetCommunitiesParams = {
     pageSize: 5
   };
@@ -54,6 +82,13 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
   itemsPerPage: number = 12; // Default value
 
   private map: L.Map | undefined;
+  provider = new OpenStreetMapProvider({
+    params: {
+      countrycodes: 'fr'
+    }
+  });
+  selectedLocation: SearchResult<RawResult> | undefined;
+  showLocationLoader: boolean = false;
 
   constructor(
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
@@ -64,10 +99,59 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     this.breadcrumbService.setBreadcrumbs([
       { caption: 'breadcrumb.communities', routerLink: '/hub/communities' }
     ]);
+    this.searchLocationControl.valueChanges
+      .pipe(debounceTime(1000))
+      .subscribe(value => {
+        if (value !== null) {
+          this.updateLocationSuggestions(value);
+        }
+      });
+  }
+
+  selectSuggestion(suggestion: SearchResult<RawResult>) {
+    this.selectedLocation = suggestion;
+    this.getCommunitiesParams.location = {
+      name: suggestion.label,
+      address: suggestion.label,
+      coordinates: {
+        lat: suggestion.y,
+        lng: suggestion.x
+      }
+    };
+    this.refreshCommunities();
   }
 
   onTextFilterChange() {
     this.getCommunitiesParams.searchText = this.searchText;
+    this.refreshCommunities();
+  }
+
+  updateLocationSuggestions(query: string) {
+    if (query == null || query.length < 3) {
+      this.locationSuggestions.set([]);
+      return;
+    }
+
+    this.showLocationLoader = true;
+    this.provider.search({ query }).then((results: SearchResult<RawResult>[]) => {
+      this.locationSuggestions.set(results);
+      this.showLocationLoader = false;
+    }).catch((error: any) => {
+      this.locationSuggestions.set([]);
+      this.showLocationLoader = false;
+    });
+  }
+
+  protected readonly stringify = (item: any): string => {
+    if (item.label) {
+      return `${item.label}`;
+    }
+    return item;
+  };
+
+  patchValue(newValue: number): void {
+    this.distanceControl.patchValue(newValue);
+    this.getCommunitiesParams.distance = newValue;
     this.refreshCommunities();
   }
 
@@ -165,6 +249,10 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     }
   }
 
+  public getLocationName(): string {
+    return this.selectedLocation?.label || '';
+  }
+
   private initMap(): void {
     this.map = L.map('map').setView([46.581934, 0.341739], 13);
 
@@ -194,5 +282,11 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
 
     // Fit the map to the bounds of the feature group
     this.map.fitBounds(featureGroup.getBounds());
+  }
+
+  protected openDropdownLocation = false;
+
+  protected closeDropdownLocation(): void {
+    this.openDropdownLocation = false;
   }
 }
