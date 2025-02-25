@@ -115,5 +115,41 @@
         "title": "How to borrow",
         "order": 4,
         "content": "This is the how to borrow page of the terre de laya."
+    },
+    {
+        "id": "14",
+        "position": "home",
+        "communityId": "3",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "Bienvenue sur la page d'accueil du partage d'objects de Beaulieu."
+    },
+    {
+        "id": "15",
+        "position": "home",
+        "communityId": "4",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "Bienvenue sur la page d'accueil du partage d'objects des 3 cités."
+    },
+    {
+        "id": "16",
+        "position": "home",
+        "communityId": "5",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "Bienvenue sur la page d'accueil du partage d'objects du quartier des rocs."
+    },
+    {
+        "id": "17",
+        "position": "home",
+        "communityId": "6",
+        "ref": "home",
+        "title": "Home",
+        "order": 1,
+        "content": "Bienvenue sur la page d'accueil du partage d'objects du quartier du centre-ville de Poitiers."
     }
 ]
