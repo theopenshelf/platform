@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -54,7 +53,6 @@ import { CommunitiesService } from '../../services/communities.service';
     TuiDataListWrapper,
     ReactiveFormsModule,
     TuiComboBoxModule,
-    JsonPipe,
     TuiLoader,
     TuiBadge,
     TuiInputModule,
