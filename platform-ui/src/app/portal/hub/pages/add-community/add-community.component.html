@@ -1,0 +1,74 @@
+<div class="container">
+    <h2>{{ 'addCommunity.title' | translate }}</h2>
+    <form [formGroup]="addCommunityForm" (ngSubmit)="onSubmit()">
+        <tui-textfield>
+            <label tuiLabel>
+                {{ 'addCommunity.communityName' | translate }}
+            </label>
+            <input id="name" formControlName="name" type="text"
+                [placeholder]="'communityNamePlaceholder.itemNamePlaceholder' | translate" tuiTextfield>
+        </tui-textfield>
+
+        <tui-segmented class="community-segmented">
+            <button type="button" (click)="setRequiresApproval(true)">
+                {{ 'addCommunity.private' | translate }}
+                <tui-icon icon="@tui.lock" />
+            </button>
+            <button type="button" (click)="setRequiresApproval(false)">
+                <tui-icon icon="@tui.lock-open" />
+                {{ 'addCommunity.public' | translate }}
+            </button>
+        </tui-segmented>
+
+        <tui-textfield>
+            <label tuiLabel>
+                {{ 'addCommunity.locationName' | translate }}
+            </label>
+            <input id="locationName" formControlName="locationName" type="text"
+                [placeholder]="'communityNamePlaceholder.locationName' | translate" tuiTextfield>
+        </tui-textfield>
+
+
+        <tui-textfield>
+            <label tuiLabel>
+                {{ 'addCommunity.locationAddress' | translate }}
+            </label>
+            <input id="locationAddress" formControlName="locationAddress" type="text"
+                [placeholder]="'communityNamePlaceholder.locationAddress' | translate" tuiTextfield>
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>
+                {{ 'addCommunity.locationCoordinatesLatitude' | translate }}
+            </label>
+            <input id="locationCoordinatesLatitude" formControlName="locationCoordinatesLatitude" type="text"
+                [placeholder]="'communityNamePlaceholder.locationCoordinatesLatitude' | translate" tuiTextfield>
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>
+                {{ 'addCommunity.locationCoordinatesLongitude' | translate }}
+            </label>
+            <input id="locationCoordinatesLongitude" formControlName="locationCoordinatesLongitude" type="text"
+                [placeholder]="'communityNamePlaceholder.locationCoordinatesLongitude' | translate" tuiTextfield>
+        </tui-textfield>
+        <label for="image">{{ 'addCommunity.uploadPicture' | translate }}</label>
+        <div class="drag-drop-zone" (dragover)="allowDrag($event)" (drop)="onImageDrop($event)">
+            @if (!imageFile) {
+            <p>{{ 'addCommunity.dragAndDropImage' | translate }}</p>
+            }
+            @if (imageFile) {
+            <p>{{ 'addItem.fileSelected' | translate }}: {{ imageFile.name }}</p>
+            }
+        </div>
+
+        <tui-textarea formControlName="description" class="tui-space_top-4"
+            placeholder="Enter a short description (max 150 characters)" maxlength="150">
+            {{ 'addCommunity.descriptionPlaceholder' | translate }}
+        </tui-textarea>
+
+        <button type="submit" tuiButton size="m" appearance="accent" [disabled]="addCommunityForm.invalid">
+            {{ 'addCommunity.addCommunityButton' | translate }}
+        </button>
+    </form>
+</div>

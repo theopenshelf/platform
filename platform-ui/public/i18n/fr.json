@@ -574,5 +574,25 @@
     "confirmRejectRequest": "Rejeter",
     "acceptRequest": "Accepter",
     "cancelRequest": "Rejeter"
+  },
+  "addCommunity": {
+    "title": "Ajouter une communauté",
+    "communityName": "Nom de la communauté",
+    "communityNamePlaceholder": "Entrer le nom de la communauté",
+    "requiresApproval": "Confirmation requise",
+    "location": "Localisation",
+    "locationPlaceholder": "Entrer une localisation",
+    "uploadPicture": "Télécharger une image",
+    "description": "Description",
+    "addCommunityButton": "Ajouter la communauté",
+    "descriptionPlaceholder": "Entrer une description",
+    "private": "Privé",
+    "public": "Public",
+    "dragAndDropImage": "Glisser-déposer une image ici, ou cliquer pour sélectionner",
+    "fileSelected": "Image sélectionnée",
+    "locationName": "Nom de la localisation",
+    "locationAddress": "Adresse de la localisation",
+    "locationCoordinatesLatitude": "Latitude de la localisation",
+    "locationCoordinatesLongitude": "Longitude de la localisation"
   }
 }

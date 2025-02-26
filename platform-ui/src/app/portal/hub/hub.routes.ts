@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { globalProviders } from '../../global.provider';
 import HubLayoutComponent from './hub-layout/hub-layout.component';
 import { hubProviders } from './hub.provider';
+import { AddCommunityComponent } from './pages/add-community/add-community.component';
 import { AddItemComponent } from './pages/add-item/add-item.component';
 import { ApprovalDashboardComponent } from './pages/approval-dashboard/approval-dashboard.component';
 import { BorrowedItemsComponent } from './pages/borroweditems/borroweditems.component';
@@ -40,6 +41,7 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'page/:ref', component: CustomPageComponent },
       { path: 'approval-dashboard', component: ApprovalDashboardComponent },
       { path: 'communities', component: CommunitiesComponent },
+      { path: 'communities/add-community', component: AddCommunityComponent },
       { path: 'communities/:id', component: CommunityComponent },
       { path: 'communities/:id/libraries', component: CommunityComponent },
       { path: 'communities/:id/members', component: CommunityComponent },

@@ -1,0 +1,46 @@
+.container {
+    padding: 20px;
+}
+
+
+/* Heading */
+h2 {
+    text-align: left;
+    margin-bottom: 20px;
+    color: var(--tos-background-accent-1);
+    /* Dark text for the heading */
+}
+
+/* Form */
+.community-segmented {
+    width: 150px;
+}
+
+
+/* Quill Editor */
+quill-editor {
+    background-color: var(--tos-background-base);
+    /* Ensure the editor has a white background */
+    margin-bottom: 100px;
+}
+
+/* Drag & Drop Zone */
+.drag-drop-zone {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed var(--tos-text-action);
+    /* Use primary color for the dashed border */
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--tos-text-action);
+    /* Primary color for the text */
+    text-align: center;
+}
+
+.drag-drop-zone:hover {
+    background-color: var(--tos-background-neutral-1);
+    /* Light background on hover */
+}

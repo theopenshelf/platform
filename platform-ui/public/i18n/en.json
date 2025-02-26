@@ -558,5 +558,25 @@
     "confirmRejectRequest": "Reject request",
     "acceptRequest": "Accept request",
     "cancelRequest": "Cancel request"
+  },
+  "addCommunity": {
+    "title": "Add Community",
+    "communityName": "Community Name",
+    "communityNamePlaceholder": "Enter community name",
+    "requiresApproval": "Requires approval",
+    "location": "Location",
+    "locationPlaceholder": "Enter location",
+    "uploadPicture": "Upload Picture",
+    "description": "Description",
+    "addCommunityButton": "Add Community",
+    "descriptionPlaceholder": "Enter description",
+    "private": "Private",
+    "public": "Public",
+    "dragAndDropImage": "Drag and drop an image here, or click to select",
+    "fileSelected": "File selected",
+    "locationName": "Location Name",
+    "locationAddress": "Location Address",
+    "locationCoordinatesLatitude": "Location Coordinates Latitude",
+    "locationCoordinatesLongitude": "Location Coordinates Longitude"
   }
 }
