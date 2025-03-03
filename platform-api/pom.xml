@@ -243,7 +243,7 @@
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
                     </container>
                     <from>
-                        <image>alpine:latest</image>
+                        <image>alpine/java:21-jdk</image>
                     </from>
                     <to>
                         <image>ghcr.io/theopenshelf/platform-api</image>
