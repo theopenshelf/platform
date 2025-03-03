@@ -37,6 +37,8 @@
         <io.specto.hoverfly-java.version>0.20.0</io.specto.hoverfly-java.version>
         <io.specto.hoverfly-java-junit5.version>0.20.0</io.specto.hoverfly-java-junit5.version>
         <org.openapitools.version>7.11.0</org.openapitools.version>
+        <logback.version>1.4.11</logback.version>
+        <logstash-logback.version>7.4</logstash-logback.version>
     </properties>
 
     <scm>
@@ -128,6 +130,18 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${io.springfox.swagger-ui.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback.version}</version>
         </dependency>
 
         <dependency>
