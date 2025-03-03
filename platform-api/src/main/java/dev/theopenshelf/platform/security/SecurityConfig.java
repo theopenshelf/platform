@@ -29,7 +29,10 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager())
                 .securityContextRepository(securityContextRepository())
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/public/**").permitAll() // public APIs can be accessed without being authenticated
+                        .pathMatchers("/public/**").permitAll() // public APIs can be accessed without being
+                                                                // authenticated
+                        .pathMatchers("/actuator/**").permitAll() // public APIs can be accessed without being
+                                                                  // authenticated
                         .anyExchange().authenticated()) // all others need authentication
                 .build();
     }
@@ -41,7 +44,8 @@ public class SecurityConfig {
 
     @Bean
     public ReactiveAuthenticationManager authenticationManager() {
-        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(userDetailsService);
+        UserDetailsRepositoryReactiveAuthenticationManager authenticationManager = new UserDetailsRepositoryReactiveAuthenticationManager(
+                userDetailsService);
         authenticationManager.setPasswordEncoder(new BCryptPasswordEncoder());
         return authenticationManager;
     }
