@@ -18,7 +18,7 @@ ENV NODE_ENV=development
 RUN npm ci
 
 # Generate the build of the application
-RUN npm run build -- --configuration=development
+RUN npm run build
 
 # Stage 2: Serve
 FROM nginx:latest
