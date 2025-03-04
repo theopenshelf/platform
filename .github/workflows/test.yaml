@@ -1,4 +1,4 @@
-name: release version
+name: test version
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - main
 
 jobs:
-  release:
+  test:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v1
 
-      - name: Prepare release
+      - name: Prepare test
         id: vars
         run: |
           sudo apt-get install libxml2-utils
