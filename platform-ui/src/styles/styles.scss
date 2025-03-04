@@ -1,5 +1,5 @@
-/* You can add global styles to this file, and also import other style files */
-@use 'theme' as *;
+@use 'styles' as *;
+@forward 'theme';
 
 body tui-root {
     font-family: "Inter var", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
