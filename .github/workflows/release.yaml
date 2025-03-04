@@ -104,9 +104,9 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
           repository: git@github.com:theopenshelf/OpenShelf-saas.git
-          file_path: dev/values.yaml
+          file-path: dev/values.yaml
 
-          yaml_paths: "openshelf-chart.backend.image.tag,openshelf-chart.frontend.image.tag"
+          yaml-paths: "openshelf-chart.backend.image.tag,openshelf-chart.frontend.image.tag"
 
           tag: ${{ env.app-version }}
 
