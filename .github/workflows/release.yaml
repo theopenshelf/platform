@@ -94,7 +94,7 @@ jobs:
           tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
 
       - name: Deploy
-        uses: qcastel/github-actions-trigger-deploy@master
+        uses: qcastel/github-actions-update-helm.git@master
         with:
           branch-name: main
 
@@ -103,11 +103,12 @@ jobs:
 
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-          repository: git@github.com:theopenshelf/platform-deployment.git
+          repository: git@github.com:theopenshelf/OpenShelf-saas.git
+          file_path: dev/values.yaml
 
-          images-names: "platform-api;platform-ui"
+          yaml_paths: "openshelf-chart.backend.image.tag,openshelf-chart.frontend.image.tag"
 
-          version: ${{ env.app-version }}
+          tag: ${{ env.app-version }}
 
           gpg-enabled: true
           gpg-key-id: ${{ secrets.GPG_KEY_ID }}
