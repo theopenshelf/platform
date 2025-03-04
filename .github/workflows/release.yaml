@@ -94,7 +94,7 @@ jobs:
           tags: ghcr.io/theopenshelf/platform-ui:${{ env.app-version }}
 
       - name: Deploy
-        uses: qcastel/github-actions-update-helm@main
+        uses: qcastel/github-actions-update-helm@master
         with:
           branch-name: main
 
