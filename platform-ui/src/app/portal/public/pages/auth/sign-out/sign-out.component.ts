@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { globalProviders } from '../../../../../global.provider';
+import { getGlobalProviders } from '../../../../../global.provider';
 
 @Component({
   standalone: true,
@@ -8,6 +8,6 @@ import { globalProviders } from '../../../../../global.provider';
   imports: [ReactiveFormsModule, FormsModule],
   templateUrl: './sign-out.component.html',
   styleUrl: './sign-out.component.scss',
-  providers: [...globalProviders],
+  providers: [...getGlobalProviders()],
 })
-export class SignOutComponent {}
+export class SignOutComponent { }

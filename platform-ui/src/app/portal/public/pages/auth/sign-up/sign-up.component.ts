@@ -13,7 +13,7 @@ import { TuiPassword } from '@taiga-ui/kit';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
   AUTH_SERVICE_TOKEN,
-  globalProviders,
+  getGlobalProviders,
 } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 
@@ -33,7 +33,7 @@ import { AuthService } from '../../../../../services/auth.service';
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
-  providers: [...globalProviders],
+  providers: [...getGlobalProviders()],
 })
 export class SignUpComponent {
   signUpForm: FormGroup;

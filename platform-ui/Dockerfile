@@ -1,6 +1,4 @@
-# Stage 1: Compile and Build angular codebase
-
-# Use official node image as the base image
+# Stage 1: Build
 FROM node:alpine3.21 as build
 
 # Combine apk commands to reduce layers and improve caching
@@ -17,22 +15,29 @@ COPY ./openapi.yaml /usr/local/
 ENV NODE_ENV=development
 
 # Install all the dependencies
-RUN npm ci  # Use npm ci for a clean install based on package-lock.json
+RUN npm ci
 
-# Generate the build of the application with the development environment
+# Generate the build of the application
 RUN npm run build -- --configuration=development
 
-# Stage 2: Serve app with nginx server
+# Stage 2: Serve
 FROM nginx:latest
 
-# Copy the custom nginx configuration file
+# Install required tools
+RUN apt-get update && apt-get install -y \
+    gettext-base \
+    nodejs \
+    npm && \
+    npm install -g sass
+
 COPY ./nginx.conf /etc/nginx/nginx.conf
-
-# Copy the built Angular app from the build stage to the Nginx directory
 COPY --from=build /usr/local/app/dist/platform-ui/browser/ /usr/share/nginx/html
+COPY --from=build /usr/local/app/src/assets/config.template.json /usr/share/nginx/html/assets/
+COPY --chmod=755 ./entrypoint.sh /
 
-# Expose port 80
+# Create directory for custom theme
+RUN mkdir -p /usr/share/nginx/html/assets/theme
+
 EXPOSE 80
 
-# Start the Nginx server
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]

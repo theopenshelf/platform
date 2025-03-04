@@ -1,5 +1,5 @@
 import { InjectionToken, Provider } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import { ConfigService } from '../../services/config.service';
 import { CategoriesService } from './services/categories.service';
 import { CommunitiesService } from './services/communities.service';
 import { CustomPageService } from './services/custom-page.service';
@@ -47,41 +47,41 @@ export const USERS_SERVICE_TOKEN = new InjectionToken<UsersService>(
 export const hubProviders: Provider[] = [
   {
     provide: ITEMS_SERVICE_TOKEN,
-    useExisting: environment.useMockApi ? MockItemsService : APIItemsService,
+    useExisting: ConfigService.configuration.useMockApi ? MockItemsService : APIItemsService,
   },
   {
     provide: CATEGORIES_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockCategoriesService
       : APICategoriesService,
   },
   {
     provide: LIBRARIES_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockLibrariesService
       : ApiLibrariesService,
   },
   {
     provide: COMMUNITIES_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockCommunitiesService
       : ApiCommunitiesService,
   },
   {
     provide: HELP_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockHelpService
       : APIHelpService,
   },
   {
     provide: CUSTOM_PAGE_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockCustomPageService
       : APICustomPageService,
   },
   {
     provide: USERS_SERVICE_TOKEN,
-    useExisting: environment.useMockApi
+    useExisting: ConfigService.configuration.useMockApi
       ? MockUsersService
       : APIUsersService,
   },

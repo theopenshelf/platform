@@ -11,7 +11,7 @@ import { tuiLayoutIconsProvider } from '@taiga-ui/layout';
 import { UserAvatarComponent } from '../../../../../components/user-avatar/user-avatar.component';
 import {
   AUTH_SERVICE_TOKEN,
-  globalProviders,
+  getGlobalProviders,
 } from '../../../../../global.provider';
 import { AuthService, UserInfo } from '../../../../../services/auth.service';
 
@@ -28,7 +28,7 @@ import { AuthService, UserInfo } from '../../../../../services/auth.service';
     UserAvatarComponent,
   ],
   providers: [
-    ...globalProviders,
+    ...getGlobalProviders(),
     tuiLayoutIconsProvider({ grid: '@tui.align-justify' }),
   ],
   templateUrl: './settings-landing-page.component.html',

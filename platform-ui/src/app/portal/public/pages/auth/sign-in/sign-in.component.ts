@@ -10,11 +10,10 @@ import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
-import { environment } from '../../../../../../environments/environment';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
   AUTH_SERVICE_TOKEN,
-  globalProviders,
+  getGlobalProviders,
 } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import {
@@ -38,7 +37,7 @@ import {
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
-  providers: [...globalProviders],
+  providers: [...getGlobalProviders()],
 })
 export class SignInComponent {
   signInForm: FormGroup;
@@ -55,7 +54,7 @@ export class SignInComponent {
       password: ['', Validators.required],
     });
     this.config = this.configService.getSettings();
-    if (environment.demoMode) {
+    if (ConfigService.configuration.demoMode) {
       this.signInForm.patchValue({
         username: 'demo',
         password: 'password',

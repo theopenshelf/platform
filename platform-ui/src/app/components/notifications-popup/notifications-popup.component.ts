@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
 import {
-  globalProviders,
+  getGlobalProviders,
   NOTIFICATIONS_SERVICE_TOKEN,
 } from '../../global.provider';
 import { UINotification, UINotificationType } from '../../models/UINotification';
@@ -27,7 +27,7 @@ import { SharedModule } from '../shared-module/shared-module.component';
   standalone: true,
   selector: 'notifications-popup',
   imports: [TranslateModule, TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
-  providers: [...globalProviders, ...hubProviders],
+  providers: [...getGlobalProviders(), ...hubProviders],
   templateUrl: './notifications-popup.component.html',
   styleUrls: ['./notifications-popup.component.scss']
 })

@@ -7,15 +7,15 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
   AUTH_SERVICE_TOKEN,
-  globalProviders,
+  getGlobalProviders,
 } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
 import { ConfigService } from '../../../../../services/config.service';
-import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   standalone: true,
@@ -31,7 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss',
-  providers: [...globalProviders],
+  providers: [...getGlobalProviders()],
 })
 export class ForgotPasswordComponent {
   signInForm: FormGroup;

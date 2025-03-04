@@ -134,7 +134,6 @@ export class FilteredAndPaginatedMembersComponent {
         data,
       })
       .subscribe(response => {
-        debugger;
         if (response) {
           this.communitiesService.deleteMember(this.community().id, member.id).subscribe();
           this.fetchItems();

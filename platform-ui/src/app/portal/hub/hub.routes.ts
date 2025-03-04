@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { globalProviders } from '../../global.provider';
+import { getGlobalProviders } from '../../global.provider';
 import HubLayoutComponent from './hub-layout/hub-layout.component';
 import { hubProviders } from './hub.provider';
 import { AddCommunityComponent } from './pages/add-community/add-community.component';
@@ -21,7 +21,7 @@ export const COMMUNITY_ROUTES: Routes = [
   {
     path: '',
     component: HubLayoutComponent,
-    providers: [...hubProviders, ...globalProviders],
+    providers: [...hubProviders, ...getGlobalProviders()],
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' }, // Redirect to 'profile'
       { path: 'items', component: ItemsComponent },
