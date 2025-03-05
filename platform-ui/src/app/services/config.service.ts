@@ -1,6 +1,5 @@
 // src/app/services/config.service.ts
 import { Inject, Injectable } from '@angular/core';
-import configJson from '../../assets/config.json';
 import { environment } from '../../environments/environment';
 import { PUBLIC_SETTINGS_SERVICE_TOKEN } from '../global.provider';
 import { PublicSettingsService } from './settings.service';
@@ -38,12 +37,20 @@ export class ConfigService {
     console.log('ConfigService: Loaded environment values:', ConfigService.config);
 
     try {
-      // Override with config.json
-      console.log('ConfigService: Attempting to load config.json...');
+      // Load config.json from assets
+      console.log('ConfigService: Attempting to fetch config.json from assets...');
+      const response = await fetch('assets/config.json');
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const configJson = await response.json();
+      console.log('ConfigService: Successfully loaded config.json:', configJson);
+
+      // Merge with environment values
       ConfigService.config = { ...ConfigService.config, ...configJson };
-      console.log('ConfigService: Successfully merged config.json:', ConfigService.config);
+      console.log('ConfigService: Final configuration:', ConfigService.config);
     } catch (e) {
-      console.warn('ConfigService: No config.json found or error loading it:', e);
+      console.warn('ConfigService: Error loading config.json:', e);
       console.log('ConfigService: Using environment defaults:', ConfigService.config);
     }
 
