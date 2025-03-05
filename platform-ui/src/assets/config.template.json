@@ -1,6 +1,6 @@
 {
-  "API_BASE_PATH": "${API_BASE_PATH:-http://localhost:8486}",
-  "useMockApi": ${USE_MOCK_API:-true},
-  "demoMode": ${DEMO_MODE:-true},
-  "defaultLocale": "${DEFAULT_LOCALE:-fr}"
+  "API_BASE_PATH": "${API_BASE_PATH",
+  "useMockApi": ${USE_MOCK_API},
+  "demoMode": ${DEMO_MODE},
+  "defaultLocale": "${DEFAULT_LOCALE}"
 } 

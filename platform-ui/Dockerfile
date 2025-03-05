@@ -26,6 +26,7 @@ FROM nginx:latest
 # Install required tools
 RUN apt-get update && apt-get install -y \
     gettext-base \
+    vim \
     nodejs \
     npm && \
     npm install -g sass
