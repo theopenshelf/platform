@@ -2,6 +2,16 @@ server:
   port: 8486
   ssl:
     enabled: false
+  servlet:
+    context-path: /api
+
+management:
+  endpoints:
+    web:
+      base-path: /api/actuator
+openapi:
+  theOpenShelf:
+    base-path: /api
 
 spring:
   datasource:
