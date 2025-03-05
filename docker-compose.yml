@@ -11,7 +11,8 @@ services:
       - POSTGRES_USER=local
       - POSTGRES_DB=theopenshelf
     volumes:
-      - ./db/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./db/postgres/init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./db/postgres/data.sql:/docker-entrypoint-initdb.d/2-data.sql
 
 
 volumes:

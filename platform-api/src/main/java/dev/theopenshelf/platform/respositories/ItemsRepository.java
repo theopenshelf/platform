@@ -8,5 +8,4 @@ import org.springframework.data.repository.CrudRepository;
 import dev.theopenshelf.platform.entities.ItemEntity;
 
 public interface ItemsRepository extends CrudRepository<ItemEntity, UUID> {
-    List<ItemEntity> findByLocated(String location);
 }
