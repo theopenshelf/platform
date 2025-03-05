@@ -28,17 +28,23 @@ export const appConfig: ApplicationConfig = {
   providers: [
     {
       provide: APP_INITIALIZER,
-      useFactory: (configService: ConfigService) => {
-        return async () => {
-          await ConfigService.initialize();
-          await configService.loadConfig();
-        };
+      useFactory: () => async () => {
+        console.log('APP_INITIALIZER: Starting ConfigService initialization...');
+        await ConfigService.initialize();
+        console.log('APP_INITIALIZER: ConfigService initialization complete');
       },
-      deps: [ConfigService],
       multi: true,
+      deps: []
+    },
+    {
+      provide: BASE_PATH,
+      useFactory: () => {
+        console.log('BASE_PATH: Getting API path from config:', ConfigService.configuration.API_BASE_PATH);
+        return ConfigService.configuration.API_BASE_PATH;
+      },
+      deps: []
     },
     ...getGlobalProviders(),
-    { provide: BASE_PATH, useValue: ConfigService.configuration.API_BASE_PATH },
     provideAnimations(),
     provideHttpClient(),
     provideZoneChangeDetection({ eventCoalescing: true }),
