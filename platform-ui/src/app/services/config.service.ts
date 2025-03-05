@@ -31,15 +31,23 @@ export class ConfigService {
   };
 
   static async initialize(): Promise<void> {
+    console.log('ConfigService: Starting initialization...');
+
     // Start with environment values
     ConfigService.config = { ...environment };
+    console.log('ConfigService: Loaded environment values:', ConfigService.config);
 
     try {
       // Override with config.json
+      console.log('ConfigService: Attempting to load config.json...');
       ConfigService.config = { ...ConfigService.config, ...configJson };
+      console.log('ConfigService: Successfully merged config.json:', ConfigService.config);
     } catch (e) {
-      console.log('No config.json found, using environment defaults');
+      console.warn('ConfigService: No config.json found or error loading it:', e);
+      console.log('ConfigService: Using environment defaults:', ConfigService.config);
     }
+
+    console.log('ConfigService: Initialization complete');
   }
 
   static get configuration(): AppConfig {
