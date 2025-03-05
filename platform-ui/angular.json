@@ -47,7 +47,8 @@
               "node_modules/quill/dist/quill.snow.css",
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles/styles.scss",
-              "src/styles/_theme.scss"
+              "src/styles/_theme.scss",
+              "src/styles/custom-theme.css"
             ],
             "scripts": [],
             "budgets": [
