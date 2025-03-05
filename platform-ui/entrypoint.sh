@@ -8,7 +8,8 @@ echo "Config generation complete"
 echo "Checking for custom theme..."
 if [ -f /usr/share/nginx/html/assets/theme/custom-theme.scss ]; then
     echo "Custom theme found, compiling..."
-    sass /usr/share/nginx/html/assets/theme/custom-theme.scss:/usr/share/nginx/html/styles/custom-theme.css
+    # Generate directly in assets folder
+    sass /usr/share/nginx/html/assets/theme/custom-theme.scss:/usr/share/nginx/html/assets/custom-theme.css
     echo "Theme compilation complete"
 else
     echo "No custom theme found, using default"

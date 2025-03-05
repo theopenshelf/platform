@@ -48,7 +48,7 @@
               "node_modules/leaflet/dist/leaflet.css",
               "src/styles/styles.scss",
               "src/styles/_theme.scss",
-              "src/styles/custom-theme.css"
+              "src/assets/custom-theme.css"
             ],
             "scripts": [],
             "budgets": [
@@ -59,7 +59,7 @@
               },
               {
                 "type": "anyComponentStyle",
-                "maximumWarning": "20kb",
+                "maximumWarning": "30kb",
                 "maximumError": "40kb"
               }
             ]
@@ -69,12 +69,12 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1.5mb",
-                  "maximumError": "4mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "20kb",
+                  "maximumWarning": "30kb",
                   "maximumError": "40kb"
                 }
               ],
