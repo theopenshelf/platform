@@ -29,11 +29,9 @@ public class SecurityConfig {
                 .authenticationManager(authenticationManager())
                 .securityContextRepository(securityContextRepository())
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/public/**").permitAll() // public APIs can be accessed without being
-                                                                // authenticated
-                        .pathMatchers("/actuator/**").permitAll() // public APIs can be accessed without being
-                                                                  // authenticated
-                        .anyExchange().authenticated()) // all others need authentication
+                        .pathMatchers("/actuator/**", "/api/actuator/**").permitAll()
+                        .pathMatchers("/public/**", "/api/public/**").permitAll()
+                        .anyExchange().authenticated())
                 .build();
     }
 
