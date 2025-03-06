@@ -3,10 +3,6 @@ package dev.theopenshelf.platform.entities;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Map;
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.theopenshelf.platform.model.Notification;
 import jakarta.persistence.Column;
@@ -47,6 +43,6 @@ public class NotificationEntity {
                 .date(date != null ? OffsetDateTime.ofInstant(date, ZoneOffset.UTC) : null)
                 .type(Notification.TypeEnum.valueOf(type.name()))
                 .alreadyRead(alreadyRead);
-        //TODO payload
+        // TODO payload
     }
 }

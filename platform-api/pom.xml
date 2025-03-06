@@ -265,6 +265,9 @@
                 <configuration>
                     <container>
                         <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                        <jvmFlags>
+                            <jvmFlag>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005</jvmFlag>
+                        </jvmFlags>
                     </container>
                     <from>
                         <image>alpine/java:21-jdk</image>

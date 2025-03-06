@@ -3,7 +3,6 @@ package dev.theopenshelf.platform.entities;
 import java.util.List;
 import java.util.UUID;
 
-import dev.theopenshelf.platform.entities.LocationEntity;
 import dev.theopenshelf.platform.model.Community;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
@@ -45,4 +44,4 @@ public class CommunityEntity {
                 .requiresApproval(requiresApproval)
                 .location(location.toLocation().build());
     }
-} 
+}

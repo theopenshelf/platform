@@ -3,7 +3,6 @@ package dev.theopenshelf.platform.entities;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import dev.theopenshelf.platform.entities.ItemEntity;
 import dev.theopenshelf.platform.model.BorrowRecord;
 import dev.theopenshelf.platform.model.BorrowStatus;
 import jakarta.persistence.Entity;
