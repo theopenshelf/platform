@@ -9,7 +9,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "generate:api-client": "openapi-generator-cli generate -i ../openapi.yaml -g typescript-angular -o src/app/api-client --skip-validate-spec"
+    "generate:api-client": "openapi-generator-cli generate -i ../openapi.yaml -g typescript-angular -o src/app/api-client --skip-validate-spec --additional-properties=withCredentials=true"
   },
   "private": true,
   "dependencies": {

@@ -1,5 +1,7 @@
 package dev.theopenshelf.platform.security;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.security.web.server.context.WebSessionServerSecurityC
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.server.session.CookieWebSessionIdResolver;
 
 @Configuration
 @EnableWebFluxSecurity
@@ -48,11 +51,21 @@ public class SecurityConfig {
         return authenticationManager;
     }
 
+    @Bean
+    public CookieWebSessionIdResolver webSessionIdResolver() {
+        CookieWebSessionIdResolver resolver = new CookieWebSessionIdResolver();
+        resolver.setCookieName("SESSIONID");
+        resolver.addCookieInitializer(builder -> builder.secure(false)
+                .maxAge(Duration.ofDays(30))
+                .httpOnly(true));
+        return resolver;
+    }
+
     // CORS configuration to allow requests from http://localhost:4200
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.addAllowedOrigin("http://localhost:4200"); // Allow only requests from this origin
+        corsConfiguration.addAllowedOrigin("http://local.oshelf.org:4200"); // Allow only requests from this origin
         corsConfiguration.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
         corsConfiguration.addAllowedHeader("*"); // Allow all headers
         corsConfiguration.setAllowCredentials(true); // Allow credentials (cookies, authentication headers, etc.)

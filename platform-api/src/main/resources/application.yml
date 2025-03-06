@@ -4,6 +4,11 @@ server:
     enabled: false
   servlet:
     context-path: /api
+  session:
+    cookie:
+      secure: true
+      same-site: none
+      http-only: true
 
 management:
   endpoints:

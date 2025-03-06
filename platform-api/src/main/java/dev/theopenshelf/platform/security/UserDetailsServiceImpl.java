@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.respositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -18,7 +19,7 @@ public class UserDetailsServiceImpl implements ReactiveUserDetailsService {
 
     @Override
     public Mono<UserDetails> findByUsername(String username) {
-        return Mono.just(usersRepository.findByUsername(username))
-                .map(user -> new User(user.getUsername(), user.getPassword(), Collections.emptyList()));
+        UserEntity user = usersRepository.findByUsername(username);
+        return user == null ? Mono.empty() : Mono.just(new User(user.getUsername(), user.getPassword(), Collections.emptyList()));
     }
 }

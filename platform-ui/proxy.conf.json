@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "http://local.oshelf.org:8486",
+    "secure": false,
+    "changeOrigin": true
+  }
+} 

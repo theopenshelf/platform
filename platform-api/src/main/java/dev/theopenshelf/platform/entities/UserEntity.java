@@ -1,6 +1,7 @@
 package dev.theopenshelf.platform.entities;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
 
@@ -63,6 +64,6 @@ public class UserEntity {
                 .avatarUrl(avatarUrl)
                 .disabled(disabled)
                 .isEmailVerified(isEmailVerified)
-                .roles(new ArrayList<>(roles));
+                .roles(Arrays.asList("hub")); //TODO
     }
 }

@@ -16,7 +16,7 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { BASE_PATH } from './api-client';
+import { BASE_PATH, Configuration } from './api-client';
 import { routes } from './app.routes';
 import { getGlobalProviders } from './global.provider';
 import { ConfigService } from './services/config.service';
@@ -35,6 +35,12 @@ export const appConfig: ApplicationConfig = {
       },
       multi: true,
       deps: []
+    },
+    {
+      provide: Configuration,
+      useValue: new Configuration({
+        withCredentials: true
+      })
     },
     {
       provide: BASE_PATH,
