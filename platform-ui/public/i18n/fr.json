@@ -602,5 +602,10 @@
     "error": "Email non vérifié",
     "signIn": "Se connecter",
     "resentEmailVerification": "Renvoyer la vérification d'email"
+  },
+  "errors": {
+    "unexpected": "Une erreur inattendue est survenue",
+    "supportReference": "Pour obtenir de l'aide, veuillez référencer: {{traceId}}",
+    "title": "Erreur"
   }
 }

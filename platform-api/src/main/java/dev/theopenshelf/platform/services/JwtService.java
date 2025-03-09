@@ -15,7 +15,10 @@ import com.nimbusds.jose.crypto.ECDSAVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class JwtService {
     private final JwkService jwkService;
     private final JWSSigner signer;
@@ -28,35 +31,52 @@ public class JwtService {
     }
 
     public String createToken(JWTClaimsSet.Builder claimsBuilder) throws JOSEException {
-        // Create JWT claims
-        JWTClaimsSet claimsSet = claimsBuilder
-                .audience("oshelf")
-                .issueTime(new Date())
-                .build();
+        log.debug("Creating JWT token with claims: {}", claimsBuilder.build().toJSONObject());
 
-        // Create signed JWT
-        SignedJWT signedJWT = new SignedJWT(
-                new JWSHeader.Builder(JWSAlgorithm.ES256)
-                        .keyID(jwkService.getSigningKey().getKeyID())
-                        .build(),
-                claimsSet);
+        try {
+            JWTClaimsSet claimsSet = claimsBuilder
+                    .audience("oshelf")
+                    .issueTime(new Date())
+                    .build();
 
-        // Sign the JWT
-        signedJWT.sign(signer);
+            SignedJWT signedJWT = new SignedJWT(
+                    new JWSHeader.Builder(JWSAlgorithm.ES256)
+                            .keyID(jwkService.getSigningKey().getKeyID())
+                            .build(),
+                    claimsSet);
 
-        // Serialize to string
-        return signedJWT.serialize();
+            signedJWT.sign(signer);
+            log.info("JWT token created successfully");
+            return signedJWT.serialize();
+        } catch (JOSEException e) {
+            log.error("Failed to create JWT token", e);
+            throw e;
+        }
     }
 
     public JWTClaimsSet verifyToken(String token) throws JOSEException, ParseException {
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        if (!signedJWT.verify(verifier)) {
-            throw new JOSEException("Signature verification failed");
+        log.debug("Verifying JWT token");
+        try {
+            SignedJWT signedJWT = SignedJWT.parse(token);
+            if (!signedJWT.verify(verifier)) {
+                log.warn("JWT signature verification failed");
+                throw new JOSEException("Signature verification failed");
+            }
+
+            JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
+            if (claims.getExpirationTime().before(new Date())) {
+                log.warn("JWT token expired. Expiration: {}", claims.getExpirationTime());
+                throw new JOSEException("Token expired");
+            }
+
+            log.info("JWT token verified successfully");
+            return claims;
+        } catch (ParseException e) {
+            log.error("Failed to parse JWT token", e);
+            throw e;
+        } catch (JOSEException e) {
+            log.error("Failed to verify JWT token", e);
+            throw e;
         }
-        JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
-        if (claims.getExpirationTime().before(new Date())) {
-            throw new JOSEException("Token expired");
-        }
-        return claims;
     }
 }

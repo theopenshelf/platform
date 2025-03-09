@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiLoader, TuiTextfield } from '@taiga-ui/core';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
@@ -15,7 +15,6 @@ import { AuthService } from '../../../../../services/auth.service';
     TuiButton,
     TuiLoader,
     TuiTextfield,
-    RouterLink,
     ReactiveFormsModule,
     FormsModule,
     TranslateModule,

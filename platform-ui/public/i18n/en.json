@@ -585,5 +585,10 @@
     "success": "Email verified successfully",
     "error": "Email verification failed",
     "signIn": "Sign in"
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred",
+    "supportReference": "For support assistance, please reference: {{traceId}}",
+    "title": "Error"
   }
 }

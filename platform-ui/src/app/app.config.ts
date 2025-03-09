@@ -12,13 +12,14 @@ import {
 } from '@angular/router';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BASE_PATH, Configuration } from './api-client';
 import { routes } from './app.routes';
 import { getGlobalProviders } from './global.provider';
+import { errorInterceptor } from './interceptors/error.interceptor';
 import { ConfigService } from './services/config.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -52,7 +53,9 @@ export const appConfig: ApplicationConfig = {
     },
     ...getGlobalProviders(),
     provideAnimations(),
-    provideHttpClient(),
+    provideHttpClient(
+      withInterceptors([errorInterceptor])
+    ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
       routes,

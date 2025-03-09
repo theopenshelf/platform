@@ -29,20 +29,15 @@
         <input formControlName="streetAddress" type="text" tuiTextfield />
       </tui-textfield>
 
-      <div class="row">
-        <div class="column">
-          <tui-textfield>
-            <label tuiLabel>{{ 'signUp.city' | translate }}</label>
-            <input formControlName="city" type="text" tuiTextfield />
-          </tui-textfield>
-        </div>
-        <div class="column">
-          <tui-textfield>
-            <label tuiLabel>{{ 'signUp.postalCode' | translate }}</label>
-            <input formControlName="postalCode" type="text" tuiTextfield />
-          </tui-textfield>
-        </div>
-      </div>
+      <tui-textfield>
+        <label tuiLabel>{{ 'signUp.city' | translate }}</label>
+        <input formControlName="city" type="text" tuiTextfield />
+      </tui-textfield>
+      
+      <tui-textfield>
+        <label tuiLabel>{{ 'signUp.postalCode' | translate }}</label>
+        <input formControlName="postalCode" type="text" tuiTextfield />
+      </tui-textfield>
 
       <tui-textfield>
         <label tuiLabel>{{ 'signUp.country' | translate }}</label>
