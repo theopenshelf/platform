@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
@@ -29,7 +29,7 @@ import { AuthService } from '../../../../../services/auth.service';
     RouterLink,
     ReactiveFormsModule,
     FormsModule,
-    TranslateModule,
+    TranslateModule
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.scss',
@@ -41,6 +41,7 @@ export class SignUpComponent {
   constructor(
     private fb: FormBuilder,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
+    private alerts: TuiAlertService,
   ) {
     this.signUpForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -72,10 +73,20 @@ export class SignUpComponent {
         city,
         postalCode,
         country,
-      );
-      alert(
-        'Registration successful! Please check your email for confirmation.',
-      );
+      ).subscribe({
+        next: () => {
+          this.alerts.open(
+            'Registration successful! Please check your email for confirmation.',
+            { appearance: 'positive' }
+          ).subscribe();
+        },
+        error: () => {
+          this.alerts.open(
+            'Registration failed! Please try again.',
+            { appearance: 'negative' }
+          ).subscribe();
+        },
+      });
     }
   }
 }

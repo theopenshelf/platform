@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TuiAlertService, TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
@@ -48,6 +48,7 @@ export class SignInComponent {
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
     private configService: ConfigService,
     private router: Router,
+    private alerts: TuiAlertService,
   ) {
     this.signInForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -75,7 +76,10 @@ export class SignInComponent {
               this.router.navigate(['/']);
             }
           } else {
-            alert('Invalid credentials');
+            this.alerts.open(
+              'Invalid credentials',
+              { appearance: 'negative' }
+            ).subscribe();
             return;
           }
         });

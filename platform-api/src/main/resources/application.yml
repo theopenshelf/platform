@@ -18,6 +18,15 @@ openapi:
   theOpenShelf:
     base-path: /api
 
+oshelf:
+  base-url: http://local.oshelf.org:4200
+  email-verification-url: http://local.oshelf.org:4200/email-confirmation
+
+sendgrid:
+  api-key: ${SENDGRID_API_KEY}
+  from:
+    email: dev@mail.oshelf.org
+    name: The Open Shelf dev environment
 spring:
   datasource:
     url: jdbc:postgresql://localhost:8433/theopenshelf

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiAlertService } from '@taiga-ui/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthApiService, User } from '../../api-client';
 import { AuthService, UserInfo } from '../auth.service';
 
@@ -42,6 +43,13 @@ export class APIAuthService implements AuthService {
     private alerts: TuiAlertService,
   ) { }
 
+  verifyEmail(token: string): Observable<boolean> {
+    return this.authApiService.verifyEmail(token).pipe(
+      map((response) => {
+        return response.success;
+      })
+    );
+  }
   getCurrentUserInfo(): UserInfo {
     return this.userInfo;
   }
@@ -102,38 +110,37 @@ export class APIAuthService implements AuthService {
     city: string,
     postalCode: string,
     country: string,
-  ): void {
+  ): Observable<boolean> {
     // Mock sign up logic (replace with backend API call)
-    this.authApiService
-      .signUp({
-        email: email,
-        username: username,
-        password: password,
-        streetAddress: streetAddress,
-        city: city,
-        postalCode: postalCode,
-        country: country,
-      })
-      .subscribe({
-        next: (response) => {
-          this.router.navigate(['/']);
-          this.alerts
-            .open(`Successfully signed up`, { appearance: 'positive' })
-            .subscribe();
-        },
-      });
+    return new Observable<boolean>((observer) => {
+      this.authApiService
+        .signUp({
+          email: email,
+          username: username,
+          password: password,
+          streetAddress: streetAddress,
+          city: city,
+          postalCode: postalCode,
+          country: country,
+        })
+        .subscribe({
+          next: (response) => {
+            observer.next(true);
+            observer.complete();
+          },
+        });
+    });
   }
 
-  signOut(): void {
-    this.authApiService.signOut().subscribe({
-      next: (response) => {
-        this.isAuthenticated$.next(false);
-        this.userRoles = [];
-        this.router.navigate(['/']);
-        this.alerts
-          .open(`Successfully logged out`, { appearance: 'positive' })
-          .subscribe();
-      },
+  signOut(): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      this.authApiService.signOut()
+        .subscribe({
+          next: (response) => {
+            observer.next(true);
+            observer.complete();
+          },
+        });
     });
   }
 

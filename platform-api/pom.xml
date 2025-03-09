@@ -39,6 +39,7 @@
         <org.openapitools.version>7.11.0</org.openapitools.version>
         <logback.version>1.5.17</logback.version>
         <logstash-logback.version>7.4</logstash-logback.version>
+        <sendgrid.version>4.10.3</sendgrid.version>
     </properties>
 
     <scm>
@@ -101,6 +102,12 @@
             <groupId>com.nimbusds</groupId>
             <artifactId>oauth2-oidc-sdk</artifactId>
             <version>${nimbus.oauth2.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sendgrid</groupId>
+            <artifactId>sendgrid-java</artifactId>
+            <version>${sendgrid.version}</version>
         </dependency>
 
         <dependency>
@@ -192,6 +199,11 @@
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
     </dependencies>
 

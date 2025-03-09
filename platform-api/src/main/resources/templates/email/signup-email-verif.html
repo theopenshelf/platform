@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Verify Your Email - The Open Shelf</title>
+    </head>
+    <body>
+        <h1>Welcome to The Open Shelf</h1>
+        <p>
+            Hello
+            <span th:text="${username}"></span>
+            ,
+        </p>
+        <p>
+            Please verify your email address by clicking the link below:
+        </p>
+
+        <p>
+            <a
+                th:href="${verif_url}"
+                style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
+            >
+                Verify Email Address
+            </a>
+        </p>
+
+        <p>
+            If the button above doesn't work, copy and paste this link into your browser:
+        </p>
+        <p th:text="${verif_url}"></p>
+
+        <p>This link will expire in 24 hours.</p>
+
+        <p>
+            Best regards,
+            <br>
+            The Open Shelf Team
+        </p>
+    </body>
+</html>

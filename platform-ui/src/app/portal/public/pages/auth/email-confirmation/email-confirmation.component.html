@@ -1,1 +1,34 @@
-<p>email-confirmation works!</p>
+<div id="email-confirmation-container">
+    <div id="email-confirmation-form-section">
+        <img
+            class="logo"
+            src="/logo-bright.png"
+            alt="The Open Shelf"
+        >
+        <h2>
+            {{ 'emailConfirmation.title' | translate }}
+        </h2>
+
+        @if (isLoading) {
+            <p>
+                {{ 'emailConfirmation.message' | translate }}
+                <tui-loader />
+            </p>
+        } @else {
+            @if (isSuccess) {    
+                <p>
+                    {{ 'emailConfirmation.success' | translate }}
+                    <button appearance="accent" tuiButton size="l" type="button" (click)="router.navigate(['/sign-in'])">{{ 'emailConfirmation.signIn' | translate }}</button>
+                </p>
+            } @else {
+                <p>
+                    {{ 'emailConfirmation.error' | translate }}
+                    <button appearance="accent" tuiButton size="l" type="button">{{ 'emailConfirmation.resentEmailVerification' | translate }}</button>
+                </p>
+            }
+        }
+    </div>
+    <div id="email-confirmation-welcome-section">
+        <app-welcome></app-welcome>
+    </div>
+</div>

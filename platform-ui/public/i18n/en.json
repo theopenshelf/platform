@@ -578,5 +578,12 @@
     "locationAddress": "Location Address",
     "locationCoordinatesLatitude": "Location Coordinates Latitude",
     "locationCoordinatesLongitude": "Location Coordinates Longitude"
+  },
+  "emailConfirmation": {
+    "title": "Email Confirmation",
+    "message": "Verifying your email...",
+    "success": "Email verified successfully",
+    "error": "Email verification failed",
+    "signIn": "Sign in"
   }
 }

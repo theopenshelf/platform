@@ -44,6 +44,12 @@ export class MockAuthService implements AuthService {
   ) {
     this.userInfo.user = this.usersService.getUserByUsername('me');
   }
+  verifyEmail(token: string): Observable<boolean> {
+    return new Observable<boolean>((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
+  }
 
   getCurrentUserInfo(): UserInfo {
     return this.userInfo;
@@ -122,15 +128,23 @@ export class MockAuthService implements AuthService {
     city: string,
     postalCode: string,
     country: string,
-  ): void {
+  ): Observable<boolean> {
     // Mock sign up logic (replace with backend API call)
     console.log('User registered:', { email, password });
+    return new Observable<boolean>((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
   }
 
-  signOut(): void {
+  signOut(): Observable<boolean> {
     this.isAuthenticated$.next(false);
     this.userRoles = [];
     this.router.navigate(['/']);
+    return new Observable<boolean>((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
   }
 
   isAuthenticated() {

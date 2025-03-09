@@ -150,6 +150,50 @@ paths:
         "404":
           description: User not found
 
+  /public/auth/email-verification:
+    post:
+      operationId: verifyEmail
+      summary: Verify user's email with token
+      tags:
+        - auth-api
+      parameters:
+        - name: token
+          in: query
+          description: Email verification token
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Email verification response
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - success
+                  - message
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Email verified successfully"
+        "400":
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid or expired token"
+
   /hub/hello-world:
     get:
       operationId: getHelloWorld

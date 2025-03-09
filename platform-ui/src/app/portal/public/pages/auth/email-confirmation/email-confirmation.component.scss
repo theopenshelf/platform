@@ -1,0 +1,97 @@
+@use 'styles' as *;
+
+#email-confirmation-container {
+    display: grid;
+    grid-template-columns: 3fr 4fr;
+
+    #email-confirmation-form-section {
+        background-color: var(--tos-background-base);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background-color: var(--tos-background-base);
+        padding: 20px;
+
+        h2 {
+            width: 100%;
+            font-size: 1.8rem;
+            color: var(--tos-background-accent-1);
+            margin-bottom: 10px;
+        }
+
+        p {
+            width: 100%;
+            font-size: 0.9rem;
+            color: var(--tos-background-accent-1);
+            margin-bottom: 15px;
+        }
+
+        .forgot-password-link {
+            width: 100%;
+            text-align: right;
+            margin: 0;
+            margin-bottom: 15px;
+        }
+
+        form {
+            box-shadow: none;
+            width: 100%;
+            padding: 0;
+        }
+
+        a {
+            color: var(--tos-text-action);
+            transition: color 0.3s;
+            font-weight: 600;
+
+
+            &:hover {
+                color: var(--tos-text-action-hover);
+            }
+        }
+    }
+
+    #email-confirmation-welcome-section {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--tos-background-accent-1);
+        color: var(--tos-text-primary-on-accent-1);
+        position: relative;
+        overflow: hidden;
+    }
+}
+
+.logo {
+    display: none;
+    width: 170px;
+}
+
+@media (max-width: 800px) {
+    #email-confirmation-container {
+        grid-template-columns: 1fr;
+        margin-top: 50px;
+
+
+        #email-confirmation-welcome-section {
+            display: none !important;
+        }
+
+        .logo {
+            display: block !important;
+        }
+
+        #email-confirmation-form-section {
+            padding: 10px;
+            width: calc(100% - 20px);
+            height: 100vh;
+        }
+
+
+        form {
+            text-align: left;
+        }
+    }
+}

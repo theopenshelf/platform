@@ -1,6 +1,6 @@
 package dev.theopenshelf.platform.entities;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
@@ -10,6 +10,8 @@ import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -48,6 +50,9 @@ public class UserEntity {
     @Column(name = "role")
     private Set<String> roles;
 
+    @Enumerated(EnumType.STRING)
+    private UserStatus status = UserStatus.WAITING_FOR_EMAIL;
+
     public User.UserBuilder toUser() {
         return User.builder()
                 .id(id)
@@ -64,6 +69,6 @@ public class UserEntity {
                 .avatarUrl(avatarUrl)
                 .disabled(disabled)
                 .isEmailVerified(isEmailVerified)
-                .roles(Arrays.asList("hub")); //TODO
+                .roles(Arrays.asList("hub")); // TODO
     }
 }

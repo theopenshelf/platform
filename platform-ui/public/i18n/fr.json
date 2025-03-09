@@ -594,5 +594,13 @@
     "locationAddress": "Adresse de la localisation",
     "locationCoordinatesLatitude": "Latitude de la localisation",
     "locationCoordinatesLongitude": "Longitude de la localisation"
+  },
+  "emailConfirmation": {
+    "title": "Confirmation d'email",
+    "message": "Vérification de votre email...",
+    "success": "Email vérifié avec succès",
+    "error": "Email non vérifié",
+    "signIn": "Se connecter",
+    "resentEmailVerification": "Renvoyer la vérification d'email"
   }
 }

@@ -23,8 +23,9 @@ export interface AuthService {
     city: string,
     postalCode: string,
     country: string,
-  ): void;
-  signOut(): void;
+  ): Observable<boolean>;
+  signOut(): Observable<boolean>;
   isAuthenticated(): Observable<boolean>;
   resetPassword(email: string): void;
+  verifyEmail(token: string): Observable<boolean>;
 }
