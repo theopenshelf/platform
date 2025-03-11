@@ -148,15 +148,38 @@ export class APIAuthService implements AuthService {
     return this.isAuthenticated$.asObservable();
   }
 
-  resetPassword(email: string): void {
-    this.authApiService
-      .resetPassword({
+  resetPassword(email: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.authApiService.resetPassword({
         email: email,
-      })
-      .subscribe({
-        next: (response) => {
-          console.log('Password reset email sent:', response);
+      }).subscribe({
+        next: () => {
+          observer.next(true);
+          observer.complete();
         },
+        error: () => {
+          observer.next(false);
+          observer.complete();
+        }
       });
+    });
+  }
+
+  confirmResetPassword(token: string, newPassword: string): Observable<boolean> {
+    return new Observable<boolean>(observer => {
+      this.authApiService.confirmResetPassword({
+        token: token,
+        newPassword: newPassword,
+      }).subscribe({
+        next: () => {
+          observer.next(true);
+          observer.complete();
+        },
+        error: () => {
+          observer.next(false);
+          observer.complete();
+        }
+      });
+    });
   }
 }

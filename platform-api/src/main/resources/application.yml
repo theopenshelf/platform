@@ -20,8 +20,7 @@ openapi:
 
 oshelf:
   base-url: http://local.oshelf.org:4200
-  email-verification-url: http://local.oshelf.org:4200/email-confirmation
-
+  frontend-url: http://local.oshelf.org:4200
 sendgrid:
   api-key: ${SENDGRID_API_KEY}
   from:

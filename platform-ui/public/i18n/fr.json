@@ -6,7 +6,11 @@
     "forgotPassword": "Mot de passe oublié?",
     "logIn": "Se connecter",
     "signUp": "S'inscrire",
-    "dontHaveAccount": "Vous n'avez pas de compte?"
+    "dontHaveAccount": "Vous n'avez pas de compte?",
+    "email": "Email",
+    "send": "Envoyer",
+    "returnToSignIn": "Retour à la connexion",
+    "emailSent": "Email envoyé"
   },
   "welcome": {
     "borrowAnything": "Empruntez tout ce dont vous avez besoin de notre bibliothèque. Tout ce que vous pouvez imaginer.",
@@ -50,7 +54,8 @@
     "signUp": "S'inscrire",
     "email": "Email",
     "send": "Envoyer",
-    "returnToSignIn": "Retour à la connexion"
+    "returnToSignIn": "Retour à la connexion",
+    "emailSent": "Email envoyé"
   },
   "signUp": {
     "title": "S'inscrire",
@@ -607,5 +612,15 @@
     "unexpected": "Une erreur inattendue est survenue",
     "supportReference": "Pour obtenir de l'aide, veuillez référencer: {{traceId}}",
     "title": "Erreur"
+  },
+  "resetPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "newPassword": "Nouveau mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "submit": "Envoyer",
+    "success": "Mot de passe réinitialisé avec succès",
+    "error": "Mot de passe non réinitialisé",
+    "unexpected": "Une erreur inattendue est survenue",
+    "returnToSignIn": "Retour à la connexion"
   }
 }

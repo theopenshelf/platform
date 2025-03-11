@@ -23,7 +23,9 @@ import com.nimbusds.jwt.JWTClaimsSet;
 
 import dev.theopenshelf.platform.api.AuthApiApiDelegate;
 import dev.theopenshelf.platform.entities.UserEntity;
+import dev.theopenshelf.platform.model.ConfirmResetPasswordRequest;
 import dev.theopenshelf.platform.model.LoginRequest;
+import dev.theopenshelf.platform.model.ResetPasswordRequest;
 import dev.theopenshelf.platform.model.SignUpRequest;
 import dev.theopenshelf.platform.model.User;
 import dev.theopenshelf.platform.model.VerifyEmail200Response;
@@ -45,8 +47,8 @@ public class AuthApi implements AuthApiApiDelegate {
     private final MailService mailService;
     private final JwtService jwtService;
 
-    @Value("${oshelf.email-verification-url}")
-    private String emailVerificationUrl;
+    @Value("${oshelf.frontend-url}")
+    private String frontendUrl;
 
     @Override
     public Mono<ResponseEntity<User>> login(Mono<LoginRequest> loginRequest, ServerWebExchange exchange) {
@@ -122,7 +124,7 @@ public class AuthApi implements AuthApiApiDelegate {
                         "email/signup-email-verif",
                         Map.of(
                                 "username", newUser.getUsername(),
-                                "verif_url", emailVerificationUrl + "?token=" + token));
+                                "verif_url", frontendUrl + "/email-confirmation?token=" + token));
                 log.info("Sent verification email to: {}", request.getEmail());
 
                 return Mono.just(ResponseEntity.status(HttpStatus.CREATED).build());
@@ -186,4 +188,55 @@ public class AuthApi implements AuthApiApiDelegate {
         }
     }
 
+    @Override
+    public Mono<ResponseEntity<Void>> resetPassword(Mono<ResetPasswordRequest> request, ServerWebExchange exchange) {
+        return request.map(req -> {
+            UserEntity user = usersRepository.findByEmail(req.getEmail());
+            if (user != null) {
+                try {
+                    String token = jwtService.createToken(new JWTClaimsSet.Builder()
+                            .subject(user.getId().toString())
+                            .expirationTime(new Date(System.currentTimeMillis() + 3600000))
+                            .claim("type", "PWD_RESET"));
+
+                    String resetUrl = frontendUrl + "/reset-password?token=" + token;
+
+                    Map<String, Object> templateVars = Map.of(
+                            "username", user.getUsername(),
+                            "reset_url", resetUrl);
+
+                    mailService.sendTemplatedEmail(
+                            user.getEmail(),
+                            "Reset Your Password - The Open Shelf",
+                            "email/reset-password",
+                            templateVars);
+                } catch (Exception e) {
+                    log.error("Failed to process password reset", e);
+                }
+            }
+            return ResponseEntity.ok().<Void>build(); // Always return OK to not reveal email existence
+        });
+    }
+
+    @Override
+    public Mono<ResponseEntity<Void>> confirmResetPassword(Mono<ConfirmResetPasswordRequest> request,
+            ServerWebExchange exchange) {
+        return request.map(req -> {
+            try {
+                JWTClaimsSet claims = jwtService.verifyToken(req.getToken());
+                if (!"PWD_RESET".equals(claims.getStringClaim("type"))) {
+                    throw new IllegalArgumentException("Invalid token type");
+                }
+
+                UUID userId = UUID.fromString(claims.getSubject());
+                UserEntity user = usersRepository.findById(userId).orElseThrow();
+                user.setPassword(passwordEncoder.encode(req.getNewPassword()));
+                usersRepository.save(user);
+
+                return ResponseEntity.ok().<Void>build();
+            } catch (Exception e) {
+                throw new IllegalArgumentException("Invalid or expired token");
+            }
+        });
+    }
 }

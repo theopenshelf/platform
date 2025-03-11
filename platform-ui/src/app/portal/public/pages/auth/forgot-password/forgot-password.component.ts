@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiAlertService, TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { WelcomeComponent } from '../../../../../components/welcome/welcome.component';
 import {
@@ -34,7 +34,7 @@ import { ConfigService } from '../../../../../services/config.service';
   providers: [...getGlobalProviders()],
 })
 export class ForgotPasswordComponent {
-  signInForm: FormGroup;
+  forgotPasswordForm: FormGroup;
   config: any;
 
   constructor(
@@ -43,25 +43,20 @@ export class ForgotPasswordComponent {
     private configService: ConfigService,
     private router: Router,
     private alerts: TuiAlertService,
+    private translate: TranslateService,
   ) {
-    this.signInForm = this.fb.group({
+    this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
     });
     this.config = this.configService.getSettings();
   }
 
   onSubmit() {
-    if (this.signInForm.valid) {
-      const { email, password } = this.signInForm.value;
-      if (this.authService.signIn(email, password)) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        this.alerts.open(
-          'Invalid credentials',
-          { appearance: 'negative' }
-        ).subscribe();
-      }
+    if (this.forgotPasswordForm.valid) {
+      const { email } = this.forgotPasswordForm.value;
+      this.authService.resetPassword(email).subscribe((response) => {
+        this.alerts.open(this.translate.instant('forgotPassword.emailSent'), { appearance: 'positive' }).subscribe();
+      });
     }
   }
 }

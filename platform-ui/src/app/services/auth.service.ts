@@ -26,6 +26,7 @@ export interface AuthService {
   ): Observable<boolean>;
   signOut(): Observable<boolean>;
   isAuthenticated(): Observable<boolean>;
-  resetPassword(email: string): void;
+  resetPassword(email: string): Observable<boolean>;
+  confirmResetPassword(token: string, newPassword: string): Observable<boolean>;
   verifyEmail(token: string): Observable<boolean>;
 }

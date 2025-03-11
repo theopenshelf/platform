@@ -151,7 +151,20 @@ export class MockAuthService implements AuthService {
     return this.isAuthenticated$.asObservable();
   }
 
-  resetPassword(email: string): void {
+  resetPassword(email: string): Observable<boolean> {
     console.log(`Password reset email sent to: ${email}`);
+    return new Observable<boolean>((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
   }
+
+  confirmResetPassword(token: string, newPassword: string): Observable<boolean> {
+    console.log(`Password reset confirmed for token: ${token} with new password: ${newPassword}`);
+    return new Observable<boolean>((observer) => {
+      observer.next(true);
+      observer.complete();
+    });
+  }
+
 }

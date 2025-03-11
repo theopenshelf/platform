@@ -6,7 +6,11 @@
     "forgotPassword": "Forgot Password?",
     "logIn": "Log In",
     "signUp": "Sign Up",
-    "dontHaveAccount": "Don't have an account?"
+    "dontHaveAccount": "Don't have an account?",
+    "email": "Email",
+    "send": "Send",
+    "returnToSignIn": "Return to sign-in",
+    "emailSent": "Email sent"
   },
   "welcome": {
     "borrowAnything": "Borrow anything you need from our library. Anything you can think of.",
@@ -50,7 +54,8 @@
     "signUp": "Sign Up",
     "email": "Email",
     "send": "Send",
-    "returnToSignIn": "Return to sign-in"
+    "returnToSignIn": "Return to sign-in",
+    "emailSent": "Email sent"
   },
   "signUp": {
     "title": "Sign Up",
@@ -590,5 +595,15 @@
     "unexpected": "An unexpected error occurred",
     "supportReference": "For support assistance, please reference: {{traceId}}",
     "title": "Error"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Submit",
+    "success": "Password reset successfully",
+    "error": "Password reset failed",
+    "unexpected": "An unexpected error occurred",
+    "returnToSignIn": "Return to sign-in"
   }
 }
