@@ -2,6 +2,9 @@ package dev.theopenshelf.platform.entities;
 
 import java.math.BigDecimal;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
 import dev.theopenshelf.platform.model.Location;
 import dev.theopenshelf.platform.model.LocationCoordinates;
 import jakarta.persistence.Embeddable;
@@ -31,5 +34,11 @@ public class LocationEntity {
                         .lat(BigDecimal.valueOf(coordinates.getLat()))
                         .lng(BigDecimal.valueOf(coordinates.getLng()))
                         .build() : null);
+    }
+
+    public LocationEntity(Location location) {
+        this.locationName = location.getName();
+        this.address = location.getAddress();
+        this.coordinates = new CoordinatesEntity(location.getCoordinates());
     }
 }

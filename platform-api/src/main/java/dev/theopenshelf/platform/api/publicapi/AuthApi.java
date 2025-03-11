@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +36,7 @@ import dev.theopenshelf.platform.services.MailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
+import reactor.util.function.Tuples;
 
 @Service
 @RequiredArgsConstructor
@@ -56,19 +58,28 @@ public class AuthApi implements AuthApiApiDelegate {
                 .doOnNext(request -> log.info("Login attempt for user: {}", request.getUsername()))
                 .flatMap(request -> authenticationManager.authenticate(UsernamePasswordAuthenticationToken
                         .unauthenticated(request.getUsername(), request.getPassword())))
-                .zipWhen(authentication -> {
+                .flatMap(authentication -> {
                     log.info("User authenticated successfully: {}", authentication.getName());
-                    return Mono.just(usersRepository.findByUsername(authentication.getName()));
+                    return usersRepository.findById(UUID.fromString(authentication.getName()))
+                            .map(userEntity -> {
+                                SecurityContext context = SecurityContextHolder.createEmptyContext();
+                                Authentication auth = new UsernamePasswordAuthenticationToken(
+                                    userEntity.getId().toString(),
+                                    null,
+                                    authentication.getAuthorities()
+                                );
+                                context.setAuthentication(auth);
+                                return Tuples.of(context, userEntity);
+                            })
+                            .map(Mono::just)
+                            .orElse(Mono.empty());
                 })
-                .flatMap(tuple -> {
-                    SecurityContext context = SecurityContextHolder.createEmptyContext();
-                    context.setAuthentication(tuple.getT1());
-                    SecurityContextHolder.setContext(context);
-                    return serverSecurityContextRepository.save(exchange, context).thenReturn(tuple.getT2());
-                })
-                .map(user -> {
-                    log.info("Login successful for user: {}", user.getUsername());
-                    return ResponseEntity.status(HttpStatus.OK).body(user.toUser().build());
+                .flatMap(tuple -> serverSecurityContextRepository
+                        .save(exchange, tuple.getT1())
+                        .thenReturn(tuple.getT2()))
+                .map(userEntity -> {
+                    log.info("Login successful for user: {}", userEntity.getUsername());
+                    return ResponseEntity.ok(userEntity.toUser().build());
                 })
                 .onErrorResume(e -> {
                     if (e instanceof BadCredentialsException) {

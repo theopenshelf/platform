@@ -44,4 +44,13 @@ public class CommunityEntity {
                 .requiresApproval(requiresApproval)
                 .location(location.toLocation().build());
     }
+
+    public CommunityEntity(Community c) {
+        this.id = c.getId();
+        this.name = c.getName();
+        this.picture = c.getPicture();
+        this.description = c.getDescription();
+        this.requiresApproval = c.getRequiresApproval();
+        this.location = new LocationEntity(c.getLocation());
+    }
 }
