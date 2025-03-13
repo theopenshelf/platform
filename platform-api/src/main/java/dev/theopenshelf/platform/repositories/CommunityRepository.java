@@ -1,4 +1,4 @@
-package dev.theopenshelf.platform.respositories;
+package dev.theopenshelf.platform.repositories;
 
 import java.util.UUID;
 

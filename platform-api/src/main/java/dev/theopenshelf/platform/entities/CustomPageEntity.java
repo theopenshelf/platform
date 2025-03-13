@@ -3,7 +3,6 @@ package dev.theopenshelf.platform.entities;
 import java.util.UUID;
 
 import dev.theopenshelf.platform.model.CustomPage;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,24 +22,41 @@ import lombok.NoArgsConstructor;
 public class CustomPageEntity {
     @Id
     private UUID id;
-    private String ref;
-    @Column(name = "display_order")
-    private Integer displayOrder;
-    private String title;
-    private String content;
+
     private UUID communityId;
+    private String content;
+    private Integer displayOrder;
 
     @Enumerated(EnumType.STRING)
-    private PagePosition position;
+    private Position position;
 
-    public CustomPage.CustomPageBuilder toCustomPage() {
-        return CustomPage.builder()
-                .id(id.toString())
+    private String ref;
+    private String title;
+
+    public enum Position {
+        FOOTER_LINKS,
+        COPYRIGHT,
+        FOOTER_HELP,
+        COMMUNITY
+    }
+
+    public CustomPage toCustomPage() {
+        return new CustomPage()
+                .id(id != null ? id.toString() : null)
                 .ref(ref)
-                .order(displayOrder)
-                .position(CustomPage.PositionEnum.valueOf(position.name()))
                 .title(title)
                 .content(content)
-                .communityId(communityId);
+                .position(position != null ? CustomPage.PositionEnum.valueOf(position.name()) : null);
+    }
+
+    public static CustomPageEntity fromCustomPage(CustomPage customPage) {
+        return CustomPageEntity.builder()
+                .id(customPage.getId() != null ? UUID.fromString(customPage.getId()) : UUID.randomUUID())
+                .ref(customPage.getRef())
+                .title(customPage.getTitle())
+                .content(customPage.getContent())
+                .position(customPage.getPosition() != null ? Position.valueOf(customPage.getPosition().name()) : null)
+                .displayOrder(customPage.getOrder())
+                .build();
     }
 }

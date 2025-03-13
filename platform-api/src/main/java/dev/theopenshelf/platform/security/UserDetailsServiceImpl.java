@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.UserEntity;
-import dev.theopenshelf.platform.respositories.UsersRepository;
+import dev.theopenshelf.platform.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 

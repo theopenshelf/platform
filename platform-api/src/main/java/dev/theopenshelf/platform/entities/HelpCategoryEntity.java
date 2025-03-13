@@ -39,4 +39,19 @@ public class HelpCategoryEntity {
                 .icon(icon)
                 .order(displayOrder);
     }
+
+    public static HelpCategoryEntity fromHelpCategory(HelpCategory category) {
+        return HelpCategoryEntity.builder()
+                .id(category.getId() != null ? UUID.fromString(category.getId()) : UUID.randomUUID())
+                .name(category.getName())
+                .icon(category.getIcon())
+                .displayOrder(category.getOrder())
+                .build();
+    }
+
+    public void updateFromHelpCategory(HelpCategory category) {
+        this.name = category.getName();
+        this.icon = category.getIcon();
+        this.displayOrder = category.getOrder();
+    }
 }

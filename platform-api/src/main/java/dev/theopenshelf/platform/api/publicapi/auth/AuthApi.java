@@ -1,4 +1,4 @@
-package dev.theopenshelf.platform.api.publicapi;
+package dev.theopenshelf.platform.api.publicapi.auth;
 
 import java.util.Date;
 import java.util.Map;
@@ -30,7 +30,7 @@ import dev.theopenshelf.platform.model.ResetPasswordRequest;
 import dev.theopenshelf.platform.model.SignUpRequest;
 import dev.theopenshelf.platform.model.User;
 import dev.theopenshelf.platform.model.VerifyEmail200Response;
-import dev.theopenshelf.platform.respositories.UsersRepository;
+import dev.theopenshelf.platform.repositories.UsersRepository;
 import dev.theopenshelf.platform.services.JwtService;
 import dev.theopenshelf.platform.services.MailService;
 import lombok.RequiredArgsConstructor;
