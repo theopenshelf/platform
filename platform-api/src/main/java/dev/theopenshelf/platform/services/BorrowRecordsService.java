@@ -1,10 +1,11 @@
 package dev.theopenshelf.platform.services;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
 import dev.theopenshelf.platform.model.BorrowRecordStandalone;
@@ -14,6 +15,7 @@ import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
 import reactor.core.publisher.Mono;
 
 @Service
+@Transactional(readOnly = true)
 public class BorrowRecordsService {
     private final BorrowRecordRepository borrowRecordRepository;
 
@@ -21,6 +23,7 @@ public class BorrowRecordsService {
         this.borrowRecordRepository = borrowRecordRepository;
     }
 
+    @Transactional(readOnly = true)
     public Mono<PaginatedBorrowRecordsResponse> getBorrowRecords(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
@@ -39,9 +42,14 @@ public class BorrowRecordsService {
             int validPage = Math.max(1, page != null ? page : 1);
             int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
 
-            List<BorrowRecordEntity> records = StreamSupport
-                    .stream(borrowRecordRepository.findAll().spliterator(), false)
-                    .collect(Collectors.toList());
+            List<BorrowRecordEntity> records;
+            if (borrowedBy != null) {
+                records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
+            } else if (itemId != null) {
+                records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
+            } else {
+                records = borrowRecordRepository.findAllWithItem();
+            }
 
             // Apply filters
             if (borrowedByCurrentUser != null && borrowedByCurrentUser) {
@@ -80,6 +88,7 @@ public class BorrowRecordsService {
         });
     }
 
+    @Transactional(readOnly = true)
     public Mono<BorrowRecordsCountByStatus> getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
@@ -87,9 +96,35 @@ public class BorrowRecordsService {
             List<String> status) {
 
         return Mono.fromCallable(() -> {
-            List<BorrowRecordEntity> records = StreamSupport
-                    .stream(borrowRecordRepository.findAll().spliterator(), false)
-                    .collect(Collectors.toList());
+            List<BorrowRecordEntity> records;
+
+            // Handle borrowedByCurrentUser flag
+
+            if (libraryIds != null && !libraryIds.isEmpty()) {
+                List<UUID> libraryUuids = libraryIds.stream()
+                        .map(UUID::fromString)
+                        .collect(Collectors.toList());
+
+                if (borrowedBy != null) {
+                    records = borrowRecordRepository.findByBorrowedByAndLibraryIdsWithItem(borrowedBy,
+                            libraryUuids);
+                } else {
+                    records = borrowRecordRepository.findByLibraryIdsWithItem(libraryUuids);
+                }
+            } else if (borrowedBy != null) {
+                records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
+            } else if (itemId != null) {
+                records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
+            } else {
+                records = borrowRecordRepository.findAllWithItem();
+            }
+
+            // Apply status filter if needed
+            if (status != null && !status.isEmpty()) {
+                records = records.stream()
+                        .filter(record -> status.contains(record.getStatus().name()))
+                        .collect(Collectors.toList());
+            }
 
             BorrowRecordsCountByStatus countByStatus = new BorrowRecordsCountByStatus();
             records.forEach(record -> updateStatusCount(countByStatus, record));
@@ -138,7 +173,7 @@ public class BorrowRecordsService {
                 .endDate(record.getEndDate())
                 .reservationDate(record.getReservationDate())
                 .effectiveReturnDate(record.getEffectiveReturnDate())
-                .item(record.getItem().toItem().build())
+                .item(record.getItem().toItem(false).build())
                 .build();
     }
 

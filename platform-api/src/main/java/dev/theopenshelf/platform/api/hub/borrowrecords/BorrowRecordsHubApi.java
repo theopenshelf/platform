@@ -1,6 +1,7 @@
 package dev.theopenshelf.platform.api.hub.borrowrecords;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -60,12 +61,15 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
             List<String> status,
             ServerWebExchange exchange) {
 
-        return borrowRecordsService.getBorrowRecordsCountByStatus(
-                borrowedByCurrentUser,
-                borrowedBy,
-                itemId,
-                libraryIds,
-                status)
-                .map(ResponseEntity::ok);
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> borrowRecordsService.getBorrowRecordsCountByStatus(
+                    borrowedByCurrentUser,
+                    borrowedByCurrentUser != null && borrowedByCurrentUser ? currentUserId.toString() : borrowedBy,
+                    itemId,
+                    libraryIds,
+                    status)
+                    .map(ResponseEntity::ok)
+                );
     }
 }

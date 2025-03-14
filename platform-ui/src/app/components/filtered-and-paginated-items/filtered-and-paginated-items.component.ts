@@ -91,11 +91,11 @@ export class FilteredAndPaginatedItemsComponent {
   getBorrowRecords(item: UIItem): UIBorrowRecord[] {
     return (
       item
-        ?.borrowRecords.filter(
+        ?.borrowRecords?.filter(
           (record) =>
             record.endDate >= new Date() &&
             record.borrowedBy === this.currentUser.user.id,
-        ) || []
+        ) ?? []
     );
   }
 

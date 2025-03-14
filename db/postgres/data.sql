@@ -185,3 +185,37 @@ INSERT INTO borrow_records (id, item_id, borrowed_by, reservation_date, start_da
 ('eeeeeeee-ffff-1111-0000-000000000002', 'eeeeeeee-ffff-1111-2222-333333333333', '22222222-2222-2222-2222-222222222222', '2025-01-09', '2025-06-12', '2025-06-17', '2025-06-12', NULL, 'RESERVED_CONFIRMED'),
 ('ffffffff-1111-2222-0000-000000000001', 'ffffffff-1111-2222-3333-444444444444', '22222222-2222-2222-2222-222222222222', '2023-12-25', '2024-01-09', '2024-01-11', '2024-01-09', '2024-01-11', 'RETURNED_ON_TIME'),
 ('ffffffff-1111-2222-0000-000000000002', 'ffffffff-1111-2222-3333-444444444444', '55555555-5555-5555-5555-555555555555', '2024-12-25', '2025-01-06', '2025-01-13', '2025-01-07', '2025-01-14', 'RETURNED_LATE'); 
+
+
+-- Categories
+INSERT INTO categories (id, name, icon, color, template) VALUES
+('11111111-1111-1111-1111-111111111115', 'Books', '@tui.book', '#4CAF50', NULL),
+('22222222-2222-2222-2222-222222222225', 'Tools', '@tui.drill', '#FF9800', NULL),
+('33333333-3333-3333-3333-333333333335', 'Electronics', '@tui.smartphone', '#2196F3', NULL),
+('44444444-4444-4444-4444-444444444445', 'Sports', '@tui.activity', '#E91E63', NULL),
+('55555555-5555-5555-5555-555555555555', 'Kitchen', '@tui.coffee', '#795548', NULL),
+('66666666-6666-6666-6666-666666666665', 'Games', '@tui.gamepad-2', '#9C27B0', NULL),
+('77777777-7777-7777-7777-777777777775', 'Garden', '@tui.flower', '#8BC34A', NULL),
+('88888888-8888-8888-8888-888888888885', 'Music', '@tui.music', '#3F51B5', NULL),
+('99999999-9999-9999-9999-999999999995', 'Art', '@tui.palette', '#FF5722', NULL);
+
+-- Update items with categories
+UPDATE items SET category_id = '11111111-1111-1111-1111-111111111115' WHERE name IN ('The Four Agreements', 'Ulysses');
+UPDATE items SET category_id = '22222222-2222-2222-2222-222222222225' WHERE name LIKE '%Tool%' OR name LIKE '%Metal%' OR name LIKE '%Steel%';
+UPDATE items SET category_id = '33333333-3333-3333-3333-333333333335' WHERE name LIKE '%Computer%' OR name LIKE '%Keyboard%' OR name LIKE '%Electronic%' OR name LIKE '%Vacuum%';
+UPDATE items SET category_id = '44444444-4444-4444-4444-444444444445' WHERE name LIKE '%Ball%' OR name LIKE '%Sport%';
+UPDATE items SET category_id = '55555555-5555-5555-5555-555555555555' WHERE name LIKE '%Kitchen%' OR name LIKE '%Food%' OR name LIKE '%Cook%' OR name LIKE '%Salad%' OR name LIKE '%Sausages%' OR name LIKE '%Pizza%';
+UPDATE items SET category_id = '66666666-6666-6666-6666-666666666665' WHERE name LIKE '%Game%' OR name LIKE '%Play%';
+UPDATE items SET category_id = '77777777-7777-7777-7777-777777777775' WHERE name LIKE '%Garden%' OR name LIKE '%Plant%' OR name LIKE '%Outdoor%';
+UPDATE items SET category_id = '88888888-8888-8888-8888-888888888885' WHERE name LIKE '%Music%' OR name LIKE '%Audio%' OR name LIKE '%Sound%';
+UPDATE items SET category_id = '99999999-9999-9999-9999-999999999995' WHERE name LIKE '%Art%' OR name LIKE '%Paint%' OR name LIKE '%Draw%';
+
+-- Catch remaining uncategorized items with sensible defaults
+UPDATE items SET category_id = '55555555-5555-5555-5555-555555555555' WHERE name LIKE '%Cheese%' OR name LIKE '%Bacon%';
+UPDATE items SET category_id = '22222222-2222-2222-2222-222222222225' WHERE name LIKE '%Concrete%' OR name LIKE '%Plastic%' OR name LIKE '%Granite%';
+UPDATE items SET category_id = '33333333-3333-3333-3333-333333333335' WHERE name LIKE '%Mouse%';
+UPDATE items SET category_id = '55555555-5555-5555-5555-555555555555' WHERE name LIKE '%Chicken%';
+UPDATE items SET category_id = '99999999-9999-9999-9999-999999999995' WHERE name LIKE '%Bikini%';
+
+-- Set default category for any remaining items
+UPDATE items SET category_id = '22222222-2222-2222-2222-222222222225' WHERE category_id IS NULL;

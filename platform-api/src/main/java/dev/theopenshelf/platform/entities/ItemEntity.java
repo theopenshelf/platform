@@ -57,6 +57,10 @@ public class ItemEntity {
     private List<BorrowRecordEntity> borrowRecords;
 
     public Item.ItemBuilder toItem() {
+        return this.toItem(true);
+    }
+
+    public Item.ItemBuilder toItem(boolean withBorrowRecords) {
         try {
             return Item.builder()
                     .id(this.id != null ? this.id : UUID.randomUUID())
@@ -70,7 +74,7 @@ public class ItemEntity {
                     .createdAt(this.createdAt != null ? OffsetDateTime.ofInstant(this.createdAt, ZoneOffset.UTC)
                             : OffsetDateTime.now())
                     .borrowCount(this.borrowCount != null ? this.borrowCount : 0)
-                    .borrowRecords(this.borrowRecords != null ? this.borrowRecords.stream()
+                    .borrowRecords(withBorrowRecords && this.borrowRecords != null ? this.borrowRecords.stream()
                             .map(record -> record.toBorrowRecord().build())
                             .toList() : List.of())
                     .favorite(this.favorite);

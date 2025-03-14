@@ -91,6 +91,16 @@ export class APIItemsService implements ItemsService {
                 shortDescription: item.shortDescription,
                 category: item.category,
                 libraryId: item.libraryId,
+                borrowRecords: item.borrowRecords.map(record => ({
+                  ...record,
+                  startDate: record.startDate ? new Date(record.startDate) : undefined,
+                  endDate: record.endDate ? new Date(record.endDate) : undefined,
+                  reservationDate: record.reservationDate ? new Date(record.reservationDate) : undefined,
+                  effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : undefined,
+                  pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+                })) as UIBorrowRecord[],
+                favorite: item.favorite,
+                borrowCount: item.borrowCount,
                 createdAt: item.createdAt
                   ? new Date(item.createdAt)
                   : undefined,
@@ -211,6 +221,8 @@ export class APIItemsService implements ItemsService {
                   shortDescription: record.item.shortDescription,
                   category: record.item.category,
                   libraryId: record.item.libraryId,
+                  favorite: record.item.favorite,
+                  borrowCount: record.item.borrowCount,
                   createdAt: record.item.createdAt
                     ? new Date(record.item.createdAt)
                     : undefined,
@@ -234,6 +246,9 @@ export class APIItemsService implements ItemsService {
             description: item.description,
             shortDescription: item.shortDescription,
             category: item.category,
+            libraryId: item.libraryId,
+            favorite: item.favorite,
+            borrowCount: item.borrowCount,
             createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
           }) as UIItem,
       ),

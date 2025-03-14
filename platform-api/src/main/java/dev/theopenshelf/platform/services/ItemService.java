@@ -93,16 +93,7 @@ public class ItemService {
             // Create response with null checks
             PaginatedItemsResponse response = new PaginatedItemsResponse();
             response.setItems(itemPage.getContent().stream()
-                    .map(item -> {
-                        if (item == null)
-                            return null;
-                        Item.ItemBuilder builder = item.toItem();
-                        if (builder == null)
-                            return null;
-                        Item built = builder.build();
-                        return built != null ? built : Item.builder().build(); // Return empty item if build fails
-                    })
-                    .filter(item -> item != null) // Filter out any nulls
+                    .map(item -> item.toItem().build())
                     .toList());
             response.setTotalItems((int) itemPage.getTotalElements());
             response.setCurrentPage(validPage);
