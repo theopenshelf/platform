@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommunitiesHubApiService, Community, CommunityMember, CustomPage, CustomPagesHubApiService, PaginatedMembersResponse } from '../../../../api-client';
+import { CommunitiesHubApiService, Community, CommunityMember, CustomPage, CustomPagesHubApiService, PaginatedCommunityMembersResponse } from '../../../../api-client';
 import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
 import { UICommunitiesPagination } from '../../../../models/UICommunitiesPagination';
@@ -20,16 +20,16 @@ export class ApiCommunitiesService implements CommunitiesService {
         private usersService: APIUsersService) { }
 
     getCommunities(getCommunitiesParams: GetCommunitiesParams): Observable<UICommunitiesPagination> {
-        return this.communitiesApiService.getCommunities(getCommunitiesParams.searchText, getCommunitiesParams.location, getCommunitiesParams.distance, 
+        return this.communitiesApiService.getCommunities(getCommunitiesParams.searchText, getCommunitiesParams.location, getCommunitiesParams.distance,
             getCommunitiesParams.requiresApproval, getCommunitiesParams.isMember).pipe(
-            map((response) => ({
-                totalPages: response.totalPages,
-                totalItems: response.totalItems,
-                currentPage: response.currentPage,
-                itemsPerPage: response.itemsPerPage,
-                items: response.communities.map((community) => this.mapToUICommunity(community))
-            }))
-        );
+                map((response) => ({
+                    totalPages: response.totalPages,
+                    totalItems: response.totalItems,
+                    currentPage: response.currentPage,
+                    itemsPerPage: response.itemsPerPage,
+                    items: response.communities.map((community) => this.mapToUICommunity(community))
+                }))
+            );
     }
 
     getCommunity(id: string): Observable<UICommunity> {
@@ -58,7 +58,7 @@ export class ApiCommunitiesService implements CommunitiesService {
 
     getMembers(communityId: string, getFilteredAndPaginatedParams: GetFilteredAndPaginatedParams): Observable<UIMembersPagination> {
         return this.communitiesApiService.getCommunityMembers(communityId, getFilteredAndPaginatedParams.page, getFilteredAndPaginatedParams.pageSize).pipe(
-            map((members: PaginatedMembersResponse) => this.mapToUIMembersPagination(members))
+            map((members: PaginatedCommunityMembersResponse) => this.mapToUIMembersPagination(members))
         );
     }
 
@@ -159,7 +159,7 @@ export class ApiCommunitiesService implements CommunitiesService {
         };
     }
 
-    private mapToUIMembersPagination(members: PaginatedMembersResponse): UIMembersPagination {
+    private mapToUIMembersPagination(members: PaginatedCommunityMembersResponse): UIMembersPagination {
         return {
             items: members.items?.map((member) => this.mapToUIMember(member)) ?? [],
             totalItems: members.totalItems,

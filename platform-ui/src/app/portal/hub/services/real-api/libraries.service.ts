@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LibrariesHubApiService, Library, LibraryMember, PaginatedMembersResponse } from '../../../../api-client';
+import { LibrariesHubApiService, Library, LibraryMember, PaginatedLibraryMembersResponse } from '../../../../api-client';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
 import { UILibrary, UIMember, UIMembersPagination } from '../../../../models/UILibrary';
 import { LibrariesService } from '../libraries.service';
@@ -54,7 +54,7 @@ export class ApiLibrariesService implements LibrariesService {
 
     getMembers(libraryId: string, getFilteredAndPaginatedParams: GetFilteredAndPaginatedParams): Observable<UIMembersPagination> {
         return this.librariesApiService.getLibraryMembers(libraryId, getFilteredAndPaginatedParams.page, getFilteredAndPaginatedParams.pageSize).pipe(
-            map((members: PaginatedMembersResponse) => this.mapToUIMembersPagination(members))
+            map((members: PaginatedLibraryMembersResponse) => this.mapToUIMembersPagination(members))
         );
     }
 
@@ -112,7 +112,7 @@ export class ApiLibrariesService implements LibrariesService {
         };
     }
 
-    private mapToUIMembersPagination(members: PaginatedMembersResponse): UIMembersPagination {
+    private mapToUIMembersPagination(members: PaginatedLibraryMembersResponse): UIMembersPagination {
         return {
             items: members.items?.map((member) => this.mapToUIMember(member)) ?? [],
             totalItems: members.totalItems,
