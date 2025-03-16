@@ -10,7 +10,6 @@ import dev.theopenshelf.platform.entities.LibraryMemberEntity;
 import dev.theopenshelf.platform.entities.LocationEntity;
 import dev.theopenshelf.platform.model.Library;
 import dev.theopenshelf.platform.model.PaginatedLibraryMembersResponse;
-import dev.theopenshelf.platform.model.PaginatedMembersResponse;
 import dev.theopenshelf.platform.repositories.LibraryRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

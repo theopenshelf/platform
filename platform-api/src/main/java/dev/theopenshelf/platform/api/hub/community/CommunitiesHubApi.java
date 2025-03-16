@@ -13,7 +13,6 @@ import dev.theopenshelf.platform.model.CommunityMember;
 import dev.theopenshelf.platform.model.GetCommunities200Response;
 import dev.theopenshelf.platform.model.Location;
 import dev.theopenshelf.platform.model.PaginatedCommunityMembersResponse;
-import dev.theopenshelf.platform.model.PaginatedMembersResponse;
 import dev.theopenshelf.platform.services.CommunitiesService;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -99,9 +98,9 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
 
         @Override
         public Mono<ResponseEntity<PaginatedCommunityMembersResponse>> getCommunityMembers(UUID communityId,
-                                                                                           Integer page,
-                                                                                           Integer pageSize,
-                                                                                           ServerWebExchange exchange) {
+                        Integer page,
+                        Integer pageSize,
+                        ServerWebExchange exchange) {
                 return Mono.just(communitiesService.getCommunityMembers(communityId, page, pageSize))
                                 .map(ResponseEntity::ok);
         }

@@ -10,7 +10,6 @@ import org.springframework.web.server.ServerWebExchange;
 import dev.theopenshelf.platform.api.LibrariesHubApiApiDelegate;
 import dev.theopenshelf.platform.model.Library;
 import dev.theopenshelf.platform.model.PaginatedLibraryMembersResponse;
-import dev.theopenshelf.platform.model.PaginatedMembersResponse;
 import dev.theopenshelf.platform.services.LibrariesService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -63,7 +62,7 @@ public class LibrariesHubApi implements LibrariesHubApiApiDelegate {
 
     @Override
     public Mono<ResponseEntity<PaginatedLibraryMembersResponse>> getLibraryMembers(UUID libraryId, Integer page,
-                                                                                   Integer pageSize, ServerWebExchange exchange) {
+            Integer pageSize, ServerWebExchange exchange) {
         return librariesService.getLibraryMembers(libraryId, page != null ? page : 1, pageSize != null ? pageSize : 10)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
