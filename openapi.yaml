@@ -1828,7 +1828,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PaginatedMembersResponse"
+                $ref: "#/components/schemas/PaginatedLibraryMembersResponse"
     post:
       operationId: addMember
       summary: Add a member to a specific hub library by ID
@@ -2139,7 +2139,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PaginatedMembersResponse"
+                $ref: "#/components/schemas/PaginatedCommunityMembersResponse"
     post:
       operationId: addCommunityMember
       summary: Add a member to a specific community by ID
@@ -2512,43 +2512,14 @@ components:
           $ref: "#/components/schemas/BorrowStatus"
 
     BorrowRecordStandalone:
-      type: object
-      required:
-        - id
-        - borrowedBy
-        - startDate
-        - endDate
-        - reservationDate
-        - item
-      properties:
-        id:
-          type: string
-          format: uuid
-        borrowedBy:
-          type: string
-          example: "someone_else@example.com"
-        startDate:
-          type: string
-          format: date
-          example: "2023-11-15"
-        pickupDate:
-          type: string
-          format: date
-          example: "2023-11-15"
-        endDate:
-          type: string
-          format: date
-          example: "2023-11-22"
-        reservationDate:
-          type: string
-          format: date
-          example: "2023-11-15"
-        effectiveReturnDate:
-          type: string
-          format: date
-          example: "2023-11-22"
-        item:
-          $ref: "#/components/schemas/Item"
+      allOf:
+        - $ref: "#/components/schemas/BorrowRecord"
+        - type: object
+          properties:
+            item:
+              $ref: "#/components/schemas/Item"
+          required:
+            - item
 
     Category:
       type: object
@@ -2882,7 +2853,7 @@ components:
           items:
             $ref: "#/components/schemas/ItemStat"
 
-    PaginatedMembersResponse:
+    PaginatedLibraryMembersResponse:
       type: object
       required:
         - totalPages
@@ -2907,6 +2878,32 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/LibraryMember"
+
+    PaginatedCommunityMembersResponse:
+      type: object
+      required:
+        - totalPages
+        - totalItems
+        - currentPage
+        - usersPerPage
+        - users
+      properties:
+        totalPages:
+          type: integer
+          example: 10
+        totalItems:
+          type: integer
+          example: 100
+        currentPage:
+          type: integer
+          example: 1
+        itemsPerPage:
+          type: integer
+          example: 10
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/CommunityMember"
 
     HelpCategory:
       type: object

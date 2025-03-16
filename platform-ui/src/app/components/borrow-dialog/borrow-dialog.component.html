@@ -25,7 +25,7 @@
     <div class="select-user">
 
         <tui-combo-box
-            *tuiLet="searchUsers() | async as filtered"
+            *tuiLet="searchUsers$ | async as filtered"
             [formControl]="userSearchControl"
             [tuiTextfieldLabelOutside]="true"
             [valueContent]="value"

@@ -2,6 +2,8 @@ package dev.theopenshelf.platform.specifications;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -28,11 +30,17 @@ public class ItemSpecifications {
             }
 
             if (libraryIds != null && !libraryIds.isEmpty()) {
-                predicates.add(root.get("libraryId").in(libraryIds));
+                List<UUID> libraryUuids = libraryIds.stream()
+                        .map(UUID::fromString)
+                        .collect(Collectors.toList());
+                predicates.add(root.get("libraryId").in(libraryUuids));
             }
 
             if (communityIds != null && !communityIds.isEmpty()) {
-                predicates.add(root.get("communityId").in(communityIds));
+                List<UUID> communityUuids = communityIds.stream()
+                        .map(UUID::fromString)
+                        .collect(Collectors.toList());
+                predicates.add(root.get("communityId").in(communityUuids));
             }
 
             if (categories != null && !categories.isEmpty()) {

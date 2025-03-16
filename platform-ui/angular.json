@@ -117,6 +117,8 @@
               "proxyConfig": "proxy.conf.json"
             },
             "mock-test": {
+              "host": "local.oshelf.org",
+              "port": 4200,
               "buildTarget": "platform-ui:build:mock-test"
             }
           },

@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { Component, ContentChild, Inject, input, OnInit, TemplateRef } from '@angular/core';
+import { ChangeDetectorRef, Component, ContentChild, Inject, input, OnInit, TemplateRef } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -202,6 +202,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {
     this.currentUser = this.authService.getCurrentUserInfo()
     this.sortingSelected.valueChanges.subscribe((value) => {
@@ -526,6 +527,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
       }
     ).subscribe((itemsPagination) => {
       this.updatePagination(itemsPagination);
+      this.cdr.detectChanges();
     });
   }
 

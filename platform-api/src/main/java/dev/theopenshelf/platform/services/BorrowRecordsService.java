@@ -24,7 +24,7 @@ public class BorrowRecordsService {
     }
 
     @Transactional(readOnly = true)
-    public Mono<PaginatedBorrowRecordsResponse> getBorrowRecords(Boolean borrowedByCurrentUser,
+    public PaginatedBorrowRecordsResponse getBorrowRecords(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             String sortBy,
@@ -37,55 +37,61 @@ public class BorrowRecordsService {
             List<String> status,
             Boolean favorite) {
 
-        return Mono.fromCallable(() -> {
-            // Validate and normalize pagination parameters
-            int validPage = Math.max(1, page != null ? page : 1);
-            int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
+        // Get initial records
+        List<BorrowRecordEntity> records;
+        if (libraryIds != null && !libraryIds.isEmpty()) {
+            List<UUID> libraryUuids = libraryIds.stream()
+                    .map(UUID::fromString)
+                    .collect(Collectors.toList());
+            records = borrowRecordRepository.findByLibraryIdsWithItem(libraryUuids);
+        } else if (borrowedBy != null) {
+            records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
+        } else if (itemId != null) {
+            records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
+        } else {
+            records = borrowRecordRepository.findAllWithItem();
+        }
 
-            List<BorrowRecordEntity> records;
-            if (borrowedBy != null) {
-                records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
-            } else if (itemId != null) {
-                records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
-            } else {
-                records = borrowRecordRepository.findAllWithItem();
-            }
+        // Apply filters
+        records = records.stream()
+                .filter(record -> categories == null || categories.isEmpty() ||
+                        (record.getItem().getCategory() != null &&
+                                categories.contains(record.getItem().getCategory().getId().toString())))
+                .filter(record -> searchText == null || searchText.isEmpty() ||
+                        record.getItem().getName().toLowerCase().contains(searchText.toLowerCase()))
+                .filter(record -> status == null || status.isEmpty() ||
+                        status.contains(record.getStatus().name()))
+                .filter(record -> favorite == null ||
+                        !favorite || record.getItem().isFavorite())
+                .collect(Collectors.toList());
 
-            // Apply filters
-            if (borrowedByCurrentUser != null && borrowedByCurrentUser) {
-                records = filterByBorrowedBy(records, borrowedBy);
-            }
-            if (borrowedBy != null) {
-                records = filterByBorrowedBy(records, borrowedBy);
-            }
-            if (itemId != null) {
-                records = filterByItemId(records, itemId);
-            }
+        // Validate and normalize pagination parameters
+        int validPage = Math.max(1, page != null ? page : 1);
+        int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
 
-            // Apply sorting
-            if (sortBy != null) {
-                records = sortRecords(records, sortBy, sortOrder);
-            }
+        // Apply sorting
+        if (sortBy != null) {
+            records = sortRecords(records, sortBy, sortOrder);
+        }
 
-            // Apply pagination
-            PaginatedBorrowRecordsResponse response = new PaginatedBorrowRecordsResponse();
-            response.setTotalItems(records.size());
-            response.setCurrentPage(validPage);
-            response.setRecordsPerPage(validPageSize);
-            response.setTotalPages((int) Math.ceil((double) records.size() / validPageSize));
+        // Apply pagination
+        PaginatedBorrowRecordsResponse response = new PaginatedBorrowRecordsResponse();
+        response.setTotalItems(records.size());
+        response.setCurrentPage(validPage);
+        response.setRecordsPerPage(validPageSize);
+        response.setTotalPages((int) Math.ceil((double) records.size() / validPageSize));
 
-            int start = (validPage - 1) * validPageSize;
-            int end = Math.min(start + validPageSize, records.size());
+        int start = (validPage - 1) * validPageSize;
+        int end = Math.min(start + validPageSize, records.size());
 
-            // Ensure start index is not negative
-            start = Math.max(0, start);
+        // Ensure start index is not negative
+        start = Math.max(0, start);
 
-            response.setRecords(records.subList(start, end).stream()
-                    .map(this::convertToStandalone)
-                    .collect(Collectors.toList()));
+        response.setRecords(records.subList(start, end).stream()
+                .map(this::convertToStandalone)
+                .collect(Collectors.toList()));
 
-            return response;
-        });
+        return response;
     }
 
     @Transactional(readOnly = true)
@@ -173,6 +179,7 @@ public class BorrowRecordsService {
                 .endDate(record.getEndDate())
                 .reservationDate(record.getReservationDate())
                 .effectiveReturnDate(record.getEffectiveReturnDate())
+                .status(record.getStatus())
                 .item(record.getItem().toItem(false).build())
                 .build();
     }

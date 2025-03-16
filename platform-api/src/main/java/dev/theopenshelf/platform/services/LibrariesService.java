@@ -9,6 +9,7 @@ import dev.theopenshelf.platform.entities.LibraryEntity;
 import dev.theopenshelf.platform.entities.LibraryMemberEntity;
 import dev.theopenshelf.platform.entities.LocationEntity;
 import dev.theopenshelf.platform.model.Library;
+import dev.theopenshelf.platform.model.PaginatedLibraryMembersResponse;
 import dev.theopenshelf.platform.model.PaginatedMembersResponse;
 import dev.theopenshelf.platform.repositories.LibraryRepository;
 import reactor.core.publisher.Flux;
@@ -74,7 +75,7 @@ public class LibrariesService {
                 .then();
     }
 
-    public Mono<PaginatedMembersResponse> getLibraryMembers(UUID libraryId, Integer page, Integer pageSize) {
+    public Mono<PaginatedLibraryMembersResponse> getLibraryMembers(UUID libraryId, Integer page, Integer pageSize) {
         return Mono.justOrEmpty(libraryRepository.findById(libraryId))
                 .map(library -> {
                     List<LibraryMemberEntity> members = library.getMembers();
@@ -82,7 +83,7 @@ public class LibrariesService {
                     int end = Math.min(start + pageSize, members.size());
                     List<LibraryMemberEntity> paginatedMembers = members.subList(start, end);
 
-                    PaginatedMembersResponse response = new PaginatedMembersResponse();
+                    PaginatedLibraryMembersResponse response = new PaginatedLibraryMembersResponse();
                     response.setItems(paginatedMembers.stream()
                             .map(member -> member.toLibraryMember().build())
                             .toList());

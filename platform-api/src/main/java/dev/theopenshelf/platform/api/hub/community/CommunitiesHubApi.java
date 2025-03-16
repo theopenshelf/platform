@@ -9,8 +9,11 @@ import org.springframework.web.server.ServerWebExchange;
 
 import dev.theopenshelf.platform.api.CommunitiesHubApiApiDelegate;
 import dev.theopenshelf.platform.model.Community;
+import dev.theopenshelf.platform.model.CommunityMember;
 import dev.theopenshelf.platform.model.GetCommunities200Response;
 import dev.theopenshelf.platform.model.Location;
+import dev.theopenshelf.platform.model.PaginatedCommunityMembersResponse;
+import dev.theopenshelf.platform.model.PaginatedMembersResponse;
 import dev.theopenshelf.platform.services.CommunitiesService;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -41,7 +44,7 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
 
                 return exchange.getPrincipal()
                                 .map(principal -> UUID.fromString(principal.getName()))
-                                .flatMap(currentUserId -> communitiesService.getCommunities(
+                                .map(currentUserId -> communitiesService.getCommunities(
                                                 searchText,
                                                 location,
                                                 distance,
@@ -74,6 +77,43 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
 
                 return community
                                 .flatMap(c -> communitiesService.updateCommunity(communityId, c))
+                                .map(ResponseEntity::ok);
+        }
+
+        @Override
+        public Mono<ResponseEntity<CommunityMember>> addCommunityMember(UUID communityId,
+                        Mono<CommunityMember> communityMember,
+                        ServerWebExchange exchange) {
+                return communityMember
+                                .flatMap(member -> communitiesService.addCommunityMember(communityId, member))
+                                .map(ResponseEntity::ok);
+        }
+
+        @Override
+        public Mono<ResponseEntity<Void>> deleteCommunityMember(UUID communityId,
+                        UUID userId,
+                        ServerWebExchange exchange) {
+                return communitiesService.deleteCommunityMember(communityId, userId)
+                                .then(Mono.just(ResponseEntity.noContent().build()));
+        }
+
+        @Override
+        public Mono<ResponseEntity<PaginatedCommunityMembersResponse>> getCommunityMembers(UUID communityId,
+                                                                                           Integer page,
+                                                                                           Integer pageSize,
+                                                                                           ServerWebExchange exchange) {
+                return Mono.just(communitiesService.getCommunityMembers(communityId, page, pageSize))
+                                .map(ResponseEntity::ok);
+        }
+
+        @Override
+        public Mono<ResponseEntity<CommunityMember>> updateCommunityMember(UUID communityId,
+                        UUID userId,
+                        Mono<CommunityMember> communityMember,
+                        ServerWebExchange exchange) {
+                return communityMember
+                                .flatMap(member -> communitiesService.updateCommunityMember(communityId, userId,
+                                                member))
                                 .map(ResponseEntity::ok);
         }
 }

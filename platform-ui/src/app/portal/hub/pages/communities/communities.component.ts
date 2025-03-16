@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Inject, OnInit, signal } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -20,7 +20,8 @@ import * as L from 'leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider.js';
 import { SearchResult } from 'leaflet-geosearch/dist/providers/provider.js';
-import { debounceTime } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
@@ -88,20 +89,33 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
   selectedLocation: SearchResult<RawResult> | undefined;
   showLocationLoader: boolean = false;
 
+  private destroy$ = new Subject<void>();
+
+  private communitiesSubject = new BehaviorSubject<any[]>([]);
+  communities$ = this.communitiesSubject.asObservable();
+
   constructor(
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
     private breadcrumbService: BreadcrumbService,
-    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService
-  ) {
+    @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
+    private cdr: ChangeDetectorRef
+  ) { }
+
+  ngOnInit(): void {
     this.refreshCommunities();
     this.breadcrumbService.setBreadcrumbs([
       { caption: 'breadcrumb.communities', routerLink: '/hub/communities' }
     ]);
+
     this.searchLocationControl.valueChanges
-      .pipe(debounceTime(1000))
+      .pipe(
+        debounceTime(1000),
+        takeUntil(this.destroy$)
+      )
       .subscribe(value => {
         if (value !== null) {
           this.updateLocationSuggestions(value);
+          this.cdr.detectChanges();
         }
       });
   }
@@ -134,9 +148,11 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     this.provider.search({ query }).then((results: SearchResult<RawResult>[]) => {
       this.locationSuggestions.set(results);
       this.showLocationLoader = false;
+      this.cdr.detectChanges();
     }).catch((error: any) => {
       this.locationSuggestions.set([]);
       this.showLocationLoader = false;
+      this.cdr.detectChanges();
     });
   }
 
@@ -151,10 +167,6 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     this.distanceControl.patchValue(newValue);
     this.getCommunitiesParams.distance = newValue;
     this.refreshCommunities();
-  }
-
-  ngOnInit(): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   ngAfterViewInit(): void {
@@ -174,6 +186,7 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     this.currentPage = communitiesPagination.currentPage;
     this.itemsPerPage = communitiesPagination.itemsPerPage;
     this.communities = communitiesPagination.items;
+    this.cdr.detectChanges();
   }
 
   // Public methods
@@ -185,10 +198,16 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
   }
 
   refreshCommunities() {
-    this.communitiesService.getCommunities(this.getCommunitiesParams).subscribe((communities) => {
-      this.updatePagination(communities);
-      this.clearMarkers();
-      this.updateMarkers();
+    this.communitiesService.getCommunities(this.getCommunitiesParams).subscribe({
+      next: (response) => {
+        this.updatePagination(response);
+        this.clearMarkers();
+        this.updateMarkers();
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        this.cdr.detectChanges();
+      }
     });
   }
 
@@ -228,8 +247,12 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
       // Create a feature group and add markers to it
       const featureGroup = L.featureGroup(markers).addTo(this.map);
 
-      // Fit the map to the bounds of the feature group
-      this.map.fitBounds(featureGroup.getBounds());
+      if (featureGroup.getLayers().length > 0) {
+        this.map.fitBounds(featureGroup.getBounds());
+      } else {
+        // Set default view (adjust coordinates and zoom level as needed)
+        this.map.setView([0, 0], 2);
+      }
     }
   }
 
@@ -279,12 +302,22 @@ export class CommunitiesComponent implements OnInit, AfterViewInit {
     const featureGroup = L.featureGroup(markers).addTo(this.map);
 
     // Fit the map to the bounds of the feature group
-    this.map.fitBounds(featureGroup.getBounds());
+    if (featureGroup.getLayers().length > 0) {
+      this.map.fitBounds(featureGroup.getBounds());
+    } else {
+      // Set default view (adjust coordinates and zoom level as needed)
+      this.map.setView([0, 0], 2);
+    }
   }
 
   protected openDropdownLocation = false;
 
   protected closeDropdownLocation(): void {
     this.openDropdownLocation = false;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

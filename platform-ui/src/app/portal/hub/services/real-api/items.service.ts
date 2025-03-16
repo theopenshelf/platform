@@ -304,7 +304,7 @@ export class APIItemsService implements ItemsService {
     borrowBy: UIUser,
   ): Observable<UIItem> {
     return this.itemsApiService
-      .borrowItem(item.id, { borrowBy: borrowBy.email, startDate, endDate })
+      .borrowItem(item.id, { borrowBy: borrowBy.id, startDate, endDate })
       .pipe(
         map((item: Item) => ({
           ...item,

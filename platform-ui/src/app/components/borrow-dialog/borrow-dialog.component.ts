@@ -11,7 +11,7 @@ import { TuiComboBoxModule, TuiInputDateRangeModule, TuiInputModule, TuiTextfiel
 import {
   injectContext
 } from '@taiga-ui/polymorpheus';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged, map, Observable, shareReplay, switchMap } from 'rxjs';
 import { UIUser } from '../../models/UIUser';
 import { BorrowItemCalendarComponent } from '../../portal/hub/components/borrow-item-calendar/borrow-item-calendar.component';
 import { hubProviders, USERS_SERVICE_TOKEN } from '../../portal/hub/hub.provider';
@@ -63,13 +63,13 @@ export class BorrowDialogComponent {
   public readonly userSearchControl = new FormControl();
   protected readonly CallToActionType = CallToActionType;
   protected selectedDate: TuiDayRange | null | undefined;
-  protected search: string | null = '';
 
   users: UIUser[] = [];
 
   private userMap: Map<string, UIUser> = new Map();
 
-  // Here you get options + content + id + observer
+  private searchSubject = new BehaviorSubject<string>('');
+
   constructor(private translate: TranslateService,
     @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
   ) {
@@ -106,6 +106,36 @@ export class BorrowDialogComponent {
       ),
     ]
     this.dateControl.setValue(new TuiDayRange(this.today, this.today));
+
+    // Set up the search observable in constructor or ngOnInit
+    this.searchUsers$ = this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged(),
+      switchMap(term => this.usersService.findUser(term)),
+      map(users => {
+        this.userMap.clear();
+        users.forEach(user => this.userMap.set(user.username, user));
+        return users;
+      }),
+      shareReplay(1)
+    );
+  }
+
+  // Create a property to hold the observable
+  searchUsers$ = new Observable<UIUser[]>();
+
+  // Update the search method to use the subject
+  public searchUsers(): Observable<UIUser[]> {
+    return this.searchUsers$;
+  }
+
+  // Handle search changes
+  set search(value: string | null) {
+    this.searchSubject.next(value || '');
+  }
+
+  get search(): string | null {
+    return this.searchSubject.getValue();
   }
 
   protected timelineItems(): TimelineItem[] {
@@ -234,16 +264,6 @@ export class BorrowDialogComponent {
     }
     return timelineItems;
   };
-
-  public searchUsers(): Observable<UIUser[]> {
-    return this.usersService.findUser(this.search ?? '').pipe(
-      map(users => {
-        this.userMap.clear(); // Clear the map before updating
-        users.forEach(user => this.userMap.set(user.username, user));
-        return users; // Return the list of users
-      })
-    );
-  }
 
   protected confirm(): void {
     if (this.userSearchControl.value) {

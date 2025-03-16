@@ -7,7 +7,6 @@ import { AddItemComponent } from './pages/add-item/add-item.component';
 import { ApprovalDashboardComponent } from './pages/approval-dashboard/approval-dashboard.component';
 import { BorrowedItemsComponent } from './pages/borroweditems/borroweditems.component';
 import { CommunitiesComponent } from './pages/communities/communities.component';
-import { CommunityComponent } from './pages/community/community.component';
 import { CustomPageComponent } from './pages/custom-page/custom-page.component';
 import { HelpCenterComponent } from './pages/help-center/help-center.component';
 import { ItemComponent } from './pages/item/item.component';
@@ -42,12 +41,13 @@ export const COMMUNITY_ROUTES: Routes = [
       { path: 'approval-dashboard', component: ApprovalDashboardComponent },
       { path: 'communities', component: CommunitiesComponent },
       { path: 'communities/add-community', component: AddCommunityComponent },
-      { path: 'communities/:id', component: CommunityComponent },
-      { path: 'communities/:id/libraries', component: CommunityComponent },
-      { path: 'communities/:id/members', component: CommunityComponent },
-      { path: 'communities/:id/pages', component: CommunityComponent },
-      { path: 'communities/:id/items', component: CommunityComponent },
-      { path: 'communities/:id/pages/:ref', component: CommunityComponent },
+      {
+        path: 'communities/:id',
+        loadChildren: () =>
+          import('./pages/community/community.routes').then(
+            (m) => m.communityRoutes,
+          ),
+      },
       {
         path: 'settings',
         loadChildren: () =>

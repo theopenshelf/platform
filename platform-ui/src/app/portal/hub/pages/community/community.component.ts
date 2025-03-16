@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
@@ -27,14 +27,10 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
-import { FilteredAndPaginatedItemsComponent } from '../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
-import { FilteredAndPaginatedMembersComponent } from '../../../../components/filtered-and-paginated-members/filtered-and-paginated-members.component';
 import { TosBreadcrumbsComponent } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
-import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UICommunity } from '../../../../models/UICommunity';
-import { UICustomPage } from '../../../../models/UICustomPage';
 import { UIUser } from '../../../../models/UIUser';
 import { AuthService, UserInfo } from '../../../../services/auth.service';
 import {
@@ -43,9 +39,8 @@ import {
 } from '../../hub.provider';
 import { CommunitiesService } from '../../services/communities.service';
 import { UsersService } from '../../services/users.service';
-import { CustomPageComponent } from '../custom-page/custom-page.component';
-import { CustomPagesEditComponent } from '../custom-pages-edit/custom-pages-edit.component';
-import { LibrariesComponent } from '../libraries/libraries/libraries.component';
+import { CommunityStateService } from './community.service';
+
 @Component({
   selector: 'app-community',
   imports: [
@@ -64,32 +59,24 @@ import { LibrariesComponent } from '../libraries/libraries/libraries.component';
     TuiSelectModule,
     TranslateModule,
     TosBreadcrumbsComponent,
-    FilteredAndPaginatedMembersComponent,
-    LibrariesComponent,
-    CustomPageComponent,
-    CustomPagesEditComponent,
     TuiTabs,
-    FilteredAndPaginatedItemsComponent
   ],
   templateUrl: './community.component.html',
   styleUrl: './community.component.scss',
 })
-export class CommunityComponent {
+export class CommunityComponent implements OnInit {
 
-  public getItemsParams: GetItemsParams | undefined;
 
   community: UICommunity | undefined;
   tabOpened: 'libraries' | 'members' | 'pages' | 'items' = 'pages';
   usersPerId: Map<string, UIUser> = new Map();
   userInfo: UserInfo | undefined;
-  isAdmin: boolean = false;
-  breadcrumbs: BreadcrumbItem[] = [];
-
-  selectedPage: UICustomPage | undefined;
-  pages: UICustomPage[] = [];
-  editMode: boolean = false;
+  breadcrumbs: BreadcrumbItem[] = []
   activeTabIndex: number = 0;
+  isAdmin: boolean = false;
+
   constructor(
+    private cdr: ChangeDetectorRef,
     @Inject(COMMUNITIES_SERVICE_TOKEN) private communitiesService: CommunitiesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
@@ -98,7 +85,8 @@ export class CommunityComponent {
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private communityState: CommunityStateService
   ) {
   }
 
@@ -108,17 +96,18 @@ export class CommunityComponent {
     const communityId = this.route.snapshot.paramMap.get('id');
     this.userService.getUsers().subscribe((users) => {
       this.usersPerId = new Map(users.map(user => [user.id, user]));
+      this.cdr.detectChanges();
     });
     this.userInfo = this.authService.getCurrentUserInfo();
     if (communityId) {
-      this.communitiesService.getCommunity(communityId).subscribe((community) => {
-        this.community = community;
-        this.isAdmin = true; //TODO
-        this.getItemsParams = {
-          communityIds: [communityId!],
-          borrowedByCurrentUser: !this.isAdmin
-        };
-      });
+      // Only fetch if community is not loaded or if it's a different community
+      if (!this.community || this.community.id !== communityId) {
+        this.communitiesService.getCommunity(communityId).subscribe((community) => {
+          this.community = community;
+          this.cdr.detectChanges();
+          this.communityState.setCommunity(community);
+        });
+      }
     }
 
     // Check the current route to set the tabOpened property
@@ -158,33 +147,14 @@ export class CommunityComponent {
       } else if (path.includes('pages') && urlSegments.length > 3) {
         this.tabOpened = 'pages';
         this.activeTabIndex = 0;
-        const pageRef = urlSegments[3].path;
-        this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
-          this.pages = pages;
-          this.selectPage(this.pages.find(page => page.ref === pageRef)!)
-          this.breadcrumbs.push({
-            caption: 'breadcrumb.pages',
-            routerLink: `/hub/communities/${this.community?.id}/pages/`
-          });
-
-          this.breadcrumbs.push({
-            name: this.selectedPage?.title,
-            routerLink: `/hub/communities/${this.community?.id}/pages/${pageRef}`
-          });
-        });
-      } else {
-        this.activeTabIndex = 0;
         this.breadcrumbs.push({
           caption: 'breadcrumb.pages',
           routerLink: `/hub/communities/${this.community?.id}/pages`
         });
         this.tabOpened = 'pages';
-        this.communitiesService.getCustomPages(this.community?.id!).subscribe((pages) => {
-          this.pages = pages;
-          this.selectPage(this.pages[0]);
-        });
       }
       this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
+      this.cdr.detectChanges();
     });
 
 
@@ -220,36 +190,6 @@ export class CommunityComponent {
       .subscribe();
   }
 
-  deletePage(page: UICustomPage): void {
-
-    const data: TuiConfirmData = {
-      content: this.translate.instant('community.confirmDeletePage', { pageTitle: page.title }),
-      yes: this.translate.instant('community.yesDelete'),
-      no: this.translate.instant('community.cancel'),
-    };
-
-    this.dialogs
-      .open<boolean>(TUI_CONFIRM, {
-        label: this.translate.instant('community.deletePageLabel', { pageTitle: page.title }),
-        size: 'm',
-        data,
-      })
-      .pipe(
-        switchMap((response) => {
-          if (response) {
-            this.communitiesService.deleteCustomPage(this.community?.id!, page.id).subscribe(() => {
-              this.alerts.open(this.translate.instant('community.deletePageSuccess', { pageTitle: page.title }), {
-                appearance: 'positive',
-              }).subscribe();
-              this.pages = this.pages.filter(p => p.id !== page.id);
-            });
-          }
-          return EMPTY;
-        }),
-      )
-      .subscribe();
-  }
-
   onTabChange(tab: 'libraries' | 'members' | 'pages' | 'items'): void {
     this.tabOpened = tab;
 
@@ -276,36 +216,4 @@ export class CommunityComponent {
     });
   }
 
-  selectPage(page: UICustomPage) {
-    this.selectedPage = page;
-    this.editMode = false;
-
-    var queryParams: any = {};
-
-    let path = `/hub/communities/${this.community?.id}`;
-    path += '/pages/' + page.ref;
-
-    this.router.navigate([path], {
-      queryParams: queryParams,
-      queryParamsHandling: 'merge'
-    });
-  }
-
-  editPage(page: UICustomPage) {
-    this.selectedPage = page;
-    this.editMode = true;
-  }
-
-  createPage() {
-    this.selectedPage = {
-      id: '',
-      communityId: this.community?.id!,
-      ref: '',
-      order: 100,
-      title: '',
-      content: '',
-      position: 'community',
-    };
-    this.editMode = true;
-  }
 }

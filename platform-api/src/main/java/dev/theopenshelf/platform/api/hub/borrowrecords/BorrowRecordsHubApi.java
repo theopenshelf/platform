@@ -37,19 +37,22 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
             Boolean favorite,
             ServerWebExchange exchange) {
 
-        return borrowRecordsService.getBorrowRecords(
-                borrowedByCurrentUser,
-                borrowedBy,
-                itemId,
-                sortBy,
-                sortOrder,
-                libraryIds,
-                categories,
-                searchText,
-                page != null ? page : 1,
-                pageSize != null ? pageSize : 10,
-                status,
-                favorite)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .map(currentUserId -> borrowRecordsService.getBorrowRecords(
+                    borrowedByCurrentUser,
+                    borrowedByCurrentUser != null && borrowedByCurrentUser ? currentUserId.toString() : borrowedBy,
+                    itemId,
+                    sortBy,
+                    sortOrder,
+                    libraryIds,
+                    categories,
+                    searchText,
+                    page != null ? page : 1,
+                    pageSize != null ? pageSize : 10,
+                    status,
+                    favorite
+                ))
                 .map(ResponseEntity::ok);
     }
 

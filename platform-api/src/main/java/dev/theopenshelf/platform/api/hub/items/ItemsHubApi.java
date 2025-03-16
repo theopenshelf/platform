@@ -68,7 +68,7 @@ public class ItemsHubApi implements ItemsHubApiApiDelegate {
                 .map(principal -> UUID.fromString(principal.getName()))
                 .flatMap(userId -> borrowItemRequestMono
                         .flatMap(request -> itemService.createBorrowRecord(itemId, userId, request)
-                                .map(record -> ResponseEntity.ok(record.getItem().toItem().build()))
+                                .map(record -> ResponseEntity.ok(record.getItem().toItem(false).build()))
                                 .defaultIfEmpty(ResponseEntity.notFound().build())));
     }
 

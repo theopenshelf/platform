@@ -20,7 +20,8 @@
     <div class="community-header-bottom">
 
       <div class="community-header-icon-container">
-        <div class="community-header-icon" [style.background-image]="community.picture ? 'url(' + community.picture + ')' : 'none'">
+        <div class="community-header-icon"
+          [style.background-image]="community.picture ? 'url(' + community.picture + ')' : 'none'">
           <tui-icon [style.visibility]="community.picture ? 'hidden' : 'visible'" icon="@tui.share-2" />
         </div>
       </div>
@@ -51,7 +52,7 @@
           <span><tui-icon icon="@tui.stamp" /> {{ 'community.doesNotRequireApproval' | translate }}</span>
           }
 
-      
+
         </div>
 
 
@@ -60,106 +61,21 @@
   </div>
 
 
-  <tui-tabs-with-more
-  class="community-tabs"
-  [itemsLimit]="3"
-  [underline]="false"
-
-  [activeItemIndex]="activeTabIndex"
->
-  <button
-      *tuiItem
-      iconStart="@tui.book-open-text"
-      tuiTab
-      type="button"
-      (click)="onTabChange('pages')"
-  >
-  {{ 'community.information' | translate }}
-</button>
-  <button
-      *tuiItem
-      iconStart="@tui.library"
-      tuiTab
-      type="button"
-      (click)="onTabChange('libraries')"
-  >
+  <tui-tabs-with-more class="community-tabs" [itemsLimit]="3" [underline]="false" [activeItemIndex]="activeTabIndex">
+    <button *tuiItem iconStart="@tui.book-open-text" tuiTab type="button" (click)="onTabChange('pages')">
+      {{ 'community.information' | translate }}
+    </button>
+    <button *tuiItem iconStart="@tui.library" tuiTab type="button" (click)="onTabChange('libraries')">
       {{ 'community.libraries' | translate }}
-  </button>
-  <button
-  *tuiItem
-  iconStart="@tui.package"
-  tuiTab
-  type="button"
-  (click)="onTabChange('items')"
->
-  {{ 'community.items' | translate }}
-</button>
-  <button
-      *tuiItem
-      iconStart="@tui.users"
-      tuiTab
-      type="button"
-      (click)="onTabChange('members')"
-  >
-  {{ 'community.members' | translate }}
-</button>
-  
-</tui-tabs-with-more>
+    </button>
+    <button *tuiItem iconStart="@tui.package" tuiTab type="button" (click)="onTabChange('items')">
+      {{ 'community.items' | translate }}
+    </button>
+    <button *tuiItem iconStart="@tui.users" tuiTab type="button" (click)="onTabChange('members')">
+      {{ 'community.members' | translate }}
+    </button>
 
+  </tui-tabs-with-more>
 
-  @if (tabOpened === 'pages') {   
-    <div class="community-pages">
-      <div class="sidebar-content">
-        <div class="sidebar-pages">
-          @for (page of pages; track page.id) {
-          <div class="sidebar-page" [class.active]="selectedPage?.ref === page.ref">
-            <div class="sidebar-page-title" (click)="selectPage(page)">
-              {{ page.title }}
-            </div>
-
-            @if (isAdmin) {
-              <div class="sidebar-page-actions">
-                <button class="edit" iconStart="@tui.pencil" tuiButton appearance="outline" size="s" type="button"
-                  (click)="editPage(page)">
-                </button>
-                <button class="delete" iconStart="@tui.trash" tuiButton appearance="outline" size="s" type="button"
-                  (click)="deletePage(page)">
-                </button>
-              </div>
-            }
-          </div>
-          }
-          <div class="sidebar-create-page">
-            <button class="add" iconStart="@tui.plus" appearance="primary" tuiButton size="m" type="button"
-              (click)="createPage()">
-              {{ 'community.addPage' | translate }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="community-pages-content">
-        @if (selectedPage) {
-          @if (editMode) {
-            <custom-pages-edit [communityId]="community.id" [page]="selectedPage"></custom-pages-edit>
-          } @else {
-            <custom-page [page]="selectedPage"></custom-page>
-          }
-        } @else {
-        <div>{{ 'community.noPageFound' | translate }}</div>
-        }
-      </div>
-    </div>
-
-
-  } @else if (tabOpened === 'libraries') {
-    <libraries [communityId]="community.id" ></libraries>
+  <router-outlet></router-outlet>
   }
-    @if (tabOpened === 'members') {
-      <filtered-and-paginated-members [community]="community" ></filtered-and-paginated-members>
-    }
-    @if (tabOpened === 'items') {
-      <filtered-and-paginated-items  [community]="community" [getItemsParams]="getItemsParams!" ></filtered-and-paginated-items>
-    }
-  }
-</div>

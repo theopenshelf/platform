@@ -11,17 +11,20 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
-            const traceId = error.headers.get('X-Trace-ID');
-            const errorMessage = error.error?.message || translate.instant('errors.unexpected');
+            // Only show alert for 5xx errors
+            if (error.status >= 500) {
+                const traceId = error.headers.get('X-Trace-ID');
+                const errorMessage = error.error?.message || translate.instant('errors.unexpected');
 
-            alertService.open(
-                `${errorMessage}\n\n${translate.instant('errors.supportReference', { traceId })}`,
-                {
-                    label: translate.instant('errors.title'),
-                    appearance: 'error',
-                    autoClose: 0,
-                }
-            ).subscribe();
+                alertService.open(
+                    `${errorMessage}\n\n${translate.instant('errors.supportReference', { traceId })}`,
+                    {
+                        label: translate.instant('errors.title'),
+                        appearance: 'error',
+                        autoClose: 0,
+                    }
+                ).subscribe();
+            }
 
             return throwError(() => error);
         })
