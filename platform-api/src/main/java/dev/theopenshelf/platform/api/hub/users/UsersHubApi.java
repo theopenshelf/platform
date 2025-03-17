@@ -21,6 +21,7 @@ public class UsersHubApi implements UsersHubApiApiDelegate {
 
     @Override
     public Mono<ResponseEntity<User>> getHubUserById(UUID id, ServerWebExchange exchange) {
+        //TODO The API needs to be improved: only list the users of a community and only if you are admin of the community
         return usersService.getUserById(id)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());

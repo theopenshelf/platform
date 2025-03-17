@@ -36,7 +36,8 @@ public class CommunitiesService {
         private final CommunityRepository communityRepository;
         private final UsersRepository userRepository;
 
-        public Mono<Community> createCommunity(Community community) {
+        public Mono<Community> createCommunity(Community community, UUID adminUser) {
+                //TODO add adminUser as a community member with admin right
                 return Mono.just(community)
                                 .map(CommunityEntity::new)
                                 .map(communityRepository::save)
@@ -94,11 +95,13 @@ public class CommunitiesService {
                                 .map(entity -> entity.toCommunity().build());
         }
 
-        public Mono<Void> deleteCommunity(UUID communityId) {
+        public Mono<Void> deleteCommunity(UUID communityId, UUID currentUserId) {
+                //TODO only admin member can delete a community
                 return Mono.fromRunnable(() -> communityRepository.deleteById(communityId));
         }
 
-        public Mono<Community> updateCommunity(UUID communityId, Community community) {
+        public Mono<Community> updateCommunity(UUID communityId, Community community, UUID currentUserId) {
+                //TODO only admin member can update a community
                 return Mono.just(community)
                                 .map(c -> {
                                         c.setId(communityId);
@@ -123,6 +126,7 @@ public class CommunitiesService {
 
         @Transactional
         public Mono<CommunityMember> addCommunityMember(UUID communityId, CommunityMember member) {
+                //TODO if current user is not an admin and community.requiresApproval, member.role = REQUESTING_JOIN
                 CommunityEntity community = communityRepository.findById(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
 
@@ -143,6 +147,7 @@ public class CommunitiesService {
 
         @Transactional
         public Mono<Void> deleteCommunityMember(UUID communityId, UUID userId) {
+                // Only an admin or the current user == member can delete a member
                 CommunityEntity community = communityRepository.findById(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
 
@@ -154,6 +159,7 @@ public class CommunitiesService {
 
         @Transactional(readOnly = true)
         public PaginatedCommunityMembersResponse getCommunityMembers(UUID communityId, Integer page, Integer pageSize) {
+                //Only an admin of the community can list the members
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
 
@@ -178,6 +184,7 @@ public class CommunitiesService {
         @Transactional
         public Mono<CommunityMember> updateCommunityMember(UUID communityId, UUID userId,
                         CommunityMember updatedMember) {
+                //Only the admin of the community can update a member
                 CommunityEntity community = communityRepository.findById(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
 

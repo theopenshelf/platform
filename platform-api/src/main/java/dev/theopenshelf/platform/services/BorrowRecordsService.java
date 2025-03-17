@@ -56,11 +56,11 @@ public class BorrowRecordsService {
         records = records.stream()
                 .filter(record -> categories == null || categories.isEmpty() ||
                         (record.getItem().getCategory() != null &&
-                                categories.contains(record.getItem().getCategory().getId().toString())))
+                                categories.contains(record.getItem().getCategory().getName())))
                 .filter(record -> searchText == null || searchText.isEmpty() ||
                         record.getItem().getName().toLowerCase().contains(searchText.toLowerCase()))
                 .filter(record -> status == null || status.isEmpty() ||
-                        status.contains(record.getStatus().name()))
+                        status.contains(record.getStatus().getValue()))
                 .filter(record -> favorite == null ||
                         !favorite || record.getItem().isFavorite())
                 .collect(Collectors.toList());
@@ -95,13 +95,12 @@ public class BorrowRecordsService {
     }
 
     @Transactional(readOnly = true)
-    public Mono<BorrowRecordsCountByStatus> getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
+    public BorrowRecordsCountByStatus getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             List<String> libraryIds,
             List<String> status) {
 
-        return Mono.fromCallable(() -> {
             List<BorrowRecordEntity> records;
 
             // Handle borrowedByCurrentUser flag
@@ -128,7 +127,7 @@ public class BorrowRecordsService {
             // Apply status filter if needed
             if (status != null && !status.isEmpty()) {
                 records = records.stream()
-                        .filter(record -> status.contains(record.getStatus().name()))
+                        .filter(record -> status.contains(record.getStatus().getValue()))
                         .collect(Collectors.toList());
             }
 
@@ -136,7 +135,6 @@ public class BorrowRecordsService {
             records.forEach(record -> updateStatusCount(countByStatus, record));
 
             return countByStatus;
-        });
     }
 
     private List<BorrowRecordEntity> filterByBorrowedBy(List<BorrowRecordEntity> records, String borrowedBy) {

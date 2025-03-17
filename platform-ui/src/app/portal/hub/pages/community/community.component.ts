@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterLink,
   RouterModule,
@@ -27,6 +28,7 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
+import { filter, map, startWith } from 'rxjs/operators';
 import { TosBreadcrumbsComponent } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
@@ -110,8 +112,20 @@ export class CommunityComponent implements OnInit {
       }
     }
 
-    // Check the current route to set the tabOpened property
-    this.route.url.subscribe(urlSegments => {
+    // Use paramMap to get the ID and combine with router.url for the full path
+    this.route.paramMap.pipe(
+      switchMap(params => {
+        const communityId = params.get('id');
+        return this.router.events.pipe(
+          filter(event => event instanceof NavigationEnd),
+          map(() => this.router.url),
+          startWith(this.router.url),
+          map(url => ({ url, communityId }))
+        );
+      })
+    ).subscribe(({ url, communityId }) => {
+      // Now you'll have the full URL path even on page refresh
+      const path = url;
       this.breadcrumbs = [
         {
           caption: 'breadcrumb.communities',
@@ -119,10 +133,10 @@ export class CommunityComponent implements OnInit {
         },
         {
           name: this.community?.name,
-          routerLink: `/hub/communities/${this.community?.id}`
+          routerLink: `/hub/communities/${communityId}`
         }
       ];
-      const path = urlSegments.map(segment => segment.path).join('/');
+
       if (path.includes('libraries')) {
         this.tabOpened = 'libraries';
         this.activeTabIndex = 1;
@@ -144,7 +158,7 @@ export class CommunityComponent implements OnInit {
           caption: 'breadcrumb.members',
           routerLink: `/hub/communities/${this.community?.id}/members`
         });
-      } else if (path.includes('pages') && urlSegments.length > 3) {
+      } else if (path.includes('pages') && url.length > 3) {
         this.tabOpened = 'pages';
         this.activeTabIndex = 0;
         this.breadcrumbs.push({

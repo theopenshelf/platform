@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TuiResponsiveDialogService } from '@taiga-ui/addon-mobile';
@@ -43,11 +43,11 @@ export class FilteredAndPaginatedMembersComponent {
   itemsPerPage: number = 10; // Default value
 
   constructor(
+    private cdr: ChangeDetectorRef,
     @Inject(COMMUNITIES_SERVICE_TOKEN) protected communitiesService: CommunitiesService,
     private dialogs: TuiResponsiveDialogService,
     private alerts: TuiAlertService,
     private translate: TranslateService
-
   ) { }
 
   ngOnInit() {
@@ -64,6 +64,7 @@ export class FilteredAndPaginatedMembersComponent {
       this.totalPages = pagination.totalPages;
       this.currentPage = pagination.currentPage;
       this.itemsPerPage = pagination.itemsPerPage;
+      this.cdr.detectChanges();
     });
   }
 
@@ -91,10 +92,12 @@ export class FilteredAndPaginatedMembersComponent {
           this.communitiesService.updateMember(this.community().id, member.id, {
             ...member,
             role: type === 'admin' ? 'admin' : 'member',
-          }).subscribe();
+          }).subscribe(() => {
+            this.fetchItems();
+          });
         } else {
-          // Revert the toggle if the user cancels the action
           member.role = member.role === 'admin' ? 'member' : 'admin';
+          this.cdr.detectChanges();
         }
       });
   }
@@ -114,8 +117,10 @@ export class FilteredAndPaginatedMembersComponent {
       })
       .subscribe(response => {
         if (response) {
-          this.communitiesService.deleteMember(this.community().id, member.id).subscribe();
-          this.fetchItems();
+          this.communitiesService.deleteMember(this.community().id, member.id)
+            .subscribe(() => {
+              this.fetchItems();
+            });
         }
       });
   }
@@ -135,8 +140,10 @@ export class FilteredAndPaginatedMembersComponent {
       })
       .subscribe(response => {
         if (response) {
-          this.communitiesService.deleteMember(this.community().id, member.id).subscribe();
-          this.fetchItems();
+          this.communitiesService.deleteMember(this.community().id, member.id)
+            .subscribe(() => {
+              this.fetchItems();
+            });
         }
       });
   }
@@ -159,8 +166,9 @@ export class FilteredAndPaginatedMembersComponent {
           this.communitiesService.updateMember(this.community().id, member.id, {
             ...member,
             role: 'member',
-          }).subscribe();
-          this.fetchItems();
+          }).subscribe(() => {
+            this.fetchItems();
+          });
         }
       });
   }

@@ -1,4 +1,4 @@
-import { Component, Inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
@@ -32,6 +32,7 @@ export class LibrariesComponent {
   libraries: UILibrary[] = [];
 
   constructor(
+    private cdr: ChangeDetectorRef,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     private breadcrumbService: BreadcrumbService
   ) {
@@ -41,6 +42,7 @@ export class LibrariesComponent {
   ngOnInit() {
     this.librariesService.getLibrariesByCommunityId(this.communityId()).subscribe((libraries) => {
       this.libraries = libraries;
+      this.cdr.detectChanges();
     });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
