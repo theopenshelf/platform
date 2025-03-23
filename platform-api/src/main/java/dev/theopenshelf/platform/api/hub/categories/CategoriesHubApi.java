@@ -22,6 +22,6 @@ public class CategoriesHubApi implements CategoriesHubApiApiDelegate {
     @Override
     public Mono<ResponseEntity<Flux<Category>>> getCategories(ServerWebExchange exchange) {
         //TODO this can be cached for 24h by the browser
-        return Mono.just(ResponseEntity.ok(Flux.fromIterable(categoriesService.getCategories())));
+        return Mono.just(ResponseEntity.ok(categoriesService.getCategories()));
     }
 }

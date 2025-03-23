@@ -25,8 +25,8 @@ public class ProfileCommunityApi implements ProfileHubApiApiDelegate {
         //TODO only update the profile if the current user is trying to edit his profile. ie user.id === userId
         return exchange.getPrincipal()
                 .map(principal -> UUID.fromString(principal.getName()))
-                .flatMap(userId -> userMono.flatMap(user -> usersService.updateProfile(userId, user)
-                        .map(ResponseEntity::ok)))
+                .flatMap(userId -> userMono.flatMap(user -> usersService.updateProfile(userId, user))
+                        .map(ResponseEntity::ok))
                 .onErrorResume(e -> {
                     log.error("Failed to update user profile", e);
                     return Mono.just(ResponseEntity.internalServerError().build());

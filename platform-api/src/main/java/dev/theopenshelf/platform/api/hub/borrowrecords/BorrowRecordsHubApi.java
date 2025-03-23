@@ -39,7 +39,7 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
         //TODO otherwise only returns the borrowRecords of the current user
         return exchange.getPrincipal()
                 .map(principal -> UUID.fromString(principal.getName()))
-                .map(currentUserId -> borrowRecordsService.getBorrowRecords(
+                .flatMap(currentUserId -> borrowRecordsService.getBorrowRecords(
                     borrowedByCurrentUser,
                     borrowedByCurrentUser != null && borrowedByCurrentUser ? currentUserId.toString() : borrowedBy,
                     itemId,
@@ -66,7 +66,7 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
 
         return exchange.getPrincipal()
                 .map(principal -> UUID.fromString(principal.getName()))
-                .map(currentUserId -> borrowRecordsService.getBorrowRecordsCountByStatus(
+                .flatMap(currentUserId -> borrowRecordsService.getBorrowRecordsCountByStatus(
                     borrowedByCurrentUser,
                     borrowedByCurrentUser != null && borrowedByCurrentUser ? currentUserId.toString() : borrowedBy,
                     itemId,

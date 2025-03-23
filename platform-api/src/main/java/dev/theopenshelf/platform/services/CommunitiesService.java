@@ -6,14 +6,15 @@ import static dev.theopenshelf.platform.specifications.CommunitySpecifications.w
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import dev.theopenshelf.platform.entities.CommunityEntity;
 import dev.theopenshelf.platform.entities.CommunityMemberEntity;
@@ -37,14 +38,16 @@ public class CommunitiesService {
         private final UsersRepository userRepository;
 
         public Mono<Community> createCommunity(Community community, UUID adminUser) {
-                //TODO add adminUser as a community member with admin right
-                return Mono.just(community)
-                                .map(CommunityEntity::new)
-                                .map(communityRepository::save)
-                                .map(entity -> entity.toCommunity().build());
+                CommunityEntity entity = new CommunityEntity(community);
+                communityRepository.save(entity);
+                addCommunityMember(entity.getId(), CommunityMember.builder()
+                                .id(adminUser)
+                                .role(CommunityMember.RoleEnum.ADMIN)
+                                .build(), adminUser);
+                return Mono.just(entity.toCommunity().build());
         }
 
-        public GetCommunities200Response getCommunities(
+        public Mono<GetCommunities200Response> getCommunities(
                         String searchText,
                         Location location,
                         BigDecimal distance,
@@ -64,7 +67,6 @@ public class CommunitiesService {
 
                 List<CommunityEntity> filteredCommunities = communitiesPage.getContent();
 
-                // Apply distance filter if location is provided
                 if (location != null && location.getCoordinates() != null && distance != null) {
                         double lat = location.getCoordinates().getLat().doubleValue();
                         double lng = location.getCoordinates().getLng().doubleValue();
@@ -87,48 +89,44 @@ public class CommunitiesService {
                 response.setItemsPerPage(pageSize);
                 response.setTotalItems(filteredCommunities.size());
                 response.setTotalPages((int) Math.ceil(filteredCommunities.size() / (double) pageSize));
-                return response;
+                return  Mono.just(response);
         }
 
         public Mono<Community> getCommunity(UUID communityId) {
-                return Mono.justOrEmpty(communityRepository.findById(communityId))
-                                .map(entity -> entity.toCommunity().build());
+                return Mono.just(communityRepository.findById(communityId)
+                                .map(entity -> entity.toCommunity().build())
+                                .orElseThrow(() -> new ResourceNotFoundException("Community not found")));
         }
 
         public Mono<Void> deleteCommunity(UUID communityId, UUID currentUserId) {
-                //TODO only admin member can delete a community
-                return Mono.fromRunnable(() -> communityRepository.deleteById(communityId));
+                if (isNotCommunityAdmin(communityId, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can delete the community");
+                }
+                communityRepository.deleteById(communityId);
+                return Mono.empty();
         }
 
         public Mono<Community> updateCommunity(UUID communityId, Community community, UUID currentUserId) {
-                //TODO only admin member can update a community
-                return Mono.just(community)
-                                .map(c -> {
-                                        c.setId(communityId);
-                                        return new CommunityEntity(c);
-                                })
-                                .map(communityRepository::save)
-                                .map(entity -> entity.toCommunity().build());
+                if (isNotCommunityAdmin(communityId, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can update the community");
+                }
+                community.setId(communityId);
+                CommunityEntity entity = new CommunityEntity(community);
+                communityRepository.save(entity);
+                return Mono.just(entity.toCommunity().build());
         }
 
-        private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-                final int R = 6371; // Earth's radius in kilometers
-
-                double latDistance = Math.toRadians(lat2 - lat1);
-                double lonDistance = Math.toRadians(lon2 - lon1);
-                double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                                                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
-                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-                return R * c;
-        }
-
-        @Transactional
-        public Mono<CommunityMember> addCommunityMember(UUID communityId, CommunityMember member) {
-                //TODO if current user is not an admin and community.requiresApproval, member.role = REQUESTING_JOIN
-                CommunityEntity community = communityRepository.findById(communityId)
+        public Mono<CommunityMember> addCommunityMember(UUID communityId, CommunityMember member, UUID currentUserId) {
+                CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                boolean isUserJoiningItselfTheCommunity = member.getId().equals(currentUserId);
+                if (!isUserJoiningItselfTheCommunity && isNotCommunityAdmin(community, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can add members");
+                }
+                MemberRole role = MemberRole.MEMBER;
+                if (isUserJoiningItselfTheCommunity && community.isRequiresApproval()) {
+                        role = MemberRole.REQUESTING_JOIN;
+                }
 
                 UserEntity user = userRepository.findById(member.getId())
                                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
@@ -136,7 +134,7 @@ public class CommunitiesService {
                 CommunityMemberEntity memberEntity = CommunityMemberEntity.builder()
                                 .community(community)
                                 .user(user)
-                                .role(MemberRole.valueOf(member.getRole().name()))
+                                .role(role)
                                 .build();
 
                 community.getMembers().add(memberEntity);
@@ -145,24 +143,24 @@ public class CommunitiesService {
                 return Mono.just(memberEntity.toCommunityMember().build());
         }
 
-        @Transactional
-        public Mono<Void> deleteCommunityMember(UUID communityId, UUID userId) {
-                // Only an admin or the current user == member can delete a member
-                CommunityEntity community = communityRepository.findById(communityId)
+        public Mono<Void> deleteCommunityMember(UUID communityId, UUID userId, UUID currentUserId) {
+                CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                if (isNotCommunityAdmin(community, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can delete community members");
+                }
 
                 community.getMembers().removeIf(member -> member.getUser().getId().equals(userId));
                 communityRepository.save(community);
-
                 return Mono.empty();
         }
 
-        @Transactional(readOnly = true)
-        public PaginatedCommunityMembersResponse getCommunityMembers(UUID communityId, Integer page, Integer pageSize) {
-                //Only an admin of the community can list the members
+        public Mono<PaginatedCommunityMembersResponse> getCommunityMembers(UUID communityId, Integer page, Integer pageSize, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
-
+                if (isNotCommunityAdmin(community, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can get community members");
+                }
                 int validPage = Math.max(1, page != null ? page : 1);
                 int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
                 int start = (validPage - 1) * validPageSize;
@@ -172,22 +170,21 @@ public class CommunitiesService {
                                 .map(member -> member.toCommunityMember().build())
                                 .collect(Collectors.toList());
 
-                return PaginatedCommunityMembersResponse.builder()
+                return Mono.just(PaginatedCommunityMembersResponse.builder()
                                 .items(members)
                                 .currentPage(validPage)
                                 .itemsPerPage(validPageSize)
                                 .totalItems(community.getMembers().size())
                                 .totalPages((int) Math.ceil((double) community.getMembers().size() / validPageSize))
-                                .build();
+                                .build());
         }
 
-        @Transactional
-        public Mono<CommunityMember> updateCommunityMember(UUID communityId, UUID userId,
-                        CommunityMember updatedMember) {
-                //Only the admin of the community can update a member
-                CommunityEntity community = communityRepository.findById(communityId)
+        public Mono<CommunityMember> updateCommunityMember(UUID communityId, UUID userId, CommunityMember updatedMember, UUID currentUserId) {
+                CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
                                 .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
-
+                if (isNotCommunityAdmin(community, currentUserId)) {
+                        throw new AuthorizationDeniedException("Only the community admins can update community members");
+                }
                 CommunityMemberEntity memberEntity = community.getMembers().stream()
                                 .filter(member -> member.getUser().getId().equals(userId))
                                 .findFirst()
@@ -197,5 +194,38 @@ public class CommunitiesService {
                 communityRepository.save(community);
 
                 return Mono.just(memberEntity.toCommunityMember().build());
+        }
+
+        public Optional<CommunityMemberEntity> isMember(UUID communityId, UUID currentUserId) {
+                CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                return community.getMembers().stream()
+                        .filter(m -> m.getUser().getId().equals(currentUserId))
+                        .findFirst();
+        }
+
+        private boolean isNotCommunityAdmin(UUID communityId, UUID currentUserId) {
+                CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
+                        .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                return isNotCommunityAdmin(community, currentUserId);
+        }
+
+        private boolean isNotCommunityAdmin(CommunityEntity community, UUID currentUserId) {
+                return community.getMembers().stream()
+                        .filter(m -> m.getUser().getId().equals(currentUserId))
+                        .noneMatch(m -> m.getRole().equals(MemberRole.ADMIN));
+        }
+
+        private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
+                final int R = 6371; // Earth's radius in kilometers
+
+                double latDistance = Math.toRadians(lat2 - lat1);
+                double lonDistance = Math.toRadians(lon2 - lon1);
+                double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                        + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
+                        * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+                return R * c;
         }
 }

@@ -26,11 +26,10 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
         @Override
         public Mono<ResponseEntity<Community>> createCommunity(Mono<Community> community, ServerWebExchange exchange) {
                 return exchange.getPrincipal()
-                        .map(principal -> UUID.fromString(principal.getName()))
-                        .flatMap(currentUserId -> community
-                                .flatMap(c -> communitiesService.createCommunity(c, currentUserId))
-                                .map(ResponseEntity::ok)
-                        );
+                                .map(principal -> UUID.fromString(principal.getName()))
+                                .flatMap(currentUserId -> community
+                                                .flatMap(c -> communitiesService.createCommunity(c, currentUserId))
+                                                .map(ResponseEntity::ok));
         }
 
         @Override
@@ -46,7 +45,7 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
 
                 return exchange.getPrincipal()
                                 .map(principal -> UUID.fromString(principal.getName()))
-                                .map(currentUserId -> communitiesService.getCommunities(
+                                .flatMap(currentUserId -> communitiesService.getCommunities(
                                                 searchText,
                                                 location,
                                                 distance,
@@ -68,10 +67,10 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
         @Override
         public Mono<ResponseEntity<Void>> deleteCommunity(UUID communityId, ServerWebExchange exchange) {
                 return exchange.getPrincipal()
-                        .map(principal -> UUID.fromString(principal.getName()))
-                        .flatMap(currentUserId ->  communitiesService.deleteCommunity(communityId, currentUserId)
-                                .then(Mono.just(ResponseEntity.noContent().build()))
-                        );
+                                .map(principal -> UUID.fromString(principal.getName()))
+                                .doOnNext(currentUserId -> communitiesService.deleteCommunity(communityId,
+                                                currentUserId))
+                                .then(Mono.just(ResponseEntity.noContent().build()));
         }
 
         @Override
@@ -81,27 +80,34 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
                         ServerWebExchange exchange) {
 
                 return exchange.getPrincipal()
-                        .map(principal -> UUID.fromString(principal.getName()))
-                        .flatMap(currentUserId -> community
-                                .flatMap(c -> communitiesService.updateCommunity(communityId, c, currentUserId))
-                                .map(ResponseEntity::ok));
+                                .map(principal -> UUID.fromString(principal.getName()))
+                                .flatMap(currentUserId -> community
+                                                .flatMap(c -> communitiesService.updateCommunity(communityId, c,
+                                                                currentUserId))
+                                                .map(ResponseEntity::ok));
         }
 
         @Override
         public Mono<ResponseEntity<CommunityMember>> addCommunityMember(UUID communityId,
                         Mono<CommunityMember> communityMember,
                         ServerWebExchange exchange) {
-                return communityMember
-                                .flatMap(member -> communitiesService.addCommunityMember(communityId, member))
-                                .map(ResponseEntity::ok);
+                return exchange.getPrincipal()
+                                .map(principal -> UUID.fromString(principal.getName()))
+                                .flatMap(currentUserId -> communityMember
+                                                .flatMap(member -> communitiesService.addCommunityMember(communityId,
+                                                                member, currentUserId))
+                                                .map(ResponseEntity::ok));
         }
 
         @Override
         public Mono<ResponseEntity<Void>> deleteCommunityMember(UUID communityId,
                         UUID userId,
                         ServerWebExchange exchange) {
-                return communitiesService.deleteCommunityMember(communityId, userId)
-                                .then(Mono.just(ResponseEntity.noContent().build()));
+                return exchange.getPrincipal()
+                        .map(principal -> UUID.fromString(principal.getName()))
+                        .doOnNext(currentUserId -> communitiesService.deleteCommunityMember(communityId, userId, currentUserId))
+
+                        .map(u -> ResponseEntity.noContent().build());
         }
 
         @Override
@@ -109,8 +115,10 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
                         Integer page,
                         Integer pageSize,
                         ServerWebExchange exchange) {
-                return Mono.just(communitiesService.getCommunityMembers(communityId, page, pageSize))
-                                .map(ResponseEntity::ok);
+                return exchange.getPrincipal()
+                        .map(principal -> UUID.fromString(principal.getName()))
+                        .flatMap(currentUserId -> communitiesService.getCommunityMembers(communityId, page, pageSize, currentUserId))
+                        .map(ResponseEntity::ok);
         }
 
         @Override
@@ -118,11 +126,12 @@ public class CommunitiesHubApi implements CommunitiesHubApiApiDelegate {
                         UUID userId,
                         Mono<CommunityMember> communityMember,
                         ServerWebExchange exchange) {
-                return communityMember
-                                .flatMap(member -> communitiesService.updateCommunityMember(communityId, userId,
-                                                member))
-                                .map(ResponseEntity::ok);
+                return exchange.getPrincipal()
+                        .map(principal -> UUID.fromString(principal.getName()))
+                        .flatMap(currentUserId -> communityMember
+                                .flatMap(member -> communitiesService.updateCommunityMember(communityId, userId, member, currentUserId))
+                                .map(ResponseEntity::ok));
         }
 
-        //TODO implement the /pages apis
+        // TODO implement the /pages apis
 }

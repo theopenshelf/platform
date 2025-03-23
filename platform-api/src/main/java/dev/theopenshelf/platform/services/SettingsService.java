@@ -18,24 +18,21 @@ public class SettingsService {
     }
 
     public Mono<GetSecuritySettings200Response> getPublicSettings() {
-        return Mono.fromCallable(() -> {
             boolean isRegistrationEnabled = settingsRepository.findById(REGISTRATION_ENABLED_KEY)
                     .map(setting -> Boolean.parseBoolean(setting.getValue()))
                     .orElse(false);
 
-            return new GetSecuritySettings200Response()
-                    .isRegistrationEnabled(isRegistrationEnabled);
-        });
+            return Mono.just(new GetSecuritySettings200Response()
+                    .isRegistrationEnabled(isRegistrationEnabled));
     }
 
-    public Mono<Void> saveSecuritySettings(SaveSecuritySettingsRequest request) {
-        return Mono.fromRunnable(() -> {
+    public Mono<SettingsEntity> saveSecuritySettings(SaveSecuritySettingsRequest request) {
+
             SettingsEntity registrationSetting = SettingsEntity.builder()
                     .key(REGISTRATION_ENABLED_KEY)
                     .value(String.valueOf(request.getIsRegistrationEnabled()))
                     .isPublic(true)
                     .build();
-            settingsRepository.save(registrationSetting);
-        });
+            return Mono.just(settingsRepository.save(registrationSetting));
     }
 }

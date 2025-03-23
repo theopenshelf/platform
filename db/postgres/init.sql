@@ -1,22 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Create tables with all required columns and constraints
-CREATE TABLE "items" (
-    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "name" varchar(255),
-    "description" varchar(255),
-    "short_description" varchar(255),
-    "image_url" varchar(255),
-    "located" varchar(255),
-    "created_at" timestamp,
-    "borrow_count" integer NOT NULL DEFAULT 0,
-    "favorite" boolean NOT NULL DEFAULT false,
-    "owner" varchar(255),
-    "library_id" uuid,
-    "category_id" uuid,
-    "community_id" UUID
-);
-
 CREATE TABLE "users" (
     "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     "username" varchar(255) NOT NULL UNIQUE,
@@ -33,15 +16,8 @@ CREATE TABLE "users" (
     "avatar_url" varchar(255),
     "created_at" timestamp DEFAULT CURRENT_TIMESTAMP,
     "is_email_verified" boolean NOT NULL DEFAULT false,
-    "disabled" boolean NOT NULL DEFAULT false
-);
-
-CREATE TABLE "categories" (
-    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "name" varchar(255),
-    "icon" varchar(255),
-    "color" varchar(255),
-    "template" varchar(255)
+    "disabled" boolean NOT NULL DEFAULT false,
+    "status" varchar(255) NOT NULL DEFAULT 'WAITING_FOR_EMAIL' CHECK (status IN ('WAITING_FOR_EMAIL', 'ACTIVE', 'INACTIVE'))
 );
 
 CREATE TABLE "communities" (
@@ -59,7 +35,7 @@ CREATE TABLE "communities" (
 CREATE TABLE "libraries" (
     "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
     "name" varchar(255),
-    "community_id" uuid,
+    "community_id" uuid REFERENCES communities(id),
     "free_access" boolean NOT NULL DEFAULT false,
     "is_admin" boolean NOT NULL DEFAULT false,
     "requires_approval" boolean NOT NULL DEFAULT false,
@@ -83,6 +59,34 @@ CREATE TABLE "library_members" (
     "user_id" uuid REFERENCES users(id),
     "role" varchar(255) CHECK (role IN ('ADMIN', 'MEMBER', 'REQUESTING_JOIN'))
 );
+
+
+CREATE TABLE "categories" (
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "name" varchar(255),
+    "icon" varchar(255),
+    "color" varchar(255),
+    "template" varchar(255)
+);
+
+-- Create tables with all required columns and constraints
+CREATE TABLE "items" (
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "name" varchar(255),
+    "description" varchar(3000),
+    "short_description" varchar(1000),
+    "image_url" varchar(255),
+    "located" varchar(255),
+    "created_at" timestamp,
+    "borrow_count" integer NOT NULL DEFAULT 0,
+    "favorite" boolean NOT NULL DEFAULT false,
+    "owner" varchar(255),
+    "library_id" uuid REFERENCES libraries(id),
+    "category_id" uuid REFERENCES categories(id),
+    "community_id" uuid REFERENCES communities(id)
+);
+
+
 
 CREATE TABLE "borrow_records" (
     "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
@@ -125,14 +129,15 @@ CREATE TABLE "help_categories" (
 
 CREATE TABLE "help_articles" (
     "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-    "content" varchar(255),
+    "content" varchar(4000),
     "display_order" integer,
     "title" varchar(255),
     "category_id" uuid REFERENCES help_categories(id)
 );
 
 CREATE TABLE "notifications" (
-    "id" bigint PRIMARY KEY,
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "user_id" uuid REFERENCES users(id),
     "already_read" boolean NOT NULL,
     "author" varchar(255),
     "date" timestamp(6) with time zone,
@@ -145,63 +150,8 @@ CREATE TABLE "notifications" (
     ))
 );
 
--- Add foreign key constraints for existing tables
-ALTER TABLE items 
-    ADD CONSTRAINT fk_items_category 
-    FOREIGN KEY (category_id) REFERENCES categories(id);
-
-ALTER TABLE items 
-    ADD CONSTRAINT fk_items_library 
-    FOREIGN KEY (library_id) REFERENCES libraries(id);
-
-ALTER TABLE libraries 
-    ADD CONSTRAINT fk_libraries_community 
-    FOREIGN KEY (community_id) REFERENCES communities(id);
-
-
--- schema-migration-1.sql
--- Add status column to users table
-ALTER TABLE users
-    ADD COLUMN status varchar(255) NOT NULL DEFAULT 'WAITING_FOR_EMAIL' CHECK (status IN ('WAITING_FOR_EMAIL', 'ACTIVE', 'INACTIVE'));
-
--- Update existing users to ACTIVE if they're already email verified
-UPDATE users 
-    SET status = 'ACTIVE' 
-    WHERE is_email_verified = true;
-
--- schema-migration-2.sql
-
-ALTER TABLE "notifications"
-ADD COLUMN "user_id" UUID NOT NULL;
-
--- If you need to add a foreign key constraint to the users table:
-ALTER TABLE "notifications"
-ADD CONSTRAINT "fk_notifications_user" 
-FOREIGN KEY ("user_id") 
-REFERENCES "users" ("id");
-
 CREATE TABLE settings (
     key VARCHAR(255) PRIMARY KEY,
     value TEXT NOT NULL,
     is_public BOOLEAN NOT NULL DEFAULT false
 );
-
--- Insert some initial settings
-INSERT INTO settings (key, value, is_public) 
-VALUES ('registration.enabled', 'true', true);
-
--- Add community_id column to items table
-ALTER TABLE "items"
-    ADD COLUMN "community_id" UUID;
-
--- Add foreign key constraint
-ALTER TABLE "items"
-    ADD CONSTRAINT "fk_items_community" 
-    FOREIGN KEY ("community_id") 
-    REFERENCES "communities" ("id");
-
--- Update existing items to set community_id based on their library's community
-UPDATE "items" i
-SET "community_id" = l."community_id"
-FROM "libraries" l
-WHERE i."library_id" = l."id";

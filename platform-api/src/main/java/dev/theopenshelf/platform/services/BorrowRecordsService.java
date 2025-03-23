@@ -12,19 +12,17 @@ import dev.theopenshelf.platform.model.BorrowRecordStandalone;
 import dev.theopenshelf.platform.model.BorrowRecordsCountByStatus;
 import dev.theopenshelf.platform.model.PaginatedBorrowRecordsResponse;
 import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
+import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @Service
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class BorrowRecordsService {
     private final BorrowRecordRepository borrowRecordRepository;
 
-    public BorrowRecordsService(BorrowRecordRepository borrowRecordRepository) {
-        this.borrowRecordRepository = borrowRecordRepository;
-    }
-
     @Transactional(readOnly = true)
-    public PaginatedBorrowRecordsResponse getBorrowRecords(Boolean borrowedByCurrentUser,
+    public Mono<PaginatedBorrowRecordsResponse> getBorrowRecords(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             String sortBy,
@@ -91,11 +89,11 @@ public class BorrowRecordsService {
                 .map(this::convertToStandalone)
                 .collect(Collectors.toList()));
 
-        return response;
+        return Mono.just(response);
     }
 
     @Transactional(readOnly = true)
-    public BorrowRecordsCountByStatus getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
+    public Mono<BorrowRecordsCountByStatus> getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             List<String> libraryIds,
@@ -134,19 +132,7 @@ public class BorrowRecordsService {
             BorrowRecordsCountByStatus countByStatus = new BorrowRecordsCountByStatus();
             records.forEach(record -> updateStatusCount(countByStatus, record));
 
-            return countByStatus;
-    }
-
-    private List<BorrowRecordEntity> filterByBorrowedBy(List<BorrowRecordEntity> records, String borrowedBy) {
-        return records.stream()
-                .filter(record -> record.getBorrowedBy().equals(borrowedBy))
-                .collect(Collectors.toList());
-    }
-
-    private List<BorrowRecordEntity> filterByItemId(List<BorrowRecordEntity> records, String itemId) {
-        return records.stream()
-                .filter(record -> record.getItem().getId().toString().equals(itemId))
-                .collect(Collectors.toList());
+            return Mono.just(countByStatus);
     }
 
     private List<BorrowRecordEntity> sortRecords(List<BorrowRecordEntity> records, String sortBy, String sortOrder) {

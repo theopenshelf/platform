@@ -1,5 +1,7 @@
 package dev.theopenshelf.platform.api.admin;
 
+import java.util.UUID;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,14 +24,19 @@ public class CustomPagesAdminApi implements CustomPagesAdminApiApiDelegate {
 
     @Override
     public Mono<ResponseEntity<CustomPage>> createCustomPage(Mono<CustomPage> customPage, ServerWebExchange exchange) {
-        return customPage
-                .flatMap(page -> customPagesService.createCommunityCustomPage(null, page))
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId ->
+                        customPage
+                .flatMap(page -> customPagesService.createCommunityCustomPage(null, page, currentUserId)))
                 .map(page -> ResponseEntity.status(HttpStatus.CREATED).body(page));
     }
 
     @Override
     public Mono<ResponseEntity<Void>> deleteCustomPage(String pageRef, ServerWebExchange exchange) {
-        return customPagesService.deleteCommunityCustomPage(null, pageRef)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPagesService.deleteCommunityCustomPage(null, pageRef, currentUserId))
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
@@ -53,8 +60,10 @@ public class CustomPagesAdminApi implements CustomPagesAdminApiApiDelegate {
     @Override
     public Mono<ResponseEntity<CustomPage>> updateCustomPage(String pageRef, Mono<CustomPage> customPage,
             ServerWebExchange exchange) {
-        return customPage
-                .flatMap(page -> customPagesService.updateCommunityCustomPage(null, pageRef, page))
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPage
+                .flatMap(page -> customPagesService.updateCommunityCustomPage(null, pageRef, page, currentUserId)))
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }

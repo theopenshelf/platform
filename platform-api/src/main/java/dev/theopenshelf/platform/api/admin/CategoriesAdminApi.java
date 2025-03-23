@@ -9,37 +9,30 @@ import org.springframework.web.server.ServerWebExchange;
 import dev.theopenshelf.platform.api.CategoriesAdminApiApiDelegate;
 import dev.theopenshelf.platform.model.Category;
 import dev.theopenshelf.platform.services.CategoriesService;
+import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriesAdminApi implements CategoriesAdminApiApiDelegate {
 
     private final CategoriesService categoriesService;
 
-    public CategoriesAdminApi(CategoriesService categoriesService) {
-        this.categoriesService = categoriesService;
-    }
-
     @Override
     public Mono<ResponseEntity<Category>> addAdminCategory(Mono<Category> category, ServerWebExchange exchange) {
-        return category.map(cat -> {
-            Category savedCategory = categoriesService.createCategory(cat);
-            return ResponseEntity.ok(savedCategory);
-        });
+        return category.flatMap(categoriesService::createCategory).map(ResponseEntity::ok);
     }
 
     @Override
     public Mono<ResponseEntity<Flux<Category>>> getAdminCategories(ServerWebExchange exchange) {
-        Flux<Category> categories = Flux.fromIterable(categoriesService.getAllCategories());
-        return Mono.just(ResponseEntity.ok(categories));
+        return Mono.just(ResponseEntity.ok(categoriesService.getAllCategories()));
     }
 
     @Override
     public Mono<ResponseEntity<Category>> getAdminCategory(UUID categoryId, ServerWebExchange exchange) {
-        return Mono.just(categoriesService.getCategoryById(categoryId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build()));
+        return categoriesService.getCategoryById(categoryId)
+                .map(ResponseEntity::ok);
     }
 
     @Override

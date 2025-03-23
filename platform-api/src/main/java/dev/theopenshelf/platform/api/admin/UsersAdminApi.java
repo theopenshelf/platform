@@ -35,14 +35,14 @@ public class UsersAdminApi implements UsersAdminApiApiDelegate {
 
     @Override
     public Mono<ResponseEntity<UserWithStats>> saveUser(Mono<UserWithStats> userWithStats, ServerWebExchange exchange) {
-        return userWithStats.flatMap(user -> usersService.saveUser(user))
+        return userWithStats.flatMap(usersService::saveUser)
                 .map(ResponseEntity::ok);
     }
 
     @Override
     public Mono<ResponseEntity<Void>> setUserPassword(UUID userId, Mono<SetUserPasswordRequest> setUserPasswordRequest,
             ServerWebExchange exchange) {
-        return setUserPasswordRequest.flatMap(request -> usersService.setUserPassword(userId, request))
-                .map(ResponseEntity::ok);
+        return setUserPasswordRequest.doOnNext(request -> usersService.setUserPassword(userId, request))
+                .map(r -> ResponseEntity.noContent().build());
     }
 }

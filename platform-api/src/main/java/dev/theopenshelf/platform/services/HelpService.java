@@ -35,46 +35,38 @@ public class HelpService {
     }
 
     public Mono<Void> createHelpArticle(HelpArticle article) {
-        return Mono.fromRunnable(() -> {
-            HelpArticleEntity entity = HelpArticleEntity.fromHelpArticle(article);
-            helpArticleRepository.save(entity);
-        });
+        helpArticleRepository.save(HelpArticleEntity.fromHelpArticle(article));
+        return Mono.empty();
     }
 
     public Mono<Void> createHelpCategory(HelpCategory category) {
-        return Mono.fromRunnable(() -> {
-            HelpCategoryEntity entity = HelpCategoryEntity.fromHelpCategory(category);
-            helpCategoryRepository.save(entity);
-        });
+        helpCategoryRepository.save(HelpCategoryEntity.fromHelpCategory(category));
+        return Mono.empty();
     }
 
     public Mono<Void> deleteHelpArticle(String articleId) {
-        return Mono.fromRunnable(() -> {
-            helpArticleRepository.deleteById(UUID.fromString(articleId));
-        });
+        helpArticleRepository.deleteById(UUID.fromString(articleId));
+        return Mono.empty();
     }
 
     public Mono<Void> deleteHelpCategory(String categoryId) {
-        return Mono.fromRunnable(() -> {
-            helpCategoryRepository.deleteById(UUID.fromString(categoryId));
-        });
+        helpCategoryRepository.deleteById(UUID.fromString(categoryId));
+        return Mono.empty();
     }
 
     public Mono<Void> updateHelpArticle(String articleId, HelpArticle article) {
-        return Mono.fromRunnable(() -> {
-            HelpArticleEntity entity = helpArticleRepository.findById(UUID.fromString(articleId))
-                    .orElseThrow(() -> new RuntimeException("Article not found"));
-            entity.updateFromHelpArticle(article);
-            helpArticleRepository.save(entity);
-        });
+        HelpArticleEntity entity = helpArticleRepository.findById(UUID.fromString(articleId))
+                .orElseThrow(() -> new RuntimeException("Article not found"));
+        entity.updateFromHelpArticle(article);
+        helpArticleRepository.save(entity);
+        return Mono.empty();
     }
 
     public Mono<Void> updateHelpCategory(String categoryId, HelpCategory category) {
-        return Mono.fromRunnable(() -> {
-            HelpCategoryEntity entity = helpCategoryRepository.findById(UUID.fromString(categoryId))
-                    .orElseThrow(() -> new RuntimeException("Category not found"));
-            entity.updateFromHelpCategory(category);
-            helpCategoryRepository.save(entity);
-        });
+        HelpCategoryEntity entity = helpCategoryRepository.findById(UUID.fromString(categoryId))
+                .orElseThrow(() -> new RuntimeException("Category not found"));
+        entity.updateFromHelpCategory(category);
+        helpCategoryRepository.save(entity);
+        return Mono.empty();
     }
 }

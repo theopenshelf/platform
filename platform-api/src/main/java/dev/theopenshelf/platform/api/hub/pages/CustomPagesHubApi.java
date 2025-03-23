@@ -26,31 +26,40 @@ public class CustomPagesHubApi implements CustomPagesHubApiApiDelegate {
     @Override
     public Mono<ResponseEntity<CustomPage>> createCommunityCustomPage(UUID communityId, Mono<CustomPage> customPage,
             ServerWebExchange exchange) {
-        return customPage
-                .flatMap(page -> customPagesService.createCommunityCustomPage(communityId, page))
-                .map(page -> ResponseEntity.status(HttpStatus.CREATED).body(page));
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPage
+                .flatMap(page -> customPagesService.createCommunityCustomPage(communityId, page, currentUserId))
+                .map(page -> ResponseEntity.status(HttpStatus.CREATED).body(page)));
     }
 
     @Override
     public Mono<ResponseEntity<Void>> deleteCommunityCustomPage(UUID communityId, String pageRef,
             ServerWebExchange exchange) {
-        return customPagesService.deleteCommunityCustomPage(communityId, pageRef)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPagesService.deleteCommunityCustomPage(communityId, pageRef, currentUserId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 
     @Override
     public Mono<ResponseEntity<CustomPage>> getCommunityCustomPage(UUID communityId, String pageRef,
             ServerWebExchange exchange) {
-        return customPagesService.getCommunityCustomPage(communityId, pageRef)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPagesService.getCommunityCustomPage(communityId, pageRef, currentUserId)
                 .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 
     @Override
     public Mono<ResponseEntity<Flux<CustomPage>>> getCommunityCustomPages(UUID communityId,
             ServerWebExchange exchange) {
-        return Mono.just(ResponseEntity.ok(customPagesService.getCommunityCustomPages(communityId)));
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .map(currentUserId -> customPagesService.getCommunityCustomPages(communityId, currentUserId))
+                .map(ResponseEntity::ok);
     }
 
     @Override
@@ -68,9 +77,10 @@ public class CustomPagesHubApi implements CustomPagesHubApiApiDelegate {
     @Override
     public Mono<ResponseEntity<CustomPage>> updateCommunityCustomPage(UUID communityId, String pageRef,
             Mono<CustomPage> customPage, ServerWebExchange exchange) {
-        return customPage
-                .flatMap(page -> customPagesService.updateCommunityCustomPage(communityId, pageRef, page))
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> customPage.flatMap(page -> customPagesService.updateCommunityCustomPage(communityId, pageRef, page, currentUserId))
                 .map(ResponseEntity::ok)
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 }

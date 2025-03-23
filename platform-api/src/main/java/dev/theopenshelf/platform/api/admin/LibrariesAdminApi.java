@@ -30,9 +30,11 @@ public class LibrariesAdminApi implements LibrariesAdminApiApiDelegate {
 
     @Override
     public Mono<ResponseEntity<Library>> getAdminLibrary(UUID libraryId, ServerWebExchange exchange) {
-        return librariesService.getLibrary(libraryId)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> librariesService.getLibrary(libraryId, currentUserId)
                 .map(entity -> ResponseEntity.ok(entity.toLibrary().build()))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 
     @Override
@@ -45,16 +47,19 @@ public class LibrariesAdminApi implements LibrariesAdminApiApiDelegate {
     @Override
     public Mono<ResponseEntity<Library>> updateAdminLibrary(UUID libraryId, Mono<Library> library,
             ServerWebExchange exchange) {
-        return library
-                .flatMap(l -> librariesService.updateLibrary(libraryId, l)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> library.flatMap(l -> librariesService.updateLibrary(libraryId, l, currentUserId)
                         .map(entity -> ResponseEntity.ok(entity.toLibrary().build()))
-                        .defaultIfEmpty(ResponseEntity.notFound().build()));
+                        .defaultIfEmpty(ResponseEntity.notFound().build())));
     }
 
     @Override
     public Mono<ResponseEntity<Void>> deleteAdminLibrary(UUID libraryId, ServerWebExchange exchange) {
-        return librariesService.deleteLibrary(libraryId)
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(currentUserId -> librariesService.deleteLibrary(libraryId, currentUserId)
                 .then(Mono.just(ResponseEntity.noContent().<Void>build()))
-                .defaultIfEmpty(ResponseEntity.notFound().build());
+                .defaultIfEmpty(ResponseEntity.notFound().build()));
     }
 }

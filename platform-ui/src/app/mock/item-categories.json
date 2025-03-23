@@ -1,0 +1,92 @@
+[
+    {
+        "name": "books",
+        "icon": "@tui.book",
+        "color": "#b71964",
+        "template": "Book Template"
+    },
+    {
+        "name": "electronics",
+        "icon": "@tui.tv",
+        "color": "#1d71ac",
+        "template": "Electronics Template"
+    },
+    {
+        "name": "clothing",
+        "icon": "@tui.shirt",
+        "color": "#8a1bcc",
+        "template": "Clothing Template"
+    },
+    {
+        "name": "diy",
+        "icon": "@tui.hammer",
+        "color": "#f58220",
+        "template": "DIY Template"
+    },
+    {
+        "name": "beauty health",
+        "icon": "@tui.heart",
+        "color": "#e17ac4",
+        "template": "Beauty & Health Template"
+    },
+    {
+        "name": "sports outdoors",
+        "icon": "@tui.bike",
+        "color": "#2a7f3d",
+        "template": "Sports & Outdoors Template"
+    },
+    {
+        "name": "camping",
+        "icon": "@tui.tent",
+        "color": "#4f9c38",
+        "template": "Camping Template"
+    },
+    {
+        "name": "gardening",
+        "icon": "@tui.flower",
+        "color": "#4ca24c",
+        "template": "Gardening Template"
+    },
+    {
+        "name": "vehicle",
+        "icon": "@tui.car",
+        "color": "#019cdb",
+        "template": "Vehicle Template"
+    },
+    {
+        "name": "home",
+        "icon": "@tui.home",
+        "color": "#d08000",
+        "template": "Home Template"
+    },
+    {
+        "name": "kids",
+        "icon": "@tui.baby",
+        "color": "#e0b100",
+        "template": "Kids Template"
+    },
+    {
+        "name": "events",
+        "icon": "@tui.calendar",
+        "color": "#e7315c",
+        "template": "Events Template"
+    },
+    {
+        "name": "multimedia",
+        "icon": "@tui.video",
+        "color": "#1e9ee7",
+        "template": "Multimedia Template"
+    },
+    {
+        "name": "travel",
+        "icon": "@tui.train-front",
+        "color": "#f09830",
+        "template": "Travel Template"
+    },
+    {
+        "name": "safety",
+        "icon": "@tui.shield",
+        "color": "#f57d2b",
+        "template": "Safety Template"
+    }
+]

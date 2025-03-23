@@ -47,7 +47,7 @@ public class NotificationsHubApi implements NotificationsHubApiApiDelegate {
             ServerWebExchange exchange) {
         return exchange.getPrincipal()
                 .map(principal -> UUID.fromString(principal.getName()))
-                .flatMap(userId -> notificationsService.getUnreadNotificationsCount(userId))
+                .flatMap(notificationsService::getUnreadNotificationsCount)
                 .map(ResponseEntity::ok);
     }
 }

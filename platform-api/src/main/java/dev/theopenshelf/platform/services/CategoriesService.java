@@ -10,22 +10,21 @@ import org.springframework.stereotype.Service;
 import dev.theopenshelf.platform.entities.CategoryEntity;
 import dev.theopenshelf.platform.model.Category;
 import dev.theopenshelf.platform.repositories.CategoryRepository;
+import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class CategoriesService {
     private final CategoryRepository categoryRepository;
 
-    public CategoriesService(CategoryRepository categoryRepository) {
-        this.categoryRepository = categoryRepository;
+    public Flux<Category> getCategories() {
+        return Flux.fromIterable(categoryRepository.findAll())
+                .map(entity -> entity.toCategory().build());
     }
 
-    public List<Category> getCategories() {
-        return StreamSupport.stream(categoryRepository.findAll().spliterator(), false)
-                .map(entity -> entity.toCategory().build())
-                .toList();
-    }
-
-    public Category createCategory(Category category) {
+    public Mono<Category> createCategory(Category category) {
         CategoryEntity entity = CategoryEntity.builder()
                 .id(category.getId() != null ? category.getId() : UUID.randomUUID())
                 .name(category.getName())
@@ -34,15 +33,18 @@ public class CategoriesService {
                 .template(category.getTemplate())
                 .build();
 
-        return categoryRepository.save(entity).toCategory().build();
+        return Mono.just(categoryRepository.save(entity).toCategory().build());
     }
 
-    public List<Category> getAllCategories() {
+    public Flux<Category> getAllCategories() {
         return getCategories();
     }
 
-    public Optional<Category> getCategoryById(UUID id) {
-        return categoryRepository.findById(id)
-                .map(entity -> entity.toCategory().build());
+    public Mono<Category> getCategoryById(UUID id) {
+        return Mono.justOrEmpty(
+                categoryRepository.findById(id)
+                        .map(entity -> entity.toCategory().build())
+                        .orElse(null)
+        );
     }
 }
