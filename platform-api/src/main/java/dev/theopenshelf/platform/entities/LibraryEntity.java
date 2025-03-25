@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import dev.theopenshelf.platform.model.Library;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,10 +26,14 @@ public class LibraryEntity {
     @Id
     private UUID id;
     private String name;
+    @Column(name = "requires_approval")
     private boolean requiresApproval;
+    @Column(name = "free_access")
     private boolean freeAccess;
     private String instructions;
+    @Column(name = "is_admin")
     private boolean isAdmin;
+    @Column(name = "community_id")
     private UUID communityId;
 
     @Embedded

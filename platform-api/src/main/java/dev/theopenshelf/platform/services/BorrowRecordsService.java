@@ -1,17 +1,23 @@
 package dev.theopenshelf.platform.services;
 
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
 import dev.theopenshelf.platform.model.BorrowRecordStandalone;
 import dev.theopenshelf.platform.model.BorrowRecordsCountByStatus;
+import dev.theopenshelf.platform.model.BorrowStatus;
 import dev.theopenshelf.platform.model.PaginatedBorrowRecordsResponse;
 import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
+import dev.theopenshelf.platform.specifications.BorrowRecordSpecifications;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
@@ -22,7 +28,8 @@ public class BorrowRecordsService {
     private final BorrowRecordRepository borrowRecordRepository;
 
     @Transactional(readOnly = true)
-    public Mono<PaginatedBorrowRecordsResponse> getBorrowRecords(Boolean borrowedByCurrentUser,
+    public Mono<PaginatedBorrowRecordsResponse> getBorrowRecords(
+            Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             String sortBy,
@@ -32,60 +39,31 @@ public class BorrowRecordsService {
             String searchText,
             Integer page,
             Integer pageSize,
-            List<String> status,
+            List<BorrowStatus> status,
             Boolean favorite) {
 
-        // Get initial records
-        List<BorrowRecordEntity> records;
-        if (libraryIds != null && !libraryIds.isEmpty()) {
-            List<UUID> libraryUuids = libraryIds.stream()
-                    .map(UUID::fromString)
-                    .collect(Collectors.toList());
-            records = borrowRecordRepository.findByLibraryIdsWithItem(libraryUuids);
-        } else if (borrowedBy != null) {
-            records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
-        } else if (itemId != null) {
-            records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
-        } else {
-            records = borrowRecordRepository.findAllWithItem();
-        }
-
-        // Apply filters
-        records = records.stream()
-                .filter(record -> categories == null || categories.isEmpty() ||
-                        (record.getItem().getCategory() != null &&
-                                categories.contains(record.getItem().getCategory().getName())))
-                .filter(record -> searchText == null || searchText.isEmpty() ||
-                        record.getItem().getName().toLowerCase().contains(searchText.toLowerCase()))
-                .filter(record -> status == null || status.isEmpty() ||
-                        status.contains(record.getStatus().getValue()))
-                .filter(record -> favorite == null ||
-                        !favorite || record.getItem().isFavorite())
-                .collect(Collectors.toList());
-
-        // Validate and normalize pagination parameters
-        int validPage = Math.max(1, page != null ? page : 1);
+        int validPage = Math.max(0, (page != null ? page : 1) - 1);
         int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
 
-        // Apply sorting
+        Specification<BorrowRecordEntity> spec = BorrowRecordSpecifications.withFilters(
+                borrowedBy, itemId, libraryIds, categories, status, searchText, favorite);
+
+        Sort sort = Sort.unsorted();
         if (sortBy != null) {
-            records = sortRecords(records, sortBy, sortOrder);
+            sort = Sort.by(
+                    sortOrder != null && sortOrder.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC,
+                    sortBy);
         }
 
-        // Apply pagination
+        PageRequest pageRequest = PageRequest.of(validPage, validPageSize, sort);
+        Page<BorrowRecordEntity> recordsPage = borrowRecordRepository.findAll(spec, pageRequest);
+
         PaginatedBorrowRecordsResponse response = new PaginatedBorrowRecordsResponse();
-        response.setTotalItems(records.size());
-        response.setCurrentPage(validPage);
+        response.setTotalItems((int) recordsPage.getTotalElements());
+        response.setCurrentPage(validPage + 1);
         response.setRecordsPerPage(validPageSize);
-        response.setTotalPages((int) Math.ceil((double) records.size() / validPageSize));
-
-        int start = (validPage - 1) * validPageSize;
-        int end = Math.min(start + validPageSize, records.size());
-
-        // Ensure start index is not negative
-        start = Math.max(0, start);
-
-        response.setRecords(records.subList(start, end).stream()
+        response.setTotalPages(recordsPage.getTotalPages());
+        response.setRecords(recordsPage.getContent().stream()
                 .map(this::convertToStandalone)
                 .collect(Collectors.toList()));
 
@@ -93,65 +71,30 @@ public class BorrowRecordsService {
     }
 
     @Transactional(readOnly = true)
-    public Mono<BorrowRecordsCountByStatus> getBorrowRecordsCountByStatus(Boolean borrowedByCurrentUser,
+    public Mono<BorrowRecordsCountByStatus> getBorrowRecordsCountByStatus(
+            Boolean borrowedByCurrentUser,
             String borrowedBy,
             String itemId,
             List<String> libraryIds,
-            List<String> status) {
+            List<BorrowStatus> status) {
 
-            List<BorrowRecordEntity> records;
+        Specification<BorrowRecordEntity> spec = BorrowRecordSpecifications.withFilters(
+                borrowedBy, itemId, libraryIds, null, status, null, null);
 
-            // Handle borrowedByCurrentUser flag
+        // Use the existing specification to get filtered records
+        List<BorrowRecordEntity> records = borrowRecordRepository.findAll(spec);
 
-            if (libraryIds != null && !libraryIds.isEmpty()) {
-                List<UUID> libraryUuids = libraryIds.stream()
-                        .map(UUID::fromString)
-                        .collect(Collectors.toList());
+        // Group and count in memory
+        Map<BorrowStatus, Long> statusCounts = records.stream()
+                .collect(Collectors.groupingBy(
+                        BorrowRecordEntity::getStatus,
+                        Collectors.counting()));
 
-                if (borrowedBy != null) {
-                    records = borrowRecordRepository.findByBorrowedByAndLibraryIdsWithItem(borrowedBy,
-                            libraryUuids);
-                } else {
-                    records = borrowRecordRepository.findByLibraryIdsWithItem(libraryUuids);
-                }
-            } else if (borrowedBy != null) {
-                records = borrowRecordRepository.findByBorrowedByWithItem(borrowedBy);
-            } else if (itemId != null) {
-                records = borrowRecordRepository.findByItemIdWithItem(UUID.fromString(itemId));
-            } else {
-                records = borrowRecordRepository.findAllWithItem();
-            }
+        // Convert to response
+        BorrowRecordsCountByStatus countByStatus = new BorrowRecordsCountByStatus();
+        statusCounts.forEach((statusValue, count) -> updateStatusCount(countByStatus, statusValue, count));
 
-            // Apply status filter if needed
-            if (status != null && !status.isEmpty()) {
-                records = records.stream()
-                        .filter(record -> status.contains(record.getStatus().getValue()))
-                        .collect(Collectors.toList());
-            }
-
-            BorrowRecordsCountByStatus countByStatus = new BorrowRecordsCountByStatus();
-            records.forEach(record -> updateStatusCount(countByStatus, record));
-
-            return Mono.just(countByStatus);
-    }
-
-    private List<BorrowRecordEntity> sortRecords(List<BorrowRecordEntity> records, String sortBy, String sortOrder) {
-        boolean isDescending = "desc".equalsIgnoreCase(sortOrder);
-        records.sort((a, b) -> {
-            int comparison = compareByField(a, b, sortBy);
-            return isDescending ? -comparison : comparison;
-        });
-        return records;
-    }
-
-    private int compareByField(BorrowRecordEntity a, BorrowRecordEntity b, String field) {
-        return switch (field.toLowerCase()) {
-            case "borrowedby" -> a.getBorrowedBy().compareTo(b.getBorrowedBy());
-            case "startdate" -> a.getStartDate().compareTo(b.getStartDate());
-            case "enddate" -> a.getEndDate().compareTo(b.getEndDate());
-            case "status" -> a.getStatus().compareTo(b.getStatus());
-            default -> 0;
-        };
+        return Mono.just(countByStatus);
     }
 
     private BorrowRecordStandalone convertToStandalone(BorrowRecordEntity record) {
@@ -168,28 +111,31 @@ public class BorrowRecordsService {
                 .build();
     }
 
-    private void updateStatusCount(BorrowRecordsCountByStatus countByStatus, BorrowRecordEntity record) {
-        switch (record.getStatus()) {
+    private void updateStatusCount(BorrowRecordsCountByStatus countByStatus, BorrowStatus statusValue,
+            Long statusCount) {
+        switch (statusValue) {
             case RESERVED_UNCONFIRMED ->
-                countByStatus.setReservedUnconfirmed(getOrDefault(countByStatus.getReservedUnconfirmed()) + 1);
+                countByStatus.setReservedUnconfirmed(statusCount.intValue());
             case RESERVED_CONFIRMED ->
-                countByStatus.setReservedConfirmed(getOrDefault(countByStatus.getReservedConfirmed()) + 1);
+                countByStatus.setReservedConfirmed(statusCount.intValue());
             case RESERVED_READY_TO_PICKUP ->
-                countByStatus.setReservedReadyToPickup(getOrDefault(countByStatus.getReservedReadyToPickup()) + 1);
+                countByStatus.setReservedReadyToPickup(statusCount.intValue());
+            case RESERVED_PICKUP_UNCONFIRMED ->
+                countByStatus.setReservedPickupUnconfirmed(statusCount.intValue());
             case BORROWED_ACTIVE ->
-                countByStatus.setBorrowedActive(getOrDefault(countByStatus.getBorrowedActive()) + 1);
+                countByStatus.setBorrowedActive(statusCount.intValue());
+            case BORROWED_DUE_TODAY ->
+                countByStatus.setBorrowedDueToday(statusCount.intValue());
             case BORROWED_LATE ->
-                countByStatus.setBorrowedLate(getOrDefault(countByStatus.getBorrowedLate()) + 1);
+                countByStatus.setBorrowedLate(statusCount.intValue());
+            case BORROWED_RETURN_UNCONFIRMED ->
+                countByStatus.setBorrowedReturnUnconfirmed(statusCount.intValue());
             case RETURNED_EARLY ->
-                countByStatus.setReturnedEarly(getOrDefault(countByStatus.getReturnedEarly()) + 1);
+                countByStatus.setReturnedEarly(statusCount.intValue());
             case RETURNED_ON_TIME ->
-                countByStatus.setReturnedOnTime(getOrDefault(countByStatus.getReturnedOnTime()) + 1);
+                countByStatus.setReturnedOnTime(statusCount.intValue());
             case RETURNED_LATE ->
-                countByStatus.setReturnedLate(getOrDefault(countByStatus.getReturnedLate()) + 1);
+                countByStatus.setReturnedLate(statusCount.intValue());
         }
-    }
-
-    private Integer getOrDefault(Integer value) {
-        return value == null ? 0 : value;
     }
 }

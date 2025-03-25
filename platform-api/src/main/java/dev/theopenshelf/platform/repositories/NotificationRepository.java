@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import dev.theopenshelf.platform.entities.NotificationEntity;
 
 @Repository
-public interface NotificationRepository extends CrudRepository<NotificationEntity, Long> {
+public interface NotificationRepository extends CrudRepository<NotificationEntity, UUID> {
     List<NotificationEntity> findAllByUserId(UUID userId);
 
     long countByUserIdAndAlreadyReadFalse(UUID userId);

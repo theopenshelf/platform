@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "notifications")
 public class NotificationEntity {
     @Id
-    private Long id;
+    private UUID id;
 
     @Column(nullable = false)
     private UUID userId;
@@ -56,7 +56,7 @@ public class NotificationEntity {
         }
 
         return Notification.builder()
-                .id(id.intValue())
+                .id(id)
                 .author(author)
                 .date(date != null ? OffsetDateTime.ofInstant(date, ZoneOffset.UTC) : null)
                 .type(Notification.TypeEnum.valueOf(type.name()))

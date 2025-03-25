@@ -25,7 +25,7 @@ public class NotificationsService {
                     try {
                         notifList.forEach(notification -> {
                             NotificationEntity entity = notificationRepository
-                                    .findById(notification.getId().longValue())
+                                    .findById(notification.getId())
                                     .orElseThrow();
                             entity.setAlreadyRead(true);
                             notificationRepository.save(entity);

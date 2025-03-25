@@ -1,6 +1,5 @@
 package dev.theopenshelf.platform.entities;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.UUID;
@@ -33,16 +32,24 @@ public class UserEntity {
     private String username;
     private String password;
     private String email;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "flat_number")
     private String flatNumber;
+    @Column(name = "street_address")
     private String streetAddress;
     private String city;
+    @Column(name = "postal_code")
     private String postalCode;
     private String country;
+    @Column(name = "preferred_language")
     private String preferredLanguage;
+    @Column(name = "avatar_url")
     private String avatarUrl;
     private boolean disabled = false;
+    @Column(name = "is_email_verified")
     private boolean isEmailVerified = false;
 
     @ElementCollection(fetch = FetchType.EAGER)

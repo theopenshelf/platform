@@ -9,6 +9,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import dev.theopenshelf.platform.api.BorrowRecordsHubApiApiDelegate;
 import dev.theopenshelf.platform.model.BorrowRecordsCountByStatus;
+import dev.theopenshelf.platform.model.BorrowStatus;
 import dev.theopenshelf.platform.model.PaginatedBorrowRecordsResponse;
 import dev.theopenshelf.platform.services.BorrowRecordsService;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
             String searchText,
             Integer page,
             Integer pageSize,
-            List<String> status,
+            List<BorrowStatus> status,
             Boolean favorite,
             ServerWebExchange exchange) {
 
@@ -61,7 +62,7 @@ public class BorrowRecordsHubApi implements BorrowRecordsHubApiApiDelegate {
             String borrowedBy,
             String itemId,
             List<String> libraryIds,
-            List<String> status,
+            List<BorrowStatus> status,
             ServerWebExchange exchange) {
 
         return exchange.getPrincipal()

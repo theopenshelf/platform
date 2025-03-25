@@ -42,7 +42,7 @@ public class CustomPageEntity {
 
     public CustomPage toCustomPage() {
         return new CustomPage()
-                .id(id != null ? id.toString() : null)
+                .id(id)
                 .ref(ref)
                 .title(title)
                 .content(content)
@@ -51,7 +51,7 @@ public class CustomPageEntity {
 
     public static CustomPageEntity fromCustomPage(CustomPage customPage) {
         return CustomPageEntity.builder()
-                .id(customPage.getId() != null ? UUID.fromString(customPage.getId()) : UUID.randomUUID())
+                .id(customPage.getId() != null ? customPage.getId() : UUID.randomUUID())
                 .ref(customPage.getRef())
                 .title(customPage.getTitle())
                 .content(customPage.getContent())

@@ -64,7 +64,7 @@ public class UsersService {
         public Mono<UserWithStats> getUserWithStats(UUID id) {
                 return Mono.justOrEmpty(usersRepository.findById(id)
                                 .map(entity -> UserWithStats.builder()
-                                                .id(entity.getId().toString())
+                                                .id(entity.getId())
                                                 .username(entity.getUsername())
                                                 .firstName(entity.getFirstName())
                                                 .lastName(entity.getLastName())
@@ -89,7 +89,7 @@ public class UsersService {
         public Flux<UserWithStats> getUsersWithStats() {
                 return Flux.fromIterable(usersRepository.findAll())
                                 .map(entity -> UserWithStats.builder()
-                                                .id(entity.getId().toString())
+                                                .id(entity.getId())
                                                 .username(entity.getUsername())
                                                 .firstName(entity.getFirstName())
                                                 .lastName(entity.getLastName())
@@ -111,7 +111,7 @@ public class UsersService {
         }
 
         public Mono<UserWithStats> saveUser(UserWithStats user) {
-                UserEntity entity = user.getId() != null ? usersRepository.findById(UUID.fromString(user.getId()))
+                UserEntity entity = user.getId() != null ? usersRepository.findById(user.getId())
                                 .orElseThrow(() -> new RuntimeException("User not found"))
                                 : UserEntity.builder()
                                                 .id(UUID.randomUUID())

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import dev.theopenshelf.platform.model.Community;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -27,6 +28,7 @@ public class CommunityEntity {
     private String name;
     private String picture;
     private String description;
+    @Column(name = "requires_approval")
     private boolean requiresApproval;
 
     @Embedded

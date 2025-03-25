@@ -256,24 +256,31 @@ export class FilteredAndPaginatedComponent implements OnInit {
       if (this.getItemsCountByStatus()) {
         this.getItemsCountByStatus()!(
           this.getItemsParams()
-        ).subscribe((countMap) => {
-          this.statusCounts = countMap;
-          if (this.activeStatusIndex === -1) {
-            let i = 0;
-            for (const status of this.statuses) {
-              if (this.getStatusCount(status.status) > 0) {
-                this.activeStatusIndex = i;
-                break;
-              }
-              i++;
-            }
+        ).subscribe({
+          next: (countMap) => {
+            this.statusCounts = countMap;
+            // Trigger status tab recalculation
+            this.statuses = this.statuses.map(status => ({
+              ...status,
+              count: this.getStatusCount(status.status)
+            }));
+            // If needed, also trigger change detection
+            this.cdr.detectChanges();
             if (this.activeStatusIndex === -1) {
-              this.activeStatusIndex = 0;
+              let i = 0;
+              for (const status of this.statuses) {
+                if (this.getStatusCount(status.status) > 0) {
+                  this.activeStatusIndex = i;
+                  break;
+                }
+                i++;
+              }
+              if (this.activeStatusIndex === -1) {
+                this.activeStatusIndex = 0;
+              }
+              this.selectedStatus = this.statuses[this.activeStatusIndex].status;
             }
-            this.selectedStatus = this.statuses[this.activeStatusIndex].status;
           }
-
-
         });
       } else {
         if (this.activeStatusIndex === -1) {
@@ -464,8 +471,17 @@ export class FilteredAndPaginatedComponent implements OnInit {
     if (this.getItemsCountByStatus()) {
       this.getItemsCountByStatus()!(
         this.getItemsParams()
-      ).subscribe((countMap) => {
-        this.statusCounts = countMap;
+      ).subscribe({
+        next: (countMap) => {
+          this.statusCounts = countMap;
+          // Trigger status tab recalculation
+          this.statuses = this.statuses.map(status => ({
+            ...status,
+            count: this.getStatusCount(status.status)
+          }));
+          // If needed, also trigger change detection
+          this.cdr.detectChanges();
+        }
       });
     }
   }

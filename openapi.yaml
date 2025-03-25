@@ -649,19 +649,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              enum:
-                - reserved-unconfirmed
-                - reserved-confirmed
-                - reserved-ready-to-pickup
-                - reserved-pickup-unconfirmed
-                - borrowed-active
-                - borrowed-due-today
-                - borrowed-late
-                - borrowed-return-unconfirmed
-                - returned-early
-                - returned-on-time
-                - returned-late
+              $ref: "#/components/schemas/BorrowStatus" # Instead of repeating enum values
       responses:
         "200":
           description: A paginated list of borrow records
@@ -752,19 +740,7 @@ paths:
           schema:
             type: array
             items:
-              type: string
-              enum:
-                - reserved-unconfirmed
-                - reserved-confirmed
-                - reserved-ready-to-pickup
-                - reserved-pickup-unconfirmed
-                - borrowed-active
-                - borrowed-due-today
-                - borrowed-late
-                - borrowed-return-unconfirmed
-                - returned-early
-                - returned-on-time
-                - returned-late
+              $ref: "#/components/schemas/BorrowStatus" # Instead of repeating enum values
         - name: favorite
           in: query
           description: Filter items by favorite status
@@ -2589,8 +2565,8 @@ components:
         - alreadyRead
       properties:
         id:
-          type: integer
-          example: 1
+          type: string
+          format: uuid
         author:
           type: string
           example: "system"
@@ -2649,6 +2625,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         username:
           type: string
         firstName:
@@ -2910,6 +2887,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         name:
           type: string
         icon:
@@ -2923,6 +2901,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         title:
           type: string
         content:
@@ -2944,6 +2923,7 @@ components:
       properties:
         id:
           type: string
+          format: uuid
         communityId:
           type: string
           format: uuid

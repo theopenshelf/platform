@@ -1,5 +1,6 @@
 package dev.theopenshelf.platform.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -18,5 +19,6 @@ public class SettingsEntity {
     @Id
     private String key;
     private String value;
+    @Column(name = "is_public")
     private boolean isPublic;
 }

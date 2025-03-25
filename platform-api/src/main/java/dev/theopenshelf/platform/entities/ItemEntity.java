@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import dev.theopenshelf.platform.model.Item;
 import dev.theopenshelf.platform.model.ItemStat;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -39,18 +40,24 @@ public class ItemEntity {
     private UUID id;
     private String name;
     private String description;
+    @Column(name = "short_description")
     private String shortDescription;
+    @Column(name = "image_url")
     private String imageUrl;
     private String owner;
+    @Column(name = "borrow_count")
     private Integer borrowCount = 0;
     private boolean favorite = false;
+    @Column(name = "library_id")
     private UUID libraryId;
+    @Column(name = "community_id")
     private UUID communityId;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
 
+    @Column(name = "created_at")
     private Instant createdAt;
 
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)

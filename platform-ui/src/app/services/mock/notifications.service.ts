@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { v4 as uuidv4 } from 'uuid';
 import { loadNotificationsData } from '../../mock/notifications-loader';
 import { UINotification, UINotificationType } from '../../models/UINotification';
 import { EventService, TosEventType } from '../../portal/hub/services/event.service';
@@ -41,7 +42,7 @@ export class MockNotificationsService implements NotificationsService {
 
   pushNewNotification(notification: MockNotification) {
     this.notifications.unshift({
-      id: this.notifications.length + 1,
+      id: uuidv4(),
       author: 'The Open Shelf',
       date: new Date().toISOString(),
       alreadyRead: false,

@@ -2,11 +2,9 @@ package dev.theopenshelf.platform.entities;
 
 import java.math.BigDecimal;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import dev.theopenshelf.platform.model.Location;
 import dev.theopenshelf.platform.model.LocationCoordinates;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import lombok.AllArgsConstructor;
@@ -20,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocationEntity {
+    @Column(name = "location_name")
     private String locationName;
     private String address;
 

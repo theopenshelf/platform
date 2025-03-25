@@ -147,8 +147,6 @@ export class APIItemsService implements ItemsService {
       favorite,
     } = params;
 
-
-
     let statusesValue: ('reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late')[] = [];
     statusesValue = statuses ? statuses.map(status => this.statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
 

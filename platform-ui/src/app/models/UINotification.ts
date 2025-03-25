@@ -13,7 +13,7 @@ export enum UINotificationType {
 }
 
 export interface UINotification {
-    id: number;
+    id: string;
     author: string;
     date: string;
     type: UINotificationType;

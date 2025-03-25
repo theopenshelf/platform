@@ -277,7 +277,7 @@ def generate_data_sql():
     sql_statements.extend(generate_library_members_sql(libraries, user_id_map, library_id_map))
     sql_statements.append("")
 
-    with open('data-test.sql', 'w') as file:
+    with open('platform/db/postgres/data.sql', 'w') as file:
         for statement in sql_statements:
             file.write(statement + '\n')
 

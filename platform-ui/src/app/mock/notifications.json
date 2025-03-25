@@ -1,6 +1,6 @@
 [
     {
-      "id": 4,
+      "id": "4",
       "author": "Platform",
       "date": "2024-11-21",
       "type": "item-available",
@@ -10,7 +10,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "author": "Platform",
       "date": "2024-11-20",
       "type": "item-due",
@@ -21,7 +21,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "author": "Platform",
       "date": "2024-11-19",
       "type": "item-borrow-reservation-date-start",
@@ -32,7 +32,7 @@
       }
     },
     {
-      "id": 1,
+      "id": "1",
       "author": "Platform",
       "date": "2024-11-19",
       "type": "item-reserved-no-longer-available",

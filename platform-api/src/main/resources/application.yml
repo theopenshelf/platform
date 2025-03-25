@@ -33,7 +33,7 @@ spring:
     password: local
   jpa:
     hibernate:
-      ddl-auto: update # "update" pour dev, "validate" ou "none" pour prod
+      ddl-auto: none # "update" pour dev, "validate" ou "none" pour prod
     show-sql: true # Affiche les requêtes SQL dans les logs
     properties:
       hibernate:
@@ -41,4 +41,5 @@ spring:
 
 logging:
   level:
-    org.springframework.web: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE # This shows the parameter values

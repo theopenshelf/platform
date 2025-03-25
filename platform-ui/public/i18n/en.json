@@ -101,7 +101,8 @@
       "borrowed-return-unconfirmed": "Borrowed Return Unconfirmed",
       "returned-early": "Returned Early",
       "returned": "Returned",
-      "returned-late": "Returned Late"
+      "returned-late": "Returned Late",
+      "returned-on-time": "Returned"
     }
   },
   "search": {

@@ -101,7 +101,8 @@
       "borrowed-return-unconfirmed": "Retour non confirmé",
       "returned-early": "Retourné en avance",
       "returned": "Retourné",
-      "returned-late": "Retourné en retard"
+      "returned-late": "Retourné en retard",
+      "returned-on-time": "Retourné"
     }
   },
   "search": {

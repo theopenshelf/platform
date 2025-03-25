@@ -34,7 +34,7 @@ public class HelpCategoryEntity {
 
     public HelpCategory.HelpCategoryBuilder toHelpCategory() {
         return HelpCategory.builder()
-                .id(id.toString())
+                .id(id)
                 .name(name)
                 .icon(icon)
                 .order(displayOrder);
@@ -42,7 +42,7 @@ public class HelpCategoryEntity {
 
     public static HelpCategoryEntity fromHelpCategory(HelpCategory category) {
         return HelpCategoryEntity.builder()
-                .id(category.getId() != null ? UUID.fromString(category.getId()) : UUID.randomUUID())
+                .id(category.getId() != null ? category.getId() : UUID.randomUUID())
                 .name(category.getName())
                 .icon(category.getIcon())
                 .displayOrder(category.getOrder())

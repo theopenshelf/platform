@@ -34,7 +34,7 @@ public class HelpArticleEntity {
 
     public HelpArticle.HelpArticleBuilder toHelpArticle() {
         return HelpArticle.builder()
-                .id(id.toString())
+                .id(id)
                 .title(title)
                 .content(content)
                 .order(displayOrder)
@@ -43,7 +43,7 @@ public class HelpArticleEntity {
 
     public static HelpArticleEntity fromHelpArticle(HelpArticle article) {
         return HelpArticleEntity.builder()
-                .id(article.getId() != null ? UUID.fromString(article.getId()) : UUID.randomUUID())
+                .id(article.getId() != null ? article.getId() : UUID.randomUUID())
                 .title(article.getTitle())
                 .content(article.getContent())
                 .displayOrder(article.getOrder())
