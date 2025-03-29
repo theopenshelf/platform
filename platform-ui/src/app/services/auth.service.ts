@@ -13,6 +13,8 @@ export interface UserInfo {
 export interface AuthService {
   message: string;
   getCurrentUserInfo(): UserInfo;
+  getUserProfile(): Observable<UIUser>;
+  initializeSession(): Promise<void>;
   signIn(username: string, password: string): Observable<boolean>;
   hasRole(role: string): boolean;
   signUp(

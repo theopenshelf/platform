@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable, of } from 'rxjs';
 import { AuthApiService } from '../../api-client';
+import { UIUser } from '../../models/UIUser';
 import { MockUsersService } from '../../portal/hub/services/mock/users.service';
 import { AuthService, UserInfo } from '../auth.service';
 
@@ -44,6 +45,16 @@ export class MockAuthService implements AuthService {
   ) {
     this.userInfo.user = this.usersService.getUserByUsername('me');
   }
+
+  async initializeSession(): Promise<void> {
+    const userProfile = await firstValueFrom(this.getUserProfile());
+    this.userInfo.user = userProfile;
+  }
+
+  getUserProfile(): Observable<UIUser> {
+    return of(this.usersService.getUserByUsername('me'));
+  }
+
   verifyEmail(token: string): Observable<boolean> {
     return new Observable<boolean>((observer) => {
       observer.next(true);

@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import {
+  ChangeDetectorRef,
   Component,
   computed,
   Inject,
@@ -101,7 +102,8 @@ export class ItemComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private borrowDialogService: BorrowDialogService,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.currentUser = this.authService.getCurrentUserInfo();
   }
@@ -126,6 +128,7 @@ export class ItemComponent implements OnInit {
       this.setItem(item);
       this.librariesService.getLibrary(item.libraryId).subscribe((library) => {
         this.library = library;
+        this.changeDetectorRef.detectChanges();
       });
       this.route.queryParams.subscribe(params => {
         const action = params['ACTION'];
@@ -214,7 +217,6 @@ export class ItemComponent implements OnInit {
   }
 
   reserveItem() {
-    debugger;
     this.borrowDialogService.reserveItemWithPreselectedDate(this.currentUser, this.selectedDate!, this.item!, this.itemsService, this.library).pipe(
       tap((item) => {
         this.item = item;

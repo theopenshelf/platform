@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
@@ -20,6 +21,8 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 import org.springframework.web.server.session.CookieWebSessionIdResolver;
 
+import reactor.core.publisher.Mono;
+
 @Configuration
 @EnableWebFluxSecurity
 public class SecurityConfig {
@@ -32,6 +35,11 @@ public class SecurityConfig {
                 .csrf((csrf) -> csrf.disable())
                 .authenticationManager(authenticationManager())
                 .securityContextRepository(securityContextRepository())
+                .exceptionHandling(handling -> handling
+                        .authenticationEntryPoint((exchange, ex) -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                            return Mono.empty();
+                        }))
                 .authorizeExchange(exchanges -> exchanges
                         .pathMatchers("/actuator/**", "/api/actuator/**").permitAll()
                         .pathMatchers("/public/**", "/api/public/**").permitAll()

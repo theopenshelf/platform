@@ -168,7 +168,7 @@ public class ItemService {
             throw new IllegalStateException("Cannot confirmed reservation of a borrow record not in reservation unconfirmed");
         }
         //TODO handle disapproved
-        record.setStatus(BorrowStatus.RESERVED_UNCONFIRMED);
+        record.setStatus(BorrowStatus.RESERVED_CONFIRMED);
         borrowRecordRepository.save(record);
         return Mono.just(itemRepository.save(item));
     }
@@ -273,19 +273,21 @@ public class ItemService {
     public boolean isApprovalRequired(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        LibraryMemberEntity member = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        MemberRole role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .map(m -> m.getRole())
+                .orElse(MemberRole.MEMBER);
 
-        return !member.getRole().equals(MemberRole.ADMIN) && library.isRequiresApproval();
+        return !role.equals(MemberRole.ADMIN) && library.isRequiresApproval();
     }
 
     public void checkIfApprovalIsRequiredAndPermission(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        LibraryMemberEntity member = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        MemberRole role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .map(m -> m.getRole())
+                .orElse(MemberRole.MEMBER);
 
-        if (!member.getRole().equals(MemberRole.ADMIN)) {
+        if (!role.equals(MemberRole.ADMIN)) {
             throw new AuthorizationDeniedException("Only the library admin can approve actions");
         }
 

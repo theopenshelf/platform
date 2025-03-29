@@ -32,4 +32,16 @@ public class ProfileCommunityApi implements ProfileHubApiApiDelegate {
                     return Mono.just(ResponseEntity.internalServerError().build());
                 });
     }
+
+    @Override
+    public Mono<ResponseEntity<User>> getProfile(ServerWebExchange exchange) {
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(userId -> usersService.getProfile(userId))
+                .map(ResponseEntity::ok)
+                .onErrorResume(e -> {
+                    log.error("Failed to update user profile", e);
+                    return Mono.just(ResponseEntity.internalServerError().build());
+                });
+    }
 }

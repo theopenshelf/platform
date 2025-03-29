@@ -61,6 +61,13 @@ public class UsersService {
                 return Mono.just(savedEntity.toUser().build());
         }
 
+        public Mono<User> getProfile(UUID userId) {
+                log.info("Get profile for user: {}", userId);
+                UserEntity userEntity = usersRepository.findById(userId)
+                        .orElseThrow(() -> new RuntimeException("User not found"));
+                return Mono.just(userEntity.toUser().build());
+        }
+
         public Mono<UserWithStats> getUserWithStats(UUID id) {
                 return Mono.justOrEmpty(usersRepository.findById(id)
                                 .map(entity -> UserWithStats.builder()

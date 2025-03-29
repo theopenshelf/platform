@@ -309,7 +309,6 @@ export class APIItemsService implements ItemsService {
     endDate: string,
     borrowBy: UIUser,
   ): Observable<UIItem> {
-    debugger
     return this.itemsApiService
       .borrowItem(item.id, { borrowBy: borrowBy.id, startDate, endDate })
       .pipe(

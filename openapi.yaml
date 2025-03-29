@@ -825,6 +825,20 @@ paths:
                   $ref: "#/components/schemas/Category"
 
   /hub/profile:
+    get:
+      operationId: getProfile
+      summary: Get the current user's profile
+      tags:
+        - profile-hub-api
+      responses:
+        "200":
+          description: get profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found
     put:
       operationId: updateProfile
       summary: Update the current user's profile

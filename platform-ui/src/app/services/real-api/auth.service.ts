@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { TuiAlertService } from '@taiga-ui/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthApiService, User } from '../../api-client';
+import { AuthApiService, ProfileHubApiService, User } from '../../api-client';
+import { UIUser } from '../../models/UIUser';
 import { AuthService, UserInfo } from '../auth.service';
 
 @Injectable({
@@ -40,8 +41,33 @@ export class APIAuthService implements AuthService {
   constructor(
     private router: Router,
     private authApiService: AuthApiService,
+    private profileApiService: ProfileHubApiService,
     private alerts: TuiAlertService,
   ) { }
+
+
+  async initializeSession(): Promise<void> {
+    try {
+      const userProfile = await firstValueFrom(this.getUserProfile());
+      this.userInfo.user = userProfile;
+    } catch (error) {
+      // Handle failed session restoration (e.g., expired cookie)
+      this.signOut();
+    }
+  }
+
+  getUserProfile(): Observable<UIUser> {
+    return this.profileApiService.getProfile().pipe(
+      map((user: User) => {
+        return {
+          ...user,
+          borrowedItems: 0,
+          returnedLate: 0,
+          successRate: 0,
+        } as UIUser;
+      })
+    );
+  }
 
   verifyEmail(token: string): Observable<boolean> {
     return this.authApiService.verifyEmail(token).pipe(

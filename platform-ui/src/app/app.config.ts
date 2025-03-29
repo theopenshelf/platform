@@ -18,8 +18,10 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { BASE_PATH, Configuration } from './api-client';
 import { routes } from './app.routes';
-import { getGlobalProviders } from './global.provider';
+import { AUTH_SERVICE_TOKEN, getGlobalProviders } from './global.provider';
 import { errorInterceptor } from './interceptors/error.interceptor';
+import { xhrInterceptor } from './interceptors/xhr.interceptor';
+import { AuthService } from './services/auth.service';
 import { ConfigService } from './services/config.service';
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
@@ -52,9 +54,15 @@ export const appConfig: ApplicationConfig = {
       deps: []
     },
     ...getGlobalProviders(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (initializer: AuthService) => () => initializer.initializeSession(),
+      deps: [AUTH_SERVICE_TOKEN],  // Use the injection token instead of the interface
+      multi: true
+    },
     provideAnimations(),
     provideHttpClient(
-      withInterceptors([errorInterceptor])
+      withInterceptors([errorInterceptor, xhrInterceptor])
     ),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(
