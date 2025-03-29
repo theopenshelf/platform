@@ -56,7 +56,7 @@ public class LibrariesService {
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
 
         Optional<CommunityMemberEntity> member = communitiesService.isMember(library.getCommunityId(), currentUser);
-        if (member.isEmpty() || !member.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
+        if (member.isEmpty() || member.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
             throw new AuthorizationDeniedException("Only the community member can create libraries");
         }
         return Mono.just(library);
@@ -70,7 +70,7 @@ public class LibrariesService {
     }
 
     public Mono<LibraryEntity> updateLibrary(UUID libraryId, Library library, UUID currentUser) {
-        LibraryEntity libraryEntity = libraryRepository.findById(libraryId)
+        LibraryEntity libraryEntity = libraryRepository.findByIdWithMembers(libraryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
 
         Optional<LibraryMemberEntity> libraryMember = libraryEntity.getMembers().stream()
@@ -114,7 +114,7 @@ public class LibrariesService {
     }
 
     public Mono<PaginatedLibraryMembersResponse> getLibraryMembers(UUID libraryId, UUID currentUser, Integer page, Integer pageSize) {
-        LibraryEntity library = libraryRepository.findById(libraryId)
+        LibraryEntity library = libraryRepository.findByIdWithMembers(libraryId)
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
 
         Optional<LibraryMemberEntity> libraryMember = library.getMembers().stream()

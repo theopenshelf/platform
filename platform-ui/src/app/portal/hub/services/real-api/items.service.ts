@@ -247,6 +247,14 @@ export class APIItemsService implements ItemsService {
             libraryId: item.libraryId,
             favorite: item.favorite,
             borrowCount: item.borrowCount,
+            borrowRecords: item.borrowRecords.map(record => ({
+              ...record,
+              startDate: record.startDate ? new Date(record.startDate) : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              reservationDate: record.reservationDate ? new Date(record.reservationDate) : undefined,
+              effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : undefined,
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+            })) as UIBorrowRecord[],
             createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
           }) as UIItem,
       ),
@@ -301,6 +309,7 @@ export class APIItemsService implements ItemsService {
     endDate: string,
     borrowBy: UIUser,
   ): Observable<UIItem> {
+    debugger
     return this.itemsApiService
       .borrowItem(item.id, { borrowBy: borrowBy.id, startDate, endDate })
       .pipe(

@@ -52,7 +52,7 @@ export class BorrowDialogService {
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser ? response.selectedUser : user.user, itemsService);
                     }
                     return EMPTY;
                 })
@@ -121,7 +121,7 @@ export class BorrowDialogService {
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser ? response.selectedUser : user.user, itemsService);
                     }
                     return EMPTY;
                 }));
@@ -154,7 +154,7 @@ export class BorrowDialogService {
             .pipe(
                 switchMap((response) => {
                     if (response.action === 'confirm') {
-                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser, itemsService);
+                        return this.borrowItemConfirmation(item, response.selectedDate!, response.selectedUser ? response.selectedUser : user.user, itemsService);
                     }
                     return EMPTY;
                 }));

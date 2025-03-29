@@ -214,6 +214,7 @@ export class ItemComponent implements OnInit {
   }
 
   reserveItem() {
+    debugger;
     this.borrowDialogService.reserveItemWithPreselectedDate(this.currentUser, this.selectedDate!, this.item!, this.itemsService, this.library).pipe(
       tap((item) => {
         this.item = item;

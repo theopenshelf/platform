@@ -8,33 +8,39 @@ import java.util.UUID;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
 import dev.theopenshelf.platform.entities.ItemEntity;
+import dev.theopenshelf.platform.entities.LibraryEntity;
+import dev.theopenshelf.platform.entities.LibraryMemberEntity;
+import dev.theopenshelf.platform.entities.MemberRole;
+import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
+import dev.theopenshelf.platform.model.ApprovalReservationRequest;
 import dev.theopenshelf.platform.model.BorrowItemRequest;
 import dev.theopenshelf.platform.model.BorrowRecord;
 import dev.theopenshelf.platform.model.BorrowStatus;
 import dev.theopenshelf.platform.model.Item;
 import dev.theopenshelf.platform.model.ItemStat;
 import dev.theopenshelf.platform.model.PaginatedItemsResponse;
+import dev.theopenshelf.platform.model.ReturnItemRequest;
 import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
 import dev.theopenshelf.platform.repositories.ItemsRepository;
+import dev.theopenshelf.platform.repositories.LibraryRepository;
 import dev.theopenshelf.platform.specifications.ItemSpecifications;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class ItemService {
     private final ItemsRepository itemRepository;
     private final BorrowRecordRepository borrowRecordRepository;
-
-    public ItemService(ItemsRepository itemRepository, BorrowRecordRepository borrowRecordRepository) {
-        this.itemRepository = itemRepository;
-        this.borrowRecordRepository = borrowRecordRepository;
-    }
+    private final LibraryRepository libraryRepository;
 
     public Mono<ItemEntity> createItem(Item item, UUID ownerId) {
         ItemEntity entity = ItemEntity.builder()
@@ -77,7 +83,7 @@ public class ItemService {
 
         try {
             // Validate and normalize input parameters
-            int validPage = Math.max(0, page != null ? page : 0);
+            int validPage = Math.max(0, page != null ? page - 1 : 0);
             int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
             String validSortBy = sortBy != null ? sortBy : "createdAt";
             Sort.Direction direction = Sort.Direction.fromString(sortOrder != null ? sortOrder : "ASC");
@@ -114,20 +120,35 @@ public class ItemService {
         }
     }
 
-    public Mono<BorrowRecordEntity> createBorrowRecord(UUID itemId, UUID borrowerId, BorrowItemRequest request) {
+    public Mono<BorrowRecordEntity> reserveOrBorrowNow(UUID itemId, UUID currentUserId, BorrowItemRequest request) {
         ItemEntity item = itemRepository.findById(itemId).orElse(null);
         if (item == null) {
             return Mono.empty();
         }
 
+        UUID borrower = currentUserId;
+        if (request.getBorrowBy() != null) {
+            borrower = request.getBorrowBy();
+        }
+        LocalDate now = LocalDate.now();
+        BorrowStatus status;
+        if (request.getStartDate().isAfter(now)) {
+            status = isApprovalRequired(currentUserId, item) ? BorrowStatus.RESERVED_UNCONFIRMED : BorrowStatus.RESERVED_CONFIRMED;
+        } else {
+            status = isApprovalRequired(currentUserId, item) ? BorrowStatus.RESERVED_PICKUP_UNCONFIRMED : BorrowStatus.RESERVED_READY_TO_PICKUP;
+        }
+        //TODO verify the item is not currently borrowed or reserved
+        //TODO verify the reservation date are not conflicting with other borrow
+
+
         BorrowRecordEntity borrowRecord = BorrowRecordEntity.builder()
                 .id(UUID.randomUUID())
                 .item(item)
-                .borrowedBy(borrowerId.toString())
+                .borrowedBy(borrower.toString())
                 .startDate(request.getStartDate())
                 .endDate(request.getEndDate())
                 .reservationDate(LocalDate.now())
-                .status(BorrowStatus.RESERVED_UNCONFIRMED)
+                .status(status)
                 .build();
 
         item.setBorrowCount(item.getBorrowCount() + 1);
@@ -135,7 +156,63 @@ public class ItemService {
         return Mono.just(borrowRecordRepository.save(borrowRecord));
     }
 
-    public Mono<ItemEntity> updateBorrowStatus(UUID itemId, UUID recordId, String decision) {
+    public Mono<ItemEntity> approvalReservation(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
+        ItemEntity item = itemRepository.findById(itemId).orElse(null);
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
+
+        if (item == null || record == null) {
+            return Mono.empty();
+        }
+        checkIfApprovalIsRequiredAndPermission(userId, item);
+        if (record.getStatus() != BorrowStatus.RESERVED_UNCONFIRMED) {
+            throw new IllegalStateException("Cannot confirmed reservation of a borrow record not in reservation unconfirmed");
+        }
+        //TODO handle disapproved
+        record.setStatus(BorrowStatus.RESERVED_UNCONFIRMED);
+        borrowRecordRepository.save(record);
+        return Mono.just(itemRepository.save(item));
+    }
+
+
+    public Mono<ItemEntity> pickupItem(UUID itemId, UUID userId, ReturnItemRequest request) {
+        return Mono.justOrEmpty(itemRepository.findById(itemId))
+                .map(item ->  borrowRecordRepository.findByItemIdAndBorrowedBy(itemId, userId.toString())
+                        .map(record -> {
+                            if (record.getStatus() != BorrowStatus.RESERVED_READY_TO_PICKUP) {
+                                throw new IllegalStateException("Cannot pickup an item not in ready to pickup state");
+                            }
+
+                            BorrowStatus status = isApprovalRequired(userId, item) ? BorrowStatus.RESERVED_PICKUP_UNCONFIRMED : BorrowStatus.BORROWED_ACTIVE;
+
+                            record.setStatus(status);
+                            record.setPickupDate(LocalDate.now());
+                            borrowRecordRepository.save(record);
+                            return item;
+                        })
+                        .flatMap(i -> itemRepository.findById(itemId))
+                        .orElseThrow()
+                );
+    }
+
+    public Mono<ItemEntity> approvalPickup(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
+        ItemEntity item = itemRepository.findById(itemId).orElse(null);
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
+
+        if (item == null || record == null) {
+            return Mono.empty();
+        }
+        checkIfApprovalIsRequiredAndPermission(userId, item);
+        if (record.getStatus() != BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
+            throw new IllegalStateException("Cannot confirmed reservation of a borrow record not in pickup unconfirmed");
+        }
+
+        //TODO handle disapproved
+        record.setStatus(BorrowStatus.BORROWED_ACTIVE);
+        borrowRecordRepository.save(record);
+        return Mono.just(itemRepository.save(item));
+    }
+
+    public Mono<ItemEntity> returnItem(UUID userId, UUID itemId, UUID recordId) {
         ItemEntity item = itemRepository.findById(itemId).orElse(null);
         BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
 
@@ -143,46 +220,80 @@ public class ItemService {
             return Mono.empty();
         }
 
-        updateBorrowRecordStatus(record, decision);
+        switch (record.getStatus()) {
+            case BORROWED_LATE:
+            case BORROWED_ACTIVE:
+            case BORROWED_DUE_TODAY:
+                log.info("The borrow record is in a valid state to be returned '" + record.getStatus()+ "'");
+                break;
+            default:
+                throw new IllegalStateException("Cannot returned an item that is currently not borrowed");
+        }
+
+        LocalDate today = LocalDate.now();
+        if (isApprovalRequired(userId, item)) {
+            record.setStatus(BorrowStatus.BORROWED_RETURN_UNCONFIRMED);
+        } else if (today.isBefore(record.getEndDate())) {
+            record.setStatus(BorrowStatus.RETURNED_EARLY);
+        } else if (today.isEqual(record.getEndDate())) {
+            record.setStatus(BorrowStatus.RETURNED_ON_TIME);
+        } else {
+            record.setStatus(BorrowStatus.RETURNED_LATE);
+        }
+        record.setEffectiveReturnDate(today);
         borrowRecordRepository.save(record);
         return Mono.just(itemRepository.save(item));
     }
 
-    private void updateBorrowRecordStatus(BorrowRecordEntity record, String decision) {
-        if ("approve".equalsIgnoreCase(decision)) {
-            if (record.getStatus() == BorrowStatus.RESERVED_UNCONFIRMED) {
-                record.setStatus(BorrowStatus.RESERVED_CONFIRMED);
-            } else if (record.getStatus() == BorrowStatus.RESERVED_READY_TO_PICKUP) {
-                record.setStatus(BorrowStatus.BORROWED_ACTIVE);
-            } else if (record.getStatus() == BorrowStatus.BORROWED_RETURN_UNCONFIRMED) {
-                setReturnStatus(record);
-            }
-        } else {
-            handleRejection(record);
-        }
-    }
+    public Mono<ItemEntity> approvalReturn(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
+        ItemEntity item = itemRepository.findById(itemId).orElse(null);
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
 
-    private void setReturnStatus(BorrowRecordEntity record) {
-        LocalDate now = LocalDate.now();
-        record.setEffectiveReturnDate(now);
-        if (now.isBefore(record.getEndDate())) {
+        if (item == null || record == null) {
+            return Mono.empty();
+        }
+        checkIfApprovalIsRequiredAndPermission(userId, item);
+        if (record.getStatus() != BorrowStatus.BORROWED_RETURN_UNCONFIRMED) {
+            throw new IllegalStateException("Cannot confirmed item returned if it is not in return unconfirmed");
+        }
+
+        //TODO handle disapproved
+        LocalDate today = LocalDate.now();
+        if (today.isBefore(record.getEndDate())) {
             record.setStatus(BorrowStatus.RETURNED_EARLY);
-        } else if (now.isAfter(record.getEndDate())) {
-            record.setStatus(BorrowStatus.RETURNED_LATE);
-        } else {
+        } else if (today.isEqual(record.getEndDate())) {
             record.setStatus(BorrowStatus.RETURNED_ON_TIME);
+        } else {
+            record.setStatus(BorrowStatus.RETURNED_LATE);
+        }
+        borrowRecordRepository.save(record);
+        return Mono.just(itemRepository.save(item));
+    }
+
+    public boolean isApprovalRequired(UUID userId, ItemEntity item) {
+        LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+        LibraryMemberEntity member = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return !member.getRole().equals(MemberRole.ADMIN) && library.isRequiresApproval();
+    }
+
+    public void checkIfApprovalIsRequiredAndPermission(UUID userId, ItemEntity item) {
+        LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
+                .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+        LibraryMemberEntity member = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        if (!member.getRole().equals(MemberRole.ADMIN)) {
+            throw new AuthorizationDeniedException("Only the library admin can approve actions");
+        }
+
+        if (!library.isRequiresApproval()) {
+            throw new IllegalStateException("No approval is required for this library");
         }
     }
 
-    private void handleRejection(BorrowRecordEntity record) {
-        switch (record.getStatus()) {
-            case RESERVED_UNCONFIRMED -> record.setStatus(BorrowStatus.RESERVED_PICKUP_UNCONFIRMED);
-            case RESERVED_READY_TO_PICKUP -> record.setStatus(BorrowStatus.BORROWED_LATE);
-            case BORROWED_RETURN_UNCONFIRMED -> record.setStatus(BorrowStatus.BORROWED_LATE);
-            default -> {
-            }
-        }
-    }
 
     public Flux<BorrowRecord> getItemBorrowRecords(UUID itemId) {
         return Flux.fromIterable(borrowRecordRepository.findByItemId(itemId))
@@ -208,6 +319,6 @@ public class ItemService {
     }
 
     public Mono<ItemEntity> getItem(UUID itemId) {
-        return Mono.justOrEmpty(itemRepository.findById(itemId));
+        return Mono.justOrEmpty(itemRepository.findByIdWithBorrowRecords(itemId));
     }
 }

@@ -6,16 +6,14 @@ import dev.theopenshelf.platform.entities.SettingsEntity;
 import dev.theopenshelf.platform.model.GetSecuritySettings200Response;
 import dev.theopenshelf.platform.model.SaveSecuritySettingsRequest;
 import dev.theopenshelf.platform.repositories.SettingsRepository;
+import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @Service
+@RequiredArgsConstructor
 public class SettingsService {
     private final SettingsRepository settingsRepository;
     private static final String REGISTRATION_ENABLED_KEY = "registration.enabled";
-
-    public SettingsService(SettingsRepository settingsRepository) {
-        this.settingsRepository = settingsRepository;
-    }
 
     public Mono<GetSecuritySettings200Response> getPublicSettings() {
             boolean isRegistrationEnabled = settingsRepository.findById(REGISTRATION_ENABLED_KEY)
