@@ -150,7 +150,7 @@ export class APIItemsService implements ItemsService {
     let statusesValue: ('reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late')[] = [];
     statusesValue = statuses ? statuses.map(status => this.statusMapping[status as UIBorrowDetailedStatus] as 'reserved-confirmed' | 'reserved-ready-to-pickup' | 'borrowed-active' | 'borrowed-due-today' | 'borrowed-late' | 'returned-early' | 'returned-on-time' | 'returned-late') : [];
 
-    let sortByValue: 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+    let sortByValue: 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | 'effectiveReturnDate' | undefined;
     switch (sortBy) {
       case 'pickupDate':
         sortByValue = 'pickupDate';
@@ -166,6 +166,12 @@ export class APIItemsService implements ItemsService {
         break;
       case 'returnDate':
         sortByValue = 'returnDate';
+        break;
+      case 'effectiveReturnDate':
+        sortByValue = 'effectiveReturnDate';
+        break;
+      case 'pickupDate':
+        sortByValue = 'pickupDate';
         break;
       default:
         sortByValue = undefined;

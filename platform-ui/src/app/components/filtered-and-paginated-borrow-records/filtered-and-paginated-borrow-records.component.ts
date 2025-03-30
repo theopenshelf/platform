@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, Inject, input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { AUTH_SERVICE_TOKEN } from '../../global.provider';
@@ -70,6 +70,7 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
     private route: ActivatedRoute,
     private router: Router,
     private borrowDialogService: BorrowDialogService,
+    private changeDetectorRef: ChangeDetectorRef
   ) {
     this.currentUser = this.authService.getCurrentUserInfo()
 
@@ -132,36 +133,48 @@ export class FilteredAndPaginatedBorrowRecordsComponent {
   public pickUpItem = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.pickUpItem(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   public returnItem = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.returnItem(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   public cancelReservation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.cancelReservation(borrowRecord, item, this.itemsService).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   public reserveConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.approveReservation(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   public pickupConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.approvePickup(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 
   public returnConfirmation = (item: UIItem, borrowRecord: UIBorrowRecord) => {
     this.borrowDialogService.approveReturn(borrowRecord, item, this.itemsService, this.getLibrary(item.libraryId)!).subscribe(i => {
       this.filteredAndPaginatedComponent.resetItems();
+      this.filteredAndPaginatedComponent.fetchItems();
+      this.changeDetectorRef.detectChanges();
     });
   }
 }

@@ -266,6 +266,8 @@ export class FilteredAndPaginatedComponent implements OnInit {
             }));
             // If needed, also trigger change detection
             this.cdr.detectChanges();
+
+            // if no active status index, find the first status with items
             if (this.activeStatusIndex === -1) {
               let i = 0;
               for (const status of this.statuses) {
@@ -278,18 +280,19 @@ export class FilteredAndPaginatedComponent implements OnInit {
               if (this.activeStatusIndex === -1) {
                 this.activeStatusIndex = 0;
               }
-              this.selectedStatus = this.statuses[this.activeStatusIndex].status;
+              this.selectStatus(this.activeStatusIndex);
             }
+            this.fetchItems();
           }
         });
       } else {
         if (this.activeStatusIndex === -1) {
           this.activeStatusIndex = 0;
-          this.selectedStatus = this.statuses[this.activeStatusIndex].status;
+          this.selectStatus(this.activeStatusIndex);
+          this.fetchItems();
         }
       }
 
-      this.fetchItems();
     });
 
 
@@ -336,6 +339,10 @@ export class FilteredAndPaginatedComponent implements OnInit {
       .subscribe((result) => {
         this.isMobile = result.matches;
       });
+  }
+
+  selectStatus(activeStatusIndex: number): void {
+    this.selectedStatus = this.statuses[activeStatusIndex].status;
   }
 
   getStatusCount(status: StatusTab): number {
@@ -433,7 +440,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
   }
 
 
-  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined {
+  getSortBy(): 'favorite' | 'createdAt' | 'borrowCount' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | 'effectiveReturnDate' | 'pickupDate' | undefined {
     switch (this.sortingSelected.value) {
       case FilteredAndPaginatedComponent.SORT_RECENTLY_ADDED:
         return 'createdAt';
@@ -450,6 +457,25 @@ export class FilteredAndPaginatedComponent implements OnInit {
       case FilteredAndPaginatedComponent.SORT_RETURN_DATE:
         return 'returnDate';
       default:
+        switch (this.selectedStatus) {
+          case StatusTab.Reserved:
+          case StatusTab.Reserved_ReadyToPickup:
+            return 'reservationDate';
+          case StatusTab.Borrowed_Active:
+          case StatusTab.Borrowed_DueToReturn:
+            return 'pickupDate';
+          case StatusTab.Returned:
+            return 'effectiveReturnDate';
+
+          case StatusTab.Reserved_Unconfirmed:
+            return 'reservationDate';
+          case StatusTab.Reserved_Pickup_Unconfirmed:
+            return 'pickupDate';
+          case StatusTab.Borrowed_Return_Unconfirmed:
+            return 'effectiveReturnDate';
+        }
+
+
         return undefined;
     }
   }
@@ -486,7 +512,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     }
   }
 
-  protected fetchItems(): void {
+  public fetchItems(): void {
     let statuses: UIBorrowDetailedStatus[] = [];
     if (this.approvalTab()) {
       switch (this.selectedStatus) {
@@ -547,7 +573,7 @@ export class FilteredAndPaginatedComponent implements OnInit {
     });
   }
 
-  protected selectStatus(status: StatusTab): void {
+  protected selectStatusAndUpdateQueryParams(status: StatusTab): void {
     this.selectedStatus = status;
     this.currentPage = 0;
     this.updateQueryParams();

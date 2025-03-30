@@ -165,7 +165,7 @@ export class BorrowRecordTimelineComponent {
   private createTimelineItem(date: Date, position: 'left' | 'right', dotColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger', lineColor: 'accent' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger', lastItem: boolean, icon: string, labelKey: string): TimelineItem {
     const locale = this.translate.currentLang;
     return {
-      label: date.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }),
+      label: date ? date.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' }) : '',
       position,
       dotColor,
       lineColor,

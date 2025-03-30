@@ -17,7 +17,7 @@ export enum UIBorrowDetailedStatus {
   Borrowed_Return_Unconfirmed = 'borrowed-return-unconfirmed',
 
   Returned_Early = 'returned-early',
-  Returned_OnTime = 'returned',
+  Returned_OnTime = 'returned-on-time',
   Returned_Late = 'returned-late',
 }
 

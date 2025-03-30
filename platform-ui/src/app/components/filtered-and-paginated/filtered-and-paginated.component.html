@@ -157,7 +157,7 @@
     @if (enableStatusFiltering()) {
     <tui-tabs [(activeItemIndex)]="activeStatusIndex">
       @for (status of statuses; track status) {
-      <button [iconStart]="status.icon" tuiTab type="button" (click)="selectStatus(status.status)">
+      <button [iconStart]="status.icon" tuiTab type="button" (click)="selectStatusAndUpdateQueryParams(status.status)">
         {{ getStatusText(status.status) }}
         <tui-badge class="status-count" [appearance]="getStatusCount(status.status) > 0 ? 'primary' : 'secondary'">{{ getStatusCount(status.status) }}</tui-badge>
 

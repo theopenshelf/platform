@@ -176,7 +176,7 @@ public class ItemService {
 
     public Mono<ItemEntity> pickupItem(UUID itemId, UUID userId, ReturnItemRequest request) {
         return Mono.justOrEmpty(itemRepository.findById(itemId))
-                .map(item ->  borrowRecordRepository.findByItemIdAndBorrowedBy(itemId, userId.toString())
+                .map(item ->  borrowRecordRepository.findByItemIdAndBorrowedByAndStatus(itemId, userId.toString(), BorrowStatus.RESERVED_READY_TO_PICKUP)
                         .map(record -> {
                             if (record.getStatus() != BorrowStatus.RESERVED_READY_TO_PICKUP) {
                                 throw new IllegalStateException("Cannot pickup an item not in ready to pickup state");

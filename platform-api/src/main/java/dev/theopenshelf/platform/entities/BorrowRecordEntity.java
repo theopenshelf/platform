@@ -45,7 +45,7 @@ public class BorrowRecordEntity {
     private LocalDate endDate;
 
     @Column(name = "reservation_date")
-    private LocalDate reservationDate;
+        private LocalDate reservationDate;
 
     @Column(name = "effective_return_date")
     private LocalDate effectiveReturnDate;

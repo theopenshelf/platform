@@ -18,7 +18,7 @@ export interface GetItemsParams {
     startDate?: Date;
     endDate?: Date;
 
-    sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+    sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | 'effectiveReturnDate'  | undefined;
     sortOrder?: 'asc' | 'desc' | undefined;
 
     page?: number;

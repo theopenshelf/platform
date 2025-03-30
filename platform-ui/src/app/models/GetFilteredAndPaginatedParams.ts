@@ -17,7 +17,7 @@ export interface GetFilteredAndPaginatedParams {
     startDate?: Date;
     endDate?: Date;
 
-    sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | undefined;
+    sortBy?: 'favorite' | 'createdAt' | 'borrowCount' | 'pickupDate' | 'reservationDate' | 'startDate' | 'endDate' | 'returnDate' | 'effectiveReturnDate' | 'pickupDate' | undefined;
     sortOrder?: 'asc' | 'desc' | undefined;
 
     page?: number;

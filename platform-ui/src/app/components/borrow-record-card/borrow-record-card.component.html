@@ -27,7 +27,7 @@
               {{ 'borrowRecordCard.confirmReservation' | translate }}
             </button> 
           } @else if (status() === UIBorrowDetailedStatus.Reserved_Pickup_Unconfirmed) {
-            <button class="reserve-confirmation-button" appearance="primary" size="m" tuiButton type="button" (click)="reserveConfirmation()">
+            <button class="reserve-confirmation-button" appearance="primary" size="m" tuiButton type="button" (click)="pickupConfirmation()">
               {{ 'borrowRecordCard.confirmPickup' | translate }}
             </button> 
           } @else if (status() === UIBorrowDetailedStatus.Borrowed_Return_Unconfirmed) {  
