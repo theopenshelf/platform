@@ -14,8 +14,7 @@ import org.springframework.stereotype.Service;
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
 import dev.theopenshelf.platform.entities.ItemEntity;
 import dev.theopenshelf.platform.entities.LibraryEntity;
-import dev.theopenshelf.platform.entities.LibraryMemberEntity;
-import dev.theopenshelf.platform.entities.MemberRole;
+import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
 import dev.theopenshelf.platform.model.ApprovalReservationRequest;
 import dev.theopenshelf.platform.model.BorrowItemRequest;
@@ -273,21 +272,21 @@ public class ItemService {
     public boolean isApprovalRequired(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        MemberRole role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+        MemberRoleEntity role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
                 .map(m -> m.getRole())
-                .orElse(MemberRole.MEMBER);
+                .orElse(MemberRoleEntity.MEMBER);
 
-        return !role.equals(MemberRole.ADMIN) && library.isRequiresApproval();
+        return !role.equals(MemberRoleEntity.ADMIN) && library.isRequiresApproval();
     }
 
     public void checkIfApprovalIsRequiredAndPermission(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        MemberRole role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+        MemberRoleEntity role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
                 .map(m -> m.getRole())
-                .orElse(MemberRole.MEMBER);
+                .orElse(MemberRoleEntity.MEMBER);
 
-        if (!role.equals(MemberRole.ADMIN)) {
+        if (!role.equals(MemberRoleEntity.ADMIN)) {
             throw new AuthorizationDeniedException("Only the library admin can approve actions");
         }
 

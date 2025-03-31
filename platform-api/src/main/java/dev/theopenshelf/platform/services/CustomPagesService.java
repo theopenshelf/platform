@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.CommunityMemberEntity;
 import dev.theopenshelf.platform.entities.CustomPageEntity;
-import dev.theopenshelf.platform.entities.MemberRole;
+import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.model.CustomPage;
 import dev.theopenshelf.platform.model.GetCustomPageRefs200ResponseInner;
 import dev.theopenshelf.platform.repositories.CustomPageRepository;
@@ -26,7 +26,7 @@ public class CustomPagesService {
 
     public Mono<CustomPage> createCommunityCustomPage(UUID communityId, CustomPage page, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
-        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRole.ADMIN)) {
+        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
             throw new AuthorizationDeniedException("Only the community admin can create custom page");
         }
 
@@ -40,7 +40,7 @@ public class CustomPagesService {
 
     public Mono<Void> deleteCommunityCustomPage(UUID communityId, String pageRef, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
-        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRole.ADMIN)) {
+        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
             throw new AuthorizationDeniedException("Only the community admin can delete custom page");
         }
 
@@ -58,7 +58,7 @@ public class CustomPagesService {
 
     public Mono<CustomPage> getCommunityCustomPage(UUID communityId, String pageRef, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
-        if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
+        if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
             throw new AuthorizationDeniedException("Only the community member can access custom page");
         }
 
@@ -72,7 +72,7 @@ public class CustomPagesService {
 
     public Flux<CustomPage> getCommunityCustomPages(UUID communityId, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
-        if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
+        if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
             throw new AuthorizationDeniedException("Only the community member can access custom page");
         }
 
@@ -106,7 +106,7 @@ public class CustomPagesService {
     public Mono<CustomPage> updateCommunityCustomPage(UUID communityId, String pageRef, CustomPage page, UUID currentUser) {
 
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
-        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRole.ADMIN)) {
+        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
             throw new AuthorizationDeniedException("Only the community admin can update custom page");
         }
 

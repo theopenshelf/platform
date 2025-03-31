@@ -289,8 +289,8 @@ export class FilteredAndPaginatedComponent implements OnInit {
         if (this.activeStatusIndex === -1) {
           this.activeStatusIndex = 0;
           this.selectStatus(this.activeStatusIndex);
-          this.fetchItems();
         }
+        this.fetchItems();
       }
 
     });

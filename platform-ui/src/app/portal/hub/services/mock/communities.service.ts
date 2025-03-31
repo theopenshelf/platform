@@ -78,12 +78,22 @@ export class MockCommunitiesService implements CommunitiesService {
       });
     }
 
+    const communitiesWithMembership = filteredCommunities.map((community) => {
+      return {
+        ...community,
+        membership: {
+          isMember: true,
+          role: 'admin' as 'admin' | 'member' | 'requestingJoin', // Add proper type assertion
+        },
+      };
+    });
+
     return of({
       totalPages: 1,
-      totalItems: filteredCommunities.length,
+      totalItems: communitiesWithMembership.length,
       currentPage: getCommunitiesParams.page ?? 0,
       itemsPerPage: getCommunitiesParams.pageSize ?? 10,
-      items: filteredCommunities
+      items: communitiesWithMembership,
     });
   }
 

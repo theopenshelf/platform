@@ -37,7 +37,7 @@ public class CommunityMemberEntity {
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    private MemberRoleEntity role;
 
     public CommunityMember.CommunityMemberBuilder toCommunityMember() {
         return CommunityMember.builder()
@@ -56,6 +56,6 @@ public class CommunityMemberEntity {
                 .disabled(user.isDisabled())
                 .isEmailVerified(user.isEmailVerified())
                 .roles(new ArrayList<>(user.getRoles()))
-                .role(CommunityMember.RoleEnum.valueOf(role.name()));
+                .role(role.toMemberRole());
     }
 }

@@ -1,9 +1,12 @@
 package dev.theopenshelf.platform.entities;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import dev.theopenshelf.platform.model.Community;
+import dev.theopenshelf.platform.model.CommunityWithMembership;
+import dev.theopenshelf.platform.model.CommunityWithMembershipMembership;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -45,6 +48,23 @@ public class CommunityEntity {
                 .description(description)
                 .requiresApproval(requiresApproval)
                 .location(location.toLocation().build());
+    }
+
+
+    public CommunityWithMembership toCommunityWithMembership(UUID userId) {
+
+        return CommunityWithMembership.builder()
+                .community(toCommunity().build())
+                .membership( this.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findAny()
+                        .map(m -> m.getRole())
+                        .map(r -> CommunityWithMembershipMembership.builder()
+                                .isMember(true)
+                                .role(r.toMemberRole())
+                                .build())
+                        .orElse(CommunityWithMembershipMembership.builder()
+                                .isMember(false)
+                                .build())
+                ).build();
     }
 
     public CommunityEntity(Community c) {

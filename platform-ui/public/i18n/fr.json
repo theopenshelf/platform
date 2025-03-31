@@ -540,7 +540,12 @@
     "enterLocation": "Entrer une localisation",
     "locationPlaceholder": "Entrer une localisation",
     "distance": "Distance",
-    "filterByLocation": "Filtrer par localisation"
+    "filterByLocation": "Filtrer par localisation",
+    "role": {
+      "admin": "Administrateur",
+      "member": "Membre",
+      "requestingJoin": "Adhésion en attente"
+    }
   },
   "community": {
     "descriptionTitle": "Description",

@@ -26,7 +26,7 @@ import { BreadcrumbService } from '../../../../components/tos-breadcrumbs/tos-br
 import { AUTH_SERVICE_TOKEN } from '../../../../global.provider';
 import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
 import { UICommunitiesPagination } from '../../../../models/UICommunitiesPagination';
-import { UICommunity } from '../../../../models/UICommunity';
+import { UICommunity, UICommunityWithMembership } from '../../../../models/UICommunity';
 import { AuthService } from '../../../../services/auth.service';
 import { COMMUNITIES_SERVICE_TOKEN } from '../../hub.provider';
 import { CommunitiesService } from '../../services/communities.service';
@@ -65,7 +65,7 @@ import { CommunitiesService } from '../../services/communities.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommunitiesComponent implements OnInit, AfterViewInit {
-  communities: UICommunity[] = [];
+  communities: UICommunityWithMembership[] = [];
   searchText = '';
   searchLocationControl = new FormControl('');
   locationSuggestions = signal<SearchResult<RawResult>[]>([]);

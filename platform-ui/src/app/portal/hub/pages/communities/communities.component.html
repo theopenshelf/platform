@@ -115,15 +115,26 @@
             tuiButton type="button">
             {{ 'communities.seeCommunity' | translate }}
           </button>
-          @if (community.requiresApproval) {
-          <button appearance="primary" class="items-count" size="m" tuiButton type="button"
-            (click)="requestToJoin(community)">
-            {{ 'communities.requestToJoin' | translate }}
+
+          @if (community.membership.isMember) {
+          <button [appearance]="community.membership.role === 'admin' ? 'accent' : 'primary'" 
+                 class="items-count" 
+                 size="m" 
+                 tuiButton 
+                 type="button">
+            {{ 'communities.role.' + community.membership.role | translate }}
           </button>
           } @else {
-          <button appearance="accent" class="items-count" size="m" tuiButton disabled type="button">
-            {{ 'communities.joinCommunity' | translate }}
-          </button>
+            @if (community.requiresApproval) {
+              <button appearance="primary" class="items-count" size="m" tuiButton type="button"
+                (click)="requestToJoin(community)">
+                {{ 'communities.requestToJoin' | translate }}
+              </button>
+              } @else {
+              <button appearance="accent" class="items-count" size="m" tuiButton disabled type="button">
+                {{ 'communities.joinCommunity' | translate }}
+              </button>
+              }
           }
         </div>
       </div>

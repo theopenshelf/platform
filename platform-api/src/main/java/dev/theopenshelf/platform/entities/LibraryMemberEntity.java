@@ -37,7 +37,7 @@ public class LibraryMemberEntity {
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
-    private MemberRole role;
+    private MemberRoleEntity role;
 
     public LibraryMember.LibraryMemberBuilder toLibraryMember() {
         return LibraryMember.builder()

@@ -2034,7 +2034,7 @@ paths:
                   communities:
                     type: array
                     items:
-                      $ref: "#/components/schemas/Community"
+                      $ref: "#/components/schemas/CommunityWithMembership"
     post:
       operationId: createCommunity
       summary: Create a new community
@@ -3073,15 +3073,34 @@ components:
         description:
           type: string
 
+    MemberRole:
+      type: string
+      enum: [ADMIN, MEMBER, REQUESTING_JOIN]
+      description: Role of a user within a community
+
+    CommunityWithMembership:
+      type: object
+      required:
+        - community
+        - membership
+      properties:
+        community:
+          $ref: "#/components/schemas/Community"
+        membership:
+          type: object
+          properties:
+            isMember:
+              type: boolean
+            role:
+              $ref: "#/components/schemas/MemberRole"
+
     CommunityMember:
       allOf:
         - $ref: "#/components/schemas/User"
         - type: object
           properties:
             role:
-              type: string
-              enum: ["admin", "member", "requestingJoin"]
-              example: "member"
+              $ref: "#/components/schemas/MemberRole"
 
   responses:
     OK_200_GET_HELLO_WORLD:

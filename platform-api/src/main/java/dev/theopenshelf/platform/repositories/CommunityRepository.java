@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -17,6 +18,8 @@ import dev.theopenshelf.platform.entities.CommunityEntity;
 @Repository
 public interface CommunityRepository
         extends CrudRepository<CommunityEntity, UUID>, JpaSpecificationExecutor<CommunityEntity> {
+    
+    @EntityGraph(attributePaths = {"members"})
     Page<CommunityEntity> findAll(Specification<CommunityEntity> spec, Pageable pageable);
 
     @Query("SELECT DISTINCT c FROM CommunityEntity c " +

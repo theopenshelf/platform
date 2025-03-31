@@ -11,6 +11,13 @@ export interface UICommunity {
   description?: string;
 }
 
+export interface UICommunityWithMembership extends UICommunity {
+  membership: {
+    isMember: boolean;
+    role: 'admin' | 'member' | 'requestingJoin';
+  };
+}
+
 export interface UIMember extends UIUser {
   role: 'admin' | 'member' | 'requestingJoin';
 }

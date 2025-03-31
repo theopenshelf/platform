@@ -170,9 +170,6 @@ export class APIItemsService implements ItemsService {
       case 'effectiveReturnDate':
         sortByValue = 'effectiveReturnDate';
         break;
-      case 'pickupDate':
-        sortByValue = 'pickupDate';
-        break;
       default:
         sortByValue = undefined;
         break;

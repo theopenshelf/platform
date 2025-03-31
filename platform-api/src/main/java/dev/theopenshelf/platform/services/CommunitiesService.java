@@ -18,13 +18,14 @@ import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.CommunityEntity;
 import dev.theopenshelf.platform.entities.CommunityMemberEntity;
-import dev.theopenshelf.platform.entities.MemberRole;
+import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
 import dev.theopenshelf.platform.model.Community;
 import dev.theopenshelf.platform.model.CommunityMember;
 import dev.theopenshelf.platform.model.GetCommunities200Response;
 import dev.theopenshelf.platform.model.Location;
+import dev.theopenshelf.platform.model.MemberRole;
 import dev.theopenshelf.platform.model.PaginatedCommunityMembersResponse;
 import dev.theopenshelf.platform.repositories.CommunityRepository;
 import dev.theopenshelf.platform.repositories.UsersRepository;
@@ -42,7 +43,7 @@ public class CommunitiesService {
                 communityRepository.save(entity);
                 addCommunityMember(entity.getId(), CommunityMember.builder()
                                 .id(adminUser)
-                                .role(CommunityMember.RoleEnum.ADMIN)
+                                .role(MemberRole.ADMIN)
                                 .build(), adminUser);
                 return Mono.just(entity.toCommunity().build());
         }
@@ -83,7 +84,7 @@ public class CommunitiesService {
 
                 GetCommunities200Response response = new GetCommunities200Response();
                 response.setCommunities(filteredCommunities.stream()
-                                .map(entity -> entity.toCommunity().build())
+                                .map(entity -> entity.toCommunityWithMembership(currentUserId))
                                 .toList());
                 response.setCurrentPage(page);
                 response.setItemsPerPage(pageSize);
@@ -123,9 +124,9 @@ public class CommunitiesService {
                 if (!isUserJoiningItselfTheCommunity && isNotCommunityAdmin(community, currentUserId)) {
                         throw new AuthorizationDeniedException("Only the community admins can add members");
                 }
-                MemberRole role = MemberRole.MEMBER;
+                MemberRoleEntity role = MemberRoleEntity.MEMBER;
                 if (isUserJoiningItselfTheCommunity && community.isRequiresApproval()) {
-                        role = MemberRole.REQUESTING_JOIN;
+                        role = MemberRoleEntity.REQUESTING_JOIN;
                 }
 
                 UserEntity user = userRepository.findById(member.getId())
@@ -190,7 +191,7 @@ public class CommunitiesService {
                                 .findFirst()
                                 .orElseThrow(() -> new ResourceNotFoundException("Member not found"));
 
-                memberEntity.setRole(MemberRole.valueOf(updatedMember.getRole().name()));
+                memberEntity.setRole(MemberRoleEntity.valueOf(updatedMember.getRole().name()));
                 communityRepository.save(community);
 
                 return Mono.just(memberEntity.toCommunityMember().build());
@@ -213,7 +214,7 @@ public class CommunitiesService {
         private boolean isNotCommunityAdmin(CommunityEntity community, UUID currentUserId) {
                 return community.getMembers().stream()
                         .filter(m -> m.getUser().getId().equals(currentUserId))
-                        .noneMatch(m -> m.getRole().equals(MemberRole.ADMIN));
+                        .noneMatch(m -> m.getRole().equals(MemberRoleEntity.ADMIN));
         }
 
         private double calculateDistance(double lat1, double lon1, double lat2, double lon2) {

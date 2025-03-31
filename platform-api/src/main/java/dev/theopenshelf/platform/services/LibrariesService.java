@@ -3,8 +3,6 @@ package dev.theopenshelf.platform.services;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
@@ -13,7 +11,7 @@ import dev.theopenshelf.platform.entities.CommunityMemberEntity;
 import dev.theopenshelf.platform.entities.LibraryEntity;
 import dev.theopenshelf.platform.entities.LibraryMemberEntity;
 import dev.theopenshelf.platform.entities.LocationEntity;
-import dev.theopenshelf.platform.entities.MemberRole;
+import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
 import dev.theopenshelf.platform.model.Library;
 import dev.theopenshelf.platform.model.PaginatedLibraryMembersResponse;
@@ -31,7 +29,7 @@ public class LibrariesService {
     public Mono<LibraryEntity> createLibrary(Library library, UUID ownerId) {
 
         Optional<CommunityMemberEntity> member = communitiesService.isMember(library.getCommunityId(), ownerId);
-        if (member.isEmpty() || !member.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
+        if (member.isEmpty() || !member.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
             throw new AuthorizationDeniedException("Only the community member can create libraries");
         }
         LibraryEntity entity = LibraryEntity.builder()
@@ -56,7 +54,7 @@ public class LibrariesService {
                 .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
 
         Optional<CommunityMemberEntity> member = communitiesService.isMember(library.getCommunityId(), currentUser);
-        if (member.isEmpty() || member.get().getRole().equals(MemberRole.REQUESTING_JOIN)) {
+        if (member.isEmpty() || member.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
             throw new AuthorizationDeniedException("Only the community member can create libraries");
         }
         return Mono.just(library);
@@ -75,10 +73,10 @@ public class LibrariesService {
 
         Optional<LibraryMemberEntity> libraryMember = libraryEntity.getMembers().stream()
                 .filter(m -> m.getUser().getId().equals(currentUser))
-                .filter(m -> m.getRole().equals(MemberRole.ADMIN))
+                .filter(m -> m.getRole().equals(MemberRoleEntity.ADMIN))
                 .findFirst();
 
-        if (libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRole.ADMIN) ) {
+        if (libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRoleEntity.ADMIN) ) {
             throw new AuthorizationDeniedException("Only the library admin can update libraries");
         }
 
@@ -101,12 +99,12 @@ public class LibrariesService {
 
         Optional<LibraryMemberEntity> libraryMember = library.getMembers().stream()
                 .filter(m -> m.getUser().getId().equals(currentUser))
-                .filter(m -> m.getRole().equals(MemberRole.ADMIN))
+                .filter(m -> m.getRole().equals(MemberRoleEntity.ADMIN))
                 .findFirst();
 
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(library.getCommunityId(), currentUser);
-        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRole.ADMIN)
-                || libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRole.ADMIN) ) {
+        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)
+                || libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRoleEntity.ADMIN) ) {
             throw new AuthorizationDeniedException("Only the community admin or library admin can delete libraries");
         }
         libraryRepository.delete(library);
@@ -119,12 +117,12 @@ public class LibrariesService {
 
         Optional<LibraryMemberEntity> libraryMember = library.getMembers().stream()
                 .filter(m -> m.getUser().getId().equals(currentUser))
-                .filter(m -> m.getRole().equals(MemberRole.ADMIN))
+                .filter(m -> m.getRole().equals(MemberRoleEntity.ADMIN))
                 .findFirst();
 
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(library.getCommunityId(), currentUser);
-        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRole.ADMIN)
-                || libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRole.ADMIN) ) {
+        if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)
+                || libraryMember.isEmpty() || !libraryMember.get().getRole().equals(MemberRoleEntity.ADMIN) ) {
             throw new AuthorizationDeniedException("Only the community admin or library admin can access library members");
         }
 

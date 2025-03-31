@@ -525,7 +525,12 @@
     "enterLocation": "Enter location",
     "locationPlaceholder": "Enter location",
     "distance": "Distance",
-    "filterByLocation": "Filter by location"
+    "filterByLocation": "Filter by location",
+    "role": {
+      "admin": "Admin",
+      "member": "Member",
+      "requestingJoin": "Requesting to join"
+    }
   },
   "community": {
     "descriptionTitle": "Description",

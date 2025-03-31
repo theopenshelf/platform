@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { CommunitiesHubApiService, Community, CommunityMember, CustomPage, CustomPagesHubApiService, PaginatedCommunityMembersResponse } from '../../../../api-client';
+import { CommunitiesHubApiService, Community, CommunityMember, CommunityWithMembership, CustomPage, CustomPagesHubApiService, PaginatedCommunityMembersResponse } from '../../../../api-client';
 import { GetCommunitiesParams } from '../../../../models/GetCommunitiesParams';
 import { GetFilteredAndPaginatedParams } from '../../../../models/GetFilteredAndPaginatedParams';
 import { UICommunitiesPagination } from '../../../../models/UICommunitiesPagination';
-import { UICommunity, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
+import { UICommunity, UICommunityWithMembership, UIMember, UIMembersPagination } from '../../../../models/UICommunity';
 import { UICustomPage } from '../../../../models/UICustomPage';
 import { CommunitiesService } from '../communities.service';
 import { APIUsersService } from './users.service';
@@ -27,7 +27,7 @@ export class ApiCommunitiesService implements CommunitiesService {
                     totalItems: response.totalItems,
                     currentPage: response.currentPage,
                     itemsPerPage: response.itemsPerPage,
-                    items: response.communities.map((community) => this.mapToUICommunity(community))
+                    items: response.communities.map((communityWithMembership) => this.mapToUICommunityWithMembership(communityWithMembership))
                 }))
             );
     }
@@ -138,6 +138,25 @@ export class ApiCommunitiesService implements CommunitiesService {
             picture: community.picture,
             description: community.description,
             requiresApproval: community.requiresApproval ?? false,
+        };
+    }
+
+    private mapRole(role: string | undefined): 'admin' | 'member' | 'requestingJoin' {
+        switch (role) {
+            case 'ADMIN': return 'admin';
+            case 'MEMBER': return 'member';
+            case 'REQUESTING_JOIN': return 'requestingJoin';
+            default: return 'member';
+        }
+    }
+
+    private mapToUICommunityWithMembership(communityWithMembership: CommunityWithMembership): UICommunityWithMembership {
+        return {
+            ...this.mapToUICommunity(communityWithMembership.community),
+            membership: {
+                isMember: communityWithMembership.membership?.isMember ?? false,
+                role: this.mapRole(communityWithMembership.membership?.role),
+            },
         };
     }
 
