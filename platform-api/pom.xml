@@ -3,7 +3,7 @@
 
     <groupId>dev.theopenshelf</groupId>
     <artifactId>platform-api</artifactId>
-    <version>0.0.140</version>
+    <version>0.0.141-SNAPSHOT</version>
     <name>platform-api</name>
     <description>platform API</description>
 
@@ -46,7 +46,7 @@
         <connection>scm:git:${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
         <url>git@github.com:theopenshelf/platform.git</url>
-        <tag>0.0.140</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
