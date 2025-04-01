@@ -191,14 +191,14 @@ export class ApiCommunitiesService implements CommunitiesService {
     private mapToUIMember(member: CommunityMember): UIMember {
         return {
             ...this.usersService.mapToUIUser(member),
-            role: member.role ?? 'member',
+            role: this.mapRole(member.role),
         };
     }
 
     private mapToApiMember(member: UIMember): CommunityMember {
         return {
             ...this.usersService.mapToApiUser(member),
-            role: member.role ?? 'member',
+            role: member.role,
         };
     }
 }
