@@ -198,7 +198,9 @@ export class ApiCommunitiesService implements CommunitiesService {
     private mapToApiMember(member: UIMember): CommunityMember {
         return {
             ...this.usersService.mapToApiUser(member),
-            role: member.role,
+            role: member.role === 'admin' ? 'ADMIN' :
+                member.role === 'member' ? 'MEMBER' :
+                    member.role === 'requestingJoin' ? 'REQUESTING_JOIN' : 'MEMBER'
         };
     }
 }
