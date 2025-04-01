@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Notification - The Open Shelf</title>
+    </head>
+    <body>
+        <h1 th:text="${title}"></h1>
+        <p>
+            Hello
+            <span th:text="${username}"></span>
+            ,
+        </p>
+        <p>
+            Notification of type <span th:text="${type}"></span>
+        </p>
+
+        <p>
+            Best regards,
+            <br>
+            The Open Shelf Team
+        </p>
+    </body>
+</html>

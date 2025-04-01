@@ -2305,6 +2305,43 @@ paths:
         "404":
           description: Custom page not found
 
+  /debug/notifications:
+    post:
+      operationId: debugPostNotification
+      summary: Debug endpoint to create a notification for a specific user
+      tags:
+        - debug-api
+      security:
+        - BearerAuthOAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - userId
+                - notification
+              properties:
+                userId:
+                  type: string
+                  format: uuid
+                  description: The ID of the user to send the notification to
+                notification:
+                  $ref: "#/components/schemas/Notification"
+                  description: The notification to send
+      responses:
+        "201":
+          description: Notification created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Notification"
+        "404":
+          description: User not found
+        "400":
+          description: Invalid notification payload
+
 components:
   #####################################################
   # Predefined Components
@@ -2603,6 +2640,12 @@ components:
             - ITEM_DUE
             - ITEM_BORROW_RESERVATION_DATE_START
             - ITEM_RESERVED_NO_LONGER_AVAILABLE
+            - ITEM_RESERVATION_APPROVED
+            - ITEM_RESERVATION_REJECTED
+            - ITEM_PICKUP_APPROVED
+            - ITEM_PICKUP_REJECTED
+            - ITEM_RETURN_APPROVED
+            - ITEM_RETURN_REJECTED
         alreadyRead:
           type: boolean
           example: false

@@ -1,4 +1,4 @@
-<button
+  <button
   iconStart="@tui.bell"
   (click)="toggleNotificationsPopup()"
   tuiIconButton
@@ -7,9 +7,13 @@
   i18n="@@notificationsButton"
 >
   {{ 'notifications.button' | translate }}
-  @if (unreadNotificationsCount > 0) {
-    <tui-badge-notification class="unreadNotificationsCount" size="s"
-      >{{ unreadNotificationsCount }}
+  @if (unreadNotificationsCount() > 0) {
+    <tui-badge-notification 
+      class="unreadNotificationsCount" 
+      size="s"
+      [@pulseAnimation]="hasNewNotifications()"
+    >
+      {{ unreadNotificationsCount() }}
     </tui-badge-notification>
   }
 </button>
@@ -29,7 +33,7 @@
       </button>
     </div>
     <div class="notifications-list">
-      @for (notification of notifications; track notification) {
+      @for (notification of notifications(); track notification.id) {
         <div
           class="notification-item"
           [class.unread]="!notification.alreadyRead"

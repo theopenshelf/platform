@@ -28,7 +28,7 @@ def generate_users_sql(users, user_id_map):
         sql_statements.append(sql)
     return sql_statements
 
-def generate_notifications_sql(notifications, user_id_map):
+def generate_notifications_sql(notifications, user_id_map, item_id_map):
     sql_statements = []
     for user_id in user_id_map.values():
         for notification in notifications:
@@ -44,7 +44,13 @@ def generate_notifications_sql(notifications, user_id_map):
                 notification_type = 'ITEM_AVAILABLE'  # Default to a valid type if necessary
             # Use UUID for the notification ID
             notification_id = generate_uuid()
-            sql = f"INSERT INTO notifications (id, user_id, author, date, type, already_read, payload) VALUES ('{notification_id}', '{user_id}', '{notification['author']}', '{notification['date']}', '{notification_type}', {str(notification['alreadyRead']).lower()}, '{json.dumps(notification['payload'])}');"
+            
+            # Map the itemId in the payload to the new UUID
+            payload = notification['payload'].copy()
+            if 'itemId' in payload and payload['itemId'] in item_id_map:
+                payload['itemId'] = item_id_map[payload['itemId']]
+            
+            sql = f"INSERT INTO notifications (id, user_id, author, date, type, already_read, payload) VALUES ('{notification_id}', '{user_id}', '{notification['author']}', '{notification['date']}', '{notification_type}', {str(notification['alreadyRead']).lower()}, '{json.dumps(payload)}');"
             sql_statements.append(sql)
     return sql_statements
 
@@ -158,7 +164,7 @@ def generate_items_sql(items, libraries, user_id_map, library_id_map, community_
             effective_return_date = f"'{record.get('effectiveReturnDate')}'" if record.get('effectiveReturnDate') else "NULL"
             record_sql = f"INSERT INTO borrow_records (id, item_id, borrowed_by, reservation_date, start_date, end_date, pickup_date, effective_return_date, status) VALUES ('{generate_uuid()}', '{item_uuid}', '{borrowed_by}', '{record['reservationDate']}', '{record['startDate']}', '{record['endDate']}', {pickup_date}, {effective_return_date}, '{status}');"
             sql_statements.append(record_sql)
-    return sql_statements
+    return sql_statements, item_id_map
 
 def generate_item_categories_sql(categories):
     sql_statements = []
@@ -203,15 +209,14 @@ def generate_library_members_sql(libraries, user_id_map, library_id_map):
     return sql_statements
 
 def generate_data_sql():
-    users = load_json('platform/platform-ui/src/app/mock/users.json')
-    notifications = load_json('platform/platform-ui/src/app/mock/notifications.json')
-    libraries = load_json('platform/platform-ui/src/app/mock/libraries.json')
-    help_data = load_json('platform/platform-ui/src/app/mock/help.json')
-    custom_pages = load_json('platform/platform-ui/src/app/mock/custom-pages.json')
-    communities = load_json('platform/platform-ui/src/app/mock/communities.json')
-    items = load_json('platform/platform-ui/src/app/mock/items.json')
-
-    item_categories = load_json('platform/platform-ui/src/app/mock/item-categories.json')
+    users = load_json('platform-ui/src/app/mock/users.json')
+    notifications = load_json('platform-ui/src/app/mock/notifications.json')
+    libraries = load_json('platform-ui/src/app/mock/libraries.json')
+    help_data = load_json('platform-ui/src/app/mock/help.json')
+    custom_pages = load_json('platform-ui/src/app/mock/custom-pages.json')
+    communities = load_json('platform-ui/src/app/mock/communities.json')
+    items = load_json('platform-ui/src/app/mock/items.json')
+    item_categories = load_json('platform-ui/src/app/mock/item-categories.json')
 
     user_id_map = map_user_ids(users)
 
@@ -246,14 +251,15 @@ def generate_data_sql():
     sql_statements.extend(item_category_sql)
     sql_statements.append("")
 
-    # Items and Borrow Records
+    # Items and Borrow Records - Get the item_id_map
     sql_statements.append("-- Items and Borrow Records")
-    sql_statements.extend(generate_items_sql(items, libraries, user_id_map, library_id_map, community_id_map, category_id_map))
+    items_sql, item_id_map = generate_items_sql(items, libraries, user_id_map, library_id_map, community_id_map, category_id_map)
+    sql_statements.extend(items_sql)
     sql_statements.append("")
 
-    # Notifications
+    # Notifications - now with item_id_map
     sql_statements.append("-- Notifications")
-    sql_statements.extend(generate_notifications_sql(notifications, user_id_map))
+    sql_statements.extend(generate_notifications_sql(notifications, user_id_map, item_id_map))
     sql_statements.append("")
 
     # Help Categories and Articles
@@ -277,7 +283,7 @@ def generate_data_sql():
     sql_statements.extend(generate_library_members_sql(libraries, user_id_map, library_id_map))
     sql_statements.append("")
 
-    with open('platform/db/postgres/data.sql', 'w') as file:
+    with open('db/postgres/data.sql', 'w') as file:
         for statement in sql_statements:
             file.write(statement + '\n')
 

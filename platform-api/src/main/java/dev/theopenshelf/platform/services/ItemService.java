@@ -3,7 +3,9 @@ package dev.theopenshelf.platform.services;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,7 +16,11 @@ import org.springframework.stereotype.Service;
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
 import dev.theopenshelf.platform.entities.ItemEntity;
 import dev.theopenshelf.platform.entities.LibraryEntity;
+import dev.theopenshelf.platform.entities.LibraryMemberEntity;
 import dev.theopenshelf.platform.entities.MemberRoleEntity;
+import dev.theopenshelf.platform.entities.NotificationEntity;
+import dev.theopenshelf.platform.entities.NotificationType;
+import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
 import dev.theopenshelf.platform.model.ApprovalReservationRequest;
 import dev.theopenshelf.platform.model.BorrowItemRequest;
@@ -27,6 +33,7 @@ import dev.theopenshelf.platform.model.ReturnItemRequest;
 import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
 import dev.theopenshelf.platform.repositories.ItemsRepository;
 import dev.theopenshelf.platform.repositories.LibraryRepository;
+import dev.theopenshelf.platform.repositories.UsersRepository;
 import dev.theopenshelf.platform.specifications.ItemSpecifications;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +47,8 @@ public class ItemService {
     private final ItemsRepository itemRepository;
     private final BorrowRecordRepository borrowRecordRepository;
     private final LibraryRepository libraryRepository;
+    private final NotificationsService notificationsService;
+    private final UsersRepository usersRepository;
 
     public Mono<ItemEntity> createItem(Item item, UUID ownerId) {
         ItemEntity entity = ItemEntity.builder()
@@ -152,6 +161,20 @@ public class ItemService {
 
         item.setBorrowCount(item.getBorrowCount() + 1);
         itemRepository.save(item);
+
+        if (borrowRecord.getStatus() == BorrowStatus.RESERVED_UNCONFIRMED || borrowRecord.getStatus() == BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
+            LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+            for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
+                notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
+                                .type(borrowRecord.getStatus() == BorrowStatus.RESERVED_UNCONFIRMED ? NotificationType.ITEM_NEW_RETURN_TO_CONFIRM : NotificationType.ITEM_NEW_PICKUP_TO_CONFIRM)
+                                .alreadyRead(false)
+                                .author(NotificationsService.PLATFORM_AUTHOR)
+                                .userId(member.getId())
+                                .payload(Map.of("item", item))
+                        .build());
+            }
+        }
         return Mono.just(borrowRecordRepository.save(borrowRecord));
     }
 
@@ -169,9 +192,18 @@ public class ItemService {
         //TODO handle disapproved
         record.setStatus(BorrowStatus.RESERVED_CONFIRMED);
         borrowRecordRepository.save(record);
+
+        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        notificationsService.sendNotifications(user, NotificationEntity.builder()
+                .type(NotificationType.ITEM_RESERVATION_APPROVED)
+                .alreadyRead(false)
+                .author(NotificationsService.PLATFORM_AUTHOR)
+                .userId(userId)
+                .payload(Map.of("item", item))
+                .build());
+
         return Mono.just(itemRepository.save(item));
     }
-
 
     public Mono<ItemEntity> pickupItem(UUID itemId, UUID userId, ReturnItemRequest request) {
         return Mono.justOrEmpty(itemRepository.findById(itemId))
@@ -186,6 +218,20 @@ public class ItemService {
                             record.setStatus(status);
                             record.setPickupDate(LocalDate.now());
                             borrowRecordRepository.save(record);
+
+                            if (status == BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
+                                LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
+                                        .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+                                for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
+                                    notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
+                                            .type(NotificationType.ITEM_NEW_PICKUP_TO_CONFIRM)
+                                            .alreadyRead(false)
+                                            .author(NotificationsService.PLATFORM_AUTHOR)
+                                            .userId(member.getId())
+                                            .payload(Map.of("item", item))
+                                            .build());
+                                }
+                            }
                             return item;
                         })
                         .flatMap(i -> itemRepository.findById(itemId))
@@ -208,6 +254,16 @@ public class ItemService {
         //TODO handle disapproved
         record.setStatus(BorrowStatus.BORROWED_ACTIVE);
         borrowRecordRepository.save(record);
+
+        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        notificationsService.sendNotifications(user, NotificationEntity.builder()
+                .type(NotificationType.ITEM_PICK_UP_APPROVED)
+                .alreadyRead(false)
+                .author(NotificationsService.PLATFORM_AUTHOR)
+                .userId(userId)
+                .payload(Map.of("item", item))
+                .build());
+
         return Mono.just(itemRepository.save(item));
     }
 
@@ -241,6 +297,20 @@ public class ItemService {
         }
         record.setEffectiveReturnDate(today);
         borrowRecordRepository.save(record);
+        if (record.getStatus() == BorrowStatus.BORROWED_RETURN_UNCONFIRMED) {
+            LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+            for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
+                notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
+                        .type(NotificationType.ITEM_NEW_RESERVATION_TO_CONFIRM)
+                        .alreadyRead(false)
+                        .author(NotificationsService.PLATFORM_AUTHOR)
+                        .userId(member.getId())
+                        .payload(Map.of("item", item))
+                        .build());
+            }
+        }
+
         return Mono.just(itemRepository.save(item));
     }
 
@@ -266,6 +336,16 @@ public class ItemService {
             record.setStatus(BorrowStatus.RETURNED_LATE);
         }
         borrowRecordRepository.save(record);
+
+        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        notificationsService.sendNotifications(user, NotificationEntity.builder()
+                .type(NotificationType.ITEM_RETURN_APPROVED)
+                .alreadyRead(false)
+                .author(NotificationsService.PLATFORM_AUTHOR)
+                .userId(userId)
+                .payload(Map.of("item", item))
+                .build());
+
         return Mono.just(itemRepository.save(item));
     }
 

@@ -6,8 +6,8 @@ import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.UUID;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import dev.theopenshelf.platform.model.Notification;
 import jakarta.persistence.Column;
@@ -42,25 +42,17 @@ public class NotificationEntity {
 
     private boolean alreadyRead;
 
+    @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private String payload;
+    private Map<String, Object> payload;
 
     public Notification.NotificationBuilder toNotification() {
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> payloadMap = null;
-        try {
-            payloadMap = payload != null ? mapper.readValue(payload, new TypeReference<Map<String, Object>>() {
-            }) : null;
-        } catch (Exception e) {
-            // Handle or log the error
-        }
-
         return Notification.builder()
                 .id(id)
                 .author(author)
                 .date(date != null ? OffsetDateTime.ofInstant(date, ZoneOffset.UTC) : null)
                 .type(Notification.TypeEnum.valueOf(type.name()))
                 .alreadyRead(alreadyRead)
-                .payload(payloadMap);
+                .payload(payload);
     }
 }

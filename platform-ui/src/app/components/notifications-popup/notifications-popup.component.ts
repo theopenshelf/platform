@@ -1,9 +1,11 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import {
   Component,
   effect,
   ElementRef,
   HostListener,
   Inject,
+  OnDestroy,
   OnInit,
   output,
   signal
@@ -12,6 +14,8 @@ import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { TuiBadgeNotification } from '@taiga-ui/kit';
+import { interval, Subscription } from 'rxjs';
+import { takeWhile } from 'rxjs/operators';
 import {
   getGlobalProviders,
   NOTIFICATIONS_SERVICE_TOKEN,
@@ -29,17 +33,28 @@ import { SharedModule } from '../shared-module/shared-module.component';
   imports: [TranslateModule, TuiBadgeNotification, TuiButton, TuiIcon, SharedModule],
   providers: [...getGlobalProviders(), ...hubProviders],
   templateUrl: './notifications-popup.component.html',
-  styleUrls: ['./notifications-popup.component.scss']
+  styleUrls: ['./notifications-popup.component.scss'],
+  animations: [
+    trigger('pulseAnimation', [
+      transition('* => true', [
+        style({ transform: 'scale(1)' }),
+        animate('300ms ease-in-out', style({ transform: 'scale(1.2)' })),
+        animate('300ms ease-in-out', style({ transform: 'scale(1)' }))
+      ])
+    ])
+  ]
 })
-export class NotificationsPopupComponent implements OnInit {
+export class NotificationsPopupComponent implements OnInit, OnDestroy {
+  private readonly POLLING_INTERVAL = 30000; // Poll every 30 seconds
+  private pollingSubscription?: Subscription;
+  private isAlive = true; // Track component lifecycle
 
-  notifications: UINotification[] = [];
-  protected unreadNotificationsCount: number = 0;
-
-  isPopupVisible = signal(false); // Popup visibility controlled by the parent
-  isPopupVisibleChange = output<boolean>(); // Emit changes to the parent
-
-  // Signal to trigger notifications refresh
+  // Use signals for reactive state
+  notifications = signal<UINotification[]>([]);
+  unreadNotificationsCount = signal<number>(0);
+  hasNewNotifications = signal(false);
+  isPopupVisible = signal(false);
+  isPopupVisibleChange = output<boolean>();
   refreshNotificationsSignal = signal(false);
 
   constructor(
@@ -48,44 +63,104 @@ export class NotificationsPopupComponent implements OnInit {
     @Inject(NOTIFICATIONS_SERVICE_TOKEN)
     private notificationsService: NotificationsService,
   ) {
+    // Effect to handle notifications refresh
     effect(() => {
       if (this.refreshNotificationsSignal()) {
         this.refreshNotificationsSignal.set(false);
         this.refreshNotifications();
       }
     });
-
   }
 
   ngOnInit() {
     this.refreshNotifications();
+    this.startPolling();
+  }
 
+  ngOnDestroy() {
+    this.isAlive = false;
+    if (this.pollingSubscription) {
+      this.pollingSubscription.unsubscribe();
+    }
+  }
+
+  private startPolling() {
+    // Start polling for notifications
+    this.pollingSubscription = interval(this.POLLING_INTERVAL)
+      .pipe(
+        takeWhile(() => this.isAlive)
+      )
+      .subscribe(() => {
+        this.refreshNotifications();
+      });
   }
 
   refreshNotifications() {
     this.notificationsService
       .getNotifications()
-      .subscribe((notifications: UINotification[]) => {
-        this.notifications = notifications;
-        this.unreadNotificationsCount =
-          this.notificationsService.getUnreadNotificationsCount();
+      .subscribe({
+        next: (notifications: UINotification[]) => {
+          const previousCount = this.unreadNotificationsCount();
+
+          // Update notifications signal
+          this.notifications.set(notifications);
+
+          // Calculate unread count from the notifications
+          const newUnreadCount = notifications.filter(n => !n.alreadyRead).length;
+          this.unreadNotificationsCount.set(newUnreadCount);
+
+          // Trigger animation if we have new notifications
+          if (newUnreadCount > previousCount) {
+            this.hasNewNotifications.set(true);
+            setTimeout(() => {
+              this.hasNewNotifications.set(false);
+            }, 600);
+          }
+        },
+        error: (error) => {
+          console.error('Failed to fetch notifications:', error);
+        }
       });
   }
 
   toggleNotificationsPopup() {
-    this.isPopupVisible.set(!this.isPopupVisible());
-    this.unreadNotificationsCount =
-      this.notificationsService.getUnreadNotificationsCount();
+    const newVisibility = !this.isPopupVisible();
+    this.isPopupVisible.set(newVisibility);
+
+    // If opening the popup, refresh notifications
+    if (newVisibility) {
+      this.refreshNotifications();
+    }
   }
 
   markAsRead(notification: UINotification): void {
-    notification.alreadyRead = true;
-    this.markAllAsRead();
+    // Update the notification's read status
+    const updatedNotifications = this.notifications().map(n =>
+      n.id === notification.id ? { ...n, alreadyRead: true } : n
+    );
+
+    // Update notifications signal
+    this.notifications.set(updatedNotifications);
+
+    // Update unread count
+    this.unreadNotificationsCount.set(updatedNotifications.filter(n => !n.alreadyRead).length);
+
+    // Notify the service
+    this.notificationsService.acknowledgeNotifications([notification]);
   }
 
   markAllAsRead(): void {
-    this.notificationsService.acknowledgeNotifications(this.notifications);
-    this.unreadNotificationsCount = 0;
+    // Update all notifications as read
+    const updatedNotifications = this.notifications().map(n => ({ ...n, alreadyRead: true }));
+
+    // Update notifications signal
+    this.notifications.set(updatedNotifications);
+
+    // Reset unread count
+    this.unreadNotificationsCount.set(0);
+
+    // Notify the service
+    this.notificationsService.acknowledgeNotifications(this.notifications());
   }
 
   getNotificationText(type: UINotificationType): string {
