@@ -1,11 +1,14 @@
 package dev.theopenshelf.platform.services;
 
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.HelpArticleEntity;
 import dev.theopenshelf.platform.entities.HelpCategoryEntity;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.exceptions.CodedError;
 import dev.theopenshelf.platform.model.HelpArticle;
 import dev.theopenshelf.platform.model.HelpCategory;
 import dev.theopenshelf.platform.repositories.HelpArticleRepository;
@@ -56,7 +59,11 @@ public class HelpService {
 
     public Mono<Void> updateHelpArticle(String articleId, HelpArticle article) {
         HelpArticleEntity entity = helpArticleRepository.findById(UUID.fromString(articleId))
-                .orElseThrow(() -> new RuntimeException("Article not found"));
+                .orElseThrow(() -> new CodedException(CodedError.HELP_ARTICLE_NOT_FOUND.getCode(),
+                        CodedError.HELP_ARTICLE_NOT_FOUND.getDefaultMessage(),
+                        Map.of("articleId", articleId),
+                        CodedError.HELP_ARTICLE_NOT_FOUND.getDocumentationUrl()));
+
         entity.updateFromHelpArticle(article);
         helpArticleRepository.save(entity);
         return Mono.empty();
@@ -64,7 +71,11 @@ public class HelpService {
 
     public Mono<Void> updateHelpCategory(String categoryId, HelpCategory category) {
         HelpCategoryEntity entity = helpCategoryRepository.findById(UUID.fromString(categoryId))
-                .orElseThrow(() -> new RuntimeException("Category not found"));
+                .orElseThrow(() -> new CodedException(CodedError.HELP_CATEGORY_NOT_FOUND.getCode(),
+                        CodedError.HELP_CATEGORY_NOT_FOUND.getDefaultMessage(),
+                        Map.of("categoryId", categoryId),
+                        CodedError.HELP_CATEGORY_NOT_FOUND.getDocumentationUrl()));
+
         entity.updateFromHelpCategory(category);
         helpCategoryRepository.save(entity);
         return Mono.empty();

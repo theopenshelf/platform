@@ -21,7 +21,8 @@ import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.entities.NotificationEntity;
 import dev.theopenshelf.platform.entities.NotificationType;
 import dev.theopenshelf.platform.entities.UserEntity;
-import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.exceptions.CodedError;
 import dev.theopenshelf.platform.model.ApprovalReservationRequest;
 import dev.theopenshelf.platform.model.BorrowItemRequest;
 import dev.theopenshelf.platform.model.BorrowRecord;
@@ -164,7 +165,10 @@ public class ItemService {
 
         if (borrowRecord.getStatus() == BorrowStatus.RESERVED_UNCONFIRMED || borrowRecord.getStatus() == BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
             LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+                    .orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                        CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                        Map.of("libraryId", item.getLibraryId()),
+                        CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
             for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
                 notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
                                 .type(borrowRecord.getStatus() == BorrowStatus.RESERVED_UNCONFIRMED ? NotificationType.ITEM_NEW_RETURN_TO_CONFIRM : NotificationType.ITEM_NEW_PICKUP_TO_CONFIRM)
@@ -179,21 +183,36 @@ public class ItemService {
     }
 
     public Mono<ItemEntity> approvalReservation(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
-        ItemEntity item = itemRepository.findById(itemId).orElse(null);
-        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
+        ItemEntity item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new CodedException(CodedError.ITEM_NOT_FOUND.getCode(), 
+                    CodedError.ITEM_NOT_FOUND.getDefaultMessage(), 
+                    Map.of("itemId", itemId), 
+                    CodedError.ITEM_NOT_FOUND.getDocumentationUrl()));
 
-        if (item == null || record == null) {
-            return Mono.empty();
-        }
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId)
+                .orElseThrow(() -> new CodedException(CodedError.BORROW_RECORD_NOT_FOUND.getCode(),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDefaultMessage(),
+                    Map.of("recordId", recordId),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDocumentationUrl()));
+
         checkIfApprovalIsRequiredAndPermission(userId, item);
         if (record.getStatus() != BorrowStatus.RESERVED_UNCONFIRMED) {
-            throw new IllegalStateException("Cannot confirmed reservation of a borrow record not in reservation unconfirmed");
+            throw new CodedException(CodedError.INVALID_STATUS_TRANSITION.getCode(),
+                    "Cannot confirm reservation of a borrow record not in reservation unconfirmed state",
+                    Map.of("currentStatus", record.getStatus(),
+                          "expectedStatus", BorrowStatus.RESERVED_UNCONFIRMED),
+                    CodedError.INVALID_STATUS_TRANSITION.getDocumentationUrl());
         }
-        //TODO handle disapproved
+
         record.setStatus(BorrowStatus.RESERVED_CONFIRMED);
         borrowRecordRepository.save(record);
 
-        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        UserEntity user = usersRepository.findById(userId)
+                .orElseThrow(() -> new CodedException(CodedError.USER_NOT_FOUND.getCode(),
+                    CodedError.USER_NOT_FOUND.getDefaultMessage(),
+                    Map.of("userId", userId),
+                    CodedError.USER_NOT_FOUND.getDocumentationUrl()));
+
         notificationsService.sendNotifications(user, NotificationEntity.builder()
                 .type(NotificationType.ITEM_RESERVATION_APPROVED)
                 .alreadyRead(false)
@@ -210,7 +229,11 @@ public class ItemService {
                 .map(item ->  borrowRecordRepository.findByItemIdAndBorrowedByAndStatus(itemId, userId.toString(), BorrowStatus.RESERVED_READY_TO_PICKUP)
                         .map(record -> {
                             if (record.getStatus() != BorrowStatus.RESERVED_READY_TO_PICKUP) {
-                                throw new IllegalStateException("Cannot pickup an item not in ready to pickup state");
+                                throw new CodedException(CodedError.INVALID_STATUS_TRANSITION.getCode(),
+                                        "Cannot pickup an item not in ready to pickup state",
+                                        Map.of("currentStatus", record.getStatus(),
+                                              "expectedStatus", BorrowStatus.RESERVED_READY_TO_PICKUP),
+                                        CodedError.INVALID_STATUS_TRANSITION.getDocumentationUrl());
                             }
 
                             BorrowStatus status = isApprovalRequired(userId, item) ? BorrowStatus.RESERVED_PICKUP_UNCONFIRMED : BorrowStatus.BORROWED_ACTIVE;
@@ -221,7 +244,10 @@ public class ItemService {
 
                             if (status == BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
                                 LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
-                                        .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+                                        .orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                                            CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                                            Map.of("libraryId", item.getLibraryId()),
+                                            CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
                                 for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
                                     notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
                                             .type(NotificationType.ITEM_NEW_PICKUP_TO_CONFIRM)
@@ -240,22 +266,36 @@ public class ItemService {
     }
 
     public Mono<ItemEntity> approvalPickup(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
-        ItemEntity item = itemRepository.findById(itemId).orElse(null);
-        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
+        ItemEntity item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new CodedException(CodedError.ITEM_NOT_FOUND.getCode(),
+                    CodedError.ITEM_NOT_FOUND.getDefaultMessage(),
+                    Map.of("itemId", itemId),
+                    CodedError.ITEM_NOT_FOUND.getDocumentationUrl()));
 
-        if (item == null || record == null) {
-            return Mono.empty();
-        }
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId)
+                .orElseThrow(() -> new CodedException(CodedError.BORROW_RECORD_NOT_FOUND.getCode(),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDefaultMessage(),
+                    Map.of("recordId", recordId),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDocumentationUrl()));
+
         checkIfApprovalIsRequiredAndPermission(userId, item);
         if (record.getStatus() != BorrowStatus.RESERVED_PICKUP_UNCONFIRMED) {
-            throw new IllegalStateException("Cannot confirmed reservation of a borrow record not in pickup unconfirmed");
+            throw new CodedException(CodedError.INVALID_STATUS_TRANSITION.getCode(),
+                    "Cannot confirm pickup of a borrow record not in pickup unconfirmed state",
+                    Map.of("currentStatus", record.getStatus(),
+                          "expectedStatus", BorrowStatus.RESERVED_PICKUP_UNCONFIRMED),
+                    CodedError.INVALID_STATUS_TRANSITION.getDocumentationUrl());
         }
 
-        //TODO handle disapproved
         record.setStatus(BorrowStatus.BORROWED_ACTIVE);
         borrowRecordRepository.save(record);
 
-        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        UserEntity user = usersRepository.findById(userId)
+                .orElseThrow(() -> new CodedException(CodedError.USER_NOT_FOUND.getCode(),
+                    CodedError.USER_NOT_FOUND.getDefaultMessage(),
+                    Map.of("userId", userId),
+                    CodedError.USER_NOT_FOUND.getDocumentationUrl()));
+
         notificationsService.sendNotifications(user, NotificationEntity.builder()
                 .type(NotificationType.ITEM_PICK_UP_APPROVED)
                 .alreadyRead(false)
@@ -282,7 +322,10 @@ public class ItemService {
                 log.info("The borrow record is in a valid state to be returned '" + record.getStatus()+ "'");
                 break;
             default:
-                throw new IllegalStateException("Cannot returned an item that is currently not borrowed");
+                throw new CodedException(CodedError.INVALID_STATUS_TRANSITION.getCode(),
+                        "Cannot returned an item that is currently not borrowed",
+                        Map.of("currentStatus", record.getStatus()),
+                        CodedError.INVALID_STATUS_TRANSITION.getDocumentationUrl());
         }
 
         LocalDate today = LocalDate.now();
@@ -299,7 +342,10 @@ public class ItemService {
         borrowRecordRepository.save(record);
         if (record.getStatus() == BorrowStatus.BORROWED_RETURN_UNCONFIRMED) {
             LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
+                    .orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                        CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                        Map.of("libraryId", item.getLibraryId()),
+                        CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
             for (LibraryMemberEntity member : library.getMembers().stream().filter(m -> m.getRole() == MemberRoleEntity.ADMIN).collect(Collectors.toSet())) {
                 notificationsService.sendNotifications(member.getUser(), NotificationEntity.builder()
                         .type(NotificationType.ITEM_NEW_RESERVATION_TO_CONFIRM)
@@ -315,18 +361,27 @@ public class ItemService {
     }
 
     public Mono<ItemEntity> approvalReturn(UUID userId, UUID itemId, UUID recordId, ApprovalReservationRequest.DecisionEnum decision) {
-        ItemEntity item = itemRepository.findById(itemId).orElse(null);
-        BorrowRecordEntity record = borrowRecordRepository.findById(recordId).orElse(null);
+        ItemEntity item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new CodedException(CodedError.ITEM_NOT_FOUND.getCode(),
+                    CodedError.ITEM_NOT_FOUND.getDefaultMessage(),
+                    Map.of("itemId", itemId),
+                    CodedError.ITEM_NOT_FOUND.getDocumentationUrl()));
 
-        if (item == null || record == null) {
-            return Mono.empty();
-        }
+        BorrowRecordEntity record = borrowRecordRepository.findById(recordId)
+                .orElseThrow(() -> new CodedException(CodedError.BORROW_RECORD_NOT_FOUND.getCode(),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDefaultMessage(),
+                    Map.of("recordId", recordId),
+                    CodedError.BORROW_RECORD_NOT_FOUND.getDocumentationUrl()));
+
         checkIfApprovalIsRequiredAndPermission(userId, item);
         if (record.getStatus() != BorrowStatus.BORROWED_RETURN_UNCONFIRMED) {
-            throw new IllegalStateException("Cannot confirmed item returned if it is not in return unconfirmed");
+            throw new CodedException(CodedError.INVALID_STATUS_TRANSITION.getCode(),
+                    "Cannot confirm return of a borrow record not in return unconfirmed state",
+                    Map.of("currentStatus", record.getStatus(),
+                          "expectedStatus", BorrowStatus.BORROWED_RETURN_UNCONFIRMED),
+                    CodedError.INVALID_STATUS_TRANSITION.getDocumentationUrl());
         }
 
-        //TODO handle disapproved
         LocalDate today = LocalDate.now();
         if (today.isBefore(record.getEndDate())) {
             record.setStatus(BorrowStatus.RETURNED_EARLY);
@@ -337,7 +392,12 @@ public class ItemService {
         }
         borrowRecordRepository.save(record);
 
-        UserEntity user = usersRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        UserEntity user = usersRepository.findById(userId)
+                .orElseThrow(() -> new CodedException(CodedError.USER_NOT_FOUND.getCode(),
+                    CodedError.USER_NOT_FOUND.getDefaultMessage(),
+                    Map.of("userId", userId),
+                    CodedError.USER_NOT_FOUND.getDocumentationUrl()));
+
         notificationsService.sendNotifications(user, NotificationEntity.builder()
                 .type(NotificationType.ITEM_RETURN_APPROVED)
                 .alreadyRead(false)
@@ -351,8 +411,13 @@ public class ItemService {
 
     public boolean isApprovalRequired(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        MemberRoleEntity role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                    CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                    Map.of("libraryId", item.getLibraryId()),
+                    CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
+        MemberRoleEntity role = library.getMembers().stream()
+                .filter(m -> m.getUser().getId().equals(userId))
+                .findFirst()
                 .map(m -> m.getRole())
                 .orElse(MemberRoleEntity.MEMBER);
 
@@ -361,17 +426,29 @@ public class ItemService {
 
     public void checkIfApprovalIsRequiredAndPermission(UUID userId, ItemEntity item) {
         LibraryEntity library = libraryRepository.findByIdWithMembers(item.getLibraryId())
-                .orElseThrow(() -> new ResourceNotFoundException("Library not found"));
-        MemberRoleEntity role = library.getMembers().stream().filter(m -> m.getUser().getId().equals(userId)).findFirst()
+                .orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                    CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                    Map.of("libraryId", item.getLibraryId()),
+                    CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
+
+        MemberRoleEntity role = library.getMembers().stream()
+                .filter(m -> m.getUser().getId().equals(userId))
+                .findFirst()
                 .map(m -> m.getRole())
                 .orElse(MemberRoleEntity.MEMBER);
 
         if (!role.equals(MemberRoleEntity.ADMIN)) {
-            throw new AuthorizationDeniedException("Only the library admin can approve actions");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only library admins can approve actions",
+                    Map.of("userId", userId, "libraryId", library.getId()),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         if (!library.isRequiresApproval()) {
-            throw new IllegalStateException("No approval is required for this library");
+            throw new CodedException(CodedError.APPROVAL_NOT_REQUIRED.getCode(),
+                    CodedError.APPROVAL_NOT_REQUIRED.getDefaultMessage(),
+                    Map.of("libraryId", library.getId()),
+                    CodedError.APPROVAL_NOT_REQUIRED.getDocumentationUrl());
         }
     }
 

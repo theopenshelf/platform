@@ -600,7 +600,138 @@
   "errors": {
     "unexpected": "An unexpected error occurred",
     "supportReference": "For support assistance, please reference: {{traceId}}",
-    "title": "Error"
+    "title": "Error",
+    "learnMore": "Learn more",
+    "auth001": {
+      "title": "User Not Found",
+      "message": "The specified user could not be found.",
+      "action": "Please check the provided information and try again."
+    },
+    "auth002": {
+      "title": "Invalid Credentials",
+      "message": "The provided username or password is incorrect.",
+      "action": "Please check your credentials and try again."
+    },
+    "auth003": {
+      "title": "Email Already Verified",
+      "message": "This email address has already been verified.",
+      "action": "You can proceed to sign in."
+    },
+    "auth004": {
+      "title": "Invalid Verification",
+      "message": "The verification token is invalid or has expired.",
+      "action": "Please request a new verification email."
+    },
+    "auth005": {
+      "title": "Insufficient Permissions",
+      "message": "You don't have sufficient permissions to perform this action.",
+      "action": "Please contact an administrator if you need access."
+    },
+    "res001": {
+      "title": "Item Not Found",
+      "message": "The requested item could not be found.",
+      "action": "Please check the item ID and try again."
+    },
+    "res002": {
+      "title": "Item Not Available",
+      "message": "The requested item is not available at this time.",
+      "action": "Please try again later or choose another item."
+    },
+    "res003": {
+      "title": "Item Already Reserved",
+      "message": "This item has already been reserved for the selected period.",
+      "action": "Please select different dates or choose another item."
+    },
+    "res004": {
+      "title": "Library Not Found",
+      "message": "The requested library could not be found.",
+      "action": "Please check the library ID and try again."
+    },
+    "res005": {
+      "title": "Community Not Found",
+      "message": "The requested community could not be found.",
+      "action": "Please check the community ID and try again."
+    },
+    "res006": {
+      "title": "Member Not Found",
+      "message": "The requested member could not be found.",
+      "action": "Please check the member ID and try again."
+    },
+    "res007": {
+      "title": "Custom Page Not Found",
+      "message": "The requested custom page could not be found.",
+      "action": "Please check the page reference and try again."
+    },
+    "res008": {
+      "title": "Borrow Record Not Found",
+      "message": "The requested borrow record could not be found.",
+      "action": "Please check the borrow record ID and try again."
+    },
+    "res009": {
+      "title": "Help Article Not Found",
+      "message": "The requested help article could not be found.",
+      "action": "Please check the article ID and try again."
+    },
+    "res010": {
+      "title": "Help Category Not Found",
+      "message": "The requested help category could not be found.",
+      "action": "Please check the category ID and try again."
+    },
+    "res011": {
+      "title": "Settings Not Found",
+      "message": "The system settings could not be found.",
+      "action": "Please contact an administrator to set up the system settings."
+    },
+    "val001": {
+      "title": "Invalid Input",
+      "message": "The provided input is invalid.",
+      "action": "Please check the form and correct any errors."
+    },
+    "val002": {
+      "title": "Missing Required Field",
+      "message": "A required field is missing.",
+      "action": "Please fill in all required fields."
+    },
+    "val003": {
+      "title": "Invalid Status Transition",
+      "message": "The requested status transition is not allowed.",
+      "action": "Please check the current status and allowed transitions."
+    },
+    "val004": {
+      "title": "Approval Not Required",
+      "message": "Approval is not required for this operation.",
+      "action": "You can proceed without approval."
+    },
+    "val005": {
+      "title": "Invalid Borrow State",
+      "message": "The current borrow state does not allow this operation.",
+      "action": "Please check the current state and allowed operations."
+    },
+    "sys001": {
+      "title": "Internal Error",
+      "message": "An internal error occurred. Our team has been notified.",
+      "action": "Please try again later."
+    },
+    "sys002": {
+      "title": "External Service Error",
+      "message": "We're having trouble connecting to an external service.",
+      "action": "Please try again later."
+    },
+    "sys003": {
+      "title": "Email Sending Error",
+      "message": "We encountered an error while sending the email.",
+      "action": "Please try again later or contact support if the problem persists."
+    },
+    "client_error": {
+      "title": "Client Error",
+      "message": "An error occurred in your browser.",
+      "action": "Please refresh the page and try again."
+    },
+    "unknown_error": {
+      "title": "Unknown Error",
+      "message": "An unexpected error occurred.",
+      "action": "Please try again later."
+    }
   },
   "resetPassword": {
     "title": "Reset Password",

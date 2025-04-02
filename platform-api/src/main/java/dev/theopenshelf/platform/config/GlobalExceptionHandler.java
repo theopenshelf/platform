@@ -1,52 +1,117 @@
 package dev.theopenshelf.platform.config;
 
-import java.time.LocalDateTime;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.support.WebExchangeBindException;
 
-import dev.theopenshelf.platform.model.ApiError;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.model.CodedError;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public Mono<ResponseEntity<ApiError>> handleException(Exception ex) {
+    @ExceptionHandler(CodedException.class)
+    public Mono<ResponseEntity<CodedError>> handleCodedException(CodedException ex) {
         return Mono.deferContextual(ctx -> {
-            String traceId = ctx.getOrDefault("traceId", "no-trace-id");
-            log.error("Error occurred: {}, TraceID: {}", ex.getMessage(), traceId, ex);
+            String traceId = ctx.getOrDefault("traceId", generateTraceId());
+            logError(traceId, ex);
 
-            ApiError error = ApiError.builder()
+            CodedError error = new CodedError()
+                    .code(ex.getCode())
                     .message(ex.getMessage())
                     .traceId(traceId)
-                    .timestamp(LocalDateTime.now())
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                    .build();
+                    .documentationUrl(ex.getDocumentationUrl())
+                    .variables(ex.getVariables());
+
+            return Mono.just(new ResponseEntity<>(error, HttpStatus.BAD_REQUEST));
+        });
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public Mono<ResponseEntity<CodedError>> handleBadCredentials(BadCredentialsException ex) {
+        return Mono.deferContextual(ctx -> {
+            String traceId = ctx.getOrDefault("traceId", generateTraceId());
+            logError(traceId, ex);
+
+            CodedError error = new CodedError()
+                    .code("AUTH002")
+                    .message("Invalid credentials provided")
+                    .traceId(traceId);
+
+            return Mono.just(new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED));
+        });
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public Mono<ResponseEntity<CodedError>> handleAccessDeniedException(AccessDeniedException ex) {
+        return Mono.deferContextual(ctx -> {
+            String traceId = ctx.getOrDefault("traceId", generateTraceId());
+            logError(traceId, ex);
+
+            CodedError error = new CodedError()
+                    .code("AUTH005")
+                    .message("You don't have sufficient permissions to perform this action")
+                    .traceId(traceId);
+
+            return Mono.just(new ResponseEntity<>(error, HttpStatus.FORBIDDEN));
+        });
+    }
+
+    @ExceptionHandler(WebExchangeBindException.class)
+    public Mono<ResponseEntity<CodedError>> handleValidationException(WebExchangeBindException ex) {
+        return Mono.deferContextual(ctx -> {
+            String traceId = ctx.getOrDefault("traceId", generateTraceId());
+            logError(traceId, ex);
+
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("fields", ex.getBindingResult().getFieldErrors().stream()
+                    .map(error -> Map.of(
+                            "field", error.getField(),
+                            "message", error.getDefaultMessage()
+                    ))
+                    .toList());
+
+            CodedError error = new CodedError()
+                    .code("VAL001")
+                    .message("Validation failed")
+                    .traceId(traceId)
+                    .variables(variables);
+
+            return Mono.just(new ResponseEntity<>(error, HttpStatus.UNPROCESSABLE_ENTITY));
+        });
+    }
+
+    @ExceptionHandler(Exception.class)
+    public Mono<ResponseEntity<CodedError>> handleException(Exception ex) {
+        return Mono.deferContextual(ctx -> {
+            String traceId = ctx.getOrDefault("traceId", generateTraceId());
+            logError(traceId, ex);
+
+            CodedError error = new CodedError()
+                    .code("SYS001")
+                    .message("An unexpected error occurred")
+                    .traceId(traceId);
 
             return Mono.just(new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR));
         });
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public Mono<ResponseEntity<ApiError>> handleBadCredentials(BadCredentialsException ex) {
-        return Mono.deferContextual(ctx -> {
-            String traceId = ctx.getOrDefault("traceId", "no-trace-id");
-            log.error("Authentication error: {}, TraceID: {}", ex.getMessage(), traceId, ex);
+    private String generateTraceId() {
+        return UUID.randomUUID().toString();
+    }
 
-            ApiError error = ApiError.builder()
-                    .message(ex.getMessage())
-                    .traceId(traceId)
-                    .timestamp(LocalDateTime.now())
-                    .status(HttpStatus.BAD_REQUEST.value())
-                    .build();
-
-            return Mono.just(new ResponseEntity<>(error, HttpStatus.BAD_REQUEST));
-        });
+    private void logError(String traceId, Exception ex) {
+        log.error("Error occurred - TraceId: {} - Message: {}", traceId, ex.getMessage(), ex);
     }
 }

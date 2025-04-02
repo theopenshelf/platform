@@ -617,7 +617,138 @@
   "errors": {
     "unexpected": "Une erreur inattendue est survenue",
     "supportReference": "Pour obtenir de l'aide, veuillez référencer: {{traceId}}",
-    "title": "Erreur"
+    "title": "Erreur",
+    "learnMore": "En savoir plus",
+    "auth001": {
+      "title": "Utilisateur non trouvé",
+      "message": "L'utilisateur spécifié n'a pas été trouvé.",
+      "action": "Veuillez vérifier les informations fournies et réessayer."
+    },
+    "auth002": {
+      "title": "Identifiants invalides",
+      "message": "Le nom d'utilisateur ou le mot de passe fourni est incorrect.",
+      "action": "Veuillez vérifier vos identifiants et réessayer."
+    },
+    "auth003": {
+      "title": "Email déjà vérifié",
+      "message": "Cette adresse email a déjà été vérifiée.",
+      "action": "Vous pouvez procéder à la connexion."
+    },
+    "auth004": {
+      "title": "Vérification invalide",
+      "message": "Le jeton de vérification est invalide ou a expiré.",
+      "action": "Veuillez demander un nouvel email de vérification."
+    },
+    "auth005": {
+      "title": "Permissions insuffisantes",
+      "message": "Vous n'avez pas les permissions suffisantes pour effectuer cette action.",
+      "action": "Veuillez contacter un administrateur si vous avez besoin d'accès."
+    },
+    "res001": {
+      "title": "Article non trouvé",
+      "message": "L'article demandé n'a pas été trouvé.",
+      "action": "Veuillez vérifier l'identifiant de l'article et réessayer."
+    },
+    "res002": {
+      "title": "Article non disponible",
+      "message": "L'article demandé n'est pas disponible pour le moment.",
+      "action": "Veuillez réessayer plus tard ou choisir un autre article."
+    },
+    "res003": {
+      "title": "Article déjà réservé",
+      "message": "Cet article a déjà été réservé pour la période sélectionnée.",
+      "action": "Veuillez sélectionner d'autres dates ou choisir un autre article."
+    },
+    "res004": {
+      "title": "Bibliothèque non trouvée",
+      "message": "La bibliothèque demandée n'a pas été trouvée.",
+      "action": "Veuillez vérifier l'identifiant de la bibliothèque et réessayer."
+    },
+    "res005": {
+      "title": "Communauté non trouvée",
+      "message": "La communauté demandée n'a pas été trouvée.",
+      "action": "Veuillez vérifier l'identifiant de la communauté et réessayer."
+    },
+    "res006": {
+      "title": "Membre non trouvé",
+      "message": "Le membre demandé n'a pas été trouvé.",
+      "action": "Veuillez vérifier l'identifiant du membre et réessayer."
+    },
+    "res007": {
+      "title": "Page personnalisée non trouvée",
+      "message": "La page personnalisée demandée n'a pas été trouvée.",
+      "action": "Veuillez vérifier la référence de la page et réessayer."
+    },
+    "res008": {
+      "title": "Enregistrement d'emprunt non trouvé",
+      "message": "L'enregistrement d'emprunt demandé n'a pas été trouvé.",
+      "action": "Veuillez vérifier l'identifiant de l'enregistrement et réessayer."
+    },
+    "res009": {
+      "title": "Article d'aide non trouvé",
+      "message": "L'article d'aide demandé n'a pas été trouvé.",
+      "action": "Veuillez vérifier l'identifiant de l'article et réessayer."
+    },
+    "res010": {
+      "title": "Catégorie d'aide non trouvée",
+      "message": "La catégorie d'aide demandée n'a pas été trouvée.",
+      "action": "Veuillez vérifier l'identifiant de la catégorie et réessayer."
+    },
+    "res011": {
+      "title": "Paramètres non trouvés",
+      "message": "Les paramètres système n'ont pas été trouvés.",
+      "action": "Veuillez contacter un administrateur pour configurer les paramètres système."
+    },
+    "val001": {
+      "title": "Saisie invalide",
+      "message": "La saisie fournie est invalide.",
+      "action": "Veuillez vérifier le formulaire et corriger les erreurs."
+    },
+    "val002": {
+      "title": "Champ requis manquant",
+      "message": "Un champ requis est manquant.",
+      "action": "Veuillez remplir tous les champs requis."
+    },
+    "val003": {
+      "title": "Transition de statut invalide",
+      "message": "La transition de statut demandée n'est pas autorisée.",
+      "action": "Veuillez vérifier le statut actuel et les transitions autorisées."
+    },
+    "val004": {
+      "title": "Approbation non requise",
+      "message": "L'approbation n'est pas requise pour cette opération.",
+      "action": "Vous pouvez procéder sans approbation."
+    },
+    "val005": {
+      "title": "État d'emprunt invalide",
+      "message": "L'état d'emprunt actuel ne permet pas cette opération.",
+      "action": "Veuillez vérifier l'état actuel et les opérations autorisées."
+    },
+    "sys001": {
+      "title": "Erreur interne",
+      "message": "Une erreur interne est survenue. Notre équipe a été notifiée.",
+      "action": "Veuillez réessayer plus tard."
+    },
+    "sys002": {
+      "title": "Erreur de service externe",
+      "message": "Nous rencontrons des difficultés pour nous connecter à un service externe.",
+      "action": "Veuillez réessayer plus tard."
+    },
+    "sys003": {
+      "title": "Erreur d'envoi d'email",
+      "message": "Nous avons rencontré une erreur lors de l'envoi de l'email.",
+      "action": "Veuillez réessayer plus tard ou contacter le support si le problème persiste."
+    },
+    "client_error": {
+      "title": "Erreur client",
+      "message": "Une erreur s'est produite dans votre navigateur.",
+      "action": "Veuillez rafraîchir la page et réessayer."
+    },
+    "unknown_error": {
+      "title": "Erreur inconnue",
+      "message": "Une erreur inattendue est survenue.",
+      "action": "Veuillez réessayer plus tard."
+    }
   },
   "resetPassword": {
     "title": "Réinitialiser le mot de passe",

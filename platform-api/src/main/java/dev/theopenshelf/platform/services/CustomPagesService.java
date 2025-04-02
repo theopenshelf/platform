@@ -1,14 +1,16 @@
 package dev.theopenshelf.platform.services;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.CommunityMemberEntity;
 import dev.theopenshelf.platform.entities.CustomPageEntity;
 import dev.theopenshelf.platform.entities.MemberRoleEntity;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.exceptions.CodedError;
 import dev.theopenshelf.platform.model.CustomPage;
 import dev.theopenshelf.platform.model.GetCustomPageRefs200ResponseInner;
 import dev.theopenshelf.platform.repositories.CustomPageRepository;
@@ -27,7 +29,10 @@ public class CustomPagesService {
     public Mono<CustomPage> createCommunityCustomPage(UUID communityId, CustomPage page, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
         if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
-            throw new AuthorizationDeniedException("Only the community admin can create custom page");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only community admins can create custom pages",
+                    Map.of("userId", currentUser, "communityId", communityId),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         log.info("Creating custom page for community: {}", communityId);
@@ -41,16 +46,19 @@ public class CustomPagesService {
     public Mono<Void> deleteCommunityCustomPage(UUID communityId, String pageRef, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
         if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
-            throw new AuthorizationDeniedException("Only the community admin can delete custom page");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only community admins can delete custom pages",
+                    Map.of("userId", currentUser, "communityId", communityId),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         log.info("Deleting custom page: {} from community: {}", pageRef, communityId);
         CustomPageEntity entity = customPageRepository.findByCommunityIdAndRef(communityId, pageRef)
-                .orElse(null);
-        if (entity == null) {
-            log.warn("Custom page not found: {} in community: {}", pageRef, communityId);
-            return Mono.empty();
-        }
+                .orElseThrow(() -> new CodedException(CodedError.CUSTOM_PAGE_NOT_FOUND.getCode(),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDefaultMessage(),
+                        Map.of("pageRef", pageRef, "communityId", communityId),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDocumentationUrl()));
+
         customPageRepository.delete(entity);
         log.info("Deleted custom page: {} from community: {}", pageRef, communityId);
         return Mono.empty();
@@ -59,7 +67,10 @@ public class CustomPagesService {
     public Mono<CustomPage> getCommunityCustomPage(UUID communityId, String pageRef, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
         if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
-            throw new AuthorizationDeniedException("Only the community member can access custom page");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only community members can access custom pages",
+                    Map.of("userId", currentUser, "communityId", communityId),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         log.info("Retrieving custom page: {} from community: {}", pageRef, communityId);
@@ -67,13 +78,20 @@ public class CustomPagesService {
                 .map(entity -> {
                     log.info("Found custom page: {} in community: {}", pageRef, communityId);
                     return entity.toCustomPage();
-                });
+                })
+                .switchIfEmpty(Mono.error(new CodedException(CodedError.CUSTOM_PAGE_NOT_FOUND.getCode(),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDefaultMessage(),
+                        Map.of("pageRef", pageRef, "communityId", communityId),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDocumentationUrl())));
     }
 
     public Flux<CustomPage> getCommunityCustomPages(UUID communityId, UUID currentUser) {
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
         if (communityMember.isEmpty() || communityMember.get().getRole().equals(MemberRoleEntity.REQUESTING_JOIN)) {
-            throw new AuthorizationDeniedException("Only the community member can access custom page");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only community members can access custom pages",
+                    Map.of("userId", currentUser, "communityId", communityId),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         log.info("Retrieving all custom pages for community: {}", communityId);
@@ -88,7 +106,11 @@ public class CustomPagesService {
                 .map(entity -> {
                     log.info("Found custom page: {}", pageRef);
                     return entity.toCustomPage();
-                });
+                })
+                .switchIfEmpty(Mono.error(new CodedException(CodedError.CUSTOM_PAGE_NOT_FOUND.getCode(),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDefaultMessage(),
+                        Map.of("pageRef", pageRef),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDocumentationUrl())));
     }
 
     public Flux<GetCustomPageRefs200ResponseInner> getCustomPageRefs() {
@@ -104,21 +126,21 @@ public class CustomPagesService {
     }
 
     public Mono<CustomPage> updateCommunityCustomPage(UUID communityId, String pageRef, CustomPage page, UUID currentUser) {
-
         Optional<CommunityMemberEntity> communityMember = communitiesService.isMember(communityId, currentUser);
         if (communityMember.isEmpty() || !communityMember.get().getRole().equals(MemberRoleEntity.ADMIN)) {
-            throw new AuthorizationDeniedException("Only the community admin can update custom page");
+            throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                    "Only community admins can update custom pages",
+                    Map.of("userId", currentUser, "communityId", communityId),
+                    CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
         }
 
         log.info("Updating custom page: {} in community: {}", pageRef, communityId);
         CustomPageEntity existingEntity = customPageRepository
                 .findByCommunityIdAndRef(communityId, pageRef)
-                .orElse(null);
-
-        if (existingEntity == null) {
-            log.warn("Custom page not found: {} in community: {}", pageRef, communityId);
-            return Mono.empty();
-        }
+                .orElseThrow(() -> new CodedException(CodedError.CUSTOM_PAGE_NOT_FOUND.getCode(),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDefaultMessage(),
+                        Map.of("pageRef", pageRef, "communityId", communityId),
+                        CodedError.CUSTOM_PAGE_NOT_FOUND.getDocumentationUrl()));
 
         existingEntity.setTitle(page.getTitle());
         existingEntity.setContent(page.getContent());

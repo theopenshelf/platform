@@ -23,7 +23,8 @@ import com.sendgrid.helpers.mail.objects.Email;
 
 import dev.theopenshelf.platform.entities.NotificationEntity;
 import dev.theopenshelf.platform.entities.UserEntity;
-import dev.theopenshelf.platform.exceptions.MailException;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.exceptions.CodedError;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class MailService {
     @Value("${sendgrid.from.name}")
     private String sendgridFromName;
 
-    public void sendMail(String to, String subject, String text) throws MailException {
+    public void sendMail(String to, String subject, String text) {
         log.info("Sending email to: {}, subject: {}", to, subject);
 
         Email from = new Email(sendgridFromEmail, sendgridFromName);
@@ -67,11 +68,18 @@ public class MailService {
             } else {
                 log.error("Failed to send email to: {}, status: {}, body: {}",
                         to, response.getStatusCode(), response.getBody());
-                throw new MailException("Failed to send email: " + response.getBody());
+                throw new CodedException(CodedError.EMAIL_SENDING_ERROR.getCode(),
+                        "Failed to send email: " + response.getBody(),
+                        Map.of("to", to, "status", response.getStatusCode(), "error", response.getBody()),
+                        CodedError.EMAIL_SENDING_ERROR.getDocumentationUrl());
             }
         } catch (IOException ex) {
             log.error("IOException while sending email to: {}", to, ex);
-            throw new MailException("Failed to send email", ex);
+            throw new CodedException(CodedError.EMAIL_SENDING_ERROR.getCode(),
+                    "Failed to send email due to IO error",
+                    Map.of("to", to, "error", ex.getMessage()),
+                    CodedError.EMAIL_SENDING_ERROR.getDocumentationUrl(),
+                    ex);
         }
     }
 
@@ -86,7 +94,11 @@ public class MailService {
             sendMail(to, subject, htmlContent);
         } catch (Exception e) {
             log.error("Failed to process template: {}", templateName, e);
-            throw new MailException("Failed to process email template", e);
+            throw new CodedException(CodedError.EMAIL_SENDING_ERROR.getCode(),
+                    "Failed to process email template",
+                    Map.of("to", to, "template", templateName, "error", e.getMessage()),
+                    CodedError.EMAIL_SENDING_ERROR.getDocumentationUrl(),
+                    e);
         }
     }
 

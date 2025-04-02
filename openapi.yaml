@@ -84,7 +84,7 @@ paths:
         "201":
           description: User registered successfully
         "400":
-          description: Invalid input
+          $ref: "#/components/responses/BadRequest"
 
   /public/auth/signout:
     post:
@@ -118,7 +118,7 @@ paths:
         "200":
           description: Password reset email sent
         "404":
-          description: User not found
+          $ref: "#/components/responses/NotFound"
 
   /public/auth/reset-password/confirm:
     post:
@@ -146,9 +146,9 @@ paths:
         "200":
           description: Password reset successfully
         "400":
-          description: Invalid token or password
+          $ref: "#/components/responses/BadRequest"
         "404":
-          description: User not found
+          $ref: "#/components/responses/NotFound"
 
   /public/auth/email-verification:
     post:
@@ -181,18 +181,7 @@ paths:
                     type: string
                     example: "Email verified successfully"
         "400":
-          description: Invalid or expired token
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: boolean
-                    example: false
-                  message:
-                    type: string
-                    example: "Invalid or expired token"
+          $ref: "#/components/responses/BadRequest"
 
   /hub/hello-world:
     get:
@@ -3145,6 +3134,66 @@ components:
             role:
               $ref: "#/components/schemas/MemberRole"
 
+    CodedError:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          description: A unique error code that identifies the type of error
+          example: AUTH001
+        message:
+          type: string
+          description: A human-readable error message
+          example: The specified user could not be found
+        traceId:
+          type: string
+          description: A unique identifier for tracing this error instance
+          example: 550e8400-e29b-41d4-a716-446655440000
+        documentationUrl:
+          type: string
+          description: URL to the documentation about this error
+          example: https://docs.theopenshelf.com/errors/AUTH001
+        variables:
+          type: object
+          additionalProperties: true
+          description: Additional context variables for the error
+          example:
+            field: "email"
+            value: "invalid@email"
+
+    ValidationFieldError:
+      type: object
+      required:
+        - field
+        - message
+      properties:
+        field:
+          type: string
+          description: The field that failed validation
+          example: email
+        message:
+          type: string
+          description: The validation error message
+          example: must be a valid email
+
+    ValidationError:
+      allOf:
+        - $ref: "#/components/schemas/CodedError"
+        - type: object
+          properties:
+            variables:
+              type: object
+              required:
+                - fields
+              properties:
+                fields:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/ValidationFieldError"
+
   responses:
     OK_200_GET_HELLO_WORLD:
       description: OK
@@ -3191,3 +3240,76 @@ components:
               lastName: "Doe"
               email: "john.doe@example.com"
               flat: "A701"
+    BadRequest:
+      description: Bad Request - The request was invalid or cannot be served
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CodedError"
+          examples:
+            validation_error:
+              value:
+                code: VAL001
+                message: Validation failed
+                variables:
+                  fields:
+                    - field: email
+                      message: must be a valid email
+            invalid_input:
+              value:
+                code: VAL002
+                message: Missing required field
+                variables:
+                  field: username
+    Unauthorized:
+      description: Unauthorized - Authentication is required
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CodedError"
+          example:
+            code: AUTH001
+            message: Authentication required
+            documentationUrl: https://docs.theopenshelf.com/errors/AUTH001
+    Forbidden:
+      description: Forbidden - No permission to access the resource
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CodedError"
+          example:
+            code: AUTH005
+            message: You don't have sufficient permissions to perform this action
+    NotFound:
+      description: Not Found - The requested resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CodedError"
+          example:
+            code: RES001
+            message: The requested resource was not found
+    ValidationError:
+      description: Validation Error - The request data failed validation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ValidationError"
+          example:
+            code: VAL001
+            message: Validation failed
+            variables:
+              fields:
+                - field: email
+                  message: must be a valid email
+                - field: password
+                  message: must be at least 8 characters
+    InternalServerError:
+      description: Internal Server Error - Something went wrong on the server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/CodedError"
+          example:
+            code: SYS001
+            message: An unexpected error occurred

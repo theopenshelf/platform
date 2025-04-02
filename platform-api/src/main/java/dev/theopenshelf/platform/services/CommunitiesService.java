@@ -6,6 +6,7 @@ import static dev.theopenshelf.platform.specifications.CommunitySpecifications.w
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -13,14 +14,14 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.CommunityEntity;
 import dev.theopenshelf.platform.entities.CommunityMemberEntity;
 import dev.theopenshelf.platform.entities.MemberRoleEntity;
 import dev.theopenshelf.platform.entities.UserEntity;
-import dev.theopenshelf.platform.exceptions.ResourceNotFoundException;
+import dev.theopenshelf.platform.exceptions.CodedException;
+import dev.theopenshelf.platform.exceptions.CodedError;
 import dev.theopenshelf.platform.model.Community;
 import dev.theopenshelf.platform.model.CommunityMember;
 import dev.theopenshelf.platform.model.GetCommunities200Response;
@@ -96,12 +97,18 @@ public class CommunitiesService {
         public Mono<Community> getCommunity(UUID communityId) {
                 return Mono.just(communityRepository.findById(communityId)
                                 .map(entity -> entity.toCommunity().build())
-                                .orElseThrow(() -> new ResourceNotFoundException("Community not found")));
+                                .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("communityId", communityId),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl())));
         }
 
         public Mono<Void> deleteCommunity(UUID communityId, UUID currentUserId) {
                 if (isNotCommunityAdmin(communityId, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can delete the community");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can delete the community",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
                 communityRepository.deleteById(communityId);
                 return Mono.empty();
@@ -109,7 +116,10 @@ public class CommunitiesService {
 
         public Mono<Community> updateCommunity(UUID communityId, Community community, UUID currentUserId) {
                 if (isNotCommunityAdmin(communityId, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can update the community");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can update the community",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
                 community.setId(communityId);
                 CommunityEntity entity = new CommunityEntity(community);
@@ -119,18 +129,29 @@ public class CommunitiesService {
 
         public Mono<CommunityMember> addCommunityMember(UUID communityId, CommunityMember member, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("communityId", communityId),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
+
                 boolean isUserJoiningItselfTheCommunity = member.getId().equals(currentUserId);
                 if (!isUserJoiningItselfTheCommunity && isNotCommunityAdmin(community, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can add members");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can add members",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
+
                 MemberRoleEntity role = MemberRoleEntity.MEMBER;
                 if (isUserJoiningItselfTheCommunity && community.isRequiresApproval()) {
                         role = MemberRoleEntity.REQUESTING_JOIN;
                 }
 
                 UserEntity user = userRepository.findById(member.getId())
-                                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.USER_NOT_FOUND.getCode(),
+                                        CodedError.USER_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("userId", member.getId()),
+                                        CodedError.USER_NOT_FOUND.getDocumentationUrl()));
 
                 CommunityMemberEntity memberEntity = CommunityMemberEntity.builder()
                                 .community(community)
@@ -146,9 +167,16 @@ public class CommunitiesService {
 
         public Mono<Void> deleteCommunityMember(UUID communityId, UUID userId, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("communityId", communityId),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
+
                 if (isNotCommunityAdmin(community, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can delete community members");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can delete members",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
 
                 community.getMembers().removeIf(member -> member.getUser().getId().equals(userId));
@@ -158,10 +186,18 @@ public class CommunitiesService {
 
         public Mono<PaginatedCommunityMembersResponse> getCommunityMembers(UUID communityId, Integer page, Integer pageSize, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("communityId", communityId),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
+
                 if (isNotCommunityAdmin(community, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can get community members");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can view members",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
+
                 int validPage = Math.max(1, page != null ? page : 1);
                 int validPageSize = Math.max(1, pageSize != null ? pageSize : 10);
                 int start = (validPage - 1) * validPageSize;
@@ -182,14 +218,25 @@ public class CommunitiesService {
 
         public Mono<CommunityMember> updateCommunityMember(UUID communityId, UUID userId, CommunityMember updatedMember, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                                .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("communityId", communityId),
+                                        CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
+
                 if (isNotCommunityAdmin(community, currentUserId)) {
-                        throw new AuthorizationDeniedException("Only the community admins can update community members");
+                        throw new CodedException(CodedError.INSUFFICIENT_PERMISSIONS.getCode(),
+                                "Only community admins can update members",
+                                Map.of("userId", currentUserId, "communityId", communityId),
+                                CodedError.INSUFFICIENT_PERMISSIONS.getDocumentationUrl());
                 }
+
                 CommunityMemberEntity memberEntity = community.getMembers().stream()
                                 .filter(member -> member.getUser().getId().equals(userId))
                                 .findFirst()
-                                .orElseThrow(() -> new ResourceNotFoundException("Member not found"));
+                                .orElseThrow(() -> new CodedException(CodedError.MEMBER_NOT_FOUND.getCode(),
+                                        CodedError.MEMBER_NOT_FOUND.getDefaultMessage(),
+                                        Map.of("userId", userId, "communityId", communityId),
+                                        CodedError.MEMBER_NOT_FOUND.getDocumentationUrl()));
 
                 memberEntity.setRole(MemberRoleEntity.valueOf(updatedMember.getRole().name()));
                 communityRepository.save(community);
@@ -199,7 +246,10 @@ public class CommunitiesService {
 
         public Optional<CommunityMemberEntity> isMember(UUID communityId, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                        .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                Map.of("communityId", communityId),
+                                CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
                 return community.getMembers().stream()
                         .filter(m -> m.getUser().getId().equals(currentUserId))
                         .findFirst();
@@ -207,7 +257,10 @@ public class CommunitiesService {
 
         private boolean isNotCommunityAdmin(UUID communityId, UUID currentUserId) {
                 CommunityEntity community = communityRepository.findByIdWithMembers(communityId)
-                        .orElseThrow(() -> new ResourceNotFoundException("Community not found"));
+                        .orElseThrow(() -> new CodedException(CodedError.COMMUNITY_NOT_FOUND.getCode(),
+                                CodedError.COMMUNITY_NOT_FOUND.getDefaultMessage(),
+                                Map.of("communityId", communityId),
+                                CodedError.COMMUNITY_NOT_FOUND.getDocumentationUrl()));
                 return isNotCommunityAdmin(community, currentUserId);
         }
 
