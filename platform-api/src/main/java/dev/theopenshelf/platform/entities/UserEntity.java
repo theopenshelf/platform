@@ -1,6 +1,7 @@
 package dev.theopenshelf.platform.entities;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -77,5 +78,16 @@ public class UserEntity {
                 .disabled(disabled)
                 .isEmailVerified(isEmailVerified)
                 .roles(Arrays.asList("hub")); // TODO
+    }
+
+    public Locale getLocale() {
+        if (preferredLanguage == null || preferredLanguage.trim().isEmpty()) {
+            return Locale.ENGLISH; // Default to English
+        }
+        // Handle both formats: "en" and "en-US"
+        String[] parts = preferredLanguage.split("-");
+        return parts.length > 1
+                ? new Locale(parts[0], parts[1])
+                : new Locale(parts[0]);
     }
 }

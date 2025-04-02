@@ -1,13 +1,18 @@
 package dev.theopenshelf.platform.services;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
+import com.nimbusds.jose.util.Pair;
 import com.sendgrid.Method;
 import com.sendgrid.Request;
 import com.sendgrid.Response;
@@ -16,7 +21,11 @@ import com.sendgrid.helpers.mail.Mail;
 import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
+import dev.theopenshelf.platform.entities.NotificationEntity;
+import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.exceptions.MailException;
+import lombok.Builder;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MailService {
 
     private final SpringTemplateEngine templateEngine;
+    private final MessageSource messageSource;
 
     @Value("${sendgrid.api-key}")
     private String sendgridApiKey;
@@ -78,5 +88,41 @@ public class MailService {
             log.error("Failed to process template: {}", templateName, e);
             throw new MailException("Failed to process email template", e);
         }
+    }
+
+    public void sendTemplatedEmail(UserEntity user, String subject, String templateName,
+            List<TemplateVariable> variables) {
+        Map<String, Object> variablesMap = variables.stream()
+                .map(v -> {
+                    switch (v.type) {
+                        case TRANSLATABLE_TEXT -> {
+                            return Pair.of(v.ref,
+                                    messageSource.getMessage(v.translateKey, v.args, user.getLocale()));
+                        }
+                        default -> {
+                            return Pair.of(v.ref, v.value);
+                        }
+                    }
+                })
+                .collect(Collectors.toMap(
+                        Pair::getLeft,
+                        Pair::getRight));
+
+        sendTemplatedEmail(user.getEmail(), subject, templateName, variablesMap);
+    }
+
+    @Data
+    @Builder
+    public static class TemplateVariable {
+        public TemplateVariableType type;
+        public String ref;
+        public String translateKey;
+        public Object value;
+        public Object[] args;
+    }
+
+    public enum TemplateVariableType {
+        TRANSLATABLE_TEXT,
+        RAW
     }
 }

@@ -1,10 +1,9 @@
 package dev.theopenshelf.platform.services;
 
-import java.util.Map;
+import java.util.Arrays;
 import java.util.UUID;
 
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.NotificationEntity;
@@ -12,6 +11,8 @@ import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.model.GetUnreadNotificationsCount200Response;
 import dev.theopenshelf.platform.model.Notification;
 import dev.theopenshelf.platform.repositories.NotificationRepository;
+import dev.theopenshelf.platform.services.MailService.TemplateVariable;
+import dev.theopenshelf.platform.services.MailService.TemplateVariableType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
@@ -50,7 +51,7 @@ public class NotificationsService {
 
     public Flux<Notification> getNotifications(UUID userId) {
         log.info("Retrieving notifications for user {}", userId);
-        //TODO convert the payload so the itemId is replaced by the actual item
+        // TODO convert the payload so the itemId is replaced by the actual item
         return Flux.fromIterable(notificationRepository.findAllByUserId(userId))
                 .map(entity -> entity.toNotification().build());
     }
@@ -69,25 +70,38 @@ public class NotificationsService {
         if (user.getEmail().endsWith("example.com")) {
             log.info("Skipping email notification for @example.com mails");
         } else {
-            Map<String, Object> templateVars = Map.of(
-                    "title", translate("title", notification),
-                    "username", user.getUsername(),
-                    "content", translate("content", notification));
-            mailService.sendTemplatedEmail(user.getEmail(), notification.getType().name(), "email/notification", templateVars);
+            // Create template variables for the email
+            var titleVar = TemplateVariable.builder()
+                    .type(TemplateVariableType.TRANSLATABLE_TEXT)
+                    .ref("title")
+                    .translateKey("notification." + notification.getType().name().toLowerCase() + ".title")
+                    .args(getMessageArgs(notification))
+                    .build();
+
+            var contentVar = TemplateVariable.builder()
+                    .type(TemplateVariableType.TRANSLATABLE_TEXT)
+                    .ref("content")
+                    .translateKey("notification." + notification.getType().name().toLowerCase() + ".content")
+                    .args(getMessageArgs( notification))
+                    .build();
+
+            var usernameVar = TemplateVariable.builder()
+                    .type(TemplateVariableType.RAW)
+                    .ref("username")
+                    .value(user.getUsername())
+                    .build();
+
+            mailService.sendTemplatedEmail(
+                    user,
+                    notification.getType().name(),
+                    "email/notification",
+                    Arrays.asList(titleVar, contentVar, usernameVar));
         }
         log.info("Successfully send {} notification", notification);
         return Mono.empty();
     }
 
-    private String translate(String key, NotificationEntity notification) {
-        return messageSource.getMessage(
-                "notification." + notification.getType().name().toLowerCase() + "." + key,
-                getMessageArgs(key, notification),
-                LocaleContextHolder.getLocale()
-        );
-    }
-
-    private Object[] getMessageArgs(String key, NotificationEntity entity) {
+    private Object[] getMessageArgs(NotificationEntity entity) {
         // Extract arguments from the notification payload based on type
         switch (entity.getType()) {
             case ITEM_AVAILABLE:
@@ -101,7 +115,7 @@ public class NotificationsService {
                 };
             // Add cases for other notification types
             default:
-                return new Object[]{};
+                return new Object[] {};
         }
     }
 }

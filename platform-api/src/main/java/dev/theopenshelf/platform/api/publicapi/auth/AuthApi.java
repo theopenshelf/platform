@@ -1,7 +1,7 @@
 package dev.theopenshelf.platform.api.publicapi.auth;
 
+import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -45,7 +45,7 @@ public class AuthApi implements AuthApiApiDelegate {
     private final ReactiveAuthenticationManager authenticationManager;
     private final UsersRepository usersRepository;
     private final ServerSecurityContextRepository serverSecurityContextRepository;
-    private final PasswordEncoder passwordEncoder; // Add this field
+    private final PasswordEncoder passwordEncoder;
     private final MailService mailService;
     private final JwtService jwtService;
 
@@ -64,10 +64,9 @@ public class AuthApi implements AuthApiApiDelegate {
                             .map(userEntity -> {
                                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                                 Authentication auth = new UsernamePasswordAuthenticationToken(
-                                    userEntity.getId().toString(),
-                                    null,
-                                    authentication.getAuthorities()
-                                );
+                                        userEntity.getId().toString(),
+                                        null,
+                                        authentication.getAuthorities());
                                 context.setAuthentication(auth);
                                 return Tuples.of(context, userEntity);
                             })
@@ -129,15 +128,68 @@ public class AuthApi implements AuthApiApiDelegate {
                 String token = jwtService.createToken(claimsBuilder);
                 log.debug("Created verification token for user: {}", newUser.getUsername());
 
+                var titleVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("title")
+                        .translateKey("email.signup.title")
+                        .build();
+
+                var welcomeVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("welcome")
+                        .translateKey("email.signup.welcome")
+                        .build();
+
+                var instructionsVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("instructions")
+                        .translateKey("email.signup.instructions")
+                        .build();
+
+                var buttonTextVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("button_text")
+                        .translateKey("email.signup.button")
+                        .build();
+
+                var fallbackVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("fallback")
+                        .translateKey("email.common.button_fallback")
+                        .build();
+
+                var expiryVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("expiry")
+                        .translateKey("email.signup.expiry")
+                        .build();
+
+                var signatureVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                        .ref("signature")
+                        .translateKey("email.common.signature")
+                        .build();
+
+                var usernameVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.RAW)
+                        .ref("username")
+                        .value(newUser.getUsername())
+                        .build();
+
+                var verifUrlVar = MailService.TemplateVariable.builder()
+                        .type(MailService.TemplateVariableType.RAW)
+                        .ref("verif_url")
+                        .value(frontendUrl + "/email-confirmation?token=" + token)
+                        .build();
+
                 mailService.sendTemplatedEmail(
-                        request.getEmail(),
+                        newUser,
                         "Welcome to The Open Shelf",
                         "email/signup-email-verif",
-                        Map.of(
-                                "username", newUser.getUsername(),
-                                "verif_url", frontendUrl + "/email-confirmation?token=" + token));
-                log.info("Sent verification email to: {}", request.getEmail());
+                        Arrays.asList(titleVar, welcomeVar, instructionsVar, buttonTextVar,
+                                fallbackVar, expiryVar, signatureVar, usernameVar, verifUrlVar));
 
+                log.info("Sent verification email to: {}", request.getEmail());
                 return Mono.just(ResponseEntity.status(HttpStatus.CREATED).build());
             } catch (JOSEException e) {
                 log.error("Failed to create email verification token for user: {}", newUser.getUsername(), e);
@@ -210,17 +262,67 @@ public class AuthApi implements AuthApiApiDelegate {
                             .expirationTime(new Date(System.currentTimeMillis() + 3600000))
                             .claim("type", "PWD_RESET"));
 
-                    String resetUrl = frontendUrl + "/reset-password?token=" + token;
+                    var titleVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("title")
+                            .translateKey("email.reset.title")
+                            .build();
 
-                    Map<String, Object> templateVars = Map.of(
-                            "username", user.getUsername(),
-                            "reset_url", resetUrl);
+                    var messageVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("message")
+                            .translateKey("email.reset.message")
+                            .build();
+
+                    var buttonTextVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("button_text")
+                            .translateKey("email.reset.button")
+                            .build();
+
+                    var fallbackVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("fallback")
+                            .translateKey("email.common.button_fallback")
+                            .build();
+
+                    var expiryVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("expiry")
+                            .translateKey("email.reset.expiry")
+                            .build();
+
+                    var disclaimerVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("disclaimer")
+                            .translateKey("email.reset.disclaimer")
+                            .build();
+
+                    var signatureVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.TRANSLATABLE_TEXT)
+                            .ref("signature")
+                            .translateKey("email.common.signature")
+                            .build();
+
+                    var usernameVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.RAW)
+                            .ref("username")
+                            .value(user.getUsername())
+                            .build();
+
+                    var resetUrlVar = MailService.TemplateVariable.builder()
+                            .type(MailService.TemplateVariableType.RAW)
+                            .ref("reset_url")
+                            .value(frontendUrl + "/reset-password?token=" + token)
+                            .build();
 
                     mailService.sendTemplatedEmail(
-                            user.getEmail(),
+                            user,
                             "Reset Your Password - The Open Shelf",
                             "email/reset-password",
-                            templateVars);
+                            Arrays.asList(titleVar, messageVar, buttonTextVar, fallbackVar,
+                                    expiryVar, disclaimerVar, signatureVar, usernameVar, resetUrlVar));
+
                 } catch (Exception e) {
                     log.error("Failed to process password reset", e);
                 }
