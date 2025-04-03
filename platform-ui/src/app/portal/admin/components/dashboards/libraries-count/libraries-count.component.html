@@ -1,5 +1,5 @@
 <card-counter
     [icon]="'@tui.library'"
     [label]="'librariesCount.label' | translate"
-    [counter]="count"
+    [counter]="(count$ | async) ?? 0"
 ></card-counter>

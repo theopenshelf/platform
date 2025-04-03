@@ -1,12 +1,16 @@
+import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
+import { Observable, map } from 'rxjs';
 import { DASHBOARD_SERVICE_TOKEN } from '../../../admin.providers';
 import { DashboardService, UIBorrowerMetrics } from '../../../services/dashboard.service';
 import { CardTopComponent, TopData } from '../card-top/card-top.component';
 
 @Component({
   selector: 'top-borrowers',
+  standalone: true,
   imports: [
+    CommonModule,
     CardTopComponent,
     TranslateModule
   ],
@@ -14,19 +18,17 @@ import { CardTopComponent, TopData } from '../card-top/card-top.component';
   styleUrl: './top-borrowers.component.scss'
 })
 export class TopBorrowersComponent {
-  protected topItems: TopData[] = [];
+  protected topItems$: Observable<TopData[]>;
 
   constructor(
     @Inject(DASHBOARD_SERVICE_TOKEN) private dashboardService: DashboardService,
-  ) { }
-
-  ngOnInit(): void {
-    this.dashboardService.getTopBorrowers().subscribe((items: UIBorrowerMetrics[]) => {
-      this.topItems = items.map(item => ({
+  ) {
+    this.topItems$ = this.dashboardService.getTopBorrowers().pipe(
+      map((items: UIBorrowerMetrics[]) => items.map(item => ({
         name: item.username,
         avatar: true,
         value: item.totalBorrows,
-      }));
-    });
+      })))
+    );
   }
 }

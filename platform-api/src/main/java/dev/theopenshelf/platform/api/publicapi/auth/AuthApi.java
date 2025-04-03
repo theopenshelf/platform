@@ -2,6 +2,7 @@ package dev.theopenshelf.platform.api.publicapi.auth;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -78,7 +79,10 @@ public class AuthApi implements AuthApiApiDelegate {
                         .thenReturn(tuple.getT2()))
                 .map(userEntity -> {
                     log.info("Login successful for user: {}", userEntity.getUsername());
-                    return ResponseEntity.ok(userEntity.toUser().build());
+                    return ResponseEntity.ok(userEntity.toUser()
+                            //TODO get the user roles
+                                    .roles(List.of("hub", "admin"))
+                            .build());
                 })
                 .onErrorResume(e -> {
                     if (e instanceof BadCredentialsException) {
@@ -112,7 +116,7 @@ public class AuthApi implements AuthApiApiDelegate {
             newUser.setPostalCode(request.getPostalCode());
             newUser.setCountry(request.getCountry());
             newUser.setStreetAddress(request.getStreetAddress());
-            newUser.setRoles(Set.of("hub-user"));
+            newUser.setRoles(Set.of("hub-user", "admin"));
 
             log.debug("Created new user entity with ID: {}", newUser.getId());
             usersRepository.save(newUser);

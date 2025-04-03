@@ -2,5 +2,5 @@
     [title]="'topBorrowers.title' | translate"
     [columnName]="'topBorrowers.columnName' | translate"
     [columnValue]="'topBorrowers.columnValue' | translate"
-    [data]="topItems"
+    [data]="(topItems$ | async) || []"
 ></card-top>

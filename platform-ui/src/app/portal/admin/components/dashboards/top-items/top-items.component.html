@@ -2,5 +2,5 @@
     [title]="'topItems.title' | translate"
     [columnName]="'topItems.columnName' | translate"
     [columnValue]="'topItems.columnValue' | translate"
-    [data]="topItems"
+    [data]="(topItems$ | async) || []"
 ></card-top>
