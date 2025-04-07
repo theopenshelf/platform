@@ -120,7 +120,22 @@ public class MailService {
                         Pair::getLeft,
                         Pair::getRight));
 
-        sendTemplatedEmail(user.getEmail(), subject, templateName, variablesMap);
+        Context context = new Context(user.getLocale());
+        context.setVariables(variablesMap);
+
+        try {
+            String htmlContent = templateEngine.process(templateName, context);
+            log.debug("Template processed successfully");
+            String translatedSubject = messageSource.getMessage(subject, null, user.getLocale());
+            sendMail(user.getEmail(), translatedSubject, htmlContent);
+        } catch (Exception e) {
+            log.error("Failed to process template: {}", templateName, e);
+            throw new CodedException(CodedError.EMAIL_SENDING_ERROR.getCode(),
+                    "Failed to process email template",
+                    Map.of("to", user.getEmail(), "template", templateName, "error", e.getMessage()),
+                    CodedError.EMAIL_SENDING_ERROR.getDocumentationUrl(),
+                    e);
+        }
     }
 
     @Data

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html :xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title :th:text="#{notification.item_new_reservation_to_confirm.email.title}">
+            New Reservation to Confirm - The Open Shelf
+        </title>
+        <meta
+            http-equiv="Content-Type"
+            content="text/html; charset=UTF-8"
+        >
+        <div :th:replace="~{email/fragments/styles :: styles}"></div>
+    </head>
+    <body>
+        <div class="container">
+            <div :th:replace="~{email/fragments/header :: header}"></div>
+
+            <div class="content">
+                <h1 :th:text="#{notification.item_new_reservation_to_confirm.email.title}">New Reservation to Confirm</h1>
+
+                <p>
+                    <span :th:text="#{notification.item_new_reservation_to_confirm.email.greeting(${username})}">Hello username,</span>
+                </p>
+
+                <p>
+                    <span :th:text="#{notification.item_new_reservation_to_confirm.email.message(${itemName}, ${borrowerName})}">
+                        A new reservation for "itemName" has been made by borrowerName.
+                    </span>
+                </p>
+
+                <div class="button-container">
+                    <a
+                        :th:href="${confirmUrl}"
+                        class="button"
+                        :th:text="#{notification.item_new_reservation_to_confirm.email.confirm}"
+                    >
+                        Confirm Reservation
+                    </a>
+                </div>
+
+                <p class="button-fallback">
+                    <small :th:text="#{email.common.button_fallback}">
+                        If the button above doesn't work, copy and paste this link into your browser:
+                    </small>
+                    <br>
+                    <small :th:text="${confirmUrl}">confirmUrl</small>
+                </p>
+
+                <p>
+                    <span :th:text="#{email.common.signature}">Best regards,</span>
+                    <br>
+                    <span>The Open Shelf Team</span>
+                </p>
+            </div>
+
+            <div :th:replace="~{email/fragments/footer :: footer}"></div>
+        </div>
+    </body>
+</html>

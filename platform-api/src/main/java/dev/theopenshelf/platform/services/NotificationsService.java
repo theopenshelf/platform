@@ -1,6 +1,8 @@
 package dev.theopenshelf.platform.services;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -8,9 +10,10 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.NotificationEntity;
+import dev.theopenshelf.platform.entities.NotificationType;
 import dev.theopenshelf.platform.entities.UserEntity;
-import dev.theopenshelf.platform.exceptions.CodedException;
 import dev.theopenshelf.platform.exceptions.CodedError;
+import dev.theopenshelf.platform.exceptions.CodedException;
 import dev.theopenshelf.platform.model.GetUnreadNotificationsCount200Response;
 import dev.theopenshelf.platform.model.Notification;
 import dev.theopenshelf.platform.repositories.NotificationRepository;
@@ -106,31 +109,20 @@ public class NotificationsService {
                 log.info("Skipping email notification for @example.com mails");
             } else {
                 // Create template variables for the email
-                var titleVar = TemplateVariable.builder()
-                        .type(TemplateVariableType.TRANSLATABLE_TEXT)
-                        .ref("title")
-                        .translateKey("notification." + notification.getType().name().toLowerCase() + ".title")
-                        .args(getMessageArgs(notification))
-                        .build();
+                List<TemplateVariable> templateVariables = getTemplateVariables(notification.getType(), notification);
 
-                var contentVar = TemplateVariable.builder()
-                        .type(TemplateVariableType.TRANSLATABLE_TEXT)
-                        .ref("content")
-                        .translateKey("notification." + notification.getType().name().toLowerCase() + ".content")
-                        .args(getMessageArgs(notification))
-                        .build();
-
-                var usernameVar = TemplateVariable.builder()
-                        .type(TemplateVariableType.RAW)
-                        .ref("username")
-                        .value(user.getUsername())
-                        .build();
+                templateVariables.add(
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("username")
+                                .value(user.getUsername())
+                                .build());
 
                 mailService.sendTemplatedEmail(
                         user,
-                        notification.getType().name(),
-                        "email/notification",
-                        Arrays.asList(titleVar, contentVar, usernameVar));
+                        "notification." + notification.getType().name().toLowerCase() + ".email.title",
+                        "email/" + notification.getType().getEmailTemplate(),
+                        templateVariables);
             }
             log.info("Successfully send {} notification", notification);
             return Mono.empty();
@@ -161,5 +153,91 @@ public class NotificationsService {
             default:
                 return new Object[] {};
         }
+    }
+
+    private List<TemplateVariable> getTemplateVariables(NotificationType type, NotificationEntity notification) {
+        List<TemplateVariable> variables = new ArrayList<>();
+
+        // Common variables for all item-related notifications
+        if (notification.getPayload().containsKey("itemId")) {
+            variables.add(TemplateVariable.builder()
+                    .type(TemplateVariableType.RAW)
+                    .ref("itemUrl")
+                    .value("/items/" + notification.getPayload().get("itemId"))
+                    .build());
+        }
+        if (notification.getPayload().containsKey("itemName")) {
+            variables.add(TemplateVariable.builder()
+                    .type(TemplateVariableType.RAW)
+                    .ref("itemName")
+                    .value(notification.getPayload().get("itemName"))
+                    .build());
+        }
+
+        switch (type) {
+            case ITEM_AVAILABLE -> {
+                // Already handled by common variables
+            }
+            case ITEM_DUE -> {
+                variables.add(TemplateVariable.builder()
+                        .type(TemplateVariableType.RAW)
+                        .ref("dueDate")
+                        .value(notification.getPayload().get("dueDate"))
+                        .build());
+            }
+            case ITEM_BORROW_RESERVATION_DATE_START -> {
+                variables.add(TemplateVariable.builder()
+                        .type(TemplateVariableType.RAW)
+                        .ref("startDate")
+                        .value(notification.getPayload().get("startDate"))
+                        .build());
+            }
+            case ITEM_RESERVED_NO_LONGER_AVAILABLE -> {
+                // Already handled by common variables
+            }
+            case ITEM_NEW_RESERVATION_TO_CONFIRM -> {
+                variables.addAll(Arrays.asList(
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("borrowerName")
+                                .value(notification.getPayload().get("borrowerName"))
+                                .build(),
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("confirmUrl")
+                                .value("/admin/reservations/" + notification.getPayload().get("reservationId"))
+                                .build()));
+            }
+            case ITEM_NEW_PICKUP_TO_CONFIRM -> {
+                variables.addAll(Arrays.asList(
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("borrowerName")
+                                .value(notification.getPayload().get("borrowerName"))
+                                .build(),
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("confirmUrl")
+                                .value("/admin/pickups/" + notification.getPayload().get("pickupId"))
+                                .build()));
+            }
+            case ITEM_NEW_RETURN_TO_CONFIRM -> {
+                variables.addAll(Arrays.asList(
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("borrowerName")
+                                .value(notification.getPayload().get("borrowerName"))
+                                .build(),
+                        TemplateVariable.builder()
+                                .type(TemplateVariableType.RAW)
+                                .ref("confirmUrl")
+                                .value("/admin/returns/" + notification.getPayload().get("returnId"))
+                                .build()));
+            }
+            case ITEM_RESERVATION_APPROVED, ITEM_PICK_UP_APPROVED, ITEM_RETURN_APPROVED -> {
+                // Already handled by common variables
+            }
+        }
+        return variables;
     }
 }

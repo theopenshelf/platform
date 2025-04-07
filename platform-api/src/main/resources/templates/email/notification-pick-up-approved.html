@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{notification.item_pickup_approved.email.title}">Pickup Approved - The Open Shelf</title>
+        <meta
+            http-equiv="Content-Type"
+            content="text/html; charset=UTF-8"
+        >
+        <div th:replace="~{email/fragments/styles :: styles}"></div>
+    </head>
+    <body>
+        <div class="container">
+            <div th:replace="~{email/fragments/header :: header}"></div>
+
+            <div class="content">
+                <h1 th:text="#{notification.item_pickup_approved.email.title}">Pickup Approved</h1>
+
+                <p>
+                    <span th:text="#{notification.item_pickup_approved.email.greeting(${username})}">Hello username,</span>
+                </p>
+
+                <p>
+                    <span th:text="#{notification.item_pickup_approved.email.message(${itemName})}">
+                        The pickup of "itemName" has been approved.
+                    </span>
+                </p>
+
+                <p>
+                    <span th:text="#{notification.item_pickup_approved.email.due_date(${dueDate})}">
+                        Please remember to return the item by dueDate.
+                    </span>
+                </p>
+
+                <div class="button-container">
+                    <a
+                        th:href="${viewUrl}"
+                        class="button"
+                        th:text="#{notification.item_pickup_approved.email.view_details}"
+                    >
+                        View Details
+                    </a>
+                </div>
+
+                <p class="button-fallback">
+                    <small th:text="#{email.common.button_fallback}">
+                        If the button above doesn't work, copy and paste this link into your browser:
+                    </small>
+                    <br>
+                    <small th:text="${viewUrl}">viewUrl</small>
+                </p>
+
+                <p>
+                    <span th:text="#{email.common.signature}">Best regards,</span>
+                    <br>
+                    <span>The Open Shelf Team</span>
+                </p>
+            </div>
+
+            <div th:replace="~{email/fragments/footer :: footer}"></div>
+        </div>
+    </body>
+</html>
