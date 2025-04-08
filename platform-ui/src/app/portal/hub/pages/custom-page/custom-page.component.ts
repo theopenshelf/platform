@@ -1,4 +1,4 @@
-import { Component, Inject, input, OnInit } from '@angular/core';
+import { Component, Inject, input, OnInit, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { UICustomPage } from '../../../../models/UICustomPage';
@@ -11,11 +11,13 @@ import { CustomPageService } from '../../services/custom-page.service';
     TranslateModule
   ],
   templateUrl: './custom-page.component.html',
-  styleUrl: './custom-page.component.scss'
+  styleUrl: './custom-page.component.scss',
+  standalone: true
 })
 export class CustomPageComponent implements OnInit {
-  pageRef: any;
+  pageRef: string = '';
   page = input<UICustomPage>();
+  currentPage: WritableSignal<UICustomPage | undefined> = signal(undefined);
 
   constructor(
     private route: ActivatedRoute,
@@ -25,13 +27,25 @@ export class CustomPageComponent implements OnInit {
 
   ngOnInit() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (!this.page()) {
-      this.route.params.subscribe((params) => {
-        this.pageRef = params['ref'] || '';
-        this.customPageService.getCustomPage(this.pageRef).subscribe((page) => {
-          this.page.apply(page);
-        });
-      });
+
+    // If we have an input page, use it
+    if (this.page()) {
+      this.currentPage.set(this.page());
+      return;
     }
+
+    // Otherwise load from service
+    this.route.params.subscribe((params) => {
+      this.pageRef = params['ref'] || '';
+      this.customPageService.getCustomPage(this.pageRef).subscribe({
+        next: (page) => {
+          this.currentPage.set(page);
+        },
+        error: (error) => {
+          console.error('Failed to load custom page:', error);
+          // You might want to navigate to an error page or show a notification
+        }
+      });
+    });
   }
 }
