@@ -88,34 +88,9 @@
   </nav>
 
 
-  @if (getItemsParams) {
-    @if (tabOpened === 'items') {
-    <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams">
-      <ng-template #libraryTemplate>
-        @if (isAdmin) {
-        <button class="add-item" routerLink="/hub/item/add" appearance="primary" size="m" tuiButton type="button">
-          <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
-          {{ 'library.addItem' | translate }}
-        </button>
-        }
-      </ng-template>
+  <router-outlet></router-outlet>
 
-    </filtered-and-paginated-items>
-    }
 
-    @if (tabOpened === 'borrow-records') {
-
-    <filtered-and-paginated-borrow-records [library]="library"  [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
-    </filtered-and-paginated-borrow-records>
-    }
-
-    @if (tabOpened === 'approval') {
-
-      <filtered-and-paginated-borrow-records [approvalTab]="true" [library]="library"  [enableStatusFiltering]="true" [getItemsParams]="getItemsParams">
-      </filtered-and-paginated-borrow-records>
-    }
-
-  }
   }
 
 </div>

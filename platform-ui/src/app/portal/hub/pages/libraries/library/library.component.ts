@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   ActivatedRoute,
@@ -26,8 +26,6 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/legacy';
 import { EMPTY, switchMap } from 'rxjs';
-import { FilteredAndPaginatedBorrowRecordsComponent } from '../../../../../components/filtered-and-paginated-borrow-records/filtered-and-paginated-borrow-records.component';
-import { FilteredAndPaginatedItemsComponent } from '../../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
 import { TosBreadcrumbsComponent } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.component';
 import { BreadcrumbItem, BreadcrumbService } from '../../../../../components/tos-breadcrumbs/tos-breadcrumbs.service';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
@@ -41,6 +39,7 @@ import {
 } from '../../../hub.provider';
 import { LibrariesService } from '../../../services/libraries.service';
 import { UsersService } from '../../../services/users.service';
+import { LibraryStateService } from '../library.service';
 
 @Component({
   selector: 'app-library',
@@ -58,8 +57,6 @@ import { UsersService } from '../../../services/users.service';
     TuiDataList,
     TuiDataListWrapper,
     TuiSelectModule,
-    FilteredAndPaginatedItemsComponent,
-    FilteredAndPaginatedBorrowRecordsComponent,
     TranslateModule,
     TosBreadcrumbsComponent
   ],
@@ -76,6 +73,7 @@ export class LibraryComponent {
   isAdmin: boolean = false;
   breadcrumbs: BreadcrumbItem[] = [];
   constructor(
+    private cdr: ChangeDetectorRef,
     @Inject(LIBRARIES_SERVICE_TOKEN) private librariesService: LibrariesService,
     @Inject(USERS_SERVICE_TOKEN) private userService: UsersService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
@@ -84,6 +82,7 @@ export class LibraryComponent {
     private router: Router,
     private route: ActivatedRoute,
     private translate: TranslateService,
+    private libraryState: LibraryStateService,
     private breadcrumbService: BreadcrumbService
   ) {
   }
@@ -99,6 +98,8 @@ export class LibraryComponent {
     if (libraryId) {
       this.librariesService.getLibrary(libraryId).subscribe((library) => {
         this.library = library;
+        this.libraryState.setLibrary(library);
+        this.cdr.detectChanges();
         this.breadcrumbs = [
           {
             name: library.name,
