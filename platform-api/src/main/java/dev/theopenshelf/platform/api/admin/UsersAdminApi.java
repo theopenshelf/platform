@@ -42,7 +42,7 @@ public class UsersAdminApi implements UsersAdminApiApiDelegate {
     @Override
     public Mono<ResponseEntity<Void>> setUserPassword(UUID userId, Mono<SetUserPasswordRequest> setUserPasswordRequest,
             ServerWebExchange exchange) {
-        return setUserPasswordRequest.doOnNext(request -> usersService.setUserPassword(userId, request))
+        return setUserPasswordRequest.doOnNext(request -> usersService.setUserPassword(userId, request.getNewPassword()))
                 .map(r -> ResponseEntity.noContent().build());
     }
 }

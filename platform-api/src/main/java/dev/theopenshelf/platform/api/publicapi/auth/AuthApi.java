@@ -34,6 +34,7 @@ import dev.theopenshelf.platform.model.VerifyEmail200Response;
 import dev.theopenshelf.platform.repositories.UsersRepository;
 import dev.theopenshelf.platform.services.JwtService;
 import dev.theopenshelf.platform.services.MailService;
+import dev.theopenshelf.platform.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -49,6 +50,7 @@ public class AuthApi implements AuthApiApiDelegate {
         private final PasswordEncoder passwordEncoder;
         private final MailService mailService;
         private final JwtService jwtService;
+        private final UsersService usersService;
 
         @Value("${oshelf.frontend-url}")
         private String frontendUrl;
@@ -269,9 +271,7 @@ public class AuthApi implements AuthApiApiDelegate {
                                 }
 
                                 UUID userId = UUID.fromString(claims.getSubject());
-                                UserEntity user = usersRepository.findById(userId).orElseThrow();
-                                user.setPassword(passwordEncoder.encode(req.getNewPassword()));
-                                usersRepository.save(user);
+                                usersService.setUserPassword(userId, req.getNewPassword());
 
                                 return ResponseEntity.ok().<Void>build();
                         } catch (Exception e) {

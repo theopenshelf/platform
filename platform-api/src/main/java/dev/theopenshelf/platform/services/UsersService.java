@@ -8,6 +8,7 @@ import java.util.UUID;
 import java.util.stream.StreamSupport;
 
 import org.springframework.security.authorization.AuthorizationDeniedException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.UserEntity;
@@ -25,6 +26,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UsersService {
         private final UsersRepository usersRepository;
+        private final PasswordEncoder passwordEncoder;
 
         public Mono<User> getUserById(UUID id) {
                 return Mono.justOrEmpty(usersRepository.findById(id)
@@ -143,11 +145,11 @@ public class UsersService {
                 return getUserWithStats(savedEntity.getId());
         }
 
-        public Mono<Void> setUserPassword(UUID userId, SetUserPasswordRequest request) {
-                UserEntity entity = usersRepository.findById(userId)
+        public Mono<Void> setUserPassword(UUID userId, String password) {
+                UserEntity user = usersRepository.findById(userId)
                                 .orElseThrow(() -> new RuntimeException("User not found"));
-                entity.setPassword(request.getNewPassword()); // TODO: Hash password
-                usersRepository.save(entity);
+                user.setPassword(passwordEncoder.encode(password));
+                usersRepository.save(user);
                 return Mono.empty();
         }
 }
