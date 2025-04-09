@@ -50,6 +50,11 @@ export class APIAuthService implements AuthService {
     try {
       const userProfile = await firstValueFrom(this.getUserProfile());
       this.userInfo.user = userProfile;
+      this.userInfo.firstName = userProfile.firstName;
+      this.userInfo.lastName = userProfile.lastName;
+      this.userInfo.username = userProfile.username;
+      this.userInfo.email = userProfile.email;
+      this.userInfo.user = userProfile;
     } catch (error) {
       // Handle failed session restoration (e.g., expired cookie)
       this.signOut();

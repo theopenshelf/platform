@@ -243,7 +243,9 @@
     "postalCodePlaceholder": "Entrez votre code postal",
     "country": "Pays",
     "countryPlaceholder": "Entrez votre pays",
-    "saveButton": "Enregistrer"
+    "saveButton": "Enregistrer",
+    "saveSuccess": "Profil enregistré avec succès",
+    "saveError": "Profil non enregistré"
   },
   "adminLayout": {
     "logoText": "The Open Shelf",

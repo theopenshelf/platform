@@ -5,8 +5,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
-import { TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TuiAlertService, TuiButton, TuiIcon, TuiTextfield } from '@taiga-ui/core';
 import { TuiPassword } from '@taiga-ui/kit';
 import { AUTH_SERVICE_TOKEN } from '../../../../../global.provider';
 import { AuthService } from '../../../../../services/auth.service';
@@ -31,12 +31,14 @@ export class ProfileComponent {
 
   constructor(
     private fb: FormBuilder,
+    private alerts: TuiAlertService,
+    private translate: TranslateService,
     @Inject(USERS_SERVICE_TOKEN) private usersService: UsersService,
     @Inject(AUTH_SERVICE_TOKEN) private authService: AuthService,
   ) {
     this.profileForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.minLength(6)]],
       streetAddress: [''],
       city: [''],
       postalCode: [''],
@@ -50,7 +52,7 @@ export class ProfileComponent {
 
   // Load initial profile data
   loadProfile(): void {
-    this.profileForm.patchValue(this.authService.getCurrentUserInfo());
+    this.profileForm.patchValue(this.authService.getCurrentUserInfo().user);
   }
 
   onSave(): void {
@@ -58,10 +60,14 @@ export class ProfileComponent {
       this.usersService
         .updateUser(this.profileForm.value)
         .subscribe((user) => {
-          console.log('Profile data saved:', user);
+          this.alerts.open(this.translate.instant('profile.saveSuccess'), {
+            appearance: 'success',
+          }).subscribe();
         });
     } else {
-      console.error('Form is invalid');
+      this.alerts.open(this.translate.instant('profile.saveError'), {
+        appearance: 'error',
+      }).subscribe();
     }
   }
 }
