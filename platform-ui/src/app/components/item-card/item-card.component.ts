@@ -1,5 +1,5 @@
 import { CommonModule, DatePipe } from '@angular/common';
-import { Component, computed, Inject, input } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, Inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -58,11 +58,17 @@ export class ItemCardComponent {
   constructor(
     @Inject(ITEMS_SERVICE_TOKEN) private itemsService: ItemsService,
     private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) { }
 
   markAsFavorite: (item: UIItem) => void = (item) => {
     this.itemsService.markAsFavorite(item).subscribe({
-      next: () => console.log(`Item ${item.id} marked as favorite.`),
+      next: (updatedItem) => {
+        item.favorite = updatedItem.favorite;
+        // Force change detection
+        this.cdr.detectChanges();
+        console.log(`Item ${item.id} marked as favorite.`);
+      },
       error: (err) => console.error('Error marking item as favorite:', err),
     });
   };

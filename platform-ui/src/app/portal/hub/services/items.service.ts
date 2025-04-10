@@ -52,6 +52,6 @@ export interface ItemsService {
     item: UIItem,
     borrowRecord: UIBorrowRecord,
   ): Observable<UIItem>;
-  markAsFavorite(item: UIItem): Observable<void>;
+  markAsFavorite(item: UIItem): Observable<UIItem>;
 
 }

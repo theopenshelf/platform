@@ -432,10 +432,23 @@ export class APIItemsService implements ItemsService {
     );
   }
 
-  markAsFavorite(item: UIItem): Observable<void> {
+  markAsFavorite(item: UIItem): Observable<UIItem> {
     return this.itemsApiService
       .markAsFavorite(item.id)
-      .pipe(map(() => undefined));
+      .pipe(map((item: Item) => ({
+        ...item,
+        favorite: item.favorite,
+        borrowRecords: item.borrowRecords.map(
+          (record: BorrowRecord) =>
+            ({
+              ...record,
+              startDate: record.startDate ? new Date(record.startDate) : undefined,
+              endDate: record.endDate ? new Date(record.endDate) : undefined,
+              reservationDate: record.reservationDate ? new Date(record.reservationDate) : undefined,
+              pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+            }) as UIBorrowRecord,
+        ),
+      }) as UIItem));
   }
 
   approvalReservation(

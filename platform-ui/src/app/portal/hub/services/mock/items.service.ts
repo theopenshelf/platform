@@ -459,9 +459,9 @@ export class MockItemsService implements ItemsService {
     return of(item);
   }
 
-  markAsFavorite(item: UIItem): Observable<void> {
+  markAsFavorite(item: UIItem): Observable<UIItem> {
     item.favorite = !item.favorite;
-    return of(undefined);
+    return of(item);
   }
 
   matchesStatus(status: UIBorrowStatus, item: UIItem, borrowedBy: string | undefined): boolean {
