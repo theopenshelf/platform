@@ -12,7 +12,10 @@ public enum CodedError {
     EMAIL_ALREADY_VERIFIED("AUTH003", "Email is already verified", "auth/email-already-verified"),
     INVALID_VERIFICATION_TOKEN("AUTH004", "Invalid or expired verification token", "auth/invalid-verification-token"),
 
-    // Authorization errors (2000-2999)
+    // Notification errors (2000-2999)
+    NOTIFICATION_SETTINGS_NOT_FOUND("NOT001", "Notification settings not found", "notifications/settings-not-found"),
+
+    // Authorization errors (3000-3999)
     INSUFFICIENT_PERMISSIONS("AUTH005", "You don't have sufficient permissions to perform this action",
             "auth/insufficient-permissions"),
 

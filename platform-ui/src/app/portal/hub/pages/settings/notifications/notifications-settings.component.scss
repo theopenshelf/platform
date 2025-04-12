@@ -1,0 +1,31 @@
+@use 'styles' as *;
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+
+form {
+    background-color: var(--tos-background-base);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0px;
+    border: none;
+    box-shadow: none !important;
+    border-radius: 16px;
+    margin-bottom: 40px;
+}
+
+/* Row and Column Flexbox layout */
+.row {
+    display: flex;
+    gap: 16px;
+}
+
+.column {
+    flex: 1;
+}

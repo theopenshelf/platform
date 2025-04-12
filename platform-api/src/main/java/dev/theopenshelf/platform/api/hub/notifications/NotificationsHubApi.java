@@ -9,6 +9,8 @@ import org.springframework.web.server.ServerWebExchange;
 import dev.theopenshelf.platform.api.NotificationsHubApiApiDelegate;
 import dev.theopenshelf.platform.model.GetUnreadNotificationsCount200Response;
 import dev.theopenshelf.platform.model.Notification;
+import dev.theopenshelf.platform.model.NotificationSettings;
+import dev.theopenshelf.platform.services.NotificationSettingsService;
 import dev.theopenshelf.platform.services.NotificationsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import reactor.core.publisher.Mono;
 public class NotificationsHubApi implements NotificationsHubApiApiDelegate {
 
     private final NotificationsService notificationsService;
+    private final NotificationSettingsService notificationSettingsService;
 
     @Override
     public Mono<ResponseEntity<Void>> acknowledgeNotifications(Flux<Notification> notifications,
@@ -48,6 +51,24 @@ public class NotificationsHubApi implements NotificationsHubApiApiDelegate {
         return exchange.getPrincipal()
                 .map(principal -> UUID.fromString(principal.getName()))
                 .flatMap(notificationsService::getUnreadNotificationsCount)
+                .map(ResponseEntity::ok);
+    }
+
+    @Override
+    public Mono<ResponseEntity<NotificationSettings>> getNotificationSettings(ServerWebExchange exchange) {
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(notificationSettingsService::getNotificationSettings)
+                .map(ResponseEntity::ok);
+    }
+
+    @Override
+    public Mono<ResponseEntity<NotificationSettings>> updateNotificationSettings(
+            Mono<NotificationSettings> notificationSettings, ServerWebExchange exchange) {
+        return exchange.getPrincipal()
+                .map(principal -> UUID.fromString(principal.getName()))
+                .flatMap(userId -> notificationSettings
+                        .flatMap(settings -> notificationSettingsService.updateNotificationSettings(userId, settings)))
                 .map(ResponseEntity::ok);
     }
 }

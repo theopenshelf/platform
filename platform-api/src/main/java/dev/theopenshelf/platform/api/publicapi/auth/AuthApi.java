@@ -25,6 +25,7 @@ import com.nimbusds.jwt.JWTClaimsSet;
 
 import dev.theopenshelf.platform.api.AuthApiApiDelegate;
 import dev.theopenshelf.platform.entities.UserEntity;
+import dev.theopenshelf.platform.entities.NotificationSettingsEntity;
 import dev.theopenshelf.platform.model.ConfirmResetPasswordRequest;
 import dev.theopenshelf.platform.model.LoginRequest;
 import dev.theopenshelf.platform.model.ResetPasswordRequest;
@@ -32,6 +33,7 @@ import dev.theopenshelf.platform.model.SignUpRequest;
 import dev.theopenshelf.platform.model.User;
 import dev.theopenshelf.platform.model.VerifyEmail200Response;
 import dev.theopenshelf.platform.repositories.UsersRepository;
+import dev.theopenshelf.platform.repositories.NotificationSettingsRepository;
 import dev.theopenshelf.platform.services.JwtService;
 import dev.theopenshelf.platform.services.MailService;
 import dev.theopenshelf.platform.services.UsersService;
@@ -46,6 +48,7 @@ import reactor.util.function.Tuples;
 public class AuthApi implements AuthApiApiDelegate {
         private final ReactiveAuthenticationManager authenticationManager;
         private final UsersRepository usersRepository;
+        private final NotificationSettingsRepository notificationSettingsRepository;
         private final ServerSecurityContextRepository serverSecurityContextRepository;
         private final PasswordEncoder passwordEncoder;
         private final MailService mailService;
@@ -128,6 +131,13 @@ public class AuthApi implements AuthApiApiDelegate {
                         log.debug("Created new user entity with ID: {}", newUser.getId());
                         usersRepository.save(newUser);
                         log.info("Saved new user: {}", newUser.getUsername());
+
+                        // Create default notification settings for the new user
+                        NotificationSettingsEntity settings = new NotificationSettingsEntity();
+                        settings.setUser(newUser);
+                        settings.setEnableNotifications(true);
+                        notificationSettingsRepository.save(settings);
+                        log.debug("Created default notification settings for user: {}", newUser.getUsername());
 
                         try {
                                 JWTClaimsSet.Builder claimsBuilder = new JWTClaimsSet.Builder()

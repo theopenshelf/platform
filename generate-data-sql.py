@@ -236,6 +236,13 @@ def generate_library_members_sql(libraries, user_id_map, library_id_map):
                     sql_statements.append(sql)
     return sql_statements
 
+def generate_notification_settings_sql(user_id_map):
+    sql_statements = []
+    for user_id in user_id_map.values():
+        sql = f"INSERT INTO notification_settings (user_id, enable_notifications) VALUES ('{user_id}', true);"
+        sql_statements.append(sql)
+    return sql_statements
+
 def generate_data_sql():
     users = load_json('platform-ui/src/app/mock/users.json')
     notifications = load_json('platform-ui/src/app/mock/notifications.json')
@@ -262,6 +269,7 @@ def generate_data_sql():
     # Users
     sql_statements.append("-- Users")
     sql_statements.extend(generate_users_sql(users, user_id_map))
+    sql_statements.extend(generate_notification_settings_sql(user_id_map))
     sql_statements.append("")
 
     # Communities

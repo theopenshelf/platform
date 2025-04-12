@@ -166,3 +166,9 @@ CREATE TABLE settings (
     value TEXT NOT NULL,
     is_public BOOLEAN NOT NULL DEFAULT false
 );
+
+CREATE TABLE "notification_settings" (
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "user_id" uuid REFERENCES users(id) NOT NULL,
+    "enable_notifications" boolean NOT NULL DEFAULT true
+);

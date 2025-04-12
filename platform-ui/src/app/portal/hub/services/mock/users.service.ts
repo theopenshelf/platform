@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import users from '../../../../mock/users.json';
+import { UINotificationsSettings } from '../../../../models/UINotificationsSettings';
 import { UIUser } from '../../../../models/UIUser';
 import { UsersService } from '../users.service';
 
@@ -30,5 +31,13 @@ export class MockUsersService implements UsersService {
 
   getMockUser(userId: string): UIUser {
     return users.find((user) => user.id === userId) || ({} as UIUser);
+  }
+
+  getNotificationsSettings(): Observable<UINotificationsSettings> {
+    return of({ isNotificationsEnabled: true });
+  }
+
+  updateNotificationsSettings(settings: UINotificationsSettings): Observable<UINotificationsSettings> {
+    return of(settings);
   }
 }

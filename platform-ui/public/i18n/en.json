@@ -46,7 +46,763 @@
     "itemPickupApproved": "Item pickup approved",
     "itemReturnApproved": "Item return approved",
     "itemReservationApproved": "Item reservation approved",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "enableNotifications": "Enable Notifications",
+    "editTitle": "Edit Notifications",
+    "saveSuccess": "Notifications saved successfully",
+    "saveError": "Failed to save notifications"
+  },
+  "forgotPassword": {
+    "title": "Forgot Password",
+    "dontHaveAccount": "Don't have an account?",
+    "signUp": "Sign Up",
+    "email": "Email",
+    "send": "Send",
+    "returnToSignIn": "Return to sign-in",
+    "emailSent": "Email sent"
+  },
+  "signUp": {
+    "title": "Sign Up",
+    "alreadyRegistered": "Already registered?",
+    "signIn": "Sign In",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "streetAddress": "Street Address",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "country": "Country",
+    "signUp": "Sign Up"
+  },
+  "hubLayout": {
+    "settings": "Settings",
+    "adminPanel": "Admin panel",
+    "logOut": "Log out",
+    "items": "Items",
+    "borrowedItems": "Borrowed",
+    "libraries": "Libraries",
+    "communities": "Communities"
+  },
+  "borrowRecordCard": {
+    "seeDetails": "See details",
+    "days": "day(s)",
+    "borrowTitle": "Borrowed on {{startDate}}",
+    "pickUp": "Pick up",
+    "return": "Return",
+    "cancelReservation": "Cancel",
+    "confirmReservation": "Confirm",
+    "confirmReturn": "Confirm",
+    "confirmPickup": "Confirm",
+    "status": {
+      "reserved-impossible": "Reserved Impossible",
+      "reserved-unconfirmed": "Reserved Unconfirmed",
+      "reserved-confirmed": "Reserved Confirmed",
+      "reserved-ready-to-pickup": "Reserved Ready to Pickup",
+      "reserved-pickup-unconfirmed": "Reserved Pickup Unconfirmed",
+      "borrowed-active": "Borrowed Active",
+      "borrowed-due-today": "Borrowed Due Today",
+      "borrowed-late": "Borrowed Late",
+      "borrowed-return-unconfirmed": "Borrowed Return Unconfirmed",
+      "returned-early": "Returned Early",
+      "returned": "Returned",
+      "returned-late": "Returned Late",
+      "returned-on-time": "Returned"
+    }
+  },
+  "search": {
+    "placeholder": "What object are you looking for?"
+  },
+  "categories": {
+    "filter": "Which categories?",
+    "addCategory": "Add Category",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "dateRange": {
+    "filter": "When do you need it?"
+  },
+  "libraries": {
+    "filter": "Which library?",
+    "itemsCount": "{{count}} item(s)",
+    "seeItems": "See items"
+  },
+
+  "sortBy": {
+    "filter": "Sort by"
+  },
+  "itemCard": {
+    "borrowNow": "Borrow now",
+    "reserveItem": "Reserve",
+    "reservationState": {
+      "nextReservation": "Your next reservation: ",
+      "noUpcomingReservations": "You have no upcoming reservations"
+    },
+    "borrowCounts": "borrow(s)",
+    "more": "More"
+  },
+  "addItem": {
+    "title": "Add a New Item",
+    "itemName": "Item Name",
+    "itemNamePlaceholder": "Enter item name",
+    "uploadImage": "Upload Image",
+    "dragAndDropImage": "Drag and drop an image here, or click to select",
+    "fileSelected": "File selected",
+    "shortDescription": "Short Description",
+    "shortDescriptionPlaceholder": "Enter a short description (max 150 characters)",
+    "description": "Description",
+    "addItemButton": "Add Item"
+  },
+  "customPage": {
+    "pageNotFound": "Page not found"
+  },
+  "helpCenter": {
+    "searchPlaceholder": "What object are you looking for?",
+    "searchResults": "Search Results",
+    "noArticlesFound": "No article found"
+  },
+  "item": {
+    "notFound": "Not found",
+    "currentlyBorrowed": "You currently have this item borrowed",
+    "returnItem": "Return item",
+    "borrowThisItem": "Borrow this item",
+    "nextReservation": "Your next reservation: ",
+    "noUpcomingReservations": "You have no upcoming reservations",
+    "chooseDate": "Choose a date",
+    "selectDateToBorrow": "Select a date to borrow",
+    "borrow": "Borrow",
+    "nextReservations": "Your next reservations",
+    "borrowCounts": "borrow(s)",
+    "previousReservations": "Your previous reservations",
+    "chooseDateRange": "Choose a date range",
+    "borrowLabel": "Borrow {{itemName}}",
+    "confirmBorrowContent": "Are you sure you want to borrow this item from {{startDate}} to {{endDate}}?",
+    "reserveItemContent": "Reserve {{itemName}}",
+    "yesBorrow": "Yes, Borrow",
+    "cancel": "Cancel",
+    "borrowSuccess": "Successfully borrowed {{itemName}} from {{startDate}} to {{endDate}}",
+    "cancelReservationLabel": "Cancel Reservation for {{itemName}}",
+    "cancelReservationContent": "Are you sure you want to cancel your reservation for {{itemName}} from {{startDate}} to {{endDate}}?",
+    "yesCancel": "Yes, Cancel",
+    "keepReservation": "Keep Reservation",
+    "reservationCancelled": "Reservation cancelled successfully",
+    "returnLabel": "Return {{itemName}}",
+    "returnContent": "Confirm you have returned {{itemName}} the {{endDate}}?",
+    "yesReturn": "Yes, It is returned",
+    "noReturn": "No, I have not returned it yet",
+    "returnSuccess": "Item returned successfully",
+    "pickUpLabel": "Pick up {{itemName}}",
+    "pickUpContent": "Confirm you have picked up {{itemName}} the {{endDate}}?",
+    "yesPickUp": "Yes, I have picked it up",
+    "noPickUp": "No, I have not picked it up yet",
+    "pickUpSuccess": "Item picked up successfully",
+    "itemReadyToPickup": "Item ready to pickup",
+    "pickUpItem": "Pick up item",
+    "itemAvailable": "Item is available",
+    "borrowItem": "Borrow item now",
+    "pickUpItemEarly": "Pick up item early",
+    "description": "Description",
+    "borrowRecords": "Borrow records",
+    "chooseDates": "Choose dates",
+    "library-instructions": "Instructions",
+    "availabilities": "Availabilities",
+    "reserve": "Reserve",
+    "dateRanges": {
+      "today": "Today",
+      "twoDays": "2 days",
+      "threeDays": "3 days",
+      "oneWeek": "One week",
+      "twoWeeks": "Two weeks"
+    },
+    "columns": {
+      "image": "Image",
+      "name": "Name",
+      "located": "Located",
+      "owner": "Owner",
+      "imageUrl": "Image URL",
+      "description": "Description",
+      "shortDescription": "Short Description",
+      "category": "Category",
+      "favorite": "Favorite",
+      "borrowCount": "Borrow Count",
+      "lateReturnPercentage": "Late Return %",
+      "averageDuration": "Avg Duration"
+    },
+    "reserveContentApproval": "Approve reservation for {{itemName}} until {{endDate}}?",
+    "pickupContentApproval": "Approve pickup for {{itemName}} until {{endDate}}?",
+    "returnContentApproval": "Approve return for {{itemName}} until {{endDate}}?",
+    "reserveApprovalSuccess": "Reservation approved successfully",
+    "pickupApprovalSuccess": "Pickup approved successfully",
+    "returnApprovalSuccess": "Return approved successfully"
+  },
+  "profile": {
+    "editTitle": "Edit your profile",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "streetAddress": "Street Address",
+    "streetAddressPlaceholder": "Enter your street address",
+    "city": "City",
+    "cityPlaceholder": "Enter your city",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "Enter your postal code",
+    "country": "Country",
+    "countryPlaceholder": "Enter your country",
+    "saveButton": "Save",
+    "saveSuccess": "Profile saved successfully",
+    "saveError": "Profile save failed"
+  },
+  "adminLayout": {
+    "logoText": "The Open Shelf",
+    "hubPortal": "Hub portal",
+    "logOut": "Log out",
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "items": "Items",
+    "more": "More",
+    "categories": "Categories",
+    "security": "Security",
+    "pages": "Pages"
+  },
+  "borrowsStat": {
+    "totalBorrowsOverTime": "Total Borrows Over Time",
+    "vertical": "Vertical",
+    "horizontal": "Horizontal",
+    "index": "Index",
+    "overview": "Overview",
+    "totalBorrows": "Total Borrows",
+    "totalReservations": "Total Reservations",
+    "itemsOnLoan": "Items currently on loan",
+    "avgLoanDuration": "Avg loan duration",
+    "returnTimeliness": "Return Timeliness"
+  },
+  "topCategories": {
+    "title": "Top Categories",
+    "columnName": "Category",
+    "columnValue": "Total Borrows",
+    "columnSecondaryValue": "Total Items"
+  },
+  "topItems": {
+    "title": "Top Items",
+    "columnName": "Item",
+    "columnValue": "Total Borrows"
+  },
+  "topBorrowers": {
+    "title": "Top Borrowers",
+    "columnName": "Borrower",
+    "columnValue": "Total Borrows"
+  },
+  "usersCount": {
+    "label": "Users"
+  },
+  "itemsCount": {
+    "label": "Items"
+  },
+  "librariesCount": {
+    "label": "Libraries"
+  },
+  "tosTable": {
+    "filterPlaceholder": "Filter",
+    "columnsVisibility": "Columns visibility"
+  },
+  "editLibrary": {
+    "editTitle": "Edit Library",
+    "addTitle": "Add Library",
+    "libraryName": "Library Name",
+    "locationName": "Location Name",
+    "address": "Address",
+    "hubAccessible": "Hub Accessible",
+    "instructions": "Instructions",
+    "save": "Save"
+  },
+  "customPagesEdit": {
+    "editTitle": "Edit Page",
+    "addTitle": "Add Page",
+    "reference": "Reference",
+    "referencePlaceholder": "Enter page reference",
+    "position": "Position",
+    "positionPlaceholder": "Choose your hero",
+    "title": "Title",
+    "titlePlaceholder": "Enter page title",
+    "save": "Save"
+  },
+  "dashboard": {
+    "loading": "Loading..."
+  },
+  "editUser": {
+    "editTitle": "Edit User",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "flatNumber": "Flat number",
+    "streetAddress": "Street Address",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel"
+  },
+  "helpCenterEdit": {
+    "addCategory": "Add new category",
+    "searchResults": "Search Results",
+    "noArticleFound": "No article found",
+    "addArticle": "Add new article",
+    "editCategory": "Edit category",
+    "categoryName": "Category Name",
+    "categoryNamePlaceholder": "Enter category name",
+    "categoryIcon": "Category Icon",
+    "categoryIconPlaceholder": "Enter category icon",
+    "save": "Save",
+    "editArticle": "Edit article",
+    "articleTitle": "Title",
+    "articleTitlePlaceholder": "Enter article title"
+  },
+  "itemActivity": {
+    "title": "Item Activity",
+    "borrowsHistory": "Borrows History",
+    "favorites": "Favorites",
+    "avgBorrowDuration": "Avg borrow duration",
+    "lateReturns": "Late returns",
+    "returns": "Returns",
+    "currentStatus": "Current status",
+    "reservations": "Reservations",
+    "borrowsRecords": "Borrows Records",
+    "noBorrowRecords": "No borrow records found"
+  },
+  "library": {
+    "addItem": "Add Item",
+    "edit": "Edit",
+    "delete": "Delete",
+    "instructions": "Instructions",
+    "accessibility": "Accessibility",
+    "hub": "Hub",
+    "members": "Members",
+    "admin": "Admin",
+    "notFound": "Library not found",
+    "items": "Items",
+    "borrow-records": "Borrow Records",
+    "requiresApproval": "Requires approval",
+    "doesNotRequireApproval": "Does not require approval",
+    "freeAccess": "Free access",
+    "privateAccess": "Private access",
+    "approval": "Approvals required"
+  },
+  "items": {
+    "addItem": "Add Item",
+    "activity": "Activity",
+    "edit": "Edit",
+    "archive": "Archive",
+    "confirmDeleteContent": "Are you sure you want to delete this item?",
+    "confirmDeleteYes": "Yes, Delete",
+    "confirmDeleteNo": "Cancel",
+    "confirmDeleteLabel": "Delete item '{{name}}'",
+    "deleteSuccess": "Item <strong>{{name}}</strong> deleted successfully"
+  },
+  "security": {
+    "registrationSettings": "Registration settings",
+    "enableUserRegistration": "Enable User Registration",
+    "save": "Save"
+  },
+  "userActivity": {
+    "totalBorrowedItems": "Total borrowed items",
+    "successRate": "Success rate",
+    "lateReturns": "Late returns",
+    "borrowRecords": "Borrow Records"
+  },
+  "users": {
+    "addUser": "Add User",
+    "activity": "Activity",
+    "password": "Password",
+    "edit": "Edit",
+    "delete": "Delete",
+    "disable": "Disable",
+    "changePassword": "Change password",
+    "confirmDeleteContent": "Are you sure you want to delete this user?",
+    "confirmDeleteYes": "Yes, Delete",
+    "confirmDeleteNo": "Cancel",
+    "confirmDeleteLabel": "Delete user '{{username}}'",
+    "deleteSuccess": "User <strong>{{username}}</strong> deleted successfully",
+    "confirmDisableContent": "Are you sure you want to disable this user?",
+    "confirmDisableYes": "Yes, Disable",
+    "confirmDisableNo": "Cancel",
+    "confirmDisableLabel": "Disable user '{{username}}'",
+    "disableSuccess": "User <strong>{{username}}</strong> disabled successfully",
+    "passwordSetSuccess": "User <strong>{{username}}</strong> password set successfully",
+    "columns": {
+      "username": "Username",
+      "email": "Email",
+      "flatNumber": "Flat Number",
+      "address": "Address",
+      "borrowedItems": "Borrowed Items",
+      "returnedLate": "Returned Late",
+      "successRate": "% of Late"
+    }
+  },
+  "filteredAndPaginated": {
+    "searchPlaceholder": "What object are you looking for?",
+    "categoriesFilter": "Which categories?",
+    "dateRangeFilter": "When do you need it?",
+    "librariesFilter": "Which library?",
+    "sortByFilter": "Sort by",
+    "filter": "Filter",
+    "categories": "Categories",
+    "borrowed": "Borrowed",
+    "reserved": "Reserved",
+    "returned": "Returned",
+    "pickup": "Ready to Pickup",
+    "borrowed-active": "Borrowed",
+    "due-to-return": "Due to Return",
+    "reserved-unconfirmed": "Reservations unconfirmed",
+    "borrowed-return-unconfirmed": "Return unconfirmed",
+    "reserved-pickup-unconfirmed": "Pickup unconfirmed",
+    "reserved-ready-to-pickup": "Ready to Pickup",
+    "approval": "Approvals required"
+  },
+  "borrowDialog": {
+    "label": {
+      "borrowBy": "Borrow this item on behalf of"
+    },
+    "searchUser": "Search for a user",
+    "title": {
+      "reserve": "Reserve",
+      "reserveConfirm": "Reserve Confirm",
+      "pickup": "Pickup",
+      "pickupConfirm": "Pickup Confirm",
+      "return": "Return",
+      "returnConfirm": "Return Confirm"
+    },
+    "description": {
+      "reserve": "Reserve the item to ensure it's available for you.",
+      "reserveConfirm": "Confirm your reservation to finalize the booking.",
+      "pickup": "Pick up the item from the designated location.",
+      "pickupConfirm": "Confirm that you have picked up the item.",
+      "return": "Return the item to the library or designated drop-off point.",
+      "returnConfirm": "Confirm that you have returned the item."
+    },
+    "chooseDates": "Choose dates",
+    "heading": {
+      "reserve": "Reserve the item",
+      "reserve-confirm": "Confirm the reservation",
+      "pickup": "Pickup the item",
+      "pickup-confirm": "Confirm the pickup",
+      "return": "Return the item",
+      "return-confirm": "Confirm the return",
+      "cancel": "Cancel the reservation"
+    },
+    "cancelButtonLabel": "Cancel",
+    "confirmButtonLabel": "Confirm",
+    "cancel": {
+      "reserve": "Cancel the reservation",
+      "pickup": "Cancel the pickup",
+      "return": "Cancel the return",
+      "cancel": "Keep the reservation"
+    },
+    "confirm": {
+      "reserve": "Confirm the reservation",
+      "pickup": "Confirm the pickup",
+      "return": "Confirm the return",
+      "cancel": "Yes, cancel the reservation"
+    },
+    "deny": {
+      "reserve": "Deny Reservation",
+      "pickup": "Deny Pickup",
+      "return": "Deny Return"
+    },
+    "approve": {
+      "reserve": "Approve Reservation",
+      "pickup": "Approve Pickup",
+      "return": "Approve Return"
+    }
+  },
+  "breadcrumb": {
+    "items": "Items",
+    "libraries": "Libraries",
+    "item": "Item",
+    "library": "Library",
+    "borrowedItems": "Borrowed Items",
+    "wishlist": "Wishlist",
+    "approval": "Approvals required",
+    "communities": "Communities",
+    "pages": "Pages",
+    "members": "Members"
+  },
+  "communities": {
+    "seeCommunity": "See more",
+    "joinCommunity": "Join",
+    "requestToJoin": "Request to join",
+    "searchPlaceholder": "Search for a community",
+    "enterLocation": "Enter location",
+    "locationPlaceholder": "Enter location",
+    "distance": "Distance",
+    "filterByLocation": "Filter by location",
+    "role": {
+      "admin": "Admin",
+      "member": "Member",
+      "requestingJoin": "Requesting to join"
+    }
+  },
+  "community": {
+    "descriptionTitle": "Description",
+    "seeCommunity": "See Community",
+    "requiresApproval": "Requires approval",
+    "doesNotRequireApproval": "Does not require approval",
+    "libraries": "Libraries",
+    "members": "Members",
+    "information": "Information",
+    "noPageFound": "No page found",
+    "deletePage": "Delete Page",
+    "deletePageSuccess": "Page '{{pageTitle}}' deleted successfully",
+    "confirmDeletePage": "Are you sure you want to delete this page?",
+    "yesDelete": "Yes, Delete",
+    "cancel": "Cancel",
+    "deletePageLabel": "Delete page '{{pageTitle}}'",
+    "addPage": "Create page",
+    "items": "Items"
+  },
+  "members": {
+    "confirmChangeTypeContent": "Are you sure you want to change the type of this member?",
+    "confirmChangeTypeYes": "Yes, Change",
+    "confirmChangeTypeNo": "Cancel",
+    "confirmChangeType": "Change type of {{type}}",
+    "confirmDeleteMemberContent": "Are you sure you want to delete this member?",
+    "confirmDeleteMemberYes": "Yes, Delete",
+    "confirmDeleteMemberNo": "Cancel",
+    "confirmDeleteMember": "Delete member",
+    "confirmAcceptRequestContent": "Are you sure you want to accept this request?",
+    "confirmAcceptRequestYes": "Yes, Accept",
+    "confirmAcceptRequestNo": "Cancel",
+    "confirmAcceptRequest": "Accept request",
+    "confirmRejectRequestContent": "Are you sure you want to reject this request?",
+    "confirmRejectRequestYes": "Yes, Reject",
+    "confirmRejectRequestNo": "Cancel",
+    "confirmRejectRequest": "Reject request",
+    "acceptRequest": "Accept request",
+    "cancelRequest": "Cancel request"
+  },
+  "addCommunity": {
+    "title": "Add Community",
+    "communityName": "Community Name",
+    "communityNamePlaceholder": "Enter community name",
+    "requiresApproval": "Requires approval",
+    "location": "Location",
+    "locationPlaceholder": "Enter location",
+    "uploadPicture": "Upload Picture",
+    "description": "Description",
+    "addCommunityButton": "Add Community",
+    "descriptionPlaceholder": "Enter description",
+    "private": "Private",
+    "public": "Public",
+    "dragAndDropImage": "Drag and drop an image here, or click to select",
+    "fileSelected": "File selected",
+    "locationName": "Location Name",
+    "locationAddress": "Location Address",
+    "locationCoordinatesLatitude": "Location Coordinates Latitude",
+    "locationCoordinatesLongitude": "Location Coordinates Longitude"
+  },
+  "emailConfirmation": {
+    "title": "Email Confirmation",
+    "message": "Verifying your email...",
+    "success": "Email verified successfully",
+    "error": "Email verification failed",
+    "signIn": "Sign in"
+  },
+  "errors": {
+    "unexpected": "An unexpected error occurred",
+    "supportReference": "For support assistance, please reference: {{traceId}}",
+    "title": "Error",
+    "learnMore": "Learn more",
+    "unauthorized": "You are not authorized to access this page. Please log in again.",
+    "auth001": {
+      "title": "User Not Found",
+      "message": "The specified user could not be found.",
+      "action": "Please check the provided information and try again."
+    },
+    "auth002": {
+      "title": "Invalid Credentials",
+      "message": "The provided username or password is incorrect.",
+      "action": "Please check your credentials and try again."
+    },
+    "auth003": {
+      "title": "Email Already Verified",
+      "message": "This email address has already been verified.",
+      "action": "You can proceed to sign in."
+    },
+    "auth004": {
+      "title": "Invalid Verification",
+      "message": "The verification token is invalid or has expired.",
+      "action": "Please request a new verification email."
+    },
+    "auth005": {
+      "title": "Insufficient Permissions",
+      "message": "You don't have sufficient permissions to perform this action.",
+      "action": "Please contact an administrator if you need access."
+    },
+    "res001": {
+      "title": "Item Not Found",
+      "message": "The requested item could not be found.",
+      "action": "Please check the item ID and try again."
+    },
+    "res002": {
+      "title": "Item Not Available",
+      "message": "The requested item is not available at this time.",
+      "action": "Please try again later or choose another item."
+    },
+    "res003": {
+      "title": "Item Already Reserved",
+      "message": "This item has already been reserved for the selected period.",
+      "action": "Please select different dates or choose another item."
+    },
+    "res004": {
+      "title": "Library Not Found",
+      "message": "The requested library could not be found.",
+      "action": "Please check the library ID and try again."
+    },
+    "res005": {
+      "title": "Community Not Found",
+      "message": "The requested community could not be found.",
+      "action": "Please check the community ID and try again."
+    },
+    "res006": {
+      "title": "Member Not Found",
+      "message": "The requested member could not be found.",
+      "action": "Please check the member ID and try again."
+    },
+    "res007": {
+      "title": "Custom Page Not Found",
+      "message": "The requested custom page could not be found.",
+      "action": "Please check the page reference and try again."
+    },
+    "res008": {
+      "title": "Borrow Record Not Found",
+      "message": "The requested borrow record could not be found.",
+      "action": "Please check the borrow record ID and try again."
+    },
+    "res009": {
+      "title": "Help Article Not Found",
+      "message": "The requested help article could not be found.",
+      "action": "Please check the article ID and try again."
+    },
+    "res010": {
+      "title": "Help Category Not Found",
+      "message": "The requested help category could not be found.",
+      "action": "Please check the category ID and try again."
+    },
+    "res011": {
+      "title": "Settings Not Found",
+      "message": "The system settings could not be found.",
+      "action": "Please contact an administrator to set up the system settings."
+    },
+    "val001": {
+      "title": "Invalid Input",
+      "message": "The provided input is invalid.",
+      "action": "Please check the form and correct any errors."
+    },
+    "val002": {
+      "title": "Missing Required Field",
+      "message": "A required field is missing.",
+      "action": "Please fill in all required fields."
+    },
+    "val003": {
+      "title": "Invalid Status Transition",
+      "message": "The requested status transition is not allowed.",
+      "action": "Please check the current status and allowed transitions."
+    },
+    "val004": {
+      "title": "Approval Not Required",
+      "message": "Approval is not required for this operation.",
+      "action": "You can proceed without approval."
+    },
+    "val005": {
+      "title": "Invalid Borrow State",
+      "message": "The current borrow state does not allow this operation.",
+      "action": "Please check the current state and allowed operations."
+    },
+    "sys001": {
+      "title": "Internal Error",
+      "message": "An internal error occurred. Our team has been notified.",
+      "action": "Please try again later."
+    },
+    "sys002": {
+      "title": "External Service Error",
+      "message": "We're having trouble connecting to an external service.",
+      "action": "Please try again later."
+    },
+    "sys003": {
+      "title": "Email Sending Error",
+      "message": "We encountered an error while sending the email.",
+      "action": "Please try again later or contact support if the problem persists."
+    },
+    "client_error": {
+      "title": "Client Error",
+      "message": "An error occurred in your browser.",
+      "action": "Please refresh the page and try again."
+    },
+    "unknown_error": {
+      "title": "Unknown Error",
+      "message": "An unexpected error occurred.",
+      "action": "Please try again later."
+    }
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "submit": "Submit",
+    "success": "Password reset successfully",
+    "error": "Password reset failed",
+    "unexpected": "An unexpected error occurred",
+    "returnToSignIn": "Return to sign-in"
+  }
+}{
+  "signIn": {
+    "welcomeBack": "Welcome back.",
+    "username": "Username",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "dontHaveAccount": "Don't have an account?",
+    "email": "Email",
+    "send": "Send",
+    "returnToSignIn": "Return to sign-in",
+    "emailSent": "Email sent"
+  },
+  "welcome": {
+    "borrowAnything": "Borrow anything you need from our library. Anything you can think of.",
+    "libraryOfThings": "Our library is a library of things. We have everything you need."
+  },
+  "timeline": {
+    "reservation": "Reservation",
+    "reservation-unconfirmed": "Waiting reservation confirmation",
+    "start": "Start",
+    "pickup": "Pickup",
+    "pickup-unconfirmed": "Waiting pickup confirmation",
+    "end": "End",
+    "return": "Return",
+    "return-unconfirmed": "Waiting return confirmation"
+  },
+  "footer": {
+    "brandingAlt": "The Open Shelf",
+    "usefulLinks": "Useful links",
+    "needHelp": "Need help?",
+    "helpCenter": "Help center",
+    "copyright": "2025 The Open Shelf",
+    "poweredBy": "Powered by"
+  },
+  "notifications": {
+    "button": "Notifications",
+    "title": "Notifications",
+    "closeButton": "Close",
+    "moreButton": "More",
+    "itemAvailable": "Item is available",
+    "itemDue": "Item is due",
+    "itemBorrowReservationDateStart": "Item borrow reservation date start",
+    "itemReservedNoLongerAvailable": "Item reserved no longer available",
+    "itemPickupApproved": "Item pickup approved",
+    "itemReturnApproved": "Item return approved",
+    "itemReservationApproved": "Item reservation approved",
+    "unknown": "Unknown",
+    "enableNotifications": "Enable Notifications",
+    "editTitle": "Edit Notifications",
+    "saveSuccess": "Notifications saved successfully",
+    "saveError": "Failed to save notifications"
   },
   "forgotPassword": {
     "title": "Forgot Password",

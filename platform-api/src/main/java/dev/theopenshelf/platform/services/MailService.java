@@ -23,9 +23,12 @@ import com.sendgrid.helpers.mail.objects.Content;
 import com.sendgrid.helpers.mail.objects.Email;
 
 import dev.theopenshelf.platform.entities.NotificationEntity;
+import dev.theopenshelf.platform.entities.NotificationSettingsEntity;
 import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.exceptions.CodedException;
 import dev.theopenshelf.platform.exceptions.CodedError;
+import dev.theopenshelf.platform.exceptions.CodedErrorException;
+import dev.theopenshelf.platform.repositories.NotificationSettingsRepository;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +41,7 @@ public class MailService {
 
     private final SpringTemplateEngine templateEngine;
     private final MessageSource messageSource;
+    private final NotificationSettingsRepository notificationSettingsRepository;
 
     @Value("${sendgrid.api-key}")
     private String sendgridApiKey;
@@ -93,20 +97,31 @@ public class MailService {
     public void sendTemplatedEmail(UserEntity user, String subject, String templateName,
             List<TemplateVariable> variables, Locale locale) {
 
+        if (user.getEmail().endsWith("example.com")) {
+            log.info("Skipping email notification for @example.com mails");
+            return;
+        }
+
+        NotificationSettingsEntity notificationSettings = notificationSettingsRepository.findByUser(user)
+                .orElseThrow(() -> new CodedErrorException(CodedError.NOTIFICATION_SETTINGS_NOT_FOUND,
+                        Map.of("user", user.getId())));
+        if (!notificationSettings.isEnableNotifications()) {
+            log.info("Skipping email notification for user {} because notifications are disabled", user.getId());
+            return;
+        }
+
         variables.add(
                 TemplateVariable.builder()
                         .type(TemplateVariableType.RAW)
                         .ref("logoUrl")
                         .value(logoUrl)
-                        .build()
-        );
+                        .build());
         variables.add(
                 TemplateVariable.builder()
                         .type(TemplateVariableType.RAW)
                         .ref("appName")
                         .value(appName)
-                        .build()
-        );
+                        .build());
 
         Map<String, Object> variablesMap = variables.stream()
                 .map(v -> {
@@ -116,15 +131,13 @@ public class MailService {
                                     messageSource.getMessage(v.translateKey, v.args, locale));
                         }
                         default -> {
-                            return Pair.of(v.ref, v.value == null ? "": v.value);
+                            return Pair.of(v.ref, v.value == null ? "" : v.value);
                         }
                     }
                 })
                 .collect(Collectors.toMap(
                         Pair::getLeft,
                         Pair::getRight));
-
-
 
         Context context = new Context(locale);
         context.setVariables(variablesMap);

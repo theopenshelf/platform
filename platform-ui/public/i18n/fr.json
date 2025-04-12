@@ -46,7 +46,12 @@
     "unknown": "Inconnu",
     "itemPickupApproved": "La récupération de l'article est approuvée",
     "itemReturnApproved": "Le retour de l'article est approuvé",
-    "itemReservationApproved": "La réservation de l'article est approuvée"
+    "itemReservationApproved": "La réservation de l'article est approuvée",
+    "enableNotifications": "Activer les notifications",
+    "editTitle": "Modifier les notifications",
+    "saveButton": "Enregistrer",
+    "saveSuccess": "Notifications enregistrées avec succès",
+    "saveError": "Erreur lors de l'enregistrement des notifications"
   },
   "forgotPassword": {
     "title": "Mot de passe oublié",

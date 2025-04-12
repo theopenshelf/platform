@@ -1,0 +1,33 @@
+<div class="notifications-container">
+
+    <form
+        [formGroup]="notificationsForm"
+        (ngSubmit)="onSave()"
+    >
+        <h1>
+            {{ 'notifications.editTitle' | translate }}
+        </h1>
+
+        <div class="section">
+          <input
+              tuiSwitch
+              type="checkbox"
+              formControlName="isNotificationsEnabled"
+              [showIcons]="true"
+              name="notificationsToggle"
+          >
+          <label>
+              {{ 'notifications.enableNotifications' | translate }}
+          </label>
+      </div>
+
+        <button
+            appearance="accent"
+            tuiButton
+            size="l"
+            type="submit"
+        >
+            {{ 'notifications.saveButton' | translate }}
+        </button>
+    </form>
+</div>

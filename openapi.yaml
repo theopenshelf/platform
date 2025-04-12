@@ -2335,6 +2335,44 @@ paths:
         "400":
           description: Invalid notification payload
 
+  /hub/notifications-settings:
+    get:
+      operationId: getNotificationSettings
+      summary: Get the current user's notification settings
+      tags:
+        - notifications-hub-api
+      responses:
+        "200":
+          description: Notification settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationSettings"
+        "401":
+          description: Unauthorized
+    put:
+      operationId: updateNotificationSettings
+      summary: Update the current user's notification settings
+      tags:
+        - notifications-hub-api
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NotificationSettings"
+      responses:
+        "200":
+          description: Notification settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotificationSettings"
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized
+
 components:
   #####################################################
   # Predefined Components
@@ -3204,6 +3242,15 @@ components:
                   type: array
                   items:
                     $ref: "#/components/schemas/ValidationFieldError"
+
+    NotificationSettings:
+      type: object
+      properties:
+        enableNotifications:
+          type: boolean
+          description: Whether notifications are enabled for the user
+      required:
+        - enableNotifications
 
   responses:
     OK_200_GET_HELLO_WORLD:

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { map, Observable } from "rxjs";
-import { ProfileHubApiService, User, UsersHubApiService } from "../../../../api-client";
+import { NotificationSettings, NotificationsHubApiService, ProfileHubApiService, User, UsersHubApiService } from "../../../../api-client";
+import { UINotificationsSettings } from "../../../../models/UINotificationsSettings";
 import { UIUser } from "../../../../models/UIUser";
 import { UsersService } from "../users.service";
 
@@ -9,7 +10,11 @@ import { UsersService } from "../users.service";
 })
 export class APIUsersService implements UsersService {
 
-    constructor(private usersApiService: UsersHubApiService, private profileApiService: ProfileHubApiService) { }
+    constructor(
+        private usersApiService: UsersHubApiService,
+        private profileApiService: ProfileHubApiService,
+        private notificationsApiService: NotificationsHubApiService
+    ) { }
 
     getUsers(): Observable<UIUser[]> {
         return this.usersApiService.getHubUsers().pipe(
@@ -83,6 +88,30 @@ export class APIUsersService implements UsersService {
             successRate: 0,
             avatarUrl: user.avatarUrl || '',
             preferredLanguage: user.preferredLanguage || '',
+        };
+    }
+
+    getNotificationsSettings(): Observable<UINotificationsSettings> {
+        return this.notificationsApiService.getNotificationSettings().pipe(
+            map((settings: NotificationSettings) => this.mapToUINotificationsSettings(settings))
+        );
+    }
+
+    updateNotificationsSettings(settings: UINotificationsSettings): Observable<UINotificationsSettings> {
+        return this.notificationsApiService.updateNotificationSettings(this.mapToApiNotificationsSettings(settings)).pipe(
+            map((settings: NotificationSettings) => this.mapToUINotificationsSettings(settings))
+        );
+    }
+
+    private mapToApiNotificationsSettings(settings: UINotificationsSettings): NotificationSettings {
+        return {
+            enableNotifications: settings.isNotificationsEnabled,
+        };
+    }
+
+    private mapToUINotificationsSettings(settings: NotificationSettings): UINotificationsSettings {
+        return {
+            isNotificationsEnabled: settings.enableNotifications,
         };
     }
 }

@@ -114,26 +114,22 @@ public class NotificationsService {
             notification.setUserId(user.getId());
             notificationRepository.save(notification);
 
-            if (user.getEmail().endsWith("example.com")) {
-                log.info("Skipping email notification for @example.com mails");
-            } else {
-                // Create template variables for the email
-                List<TemplateVariable> templateVariables = getTemplateVariables(notification.getType(), notification);
+            // Create template variables for the email
+            List<TemplateVariable> templateVariables = getTemplateVariables(notification.getType(), notification);
 
-                templateVariables.add(
-                        TemplateVariable.builder()
-                                .type(TemplateVariableType.RAW)
-                                .ref("username")
-                                .value(user.getUsername())
-                                .build());
+            templateVariables.add(
+                    TemplateVariable.builder()
+                            .type(TemplateVariableType.RAW)
+                            .ref("username")
+                            .value(user.getUsername())
+                            .build());
 
-                mailService.sendTemplatedEmail(
-                        user,
-                        "notification." + notification.getType().name().toLowerCase() + ".email.title",
-                        "email/" + notification.getType().getEmailTemplate(),
-                        templateVariables,
-                        locale);
-            }
+            mailService.sendTemplatedEmail(
+                    user,
+                    "notification." + notification.getType().name().toLowerCase() + ".email.title",
+                    "email/" + notification.getType().getEmailTemplate(),
+                    templateVariables,
+                    locale);
             log.info("Successfully send {} notification", notification);
             return Mono.empty();
         } catch (Exception e) {
