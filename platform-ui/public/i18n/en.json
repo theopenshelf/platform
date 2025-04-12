@@ -604,6 +604,7 @@
     "supportReference": "For support assistance, please reference: {{traceId}}",
     "title": "Error",
     "learnMore": "Learn more",
+    "unauthorized": "You are not authorized to access this page. Please log in again.",
     "auth001": {
       "title": "User Not Found",
       "message": "The specified user could not be found.",

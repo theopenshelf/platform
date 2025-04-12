@@ -621,6 +621,7 @@
     "supportReference": "Pour obtenir de l'aide, veuillez référencer: {{traceId}}",
     "title": "Erreur",
     "learnMore": "En savoir plus",
+    "unauthorized": "Vous n'êtes pas autorisé à accéder à cette page. Veuillez vous reconnecter.",
     "auth001": {
       "title": "Utilisateur non trouvé",
       "message": "L'utilisateur spécifié n'a pas été trouvé.",

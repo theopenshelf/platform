@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { TuiAlertService } from '@taiga-ui/core';
-import { throwError } from 'rxjs';
+import { EMPTY, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { CodedError } from '../api-client/model/codedError';
 
@@ -12,6 +12,10 @@ interface ErrorTranslation {
     message: string;
     action?: string;
 }
+
+// Keep track of the last 401 error shown
+let lastUnauthorizedError = 0;
+const UNAUTHORIZED_ERROR_DEBOUNCE = 2000; // 2 seconds debounce
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
     const alertService = inject(TuiAlertService);
@@ -22,12 +26,17 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((error: HttpErrorResponse) => {
             if (error.status === 401) {
                 // Only show error and redirect if not already on login page
-                if (!router.url.includes('/login') && !router.url.includes('/')) {
-                    showError(alertService, translate, {
-                        code: 'UNAUTHORIZED',
-                        message: translate.instant('errors.unauthorized')
-                    } as CodedError);
+                if (router.url !== '/login' && router.url !== '/') {
+                    const now = Date.now();
+                    if (now - lastUnauthorizedError > UNAUTHORIZED_ERROR_DEBOUNCE) {
+                        lastUnauthorizedError = now;
+                        showError(alertService, translate, {
+                            code: 'UNAUTHORIZED',
+                            message: translate.instant('errors.unauthorized')
+                        } as CodedError);
+                    }
                     router.navigate(['/login']);
+                    return EMPTY; // Don't propagate the error when redirecting
                 }
             } else if (error.error instanceof ErrorEvent) {
                 // Client-side error
