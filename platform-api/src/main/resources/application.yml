@@ -21,6 +21,10 @@ openapi:
 oshelf:
   base-url: http://local.oshelf.org:4200
   frontend-url: http://local.oshelf.org:4200
+  email:
+    template:
+      logo-url: http://local.oshelf.org:4200/logo-simple.png
+      app-name: OShelf
 sendgrid:
   api-key: ${SENDGRID_API_KEY}
   from:

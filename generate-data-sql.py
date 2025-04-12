@@ -39,18 +39,46 @@ def generate_notifications_sql(notifications, user_id_map, item_id_map):
                 'ITEM_AVAILABLE',
                 'ITEM_DUE',
                 'ITEM_BORROW_RESERVATION_DATE_START',
-                'ITEM_RESERVED_NO_LONGER_AVAILABLE'
+                'ITEM_RESERVED_NO_LONGER_AVAILABLE',
+                'ITEM_RESERVATION_APPROVED',
+                'ITEM_RESERVATION_REJECTED',
+                'ITEM_PICKUP_APPROVED',
+                'ITEM_PICKUP_REJECTED',
+                'ITEM_RETURN_APPROVED',
+                'ITEM_RETURN_REJECTED'
             ]:
                 notification_type = 'ITEM_AVAILABLE'  # Default to a valid type if necessary
+            
             # Use UUID for the notification ID
             notification_id = generate_uuid()
             
             # Map the itemId in the payload to the new UUID
-            payload = notification['payload'].copy()
-            if 'itemId' in payload and payload['itemId'] in item_id_map:
-                payload['itemId'] = item_id_map[payload['itemId']]
+            payload = notification['payload'].copy() if notification.get('payload') else {}
             
-            sql = f"INSERT INTO notifications (id, user_id, author, date, type, already_read, payload) VALUES ('{notification_id}', '{user_id}', '{notification['author']}', '{notification['date']}', '{notification_type}', {str(notification['alreadyRead']).lower()}, '{json.dumps(payload)}');"
+            # Extract the item_id before modifying the payload
+            original_item_id = payload.get('itemId')
+            item_id = 'NULL'
+            if original_item_id:
+                mapped_item_id = item_id_map.get(original_item_id)
+                if mapped_item_id:
+                    item_id = f"'{mapped_item_id}'"
+                    payload['itemId'] = mapped_item_id
+            
+            # Handle borrow_record_id
+            borrow_record_id = f"'{payload['borrowRecordId']}'" if 'borrowRecordId' in payload else 'NULL'
+            
+            # Ensure date has timezone information
+            date = notification['date']
+            if not date.endswith('Z') and not '+' in date and not '-' in date[10:]:
+                date = date + 'T00:00:00Z' if len(date) == 10 else date + 'Z'
+            
+            sql = f"""INSERT INTO notifications (
+                id, user_id, author, date, type, already_read, payload, item_id, borrow_record_id
+            ) VALUES (
+                '{notification_id}', '{user_id}', '{notification['author']}', '{date}',
+                '{notification_type}', {str(notification['alreadyRead']).lower()}, '{json.dumps(payload)}',
+                {item_id}, {borrow_record_id}
+            );"""
             sql_statements.append(sql)
     return sql_statements
 

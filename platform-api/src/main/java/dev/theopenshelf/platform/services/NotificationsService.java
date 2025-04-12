@@ -3,9 +3,11 @@ package dev.theopenshelf.platform.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class NotificationsService {
     private final NotificationRepository notificationRepository;
     private final MailService mailService;
     private final MessageSource messageSource;
+
+    @Value("${oshelf.frontend-url}")
+    private String frontendUrl;
 
     public Mono<Void> acknowledgeNotifications(UUID userId, Flux<Notification> notifications) {
         return notifications.collectList()
@@ -100,6 +105,10 @@ public class NotificationsService {
     }
 
     public Mono<Void> sendNotifications(UserEntity user, NotificationEntity notification) {
+        return this.sendNotifications(user, notification, user.getLocale());
+    }
+
+    public Mono<Void> sendNotifications(UserEntity user, NotificationEntity notification, Locale locale) {
         try {
             notification.setId(UUID.randomUUID());
             notification.setUserId(user.getId());
@@ -122,7 +131,8 @@ public class NotificationsService {
                         user,
                         "notification." + notification.getType().name().toLowerCase() + ".email.title",
                         "email/" + notification.getType().getEmailTemplate(),
-                        templateVariables);
+                        templateVariables,
+                        locale);
             }
             log.info("Successfully send {} notification", notification);
             return Mono.empty();
@@ -158,20 +168,36 @@ public class NotificationsService {
     private List<TemplateVariable> getTemplateVariables(NotificationType type, NotificationEntity notification) {
         List<TemplateVariable> variables = new ArrayList<>();
 
-        // Common variables for all item-related notifications
-        if (notification.getPayload().containsKey("itemId")) {
-            variables.add(TemplateVariable.builder()
-                    .type(TemplateVariableType.RAW)
-                    .ref("itemUrl")
-                    .value("/items/" + notification.getPayload().get("itemId"))
-                    .build());
-        }
-        if (notification.getPayload().containsKey("itemName")) {
-            variables.add(TemplateVariable.builder()
-                    .type(TemplateVariableType.RAW)
-                    .ref("itemName")
-                    .value(notification.getPayload().get("itemName"))
-                    .build());
+        if (notification.getItem() != null) {
+            variables.add(
+                    TemplateVariable.builder()
+                            .type(TemplateVariableType.RAW)
+                            .ref("itemName")
+                            .value(notification.getItem().getName())
+                            .build());
+            String imgUrl = notification.getItem().getImageUrl();
+            if (notification.getItem().getImageUrl().startsWith("/")) {
+                imgUrl = frontendUrl +  imgUrl;
+            }
+            variables.add(
+                    TemplateVariable.builder()
+                            .type(TemplateVariableType.RAW)
+                            .ref("itemImageUrl")
+                            .value(imgUrl)
+                            .build());
+            variables.add(
+                    TemplateVariable.builder()
+                            .type(TemplateVariableType.RAW)
+                            .ref("itemOwner")
+                            .value(notification.getItem().getOwner())
+                            .build());
+
+            variables.add(
+                    TemplateVariable.builder()
+                            .type(TemplateVariableType.RAW)
+                            .ref("itemUrl")
+                            .value(frontendUrl + "/hub/items/" + notification.getItem().getId())
+                            .build());
         }
 
         switch (type) {
@@ -205,7 +231,7 @@ public class NotificationsService {
                         TemplateVariable.builder()
                                 .type(TemplateVariableType.RAW)
                                 .ref("confirmUrl")
-                                .value("/admin/reservations/" + notification.getPayload().get("reservationId"))
+                                .value(frontendUrl + "/admin/reservations/" + notification.getPayload().get("reservationId"))
                                 .build()));
             }
             case ITEM_NEW_PICKUP_TO_CONFIRM -> {
@@ -218,7 +244,7 @@ public class NotificationsService {
                         TemplateVariable.builder()
                                 .type(TemplateVariableType.RAW)
                                 .ref("confirmUrl")
-                                .value("/admin/pickups/" + notification.getPayload().get("pickupId"))
+                                .value(frontendUrl + "/admin/pickups/" + notification.getPayload().get("pickupId"))
                                 .build()));
             }
             case ITEM_NEW_RETURN_TO_CONFIRM -> {
@@ -231,7 +257,7 @@ public class NotificationsService {
                         TemplateVariable.builder()
                                 .type(TemplateVariableType.RAW)
                                 .ref("confirmUrl")
-                                .value("/admin/returns/" + notification.getPayload().get("returnId"))
+                                .value(frontendUrl + "/admin/returns/" + notification.getPayload().get("returnId"))
                                 .build()));
             }
             case ITEM_RESERVATION_APPROVED, ITEM_PICK_UP_APPROVED, ITEM_RETURN_APPROVED -> {

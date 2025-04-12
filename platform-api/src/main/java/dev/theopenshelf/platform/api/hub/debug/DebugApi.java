@@ -2,7 +2,9 @@ package dev.theopenshelf.platform.api.hub.debug;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
+import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +16,7 @@ import dev.theopenshelf.platform.entities.NotificationType;
 import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.model.DebugPostNotificationRequest;
 import dev.theopenshelf.platform.model.Notification;
+import dev.theopenshelf.platform.repositories.ItemsRepository;
 import dev.theopenshelf.platform.repositories.UsersRepository;
 import dev.theopenshelf.platform.services.NotificationsService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ public class DebugApi implements DebugApiApiDelegate {
 
     private final UsersRepository usersRepository;
     private final NotificationsService notificationService;
+    private final ItemsRepository itemsRepository;
 
     @Override
     public Mono<ResponseEntity<Notification>> debugPostNotification(
@@ -50,6 +54,10 @@ public class DebugApi implements DebugApiApiDelegate {
 
                         @SuppressWarnings("unchecked")
                         Map<String, Object> payload = (Map<String, Object>) notification.getPayload();
+                        UUID itemId = UUID.randomUUID();
+                        if (payload.containsKey("itemId")) {
+                            itemId = UUID.fromString((String) payload.get("itemId"));
+                        }
 
                         NotificationEntity notificationEntity = NotificationEntity.builder()
                                 .author(notification.getAuthor())
@@ -57,9 +65,11 @@ public class DebugApi implements DebugApiApiDelegate {
                                 .type(NotificationType.valueOf(notification.getType().name()))
                                 .alreadyRead(notification.getAlreadyRead())
                                 .payload(payload)
+                                .item(itemsRepository.findByIdWithBorrowRecords(itemId).orElse(null))
                                 .build();
 
-                        notificationService.sendNotifications(user, notificationEntity);
+                        Locale locale = request.getLocale() != null ?  Locale.of(request.getLocale()) : user.getLocale();
+                        notificationService.sendNotifications(user, notificationEntity, locale);
 
                         return notificationEntity.toNotification().build();
                     } catch (Exception e) {

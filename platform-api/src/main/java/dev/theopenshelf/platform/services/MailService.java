@@ -2,6 +2,7 @@ package dev.theopenshelf.platform.services;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -47,6 +48,12 @@ public class MailService {
     @Value("${sendgrid.from.name}")
     private String sendgridFromName;
 
+    @Value("${oshelf.email.template.logo-url}")
+    private String logoUrl;
+
+    @Value("${oshelf.email.template.app-name}")
+    private String appName;
+
     public void sendMail(String to, String subject, String text) {
         log.info("Sending email to: {}, subject: {}", to, subject);
 
@@ -83,36 +90,33 @@ public class MailService {
         }
     }
 
-    public void sendTemplatedEmail(String to, String subject, String templateName, Map<String, Object> variables) {
-        log.debug("Preparing templated email. Template: {}, To: {}, Variables: {}", templateName, to, variables);
-        Context context = new Context();
-        context.setVariables(variables);
-
-        try {
-            String htmlContent = templateEngine.process(templateName, context);
-            log.debug("Template processed successfully");
-            sendMail(to, subject, htmlContent);
-        } catch (Exception e) {
-            log.error("Failed to process template: {}", templateName, e);
-            throw new CodedException(CodedError.EMAIL_SENDING_ERROR.getCode(),
-                    "Failed to process email template",
-                    Map.of("to", to, "template", templateName, "error", e.getMessage()),
-                    CodedError.EMAIL_SENDING_ERROR.getDocumentationUrl(),
-                    e);
-        }
-    }
-
     public void sendTemplatedEmail(UserEntity user, String subject, String templateName,
-            List<TemplateVariable> variables) {
+            List<TemplateVariable> variables, Locale locale) {
+
+        variables.add(
+                TemplateVariable.builder()
+                        .type(TemplateVariableType.RAW)
+                        .ref("logoUrl")
+                        .value(logoUrl)
+                        .build()
+        );
+        variables.add(
+                TemplateVariable.builder()
+                        .type(TemplateVariableType.RAW)
+                        .ref("appName")
+                        .value(appName)
+                        .build()
+        );
+
         Map<String, Object> variablesMap = variables.stream()
                 .map(v -> {
                     switch (v.type) {
                         case TRANSLATABLE_TEXT -> {
                             return Pair.of(v.ref,
-                                    messageSource.getMessage(v.translateKey, v.args, user.getLocale()));
+                                    messageSource.getMessage(v.translateKey, v.args, locale));
                         }
                         default -> {
-                            return Pair.of(v.ref, v.value);
+                            return Pair.of(v.ref, v.value == null ? "": v.value);
                         }
                     }
                 })
@@ -120,13 +124,15 @@ public class MailService {
                         Pair::getLeft,
                         Pair::getRight));
 
-        Context context = new Context(user.getLocale());
+
+
+        Context context = new Context(locale);
         context.setVariables(variablesMap);
 
         try {
             String htmlContent = templateEngine.process(templateName, context);
             log.debug("Template processed successfully");
-            String translatedSubject = messageSource.getMessage(subject, null, user.getLocale());
+            String translatedSubject = messageSource.getMessage(subject, null, locale);
             sendMail(user.getEmail(), translatedSubject, htmlContent);
         } catch (Exception e) {
             log.error("Failed to process template: {}", templateName, e);

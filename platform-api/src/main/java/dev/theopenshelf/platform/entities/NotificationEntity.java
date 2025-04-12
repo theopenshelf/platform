@@ -15,6 +15,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,6 +44,14 @@ public class NotificationEntity {
 
     private boolean alreadyRead;
 
+    @ManyToOne
+    @JoinColumn(name = "item_id")
+    private ItemEntity item;
+
+    @ManyToOne
+    @JoinColumn(name = "borrow_record_id")
+    private BorrowRecordEntity borrowRecord;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     private Map<String, Object> payload;
@@ -53,6 +63,8 @@ public class NotificationEntity {
                 .date(date != null ? OffsetDateTime.ofInstant(date, ZoneOffset.UTC) : null)
                 .type(Notification.TypeEnum.valueOf(type.name()))
                 .alreadyRead(alreadyRead)
+                .item(item != null ? item.toItem(false).build() : null)
+                .borrowRecord(borrowRecord != null ? borrowRecord.toBorrowRecord().build() : null)
                 .payload(payload);
     }
 }

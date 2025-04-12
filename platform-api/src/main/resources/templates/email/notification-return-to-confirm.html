@@ -1,56 +1,54 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title th:text="#{notification.item_new_return_to_confirm.email.title}">New Return to Confirm - The Open Shelf</title>
-        <meta
-            http-equiv="Content-Type"
-            content="text/html; charset=UTF-8"
-        >
-        <div th:replace="~{email/fragments/styles :: styles}"></div>
+    <head th:replace="~{email/fragments/email-layout :: head(~{::title})}">
+        <title th:text="#{notification.item_new_return_to_confirm.email.title}">New Return to Confirm - [[${appName}]]</title>
     </head>
     <body>
-        <div class="container">
-            <div th:replace="~{email/fragments/header :: header}"></div>
+        <th:block th:replace="~{email/fragments/email-layout :: layout}">
+            <!-- Header -->
+            <tr th:replace="~{email/fragments/email-layout :: header}"></tr>
 
-            <div class="content">
+            <!-- Content -->
+            <td th:fragment="content">
                 <h1 th:text="#{notification.item_new_return_to_confirm.email.title}">New Return to Confirm</h1>
-
                 <p>
                     <span th:text="#{notification.item_new_return_to_confirm.email.greeting(${username})}">Hello username,</span>
                 </p>
-
                 <p>
                     <span th:text="#{notification.item_new_return_to_confirm.email.message(${itemName}, ${borrowerName})}">
                         A new return request for "itemName" has been made by borrowerName.
                     </span>
                 </p>
 
-                <div class="button-container">
-                    <a
-                        th:href="${confirmUrl}"
-                        class="button"
-                        th:text="#{notification.item_new_return_to_confirm.email.confirm}"
-                    >
-                        Confirm Return
-                    </a>
+                <div class="item-card">
+                    <img th:if="${itemImageUrl}" th:src="${itemImageUrl}" class="item-image" alt="Item Image" />
+                    <div class="item-details">
+                        <div class="item-name" th:text="${itemName}">Item Name</div>
+                        <div class="item-owner" th:if="${itemOwner}" th:text="${itemOwner}">Owner Name</div>
+                    </div>
                 </div>
 
-                <p class="button-fallback">
-                    <small th:text="#{email.common.button_fallback}">
-                        If the button above doesn't work, copy and paste this link into your browser:
-                    </small>
-                    <br>
-                    <small th:text="${confirmUrl}">confirmUrl</small>
-                </p>
+                <!-- Button -->
+                <th:block th:replace="~{email/fragments/email-layout :: button(${confirmUrl}, #{notification.item_new_return_to_confirm.email.confirm})}"></th:block>
 
-                <p>
-                    <span th:text="#{email.common.signature}">Best regards,</span>
-                    <br>
-                    <span>The Open Shelf Team</span>
-                </p>
-            </div>
+                <!-- Button Fallback -->
+                <th:block th:replace="~{email/fragments/email-layout :: button-fallback(${confirmUrl})}"></th:block>
 
-            <div th:replace="~{email/fragments/footer :: footer}"></div>
-        </div>
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="content-block">
+                            <p>
+                                <span th:text="#{email.common.signature}">Best regards,</span>
+                                <br>
+                                <span>[[${appName}]] Team</span>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <!-- Footer -->
+            <div th:replace="~{email/fragments/email-layout :: footer}"></div>
+        </th:block>
     </body>
 </html>

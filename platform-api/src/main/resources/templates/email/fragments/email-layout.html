@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head(title)">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title th:replace="${title}">Email Template</title>
+        <!--[if mso]>
+        <style type="text/css">
+            table {border-collapse:collapse;border-spacing:0;margin:0;}
+            div, td {padding:0;}
+            div {margin:0 !important;}
+        </style>
+        <noscript>
+        <xml>
+            <o:OfficeDocumentSettings>
+                <o:PixelsPerInch>96</o:PixelsPerInch>
+            </o:OfficeDocumentSettings>
+        </xml>
+        </noscript>
+        <![endif]-->
+        <style>
+            /* Base */
+            body, html {
+                margin: 0;
+                padding: 0;
+                width: 100% !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                -webkit-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+            }
+
+            body {
+                background-color: #f1f5f9;
+            }
+
+            /* Typography */
+            * {
+                -webkit-font-smoothing: antialiased;
+            }
+
+            table {
+                border-collapse: separate;
+                mso-table-lspace: 0pt;
+                mso-table-rspace: 0pt;
+                width: 100%;
+            }
+
+            img {
+                -ms-interpolation-mode: bicubic;
+                max-width: 100%;
+                border: 0;
+                display: block;
+                height: auto;
+                line-height: 100%;
+            }
+
+            /* Layout */
+            .email-wrapper {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                background-color: #f1f5f9;
+            }
+
+            .email-content {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .email-masthead {
+                padding: 32px 0;
+                text-align: center;
+                background: #283242;
+            }
+
+            .email-masthead_inner {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .email-masthead_logo {
+                width: 140px;
+                height: auto;
+                border: 0;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 16px;
+                filter: brightness(0) invert(1);
+            }
+
+            .email-masthead_name {
+                display: inline-block;
+                font-size: 24px;
+                font-weight: 600;
+                color: #ffffff;
+                text-decoration: none;
+                text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+                vertical-align: middle;
+                margin: 0;
+                padding: 0;
+            }
+
+            .email-body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                border-top: 1px solid #f1f5f9;
+                background-color: #ffffff;
+            }
+
+            .email-body_inner {
+                width: 580px;
+                margin: 0 auto;
+                padding: 0;
+                background: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            }
+
+            .email-content-cell {
+                padding: 40px 32px;
+            }
+
+            .email-footer {
+                width: 580px;
+                margin: 0 auto;
+                padding: 0;
+                text-align: center;
+            }
+
+            .email-footer_cell {
+                color: rgba(27, 31, 59, 0.4);
+                padding: 24px;
+                text-align: center;
+            }
+
+            /* Body Content */
+            h1 {
+                margin: 0 0 32px;
+                color: #1b1f3b;
+                font-size: 28px;
+                font-weight: 700;
+                text-align: center;
+                letter-spacing: -0.5px;
+                line-height: 1.4;
+            }
+
+            p {
+                margin: 0 0 20px;
+                color: rgba(27, 31, 59, 0.65);
+                font-size: 16px;
+                line-height: 1.8;
+            }
+
+            /* Buttons */
+            .button {
+                display: inline-block;
+                width: 200px;
+                background-color: #FB8C02;
+                border-radius: 8px;
+                color: #ffffff;
+                font-size: 16px;
+                font-weight: 600;
+                text-align: center;
+                text-decoration: none;
+                padding: 16px 40px;
+                -webkit-text-size-adjust: none;
+                mso-hide: all;
+            }
+
+            /* Item Card */
+            .item-card {
+                margin: 32px 0;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 12px;
+                overflow: hidden;
+                background-color: #ffffff;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 320px;
+                object-fit: cover;
+                background-color: #ffffff;
+            }
+
+            .item-details {
+                padding: 24px;
+                background: #ffffff;
+                border-top: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .item-name {
+                margin: 0 0 8px;
+                font-size: 20px;
+                font-weight: 600;
+                letter-spacing: -0.3px;
+            }
+
+            .item-owner {
+                margin: 0;
+                font-size: 14px;
+            }
+
+            /* Utilities */
+            .align-center {
+                text-align: center;
+            }
+
+            .link {
+                color: #FB8C02;
+            }
+
+            /* Responsive */
+            @media only screen and (max-width: 620px) {
+                .email-body_inner,
+                .email-footer {
+                    width: 100% !important;
+                }
+
+                .email-body_inner {
+                    border-radius: 0 !important;
+                }
+
+                .email-content-cell {
+                    padding: 32px 24px !important;
+                }
+
+                .item-image {
+                    height: 240px !important;
+                }
+
+                .button {
+                    width: 100% !important;
+                }
+
+                .email-masthead_logo {
+                    width: 120px;
+                    margin-right: 12px;
+                }
+
+                .email-masthead_name {
+                    font-size: 20px;
+                }
+            }
+
+            /* Prevent dark mode from affecting emails */
+            @media (prefers-color-scheme: dark) {
+                body, .body, .main, .item-card, .item-details {
+                    background-color: #ffffff !important;
+                }
+
+                .item-name {
+                    color: #ffffff !important;
+                }
+
+                .item-owner {
+                    color: rgba(255, 255, 255, 0.65) !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Base Layout Fragment -->
+        <th:block th:fragment="layout">
+            <table class="email-wrapper" role="presentation">
+                <tr>
+                    <td align="center">
+                        <table class="email-content" role="presentation">
+                            <!-- Header -->
+                            <tr th:replace="~{::header}">
+                                <!-- Header will be inserted here -->
+                            </tr>
+                            <!-- Body -->
+                            <tr>
+                                <td>
+                                    <table class="email-body_inner" role="presentation">
+                                        <tr>
+                                            <td class="email-content-cell">
+                                                <table role="presentation" width="100%">
+                                                    <tr>
+                                                        <td th:replace="~{::content}">
+                                                            <!-- Content will be inserted here -->
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <!-- Footer -->
+                            <tr th:replace="~{::footer}">
+                                <!-- Footer will be inserted here -->
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </th:block>
+
+        <!-- Header Fragment -->
+        <tr th:fragment="header">
+            <td class="email-masthead">
+                <div class="email-masthead_inner">
+                    <img th:src="${logoUrl}" th:alt="${appName}" class="email-masthead_logo" />
+                    <span class="email-masthead_name" th:text="${appName}">App Name</span>
+                </div>
+            </td>
+        </tr>
+
+        <!-- Button Fragment -->
+        <th:block th:fragment="button(url, text)">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center" style="padding: 32px 0;">
+                        <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td align="center" bgcolor="#FB8C02" style="border-radius: 8px;">
+                                    <a th:href="${url}" th:text="${text}" class="button">Button Text</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </th:block>
+
+        <!-- Button Fallback Fragment -->
+        <th:block th:fragment="button-fallback(url)">
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td style="background: #f1f5f9; padding: 20px; border-radius: 8px; border: 1px solid rgba(0, 0, 0, 0.1);">
+                        <p style="margin: 0; font-size: 14px; color: rgba(27, 31, 59, 0.65);">
+                            <small th:text="#{email.common.button_fallback}">
+                                If the button above doesn't work, copy and paste this link into your browser:
+                            </small>
+                        </p>
+                        <p style="margin: 8px 0 0; font-size: 14px; word-break: break-all;">
+                            <small>
+                                <a th:href="${url}" th:text="${url}" class="link">url</a>
+                            </small>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </th:block>
+
+        <!-- Footer Fragment -->
+        <tr th:fragment="footer">
+            <td>
+                <table class="email-footer" role="presentation">
+                    <tr>
+                        <td class="email-footer_cell">
+                            <p style="margin: 0 0 4px; font-size: 13px;">© 2024 [[${appName}]]. All rights reserved.</p>
+                            <p style="margin: 0; font-size: 13px;">
+                                This email was sent to you because you have an account on [[${appName}]].
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </body>
+</html> 

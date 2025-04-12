@@ -153,10 +153,12 @@ public class AuthApi implements AuthApiApiDelegate {
                                                 .build();
 
                                 mailService.sendTemplatedEmail(
-                                                newUser,
-                                                "Welcome to The Open Shelf",
-                                                "email/signup-email-verif",
-                                                Arrays.asList(usernameVar, verifUrlVar));
+                                        newUser,
+                                        "Welcome to The Open Shelf",
+                                        "email/signup-email-verif",
+                                        Arrays.asList(usernameVar, verifUrlVar),
+                                        newUser.getLocale()
+                                );
 
                                 log.info("Sent verification email to: {}", request.getEmail());
                                 return Mono.just(ResponseEntity.status(HttpStatus.CREATED).build());
@@ -247,10 +249,12 @@ public class AuthApi implements AuthApiApiDelegate {
                                                         .build();
 
                                         mailService.sendTemplatedEmail(
-                                                        user,
-                                                        "Reset Your Password - The Open Shelf",
-                                                        "email/reset-password",
-                                                        Arrays.asList(usernameVar, resetUrlVar));
+                                                user,
+                                                "Reset Your Password - The Open Shelf",
+                                                "email/reset-password",
+                                                Arrays.asList(usernameVar, resetUrlVar),
+                                                user.getLocale()
+                                        );
 
                                 } catch (Exception e) {
                                         log.error("Failed to process password reset", e);

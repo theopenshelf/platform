@@ -1,58 +1,54 @@
 <!DOCTYPE html>
-<html :xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title :th:text="#{notification.item_reserved_no_longer_available.email.title}">
-            Item No Longer Available - The Open Shelf
-        </title>
-        <meta
-            http-equiv="Content-Type"
-            content="text/html; charset=UTF-8"
-        >
-        <div :th:replace="~{email/fragments/styles :: styles}"></div>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{email/fragments/email-layout :: head(~{::title})}">
+        <title th:text="#{notification.item_reserved_no_longer_available.email.title}">Item No Longer Available - [[${appName}]]</title>
     </head>
     <body>
-        <div class="container">
-            <div :th:replace="~{email/fragments/header :: header}"></div>
+        <th:block th:replace="~{email/fragments/email-layout :: layout}">
+            <!-- Header -->
+            <tr th:replace="~{email/fragments/email-layout :: header}"></tr>
 
-            <div class="content">
-                <h1 :th:text="#{notification.item_reserved_no_longer_available.email.title}">Item No Longer Available</h1>
-
+            <!-- Content -->
+            <td th:fragment="content">
+                <h1 th:text="#{notification.item_reserved_no_longer_available.email.title}">Item No Longer Available</h1>
                 <p>
-                    <span :th:text="#{notification.item_reserved_no_longer_available.email.greeting(${username})}">Hello username,</span>
+                    <span th:text="#{notification.item_reserved_no_longer_available.email.greeting(${username})}">Hello username,</span>
                 </p>
-
                 <p>
-                    <span :th:text="#{notification.item_reserved_no_longer_available.email.message(${itemName})}">
+                    <span th:text="#{notification.item_reserved_no_longer_available.email.message(${itemName})}">
                         Unfortunately, the item "itemName" you reserved is no longer available.
                     </span>
                 </p>
 
-                <div class="button-container">
-                    <a
-                        :th:href="${itemUrl}"
-                        class="button"
-                        :th:text="#{notification.item_reserved_no_longer_available.email.view_item}"
-                    >
-                        View Item
-                    </a>
+                <div class="item-card">
+                    <img th:if="${itemImageUrl}" th:src="${itemImageUrl}" class="item-image" alt="Item Image" />
+                    <div class="item-details">
+                        <div class="item-name" th:text="${itemName}">Item Name</div>
+                        <div class="item-owner" th:if="${itemOwner}" th:text="${itemOwner}">Owner Name</div>
+                    </div>
                 </div>
 
-                <p class="button-fallback">
-                    <small :th:text="#{email.common.button_fallback}">
-                        If the button above doesn't work, copy and paste this link into your browser:
-                    </small>
-                    <br>
-                    <small :th:text="${itemUrl}">itemUrl</small>
-                </p>
+                <!-- Button -->
+                <th:block th:replace="~{email/fragments/email-layout :: button(${itemUrl}, #{notification.item_reserved_no_longer_available.email.view_item})}"></th:block>
 
-                <p>
-                    <span :th:text="#{email.common.signature}">Best regards,</span>
-                    <br>
-                    <span>The Open Shelf Team</span>
-                </p>
-            </div>
+                <!-- Button Fallback -->
+                <th:block th:replace="~{email/fragments/email-layout :: button-fallback(${itemUrl})}"></th:block>
 
-            <div :th:replace="~{email/fragments/footer :: footer}"></div>
-        </div>
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="content-block">
+                            <p>
+                                <span th:text="#{email.common.signature}">Best regards,</span>
+                                <br>
+                                <span>[[${appName}]] Team</span>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <!-- Footer -->
+            <div th:replace="~{email/fragments/email-layout :: footer}"></div>
+        </th:block>
     </body>
 </html>

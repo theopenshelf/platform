@@ -2312,6 +2312,10 @@ paths:
                 - userId
                 - notification
               properties:
+                locale:
+                  type: string
+                  example: "en"
+                  description: The locale of the notification
                 userId:
                   type: string
                   format: uuid
@@ -2635,12 +2639,19 @@ components:
             - ITEM_PICKUP_REJECTED
             - ITEM_RETURN_APPROVED
             - ITEM_RETURN_REJECTED
+            - ITEM_NEW_RESERVATION_TO_CONFIRM
+            - ITEM_NEW_PICKUP_TO_CONFIRM
+            - ITEM_NEW_RETURN_TO_CONFIRM
         alreadyRead:
           type: boolean
           example: false
         payload:
           type: object
           additionalProperties: true
+        item:
+          $ref: "#/components/schemas/Item"
+        borrowRecord:
+          $ref: "#/components/schemas/BorrowRecord"
 
     ItemStat:
       allOf:

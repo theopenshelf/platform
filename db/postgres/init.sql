@@ -146,8 +146,19 @@ CREATE TABLE "notifications" (
         'ITEM_AVAILABLE',
         'ITEM_DUE',
         'ITEM_BORROW_RESERVATION_DATE_START',
-        'ITEM_RESERVED_NO_LONGER_AVAILABLE'
-    ))
+        'ITEM_RESERVED_NO_LONGER_AVAILABLE',
+        'ITEM_RESERVATION_APPROVED',
+        'ITEM_RESERVATION_REJECTED',
+        'ITEM_PICKUP_APPROVED',
+        'ITEM_PICKUP_REJECTED',
+        'ITEM_RETURN_APPROVED',
+        'ITEM_RETURN_REJECTED',
+        'ITEM_NEW_RESERVATION_TO_CONFIRM',
+        'ITEM_NEW_PICKUP_TO_CONFIRM',
+        'ITEM_NEW_RETURN_TO_CONFIRM'
+    )),
+    "item_id" uuid REFERENCES items(id),
+    "borrow_record_id" uuid REFERENCES borrow_records(id)
 );
 
 CREATE TABLE settings (

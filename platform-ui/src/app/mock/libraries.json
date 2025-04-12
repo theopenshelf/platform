@@ -14,6 +14,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Please follow the guidelines for hub usage. Ensure all members are registered and adhere to the library rules. Maintain cleanliness and report any issues to the admin.",
@@ -41,6 +49,14 @@
       {
         "userId": "12",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
@@ -68,6 +84,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
@@ -95,6 +119,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Reserve an items and as I am using it too, I will let you know when it's available. Once approved, you can pick it up from the garage. For certain items, I will require a deposit.",
@@ -122,6 +154,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
@@ -149,6 +189,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "member"
+      },
+      {
+          "userId": "16",
+          "role": "admin"
       }
     ],
     "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
@@ -176,6 +224,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",
@@ -203,6 +259,14 @@
       {
         "userId": "2",
         "role": "member"
+      },
+      {
+          "userId": "15",
+          "role": "admin"
+      },
+      {
+          "userId": "16",
+          "role": "member"
       }
     ],
     "instructions": "Veuillez suivre les directives d'utilisation du hub. Assurez-vous que tous les membres sont enregistrés et respectent les règles de la bibliothèque. Maintenez la propreté et signalez tout problème à l'administrateur.",

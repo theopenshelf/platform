@@ -1,40 +1,47 @@
 <!DOCTYPE html>
-<html :xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title :th:text="${title}">Verify Your Email - The Open Shelf</title>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="~{email/fragments/email-layout :: head(~{::title})}">
+        <title th:text="${title}">Verify Your Email - [[${appName}]]</title>
     </head>
     <body>
-        <h1 :th:text="${title}">Welcome to The Open Shelf</h1>
-        <p>
-            <span :th:text="${welcome}">Hello</span>
-            <span :th:text="${username}"></span>
-            ,
-        </p>
-        <p :th:text="${instructions}">
-            Please verify your email address by clicking the link below:
-        </p>
+        <th:block th:replace="~{email/fragments/email-layout :: layout}">
+            <!-- Header -->
+            <tr th:replace="~{email/fragments/email-layout :: header}"></tr>
 
-        <p>
-            <a
-                :th:href="${verif_url}"
-                style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;"
-                :th:text="${button_text}"
-            >
-                Verify Email Address
-            </a>
-        </p>
+            <!-- Content -->
+            <td th:fragment="content">
+                <h1 th:text="${title}">Welcome to [[${appName}]]</h1>
+                <p>
+                    <span th:text="${welcome}">Hello</span>
+                    <span th:text="${username}"></span>,
+                </p>
+                <p th:text="${instructions}">
+                    Please verify your email address by clicking the link below:
+                </p>
 
-        <p :th:text="${fallback}">
-            If the button above doesn't work, copy and paste this link into your browser:
-        </p>
-        <p :th:text="${verif_url}"></p>
+                <!-- Button -->
+                <th:block th:replace="~{email/fragments/email-layout :: button(${verif_url}, ${button_text})}"></th:block>
 
-        <p :th:text="${expiry}">This link will expire in 24 hours.</p>
+                <!-- Button Fallback -->
+                <th:block th:replace="~{email/fragments/email-layout :: button-fallback(${verif_url})}"></th:block>
 
-        <p>
-            <span :th:text="${signature}">Best regards,</span>
-            <br>
-            The Open Shelf Team
-        </p>
+                <p th:text="${expiry}">This link will expire in 24 hours.</p>
+
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="content-block">
+                            <p>
+                                <span th:text="${signature}">Best regards,</span>
+                                <br>
+                                <span>[[${appName}]] Team</span>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <!-- Footer -->
+            <div th:replace="~{email/fragments/email-layout :: footer}"></div>
+        </th:block>
     </body>
 </html>

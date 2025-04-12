@@ -252,5 +252,41 @@
         "borrowedItems": 0,
         "returnedLate": 0,
         "successRate": 0
+    },
+    {
+        "id": "15",
+        "username": "qcastel",
+        "firstName": "Quentin",
+        "lastName": "Castel",
+        "email": "quentincastel86@gmail.com",
+        "isEmailVerified": true,
+        "disabled": false,
+        "preferredLanguage": "en",
+        "flatNumber": "",
+        "streetAddress": "119 route des oriolleres",
+        "city": "Mignaloux-Beauvoir",
+        "postalCode": "86550",
+        "country": "France",
+        "borrowedItems": 0,
+        "returnedLate": 0,
+        "successRate": 0
+    },
+    {
+        "id": "16",
+        "username": "afrancani",
+        "firstName": "Allan",
+        "lastName": "Francani",
+        "email": "allan.francani@pm.me",
+        "isEmailVerified": true,
+        "disabled": false,
+        "preferredLanguage": "en",
+        "flatNumber": "",
+        "streetAddress": "",
+        "city": "Haut-Savoie",
+        "postalCode": "74100",
+        "country": "France",
+        "borrowedItems": 0,
+        "returnedLate": 0,
+        "successRate": 0
     }
 ]
