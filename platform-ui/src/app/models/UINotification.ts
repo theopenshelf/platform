@@ -1,3 +1,5 @@
+import { UIBorrowRecord } from "./UIBorrowRecord";
+import { UIItem } from "./UIItem";
 
 export enum UINotificationType {
     ITEM_AVAILABLE = 'item-available',
@@ -19,4 +21,6 @@ export interface UINotification {
     type: UINotificationType;
     alreadyRead: boolean;
     payload: any | undefined;
+    item?: UIItem;
+    borrowRecord?: UIBorrowRecord;
 }

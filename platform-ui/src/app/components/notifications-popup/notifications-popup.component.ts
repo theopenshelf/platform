@@ -205,8 +205,8 @@ export class NotificationsPopupComponent implements OnInit, OnDestroy {
 
   getNotificationImage(notification: UINotification): string {
     // Check if the notification has an associated item with an image
-    if (notification.payload?.item?.imageUrl) {
-      return notification.payload.item.imageUrl;
+    if (notification.item?.imageUrl) {
+      return notification.item.imageUrl;
     }
     // Fallback to a default image
     return '/assets/default-notification.png';

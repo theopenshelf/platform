@@ -8,8 +8,7 @@ export const loadNotificationsData = (): UINotification[] => {
     return notificationsData.map(notification => ({
         ...notification,
         type: notification.type as unknown as UINotificationType,
-        payload: {
-            item: itemsData.find(item => item.id === notification.payload.itemId)
-        }
+        payload: {},
+        item: itemsData.find(item => item.id === notification.payload.itemId),
     }));
 };

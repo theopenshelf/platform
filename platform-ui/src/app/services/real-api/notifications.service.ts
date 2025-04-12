@@ -5,6 +5,8 @@ import {
   Notification,
   NotificationsHubApiService,
 } from '../../api-client';
+import { UIBorrowRecord } from '../../models/UIBorrowRecord';
+import { UIItem } from '../../models/UIItem';
 import { UINotification, UINotificationType } from '../../models/UINotification';
 import {
   NotificationsService
@@ -65,6 +67,8 @@ export class APINotificationsService implements NotificationsService {
               type,
               translationKey: this.getNotificationTranslationKey(type),
               payload: notification.payload ?? {},
+              item: notification.item as UIItem | undefined,
+              borrowRecord: notification.borrowRecord as UIBorrowRecord | undefined,
             };
           }
         );
