@@ -3,7 +3,7 @@
 <filtered-and-paginated-items [categoriesFilteringOpened]="false" [getItemsParams]="getItemsParams!">
     <ng-template #libraryTemplate>
       @if (library!.isAdmin) {
-      <button class="add-item" routerLink="/hub/item/add" appearance="primary" size="m" tuiButton type="button">
+      <button class="add-item" routerLink="/hub/libraries/{{library!.id}}/item/add" appearance="primary" size="m" tuiButton type="button">
         <tui-icon icon="@tui.shopping-basket" [style.height.rem]="1" />
         {{ 'library.addItem' | translate }}
       </button>

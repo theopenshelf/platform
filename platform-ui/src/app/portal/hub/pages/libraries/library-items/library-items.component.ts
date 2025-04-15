@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiIcon } from '@taiga-ui/core';
 import { FilteredAndPaginatedItemsComponent } from '../../../../../components/filtered-and-paginated-items/filtered-and-paginated-items.component';
@@ -12,7 +13,8 @@ import { LibraryStateService } from '../library.service';
     FilteredAndPaginatedItemsComponent,
     TuiIcon,
     TuiButton,
-    TranslateModule
+    TranslateModule,
+    RouterLink
   ],
   templateUrl: './library-items.component.html',
   styleUrl: './library-items.component.scss'

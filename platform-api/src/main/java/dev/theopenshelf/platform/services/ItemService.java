@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -14,6 +15,7 @@ import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.stereotype.Service;
 
 import dev.theopenshelf.platform.entities.BorrowRecordEntity;
+import dev.theopenshelf.platform.entities.CategoryEntity;
 import dev.theopenshelf.platform.entities.ItemEntity;
 import dev.theopenshelf.platform.entities.LibraryEntity;
 import dev.theopenshelf.platform.entities.LibraryMemberEntity;
@@ -32,6 +34,7 @@ import dev.theopenshelf.platform.model.ItemStat;
 import dev.theopenshelf.platform.model.PaginatedItemsResponse;
 import dev.theopenshelf.platform.model.ReturnItemRequest;
 import dev.theopenshelf.platform.repositories.BorrowRecordRepository;
+import dev.theopenshelf.platform.repositories.CategoryRepository;
 import dev.theopenshelf.platform.repositories.ItemsRepository;
 import dev.theopenshelf.platform.repositories.LibraryRepository;
 import dev.theopenshelf.platform.repositories.UsersRepository;
@@ -50,10 +53,23 @@ public class ItemService {
     private final LibraryRepository libraryRepository;
     private final NotificationsService notificationsService;
     private final UsersRepository usersRepository;
+    private final CategoryRepository categoryRepository;
 
     public Mono<ItemEntity> createItem(Item item, UUID ownerId) {
+        LibraryEntity library = libraryRepository.findById(item.getLibraryId()).orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                CodedError.LIBRARY_NOT_FOUND.getDefaultMessage(),
+                Map.of("libraryId", item.getLibraryId()),
+                CodedError.LIBRARY_NOT_FOUND.getDocumentationUrl()));
+
+        CategoryEntity category = categoryRepository.findById(item.getCategory().getId()).orElseThrow(() -> new CodedException(CodedError.LIBRARY_NOT_FOUND.getCode(),
+                CodedError.CATEGORY_NOT_FOUND.getDefaultMessage(),
+                Map.of("category", item.getCategory().getId()),
+                CodedError.CATEGORY_NOT_FOUND.getDocumentationUrl()));
+
         ItemEntity entity = ItemEntity.builder()
                 .id(UUID.randomUUID())
+                .communityId(library.getCommunityId())
+                .category(category)
                 .name(item.getName())
                 .description(item.getDescription())
                 .shortDescription(item.getShortDescription())

@@ -267,20 +267,7 @@ export class APIItemsService implements ItemsService {
   addItem(item: UIItem): Observable<UIItem> {
     const apiItem = {
       ...item,
-      borrowRecords: item.borrowRecords.map(
-        (record: UIBorrowRecord) =>
-          ({
-            id: record.id,
-            startDate: record.startDate
-              ? record.startDate.toISOString()
-              : undefined,
-            endDate: record.endDate ? record.endDate.toISOString() : undefined,
-            reservationDate: record.reservationDate
-              ? record.reservationDate.toISOString()
-              : undefined,
-            borrowedBy: record.borrowedBy,
-          }) as BorrowRecord,
-      ),
+      borrowRecords: [],
       createdAt: item.createdAt?.toISOString(),
     };
 

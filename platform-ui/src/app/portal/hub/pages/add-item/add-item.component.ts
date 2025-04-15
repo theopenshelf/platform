@@ -6,7 +6,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { TuiButton, TuiTextfield } from '@taiga-ui/core';
 import { TuiDataListWrapper, TuiStringifyContentPipe } from '@taiga-ui/kit';
@@ -67,6 +67,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
 
   imageFile?: File;
   categories: UICategory[] = [];
+  libraryId: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -74,6 +75,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
     @Inject(CATEGORIES_SERVICE_TOKEN)
     private categoriesService: CategoriesService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     this.addItemForm = this.fb.group({
       name: ['', Validators.required],
@@ -112,6 +114,7 @@ export class AddItemComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.libraryId = this.route.snapshot.paramMap.get('id');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.categoriesService
       .getCategories()
@@ -153,8 +156,9 @@ export class AddItemComponent implements OnInit, OnDestroy {
     if (this.addItemForm.valid) {
       const newItem = this.addItemForm.value;
       newItem.category = this.categories.find(
-        (c) => c.name === newItem.category,
+        (c) => c.id === newItem.category.id,
       );
+      newItem.libraryId = this.libraryId;
       this.itemsService.addItem(newItem).subscribe({
         next: (createdItem) => {
           this.addItemForm.reset();

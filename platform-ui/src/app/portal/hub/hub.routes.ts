@@ -23,12 +23,12 @@ export const COMMUNITY_ROUTES: Routes = [
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' },
       { path: 'items', component: ItemsComponent },
-      { path: 'item/add', component: AddItemComponent },
       { path: 'items/:itemId', component: ItemComponent },
       { path: 'borrowed-items', component: BorrowedItemsComponent },
       { path: 'libraries', component: LibrariesComponent },
       { path: 'libraries/add-library', component: EditLibraryComponent },
       { path: 'libraries/:id/edit', component: EditLibraryComponent },
+      { path: 'libraries/:id/item/add', component: AddItemComponent },
       { path: 'wishlist', component: WishlistComponent },
       { path: 'help-center', component: HelpCenterComponent },
       { path: 'page/:ref', component: CustomPageComponent },
