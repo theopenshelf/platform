@@ -48,6 +48,12 @@ export const loadItems = (): UIItem[] => {
   var itemsLoaded = items.map((item) => {
     return {
       ...item,
+      status: 'published',
+      images: [{
+        imageUrl: item.imageUrl,
+        type: 'original' as 'original' | 'ai',
+        order: 0,
+      }],
       category: mapCategory(item.category),
       owner: item.owner || 'TheOpenShelf',
       borrowRecords: item.borrowRecords.map(

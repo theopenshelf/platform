@@ -6,6 +6,7 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,6 @@ public class ItemEntity {
     private String description;
     @Column(name = "short_description")
     private String shortDescription;
-    @Column(name = "image_url")
-    private String imageUrl;
     private String owner;
     @Column(name = "borrow_count")
     private Integer borrowCount = 0;
@@ -66,7 +65,14 @@ public class ItemEntity {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BorrowRecordEntity> borrowRecords;
+    private Set<BorrowRecordEntity> borrowRecords;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ItemImageEntity> images; // List of images with type 'original' or 'ai'
+
+    @Column(name = "status")
+    private String status; // draft, published, or generation-in-progress
 
     public Item.ItemBuilder toItem() {
         return this.toItem(true);
@@ -76,10 +82,10 @@ public class ItemEntity {
         try {
             return Item.builder()
                     .id(this.id != null ? this.id : UUID.randomUUID())
+                    .status(Item.StatusEnum.fromValue(this.status))
                     .name(this.name != null ? this.name : "")
                     .description(this.description != null ? this.description : "")
                     .shortDescription(this.shortDescription != null ? this.shortDescription : "")
-                    .imageUrl(this.imageUrl != null ? this.imageUrl : "")
                     .libraryId(this.libraryId != null ? this.libraryId : UUID.randomUUID())
                     .category(this.category != null ? this.category.toCategory().build() : null)
                     .owner(this.owner != null ? this.owner : "")
@@ -89,6 +95,9 @@ public class ItemEntity {
                     .borrowRecords(withBorrowRecords && this.borrowRecords != null ? this.borrowRecords.stream()
                             .map(record -> record.toBorrowRecord().build())
                             .toList() : List.of())
+                    .images(this.images != null ? this.images.stream()
+                            .map(ItemImageEntity::toItemImage)
+                            .collect(Collectors.toList()) : List.of())
                     .favorite(this.favorite);
         } catch (Exception e) {
             log.error("Error converting ItemEntity to Item", e);
@@ -97,7 +106,6 @@ public class ItemEntity {
                     .name("")
                     .description("")
                     .shortDescription("")
-                    .imageUrl("")
                     .libraryId(UUID.randomUUID())
                     .owner("")
                     .createdAt(OffsetDateTime.now())
@@ -112,7 +120,6 @@ public class ItemEntity {
                 .id(id)
                 .name(name)
                 .owner(owner)
-                .imageUrl(imageUrl)
                 .description(description)
                 .shortDescription(shortDescription)
                 .category(category != null ? category.toCategory().build() : null)

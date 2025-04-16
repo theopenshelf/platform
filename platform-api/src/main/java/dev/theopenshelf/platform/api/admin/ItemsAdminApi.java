@@ -53,7 +53,6 @@ public class ItemsAdminApi implements ItemsAdminApiApiDelegate {
                                     .name(item.getName())
                                     .description(item.getDescription())
                                     .shortDescription(item.getShortDescription())
-                                    .imageUrl(item.getImageUrl())
                                     .owner(item.getOwner())
                                     .borrowCount(item.getBorrowCount())
                                     .favorite(item.getFavorite())

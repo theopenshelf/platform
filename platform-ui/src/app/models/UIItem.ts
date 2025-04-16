@@ -5,7 +5,6 @@ export interface UIItem {
   id: string;
 
   name: string;
-  imageUrl: string;
   description: string;
   shortDescription: string;
   category: UICategory;
@@ -19,4 +18,14 @@ export interface UIItem {
 
   //statistics
   borrowCount: number;
+
+  status: string; // draft, published, or generation-in-progress
+
+  images: UIItemImage[];
+}
+
+export interface UIItemImage {
+  imageUrl: string;
+  type: 'original' | 'ai';
+  order: number;
 }

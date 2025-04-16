@@ -300,6 +300,13 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: status
+          in: query
+          description: Filter items by draft or published status
+          required: false
+          schema:
+            type: string
+            enum: [draft, published]
       responses:
         "200":
           description: A paginated list of items
@@ -2467,13 +2474,31 @@ components:
               enum: ["admin", "member", "requestingJoin"]
               example: "member"
 
+    ItemImage:
+      type: object
+      required:
+        - imageUrl
+        - type
+        - order
+      properties:
+        imageUrl:
+          type: string
+          example: "/items/harry-potter.png"
+        type:
+          type: string
+          enum: [original, ai]
+          example: "original"
+        order:
+          type: integer
+          example: 0
+
     Item:
       type: object
       required:
         - id
         - name
         - owner
-        - imageUrl
+        - status
         - description
         - shortDescription
         - category
@@ -2481,6 +2506,7 @@ components:
         - borrowCount
         - libraryId
         - borrowRecords
+        - images
 
       properties:
         id:
@@ -2493,9 +2519,6 @@ components:
         owner:
           type: string
           example: "TheOpenShelf"
-        imageUrl:
-          type: string
-          example: "/items/harry-potter.png"
         description:
           type: string
           example: "A magical adventure story that follows the journey of a young wizard and his friends."
@@ -2522,6 +2545,14 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/BorrowRecord"
+        images:
+          type: array
+          items:
+            $ref: "#/components/schemas/ItemImage"
+        status:
+          type: string
+          enum: [draft, published, generation-in-progress]
+          example: "published"
 
     BorrowStatus:
       type: string
@@ -3275,7 +3306,6 @@ components:
                     name: "Harry Potter Book"
                     located: "ShareSpace"
                     owner: "TheOpenShelf"
-                    imageUrl: "/items/harry-potter.png"
                     description: "A magical adventure story that follows the journey of a young wizard and his friends."
                     shortDescription: "A magical adventure story."
                     category:

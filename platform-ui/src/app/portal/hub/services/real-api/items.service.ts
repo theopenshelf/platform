@@ -5,6 +5,7 @@ import {
   BorrowRecordsHubApiService,
   BorrowRecordStandalone,
   Item,
+  ItemImage,
   ItemsHubApiService,
 } from '../../../../api-client';
 import { GetBorrowRecordsCountByStatusParams } from '../../../../models/GetBorrowRecordsCountByStatusParams';
@@ -12,7 +13,7 @@ import { GetItemsParams } from '../../../../models/GetItemsParams';
 import { UIBorrowRecord } from '../../../../models/UIBorrowRecord';
 import { UIBorrowRecordsPagination, UIBorrowRecordStandalone } from '../../../../models/UIBorrowRecordsPagination';
 import { UIBorrowDetailedStatus } from '../../../../models/UIBorrowStatus';
-import { UIItem } from '../../../../models/UIItem';
+import { UIItem, UIItemImage } from '../../../../models/UIItem';
 import { UIItemsPagination } from '../../../../models/UIItemsPagination';
 import { UIUser } from '../../../../models/UIUser';
 import { ItemsService } from '../items.service';
@@ -75,38 +76,38 @@ export class APIItemsService implements ItemsService {
         favorite,
       )
       .pipe(
-        map((response) => ({
-          totalPages: response.totalPages,
-          totalItems: response.totalItems,
-          currentPage: response.currentPage,
-          itemsPerPage: response.itemsPerPage,
-          items: response.items.map(
-            (item: Item) =>
-              ({
-                id: item.id,
-                name: item.name,
-                owner: item.owner,
-                imageUrl: item.imageUrl,
-                description: item.description,
-                shortDescription: item.shortDescription,
-                category: item.category,
-                libraryId: item.libraryId,
-                borrowRecords: item.borrowRecords.map(record => ({
-                  ...record,
-                  startDate: record.startDate ? new Date(record.startDate) : undefined,
-                  endDate: record.endDate ? new Date(record.endDate) : undefined,
-                  reservationDate: record.reservationDate ? new Date(record.reservationDate) : undefined,
-                  effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : undefined,
-                  pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
-                })) as UIBorrowRecord[],
-                favorite: item.favorite,
-                borrowCount: item.borrowCount,
-                createdAt: item.createdAt
-                  ? new Date(item.createdAt)
-                  : undefined,
-              }) as UIItem,
-          ),
-        })),
+        map((response) => {
+          debugger;
+          return ({
+            totalPages: response.totalPages,
+            totalItems: response.totalItems,
+            currentPage: response.currentPage,
+            itemsPerPage: response.itemsPerPage,
+            items: response.items.map(
+              (item: Item) =>
+                ({
+                  ...item,
+                  images: item.images.map(image => ({
+                    imageUrl: image.imageUrl,
+                    type: image.type,
+                    order: image.order,
+                  })) as UIItemImage[],
+                  borrowRecords: item.borrowRecords.map(record => ({
+                    ...record,
+                    startDate: record.startDate ? new Date(record.startDate) : undefined,
+                    endDate: record.endDate ? new Date(record.endDate) : undefined,
+                    reservationDate: record.reservationDate ? new Date(record.reservationDate) : undefined,
+                    effectiveReturnDate: record.effectiveReturnDate ? new Date(record.effectiveReturnDate) : undefined,
+                    pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
+                  })) as UIBorrowRecord[],
+                  createdAt: item.createdAt
+                    ? new Date(item.createdAt)
+                    : undefined,
+                }) as UIItem,
+            ),
+          })
+        }
+        ),
       );
   }
 
@@ -215,12 +216,17 @@ export class APIItemsService implements ItemsService {
                   : undefined,
                 item: ({
                   id: record.item.id,
+                  status: record.item.status,
                   name: record.item.name,
                   owner: record.item.owner,
-                  imageUrl: record.item.imageUrl,
                   description: record.item.description,
                   shortDescription: record.item.shortDescription,
                   category: record.item.category,
+                  images: record.item.images.map(image => ({
+                    imageUrl: image.imageUrl,
+                    type: image.type,
+                    order: image.order,
+                  })) as UIItemImage[],
                   libraryId: record.item.libraryId,
                   favorite: record.item.favorite,
                   borrowCount: record.item.borrowCount,
@@ -228,6 +234,7 @@ export class APIItemsService implements ItemsService {
                     ? new Date(record.item.createdAt)
                     : undefined,
                 }) as UIItem,
+                status: record.status ?? 'draft' as string,
               }) as UIBorrowRecordStandalone,
           ),
         })),
@@ -240,15 +247,7 @@ export class APIItemsService implements ItemsService {
       map(
         (item: Item) =>
           ({
-            id: item.id,
-            name: item.name,
-            owner: item.owner,
-            imageUrl: item.imageUrl,
-            description: item.description,
-            shortDescription: item.shortDescription,
-            category: item.category,
-            libraryId: item.libraryId,
-            favorite: item.favorite,
+            ...item,
             borrowCount: item.borrowCount,
             borrowRecords: item.borrowRecords.map(record => ({
               ...record,
@@ -259,6 +258,11 @@ export class APIItemsService implements ItemsService {
               pickupDate: record.pickupDate ? new Date(record.pickupDate) : undefined,
             })) as UIBorrowRecord[],
             createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
+            images: item.images.map(image => ({
+              imageUrl: image.imageUrl,
+              type: image.type,
+              order: image.order,
+            })) as UIItemImage[],
           }) as UIItem,
       ),
     );
@@ -269,11 +273,22 @@ export class APIItemsService implements ItemsService {
       ...item,
       borrowRecords: [],
       createdAt: item.createdAt?.toISOString(),
-    };
+      images: item.images.map(image => ({
+        imageUrl: image.imageUrl,
+        type: image.type,
+        order: image.order,
+      })) as ItemImage[],
+    } as Item;
 
     return this.itemsApiService.addItem(apiItem).pipe(
       map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft', // Ensure status is always a string
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -304,6 +319,12 @@ export class APIItemsService implements ItemsService {
       .pipe(
         map((item: Item) => ({
           ...item,
+          images: item.images.map(image => ({
+            imageUrl: image.imageUrl ?? '',
+            type: image.type,
+            order: image.order,
+          })),
+          status: item.status ?? 'draft',
           createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
           borrowRecords: item.borrowRecords.map(
             (record: BorrowRecord) =>
@@ -330,6 +351,11 @@ export class APIItemsService implements ItemsService {
       .pipe(
         map((item: Item) => ({
           ...item,
+          images: item.images.map(image => ({
+            imageUrl: image.imageUrl,
+            type: image.type,
+            order: image.order,
+          })) as UIItemImage[],
           createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
           borrowRecords: item.borrowRecords.map(
             (record: BorrowRecord) =>
@@ -354,6 +380,11 @@ export class APIItemsService implements ItemsService {
       .returnItem(item.id, { borrowRecordId: borrowRecord.id })
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -379,6 +410,12 @@ export class APIItemsService implements ItemsService {
       .pickupItem(item.id, { borrowRecordId: borrowRecord.id })
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft',
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -424,6 +461,12 @@ export class APIItemsService implements ItemsService {
       .markAsFavorite(item.id)
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft',
         favorite: item.favorite,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -447,6 +490,12 @@ export class APIItemsService implements ItemsService {
       .approvalReservation(item.id, { borrowRecordId: borrowRecord.id, decision })
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft',
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -472,6 +521,12 @@ export class APIItemsService implements ItemsService {
     return this.itemsApiService.approvalPickup(item.id, { borrowRecordId: borrowRecord.id, decision })
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft',
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>
@@ -497,6 +552,12 @@ export class APIItemsService implements ItemsService {
     return this.itemsApiService.approvalReturn(item.id, { borrowRecordId: borrowRecord.id, decision })
       .pipe(map((item: Item) => ({
         ...item,
+        images: item.images.map(image => ({
+          imageUrl: image.imageUrl,
+          type: image.type,
+          order: image.order,
+        })) as UIItemImage[],
+        status: item.status ?? 'draft',
         createdAt: item.createdAt ? new Date(item.createdAt) : undefined,
         borrowRecords: item.borrowRecords.map(
           (record: BorrowRecord) =>

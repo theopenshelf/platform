@@ -4,7 +4,7 @@
     <!-- Image Section -->
     @if (item()) {
       <div class="image-container">
-        <img [src]="item()!.imageUrl" [alt]="item()!.name" class="record-image" />
+        <img [src]="item()!.images[0].imageUrl" [alt]="item()!.name" class="record-image" />
         
         <div class="action-container">
           @if (status() === UIBorrowDetailedStatus.Reserved_ReadyToPickup) {

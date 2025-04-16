@@ -81,6 +81,7 @@ export class ApiItemsService implements ItemsService {
   addItem(item: UIItemWithStats): Observable<UIItemWithStats> {
     const itemStat: ItemStat = {
       ...item,
+      status: item.status as ItemStat.StatusEnum,
       borrowRecords: item.borrowRecords.map(
         (record: UIBorrowRecord) =>
           ({

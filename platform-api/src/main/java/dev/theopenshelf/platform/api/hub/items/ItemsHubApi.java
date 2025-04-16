@@ -46,10 +46,22 @@ public class ItemsHubApi implements ItemsHubApiApiDelegate {
         }
 
         @Override
-        public Mono<ResponseEntity<PaginatedItemsResponse>> getItems(Boolean borrowedByCurrentUser, String borrowedBy,
-                        List<String> libraryIds, List<String> communityIds, List<String> categories, String searchText,
-                        Boolean currentlyAvailable, String sortBy, String sortOrder, Integer page, Integer pageSize,
-                        LocalDate startDate, LocalDate endDate, Boolean favorite, ServerWebExchange exchange) {
+        public Mono<ResponseEntity<PaginatedItemsResponse>> getItems(Boolean borrowedByCurrentUser,
+                                                                     String borrowedBy,
+                                                                     List<String> libraryIds,
+                                                                     List<String> communityIds,
+                                                                     List<String> categories,
+                                                                     String searchText,
+                                                                     Boolean currentlyAvailable,
+                                                                     String sortBy,
+                                                                     String sortOrder,
+                                                                     Integer page,
+                                                                     Integer pageSize,
+                                                                     LocalDate startDate,
+                                                                     LocalDate endDate,
+                                                                     Boolean favorite,
+                                                                     String status,
+                                                                     ServerWebExchange exchange) {
                 // TODO only returns items if user is member of the community on which the
                 // item->library is part
                 return exchange.getPrincipal()

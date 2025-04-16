@@ -33,7 +33,7 @@ public interface ItemsRepository extends CrudRepository<ItemEntity, UUID>, JpaSp
 
         List<ItemEntity> findByFavorite(boolean favorite);
 
-        @EntityGraph(attributePaths = { "borrowRecords", "category" })
+        @EntityGraph(attributePaths = { "borrowRecords", "category", "images" })
         Page<ItemEntity> findAll(Specification<ItemEntity> spec, Pageable pageable);
 
         @Query("SELECT i.name, COUNT(br) FROM ItemEntity i LEFT JOIN i.borrowRecords br GROUP BY i.name ORDER BY COUNT(br) DESC")
@@ -41,4 +41,8 @@ public interface ItemsRepository extends CrudRepository<ItemEntity, UUID>, JpaSp
 
         @Query("SELECT i FROM ItemEntity i LEFT JOIN FETCH i.borrowRecords WHERE i.id = :itemId")
         Optional<ItemEntity> findByIdWithBorrowRecords(@Param("itemId") UUID itemId);
+
+        @EntityGraph(attributePaths = { "borrowRecords", "category", "images" })
+        @Query("SELECT i FROM ItemEntity i WHERE i.id = :itemId")
+        Optional<ItemEntity> findByIdWithImages(@Param("itemId") UUID itemId);
 }

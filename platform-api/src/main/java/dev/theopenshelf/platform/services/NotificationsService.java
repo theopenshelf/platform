@@ -5,19 +5,23 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import dev.theopenshelf.platform.entities.ItemImageEntity;
 import dev.theopenshelf.platform.entities.NotificationEntity;
 import dev.theopenshelf.platform.entities.NotificationType;
 import dev.theopenshelf.platform.entities.UserEntity;
 import dev.theopenshelf.platform.exceptions.CodedError;
 import dev.theopenshelf.platform.exceptions.CodedException;
 import dev.theopenshelf.platform.model.GetUnreadNotificationsCount200Response;
+import dev.theopenshelf.platform.model.ItemImage;
 import dev.theopenshelf.platform.model.Notification;
+import dev.theopenshelf.platform.repositories.ItemImageRepository;
 import dev.theopenshelf.platform.repositories.NotificationRepository;
 import dev.theopenshelf.platform.services.MailService.TemplateVariable;
 import dev.theopenshelf.platform.services.MailService.TemplateVariableType;
@@ -35,6 +39,7 @@ public class NotificationsService {
     private final NotificationRepository notificationRepository;
     private final MailService mailService;
     private final MessageSource messageSource;
+    private final ItemImageRepository itemImageRepository;
 
     @Value("${oshelf.frontend-url}")
     private String frontendUrl;
@@ -76,7 +81,23 @@ public class NotificationsService {
         log.info("Retrieving notifications for user {}", userId);
         try {
             return Flux.fromIterable(notificationRepository.findAllByUserId(userId))
-                    .map(entity -> entity.toNotification().build());
+                    .flatMap(entity -> {
+                        // Fetch the image with order = 0
+                        Notification notification = entity.toNotification().build();
+                        if (entity.getItem() != null) {
+                            Optional<ItemImageEntity> imageOpt = itemImageRepository
+                                    .findFirstImageByItemId(entity.getItem().getId());
+                            imageOpt.ifPresent(image -> {
+                                // Enrich the notification with image details
+                                if (notification.getItem() != null) {
+                                    notification.getItem().setImages(List.of(
+                                            image.toItemImage()));
+                                }
+                            });
+                        }
+                        return Mono.just(notification);
+
+                    });
         } catch (Exception e) {
             log.error("Failed to retrieve notifications", e);
             return Flux.error(new CodedException(
@@ -171,16 +192,22 @@ public class NotificationsService {
                             .ref("itemName")
                             .value(notification.getItem().getName())
                             .build());
-            String imgUrl = notification.getItem().getImageUrl();
-            if (notification.getItem().getImageUrl().startsWith("/")) {
-                imgUrl = frontendUrl +  imgUrl;
-            }
-            variables.add(
+            Optional<String> imgUrl = notification.getItem().getImages().stream().filter(i -> i.getOrder() == 0)
+                    .findFirst()
+                    .map(ItemImageEntity::getImageUrl)
+                    .map(u -> {
+                        if (u.startsWith("/")) {
+                            u = frontendUrl + u;
+                        }
+                        return u;
+                    });
+            imgUrl.ifPresent(u -> variables.add(
                     TemplateVariable.builder()
                             .type(TemplateVariableType.RAW)
                             .ref("itemImageUrl")
-                            .value(imgUrl)
-                            .build());
+                            .value(u)
+                            .build()));
+
             variables.add(
                     TemplateVariable.builder()
                             .type(TemplateVariableType.RAW)
@@ -227,7 +254,8 @@ public class NotificationsService {
                         TemplateVariable.builder()
                                 .type(TemplateVariableType.RAW)
                                 .ref("confirmUrl")
-                                .value(frontendUrl + "/admin/reservations/" + notification.getPayload().get("reservationId"))
+                                .value(frontendUrl + "/admin/reservations/"
+                                        + notification.getPayload().get("reservationId"))
                                 .build()));
             }
             case ITEM_NEW_PICKUP_TO_CONFIRM -> {

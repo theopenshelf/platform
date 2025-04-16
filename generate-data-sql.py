@@ -173,7 +173,7 @@ def generate_items_sql(items, libraries, user_id_map, library_id_map, community_
         community_id_sql = f"'{community_id}'" if community_id else "NULL"
         category_id_sql = f"'{category_id}'" if category_id else "NULL"
         
-        sql = f"INSERT INTO items (id, name, description, short_description, image_url, located, created_at, borrow_count, favorite, owner, library_id, category_id, community_id) VALUES ('{item_uuid}', '{escape_sql_string(item['name'])}', '{description}', '{short_description}', '{escape_sql_string(item['imageUrl'])}', '{escape_sql_string(item.get('located', ''))}', '{item['createdAt']}', {item['borrowCount']}, {item['favorite']}, '{escape_sql_string(item.get('owner', ''))}', {library_id_sql}, {category_id_sql}, {community_id_sql});"
+        sql = f"INSERT INTO items (id, name, description, short_description, located, created_at, borrow_count, favorite, owner, library_id, category_id, community_id, status) VALUES ('{item_uuid}', '{escape_sql_string(item['name'])}', '{description}', '{short_description}', '{escape_sql_string(item.get('located', ''))}', '{item['createdAt']}', {item['borrowCount']}, {item['favorite']}, '{escape_sql_string(item.get('owner', ''))}', {library_id_sql}, {category_id_sql}, {community_id_sql}, 'published');"
         sql_statements.append(sql)
         
         for record in item['borrowRecords']:
@@ -192,6 +192,9 @@ def generate_items_sql(items, libraries, user_id_map, library_id_map, community_
             effective_return_date = f"'{record.get('effectiveReturnDate')}'" if record.get('effectiveReturnDate') else "NULL"
             record_sql = f"INSERT INTO borrow_records (id, item_id, borrowed_by, reservation_date, start_date, end_date, pickup_date, effective_return_date, status) VALUES ('{generate_uuid()}', '{item_uuid}', '{borrowed_by}', '{record['reservationDate']}', '{record['startDate']}', '{record['endDate']}', {pickup_date}, {effective_return_date}, '{status}');"
             sql_statements.append(record_sql)
+
+        image_sql = f"INSERT INTO item_images (id, item_id, image_url, item_order, type) VALUES ('{generate_uuid()}', '{item_uuid}', '{escape_sql_string(item['imageUrl'])}', 0, 'original');"
+        sql_statements.append(image_sql)
     return sql_statements, item_id_map
 
 def generate_item_categories_sql(categories):

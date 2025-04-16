@@ -75,7 +75,6 @@ CREATE TABLE "items" (
     "name" varchar(255),
     "description" varchar(3000),
     "short_description" varchar(1000),
-    "image_url" varchar(255),
     "located" varchar(255),
     "created_at" timestamp,
     "borrow_count" integer NOT NULL DEFAULT 0,
@@ -83,10 +82,17 @@ CREATE TABLE "items" (
     "owner" varchar(255),
     "library_id" uuid REFERENCES libraries(id),
     "category_id" uuid REFERENCES categories(id),
-    "community_id" uuid REFERENCES communities(id)
+    "community_id" uuid REFERENCES communities(id),
+    "status" varchar(255) CHECK (status IN ('draft', 'published', 'generation-in-progress'))
 );
 
-
+CREATE TABLE "item_images" (
+    "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "item_id" uuid REFERENCES items(id),
+    "image_url" varchar(255) NOT NULL,
+    "type" varchar(255) CHECK (type IN ('original', 'ai')) NOT NULL,
+    "item_order" integer NOT NULL DEFAULT 0
+);
 
 CREATE TABLE "borrow_records" (
     "id" uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
