@@ -38,7 +38,7 @@
         <io.specto.hoverfly-java-junit5.version>0.20.0</io.specto.hoverfly-java-junit5.version>
         <org.openapitools.version>7.11.0</org.openapitools.version>
         <logback.version>1.5.17</logback.version>
-        <logstash-logback.version>7.4</logstash-logback.version>
+        <logstash-logback.version>8.1</logstash-logback.version>
         <sendgrid.version>4.10.3</sendgrid.version>
     </properties>
 
